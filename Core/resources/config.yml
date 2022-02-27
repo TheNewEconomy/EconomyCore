@@ -1,0 +1,135 @@
+# The New Economy v0.1.1.1
+# Author: creatorfromhell
+# License: http://creativecommons.org/licenses/by-nc-nd/4.0/
+# If you would like to contribute to the plugin
+# you can do so via Github at https://github.com/TheNewEconomy/TNE-Bukkit
+# To donate to the continued development of TNE with perks, https://patreon.com/creatorfromhell
+# To view a commented version of this file, visit https://github.com/TheNewEconomy/TNE-Bukkit/blob/master/TNE/src/net/tnemc/resources/config.yml.
+Core:
+    
+    #Should TNE separate account balances by world?
+    Multiworld: false
+
+    #The name of the world to use if multiworld is set to false. Setting to TNE_SYSTEM will let TNE decide the default world.
+    DefaultWorld: "TNE_SYSTEM"
+
+    #Should TNE be placed in debug mode?
+    Debug: false
+
+    #All configurations relating to the server in general.
+    Server:
+
+        #Should TNE disable mob drops that are valid item currencies?
+        MobDrop: true
+
+        #Should item currencies be automatically consolidated into the least amount of items after every transaction?
+        Consolidate: false
+
+        #Should item currencies in players inventory on first join with TNE be kept and added to their balance?
+        KeepItems: false
+
+        #Should experience gaining be disabled? This will help for servers that use Experience as currency.
+        ExperienceGain: false
+
+        #Should players be allowed to use currencies in villager trading?
+        #This allows blocking trading item-based currencies to villagers.
+        CurrencyTrading: true
+
+        #The name of this server for data-related purposes. Max length is 100 characters.
+        Name: "Main Server"
+
+        #All configurations relating to the server's economy account.
+        Account:
+
+            #Enable the server account?
+            Enabled: true
+
+            #The name of the server account. Max length is 100 characters.
+            Name: "Server_Account"
+
+            #The starting balance for the server account.
+            Balance: 500
+
+        #Configurations relating to third-party support.
+        ThirdParty:
+
+            #Enable bstats?
+            Stats: true
+
+            #The prefix used by the Towny plugin to denote town UUIDs
+            Town: "town-"
+
+            #The prefix used by the Towny plugin to denote nation UUIDs
+            Nation: "nation-"
+
+            #The prefix used by the Factions plugin to denote faction UUIDs
+            Faction: "faction-"
+
+            #Should McMMO rewards that are item currencies be disabled?
+            McMMORewards: true
+
+    #All configurations relating to TNE commands
+    Commands:
+
+        #The command trigger(s) used to identify what is and isn't a command.
+        #To use multiple triggers, separate with comma, i.e. /,!.
+        Triggers: "/"
+
+        #Configurations relating to the money top command.
+        Top:
+
+          #A list of values to use to exclude certain users from baltop if the username contains these values.
+          Exclusions:
+            - "town-%"
+            - "nation-%"
+            - "faction-%"
+            - "towny-%"
+
+        #Extra configurations regarding the pay command
+        Pay:
+
+          #Can players use /pay on offline players? May result in additional polling requests to Mojang's API, which
+          #could result in slower response times.
+          Offline: false
+
+          #How close to another player someone must be, in blocks, in order to use /pay on them. Set to 0 to disable.
+          Radius: 0
+    
+    #All configurations relating to update checking
+    Update:
+    
+        #Should TNE check for updates?
+        Check: true
+        
+        #Should TNE notify any users with the tne.admin node of TNE updates on join?
+        Notify: true
+
+    #All configurations relating to the transaction system.
+    Transactions:
+
+        #The time format to use when displaying transaction history data.
+        Format: M, d y
+
+        #The timezone to use for transactions.
+        Timezone: US/Eastern
+
+    #All configurations relating to the data auto saver
+    AutoSaver:
+
+        #Should TNE auto save data periodically?
+        Enabled: true
+
+        #The interval at which the auto saver will save data(in seconds)
+        Interval: 600
+
+    #All configurations relating to currency.
+    Currency:
+
+        #Configurations relating to basic information about currencies.
+        Info:
+
+            #Should balances in /bal and /tne money be formatted?
+            FormatMoney: true
+
+            #Should balance in /baltop be formatted?
+            FormatTop: true

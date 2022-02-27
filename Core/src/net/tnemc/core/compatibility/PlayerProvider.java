@@ -1,19 +1,22 @@
 package net.tnemc.core.compatibility;
 
-import net.tnemc.core.account.Account;
-import net.tnemc.core.currency.Currency;
-import net.tnemc.core.currency.item.ItemCurrrency;
-import net.tnemc.core.managers.EconomyManager;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 /**
  * A class that acts as a bridge between various player objects on different server software providers.
  *
- * @since 0.1.1.17
+ * @since 0.1.2.0
  * @author creatorfromhell
  */
 public interface PlayerProvider {
+
+  /**
+   * Used to get the {@link UUID} of this player.
+   * @return The {@link UUID} of this player.
+   */
+  UUID getUUID();
 
   /**
    * Used to get the amount of experience this player has.
@@ -51,7 +54,7 @@ public interface PlayerProvider {
    */
   Object getInventory(boolean ender);
 
-  BigDecimal getItems(Currency currency, Object inventory);
+  /*BigDecimal getItems(Currency currency, Object inventory);
 
   default void setItems(Account account, Currency currency, BigDecimal amount, Object inventory,
                         boolean remove) {
@@ -64,5 +67,5 @@ public interface PlayerProvider {
   }
 
   void setItems(Account account, Currency currency, BigDecimal amount, Object inventory,
-                boolean remove, boolean consolidate);
+                boolean remove, boolean consolidate);*/
 }

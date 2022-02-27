@@ -1,6 +1,5 @@
 package net.tnemc.core.compatibility;
 
-import net.tnemc.core.compatibility.log.DebugLevel;
 
 /**
  * The New Economy Minecraft Server Plugin
@@ -13,10 +12,12 @@ import net.tnemc.core.compatibility.log.DebugLevel;
  * Created by creatorfromhell on 06/30/2017.
  */
 
+import net.tnemc.core.compatibility.log.DebugLevel;
+
 /**
  * Provides a compatibility layer for logging purposes.
  *
- * @since 0.1.1.17
+ * @since 0.1.2.0
  * @author creatorfromhell
  */
 public interface LogProvider {

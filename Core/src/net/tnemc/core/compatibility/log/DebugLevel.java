@@ -14,7 +14,7 @@ package net.tnemc.core.compatibility.log;
 /**
  * Used to outline the various debugging levels that could be utilized within the logging layer.
  *
- * @since 0.1.1.17
+ * @since 0.1.2.0
  * @author creatorfromhell
  */
 public enum DebugLevel {

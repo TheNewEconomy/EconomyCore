@@ -11,17 +11,10 @@ package net.tnemc.core;
  * Created by creatorfromhell on 06/30/2017.
  */
 
-import net.tnemc.core.EconomyManager;
-import net.tnemc.core.ServerInformation;
+
 import net.tnemc.core.compatibility.LogProvider;
-import net.tnemc.core.compatibility.PlayerProvider;
-import net.tnemc.core.compatibility.ServerConnector;
-import net.tnemc.core.io.StorageManager;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.util.Optional;
-import java.util.UUID;
 
 /**
  * The core class of TNE which should be used within each implementation's class.
@@ -29,38 +22,34 @@ import java.util.UUID;
  * @since 0.1.1.17
  * @author creatorfromhell
  */
-public class TNECore {
+public abstract class TNECore {
+
+  /*
+   * Core final variables utilized within TNE.
+   */
   public static final String coreURL = "https://tnemc.net/files/module-version.xml";
 
+  /* Core non-final variables utilized within TNE as settings */
+  protected File directory;
+
+  /* Key Managers and Object instances utilized with TNE */
+
+  //General Key Object Instances
+  protected LogProvider logger;
+
+  //Manager Instances
+
+  /* Plugin Instance */
   private static TNECore instance;
 
-  private StorageManager storageManager;
-  private ServerConnector connector;
-  private ServerInformation information;
-  private LogProvider logger;
+  public static void setInstance(TNECore core) {
 
-  private EconomyManager manager;
-
-  private File directory;
-
-  //TODO: Constructor here.
-
-  /**
-   * The implementation's {@link ServerConnector}.
-   *
-   * @return The server connector for the implementation.
-   */
-  public static ServerConnector connector() {
-    return instance.connector;
-  }
-
-  /**
-   * The implementation's {@link ServerInformation}.
-   *
-   * @return The server information.
-   */
-  public static ServerInformation info() {
-    return instance.information;
+    if(instance == null) {
+      instance = core;
+    } else {
+      throw new IllegalStateException("TNE has already been initiated. Please refrain from attempting" +
+                                          "to modify the instance variable.");
+    }
   }
 
   /**
@@ -70,25 +59,5 @@ public class TNECore {
    */
   public static LogProvider log() {
     return instance.logger;
-  }
-
-  public static StorageManager storage() {
-    return instance.storageManager;
-  }
-
-  public static TNECore instance() {
-    return instance;
-  }
-
-  public EconomyManager manager() {
-    return manager;
-  }
-
-  public Optional<PlayerProvider> findPlayer(@NotNull UUID identifier) {
-    return connector().findPlayer(identifier);
-  }
-
-  public static File directory() {
-    return instance.directory;
   }
 }

@@ -3,6 +3,7 @@
     <artifactId>EconomyCore</artifactId>
     <packaging>jar</packaging>
     <name>The New Economy Core</name>
+
     <dependencies>
         <dependency>
             <groupId>net.tnemc</groupId>
@@ -10,12 +11,24 @@
             <version>0.1.2.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>4.0.3</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <parent>
         <groupId>net.tnemc</groupId>
         <artifactId>TNE</artifactId>
-        <version>0.1.2</version>
+        <version>0.1.2.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -28,7 +41,7 @@
         <sourceDirectory>src/</sourceDirectory>
         <resources>
             <resource>
-                <directory>src/net/tnemc/resources/</directory>
+                <directory>resources/</directory>
             </resource>
         </resources>
         <plugins>
@@ -37,8 +50,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>1.16</source>
+                    <target>1.16</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -63,18 +76,20 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <filters>
-                        <filter>
-                            <excludes>
-                                <artifact>com.github.tnerevival</artifact>
-                                <exclude>org/h2/**</exclude>
-                            </excludes>
-                        </filter>
-                    </filters>
+                    <artifactSet>
+                        <includes>
+                            <include>org.json.simple:*</include>
+                            <include>com.zaxxer:*</include>
+                        </includes>
+                    </artifactSet>
                     <relocations>
                         <relocation>
                             <pattern>org.json.simple</pattern>
-                            <shadedPattern>net.tnemc.libs.org.json.simple</shadedPattern>
+                            <shadedPattern>net.tnemc.libs.json</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>com.zaxxer</pattern>
+                            <shadedPattern>net.tnemc.libs.zaxxer</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
