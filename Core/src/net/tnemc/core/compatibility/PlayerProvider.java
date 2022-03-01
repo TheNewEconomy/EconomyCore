@@ -54,6 +54,14 @@ public interface PlayerProvider {
    */
   Object getInventory(boolean ender);
 
+  /**
+   * Used to determine if this player has the specified permission node.
+   *
+   * @param permission The node to check for.
+   * @return True if the player has the permission, otherwise false.
+   */
+  boolean hasPermission(String permission);
+
   /*BigDecimal getItems(Currency currency, Object inventory);
 
   default void setItems(Account account, Currency currency, BigDecimal amount, Object inventory,

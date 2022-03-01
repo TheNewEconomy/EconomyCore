@@ -1,10 +1,6 @@
-# The New Economy v0.1.1.1
+# The New Economy v0.1.2.0
 # Author: creatorfromhell
 # License: http://creativecommons.org/licenses/by-nc-nd/4.0/
-# If you would like to contribute to the plugin
-# you can do so via Github at https://github.com/TheNewEconomy/TNE-Bukkit
-# To donate to the continued development of TNE with perks, https://patreon.com/creatorfromhell
-# To view a commented version of this file, visit https://github.com/TheNewEconomy/TNE-Bukkit/blob/master/TNE/src/net/tnemc/resources/config.yml.
 Core:
     
     #Should TNE separate account balances by world?
@@ -18,6 +14,10 @@ Core:
 
     #All configurations relating to the server in general.
     Server:
+
+        #Should TNE automatically group the world's realms with the main overworld world.
+        #Example: Setting this to true would make world, world_nether and world_the_end share balances automatically.
+        GroupRealms: true
 
         #Should TNE disable mob drops that are valid item currencies?
         MobDrop: true
@@ -77,6 +77,10 @@ Core:
 
         #Configurations relating to the money top command.
         Top:
+
+          #How often should the data used for /baltop be refreshed?
+          #This is in seconds.
+          Refresh: 600
 
           #A list of values to use to exclude certain users from baltop if the username contains these values.
           Exclusions:

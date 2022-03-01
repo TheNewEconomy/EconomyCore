@@ -13,6 +13,7 @@ package net.tnemc.core;
 
 
 import net.tnemc.core.compatibility.LogProvider;
+import net.tnemc.core.storage.StorageManager;
 
 import java.io.File;
 
@@ -38,6 +39,7 @@ public abstract class TNECore {
   protected LogProvider logger;
 
   //Manager Instances
+  protected StorageManager storage;
 
   /* Plugin Instance */
   private static TNECore instance;
@@ -59,5 +61,14 @@ public abstract class TNECore {
    */
   public static LogProvider log() {
     return instance.logger;
+  }
+
+  /**
+   * The {@link StorageManager} we are utilizing.
+   *
+   * @return The {@link StorageManager}.
+   */
+  public static StorageManager storage() {
+    return instance.storage;
   }
 }

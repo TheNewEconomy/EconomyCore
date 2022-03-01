@@ -2,6 +2,14 @@ package net.tnemc.core.serialization;
 
 import org.json.simple.JSONObject;
 
+/*
+ * The New Economy Minecraft Server Plugin
+ *
+ * This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
+ * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/ or send a letter to
+ * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+ */
+
 /**
  * A class which represents an object that can be parsed to or from JSON.
  *
@@ -11,14 +19,12 @@ import org.json.simple.JSONObject;
 public abstract class JSONified<T> {
 
   protected String serialized;
-  protected T object;
 
   public JSONified(String serialized) {
-    this.object = deserialize(serialized);
+    this.serialized = serialized;
   }
 
   public JSONified(T object) {
-    this.object = object;
     this.serialized = serialize(object).toJSONString();
   }
 

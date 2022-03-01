@@ -4,6 +4,17 @@
     <packaging>jar</packaging>
     <name>The New Economy Core</name>
 
+    <properties>
+        <tne.relocation>net.tnemc.libs.</tne.relocation>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>aikar</id>
+            <url>https://repo.aikar.co/content/groups/aikar/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>net.tnemc</groupId>
@@ -16,6 +27,11 @@
             <artifactId>HikariCP</artifactId>
             <version>4.0.3</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>co.aikar</groupId>
+            <artifactId>idb-core</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
@@ -76,20 +92,26 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
                     <artifactSet>
                         <includes>
                             <include>org.json.simple:*</include>
                             <include>com.zaxxer:*</include>
+                            <include>co.aikar:*</include>
                         </includes>
                     </artifactSet>
                     <relocations>
                         <relocation>
                             <pattern>org.json.simple</pattern>
-                            <shadedPattern>net.tnemc.libs.json</shadedPattern>
+                            <shadedPattern>${tne.relocation}.json</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>com.zaxxer</pattern>
-                            <shadedPattern>net.tnemc.libs.zaxxer</shadedPattern>
+                            <shadedPattern>${tne.relocation}.zaxxer</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>co.aikar.idb</pattern>
+                            <shadedPattern>${tne.relocation}.idb</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
