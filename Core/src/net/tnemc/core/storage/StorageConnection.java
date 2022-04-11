@@ -7,6 +7,7 @@ package net.tnemc.core.storage;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
+import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import net.tnemc.core.StorageSettings;
 import net.tnemc.core.TNECore;
@@ -92,22 +93,24 @@ public class StorageConnection {
   }
 
   protected void hikariSource() {
-    hikariSource = new HikariDataSource();
-    hikariSource.setPoolName("TNE");
-    hikariSource.setJdbcUrl(url);
-    hikariSource.setUsername(settings().user());
-    hikariSource.setPassword(settings().pass());
-    hikariSource.setMaximumPoolSize(settings().poolSize());
-    hikariSource.setMinimumIdle(settings().poolIdle());
-    hikariSource.setMaxLifetime(settings().poolLife());
-    hikariSource.addDataSourceProperty("cachePrepStmts", "true");
-    hikariSource.addDataSourceProperty("prepStmtCacheSize", "250");
-    hikariSource.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-    hikariSource.addDataSourceProperty("userServerPrepStmts", "true");
+    HikariConfig config = new HikariConfig();
+    config.setPoolName("TNE");
+    config.setJdbcUrl(url);
+    config.setUsername(settings().user());
+    config.setPassword(settings().pass());
+    config.setMaximumPoolSize(settings().poolSize());
+    config.setMinimumIdle(settings().poolIdle());
+    config.setMaxLifetime(settings().poolLife());
+    config.addDataSourceProperty("cachePrepStmts", "true");
+    config.addDataSourceProperty("prepStmtCacheSize", "250");
+    config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+    config.addDataSourceProperty("userServerPrepStmts", "true");
 
     for(Map.Entry<String, Object> entry : engine.hikariProperties().entrySet()) {
-      hikariSource.addDataSourceProperty(entry.getKey(), entry.getValue());
+      config.addDataSourceProperty(entry.getKey(), entry.getValue());
     }
+    hikariSource = new HikariDataSource(config);
+
   }
 
   protected void findDriver() {

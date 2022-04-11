@@ -42,7 +42,7 @@ public class StorageManager {
     return engines.getOrDefault(settings.type(), engines.get("h2"));
   }
 
-  public static StorageSettings settings() {
+  public static final StorageSettings settings() {
     return instance.settings;
   }
 

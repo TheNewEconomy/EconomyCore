@@ -1,4 +1,4 @@
-package net.tnemc.core.storage.query;
+package net.tnemc.core.storage.mappers;
 /*
  * The New Economy Minecraft Server Plugin
  *
@@ -7,22 +7,17 @@ package net.tnemc.core.storage.query;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
-import java.io.Closeable;
+import org.apache.ibatis.jdbc.SQL;
+
+import java.util.UUID;
 
 /**
- * Statement
+ * AccountMapper
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public abstract class Statement implements AutoCloseable {
+public interface AccountMapper {
 
-  /**
-   * Closes every resource associated with this Statement.
-   * @throws Exception
-   */
-  @Override
-  public void close() throws Exception {
-
-  }
+  void insertAccount(UUID id);
 }
