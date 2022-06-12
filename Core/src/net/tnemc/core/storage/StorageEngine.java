@@ -23,6 +23,13 @@ import java.util.Map;
 public interface StorageEngine {
 
   /**
+   * The identifier for this {@link StorageEngine engine}.
+   *
+   * @return The identifier for this engine, which is used for search-related purposes.
+   */
+  String identifier();
+
+  /**
    * Outlines a list of drivers that may be found for this storage engine. This allows us to support
    * multiple driver classes such as maria, mysql, etc. for each storage engine.
    *

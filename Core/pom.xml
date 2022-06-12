@@ -22,28 +22,31 @@
             <version>0.1.2.0</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-            <version>4.0.3</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>co.aikar</groupId>
-            <artifactId>idb-core</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
+        <!-- JSON for the tech stuff -->
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
             <version>1.1.1</version>
             <scope>compile</scope>
         </dependency>
+        <!-- Database Stuff is Fun -->
         <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-            <version>3.5.9</version>
+            <groupId>co.aikar</groupId>
+            <artifactId>idb-core</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <!-- Pooling For Performance -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>4.0.3</version>
             <scope>compile</scope>
+        </dependency>
+        <!-- Caching For Performance -->
+        <dependency>
+            <groupId>org.cache2k</groupId>
+            <artifactId>cache2k-core</artifactId>
+            <version>2.6.1.Final</version>
         </dependency>
     </dependencies>
 
@@ -116,7 +119,7 @@
                             <shadedPattern>${tne.relocation}.zaxxer</shadedPattern>
                         </relocation>
                         <relocation>
-                            <pattern>co.aikar.idb</pattern>
+                            <pattern>co.aikar.idb-bukkit</pattern>
                             <shadedPattern>${tne.relocation}.idb</shadedPattern>
                         </relocation>
                     </relocations>

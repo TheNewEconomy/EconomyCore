@@ -12,6 +12,7 @@ import net.tnemc.core.storage.StorageEngine;
 import net.tnemc.core.storage.StorageManager;
 
 import java.util.LinkedHashSet;
+import java.util.Map;
 
 /**
  * MySQLEngine
@@ -20,6 +21,11 @@ import java.util.LinkedHashSet;
  * @since 0.1.2.0
  */
 public class MySQLEngine implements StorageEngine {
+
+  @Override
+  public String identifier() {
+    return "mysql";
+  }
 
   /**
    * Outlines a list of drivers that may be found for this storage engine. This allows us to support
@@ -58,5 +64,10 @@ public class MySQLEngine implements StorageEngine {
   @Override
   public void initialize(StorageManager manager) {
 
+  }
+
+  @Override
+  public Map<String, Object> hikariProperties() {
+    return StorageEngine.super.hikariProperties();
   }
 }
