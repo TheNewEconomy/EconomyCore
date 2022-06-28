@@ -50,6 +50,16 @@ public class SpongePlayerProvider implements PlayerProvider {
   }
 
   /**
+   * Used to get the name of the world this player is in.
+   *
+   * @return The name of the world.
+   */
+  @Override
+  public String getWorld() {
+    return player.world().key().asString();
+  }
+
+  /**
    * Used to get the amount of experience this player has.
    *
    * @return The amount of levels this player has.
