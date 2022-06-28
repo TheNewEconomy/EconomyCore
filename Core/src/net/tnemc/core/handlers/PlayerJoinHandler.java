@@ -1,6 +1,8 @@
 package net.tnemc.core.handlers;
 
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.utils.AccountHelper;
+import net.tnemc.core.utils.HandlerResponse;
 
 /**
  * Represents an event where a player is joining.
@@ -15,17 +17,31 @@ public class PlayerJoinHandler {
    * @param provider The {@link PlayerProvider} associated with the platform event.
    * @return True if the event should be cancelled, otherwise false.
    */
-  public boolean handle(PlayerProvider provider) {
-    //TODO: Is ready for players?
+  public HandlerResponse handle(PlayerProvider provider) {
+    final HandlerResponse response = new HandlerResponse("", false);
 
-    //TODO: Check if account exists
+    //TODO: Is ready for players? Probably not needed anymore
+
+    if(!AccountHelper.exists(provider.getUUID())) {
+
+      //Initialize our account.
+      if(!AccountHelper.initialize(provider.getUUID(), provider.getName())) {
+        response.setResponse("Messages.Account.Failed");
+        response.setCancelled(true);
+        return response;
+      }
+    }
 
     //TODO: Check item currency balances.
 
     //TODO: Check for transactions that happened while away if player has notify settings active.
 
-    //TODO: If admin check update
+    if(provider.hasPermission("tne.admin.update")) {
+      //TODO: Update check.
 
-    return false;
+      //TODO: Any warnings? Balance jumps?
+    }
+
+    return response;
   }
 }

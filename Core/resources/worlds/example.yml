@@ -1,6 +1,8 @@
 #An example world configuration. This is led off by the world's name.
 Example:
 
+  #Should
+
   #Fees for teleporting to this world.
   Fee:
 

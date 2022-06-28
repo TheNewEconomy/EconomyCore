@@ -14,10 +14,10 @@ Info:
   Major_Plural: "Dollars"
 
   #The singular form of this currency's minor denomination.
-  Minor_Single: "Dollar"
+  Minor_Single: "Cent"
 
   #The plural form of this currency's minor denomination.
-  Minor_Plural: "Dollars"
+  Minor_Plural: "Cents"
 
   #The SI Prefixes used when <shorten> is used for the currency's format.
   #TNE's default prefixes are based off of the Internation Bureau of Weights and Measures official list.

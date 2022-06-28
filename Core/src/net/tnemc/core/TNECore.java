@@ -13,6 +13,7 @@ package net.tnemc.core;
 
 
 import net.tnemc.core.compatibility.LogProvider;
+import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.id.UUIDProvider;
 import net.tnemc.core.storage.StorageManager;
 
@@ -35,6 +36,9 @@ public abstract class TNECore {
 
   /* Core non-final variables utilized within TNE as settings */
   protected File directory;
+
+  //The DebugLevel that the server is currently running in.
+  private DebugLevel level;
 
   /* Key Managers and Object instances utilized with TNE */
 
@@ -82,5 +86,13 @@ public abstract class TNECore {
    */
   public static StorageManager storage() {
     return instance.storage;
+  }
+
+  public static TNECore instance() {
+    return instance;
+  }
+
+  public DebugLevel getLevel() {
+    return level;
   }
 }

@@ -24,6 +24,30 @@ public interface ServerConnector {
   Optional<PlayerProvider> findPlayer(@NotNull UUID identifier);
 
   /**
+   * Used to determine if this player has played on this server before.
+   *
+   * @param uuid The {@link UUID} that is associated with the player.
+   * @return True if the player has played on the server before, otherwise false.
+   */
+  boolean playedBefore(UUID uuid);
+
+  /**
+   * Used to determine if a player with the specified username has played
+   * before.
+   * @param name The username to search for.
+   * @return True if someone with the specified username has played before,
+   * otherwise false.
+   */
+  boolean playedBefore(final String name);
+
+  /**
+   * Used to determine if a player with the specified username is online.
+   * @param name The username to search for.
+   * @return True if someone with the specified username is online.
+   */
+  boolean online(final String name);
+
+  /**
    * Returns the {@link Pattern pattern} utilized to determine if a string is a valid
    * player username.
    *
@@ -36,5 +60,9 @@ public interface ServerConnector {
     return Pattern.compile("^\\w*$");
   }
 
+  /**
+   * Returns the name of the default world.
+   * @return The name of the default world.
+   */
   String defaultWorld();
 }

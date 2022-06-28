@@ -68,22 +68,6 @@ public interface UUIDProvider {
   }
 
   /**
-   * Used to determine if a player with the specified username has played
-   * before.
-   * @param name The username to search for.
-   * @return True if someone with the specified username has played before,
-   * otherwise false.
-   */
-  boolean playedBefore(final String name);
-
-  /**
-   * Used to determine if a player with the specified username is online.
-   * @param name The username to search for.
-   * @return True if someone with the specified username is online.
-   */
-  boolean online(final String name);
-
-  /**
    * Used to retrieve a {@link UUIDPair} from a player object if a
    * player with the specified username has played before, or is online.
    * @param name The username of the pair.

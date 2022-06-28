@@ -24,4 +24,8 @@ public class AccountHelper {
   public static boolean exists(final UUID uuid) {
     return false;
   }
+
+  public static boolean initialize(final UUID uuid, final String name) {
+    return true;
+  }
 }

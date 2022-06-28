@@ -19,18 +19,24 @@ public interface PlayerProvider {
   UUID getUUID();
 
   /**
+   * Used to get the name of this player.
+   * @return The name of this player.
+   */
+  String getName();
+
+  /**
    * Used to get the amount of experience this player has.
    *
    * @return The amount of levels this player has.
    */
-  float getExp();
+  int getExp();
 
   /**
    * Used to set the amount of experience this player has.
    *
    * @param exp The amount of experience to set for this player.
    */
-  void setExp(float exp);
+  void setExp(int exp);
 
   /**
    * Used to get the amount of experience levels this player has.
@@ -61,14 +67,6 @@ public interface PlayerProvider {
    * @return True if the player has the permission, otherwise false.
    */
   boolean hasPermission(String permission);
-
-  /**
-   * Used to determine if this player has played on this server before.
-   *
-   * @param uuid The {@link UUID} that is associated with the player.
-   * @return True if the player has played on the server before, otherwise false.
-   */
-  boolean playedBefore(UUID uuid);
 
   /*BigDecimal getItems(Currency currency, Object inventory);
 

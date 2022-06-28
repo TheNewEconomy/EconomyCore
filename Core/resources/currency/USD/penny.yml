@@ -1,9 +1,6 @@
 #Configurations relating to basic information about this currency tier.
 Info:
 
-  #This tier's type(major, or minor)
-  Type: 'Minor'
-
   #The singular name of this tier.
   Single: 'Penny'
 
@@ -14,7 +11,7 @@ Info:
 Options:
 
   #The weight of the tier. E.X. 20USD would equal 20
-  Weight: 1
+  Weight: .01
 
   #The material used for this item.
   Material: 'PAPER'
