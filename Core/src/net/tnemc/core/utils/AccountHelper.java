@@ -1,4 +1,4 @@
-package net.tnemc.core.storage;
+package net.tnemc.core.utils;
 /*
  * The New Economy Minecraft Server Plugin
  *
@@ -7,16 +7,21 @@ package net.tnemc.core.storage;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
+import java.util.UUID;
+
 /**
- * StorageFactory
- *
- * The Storage Factory is in charge of creating the base factories and connection fopr our
- * {@link StorageManager manager}. This helps to keep the factory and connection creation code
- * out of our manager class.
+ * AccountHelper
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class StorageFactory {
+public class AccountHelper {
 
+  public static boolean exists(final String name) {
+    return false;
+  }
+
+  public static boolean exists(final UUID uuid) {
+    return false;
+  }
 }

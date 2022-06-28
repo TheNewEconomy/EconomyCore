@@ -7,7 +7,6 @@ package net.tnemc.core.storage;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
-import net.tnemc.core.StorageSettings;
 import net.tnemc.core.TNECore;
 
 import java.util.HashMap;
@@ -26,24 +25,10 @@ import java.util.Map;
  */
 public class StorageManager {
 
-  private Map<String, StorageEngine> engines = new HashMap<>();
-
-  private StorageSettings settings;
-
   private static StorageManager instance;
 
-  public StorageManager(StorageSettings settings) {
+  public StorageManager() {
     instance = this;
-
-    this.settings = settings;
-  }
-
-  public StorageEngine engine() {
-    return engines.getOrDefault(settings.type(), engines.get("h2"));
-  }
-
-  public static final StorageSettings settings() {
-    return instance.settings;
   }
 
   public static StorageManager instance() {

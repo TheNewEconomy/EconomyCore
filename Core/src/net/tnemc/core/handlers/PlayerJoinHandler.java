@@ -16,6 +16,8 @@ public class PlayerJoinHandler {
    * @return True if the event should be cancelled, otherwise false.
    */
   public boolean handle(PlayerProvider provider) {
+    //TODO: Is ready for players?
+
     //TODO: Check if account exists
 
     //TODO: Check item currency balances.

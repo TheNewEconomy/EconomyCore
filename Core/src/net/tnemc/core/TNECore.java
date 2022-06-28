@@ -1,6 +1,6 @@
 package net.tnemc.core;
 
-/**
+/*
  * The New Economy Minecraft Server Plugin
  * <p>
  * Created by creatorfromhell on 1/2/2022.
@@ -13,9 +13,11 @@ package net.tnemc.core;
 
 
 import net.tnemc.core.compatibility.LogProvider;
+import net.tnemc.core.id.UUIDProvider;
 import net.tnemc.core.storage.StorageManager;
 
 import java.io.File;
+import java.util.regex.Pattern;
 
 /**
  * The core class of TNE which should be used within each implementation's class.
@@ -29,6 +31,7 @@ public abstract class TNECore {
    * Core final variables utilized within TNE.
    */
   public static final String coreURL = "https://tnemc.net/files/module-version.xml";
+  public static final Pattern UUID_MATCHER_PATTERN = Pattern.compile("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})");
 
   /* Core non-final variables utilized within TNE as settings */
   protected File directory;
@@ -40,6 +43,7 @@ public abstract class TNECore {
 
   //Manager Instances
   protected StorageManager storage;
+  protected UUIDProvider uuidProvider;
 
   /* Plugin Instance */
   private static TNECore instance;
@@ -61,6 +65,14 @@ public abstract class TNECore {
    */
   public static LogProvider log() {
     return instance.logger;
+  }
+
+  /**
+   * The implementation's {@link UUIDProvider}, which is used to manage all UUIDs within TNE.
+   * @return The {@link UUIDProvider UUID Provider}.
+   */
+  public static UUIDProvider uuidProvider() {
+    return instance.uuidProvider;
   }
 
   /**

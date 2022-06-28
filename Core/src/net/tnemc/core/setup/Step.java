@@ -1,4 +1,4 @@
-package net.tnemc.core.storage.provider;
+package net.tnemc.core.setup;
 /*
  * The New Economy Minecraft Server Plugin
  *
@@ -7,15 +7,23 @@ package net.tnemc.core.storage.provider;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
-import net.tnemc.core.storage.StorageEngine;
-import net.tnemc.core.storage.StorageProvider;
-
 /**
- * Represents a data storage provider that is based on SQL.
+ * Represents a step in the setup process.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public interface SQLProvider extends StorageProvider {
+public interface Step {
 
+  /**
+   * The human-friendly identifier for this step.
+   * @return the human-friendly identifier for this step.
+   */
+  String identifier();
+
+  /**
+   * Runs this step.
+   * @return True if this step ran successfully, otherwise false.
+   */
+  boolean run();
 }

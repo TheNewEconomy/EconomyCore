@@ -62,6 +62,14 @@ public interface PlayerProvider {
    */
   boolean hasPermission(String permission);
 
+  /**
+   * Used to determine if this player has played on this server before.
+   *
+   * @param uuid The {@link UUID} that is associated with the player.
+   * @return True if the player has played on the server before, otherwise false.
+   */
+  boolean playedBefore(UUID uuid);
+
   /*BigDecimal getItems(Currency currency, Object inventory);
 
   default void setItems(Account account, Currency currency, BigDecimal amount, Object inventory,

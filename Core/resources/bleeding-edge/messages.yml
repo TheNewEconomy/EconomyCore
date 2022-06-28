@@ -157,6 +157,13 @@ Messages:
     ExceedsPlayerMaximum: "<red>I'm sorry, but performing this transaction will place your balance over the maximum allowed."
     ExceedsOtherPlayerMaximum: "<red>I'm sorry, but performing this transaction will place $player's balance over the maximum allowed."
 
+  Setup:
+    General:
+      Failed: "Setup failed during step \"$step\"!"
+      Successful: "Setup has sucessfully completed!"
+      StepComplete: "Setup step \"$step\" has successfully been completed."
+    Conversion:
+      Identifier: "conversion"
   Transaction:
     Already: "<red>The transaction with the ID of $transaction has already been voided."
     Away: "<white>=====[<green>Missed Transactions<white>]===== $page/$page_top<newline>ID | Type"

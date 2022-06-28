@@ -1,4 +1,4 @@
-package net.tnemc.core.storage.mappers;
+package net.tnemc.core.setup.impl;
 /*
  * The New Economy Minecraft Server Plugin
  *
@@ -7,17 +7,11 @@ package net.tnemc.core.storage.mappers;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
-import org.apache.ibatis.jdbc.SQL;
-
-import java.util.UUID;
-
 /**
- * AccountMapper
+ * ReadOfflineInventoryStep - Reads offline inventories to convert existing items to item currencies.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public interface AccountMapper {
-
-  void insertAccount(UUID id);
+public class ReadOfflineInventoryStep {
 }
