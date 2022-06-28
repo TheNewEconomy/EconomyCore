@@ -15,6 +15,7 @@ package net.tnemc.core;
 import net.tnemc.core.compatibility.LogProvider;
 import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.id.UUIDProvider;
+import net.tnemc.core.id.impl.provider.BaseUUIDProvider;
 import net.tnemc.core.storage.StorageManager;
 
 import java.io.File;
@@ -38,7 +39,7 @@ public abstract class TNECore {
   protected File directory;
 
   //The DebugLevel that the server is currently running in.
-  private DebugLevel level;
+  private DebugLevel level = DebugLevel.STANDARD;
 
   /* Key Managers and Object instances utilized with TNE */
 
@@ -47,7 +48,7 @@ public abstract class TNECore {
 
   //Manager Instances
   protected StorageManager storage;
-  protected UUIDProvider uuidProvider;
+  protected UUIDProvider uuidProvider = new BaseUUIDProvider();
 
   /* Plugin Instance */
   private static TNECore instance;
