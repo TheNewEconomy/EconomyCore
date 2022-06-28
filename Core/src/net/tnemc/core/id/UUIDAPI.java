@@ -54,10 +54,9 @@ public interface UUIDAPI {
     UUID id = (object != null && object.containsKey("uuid"))? UUID.fromString(object.get("uuid").toString())
         : null;
 
-    UUIDPair pair = (id != null)? new UUIDPair(id, username) : TNECore.uuidProvider()
-                                                                      .generatePair(username);
-
-    TNECore.uuidProvider().store(pair);
+    if(id != null) {
+      TNECore.uuidProvider().store(new UUIDPair(id, username));
+    }
     return id;
   }
 

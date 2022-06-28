@@ -25,6 +25,12 @@ public interface PlayerProvider {
   String getName();
 
   /**
+   * Used to get the name of the world this player is in.
+   * @return The name of the world.
+   */
+  String getWorld();
+
+  /**
    * Used to get the amount of experience this player has.
    *
    * @return The amount of levels this player has.

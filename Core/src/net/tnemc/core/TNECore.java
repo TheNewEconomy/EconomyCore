@@ -17,6 +17,7 @@ import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.id.UUIDProvider;
 import net.tnemc.core.id.impl.provider.BaseUUIDProvider;
 import net.tnemc.core.storage.StorageManager;
+import net.tnemc.core.world.WorldProvider;
 
 import java.io.File;
 import java.util.regex.Pattern;
@@ -49,6 +50,7 @@ public abstract class TNECore {
   //Manager Instances
   protected StorageManager storage;
   protected UUIDProvider uuidProvider = new BaseUUIDProvider();
+  protected WorldProvider worldProvider = new WorldProvider();
 
   /* Plugin Instance */
   private static TNECore instance;
@@ -78,6 +80,15 @@ public abstract class TNECore {
    */
   public static UUIDProvider uuidProvider() {
     return instance.uuidProvider;
+  }
+
+  /**
+   * The implementation's {@link WorldProvider}, which is used to manage everything related to world
+   * groups.
+   * @return The {@link WorldProvider World Provider}.
+   */
+  public static WorldProvider worldProvider() {
+    return instance.worldProvider;
   }
 
   /**
