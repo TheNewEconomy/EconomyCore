@@ -85,6 +85,7 @@ public interface LogProvider {
   /**
    * Sends an error-related message.
    * @param message The message to send.
+   * @param exception The error's {@link Exception}.
    * @param level The {@link DebugLevel} to log this message at.
    */
   void error(String message, Exception exception, DebugLevel level);
