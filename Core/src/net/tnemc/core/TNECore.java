@@ -13,6 +13,7 @@ package net.tnemc.core;
 
 
 import net.tnemc.core.compatibility.LogProvider;
+import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.id.UUIDProvider;
 import net.tnemc.core.id.impl.provider.BaseUUIDProvider;
@@ -48,6 +49,7 @@ public abstract class TNECore {
   protected LogProvider logger;
 
   //Manager Instances
+  protected ServerConnector server;
   protected StorageManager storage;
   protected UUIDProvider uuidProvider = new BaseUUIDProvider();
   protected WorldProvider worldProvider = new WorldProvider();
@@ -64,6 +66,8 @@ public abstract class TNECore {
                                           "to modify the instance variable.");
     }
   }
+
+  //TODO: Initialize method
 
   /**
    * The implementation's {@link LogProvider}.
@@ -98,6 +102,14 @@ public abstract class TNECore {
    */
   public static StorageManager storage() {
     return instance.storage;
+  }
+
+  /**
+   * The {@link ServerConnector} for the implementation.
+   * @return The {@link ServerConnector} for the implementation.
+   */
+  public static ServerConnector server() {
+    return instance.server;
   }
 
   public static TNECore instance() {
