@@ -1,4 +1,5 @@
 package net.tnemc.core.message;
+
 /*
  * The New Economy Minecraft Server Plugin
  *

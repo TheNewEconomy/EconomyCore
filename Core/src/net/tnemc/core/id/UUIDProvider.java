@@ -11,6 +11,7 @@ package net.tnemc.core.id;
  * to a name that has never been registered on Minecraft.net.
  */
 
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -54,6 +55,10 @@ public interface UUIDProvider {
    * @param pair The {@link UUIDPair}
    */
   void store(final UUIDPair pair);
+
+  default UUID generateOffline(final String name) {
+    return UUID.nameUUIDFromBytes(("Offline:" + name).getBytes(StandardCharsets.UTF_8));
+  }
 
   /**
    * Used to determine in a string is a valid minecraft username or not.

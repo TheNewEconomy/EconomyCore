@@ -70,6 +70,7 @@ public interface UUIDAPI {
 
   default String sendRequest(final String linkAddition) {
     StringBuilder builder = new StringBuilder();
+    HttpsURLConnection connection = null;
     try {
 
       TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager(){
@@ -82,8 +83,11 @@ public interface UUIDAPI {
       sc.init(null, trustAllCerts, new SecureRandom());
       HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
-      HttpsURLConnection connection = (HttpsURLConnection) new URL(url() + linkAddition).openConnection();
+      connection = (HttpsURLConnection) new URL(url() + linkAddition).openConnection();
+      connection.setConnectTimeout(15000);
+      connection.setReadTimeout(60000);
       connection.setRequestMethod("GET");
+      connection.setRequestProperty("Accept", "application/json");
       BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
       String response;
       while((response = reader.readLine()) != null) {
@@ -92,6 +96,10 @@ public interface UUIDAPI {
       reader.close();
     } catch (Exception e) {
       return "";
+    } finally {
+      if(connection != null) {
+        connection.disconnect();
+      }
     }
     return builder.toString();
   }
