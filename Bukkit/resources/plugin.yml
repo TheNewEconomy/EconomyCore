@@ -1,17 +1,13 @@
 #General Data
 name: TheNewEconomy
 version: 0.1.2.0
-description: The ultimate feature-packed economy plugin for Minecraft.
+description: The original feature-packed economy plugin for Minecraft.
 author: creatorfromhell
 api-version: 1.13
 
 #Plugin Data
-main: net.tnemc.core.TNE
+main: net.tnemc.bukkit.TNE
 loadbefore: [Towny]
-libraries:
-  - com.h2database:h2:1.4.197
-  - com.zaxxer:HikariCP:3.1.0
-  - org.javalite:activejdbc:2.2
 softdepend: [AdvancedAchievements, NoteBlockAPI, WorldEdit, WorldGuard, FastAsyncWorldEdit, PlaceholderAPI, Essentials, Vault, Reserve, mcMMO, GUIShop, DiscordSRV, Multiverse-Core]
 
 permissions:

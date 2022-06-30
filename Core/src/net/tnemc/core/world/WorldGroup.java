@@ -21,6 +21,7 @@ import java.util.List;
 public class WorldGroup {
 
   private final List<String> worlds = new ArrayList<>();
+  private final List<String> currencies = new ArrayList<>();
 
   private final String name;
 

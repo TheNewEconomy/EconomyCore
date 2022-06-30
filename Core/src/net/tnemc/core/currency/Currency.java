@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Represents a currency object.
@@ -30,7 +31,7 @@ public class Currency {
   private BigDecimal startingHoldings;
   private BigDecimal maxBalance;
 
-  //Core currency-related configurations.
+  //Utilized for backwards compat only
   private String identifier;
   private String type;
 
