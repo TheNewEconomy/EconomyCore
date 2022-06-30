@@ -36,30 +36,24 @@ public class Receipt {
   public Receipt(UUID id, long time, Transaction transaction) {
     this.id = id;
     this.time = time;
-    this.type = type;
-    this.from = from;
-    this.to = to;
-    this.charge = charge;
+    this.type = transaction.getType();
+    this.source = transaction.getSource();
   }
 
   public UUID getId() {
     return id;
   }
 
+  public long getTime() {
+    return time;
+  }
+
   public String getType() {
     return type;
   }
 
-  public UUID getFrom() {
-    return from;
-  }
-
-  public UUID getTo() {
-    return to;
-  }
-
-  public Charge getCharge() {
-    return charge;
+  public TransactionSource getSource() {
+    return source;
   }
 
   public boolean isArchive() {

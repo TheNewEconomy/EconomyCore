@@ -110,4 +110,16 @@ public class Transaction {
       resultConsumer.accept(processor.process(this));
     }
   }
+
+  public TransactionProcessor getProcessor() {
+    return processor;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public TransactionSource getSource() {
+    return source;
+  }
 }
