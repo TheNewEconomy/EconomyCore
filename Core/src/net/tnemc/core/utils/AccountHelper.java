@@ -7,10 +7,12 @@ package net.tnemc.core.utils;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
+import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.UUID;
 
 /**
- * AccountHelper
+ * This is a class, which houses empty methods until they find their permanent logic and home.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
@@ -27,5 +29,9 @@ public class AccountHelper {
 
   public static boolean initialize(final UUID uuid, final String name) {
     return true;
+  }
+
+  public static BigDecimal getHoldings(final UUID uuid, final String world, final String currency) {
+    return BigDecimal.ZERO;
   }
 }

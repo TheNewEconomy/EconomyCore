@@ -1,4 +1,4 @@
-package net.tnemc.core.transaction;
+package net.tnemc.core.account.holdings;
 /*
  * The New Economy Minecraft Server Plugin
  *
@@ -7,21 +7,23 @@ package net.tnemc.core.transaction;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
+import net.tnemc.core.account.holdings.modify.HoldingsModifier;
+
 import java.math.BigDecimal;
 
 /**
- * An object that represents a charge during any form of financial transaction.
+ * Represents an entry for holdings. This contains all the information including world, currency and
+ * the actual BigDecimal Holdings.
  *
- * @see Transaction
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class Charge {
+public class HoldingsEntry {
 
   /**
-   * The identifier of the commodity involved.
+   * The identifier of the currency involved.
    */
-  private String commodity;
+  private String currency;
 
   /**
    * The name of the world involved.
@@ -35,23 +37,27 @@ public class Charge {
 
   /**
    * Constructs an object that represents a charge during a financial transaction.
-   * @param commodity The identifier of the commodity involved. This is usually the name of the
-   *                  currency used in the charge. This could also be a material name.
+   *
+   * @param currency The identifier of the currency involved.
    * @param world The name of the world involved.
    * @param amount The {@link BigDecimal amount} that this charge is for.
    */
-  public Charge(String commodity, String world, BigDecimal amount) {
-    this.commodity = commodity;
+  public HoldingsEntry(String currency, String world, BigDecimal amount) {
+    this.currency = currency;
     this.world = world;
     this.amount = amount;
   }
 
-  public String getCommodity() {
-    return commodity;
+  public void modify(final HoldingsModifier modifier) {
+    amount = modifier.modify(amount);
   }
 
-  public void setCommodity(String commodity) {
-    this.commodity = commodity;
+  public String getCurrency() {
+    return currency;
+  }
+
+  public void setCurrency(String currency) {
+    this.currency = currency;
   }
 
   public String getWorld() {

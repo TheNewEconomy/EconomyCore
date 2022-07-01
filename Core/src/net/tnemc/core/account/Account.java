@@ -7,13 +7,7 @@ package net.tnemc.core.account;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
-import net.tnemc.core.account.shared.Member;
-import net.tnemc.core.account.shared.Permission;
-
 import java.util.Date;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * An object that is used to represent an Account within the economy plugin.

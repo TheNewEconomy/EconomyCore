@@ -8,6 +8,9 @@ package net.tnemc.core.transaction;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
+import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.account.holdings.modify.HoldingsModifier;
+import net.tnemc.core.utils.AccountHelper;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 
 import java.util.UUID;
@@ -26,11 +29,10 @@ public class Transaction {
   private String type;
   private TransactionSource source;
 
-  private UUID from;
-  private UUID to;
-  private Charge charge;
-
-  //TODO: Transaction to and from. Should we allow conversion here? Probably.
+  private TransactionParticipant from;
+  private TransactionParticipant to;
+  private HoldingsModifier modifierTo;
+  private HoldingsModifier modifierFrom;
 
   private Consumer<TransactionResult> resultConsumer;
 
@@ -46,6 +48,49 @@ public class Transaction {
    */
   public Transaction of(final String type) {
     this.type = type;
+    return this;
+  }
+
+  /**
+   * Used to set the {@link TransactionParticipant from} participant.
+   *
+   * //TODO: Link with transaction system logic.
+   *
+   * @param id The {@link UUID unique identifier} of this participant.
+   * @param modifier The {@link HoldingsModifier modifier} associated with this participant.
+   * @return An instance of the Transaction object with the new
+   * participant.
+   */
+  public Transaction from(final UUID id, final HoldingsModifier modifier) {
+    final String currency = modifier.getCurrency();
+    final String world = modifier.getWorld();
+
+    this.from = new TransactionParticipant(id, new HoldingsEntry(currency,
+                                                                 world,
+                                                                 AccountHelper.getHoldings(id,world,
+                                                                                         currency)));
+    this.modifierFrom = modifier;
+    return this;
+  }
+  /**
+   * Used to set the {@link TransactionParticipant to} participant.
+   *
+   * //TODO: Link with transaction system logic.
+   *
+   * @param id The {@link UUID unique identifier} of this participant.
+   * @param modifier The {@link HoldingsModifier modifier} associated with this participant.
+   * @return An instance of the Transaction object with the new
+   * participant.
+   */
+  public Transaction to(final UUID id, final HoldingsModifier modifier) {
+    final String currency = modifier.getCurrency();
+    final String world = modifier.getWorld();
+
+    this.to = new TransactionParticipant(id, new HoldingsEntry(currency,
+                                                               world,
+                                                               AccountHelper.getHoldings(id,world,
+                                                                                         currency)));
+    this.modifierTo = modifier;
     return this;
   }
 

@@ -7,6 +7,8 @@ package net.tnemc.core.transaction;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
+import net.tnemc.core.account.holdings.modify.HoldingsModifier;
+
 import java.util.UUID;
 
 /**
@@ -24,10 +26,11 @@ public class Receipt {
   private long time;
   private String type;
 
-  private UUID from;
-  private UUID to;
   private TransactionSource source;
-  private Charge charge;
+  private TransactionParticipant from;
+  private TransactionParticipant to;
+  private HoldingsModifier modifierTo;
+  private HoldingsModifier modifierFrom;
 
   //Our active information that may be modified.
   private boolean archive = false;
@@ -54,6 +57,38 @@ public class Receipt {
 
   public TransactionSource getSource() {
     return source;
+  }
+
+  public TransactionParticipant getFrom() {
+    return from;
+  }
+
+  public void setFrom(TransactionParticipant from) {
+    this.from = from;
+  }
+
+  public TransactionParticipant getTo() {
+    return to;
+  }
+
+  public void setTo(TransactionParticipant to) {
+    this.to = to;
+  }
+
+  public HoldingsModifier getModifierTo() {
+    return modifierTo;
+  }
+
+  public void setModifierTo(HoldingsModifier modifierTo) {
+    this.modifierTo = modifierTo;
+  }
+
+  public HoldingsModifier getModifierFrom() {
+    return modifierFrom;
+  }
+
+  public void setModifierFrom(HoldingsModifier modifierFrom) {
+    this.modifierFrom = modifierFrom;
   }
 
   public boolean isArchive() {
