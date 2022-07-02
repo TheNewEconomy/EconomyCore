@@ -26,7 +26,7 @@ public class PlayerJoinHandler {
 
     Optional<Account> account = TNECore.eco().account().findAccount(provider.getUUID());
 
-    //Our account doesn't exist so now we need to continue from here
+    //Our account doesn't exist, so now we need to continue from here
     if(account.isEmpty()) {
 
       //Initialize our account.

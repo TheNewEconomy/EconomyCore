@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class AccountManager {
 
-  private final Map<UUID, Account> accounts = new ConcurrentHashMap<>();
+  private final Map<String, Account> accounts = new ConcurrentHashMap<>();
 
   protected UUIDProvider uuidProvider = new BaseUUIDProvider();
 
@@ -38,17 +38,23 @@ public class AccountManager {
    * optional.
    */
   public Optional<Account> findAccount(final UUID id) {
-    return Optional.ofNullable(accounts.get(id));
+    return Optional.ofNullable(accounts.get(id.toString()));
   }
 
   /**
-   * Used to find an {@link Account account} from a name.
-   * @param name The name to use in the search.
+   * Used to find an {@link Account account} from a string identifier, this could be a name or a
+   * different identifier.
+   * @param identifier The identifier to use in the search.
    * @return An optional containing the {@link Account account} if it exists, otherwise an empty
    * optional.
    */
-  public Optional<Account> findAccount(final String name) {
-    final Optional<UUIDPair> id = uuidProvider.retrieve(name);
+  public Optional<Account> findAccount(final String identifier) {
+    final Account account = accounts.get(identifier);
+    if(account != null) {
+      return Optional.of(account);
+    }
+
+    final Optional<UUIDPair> id = uuidProvider.retrieve(identifier);
 
     if(id.isPresent()) {
       return findAccount(id.get().getIdentifier());
