@@ -10,6 +10,7 @@ package net.tnemc.core.transaction;
 
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
+import net.tnemc.core.actions.ActionSource;
 import net.tnemc.core.utils.AccountHelper;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 
@@ -27,7 +28,7 @@ public class Transaction {
   private TransactionProcessor processor; //TODO: default processor(s).
 
   private String type;
-  private TransactionSource source;
+  private ActionSource source;
 
   private TransactionParticipant from;
   private TransactionParticipant to;
@@ -95,11 +96,11 @@ public class Transaction {
   }
 
   /**
-   * Used to set {@link TransactionSource source} of this transaction.
-   * @param source The {@link TransactionSource source} of this transaction.
-   * @return An instance of the Transaction object with the new {@link TransactionSource source}.
+   * Used to set {@link ActionSource source} of this transaction.
+   * @param source The {@link ActionSource source} of this transaction.
+   * @return An instance of the Transaction object with the new {@link ActionSource source}.
    */
-  public Transaction source(final TransactionSource source) {
+  public Transaction source(final ActionSource source) {
     this.source = source;
     return this;
   }
@@ -164,7 +165,7 @@ public class Transaction {
     return type;
   }
 
-  public TransactionSource getSource() {
+  public ActionSource getSource() {
     return source;
   }
 

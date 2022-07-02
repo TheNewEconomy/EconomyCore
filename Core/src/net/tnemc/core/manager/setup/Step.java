@@ -1,4 +1,4 @@
-package net.tnemc.core.setup;
+package net.tnemc.core.manager.setup;
 /*
  * The New Economy Minecraft Server Plugin
  *

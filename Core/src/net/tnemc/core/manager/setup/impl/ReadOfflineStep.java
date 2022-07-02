@@ -1,4 +1,4 @@
-package net.tnemc.core.setup.impl;
+package net.tnemc.core.manager.setup.impl;
 /*
  * The New Economy Minecraft Server Plugin
  *
@@ -8,10 +8,10 @@ package net.tnemc.core.setup.impl;
  */
 
 /**
- * ReadOfflineInventoryStep - Reads offline inventories to convert existing items to item currencies.
+ * LoadPlayers - Loads all offline uuids and name pairs.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class ReadOfflineInventoryStep {
+public class ReadOfflineStep {
 }

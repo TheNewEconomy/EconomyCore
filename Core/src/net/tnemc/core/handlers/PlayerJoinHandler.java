@@ -1,8 +1,12 @@
 package net.tnemc.core.handlers;
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.utils.AccountHelper;
 import net.tnemc.core.utils.HandlerResponse;
+
+import java.util.Optional;
 
 /**
  * Represents an event where a player is joining.
@@ -20,9 +24,10 @@ public class PlayerJoinHandler {
   public HandlerResponse handle(PlayerProvider provider) {
     final HandlerResponse response = new HandlerResponse("", false);
 
-    //TODO: Is ready for players? Probably not needed anymore
+    Optional<Account> account = TNECore.eco().account().findAccount(provider.getUUID());
 
-    if(!AccountHelper.exists(provider.getUUID())) {
+    //Our account doesn't exist so now we need to continue from here
+    if(account.isEmpty()) {
 
       //Initialize our account.
       if(!AccountHelper.initialize(provider.getUUID(), provider.getName())) {

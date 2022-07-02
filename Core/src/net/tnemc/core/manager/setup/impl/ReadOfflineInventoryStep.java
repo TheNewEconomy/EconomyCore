@@ -1,5 +1,4 @@
-package net.tnemc.core.id.impl;
-
+package net.tnemc.core.manager.setup.impl;
 /*
  * The New Economy Minecraft Server Plugin
  *
@@ -8,20 +7,11 @@ package net.tnemc.core.id.impl;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
-import net.tnemc.core.id.UUIDAPI;
-
 /**
- * Represents the Official Mojang API.
+ * ReadOfflineInventoryStep - Reads offline inventories to convert existing items to item currencies.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class MojangAPI implements UUIDAPI {
-  /**
-   * @return The URL for this UUID API Service.
-   */
-  @Override
-  public String url() {
-    return "https://api.mojang.com/users/profiles/minecraft/";
-  }
+public class ReadOfflineInventoryStep {
 }

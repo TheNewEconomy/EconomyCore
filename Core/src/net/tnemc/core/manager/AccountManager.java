@@ -1,4 +1,5 @@
 package net.tnemc.core.manager;
+
 /*
  * The New Economy Minecraft Server Plugin
  *
@@ -8,9 +9,9 @@ package net.tnemc.core.manager;
  */
 
 import net.tnemc.core.account.Account;
-import net.tnemc.core.id.UUIDPair;
-import net.tnemc.core.id.UUIDProvider;
-import net.tnemc.core.id.impl.provider.BaseUUIDProvider;
+import net.tnemc.core.manager.id.UUIDPair;
+import net.tnemc.core.manager.id.UUIDProvider;
+import net.tnemc.core.manager.id.impl.provider.BaseUUIDProvider;
 
 import java.util.Map;
 import java.util.Optional;

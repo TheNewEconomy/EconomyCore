@@ -15,9 +15,7 @@ package net.tnemc.core;
 import net.tnemc.core.compatibility.LogProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.log.DebugLevel;
-import net.tnemc.core.id.UUIDProvider;
-import net.tnemc.core.id.impl.provider.BaseUUIDProvider;
-import net.tnemc.core.storage.StorageManager;
+import net.tnemc.core.io.storage.StorageManager;
 import net.tnemc.core.world.WorldProvider;
 
 import java.io.File;

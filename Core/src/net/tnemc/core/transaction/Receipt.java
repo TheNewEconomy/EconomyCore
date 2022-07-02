@@ -8,6 +8,7 @@ package net.tnemc.core.transaction;
  */
 
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
+import net.tnemc.core.actions.ActionSource;
 
 import java.util.UUID;
 
@@ -26,7 +27,7 @@ public class Receipt {
   private long time;
   private String type;
 
-  private TransactionSource source;
+  private ActionSource source;
   private TransactionParticipant from;
   private TransactionParticipant to;
   private HoldingsModifier modifierTo;
@@ -55,7 +56,7 @@ public class Receipt {
     return type;
   }
 
-  public TransactionSource getSource() {
+  public ActionSource getSource() {
     return source;
   }
 

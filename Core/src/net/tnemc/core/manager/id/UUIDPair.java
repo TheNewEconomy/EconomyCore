@@ -1,4 +1,4 @@
-package net.tnemc.core.id;
+package net.tnemc.core.manager.id;
 
 /*
  * The New Economy Minecraft Server Plugin

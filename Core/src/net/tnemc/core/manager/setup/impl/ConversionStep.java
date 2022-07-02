@@ -1,4 +1,4 @@
-package net.tnemc.core.setup.impl;
+package net.tnemc.core.manager.setup.impl;
 
 /*
  * The New Economy Minecraft Server Plugin
@@ -8,7 +8,7 @@ package net.tnemc.core.setup.impl;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
-import net.tnemc.core.setup.Step;
+import net.tnemc.core.manager.setup.Step;
 
 /**
  * ConversionStep - Converts old economy data.

@@ -1,4 +1,4 @@
-package net.tnemc.core.serialization;
+package net.tnemc.core.io.serialization;
 
 import org.json.simple.JSONObject;
 

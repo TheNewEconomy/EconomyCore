@@ -11,7 +11,7 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
-import net.tnemc.core.message.TranslationProvider;
+import net.tnemc.core.io.message.TranslationProvider;
 import org.bukkit.entity.Player;
 
 /**

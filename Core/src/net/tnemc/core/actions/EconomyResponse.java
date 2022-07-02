@@ -1,4 +1,4 @@
-package net.tnemc.core.transaction;
+package net.tnemc.core.actions;
 
 /*
  * The New Economy Minecraft Server Plugin
@@ -9,16 +9,24 @@ package net.tnemc.core.transaction;
  */
 
 /**
- * Represents a source of a transaction.
+ * Represents a response by the Economy Plugin.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public interface TransactionSource {
+public interface EconomyResponse {
 
   /**
-   * The human-friendly identifier for this {@link TransactionSource}.
-   * @return The human-friendly identifier for this source.
+   * @since 0.1.2.0
+   * @return True if the associated action was performed correctly.
    */
-  String identifier();
+  boolean success();
+
+  /**
+   * @since 0.1.2.0
+   * @return The string to return to the performer of the action.
+   */
+  default String response() {
+    return "Default response string";
+  }
 }

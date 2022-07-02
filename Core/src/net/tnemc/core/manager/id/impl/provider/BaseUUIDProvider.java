@@ -1,4 +1,4 @@
-package net.tnemc.core.id.impl.provider;
+package net.tnemc.core.manager.id.impl.provider;
 /*
  * The New Economy Minecraft Server Plugin
  *
@@ -7,10 +7,10 @@ package net.tnemc.core.id.impl.provider;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
-import net.tnemc.core.id.UUIDAPI;
-import net.tnemc.core.id.UUIDPair;
-import net.tnemc.core.id.UUIDProvider;
-import net.tnemc.core.id.impl.AshconAPI;
+import net.tnemc.core.manager.id.UUIDAPI;
+import net.tnemc.core.manager.id.UUIDPair;
+import net.tnemc.core.manager.id.UUIDProvider;
+import net.tnemc.core.manager.id.impl.AshconAPI;
 
 import java.util.Optional;
 import java.util.UUID;

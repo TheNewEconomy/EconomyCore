@@ -1,4 +1,4 @@
-package net.tnemc.core.storage;
+package net.tnemc.core.io.storage;
 /*
  * The New Economy Minecraft Server Plugin
  *
@@ -6,11 +6,6 @@ package net.tnemc.core.storage;
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/ or send a letter to
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
-
-import net.tnemc.core.TNECore;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The manager, which manages everything related to storage.

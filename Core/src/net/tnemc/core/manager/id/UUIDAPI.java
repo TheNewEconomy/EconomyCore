@@ -1,7 +1,6 @@
-package net.tnemc.core.id;
+package net.tnemc.core.manager.id;
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.utils.PlayerHelper;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 

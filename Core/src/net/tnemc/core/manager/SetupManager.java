@@ -1,4 +1,4 @@
-package net.tnemc.core.setup.impl;
+package net.tnemc.core.manager;
 /*
  * The New Economy Minecraft Server Plugin
  *
@@ -8,10 +8,12 @@ package net.tnemc.core.setup.impl;
  */
 
 /**
- * LoadPlayers - Loads all offline uuids and name pairs.
+ * A class that manages the TNE setup process. This is utilized
+ * to set up basic features, and read offline player data to have the plugin install
+ * seamlessly into the server without missing a beat.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class ReadOfflineStep {
+public class SetupManager {
 }

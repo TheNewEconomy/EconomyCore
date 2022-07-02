@@ -10,6 +10,8 @@ package net.tnemc.api;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.NonPlayerAccount;
 import net.tnemc.core.account.PlayerAccount;
+import net.tnemc.core.actions.EconomyResponse;
+import net.tnemc.core.actions.ActionSource;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Currency;
@@ -36,7 +38,7 @@ public interface TNEAPI {
    *
    * @return True if an account with the specified identifier exists, otherwise false.
    *
-   * @since 1.0.0
+   * @since 0.1.2.0
    */
   boolean hasAccount(@NotNull String identifier);
 
@@ -49,7 +51,7 @@ public interface TNEAPI {
    *
    * @return True if an account with the specified identifier exists, otherwise false.
    *
-   * @since 1.0.0
+   * @since 0.1.2.0
    */
   boolean hasPlayerAccount(@NotNull UUID identifier);
 
@@ -66,7 +68,7 @@ public interface TNEAPI {
    *
    * @return The correlating {@link Account account} object if found, otherwise the one created.
    *
-   * @since 1.0.0
+   * @since 0.1.2.0
    */
   Account getOrCreateAccount(@NotNull String identifier);
 
@@ -81,7 +83,7 @@ public interface TNEAPI {
    *
    * @return The correlating {@link PlayerAccount account} object if found, otherwise the one created.
    *
-   * @since 1.0.0
+   * @since 0.1.2.0
    */
   PlayerAccount getOrCreatePlayerAccount(@NotNull UUID identifier, @NotNull String name);
 
@@ -95,7 +97,7 @@ public interface TNEAPI {
    *
    * @return True if the account was created. If the account was not created this returns false.
    *
-   * @since 1.0.0
+   * @since 0.1.2.0
    */
   boolean createAccount(@NotNull String identifier);
 
@@ -111,7 +113,7 @@ public interface TNEAPI {
    *
    * @return True if the account was created. If the account was not created this returns false.
    *
-   * @since 1.0.0
+   * @since 0.1.2.0
    */
   boolean createPlayerAccount(@NotNull UUID identifier, @NotNull String name);
 
@@ -128,7 +130,7 @@ public interface TNEAPI {
    * @param identifier The string identifier for the account that is being looked for.
    * @return An optional containing the {@link Account} if found, otherwise an empty optional.
    *
-   * @since 1.0.0
+   * @since 0.1.2.0
    */
   Optional<Account> getAccount(@NotNull String identifier);
 
@@ -141,11 +143,11 @@ public interface TNEAPI {
    * @return An optional containing the {@link PlayerAccount}
    * if found, otherwise an empty optional.
    *
-   * @since 1.0.0
+   * @since 0.1.2.0
    */
   Optional<PlayerAccount> getPlayerAccount(@NotNull UUID identifier);
 
-  /*/**
+  /**
    * Used to delete the specified account.
    *
    * This method is safe to search for non-player accounts.
@@ -155,11 +157,11 @@ public interface TNEAPI {
    *
    * @return The {@link EconomyResponse response} that should be returned based on the deletion action.
    *
-   * @since 1.0.0
+   * @since 0.1.2.0
    */
-  //EconomyResponse deleteAccount(@NotNull String identifier, @NotNull ActionSource source);
+  EconomyResponse deleteAccount(@NotNull String identifier, @NotNull ActionSource source);
 
-  /*/**
+  /**
    * Used to delete the specified account.
    *
    * This method is not safe to search for non-player accounts.
@@ -169,9 +171,9 @@ public interface TNEAPI {
    *
    * @return The {@link EconomyResponse response} that should be returned based on the deletion action.
    *
-   * @since 1.0.0
+   * @since 0.1.2.0
    **/
-  //EconomyResponse deleteAccount(@NotNull UUID identifier, @NotNull ActionSource source);*/
+  EconomyResponse deleteAccount(@NotNull UUID identifier, @NotNull ActionSource source);
 
   /**
    * Used to get the default currency. This could be the default currency for the server globally or
@@ -179,7 +181,7 @@ public interface TNEAPI {
    * @return The currency that is the default for the server if multi-world support is not available
    * otherwise the default for the default world.
    *
-   * @since 1.0.0
+   * @since 0.1.2.0
    */
   @NotNull
   Currency getDefaultCurrency();
@@ -191,7 +193,7 @@ public interface TNEAPI {
    * @return The default currency for the specified world if this implementation has multi-world
    * support, otherwise the default currency for the server.
    *
-   * @since 1.0.0
+   * @since 0.1.2.0
    */
   @NotNull
   Currency getDefaultCurrency(@NotNull String world);
@@ -200,7 +202,7 @@ public interface TNEAPI {
    * Used to get a set of every  {@link Currency} object for the server.
    * @return A set of every {@link Currency} object that is available for the server.
    *
-   * @since 1.0.0
+   * @since 0.1.2.0
    */
   Set<Currency> getCurrencies();
 
@@ -211,7 +213,7 @@ public interface TNEAPI {
    * @return A set of every {@link Currency} object that is available in the specified world if
    * this implementation has multi-world support, otherwise all {@link Currency} objects for the server.
    *
-   * @since 1.0.0
+   * @since 0.1.2.0
    */
   Set<Currency> getCurrencies(@NotNull String world);
 

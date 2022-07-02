@@ -1,6 +1,6 @@
-package net.tnemc.core.id.impl;
+package net.tnemc.core.manager.id.impl;
 
-import net.tnemc.core.id.UUIDAPI;
+import net.tnemc.core.manager.id.UUIDAPI;
 
 /*
  * The New Economy Minecraft Server Plugin

@@ -1,4 +1,4 @@
-package net.tnemc.core.id;
+package net.tnemc.core.manager.id;
 
 /*
  * This class provides UUID-related functions, and has a concept of

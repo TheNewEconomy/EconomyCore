@@ -1,4 +1,5 @@
-package net.tnemc.core.setup;
+package net.tnemc.core.manager.id.impl;
+
 /*
  * The New Economy Minecraft Server Plugin
  *
@@ -7,13 +8,20 @@ package net.tnemc.core.setup;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
+import net.tnemc.core.manager.id.UUIDAPI;
+
 /**
- * A class that manages the TNE setup process. This is utilized
- * to set up basic features, and read offline player data to have the plugin install
- * seamlessly into the server without missing a beat.
+ * Represents the Official Mojang API.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class SetupManager {
+public class MojangAPI implements UUIDAPI {
+  /**
+   * @return The URL for this UUID API Service.
+   */
+  @Override
+  public String url() {
+    return "https://api.mojang.com/users/profiles/minecraft/";
+  }
 }
