@@ -61,14 +61,28 @@ public interface UUIDProvider {
   }
 
   /**
-   * Used to determine in a string is a valid minecraft username or not.
+   * Used to determine if a string is a valid minecraft username or not.
    * @param name The name to check.
    * @return True if the name is a valid minecraft username, otherwise false.
    */
-  default boolean validate(final String name) {
+  static boolean validate(final String name) {
     if(name.length() >= 3 && name.length() <= 16) {
       return playerMatcher().matcher(name).matches();
     }
     return false;
+  }
+
+  /**
+   * Used to determine if a string is a valid UUID.
+   * @param identifier The string to check.
+   * @return True if the name is a valid UUID, otherwise false.
+   */
+  static boolean isUUID(final String identifier) {
+    try {
+      final UUID uuid = UUID.fromString(identifier);
+      return true;
+    } catch(Exception ignore) {
+      return false;
+    }
   }
 }

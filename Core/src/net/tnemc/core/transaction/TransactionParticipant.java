@@ -20,16 +20,16 @@ import java.util.UUID;
  */
 public class TransactionParticipant {
 
-  private final UUID id;
+  private final String id;
   private final HoldingsEntry startingBalance;
   private HoldingsEntry endingBalance;
 
-  public TransactionParticipant(final UUID id, final HoldingsEntry startingBalance) {
+  public TransactionParticipant(final String id, final HoldingsEntry startingBalance) {
     this.id = id;
     this.startingBalance = startingBalance;
   }
 
-  public UUID getId() {
+  public String getId() {
     return id;
   }
 

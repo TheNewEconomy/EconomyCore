@@ -27,11 +27,11 @@ public class AccountHelper {
     return false;
   }
 
-  public static boolean initialize(final UUID uuid, final String name) {
+  public static boolean initialize(final String uuid, final String name) {
     return true;
   }
 
-  public static BigDecimal getHoldings(final UUID uuid, final String region, final String currency) {
+  public static BigDecimal getHoldings(final String uuid, final String region, final String currency) {
     return BigDecimal.ZERO;
   }
 }

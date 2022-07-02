@@ -14,7 +14,6 @@ import net.tnemc.core.actions.ActionSource;
 import net.tnemc.core.utils.AccountHelper;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 
-import java.util.UUID;
 import java.util.function.Consumer;
 
 /**
@@ -57,12 +56,12 @@ public class Transaction {
    *
    * //TODO: Link with transaction system logic.
    *
-   * @param id The {@link UUID unique identifier} of this participant.
+   * @param id The identifier of this participant.
    * @param modifier The {@link HoldingsModifier modifier} associated with this participant.
    * @return An instance of the Transaction object with the new
    * participant.
    */
-  public Transaction from(final UUID id, final HoldingsModifier modifier) {
+  public Transaction from(final String id, final HoldingsModifier modifier) {
     final String currency = modifier.getCurrency();
     final String region = modifier.getRegion();
 
@@ -78,12 +77,12 @@ public class Transaction {
    *
    * //TODO: Link with transaction system logic.
    *
-   * @param id The {@link UUID unique identifier} of this participant.
+   * @param id The identifier of this participant.
    * @param modifier The {@link HoldingsModifier modifier} associated with this participant.
    * @return An instance of the Transaction object with the new
    * participant.
    */
-  public Transaction to(final UUID id, final HoldingsModifier modifier) {
+  public Transaction to(final String id, final HoldingsModifier modifier) {
     final String currency = modifier.getCurrency();
     final String region = modifier.getRegion();
 

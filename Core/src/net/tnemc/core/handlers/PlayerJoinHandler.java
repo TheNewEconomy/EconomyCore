@@ -30,7 +30,7 @@ public class PlayerJoinHandler {
     if(account.isEmpty()) {
 
       //Initialize our account.
-      if(!AccountHelper.initialize(provider.getUUID(), provider.getName())) {
+      if(!AccountHelper.initialize(provider.getUUID().toString(), provider.getName())) {
         response.setResponse("Messages.Account.Failed");
         response.setCancelled(true);
         return response;

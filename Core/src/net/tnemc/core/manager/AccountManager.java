@@ -9,10 +9,15 @@ package net.tnemc.core.manager;
  */
 
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.NonPlayerAccount;
+import net.tnemc.core.account.PlayerAccount;
+import net.tnemc.core.actions.EconomyResponse;
+import net.tnemc.core.actions.response.AccountResponse;
 import net.tnemc.core.manager.id.UUIDPair;
 import net.tnemc.core.manager.id.UUIDProvider;
 import net.tnemc.core.manager.id.impl.provider.BaseUUIDProvider;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,6 +35,29 @@ public class AccountManager {
   private final Map<String, Account> accounts = new ConcurrentHashMap<>();
 
   protected UUIDProvider uuidProvider = new BaseUUIDProvider();
+
+  public EconomyResponse createAccount(final String identifier, final String name) {
+    if(accounts.containsKey(identifier)) {
+      return AccountResponse.ALREADY_EXISTS;
+    }
+
+    Account account;
+
+    if(UUIDProvider.validate(name)) {
+      try {
+        final UUID id = UUID.fromString(identifier);
+        account = new PlayerAccount(id, name);
+        return AccountResponse.CREATED;
+      } catch(Exception ignore) {
+        return AccountResponse.CREATION_FAILED;
+      }
+    } else {
+
+      //TODO: Create Non-Player Accounts.
+
+      return AccountResponse.CREATED;
+    }
+  }
 
   /**
    * Used to find an {@link Account account} from a {@link UUID unique identifier}.
@@ -49,6 +77,9 @@ public class AccountManager {
    * optional.
    */
   public Optional<Account> findAccount(final String identifier) {
+
+    //Check first to see if the identifier is in the accounts map.
+    //This would return non-player accounts.
     final Account account = accounts.get(identifier);
     if(account != null) {
       return Optional.of(account);
