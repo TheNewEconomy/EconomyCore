@@ -38,7 +38,7 @@ public interface CurrencyType {
    * should be true for currency types like item currency.
    */
   default boolean loginCalculation() {
-    return true;
+    return false;
   }
 
   /**
@@ -53,18 +53,20 @@ public interface CurrencyType {
    * Used to get the holdings for a specific account from this currency type.
    *
    * @param account The uuid of the account.
-   * @param world The name of the world.
+   * @param region The name of the region involved. This is usually a world, but could be something
+   *               else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
    * @return The holdings for the specific account.
    */
-  BigDecimal getHoldings(Account account, String world, Currency currency) throws SQLException;
+  BigDecimal getHoldings(Account account, String region, Currency currency) throws SQLException;
 
   /**
    * Used to set the holdings for a specific account.
    *
-   * @param world The world to use for saving the holdings.
+   * @param region The name of the region involved. This is usually a world, but could be something
+   *               else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
    * @param amount The amount to set the player's holdings to.
    */
-  void setHoldings(Account account, String world, Currency currency, BigDecimal amount) throws SQLException;
+  void setHoldings(Account account, String region, Currency currency, BigDecimal amount) throws SQLException;
 }

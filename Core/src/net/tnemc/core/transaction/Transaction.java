@@ -63,11 +63,11 @@ public class Transaction {
    */
   public Transaction from(final UUID id, final HoldingsModifier modifier) {
     final String currency = modifier.getCurrency();
-    final String world = modifier.getWorld();
+    final String region = modifier.getRegion();
 
     this.from = new TransactionParticipant(id, new HoldingsEntry(currency,
-                                                                 world,
-                                                                 AccountHelper.getHoldings(id,world,
+                                                                 region,
+                                                                 AccountHelper.getHoldings(id,region,
                                                                                          currency)));
     this.modifierFrom = modifier;
     return this;
@@ -84,11 +84,11 @@ public class Transaction {
    */
   public Transaction to(final UUID id, final HoldingsModifier modifier) {
     final String currency = modifier.getCurrency();
-    final String world = modifier.getWorld();
+    final String region = modifier.getRegion();
 
     this.to = new TransactionParticipant(id, new HoldingsEntry(currency,
-                                                               world,
-                                                               AccountHelper.getHoldings(id,world,
+                                                               region,
+                                                               AccountHelper.getHoldings(id, region,
                                                                                          currency)));
     this.modifierTo = modifier;
     return this;
@@ -166,5 +166,25 @@ public class Transaction {
 
   public TransactionSource getSource() {
     return source;
+  }
+
+  public TransactionParticipant getFrom() {
+    return from;
+  }
+
+  public TransactionParticipant getTo() {
+    return to;
+  }
+
+  public HoldingsModifier getModifierTo() {
+    return modifierTo;
+  }
+
+  public HoldingsModifier getModifierFrom() {
+    return modifierFrom;
+  }
+
+  public Consumer<TransactionResult> getResultConsumer() {
+    return resultConsumer;
   }
 }

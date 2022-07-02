@@ -31,7 +31,7 @@ public class AccountHelper {
     return true;
   }
 
-  public static BigDecimal getHoldings(final UUID uuid, final String world, final String currency) {
+  public static BigDecimal getHoldings(final UUID uuid, final String region, final String currency) {
     return BigDecimal.ZERO;
   }
 }

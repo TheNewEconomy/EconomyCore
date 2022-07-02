@@ -12,8 +12,8 @@ import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import java.math.BigDecimal;
 
 /**
- * Represents an entry for holdings. This contains all the information including world, currency and
- * the actual BigDecimal Holdings.
+ * Represents an entry for holdings. This contains all the information including region, currency
+ * and the actual BigDecimal Holdings.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
@@ -21,14 +21,15 @@ import java.math.BigDecimal;
 public class HoldingsEntry {
 
   /**
+   * The name of the region involved. This is usually a world, but could be something else such as a
+   * world guard region name/identifier.
+   */
+  private String region;
+
+  /**
    * The identifier of the currency involved.
    */
   private String currency;
-
-  /**
-   * The name of the world involved.
-   */
-  private String world;
 
   /**
    * The {@link BigDecimal amount} that this charge is for.
@@ -38,13 +39,14 @@ public class HoldingsEntry {
   /**
    * Constructs an object that represents a charge during a financial transaction.
    *
+   * @param region The name of the region involved. This is usually a world, but could be something
+   *               else such as a world guard region name/identifier.
    * @param currency The identifier of the currency involved.
-   * @param world The name of the world involved.
    * @param amount The {@link BigDecimal amount} that this charge is for.
    */
-  public HoldingsEntry(String currency, String world, BigDecimal amount) {
+  public HoldingsEntry(String region, String currency, BigDecimal amount) {
+    this.region = region;
     this.currency = currency;
-    this.world = world;
     this.amount = amount;
   }
 
@@ -60,12 +62,12 @@ public class HoldingsEntry {
     this.currency = currency;
   }
 
-  public String getWorld() {
-    return world;
+  public String getRegion() {
+    return region;
   }
 
-  public void setWorld(String world) {
-    this.world = world;
+  public void setRegion(String region) {
+    this.region = region;
   }
 
   public BigDecimal getAmount() {

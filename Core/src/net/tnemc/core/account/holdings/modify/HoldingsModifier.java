@@ -20,21 +20,23 @@ import java.math.BigDecimal;
 public class HoldingsModifier {
 
   private final String currency;
-  private final String world;
+  private final String region;
   private final BigDecimal modifier;
   private final HoldingsOperation operation;
 
   /**
    * Represents an object that may be utilized to modify an {@link Account account's} holdings. This
    * class is able to then be applied directly to the holdings of an account.
+   *
+   * @param region The name of the region involved. This is usually a world, but could be something
+   *               else such as a world guard region name/identifier.
    * @param currency The currency to use for the modification.
-   * @param world The world to use for the modification.
    * @param modifier The amount we are utilizing to modify the holdings. This may be negative to
    *                 take the holdings down.
    */
-  public HoldingsModifier(String currency, String world, BigDecimal modifier) {
+  public HoldingsModifier(String region, String currency, BigDecimal modifier) {
+    this.region = region;
     this.currency = currency;
-    this.world = world;
     this.modifier = modifier;
     this.operation = HoldingsOperation.ADD;
   }
@@ -43,15 +45,16 @@ public class HoldingsModifier {
    * Represents an object that may be utilized to modify an {@link Account account's} holdings. This
    * class is able to then be applied directly to the holdings of an account.
    * @param currency The currency to use for the modification.
-   * @param world The world to use for the modification.
+   * @param region The name of the region involved. This is usually a world, but could be something
+   *               else such as a world guard region name/identifier.
    * @param modifier The amount we are utilizing to modify the holdings. This may be negative to
    *                 take the holdings down.
    * @param operation The operation that should be performed with the modifier.
    */
-  public HoldingsModifier(String currency, String world, BigDecimal modifier,
+  public HoldingsModifier(String region, String currency, BigDecimal modifier,
                           HoldingsOperation operation) {
     this.currency = currency;
-    this.world = world;
+    this.region = region;
     this.modifier = modifier;
     this.operation = operation;
   }
@@ -64,8 +67,8 @@ public class HoldingsModifier {
     return currency;
   }
 
-  public String getWorld() {
-    return world;
+  public String getRegion() {
+    return region;
   }
 
   public BigDecimal getModifier() {
