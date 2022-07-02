@@ -26,6 +26,7 @@ public class BaseUUIDProvider implements UUIDProvider {
 
   //TODO: implement database system
   private final ConcurrentHashMap<UUID, UUIDPair> pairs = new ConcurrentHashMap<>();
+
   /**
    * Returns the associated {@link UUIDAPI uuid api} associated with this provider.
    *

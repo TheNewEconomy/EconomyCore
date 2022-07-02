@@ -55,7 +55,7 @@ public interface UUIDAPI {
         : null;
 
     if(id != null) {
-      TNECore.uuidProvider().store(new UUIDPair(id, username));
+      TNECore.eco().account().uuidProvider().store(new UUIDPair(id, username));
     }
     return id;
   }

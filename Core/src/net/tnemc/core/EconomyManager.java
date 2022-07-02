@@ -1,4 +1,4 @@
-
+package net.tnemc.core;
 /*
  * The New Economy Minecraft Server Plugin
  *
@@ -24,9 +24,29 @@ public class EconomyManager {
   private final TranslationManager translationManager;
   private final DataManager dataManager;
 
+  private static EconomyManager instance;
+
   public EconomyManager() {
+    instance = this;
+
     this.accountManager = new AccountManager();
     this.translationManager = new TranslationManager();
     this.dataManager = new DataManager();
+  }
+
+  public AccountManager account() {
+    return accountManager;
+  }
+
+  public TranslationManager translation() {
+    return translationManager;
+  }
+
+  public DataManager data() {
+    return dataManager;
+  }
+
+  public static EconomyManager instance() {
+    return instance;
   }
 }

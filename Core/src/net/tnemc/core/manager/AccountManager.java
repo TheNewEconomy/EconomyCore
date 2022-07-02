@@ -8,8 +8,12 @@ package net.tnemc.core.manager;
  */
 
 import net.tnemc.core.account.Account;
+import net.tnemc.core.id.UUIDPair;
+import net.tnemc.core.id.UUIDProvider;
+import net.tnemc.core.id.impl.provider.BaseUUIDProvider;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -22,8 +26,36 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class AccountManager {
 
-  private final Map<UUID, String> ids = new ConcurrentHashMap<>();
   private final Map<UUID, Account> accounts = new ConcurrentHashMap<>();
 
+  protected UUIDProvider uuidProvider = new BaseUUIDProvider();
 
+  /**
+   * Used to find an {@link Account account} from a {@link UUID unique identifier}.
+   * @param id The id to use in the search.
+   * @return An optional containing the {@link Account account} if it exists, otherwise an empty
+   * optional.
+   */
+  public Optional<Account> findAccount(final UUID id) {
+    return Optional.ofNullable(accounts.get(id));
+  }
+
+  /**
+   * Used to find an {@link Account account} from a name.
+   * @param name The name to use in the search.
+   * @return An optional containing the {@link Account account} if it exists, otherwise an empty
+   * optional.
+   */
+  public Optional<Account> findAccount(final String name) {
+    final Optional<UUIDPair> id = uuidProvider.retrieve(name);
+
+    if(id.isPresent()) {
+      return findAccount(id.get().getIdentifier());
+    }
+    return Optional.empty();
+  }
+
+  public UUIDProvider uuidProvider() {
+    return uuidProvider;
+  }
 }

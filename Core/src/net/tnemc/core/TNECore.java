@@ -51,7 +51,7 @@ public abstract class TNECore {
   //Manager Instances
   protected ServerConnector server;
   protected StorageManager storage;
-  protected UUIDProvider uuidProvider = new BaseUUIDProvider();
+  protected EconomyManager economyManager = new EconomyManager();
   protected WorldProvider worldProvider = new WorldProvider();
 
   /* Plugin Instance */
@@ -79,11 +79,12 @@ public abstract class TNECore {
   }
 
   /**
-   * The implementation's {@link UUIDProvider}, which is used to manage all UUIDs within TNE.
-   * @return The {@link UUIDProvider UUID Provider}.
+   * The implementation's {@link EconomyManager}, which is used to manage everything economy related
+   * in TNE.
+   * @return The {@link EconomyManager Economy Manager}.
    */
-  public static UUIDProvider uuidProvider() {
-    return instance.uuidProvider;
+  public static EconomyManager eco() {
+    return instance.economyManager;
   }
 
   /**
