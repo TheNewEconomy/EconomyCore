@@ -178,7 +178,7 @@ Tables:
 
         Type: "VARCHAR"
 
-        Length: 100
+        Length: 50
 
         Primary: true
 

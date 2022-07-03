@@ -9,8 +9,6 @@ package net.tnemc.core.transaction;
 
 import net.tnemc.core.account.holdings.HoldingsEntry;
 
-import java.util.UUID;
-
 /**
  * Represents a participant in a {@link Transaction transaction}.
  *
