@@ -44,22 +44,22 @@ public class TestCore extends TNECore {
   }
 
   @Test
-  public void accountManager() {
-
-  }
-
-  @Test
-  public void handlePlayer() {
+  public void accountTests() {
+    //PlayerJoinHandler Tests
     PlayerJoinHandler handler = new PlayerJoinHandler();
 
     final UUID cfhID = UUID.nameUUIDFromBytes("creatorfromhell".getBytes(StandardCharsets.UTF_8));
 
-    boolean cancelled = handler.handle(new TestPlayerProvider("creatorfromhell")).isCancelled();
+    final boolean cancelled = handler.handle(new TestPlayerProvider("creatorfromhell")).isCancelled();
 
     assertFalse(cancelled, "PlayerJoinHandler threw false.");
 
     assertNotNull(eco().account().uuidProvider().retrieve("creatorfromhell").get(), "Get uuid pair returned null");
 
     assertEquals(eco().account().uuidProvider().retrieve("creatorfromhell").get().getIdentifier(), cfhID, "Invalid UUID returned.");
+
+    //Non-Player Account Tests
+    eco().account().createAccount("town-Test", "town-Test");
+    assertNotNull(eco().account().findAccount("town-Test").get().getIdentifier());
   }
 }

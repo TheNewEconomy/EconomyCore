@@ -1,4 +1,4 @@
-package net.tnemc.core.depend.faction;
+package net.tnemc.bukkit.depend.towny;
 /*
  * The New Economy Minecraft Server Plugin
  *
@@ -7,19 +7,19 @@ package net.tnemc.core.depend.faction;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
-import net.tnemc.core.account.NonPlayerAccount;
-
-import java.util.UUID;
+import net.tnemc.bukkit.BukkitTNECore;
+import net.tnemc.core.TNECore;
 
 /**
- * Represents an account linked to a Faction in a Factions Plugin.
+ * TownyHandler
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class FactionAccount extends NonPlayerAccount {
+public class TownyHandler {
 
-  public FactionAccount(String identifier, String name, UUID owner) {
-    super(identifier, name, owner);
+  public static void addTypes() {
+    BukkitTNECore.eco().account().addAccountType(TownAccount.class, new TownCheck().check());
+    BukkitTNECore.eco().account().addAccountType(NationAccount.class, new NationCheck().check());
   }
 }

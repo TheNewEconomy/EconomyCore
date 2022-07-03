@@ -1,4 +1,4 @@
-package net.tnemc.core.depend.towny;
+package net.tnemc.bukkit.depend.towny;
 /*
  * The New Economy Minecraft Server Plugin
  *
@@ -7,8 +7,10 @@ package net.tnemc.core.depend.towny;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
+import com.palmergames.bukkit.towny.TownyAPI;
 import net.tnemc.core.account.NonPlayerAccount;
 
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -19,7 +21,12 @@ import java.util.UUID;
  */
 public class NationAccount extends NonPlayerAccount {
 
-  public NationAccount(String identifier, String name, UUID owner) {
-    super(identifier, name, owner);
+  public NationAccount(String identifier, String name) {
+    super(identifier, name);
+
+    try {
+      this.identifier = Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getUUID().toString();
+      owner = Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getKing().getUUID();
+    } catch(Exception ignore) {}
   }
 }

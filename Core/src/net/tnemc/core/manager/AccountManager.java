@@ -8,20 +8,24 @@ package net.tnemc.core.manager;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.NonPlayerAccount;
 import net.tnemc.core.account.PlayerAccount;
+import net.tnemc.core.account.SharedAccount;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.actions.response.AccountResponse;
+import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.manager.id.UUIDPair;
 import net.tnemc.core.manager.id.UUIDProvider;
 import net.tnemc.core.manager.id.impl.provider.BaseUUIDProvider;
 
-import java.util.Locale;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 /**
  * Manages everything related to accounts.
@@ -34,8 +38,21 @@ public class AccountManager {
 
   private final Map<String, Account> accounts = new ConcurrentHashMap<>();
 
+  private final LinkedHashMap<Class<? extends SharedAccount>, Function<String, Boolean>> types = new LinkedHashMap<>();
+
   protected UUIDProvider uuidProvider = new BaseUUIDProvider();
 
+  public AccountManager() {
+    addDefaultTypes();
+  }
+
+  /**
+   * Used to create a new account based on the provided identifier and name.
+   * @param identifier The identifierr to use for the creation, if this is a player then this should
+   *                   be the String value of the UUID for that player.
+   * @param name The name to use for this account.
+   * @return A correlating {@link EconomyResponse response} containing the results.
+   */
   public EconomyResponse createAccount(final String identifier, final String name) {
     if(accounts.containsKey(identifier)) {
       return AccountResponse.ALREADY_EXISTS;
@@ -53,13 +70,41 @@ public class AccountManager {
         return AccountResponse.CREATION_FAILED;
       }
     } else {
+      final Optional<SharedAccount> nonPlayerAccount = createNonPlayerAccount(name);
 
-      //TODO: Create Non-Player Accounts.
-      account = new NonPlayerAccount("", "", null);
+      if(nonPlayerAccount.isEmpty()) {
+        return AccountResponse.CREATION_FAILED;
+      }
+      account = nonPlayerAccount.get();
     }
 
     accounts.put(account.getIdentifier(), account);
     return AccountResponse.CREATED;
+  }
+
+  /**
+   * Used to create a Non-Player account based on the name. This method will search the
+   * {@link #types} map for a suitable alternative.
+   *
+   * @param name The name to use for the creation.
+   * @return An Optional containing the new account class if it was able to be created, otherwise an
+   * empty Optional.
+   */
+  public Optional<SharedAccount> createNonPlayerAccount(final String name) {
+
+    for(Map.Entry<Class<? extends SharedAccount>, Function<String, Boolean>> entry : types.entrySet()) {
+      if(entry.getValue().apply(name)) {
+        try {
+          return Optional.of(entry.getKey().getDeclaredConstructor(String.class, String.class)
+                                  .newInstance(name, name));
+        } catch(Exception e) {
+          TNECore.log().error("An error occured while trying to create a new NonPlayer Account" +
+                                  "for : " + name, e, DebugLevel.STANDARD);
+        }
+      }
+    }
+
+    return Optional.empty();
   }
 
   /**
@@ -94,6 +139,26 @@ public class AccountManager {
       return findAccount(id.get().getIdentifier());
     }
     return Optional.empty();
+  }
+
+  /**
+   * Adds a new {@link Account} type. These should extend the {@link SharedAccount}.
+   * @param type The class for this type.
+   * @param check The function that should be used to check if a given String identifier, usually name,
+   *              is valid for this account type.
+   */
+  public void addAccountType(final Class<? extends NonPlayerAccount> type, Function<String, Boolean> check) {
+    types.put(type, check);
+  }
+
+  /**
+   * Adds our default built-in account types.
+   */
+  public void addDefaultTypes() {
+
+    //TODO: Add third-party before this.
+
+    addAccountType(NonPlayerAccount.class, (value)->!UUIDProvider.validate(value));
   }
 
   public UUIDProvider uuidProvider() {

@@ -7,18 +7,22 @@ package net.tnemc.core.account;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
-import java.util.UUID;
+import java.util.function.Function;
 
 /**
- * Represents an account that is not associated with a player.
+ * AccountTypeCheck
  *
- * @see Account
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class NonPlayerAccount extends SharedAccount {
+public interface AccountTypeCheck {
 
-  public NonPlayerAccount(String identifier, String name) {
-    super(identifier, name, null);
-  }
+  /**
+   * Returns our check function that should be used to check if a given String identifier, usually name,
+   * is valid for this account type.
+   *
+   * @return Our function that should be used to check if a given String identifier, usually name,
+   * is valid for this account type.
+   */
+  Function<String, Boolean> check();
 }

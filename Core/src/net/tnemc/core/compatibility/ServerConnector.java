@@ -65,4 +65,14 @@ public interface ServerConnector {
    * @return The name of the default world.
    */
   String defaultWorld();
+
+  /**
+   * Determines if a plugin with the correlating name is currently installed.
+   *
+   * @param name The name to use for our check.
+   * @return True if a plugin with that name exists, otherwise false.
+   */
+  default boolean pluginAvailable(final String name) {
+    return false;
+  }
 }
