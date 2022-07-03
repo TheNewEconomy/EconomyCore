@@ -29,9 +29,11 @@ public class PlayerJoinHandler {
     //Our account doesn't exist, so now we need to continue from here
     if(account.isEmpty()) {
 
-      //Initialize our account.
-      if(!AccountHelper.initialize(provider.getUUID().toString(), provider.getName())) {
-        response.setResponse("Messages.Account.Failed");
+      System.out.println("Creating account for: " + provider.getName());
+
+      //Create our account.
+      if(!TNECore.eco().account().createAccount(provider.getUUID().toString(), provider.getName()).success()) {
+        response.setResponse(response.getResponse());
         response.setCancelled(true);
         return response;
       }

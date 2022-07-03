@@ -9,6 +9,7 @@ package net.tnemc.test.compatibility;
 
 import net.tnemc.core.compatibility.PlayerProvider;
 
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 /**
@@ -19,7 +20,11 @@ import java.util.UUID;
  */
 public class TestPlayerProvider implements PlayerProvider {
 
+  final String name;
 
+  public TestPlayerProvider(String name) {
+    this.name = name;
+  }
 
   /**
    * Used to get the {@link UUID} of this player.
@@ -28,7 +33,7 @@ public class TestPlayerProvider implements PlayerProvider {
    */
   @Override
   public UUID getUUID() {
-    return null;
+    return UUID.nameUUIDFromBytes(getName().getBytes(StandardCharsets.UTF_8));
   }
 
   /**
@@ -38,7 +43,7 @@ public class TestPlayerProvider implements PlayerProvider {
    */
   @Override
   public String getName() {
-    return null;
+    return name;
   }
 
   /**
@@ -48,7 +53,7 @@ public class TestPlayerProvider implements PlayerProvider {
    */
   @Override
   public String getWorld() {
-    return null;
+    return "world";
   }
 
   /**

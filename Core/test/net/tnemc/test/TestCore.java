@@ -9,8 +9,14 @@ package net.tnemc.test;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.handlers.PlayerJoinHandler;
+import net.tnemc.test.compatibility.TestPlayerProvider;
 import org.junit.Test;
 
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -24,6 +30,8 @@ public class TestCore extends TNECore {
 
   @Test
   public void initialize() {
+
+    //Startup
     setInstance(this);
 
     //This should throw an exception because it's already initialized.
@@ -36,7 +44,22 @@ public class TestCore extends TNECore {
   }
 
   @Test
+  public void accountManager() {
+
+  }
+
+  @Test
   public void handlePlayer() {
     PlayerJoinHandler handler = new PlayerJoinHandler();
+
+    final UUID cfhID = UUID.nameUUIDFromBytes("creatorfromhell".getBytes(StandardCharsets.UTF_8));
+
+    boolean cancelled = handler.handle(new TestPlayerProvider("creatorfromhell")).isCancelled();
+
+    assertFalse(cancelled, "PlayerJoinHandler threw false.");
+
+    assertNotNull(eco().account().uuidProvider().retrieve("creatorfromhell").get(), "Get uuid pair returned null");
+
+    assertEquals(eco().account().uuidProvider().retrieve("creatorfromhell").get().getIdentifier(), cfhID, "Invalid UUID returned.");
   }
 }

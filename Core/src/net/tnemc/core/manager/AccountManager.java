@@ -47,16 +47,19 @@ public class AccountManager {
       try {
         final UUID id = UUID.fromString(identifier);
         account = new PlayerAccount(id, name);
-        return AccountResponse.CREATED;
+
+        uuidProvider.store(new UUIDPair(id, name));
       } catch(Exception ignore) {
         return AccountResponse.CREATION_FAILED;
       }
     } else {
 
       //TODO: Create Non-Player Accounts.
-
-      return AccountResponse.CREATED;
+      account = new NonPlayerAccount("", "", null);
     }
+
+    accounts.put(account.getIdentifier(), account);
+    return AccountResponse.CREATED;
   }
 
   /**
