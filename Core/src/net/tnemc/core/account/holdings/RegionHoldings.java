@@ -19,7 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class RegionHoldings {
 
-  //TODO: Storage
   private final Map<String, CurrencyHoldings> holdings = new ConcurrentHashMap<>();
 
   private final String region;

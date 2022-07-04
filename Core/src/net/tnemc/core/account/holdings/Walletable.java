@@ -22,7 +22,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Walletable {
 
-  //TODO: Storage
   private final Map<String, RegionHoldings> holdings = new ConcurrentHashMap<>();
 
   //get holdings
