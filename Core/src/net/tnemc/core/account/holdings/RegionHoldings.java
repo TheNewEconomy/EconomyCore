@@ -7,6 +7,10 @@ package net.tnemc.core.account.holdings;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * Used to keep track of regional holdings for an account.
  *
@@ -15,4 +19,36 @@ package net.tnemc.core.account.holdings;
  */
 public class RegionHoldings {
 
+  //TODO: Storage
+  private final Map<String, CurrencyHoldings> holdings = new ConcurrentHashMap<>();
+
+  private final String region;
+
+  public RegionHoldings(String region) {
+    this.region = region;
+  }
+
+  public void setHoldingsEntry(final HoldingsEntry entry, final HoldingsType type) {
+    final CurrencyHoldings currencyHoldings =
+        holdings.getOrDefault(entry.getCurrency(), new CurrencyHoldings(entry.getCurrency()));
+
+    currencyHoldings.setHoldingsEntry(entry, type);
+
+    holdings.put(entry.getCurrency(), currencyHoldings);
+  }
+
+  public Optional<HoldingsEntry> getHoldingsEntry(final String currency) {
+    return getHoldingsEntry(currency, HoldingsType.NORMAL_HOLDINGS);
+  }
+
+  public Optional<HoldingsEntry> getHoldingsEntry(final String currency, final HoldingsType type) {
+    if(holdings.containsKey(currency)) {
+      return holdings.get(currency).getHoldingsEntry(type);
+    }
+    return Optional.empty();
+  }
+
+  public Map<String, CurrencyHoldings> getHoldings() {
+    return holdings;
+  }
 }

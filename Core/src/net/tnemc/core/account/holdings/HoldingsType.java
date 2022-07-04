@@ -8,7 +8,8 @@ package net.tnemc.core.account.holdings;
  */
 
 /**
- * HoldingsType
+ * Represents a holdings type. Since holdings may be stored in different aspects, this allows TNE
+ * to control them all and store without needing to add new fields for each holdings option.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
@@ -29,5 +30,9 @@ public enum HoldingsType {
       if(type.identifier.equalsIgnoreCase(identifier)) return type;
     }
     return NORMAL_HOLDINGS;
+  }
+
+  public String getIdentifier() {
+    return identifier;
   }
 }

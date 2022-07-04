@@ -8,6 +8,7 @@ package net.tnemc.core.account.holdings;
  */
 
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 
@@ -37,17 +38,28 @@ public class HoldingsEntry {
   private BigDecimal amount;
 
   /**
-   * Constructs an object that represents a charge during a financial transaction.
+   * Constructs an object that represents a holdings entry.
    *
    * @param region The name of the region involved. This is usually a world, but could be something
    *               else such as a world guard region name/identifier.
    * @param currency The identifier of the currency involved.
    * @param amount The {@link BigDecimal amount} that this charge is for.
    */
-  public HoldingsEntry(String region, String currency, BigDecimal amount) {
+  public HoldingsEntry(final @NotNull String region, final @NotNull String currency, final @NotNull BigDecimal amount) {
     this.region = region;
     this.currency = currency;
     this.amount = amount;
+  }
+
+  /**
+   * Constructs an object that represents a holdings entry from a {@link HoldingsModifier}.
+   *
+   * @param modifier The modifier to build this entry from.
+   */
+  public HoldingsEntry(final @NotNull HoldingsModifier modifier) {
+    this.region = modifier.getRegion();
+    this.currency = modifier.getCurrency();
+    this.amount = modifier.getModifier();
   }
 
   public void modify(final HoldingsModifier modifier) {

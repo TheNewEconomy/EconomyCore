@@ -8,6 +8,7 @@ package net.tnemc.core.account.holdings.modify;
  */
 
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.HoldingsEntry;
 
 import java.math.BigDecimal;
 
@@ -34,10 +35,23 @@ public class HoldingsModifier {
    * @param modifier The amount we are utilizing to modify the holdings. This may be negative to
    *                 take the holdings down.
    */
-  public HoldingsModifier(String region, String currency, BigDecimal modifier) {
+  public HoldingsModifier(final String region, final String currency, final BigDecimal modifier) {
     this.region = region;
     this.currency = currency;
     this.modifier = modifier;
+    this.operation = HoldingsOperation.ADD;
+  }
+
+  /**
+   * Represents an object that may be utilized to modify an {@link Account account's} holdings. This
+   * class is able to then be applied directly to the holdings of an account.
+   *
+   * @param entry The holdings entry to populate this modifier from.
+   */
+  public HoldingsModifier(final HoldingsEntry entry) {
+    this.region = entry.getRegion();
+    this.currency = entry.getCurrency();
+    this.modifier = entry.getAmount();
     this.operation = HoldingsOperation.ADD;
   }
 
@@ -51,11 +65,24 @@ public class HoldingsModifier {
    *                 take the holdings down.
    * @param operation The operation that should be performed with the modifier.
    */
-  public HoldingsModifier(String region, String currency, BigDecimal modifier,
-                          HoldingsOperation operation) {
+  public HoldingsModifier(final String region, final String currency, final BigDecimal modifier,
+                          final HoldingsOperation operation) {
     this.currency = currency;
     this.region = region;
     this.modifier = modifier;
+    this.operation = operation;
+  }
+
+  /**
+   * Represents an object that may be utilized to modify an {@link Account account's} holdings. This
+   * class is able to then be applied directly to the holdings of an account.
+   * @param entry The holdings entry to populate this modifier from.
+   * @param operation The operation that should be performed with the modifier.
+   */
+  public HoldingsModifier(final HoldingsEntry entry, final HoldingsOperation operation) {
+    this.region = entry.getRegion();
+    this.currency = entry.getCurrency();
+    this.modifier = entry.getAmount();
     this.operation = operation;
   }
 
