@@ -7,11 +7,9 @@ package net.tnemc.core.account;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
-import net.tnemc.core.account.holdings.RegionHoldings;
+import net.tnemc.core.account.holdings.WalletHolder;
 
 import java.util.Date;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * An object that is used to represent an Account within the economy plugin.
@@ -19,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class Account {
+public class Account extends WalletHolder {
 
   protected String identifier;
   protected String name;

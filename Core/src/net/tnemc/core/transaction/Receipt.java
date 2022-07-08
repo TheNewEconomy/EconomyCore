@@ -1,4 +1,5 @@
 package net.tnemc.core.transaction;
+
 /*
  * The New Economy Minecraft Server Plugin
  *

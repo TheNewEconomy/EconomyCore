@@ -20,15 +20,36 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class Walletable {
+public class WalletHolder {
 
   private final Map<String, RegionHoldings> holdings = new ConcurrentHashMap<>();
 
-  //get holdings
-  public Optional<HoldingsEntry> getHoldings(final @NotNull String region, final @NotNull String currency) {
+  /**
+   * Used to get the holdings based on specific specifications, or returns an empty optional
+   * if no holdings for the specifications exists.
+   *
+   * @param region The region to use
+   * @param currency The currency to use.
+   *
+   * @return The holdings based on specific specifications, or an empty optional if no
+   * holdings for the specifications exists.
+   */
+  public Optional<HoldingsEntry> getHoldings(final @NotNull String region,
+                                             final @NotNull String currency) {
     return getHoldings(region, currency, HoldingsType.NORMAL_HOLDINGS);
   }
 
+  /**
+   * Used to get the holdings based on specific specifications, or returns an empty optional
+   * if no holdings for the specifications exists.
+   *
+   * @param region The region to use
+   * @param currency The currency to use.
+   * @param type The {@link HoldingsType type} to use.
+   *
+   * @return The holdings based on specific specifications, or an empty optional if no
+   * holdings for the specifications exists.
+   */
   public Optional<HoldingsEntry> getHoldings(final @NotNull String region,
                                              final @NotNull String currency,
                                              final @NotNull HoldingsType type) {
@@ -156,11 +177,11 @@ public class Walletable {
   }
 
   /**
-   * Used to merge another {@link Walletable wallet} into this one. After it has been merged, the old
+   * Used to merge another {@link WalletHolder wallet} into this one. After it has been merged, the old
    * wallet will have all of its holdings cleared.
    * @param wallet The other wallet to merge.
    */
-  public void merge(@NotNull Walletable wallet) {
+  public void merge(@NotNull WalletHolder wallet) {
     for(RegionHoldings region : wallet.getHoldings().values()) {
       for(CurrencyHoldings currency : region.getHoldings().values()) {
         for(Map.Entry<String, HoldingsEntry> entry : currency.getHoldings().entrySet()) {
