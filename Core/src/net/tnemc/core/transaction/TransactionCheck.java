@@ -8,6 +8,7 @@ package net.tnemc.core.transaction;
  */
 
 import net.tnemc.core.actions.EconomyResponse;
+import net.tnemc.core.io.maps.MapKey;
 
 /**
  * Represents a check that happens during the processing of a {@link Transaction transaction}.
@@ -27,6 +28,7 @@ public interface TransactionCheck {
    *
    * @return The unique identifier for this check.
    */
+  @MapKey
   String identifier();
 
   /**

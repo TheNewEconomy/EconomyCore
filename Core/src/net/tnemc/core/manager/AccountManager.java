@@ -16,6 +16,7 @@ import net.tnemc.core.account.SharedAccount;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.actions.response.AccountResponse;
 import net.tnemc.core.compatibility.log.DebugLevel;
+import net.tnemc.core.io.maps.EnhancedHashMap;
 import net.tnemc.core.manager.id.UUIDPair;
 import net.tnemc.core.manager.id.UUIDProvider;
 import net.tnemc.core.manager.id.impl.provider.BaseUUIDProvider;
@@ -36,7 +37,7 @@ import java.util.function.Function;
  */
 public class AccountManager {
 
-  private final Map<String, Account> accounts = new ConcurrentHashMap<>();
+  private final EnhancedHashMap<String, Account> accounts = new EnhancedHashMap<>();
 
   private final LinkedHashMap<Class<? extends SharedAccount>, Function<String, Boolean>> types = new LinkedHashMap<>();
 
@@ -78,7 +79,7 @@ public class AccountManager {
       account = nonPlayerAccount.get();
     }
 
-    accounts.put(account.getIdentifier(), account);
+    accounts.put(account);
     return AccountResponse.CREATED;
   }
 

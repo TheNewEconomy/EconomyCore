@@ -8,6 +8,7 @@ package net.tnemc.core.account;
  */
 
 import net.tnemc.core.account.holdings.WalletHolder;
+import net.tnemc.core.io.maps.MapKey;
 
 import java.util.Date;
 
@@ -57,6 +58,7 @@ public class Account extends WalletHolder {
     return isPlayer();
   }
 
+  @MapKey
   public String getIdentifier() {
     return identifier;
   }
