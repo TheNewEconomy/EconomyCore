@@ -9,6 +9,7 @@ package net.tnemc.core.transaction;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.EconomyResponse;
 
 import java.util.LinkedList;
@@ -38,11 +39,13 @@ public interface TransactionProcessor {
     if(transaction.getFrom() != null) {
       Optional<Account> from = TNECore.eco().account().findAccount(transaction.getFrom().getId());
       from.ifPresent(account->account.setHoldings(transaction.getFrom().getEndingBalance()));
+      //TODO: This is where we do the currency type stuff
     }
 
     if(transaction.getTo() != null) {
       Optional<Account> to = TNECore.eco().account().findAccount(transaction.getTo().getId());
       to.ifPresent(account->account.setHoldings(transaction.getTo().getEndingBalance()));
+      //TODO: This is where we do the currency type stuff
     }
     return new TransactionResult(true, "");
   }
