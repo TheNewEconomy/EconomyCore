@@ -8,6 +8,7 @@ package net.tnemc.core;
  */
 
 import net.tnemc.core.manager.AccountManager;
+import net.tnemc.core.manager.CurrencyManager;
 import net.tnemc.core.manager.DataManager;
 import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.manager.TranslationManager;
@@ -22,6 +23,7 @@ import net.tnemc.core.manager.TranslationManager;
 public class EconomyManager {
 
   private final AccountManager accountManager;
+  private final CurrencyManager currencyManager;
   private final TransactionManager transactionManager;
   private final TranslationManager translationManager;
   private final DataManager dataManager;
@@ -32,6 +34,7 @@ public class EconomyManager {
     instance = this;
 
     this.accountManager = new AccountManager();
+    this.currencyManager = new CurrencyManager();
     this.transactionManager = new TransactionManager();
     this.translationManager = new TranslationManager();
     this.dataManager = new DataManager();
@@ -39,6 +42,10 @@ public class EconomyManager {
 
   public AccountManager account() {
     return accountManager;
+  }
+
+  public CurrencyManager currency() {
+    return currencyManager;
   }
 
   public TranslationManager translation() {
