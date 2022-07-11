@@ -45,6 +45,10 @@ public class EconomyManager {
     return translationManager;
   }
 
+  public TransactionManager transaction() {
+    return transactionManager;
+  }
+
   public DataManager data() {
     return dataManager;
   }

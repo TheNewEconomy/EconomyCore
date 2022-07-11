@@ -66,6 +66,12 @@ public class HoldingsEntry {
     amount = modifier.modify(amount);
   }
 
+  public HoldingsEntry modifyGrab(final HoldingsModifier modifier) {
+    HoldingsEntry entry = new HoldingsEntry(region, currency, amount);
+    entry.modify(modifier);
+    return entry;
+  }
+
   public String getCurrency() {
     return currency;
   }

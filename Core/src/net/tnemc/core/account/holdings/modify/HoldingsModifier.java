@@ -86,6 +86,15 @@ public class HoldingsModifier {
     this.operation = operation;
   }
 
+  /**
+   * Returns a new {@link HoldingsModifier} object that is the opposite in terms of amount from this
+   * one.
+   * @return The new opposite holdings modifier object.
+   */
+  public HoldingsModifier counter() {
+    return new HoldingsModifier(region, currency, modifier.multiply(new BigDecimal(-1)), operation);
+  }
+
   public BigDecimal modify(final BigDecimal value) {
     return operation.perform(value, modifier);
   }

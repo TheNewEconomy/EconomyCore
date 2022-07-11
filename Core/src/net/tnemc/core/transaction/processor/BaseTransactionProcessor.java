@@ -8,9 +8,13 @@ package net.tnemc.core.transaction.processor;
  */
 
 import net.tnemc.core.transaction.Transaction;
+import net.tnemc.core.transaction.TransactionCheck;
+import net.tnemc.core.transaction.TransactionCheckGroup;
 import net.tnemc.core.transaction.TransactionParticipant;
 import net.tnemc.core.transaction.TransactionProcessor;
 import net.tnemc.core.transaction.TransactionResult;
+
+import java.util.LinkedList;
 
 /**
  * BaseTransactionProcessor
@@ -19,6 +23,8 @@ import net.tnemc.core.transaction.TransactionResult;
  * @since 0.1.2.0
  */
 public class BaseTransactionProcessor implements TransactionProcessor {
+
+  private final LinkedList<String> checks = new LinkedList<>();
 
   /**
    * Processes a transaction.
@@ -31,7 +37,36 @@ public class BaseTransactionProcessor implements TransactionProcessor {
   public TransactionResult process(Transaction transaction) {
 
 
-
     return null;
+  }
+
+  /**
+   * Used to get the checks for this processor.
+   *
+   * @return The checks for this processor.
+   */
+  @Override
+  public LinkedList<String> getChecks() {
+    return checks;
+  }
+
+  /**
+   * Used to add {@link TransactionCheck check} to this processor.
+   *
+   * @param check The check to add.
+   */
+  @Override
+  public void addCheck(TransactionCheck check) {
+    checks.add(check.identifier());
+  }
+
+  /**
+   * Used to add {@link TransactionCheck checks} from a group to this processor.
+   *
+   * @param group The group to add.
+   */
+  @Override
+  public void addGroup(TransactionCheckGroup group) {
+    checks.addAll(group.getChecks());
   }
 }

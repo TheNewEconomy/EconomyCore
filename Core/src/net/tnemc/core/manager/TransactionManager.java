@@ -51,6 +51,17 @@ public class TransactionManager {
   }
 
   /**
+   * Attempts to find a {@link TransactionCheck check}.
+   * @param identifier The identifier of the check to use in the search.
+   *
+   * @return An Optional containing the check if it exists based on the identifier, otherwise an
+   * empty Optional.
+   */
+  public Optional<TransactionCheck> findCheck(final String identifier) {
+    return Optional.ofNullable(checks.get(identifier));
+  }
+
+  /**
    * Adds a {@link TransactionCheck check} to a {@link TransactionCheckGroup group} if it exists,
    * otherwise it'll create a new group and add it to that.
    * @param check The check to add.

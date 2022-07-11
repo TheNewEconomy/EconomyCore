@@ -41,14 +41,13 @@ public class Transaction {
   }
 
   /**
-   * Used to set the transaction type of this transaction.
+   * Used to create a new Transaction object from the specified transaction type.
+   *
    * @param type The identifier of the transaction type.
-   * @return An instance of the Transaction object with the new
-   * transaction type.
+   * @return An instance of the Transaction object created with the specified type.
    */
-  public Transaction of(final String type) {
-    this.type = type;
-    return this;
+  public static Transaction of(final String type) {
+    return new Transaction(type);
   }
 
   /**
@@ -64,11 +63,13 @@ public class Transaction {
   public Transaction from(final String id, final HoldingsModifier modifier) {
     final String currency = modifier.getCurrency();
     final String region = modifier.getRegion();
+    final HoldingsEntry entry = new HoldingsEntry(currency,
+                                            region,
+                                            AccountHelper.getHoldings(id,region, currency));
 
-    this.from = new TransactionParticipant(id, new HoldingsEntry(currency,
-                                                                 region,
-                                                                 AccountHelper.getHoldings(id,region,
-                                                                                         currency)));
+    this.from = new TransactionParticipant(id, entry);
+    this.from.setEndingBalance(entry.modifyGrab(modifier));
+
     this.modifierFrom = modifier;
     return this;
   }
@@ -85,11 +86,13 @@ public class Transaction {
   public Transaction to(final String id, final HoldingsModifier modifier) {
     final String currency = modifier.getCurrency();
     final String region = modifier.getRegion();
+    final HoldingsEntry entry = new HoldingsEntry(currency,
+                                                  region,
+                                                  AccountHelper.getHoldings(id,region, currency));
 
-    this.to = new TransactionParticipant(id, new HoldingsEntry(currency,
-                                                               region,
-                                                               AccountHelper.getHoldings(id, region,
-                                                                                         currency)));
+    this.to = new TransactionParticipant(id, entry);
+    this.to.setEndingBalance(entry.modifyGrab(modifier));
+
     this.modifierTo = modifier;
     return this;
   }
