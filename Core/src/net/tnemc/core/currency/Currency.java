@@ -60,4 +60,8 @@ public class Currency {
   public Optional<Note> getNote() {
     return Optional.ofNullable(note);
   }
+
+  public CurrencyType type() {
+    return null;
+  }
 }

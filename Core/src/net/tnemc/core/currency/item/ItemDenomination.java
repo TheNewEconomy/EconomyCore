@@ -94,4 +94,6 @@ public class ItemDenomination extends Denomination {
   public void setCustomModel(int customModel) {
     this.customModel = customModel;
   }
+
+  //TODO: Build item stack
 }
