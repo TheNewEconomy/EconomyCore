@@ -7,6 +7,7 @@ package net.tnemc.core.currency;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.currency.item.ItemCurrency;
 
 import java.math.BigDecimal;
@@ -62,6 +63,7 @@ public class Currency {
   }
 
   public CurrencyType type() {
-    return null;
+    final Optional<CurrencyType> type = TNECore.eco().currency().findType(this.type);
+    return type.orElseGet(()->TNECore.eco().currency().findType("virtual").get());
   }
 }

@@ -39,13 +39,11 @@ public interface TransactionProcessor {
     if(transaction.getFrom() != null) {
       Optional<Account> from = TNECore.eco().account().findAccount(transaction.getFrom().getId());
       from.ifPresent(account->account.setHoldings(transaction.getFrom().getEndingBalance()));
-      //TODO: This is where we do the currency type stuff
     }
 
     if(transaction.getTo() != null) {
       Optional<Account> to = TNECore.eco().account().findAccount(transaction.getTo().getId());
       to.ifPresent(account->account.setHoldings(transaction.getTo().getEndingBalance()));
-      //TODO: This is where we do the currency type stuff
     }
     return new TransactionResult(true, "");
   }

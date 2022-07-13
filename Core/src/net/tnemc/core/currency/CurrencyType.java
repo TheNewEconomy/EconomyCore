@@ -8,6 +8,7 @@ package net.tnemc.core.currency;
  */
 
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.HoldingsType;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -58,7 +59,7 @@ public interface CurrencyType {
    * @param currency The instance of the currency to use.
    * @return The holdings for the specific account.
    */
-  BigDecimal getHoldings(Account account, String region, Currency currency) throws SQLException;
+  BigDecimal getHoldings(Account account, HoldingsType type, String region, Currency currency);
 
   /**
    * Used to set the holdings for a specific account.
@@ -67,6 +68,8 @@ public interface CurrencyType {
    *               else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
    * @param amount The amount to set the player's holdings to.
+   *
+   * @return True if the holdings have been set, otherwise false.
    */
-  void setHoldings(Account account, String region, Currency currency, BigDecimal amount) throws SQLException;
+  boolean setHoldings(Account account, HoldingsType type, String region, Currency currency, BigDecimal amount);
 }

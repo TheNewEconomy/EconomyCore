@@ -7,9 +7,9 @@ package net.tnemc.core.manager;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
+import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
 
-import java.util.Currency;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;

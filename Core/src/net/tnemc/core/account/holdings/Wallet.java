@@ -15,12 +15,12 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Represents something that is able to have holdings information.
+ * Represents a wallet, which holds funds for something
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class WalletHolder {
+public class Wallet {
 
   private final Map<String, RegionHoldings> holdings = new ConcurrentHashMap<>();
 
@@ -75,7 +75,6 @@ public class WalletHolder {
                                              final @NotNull String currency,
                                              final @NotNull HoldingsType type,
                                              final @NotNull HoldingsEntry defaultValue) {
-
     if(holdings.containsKey(region)) {
       return holdings.get(region).getHoldingsEntry(currency, type).orElse(defaultValue);
     }
@@ -177,11 +176,11 @@ public class WalletHolder {
   }
 
   /**
-   * Used to merge another {@link WalletHolder wallet} into this one. After it has been merged, the old
+   * Used to merge another {@link Wallet wallet} into this one. After it has been merged, the old
    * wallet will have all of its holdings cleared.
    * @param wallet The other wallet to merge.
    */
-  public void merge(@NotNull WalletHolder wallet) {
+  public void merge(@NotNull Wallet wallet) {
     for(RegionHoldings region : wallet.getHoldings().values()) {
       for(CurrencyHoldings currency : region.getHoldings().values()) {
         for(Map.Entry<String, HoldingsEntry> entry : currency.getHoldings().entrySet()) {

@@ -16,7 +16,13 @@ package net.tnemc.core.account.holdings;
  */
 public enum HoldingsType {
 
+  // all holdings
   NORMAL_HOLDINGS("Normal_Holdings"),
+
+  // for item-based currencies this is the balances in inventory only
+  INVENTORY_ONLY("Inventory_Holdings"),
+
+  // for item-based currencies this is the balances in ender chest only
   E_CHEST("Ender_Chest");
 
   private final String identifier;
