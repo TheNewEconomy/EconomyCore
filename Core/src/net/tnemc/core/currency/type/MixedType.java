@@ -41,7 +41,7 @@ public class MixedType implements CurrencyType {
    * @return The holdings for the specific account.
    */
   @Override
-  public BigDecimal getHoldings(Account account, HoldingsType type, String region, Currency currency) {
+  public BigDecimal getHoldings(Account account, String region, Currency currency, HoldingsType type) {
     return null;
   }
 
@@ -58,7 +58,7 @@ public class MixedType implements CurrencyType {
    * @return True if the holdings have been set, otherwise false.
    */
   @Override
-  public boolean setHoldings(Account account, HoldingsType type, String region, Currency currency, BigDecimal amount) {
+  public boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount) {
     return false;
   }
 }

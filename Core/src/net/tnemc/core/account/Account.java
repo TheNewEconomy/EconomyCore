@@ -100,7 +100,8 @@ public class Account {
     final Optional<Currency> currencyObject = TNECore.eco().currency().findCurrency(currency);
     return currencyObject.map(value->new HoldingsEntry(region,
                                                        currency,
-                                                       value.type().getHoldings(this, type, region, value)));
+                                                       value.type().getHoldings(this, region,
+                                                                                value, type)));
   }
 
   /**
@@ -120,9 +121,10 @@ public class Account {
 
     final Optional<Currency> currencyObject = TNECore.eco().currency().findCurrency(entry.getCurrency());
 
-    return currencyObject.map(currency->currency.type().setHoldings(this, type,
+    return currencyObject.map(currency->currency.type().setHoldings(this,
                                                                     entry.getRegion(),
                                                                     currency,
+                                                                    type,
                                                                     entry.getAmount()
     )).orElse(false);
   }

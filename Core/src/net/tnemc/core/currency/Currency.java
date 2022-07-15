@@ -66,4 +66,144 @@ public class Currency {
     final Optional<CurrencyType> type = TNECore.eco().currency().findType(this.type);
     return type.orElseGet(()->TNECore.eco().currency().findType("virtual").get());
   }
+
+  public Map<String, Double> getConversion() {
+    return conversion;
+  }
+
+  public void setConversion(Map<String, Double> conversion) {
+    this.conversion = conversion;
+  }
+
+  public BigDecimal getStartingHoldings() {
+    return startingHoldings;
+  }
+
+  public void setStartingHoldings(BigDecimal startingHoldings) {
+    this.startingHoldings = startingHoldings;
+  }
+
+  public BigDecimal getMaxBalance() {
+    return maxBalance;
+  }
+
+  public void setMaxBalance(BigDecimal maxBalance) {
+    this.maxBalance = maxBalance;
+  }
+
+  public String getIdentifier() {
+    return identifier;
+  }
+
+  public void setIdentifier(String identifier) {
+    this.identifier = identifier;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
+  }
+
+  public String getFormat() {
+    return format;
+  }
+
+  public void setFormat(String format) {
+    this.format = format;
+  }
+
+  public String getSymbol() {
+    return symbol;
+  }
+
+  public void setSymbol(String symbol) {
+    this.symbol = symbol;
+  }
+
+  public String getPrefixes() {
+    return prefixes;
+  }
+
+  public void setPrefixes(String prefixes) {
+    this.prefixes = prefixes;
+  }
+
+  public String getDecimal() {
+    return decimal;
+  }
+
+  public void setDecimal(String decimal) {
+    this.decimal = decimal;
+  }
+
+  public String getDisplay() {
+    return display;
+  }
+
+  public void setDisplay(String display) {
+    this.display = display;
+  }
+
+  public String getDisplayPlural() {
+    return displayPlural;
+  }
+
+  public void setDisplayPlural(String displayPlural) {
+    this.displayPlural = displayPlural;
+  }
+
+  public String getDisplayMinor() {
+    return displayMinor;
+  }
+
+  public void setDisplayMinor(String displayMinor) {
+    this.displayMinor = displayMinor;
+  }
+
+  public String getDisplayMinorPlural() {
+    return displayMinorPlural;
+  }
+
+  public void setDisplayMinorPlural(String displayMinorPlural) {
+    this.displayMinorPlural = displayMinorPlural;
+  }
+
+  public boolean isSeparateMajor() {
+    return separateMajor;
+  }
+
+  public void setSeparateMajor(boolean separateMajor) {
+    this.separateMajor = separateMajor;
+  }
+
+  public String getMajorSeparator() {
+    return majorSeparator;
+  }
+
+  public void setMajorSeparator(String majorSeparator) {
+    this.majorSeparator = majorSeparator;
+  }
+
+  public int getDecimalPlaces() {
+    return decimalPlaces;
+  }
+
+  public void setDecimalPlaces(int decimalPlaces) {
+    this.decimalPlaces = decimalPlaces;
+  }
+
+  public int getMinorWeight() {
+    return minorWeight;
+  }
+
+  public void setMinorWeight(int minorWeight) {
+    this.minorWeight = minorWeight;
+  }
+
+  public void setNote(Note note) {
+    this.note = note;
+  }
 }

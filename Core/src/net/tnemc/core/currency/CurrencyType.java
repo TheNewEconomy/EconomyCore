@@ -59,7 +59,7 @@ public interface CurrencyType {
    * @param currency The instance of the currency to use.
    * @return The holdings for the specific account.
    */
-  BigDecimal getHoldings(Account account, HoldingsType type, String region, Currency currency);
+  BigDecimal getHoldings(Account account, String region, Currency currency, HoldingsType type);
 
   /**
    * Used to set the holdings for a specific account.
@@ -71,5 +71,5 @@ public interface CurrencyType {
    *
    * @return True if the holdings have been set, otherwise false.
    */
-  boolean setHoldings(Account account, HoldingsType type, String region, Currency currency, BigDecimal amount);
+  boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount);
 }

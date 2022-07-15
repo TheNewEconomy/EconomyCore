@@ -8,11 +8,13 @@ package net.tnemc.core.currency.type;
  */
 
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 /**
  * Represents our currency type that is based on nothing.
@@ -41,8 +43,13 @@ public class VirtualType implements CurrencyType {
    * @return The holdings for the specific account.
    */
   @Override
-  public BigDecimal getHoldings(Account account, HoldingsType type, String region, Currency currency) {
-    return null;
+  public BigDecimal getHoldings(Account account, String region, Currency currency, HoldingsType type) {
+    final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region, currency.getIdentifier(), type);
+
+    if(holdings.isPresent()) {
+      return holdings.get().getAmount();
+    }
+    return currency.getStartingHoldings();
   }
 
   /**
@@ -58,7 +65,9 @@ public class VirtualType implements CurrencyType {
    * @return True if the holdings have been set, otherwise false.
    */
   @Override
-  public boolean setHoldings(Account account, HoldingsType type, String region, Currency currency, BigDecimal amount) {
-    return false;
+  public boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount) {
+    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getIdentifier(), amount),
+                                           type);
+    return true;
   }
 }
