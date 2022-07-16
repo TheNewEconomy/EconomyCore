@@ -7,15 +7,14 @@ package net.tnemc.sponge;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
+import com.google.inject.Inject;
 import net.tnemc.core.TNECore;
-import net.tnemc.sponge.listeners.PlayerJoinListener;
 import net.tnemc.sponge.impl.SpongeLogProvider;
+import net.tnemc.sponge.listeners.PlayerJoinListener;
 import org.slf4j.Logger;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Listener;
-
-import com.google.inject.Inject;
 import org.spongepowered.api.event.lifecycle.ConstructPluginEvent;
 import org.spongepowered.api.event.lifecycle.StartedEngineEvent;
 import org.spongepowered.plugin.PluginContainer;

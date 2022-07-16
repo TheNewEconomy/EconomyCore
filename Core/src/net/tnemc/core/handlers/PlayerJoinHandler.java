@@ -3,7 +3,6 @@ package net.tnemc.core.handlers;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.compatibility.PlayerProvider;
-import net.tnemc.core.utils.AccountHelper;
 import net.tnemc.core.utils.HandlerResponse;
 
 import java.util.Optional;

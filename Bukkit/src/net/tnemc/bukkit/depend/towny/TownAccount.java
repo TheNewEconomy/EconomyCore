@@ -11,7 +11,6 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import net.tnemc.core.account.NonPlayerAccount;
 
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * Represents an account linked to a Town in the Towny Plugin.

@@ -10,8 +10,8 @@ package net.tnemc.api;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.NonPlayerAccount;
 import net.tnemc.core.account.PlayerAccount;
-import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.actions.ActionSource;
+import net.tnemc.core.actions.EconomyResponse;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Currency;

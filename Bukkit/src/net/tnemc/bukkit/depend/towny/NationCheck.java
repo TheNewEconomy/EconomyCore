@@ -7,9 +7,7 @@ package net.tnemc.bukkit.depend.towny;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
-import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
-import com.palmergames.bukkit.towny.TownyUniverse;
 import net.tnemc.core.account.AccountTypeCheck;
 
 import java.util.function.Function;

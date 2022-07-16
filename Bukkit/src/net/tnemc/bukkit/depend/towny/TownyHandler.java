@@ -8,7 +8,6 @@ package net.tnemc.bukkit.depend.towny;
  */
 
 import net.tnemc.bukkit.BukkitTNECore;
-import net.tnemc.core.TNECore;
 
 /**
  * TownyHandler

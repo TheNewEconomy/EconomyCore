@@ -59,6 +59,6 @@ public class MixedType implements CurrencyType {
    */
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount) {
-    return false;
+    return true;
   }
 }

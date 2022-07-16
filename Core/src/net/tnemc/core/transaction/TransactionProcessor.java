@@ -9,7 +9,6 @@ package net.tnemc.core.transaction;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
-import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.EconomyResponse;
 
 import java.util.LinkedList;

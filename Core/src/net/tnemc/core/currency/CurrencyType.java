@@ -11,7 +11,6 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsType;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 
 /**
  * Represents a type of currency.

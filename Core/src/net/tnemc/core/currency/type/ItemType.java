@@ -48,8 +48,8 @@ public class ItemType implements CurrencyType {
   /**
    * Used to set the holdings for a specific account.
    *
-   * @param account
-   * @param type
+   * @param account  The Account to set the holdings for.
+   * @param type     The holdings type to set the holdings of.
    * @param region   The name of the region involved. This is usually a world, but could be something
    *                 else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.

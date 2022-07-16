@@ -10,7 +10,6 @@ package net.tnemc.core.account;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
-import net.tnemc.core.account.holdings.RegionHoldings;
 import net.tnemc.core.account.holdings.Wallet;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.maps.MapKey;

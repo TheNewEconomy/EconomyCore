@@ -9,10 +9,8 @@ package net.tnemc.sponge.impl;
 
 import net.tnemc.core.compatibility.PlayerProvider;
 import org.spongepowered.api.data.Keys;
-import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.living.player.server.ServerPlayer;
 
-import java.util.Optional;
 import java.util.UUID;
 
 /**

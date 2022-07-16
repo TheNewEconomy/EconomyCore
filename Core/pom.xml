@@ -26,6 +26,12 @@
             <version>0.1.2.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>net.tnemc</groupId>
+            <artifactId>TNIL-Core</artifactId>
+            <version>0.1.5.0</version>
+            <scope>compile</scope>
+        </dependency>
         <!-- JSON for the tech stuff -->
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
