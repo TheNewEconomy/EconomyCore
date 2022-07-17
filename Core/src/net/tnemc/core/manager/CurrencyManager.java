@@ -22,6 +22,7 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyLoader;
 import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.currency.loader.DefaultLoader;
+import net.tnemc.core.currency.type.ExperienceType;
 import net.tnemc.core.currency.type.ItemType;
 import net.tnemc.core.currency.type.MixedType;
 import net.tnemc.core.currency.type.VirtualType;
@@ -46,9 +47,18 @@ public class CurrencyManager {
   private CurrencyLoader loader = new DefaultLoader();
 
   public CurrencyManager() {
+    addType(new ExperienceType());
     addType(new ItemType());
     addType(new MixedType());
     addType(new VirtualType());
+  }
+
+  public CurrencyLoader getLoader() {
+    return loader;
+  }
+
+  public void setLoader(CurrencyLoader loader) {
+    this.loader = loader;
   }
 
   /**
