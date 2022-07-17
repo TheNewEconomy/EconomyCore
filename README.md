@@ -24,8 +24,8 @@ TNE has been recoded with ease-of-use in mind. This means whether you're a power
 casual user who wants Menu-based interactions, TNE is right for you!
 
 ## Free as in Freedom, not Free as in Beer
-TNE is licensed under the AGPLv3, which means you're free to use it how you want. This also means that networks that add
-improvements to their version must also provide them for everyone else to enjoy!
+[TNE is licensed under the AGPLv3](license.md), which means you're free to use it how you want. This also means that
+networks that add improvements to their version must also provide them for everyone else to enjoy!
 
 ## Documented
 TNE has lots of documentation for the power users that like all the documentation.
