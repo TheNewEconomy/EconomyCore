@@ -52,10 +52,10 @@ public class MixedType implements CurrencyType {
    * Used to get the holdings for a specific account from this currency type.
    *
    * @param account  The uuid of the account.
-   * @param type
    * @param region   The name of the region involved. This is usually a world, but could be something
    *                 else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
+   * @param type     The holdings type
    *
    * @return The holdings for the specific account.
    */
@@ -67,11 +67,11 @@ public class MixedType implements CurrencyType {
   /**
    * Used to set the holdings for a specific account.
    *
-   * @param account
-   * @param type
+   * @param account  The account
    * @param region   The name of the region involved. This is usually a world, but could be something
    *                 else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
+   * @param type     The holdings type
    * @param amount   The amount to set the player's holdings to.
    *
    * @return True if the holdings have been set, otherwise false.

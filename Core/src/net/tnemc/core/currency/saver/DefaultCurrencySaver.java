@@ -156,7 +156,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
       return;
     }
 
-    //TODO: Saving denomination...
+    //TODO: Translation Saving denomination...
 
     denom.set("Info.Single", denomination.singular());
     denom.set("Info.Plural", denomination.plural());

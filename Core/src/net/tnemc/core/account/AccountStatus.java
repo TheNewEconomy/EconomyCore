@@ -36,6 +36,12 @@ public interface AccountStatus {
   @NotNull String identifier();
 
   /**
+   * Whether this status is unlockable by entering the account's pin.
+   * @return True if this status is able to be unlocked using the pin, otherwise false.
+   */
+  boolean unlockable();
+
+  /**
    * Whether the account may use money from their account.
    * @return True if the account is able to use funds from its balance, otherwise false.
    */
