@@ -68,7 +68,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     final YamlFile cur = new YamlFile(directory);
 
     try {
-      cur.loadWithComments();
+      cur.createOrLoadWithComments();
 
     } catch(IOException e) {
       //TODO: Translation Failed to load, exception attached.
@@ -80,11 +80,11 @@ public class DefaultCurrencySaver implements CurrencySaver {
     //TODO: Translation: Saving currency...
 
     //Currency Info configs.
-    cur.set("Info.Major_Single", "Dollar");
-    cur.set("Info.Major_Plural", "Dollars");
-    cur.set("Info.Minor_Single", "Cent");
-    cur.set("Info.Minor_Plural", "Cents");
-    cur.set("Info.Symbol", "$");
+    cur.set("Info.Major_Single", currency.getDisplay());
+    cur.set("Info.Major_Plural", currency.getDisplayPlural());
+    cur.set("Info.Minor_Single", currency.getDisplayMinor());
+    cur.set("Info.Minor_Plural", currency.getDisplayMinorPlural());
+    cur.set("Info.Symbol", currency.getSymbol());
 
     //Currency Options configs.
     cur.set("MaxBalance", currency.getMaxBalance().toPlainString());
@@ -149,20 +149,23 @@ public class DefaultCurrencySaver implements CurrencySaver {
   public void saveDenomination(final File directory, Currency currency, Denomination denomination) {
     final YamlFile denom = new YamlFile(directory);
     try {
-      denom.loadWithComments();
+      denom.createOrLoadWithComments();
     } catch(IOException e) {
       //TODO: Translation Failed to load, exception attached.
       e.printStackTrace();
       return;
     }
 
-    denom.set("Info.Single", "Dollar");
-    denom.set("Info.Plural", "Dollars");
+    //TODO: Saving denomination...
 
-    denom.set("Options.Weight", 1);
-    denom.set("Options.Material", "PAPER");
+    denom.set("Info.Single", denomination.singular());
+    denom.set("Info.Plural", denomination.plural());
+
+    denom.set("Options.Weight", denomination.weight());
 
     if(denomination instanceof ItemDenomination) {
+
+      denom.set("Options.Material", ((ItemDenomination)denomination).getMaterial());
 
       if(((ItemDenomination)denomination).getName() != null) {
         denom.set("Options.Name", ((ItemDenomination)denomination).getName());
