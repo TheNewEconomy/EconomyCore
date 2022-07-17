@@ -40,6 +40,7 @@ public class ItemDenomination extends Denomination {
   private short damage;
   private String name = null;
   private Integer customModel = null;
+  private String texture;
 
   public ItemDenomination(String material) {
     this(material, (short)0);
@@ -104,6 +105,14 @@ public class ItemDenomination extends Denomination {
 
   public void setCustomModel(int customModel) {
     this.customModel = customModel;
+  }
+
+  public String getTexture() {
+    return texture;
+  }
+
+  public void setTexture(String texture) {
+    this.texture = texture;
   }
 
   //TODO: Build item stack

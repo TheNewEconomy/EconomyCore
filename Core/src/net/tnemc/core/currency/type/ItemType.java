@@ -41,6 +41,14 @@ public class ItemType implements CurrencyType {
   }
 
   /**
+   * @return True if this currency type is based on physical items.
+   */
+  @Override
+  public boolean supportsItems() {
+    return true;
+  }
+
+  /**
    * Used to get the holdings for a specific account from this currency type.
    *
    * @param account  The uuid of the account.

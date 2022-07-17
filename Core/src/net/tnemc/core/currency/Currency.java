@@ -19,7 +19,6 @@ package net.tnemc.core.currency;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.currency.item.ItemCurrency;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -34,7 +33,8 @@ import java.util.Optional;
  */
 public class Currency {
 
-  private Map<String, Double> conversion = new HashMap<>();
+  private final Map<String, Double> conversion = new HashMap<>();
+  private final Map<Double, Denomination> denominations = new HashMap<>();
 
   //World-related configurations.
 
@@ -66,7 +66,7 @@ public class Currency {
   private Note note;
 
   public boolean isNotable() {
-    return !(this instanceof ItemCurrency) && note != null;
+    return note != null;
   }
 
   public Optional<Note> getNote() {
@@ -80,10 +80,6 @@ public class Currency {
 
   public Map<String, Double> getConversion() {
     return conversion;
-  }
-
-  public void setConversion(Map<String, Double> conversion) {
-    this.conversion = conversion;
   }
 
   public BigDecimal getStartingHoldings() {
@@ -216,5 +212,9 @@ public class Currency {
 
   public void setNote(Note note) {
     this.note = note;
+  }
+
+  public Map<Double, Denomination> getDenominations() {
+    return denominations;
   }
 }

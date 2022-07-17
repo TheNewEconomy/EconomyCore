@@ -30,7 +30,6 @@ import net.tnemc.core.currency.Currency;
 public class ItemCurrency extends Currency {
 
   protected boolean enderChest;
-  protected boolean consolidate;
 
   public boolean canEnderChest() {
     return enderChest;
@@ -38,13 +37,5 @@ public class ItemCurrency extends Currency {
 
   public void setEnderChest(boolean enderChest) {
     this.enderChest = enderChest;
-  }
-
-  public boolean isConsolidate() {
-    return consolidate;
-  }
-
-  public void setConsolidate(boolean consolidate) {
-    this.consolidate = consolidate;
   }
 }

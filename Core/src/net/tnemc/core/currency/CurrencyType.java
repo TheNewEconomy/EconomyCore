@@ -61,6 +61,13 @@ public interface CurrencyType {
   }
 
   /**
+   * @return True if this currency type is based on physical items.
+   */
+  default boolean supportsItems() {
+    return false;
+  }
+
+  /**
    * Used to get the holdings for a specific account from this currency type.
    *
    * @param account The uuid of the account.

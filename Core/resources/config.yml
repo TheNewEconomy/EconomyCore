@@ -22,12 +22,6 @@ Core:
         #Should TNE disable mob drops that are valid item currencies?
         MobDrop: true
 
-        #Should item currencies be automatically consolidated into the least amount of items after every transaction?
-        Consolidate: false
-
-        #Should item currencies in players inventory on first join with TNE be kept and added to their balance?
-        KeepItems: false
-
         #Should experience gaining be disabled? This will help for servers that use Experience as currency.
         ExperienceGain: false
 

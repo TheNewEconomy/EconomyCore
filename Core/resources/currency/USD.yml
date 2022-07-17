@@ -19,6 +19,77 @@ Info:
   #The plural form of this currency's minor denomination.
   Minor_Plural: "Cents"
 
+  #The character to use as the symbol for this currency.
+  Symbol: '$'
+
+#Various options for currencies.
+Options:
+
+  #Whether or not this currency is the default currency for the world.
+  Default: true
+
+  #The worlds this currency belongs to, if Global is set to false.
+  Worlds:
+    - "world"
+
+  #Whether or not this currency is a global currency.
+  Global: true
+
+  #Whether or not this currency is enabled.
+  Disabled: false
+
+  #The maximum balance possible for this currency.
+  # Maximum possible value: 900000000000000000000000000000000000000000000
+  MaxBalance: 900000000000000000000000000000000000000000000
+
+  #The initial balance for accounts.
+  #Will be used if no world-specific configurations are found if multiworld is enabled
+  Balance: 200.0
+
+  #The character to use as the decimal place holder.
+  Decimal: '.'
+
+  #The amount of digits to display after the decimal character.
+  #The maximum amount of places is 4
+  DecimalPlaces: 2
+
+  #The currency type to use for this currency.
+  #Valid Types: virtual, item, experience, mixed
+  Type: "virtual"
+
+  #This is used to determine how many of minor it takes to make one major
+  Minor_Weight: 100
+
+#All configurations relating to item-backed currencies
+#The current built-in types are mixed and item
+Item:
+
+  #Would you like your item currency balances to also check the player's ender chest?
+  EnderChest: true
+
+  #Would you like your item currency balances to also check the player's ender chest?
+  Consolidate: false
+
+#All configurations related to formatting.
+Formatting:
+
+  #The format to use when outputting this currency into chat.
+  #The variables you're able to use here.
+  #<symbol> - The currency's symbol
+  #<decimal> - The currency's decimal.
+  #<major> - A combination of the currency's major amount and name
+  #<minor> - A combination of the currency's minor amount and name
+  #<major.name> - The currency's major name.
+  #<minor.name> - The currency's minor name.
+  #<major.amount> - The currency's major amount.
+  #<minor.amount> - The currency's minor amount.
+  #<short.amount> - The currency's shortened amount.
+  #<shorten> - Added to make the outputted value shortened
+  # If shortened, it will ignore the value of Format.
+  #It's also possible to include all colour variables from messages.yml
+  #Example: <major> and <minor>
+  Format: '<symbol><major.amount><decimal><minor.amount>'
+
   #The SI Prefixes used when <shorten> is used for the currency's format.
   #TNE's default prefixes are based off of the Internation Bureau of Weights and Measures official list.
   #http://www.unitarium.com/si-prefixes along with a few addition shorts for above Nonillion.
@@ -39,72 +110,12 @@ Info:
   #Nonvigintillion - ₮
   Prefixes: 'kMGTPEZYXWVUN₮'
 
-  #The character to use as the symbol for this currency.
-  Symbol: '$'
-
-#Various options for currencies.
-Options:
-
-  #Whether or not this currency is the default currency for the world.
-  Default: true
-
-  #The worlds this currency belongs to, if Global is set to false.
-  Worlds:
-    - "world"
-
-  #Whether or not this currency is a global currency.
-  Global: true
-
-  #Whether or not this currency is enabled.
-  Disabled: false
-
-  #The format to use when outputting this currency into chat.
-  #The variables you're able to use here.
-  #<symbol> - The currency's symbol
-  #<decimal> - The currency's decimal.
-  #<major> - A combination of the currency's major amount and name
-  #<minor> - A combination of the currency's minor amount and name
-  #<major.name> - The currency's major name.
-  #<minor.name> - The currency's minor name.
-  #<major.amount> - The currency's major amount.
-  #<minor.amount> - The currency's minor amount.
-  #<short.amount> - The currency's shortened amount.
-  #<shorten> - Added to make the outputted value shortened
-  # If shortened, it will ignore the value of Format.
-  #It's also possible to include all colour variables from messages.yml
-  #Example: <major> and <minor>
-  Format: <symbol><major.amount><decimal><minor.amount>
-
-  #The maximum balance possible for this currency.
-  # Maximum possible value: 900000000000000000000000000000000000000000000
-  MaxBalance: 900000000000000000000000000000000000000000000
-
-  #The initial balance for accounts.
-  #Will be used if no world-specific configurations are found if multiworld is enabled
-  Balance: 200.0
-
-  #The character to use as the decimal place holder.
-  Decimal: .
-
-  #The amount of digits to display after the decimal character.
-  #The maximum amount of places is 4
-  DecimalPlaces: 2
-
-  #The currency type to use for this currency.
-  #Valid Types: virtual, item, experience
-  Type: "virtual"
-
-  #Would you like your item currency balances to also check the player's ender chest?
-  EnderChest: true
-
   #Whether or not the major value should be separated every three numeric places.
   Major_Separate: true
 
   #The separator to use for numeric separation.
   Major_Separator: ','
 
-  #This is used to determine how many of minor it takes to make one major
-  Minor_Weight: 100
 
 #All configurations relating to currency notes.
 Note:

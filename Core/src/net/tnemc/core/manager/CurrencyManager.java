@@ -19,8 +19,14 @@ package net.tnemc.core.manager;
  */
 
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.currency.CurrencyLoader;
 import net.tnemc.core.currency.CurrencyType;
+import net.tnemc.core.currency.loader.DefaultLoader;
+import net.tnemc.core.currency.type.ItemType;
+import net.tnemc.core.currency.type.MixedType;
+import net.tnemc.core.currency.type.VirtualType;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -32,9 +38,26 @@ import java.util.Optional;
  * @since 0.1.2.0
  */
 public class CurrencyManager {
+  public static final BigDecimal largestSupported= new BigDecimal("900000000000000000000000000000000000000000000");
 
   private final Map<String, Currency> currencies = new HashMap<>();
   private final Map<String, CurrencyType> types = new HashMap<>();
+
+  private CurrencyLoader loader = new DefaultLoader();
+
+  public CurrencyManager() {
+    addType(new ItemType());
+    addType(new MixedType());
+    addType(new VirtualType());
+  }
+
+  /**
+   * Used to add a currency.
+   * @param currency The currency to add.
+   */
+  public void addCurrency(final Currency currency) {
+    currencies.put(currency.getIdentifier(), currency);
+  }
 
   /**
    * Used to find a currency based on its identifier.
@@ -43,6 +66,14 @@ public class CurrencyManager {
    */
   public Optional<Currency> findCurrency(final String identifier) {
     return Optional.ofNullable(currencies.get(identifier));
+  }
+
+  /**
+   * Used to add a currency type.
+   * @param type The currency type to add.
+   */
+  public void addType(final CurrencyType type) {
+    types.put(type.name(), type);
   }
 
   /**

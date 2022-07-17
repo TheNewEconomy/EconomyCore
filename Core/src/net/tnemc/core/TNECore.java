@@ -117,6 +117,10 @@ public abstract class TNECore {
     return instance.server;
   }
 
+  public static File directory() {
+    return instance.directory;
+  }
+
   public static TNECore instance() {
     return instance;
   }
