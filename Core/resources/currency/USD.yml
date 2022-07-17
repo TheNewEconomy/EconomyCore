@@ -126,7 +126,7 @@ Note:
 
     #The custom model data value used for this item. Defaults to 0.
     #Optional.
-    ModelData: 0
+    #ModelData: 0
 
     #The base64 texture to use if the material is PLAYER_HEAD
     Texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDA0NzE5YjNiOTdkMTk1YTIwNTcxOGI2ZWUyMWY1Yzk1Y2FmYTE2N2U3YWJjYTg4YTIxMDNkNTJiMzdkNzIyIn19fQ=="
@@ -134,18 +134,19 @@ Note:
     #All configurations relating to enchantment identification for the note item
     #The format is - enchantment name
     #Optional.
-    Enchantments:
-      - example_enchant
+    #Enchantments:
+    #  - 'example_enchant'
 
     #All configurations relating to item flags identification for the note item
     #The format is - item flag
     #Optional.
-    Flags:
-      - example_flag
+    #Flags:
+    #  - 'example_flag'
 
 Converting:
 
   #Example currency conversion.
   #Format is currency name and decimal based rate
   #In this USD converts to double Example currency so 1 USD is 2 Examples
-  Example: 2.0
+  #
+  #Example: 2.0

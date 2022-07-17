@@ -18,31 +18,33 @@ Options:
 
   #The damage value used for this item. Defaults to 0.
   #Optional.
-  Damage: 0
+  #Damage: 0
 
   #The custom name this item must have in order to be considered currency.
   #Optional.
-  Name: 'Penny'
+  #Name: 'Penny'
 
   #The lore string this item must have  in order to be considered currency.
   #Optional.
-  Lore: 'Server Currency'
+  #Lore:
+  #  - "example lore"
+  #  - "example second line"
 
   #The custom model data value used for this item. Defaults to 0.
   #Optional.
-  ModelData: 0
+  #ModelData: 0
 
   #All configurations relating to enchantment identification for currency tiers
   #The format is - enchantment name
   #Optional.
-  Enchantments:
-    - example_enchant
+  #Enchantments:
+  #  - "example_enchant"
 
   #All configurations relating to item flags identification for currency tiers
   #The format is - item flag
   #Optional.
-  Flags:
-    - example_flag
+  #Flags:
+  #  - "example_flag""
 
   #Configurations relating to crafting this currency tier.
   Crafting:
