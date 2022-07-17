@@ -20,14 +20,17 @@ package net.tnemc.core.manager;
 
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyLoader;
+import net.tnemc.core.currency.CurrencySaver;
 import net.tnemc.core.currency.CurrencyType;
-import net.tnemc.core.currency.loader.DefaultLoader;
+import net.tnemc.core.currency.loader.DefaultCurrencyLoader;
+import net.tnemc.core.currency.saver.DefaultCurrencySaver;
 import net.tnemc.core.currency.type.ExperienceType;
 import net.tnemc.core.currency.type.ItemType;
 import net.tnemc.core.currency.type.MixedType;
 import net.tnemc.core.currency.type.VirtualType;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -44,7 +47,8 @@ public class CurrencyManager {
   private final Map<String, Currency> currencies = new HashMap<>();
   private final Map<String, CurrencyType> types = new HashMap<>();
 
-  private CurrencyLoader loader = new DefaultLoader();
+  private CurrencyLoader loader = new DefaultCurrencyLoader();
+  private CurrencySaver saver = new DefaultCurrencySaver();
 
   public CurrencyManager() {
     addType(new ExperienceType());
@@ -59,6 +63,14 @@ public class CurrencyManager {
 
   public void setLoader(CurrencyLoader loader) {
     this.loader = loader;
+  }
+
+  public CurrencySaver getSaver() {
+    return saver;
+  }
+
+  public void setSaver(CurrencySaver saver) {
+    this.saver = saver;
   }
 
   /**
@@ -76,6 +88,10 @@ public class CurrencyManager {
    */
   public Optional<Currency> findCurrency(final String identifier) {
     return Optional.ofNullable(currencies.get(identifier));
+  }
+
+  public Collection<Currency> currencies() {
+    return currencies.values();
   }
 
   /**

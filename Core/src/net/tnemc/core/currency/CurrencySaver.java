@@ -11,6 +11,8 @@ package net.tnemc.core.currency;
  * Created by creatorfromhell on 06/30/2017.
  */
 
+import java.io.File;
+
 /**
  * Used to load currencies.
  *
@@ -22,19 +24,22 @@ public interface CurrencySaver {
 
   /**
    * Saves all currencies.
+   * @param directory The directory used for saving.
    */
-  void saveCurrencies();
+  void saveCurrencies(final File directory);
 
   /**
    * Saves a specific currency
+   * @param directory The directory used for saving.
    * @param currency The currency to save.
    */
-  void saveCurrency(Currency currency);
+  void saveCurrency(final File directory, Currency currency);
 
   /**
    * Saves a specific currency denomination
+   * @param directory The directory used for saving.
    * @param currency The currency of the denomination.
    * @param denomination The denomination to save.
    */
-  void saveDenomination(Currency currency, Denomination denomination);
+  void saveDenomination(final File directory, Currency currency, Denomination denomination);
 }

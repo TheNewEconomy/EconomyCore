@@ -43,7 +43,7 @@ import static net.tnemc.core.manager.CurrencyManager.largestSupported;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class DefaultLoader implements CurrencyLoader {
+public class DefaultCurrencyLoader implements CurrencyLoader {
 
 
   /**
@@ -115,7 +115,6 @@ public class DefaultLoader implements CurrencyLoader {
     final String symbol = cur.getString("Info.Symbol", "$");
 
     //Currency Options configs.
-
     //TODO: World Handling for currencies.
     /*final boolean worldDefault = cur.getBoolean("Options.Default", true);
     List<String> worlds = cur.getStringList("Options.Worlds");
