@@ -20,7 +20,6 @@ package net.tnemc.core.currency.saver;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencySaver;
-import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.Note;
 import net.tnemc.core.currency.item.ItemCurrency;
@@ -29,12 +28,8 @@ import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-
-import static net.tnemc.core.manager.CurrencyManager.largestSupported;
 
 /**
  * DefaultCurrencySaver
@@ -87,7 +82,8 @@ public class DefaultCurrencySaver implements CurrencySaver {
     cur.set("Info.Symbol", currency.getSymbol());
 
     //Currency Options configs.
-    cur.set("MaxBalance", currency.getMaxBalance().toPlainString());
+    cur.set("Options.MaxBalance", currency.getMaxBalance().toPlainString());
+    cur.set("Options.MinBalance", currency.getMinBalance().toPlainString());
     cur.set("Options.Balance", currency.getStartingHoldings().toPlainString());
     cur.set("Options.Decimal", currency.getDecimal());
     cur.set("Options.DecimalPlaces", currency.getDecimalPlaces());

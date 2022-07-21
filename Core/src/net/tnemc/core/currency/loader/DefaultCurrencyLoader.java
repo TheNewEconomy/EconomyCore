@@ -119,8 +119,6 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     /*final boolean worldDefault = cur.getBoolean("Options.Default", true);
     List<String> worlds = cur.getStringList("Options.Worlds");
     final boolean global = cur.getBoolean("Options.Global", true);*/
-    final BigDecimal maxBalance = ((new BigDecimal(cur.getString("Options.MaxBalance", largestSupported.toPlainString())).compareTo(largestSupported) > 0)? largestSupported : new BigDecimal(cur.getString("MaxBalance", largestSupported.toPlainString())));
-    final BigDecimal balance = new BigDecimal(cur.getString("Options.Balance", "200.00"));
     final String decimal = cur.getString("Options.Decimal", ".");
     final int decimalPlaces = (Math.min(cur.getInt("Options.DecimalPlaces", 2), 4));
     final String currencyType = cur.getString("Options.Type", "virtual");
@@ -143,8 +141,13 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
     Currency currency = (type.get().supportsItems())? new ItemCurrency() : new Currency();
 
+    final BigDecimal maxBalance = ((new BigDecimal(cur.getString("Options.MaxBalance", largestSupported.toPlainString())).compareTo(largestSupported) > 0)? largestSupported : new BigDecimal(cur.getString("MaxBalance", largestSupported.toPlainString())));
+    final BigDecimal minBalance = (type.get().supportsItems())? BigDecimal.ZERO : new BigDecimal(cur.getString("Options.MinBalance", "0.00"));
+    final BigDecimal balance = new BigDecimal(cur.getString("Options.Balance", "200.00"));
+
     currency.setIdentifier(identifier);
     currency.setMaxBalance(maxBalance);
+    currency.setMinBalance(minBalance);
     currency.setStartingHoldings(balance);
     currency.setDecimal(decimal);
     currency.setDecimalPlaces(decimalPlaces);

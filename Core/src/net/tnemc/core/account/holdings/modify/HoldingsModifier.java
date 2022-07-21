@@ -106,6 +106,16 @@ public class HoldingsModifier {
     return new HoldingsModifier(region, currency, modifier.multiply(new BigDecimal(-1)), operation);
   }
 
+  /**
+   * Used to determine if this modifier is used to remove froms.
+   * @return True if this will remove funds, otherwise false.
+   */
+  public boolean isRemoval() {
+    return operation.equals(HoldingsOperation.SUBTRACT)
+        || operation.equals(HoldingsOperation.DIVIDE)
+        || modifier.compareTo(BigDecimal.ZERO) < 0;
+  }
+
   public BigDecimal modify(final BigDecimal value) {
     return operation.perform(value, modifier);
   }

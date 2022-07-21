@@ -41,6 +41,7 @@ public class Currency {
   //Balance-related configurations.
   private BigDecimal startingHoldings;
   private BigDecimal maxBalance;
+  private BigDecimal minBalance;
 
   //Utilized for backwards compat only
   private String identifier;
@@ -96,6 +97,14 @@ public class Currency {
 
   public void setMaxBalance(BigDecimal maxBalance) {
     this.maxBalance = maxBalance;
+  }
+
+  public BigDecimal getMinBalance() {
+    return minBalance;
+  }
+
+  public void setMinBalance(BigDecimal minBalance) {
+    this.minBalance = minBalance;
   }
 
   public String getIdentifier() {

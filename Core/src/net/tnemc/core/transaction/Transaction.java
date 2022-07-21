@@ -19,12 +19,15 @@ package net.tnemc.core.transaction;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.ActionSource;
 import net.tnemc.core.utils.AccountHelper;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
@@ -49,6 +52,22 @@ public class Transaction {
 
   public Transaction(String type) {
     this.type = type;
+  }
+
+  /**
+   * Used to determine if the "to" participant is losing funds in this transaction.
+   * @return True if the "to" participant is losing funds, otherwise false.
+   */
+  public boolean isToLosing() {
+    return to != null && modifierTo != null && modifierTo.isRemoval();
+  }
+
+  /**
+   * Used to determine if the "from" participant is losing funds in this transaction.
+   * @return True if the "from" participant is losing funds, otherwise false.
+   */
+  public boolean isFromLosing() {
+    return from != null && modifierFrom.isRemoval();
   }
 
   /**
@@ -168,6 +187,22 @@ public class Transaction {
     if(resultConsumer != null) {
       resultConsumer.accept(processor.process(this));
     }
+  }
+
+  public Optional<Account> getFromAccount() {
+    if(from != null) {
+      return TNECore.eco().account().findAccount(from.getId());
+    }
+
+    return Optional.empty();
+  }
+
+  public Optional<Account> getToAccount() {
+    if(to != null) {
+      return TNECore.eco().account().findAccount(to.getId());
+    }
+
+    return Optional.empty();
   }
 
   public TransactionProcessor getProcessor() {
