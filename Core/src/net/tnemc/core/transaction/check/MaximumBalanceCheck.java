@@ -34,12 +34,12 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 /**
- * MinimumBalanceCheck
+ * MaximumBalanceCheck
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class MinimumBalanceCheck implements TransactionCheck {
+public class MaximumBalanceCheck implements TransactionCheck {
   /**
    * The unique string-based identifier for this check in order to be able to allow control over
    * what checks are running, and which ones may not have to be utilized. For instance, we don't
@@ -50,7 +50,7 @@ public class MinimumBalanceCheck implements TransactionCheck {
    */
   @Override
   public String identifier() {
-    return "minbal";
+    return "maxbal";
   }
 
   /**
@@ -69,7 +69,7 @@ public class MinimumBalanceCheck implements TransactionCheck {
   public EconomyResponse checkParticipant(Transaction transaction, @NotNull TransactionParticipant participant, HoldingsModifier modifier) {
 
     final Optional<Account> account = transaction.getFromAccount();
-    if(account.isPresent() && modifier.isRemoval()) {
+    if(account.isPresent() && !modifier.isRemoval()) {
 
       final Optional<HoldingsEntry> holdings = account.get().getHoldings(modifier.getRegion(),
                                                                          modifier.getCurrency());
@@ -80,8 +80,8 @@ public class MinimumBalanceCheck implements TransactionCheck {
         holdDecimal = holdings.get().getAmount();
       }
 
-      if(holdDecimal.add(modifier.getModifier()).compareTo(currency.get().getMinBalance()) < 0) {
-        return HoldingsResponse.MIN_HOLDINGS;
+      if(holdDecimal.add(modifier.getModifier()).compareTo(currency.get().getMaxBalance()) > 0) {
+        return HoldingsResponse.MAX_HOLDINGS;
       }
 
     }

@@ -18,11 +18,14 @@ package net.tnemc.core.transaction.check;
  */
 
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.actions.response.GeneralResponse;
 import net.tnemc.core.actions.response.HoldingsResponse;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionCheck;
+import net.tnemc.core.transaction.TransactionParticipant;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -47,46 +50,30 @@ public class StatusCheck implements TransactionCheck {
   }
 
   /**
-   * This method is utilized to run the check on the specific transaction. This should return an
-   * {@link EconomyResponse response}.
+   * This method is utilized to run the check on specific {@link TransactionParticipant participants}.
+   * This should return an {@link EconomyResponse response}.
    *
    * @param transaction The {@link Transaction transaction} to perform the check on.
+   * @param participant The {@link TransactionParticipant participant} to perform the check on.
+   * @param modifier    The {@link HoldingsModifier modifier} related to the specific participant.
    *
    * @return The {@link EconomyResponse response} for this check. This should include a success or
    * failure boolean along with a message for why it failed if it did. The messages for this response
    * are ignored if the check was successful.
    */
   @Override
-  public EconomyResponse process(Transaction transaction) {
+  public EconomyResponse checkParticipant(Transaction transaction, @NotNull TransactionParticipant participant, HoldingsModifier modifier) {
+    final Optional<Account> account = transaction.getFromAccount();
+    if(account.isPresent()) {
 
-    final Optional<Account> from = transaction.getFromAccount();
+      if(modifier.isRemoval()) {
 
-    if(from.isPresent()) {
-
-      if(transaction.isFromLosing()) {
-
-        if(from.get().getStatus().receive()) {
+        if(account.get().getStatus().receive()) {
           return HoldingsResponse.USE_LOCK;
         }
       } else {
 
-        if(from.get().getStatus().receive()) {
-          return HoldingsResponse.RECEIVE_LOCK;
-        }
-      }
-    }
-
-    final Optional<Account> to = transaction.getFromAccount();
-    if(to.isPresent()) {
-
-      if(transaction.isToLosing()) {
-
-        if(to.get().getStatus().receive()) {
-          return HoldingsResponse.USE_LOCK;
-        }
-      } else {
-
-        if(to.get().getStatus().receive()) {
+        if(account.get().getStatus().receive()) {
           return HoldingsResponse.RECEIVE_LOCK;
         }
       }
