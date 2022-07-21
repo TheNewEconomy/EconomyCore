@@ -114,6 +114,6 @@ public enum AccountResponse implements EconomyResponse {
     public String response() {
       return "The specified account doesn't exist.";
     }
-  }
+  },
 
 }

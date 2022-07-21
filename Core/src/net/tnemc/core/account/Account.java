@@ -22,6 +22,7 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.account.holdings.Wallet;
+import net.tnemc.core.account.status.AccountNormalStatus;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.maps.MapKey;
 import org.jetbrains.annotations.NotNull;
@@ -54,6 +55,7 @@ public class Account {
     this.creationDate = new Date().getTime();
     this.pin = "";
 
+    this.status = new AccountNormalStatus();
     //TODO: Default Status?
   }
 

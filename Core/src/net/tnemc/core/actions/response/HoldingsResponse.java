@@ -79,5 +79,39 @@ public enum HoldingsResponse implements EconomyResponse {
     public String response() {
       return "The specified account has insufficient funds.";
     }
+  },
+
+  /**
+   * The action was unsuccessful due to the account not having enough funds.
+   *
+   * @since 0.1.2.0
+   */
+  RECEIVE_LOCK {
+    @Override
+    public boolean success() {
+      return false;
+    }
+
+    @Override
+    public String response() {
+      return "The specified account is locked from receiving funds.";
+    }
+  },
+
+  /**
+   * The action was unsuccessful due to the account not having enough funds.
+   *
+   * @since 0.1.2.0
+   */
+  USE_LOCK {
+    @Override
+    public boolean success() {
+      return false;
+    }
+
+    @Override
+    public String response() {
+      return "The specified account is locked from using funds.";
+    }
   }
 }
