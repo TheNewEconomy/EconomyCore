@@ -27,6 +27,7 @@ import net.tnemc.core.actions.ActionSource;
 import net.tnemc.core.utils.AccountHelper;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -47,6 +48,8 @@ public class Transaction {
   private TransactionParticipant to;
   private HoldingsModifier modifierTo;
   private HoldingsModifier modifierFrom;
+
+  private boolean admin;
 
   private Consumer<TransactionResult> resultConsumer;
 
@@ -100,13 +103,23 @@ public class Transaction {
     this.from = new TransactionParticipant(id, entry);
     this.from.setEndingBalance(entry.modifyGrab(modifier));
 
+    final Optional<TransactionType> type = TNECore.eco().transaction().findType(this.type);
+
+    if(type.isPresent() && type.get().fromTax().isPresent()) {
+      final BigDecimal amount = type.get().fromTax().get()
+          .calculateTax(modifier.getModifier()).multiply(new BigDecimal(-1));
+
+      this.from.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount));
+    } else {
+      this.from.setEndingBalance(entry.modifyGrab(modifier));
+    }
+
     this.modifierFrom = modifier;
     return this;
   }
   /**
    * Used to set the {@link TransactionParticipant to} participant.
    *
-   * //TODO: Link with transaction system logic.
    *
    * @param id The identifier of this participant.
    * @param modifier The {@link HoldingsModifier modifier} associated with this participant.
@@ -118,10 +131,20 @@ public class Transaction {
     final String region = modifier.getRegion();
     final HoldingsEntry entry = new HoldingsEntry(currency,
                                                   region,
-                                                  AccountHelper.getHoldings(id,region, currency));
+                                                  AccountHelper.getHoldings(id, region, currency));
 
     this.to = new TransactionParticipant(id, entry);
-    this.to.setEndingBalance(entry.modifyGrab(modifier));
+
+    final Optional<TransactionType> type = TNECore.eco().transaction().findType(this.type);
+
+    if(type.isPresent() && type.get().toTax().isPresent()) {
+      final BigDecimal amount = type.get().toTax().get()
+          .calculateTax(modifier.getModifier()).multiply(new BigDecimal(-1));
+
+      this.to.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount));
+    } else {
+      this.to.setEndingBalance(entry.modifyGrab(modifier));
+    }
 
     this.modifierTo = modifier;
     return this;
@@ -134,6 +157,18 @@ public class Transaction {
    */
   public Transaction source(final ActionSource source) {
     this.source = source;
+    return this;
+  }
+
+  /**
+   * Used to set this as an administrator performed transaction. This allows it to override certain
+   * things such as account statuses.
+   *
+   * @param admin If this transaction is an administrator transaction or not.
+   * @return An instance of the Transaction object with the new {@link ActionSource source}.
+   */
+  public Transaction admin(final boolean admin) {
+    this.admin = admin;
     return this;
   }
 
@@ -231,6 +266,10 @@ public class Transaction {
 
   public HoldingsModifier getModifierFrom() {
     return modifierFrom;
+  }
+
+  public boolean isAdmin() {
+    return admin;
   }
 
   public Consumer<TransactionResult> getResultConsumer() {

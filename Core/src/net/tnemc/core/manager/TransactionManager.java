@@ -22,6 +22,13 @@ import net.tnemc.core.io.maps.EnhancedHashMap;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionCheck;
 import net.tnemc.core.transaction.TransactionCheckGroup;
+import net.tnemc.core.transaction.TransactionType;
+import net.tnemc.core.transaction.check.MaximumBalanceCheck;
+import net.tnemc.core.transaction.check.MinimumBalanceCheck;
+import net.tnemc.core.transaction.check.StatusCheck;
+import net.tnemc.core.transaction.tax.TaxType;
+import net.tnemc.core.transaction.tax.type.FlatType;
+import net.tnemc.core.transaction.tax.type.PercentileType;
 
 import java.util.Optional;
 
@@ -39,6 +46,63 @@ public class TransactionManager {
   private final EnhancedHashMap<String, TransactionCheck> checks = new EnhancedHashMap<>();
 
   private final EnhancedHashMap<String, TransactionCheckGroup> checkGroups = new EnhancedHashMap<>();
+
+  private final EnhancedHashMap<String, TransactionType> types = new EnhancedHashMap<>();
+
+  private final EnhancedHashMap<String, TaxType> tax = new EnhancedHashMap<>();
+
+  public TransactionManager() {
+
+    //Add our default TransactionTypes.
+
+
+    //Add our default transaction checks.
+    addCheck(new StatusCheck(), "core");
+    addCheck(new MinimumBalanceCheck(), "core");
+    addCheck(new MaximumBalanceCheck(), "core");
+
+    //Add our default tax types.
+    addTax(new FlatType());
+    addTax(new PercentileType());
+  }
+
+  /**
+   * Attempts to find a {@link TransactionType type}.
+   * @param identifier The identifier of the type to use in the search.
+   *
+   * @return An Optional containing the type if it exists based on the identifier, otherwise an
+   * empty Optional.
+   */
+  public Optional<TransactionType> findType(final String identifier) {
+    return Optional.ofNullable(types.get(identifier));
+  }
+
+  /**
+   * Adds a {@link TransactionType type}.
+   * @param type The type to add.
+   */
+  public void addType(final TransactionType type) {
+    types.put(type);
+  }
+
+  /**
+   * Attempts to find a {@link TaxType type}.
+   * @param identifier The identifier of the type to use in the search.
+   *
+   * @return An Optional containing the type if it exists based on the identifier, otherwise an
+   * empty Optional.
+   */
+  public Optional<TaxType> findTax(final String identifier) {
+    return Optional.ofNullable(tax.get(identifier));
+  }
+
+  /**
+   * Adds a {@link TaxType type}.
+   * @param type The type to add.
+   */
+  public void addTax(final TaxType type) {
+    tax.put(type);
+  }
 
   /**
    * Adds a {@link TransactionCheck check}.

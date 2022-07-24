@@ -1,4 +1,5 @@
 package net.tnemc.core.transaction.check;
+
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
@@ -19,7 +20,6 @@ package net.tnemc.core.transaction.check;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
-import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.actions.response.GeneralResponse;
@@ -30,7 +30,6 @@ import net.tnemc.core.transaction.TransactionCheck;
 import net.tnemc.core.transaction.TransactionParticipant;
 import org.jetbrains.annotations.NotNull;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 /**
@@ -71,16 +70,9 @@ public class MinimumBalanceCheck implements TransactionCheck {
     final Optional<Account> account = transaction.getFromAccount();
     if(account.isPresent() && modifier.isRemoval()) {
 
-      final Optional<HoldingsEntry> holdings = account.get().getHoldings(modifier.getRegion(),
-                                                                         modifier.getCurrency());
       final Optional<Currency> currency = TNECore.eco().currency().findCurrency(modifier.getCurrency());
 
-      BigDecimal holdDecimal = currency.get().getStartingHoldings();
-      if(holdings.isPresent()) {
-        holdDecimal = holdings.get().getAmount();
-      }
-
-      if(holdDecimal.add(modifier.getModifier()).compareTo(currency.get().getMinBalance()) < 0) {
+       if(participant.getEndingBalance().getAmount().compareTo(currency.get().getMinBalance()) < 0) {
         return HoldingsResponse.MIN_HOLDINGS;
       }
 

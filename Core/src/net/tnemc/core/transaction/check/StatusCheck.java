@@ -1,4 +1,5 @@
 package net.tnemc.core.transaction.check;
+
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
@@ -63,6 +64,9 @@ public class StatusCheck implements TransactionCheck {
    */
   @Override
   public EconomyResponse checkParticipant(Transaction transaction, @NotNull TransactionParticipant participant, HoldingsModifier modifier) {
+    //Override status restrictions if the transaction is an administrator one.
+    if(transaction.isAdmin()) return GeneralResponse.SUCCESS;
+
     final Optional<Account> account = transaction.getFromAccount();
     if(account.isPresent()) {
 
