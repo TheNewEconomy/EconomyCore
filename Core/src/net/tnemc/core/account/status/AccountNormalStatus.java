@@ -18,6 +18,7 @@ package net.tnemc.core.account.status;
  */
 
 import net.tnemc.core.account.AccountStatus;
+import net.tnemc.core.io.maps.MapKey;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -31,6 +32,7 @@ public class AccountNormalStatus implements AccountStatus {
    * @return The identifier of this account status.
    */
   @Override
+  @MapKey
   public @NotNull String identifier() {
     return "normal";
   }

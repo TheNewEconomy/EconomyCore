@@ -55,8 +55,7 @@ public class Account {
     this.creationDate = new Date().getTime();
     this.pin = "";
 
-    this.status = new AccountNormalStatus();
-    //TODO: Default Status?
+    this.status = TNECore.eco().account().findStatus("normal");
   }
 
   /**

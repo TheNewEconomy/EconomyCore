@@ -18,6 +18,7 @@ package net.tnemc.core.account;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.io.maps.MapKey;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -33,6 +34,7 @@ public interface AccountStatus {
   /**
    * @return The identifier of this account status.
    */
+  @MapKey
   @NotNull String identifier();
 
   /**

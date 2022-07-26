@@ -56,5 +56,6 @@ public interface TransactionType {
    */
   Optional<TaxEntry> fromTax();
 
+
   //TODO: handle how we're going to send out success/failure messages
 }

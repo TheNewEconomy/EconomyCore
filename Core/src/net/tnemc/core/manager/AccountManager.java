@@ -21,9 +21,13 @@ package net.tnemc.core.manager;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.account.NonPlayerAccount;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.SharedAccount;
+import net.tnemc.core.account.status.AccountLockedStatus;
+import net.tnemc.core.account.status.AccountNormalStatus;
+import net.tnemc.core.account.status.AccountRestrictedStatus;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.actions.response.AccountResponse;
 import net.tnemc.core.compatibility.log.DebugLevel;
@@ -49,11 +53,14 @@ public class AccountManager {
 
   private final EnhancedHashMap<String, Account> accounts = new EnhancedHashMap<>();
 
+  private final EnhancedHashMap<String, AccountStatus> statuses = new EnhancedHashMap<>();
+
   private final LinkedHashMap<Class<? extends SharedAccount>, Function<String, Boolean>> types = new LinkedHashMap<>();
 
   protected UUIDProvider uuidProvider = new BaseUUIDProvider();
 
   public AccountManager() {
+    addDefaultStatuses();
     addDefaultTypes();
   }
 
@@ -152,6 +159,21 @@ public class AccountManager {
     return Optional.empty();
   }
 
+  public AccountStatus findStatus(final String identifier) {
+    if(statuses.containsKey(identifier)) {
+      return statuses.get(identifier);
+    }
+    return statuses.get("normal");
+  }
+
+  /**
+   * Adds a new {@link AccountStatus} status.
+   * @param status The account status to add
+   */
+  public void addAccountStatus(final AccountStatus status) {
+    statuses.put(status);
+  }
+
   /**
    * Adds a new {@link Account} type. These should extend the {@link SharedAccount}.
    * @param type The class for this type.
@@ -170,6 +192,16 @@ public class AccountManager {
     //TODO: Add third-party before this.
 
     addAccountType(NonPlayerAccount.class, (value)->!UUIDProvider.validate(value));
+  }
+
+  /**
+   * Adds our default built-in account types.
+   */
+  public void addDefaultStatuses() {
+
+    addAccountStatus(new AccountLockedStatus());
+    addAccountStatus(new AccountNormalStatus());
+    addAccountStatus(new AccountRestrictedStatus());
   }
 
   public UUIDProvider uuidProvider() {
