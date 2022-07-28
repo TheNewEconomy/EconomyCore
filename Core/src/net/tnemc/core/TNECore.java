@@ -21,6 +21,9 @@ package net.tnemc.core;
 import net.tnemc.core.compatibility.LogProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.log.DebugLevel;
+import net.tnemc.core.config.DataConfig;
+import net.tnemc.core.config.MainConfig;
+import net.tnemc.core.config.MessageConfig;
 import net.tnemc.core.io.storage.StorageManager;
 import net.tnemc.core.world.WorldProvider;
 
@@ -57,6 +60,10 @@ public abstract class TNECore {
   protected StorageManager storage;
   protected EconomyManager economyManager = new EconomyManager();
   protected WorldProvider worldProvider = new WorldProvider();
+
+  private MainConfig config;
+  private DataConfig data;
+  private MessageConfig message;
 
   /* Plugin Instance */
   private static TNECore instance;
@@ -115,6 +122,18 @@ public abstract class TNECore {
    */
   public static ServerConnector server() {
     return instance.server;
+  }
+
+  public MainConfig getConfig() {
+    return config;
+  }
+
+  public DataConfig getData() {
+    return data;
+  }
+
+  public MessageConfig getMessage() {
+    return message;
   }
 
   public static File directory() {
