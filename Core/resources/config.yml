@@ -111,6 +111,15 @@ Core:
         #The timezone to use for transactions.
         Timezone: US/Eastern
 
+        #Configurations relating to tracking large transactions
+        Tracking:
+
+            #If large transaction tracking is enabled or not.
+            Enabled: true
+
+            #The threshold to mark a transaction for tracking.
+            Amount: 400
+
         #Configurations relating to pay transactions.
         Pay:
 

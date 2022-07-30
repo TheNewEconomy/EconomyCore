@@ -49,6 +49,7 @@ public class Transaction {
   private HoldingsModifier modifierFrom;
 
   private boolean admin;
+  private boolean track;
 
   private Consumer<TransactionResult> resultConsumer;
 
@@ -84,8 +85,6 @@ public class Transaction {
 
   /**
    * Used to set the {@link TransactionParticipant from} participant.
-   *
-   * //TODO: Link with transaction system logic.
    *
    * @param id The identifier of this participant.
    * @param modifier The {@link HoldingsModifier modifier} associated with this participant.
@@ -283,6 +282,14 @@ public class Transaction {
 
   public boolean isAdmin() {
     return admin;
+  }
+
+  public boolean isTrack() {
+    return track;
+  }
+
+  public void setTrack(boolean track) {
+    this.track = track;
   }
 
   public Consumer<TransactionResult> getResultConsumer() {

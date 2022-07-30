@@ -26,11 +26,13 @@ import net.tnemc.core.transaction.TransactionType;
 import net.tnemc.core.transaction.check.MaximumBalanceCheck;
 import net.tnemc.core.transaction.check.MinimumBalanceCheck;
 import net.tnemc.core.transaction.check.StatusCheck;
+import net.tnemc.core.transaction.check.TrackingCheck;
 import net.tnemc.core.transaction.tax.TaxType;
 import net.tnemc.core.transaction.tax.type.FlatType;
 import net.tnemc.core.transaction.tax.type.PercentileType;
 import net.tnemc.core.transaction.type.PayType;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 /**
@@ -52,12 +54,18 @@ public class TransactionManager {
 
   private final EnhancedHashMap<String, TaxType> tax = new EnhancedHashMap<>();
 
+  //TODO: Configuration loading.
+  private boolean track = true;
+  private BigDecimal amount = new BigDecimal("400");
+
+
   public TransactionManager() {
 
     //Add our default TransactionTypes.
     addType(new PayType());
 
     //Add our default transaction checks.
+    addCheck(new TrackingCheck(), "core");
     addCheck(new StatusCheck(), "core");
     addCheck(new MinimumBalanceCheck(), "core");
     addCheck(new MaximumBalanceCheck(), "core");
@@ -170,5 +178,21 @@ public class TransactionManager {
    */
   public Optional<TransactionCheckGroup> findGroup(final String identifier) {
     return Optional.ofNullable(checkGroups.get(identifier));
+  }
+
+  public boolean isTrack() {
+    return track;
+  }
+
+  public void setTrack(boolean track) {
+    this.track = track;
+  }
+
+  public BigDecimal getAmount() {
+    return amount;
+  }
+
+  public void setAmount(BigDecimal amount) {
+    this.amount = amount;
   }
 }
