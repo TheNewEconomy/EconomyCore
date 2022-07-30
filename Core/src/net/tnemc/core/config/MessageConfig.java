@@ -24,8 +24,6 @@ import net.tnemc.core.io.message.translation.Language;
 import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;

@@ -69,12 +69,12 @@ public class StatusCheck implements TransactionCheck {
     //Override status restrictions if the transaction is an administrator one.
     if(transaction.isAdmin()) return GeneralResponse.SUCCESS;
 
-    final Optional<Account> account = transaction.getFromAccount();
+    final Optional<Account> account = participant.asAccount();
     if(account.isPresent()) {
 
       if(modifier.isRemoval()) {
 
-        if(!account.get().getStatus().receive()) {
+        if(!account.get().getStatus().use()) {
           return HoldingsResponse.USE_LOCK;
         }
       } else {

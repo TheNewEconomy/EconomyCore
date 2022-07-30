@@ -19,11 +19,9 @@ package net.tnemc.core.transaction.processor;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionCheck;
 import net.tnemc.core.transaction.TransactionCheckGroup;
 import net.tnemc.core.transaction.TransactionProcessor;
-import net.tnemc.core.transaction.TransactionResult;
 
 import java.util.LinkedList;
 

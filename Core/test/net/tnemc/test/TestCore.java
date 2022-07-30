@@ -92,6 +92,7 @@ public class TestCore extends TNECore {
 
 
     final Optional<Account> account = eco().account().findAccount(cfhID);
+
     final Optional<Account> towny = eco().account().findAccount("town-Test");
 
     if(towny.isPresent()) {

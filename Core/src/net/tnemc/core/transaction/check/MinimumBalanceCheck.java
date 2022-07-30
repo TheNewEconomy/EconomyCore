@@ -69,15 +69,12 @@ public class MinimumBalanceCheck implements TransactionCheck {
   @Override
   public EconomyResponse checkParticipant(Transaction transaction, @NotNull TransactionParticipant participant, HoldingsModifier modifier) {
 
-    final Optional<Account> account = transaction.getFromAccount();
+    final Optional<Account> account = participant.asAccount();
     if(account.isPresent() && modifier.isRemoval()) {
 
       final Optional<Currency> currency = TNECore.eco().currency().findCurrency(modifier.getCurrency());
 
-      System.out.println("ID: " + participant.getId());
-      System.out.println("Min: " + currency.get().getMinBalance().toPlainString());
-      System.out.println("End: " + participant.getEndingBalance().getAmount().toPlainString());
-       if(participant.getEndingBalance().getAmount().compareTo(currency.get().getMinBalance()) < 0) {
+      if(participant.getEndingBalance().getAmount().compareTo(currency.get().getMinBalance()) < 0) {
         return HoldingsResponse.MIN_HOLDINGS;
       }
 

@@ -69,7 +69,7 @@ public class MaximumBalanceCheck implements TransactionCheck {
   @Override
   public EconomyResponse checkParticipant(Transaction transaction, @NotNull TransactionParticipant participant, HoldingsModifier modifier) {
 
-    final Optional<Account> account = transaction.getFromAccount();
+    final Optional<Account> account = participant.asAccount();
     if(account.isPresent() && !modifier.isRemoval()) {
 
       final Optional<Currency> currency = TNECore.eco().currency().findCurrency(modifier.getCurrency());

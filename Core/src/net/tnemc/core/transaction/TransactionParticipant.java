@@ -18,7 +18,11 @@ package net.tnemc.core.transaction;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
+
+import java.util.Optional;
 
 /**
  * Represents a participant in a {@link Transaction transaction}.
@@ -36,6 +40,10 @@ public class TransactionParticipant {
   public TransactionParticipant(final String id, final HoldingsEntry startingBalance) {
     this.id = id;
     this.startingBalance = startingBalance;
+  }
+
+  public Optional<Account> asAccount() {
+    return TNECore.eco().account().findAccount(id);
   }
 
   public String getId() {

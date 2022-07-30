@@ -18,7 +18,6 @@ package net.tnemc.core.config;
  */
 
 import net.tnemc.core.TNECore;
-import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.File;
 

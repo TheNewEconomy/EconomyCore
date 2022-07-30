@@ -18,7 +18,6 @@ package net.tnemc.core.utils;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 /**

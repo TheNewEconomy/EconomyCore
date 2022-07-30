@@ -132,8 +132,6 @@ Core:
                 #The tax to apply to the sender
                 Rate: 0.0
 
-
-
     #All configurations relating to the data auto saver
     AutoSaver:
 
