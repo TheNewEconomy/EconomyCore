@@ -113,7 +113,7 @@ public class TestCore extends TNECore {
           "USD",
           new BigDecimal("600"));
 
-      Transaction transaction = new Transaction("give").to(cfhID.toString(), modifier).from("town-Test", modifier.counter()).processor(new BaseTransactionProcessor());
+      Transaction transaction = new Transaction("pay").to(cfhID.toString(), modifier).from("town-Test", modifier.counter()).processor(new BaseTransactionProcessor());
 
       try {
         transaction.process((transactionResult -> System.out.println(transactionResult.getMessage())));

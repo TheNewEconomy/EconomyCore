@@ -29,6 +29,7 @@ import net.tnemc.core.transaction.check.StatusCheck;
 import net.tnemc.core.transaction.tax.TaxType;
 import net.tnemc.core.transaction.tax.type.FlatType;
 import net.tnemc.core.transaction.tax.type.PercentileType;
+import net.tnemc.core.transaction.type.PayType;
 
 import java.util.Optional;
 
@@ -54,7 +55,7 @@ public class TransactionManager {
   public TransactionManager() {
 
     //Add our default TransactionTypes.
-
+    addType(new PayType());
 
     //Add our default transaction checks.
     addCheck(new StatusCheck(), "core");

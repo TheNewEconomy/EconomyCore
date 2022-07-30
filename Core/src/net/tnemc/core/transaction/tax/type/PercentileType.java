@@ -39,6 +39,6 @@ public class PercentileType implements TaxType {
 
   @Override
   public BigDecimal handleTaxation(BigDecimal amount, BigDecimal tax) {
-    return amount.add(amount.multiply(tax));
+    return amount.multiply(tax);
   }
 }

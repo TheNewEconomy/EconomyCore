@@ -39,6 +39,6 @@ public class FlatType implements TaxType {
 
   @Override
   public BigDecimal handleTaxation(BigDecimal amount, BigDecimal tax) {
-    return amount.add(tax);
+    return tax;
   }
 }
