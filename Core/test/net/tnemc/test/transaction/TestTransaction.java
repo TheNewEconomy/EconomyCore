@@ -1,5 +1,4 @@
-package net.tnemc.core.transaction.tax.type;
-
+package net.tnemc.test.transaction;
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
@@ -18,27 +17,11 @@ package net.tnemc.core.transaction.tax.type;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.io.maps.MapKey;
-import net.tnemc.core.transaction.tax.TaxType;
-
-import java.math.BigDecimal;
-
 /**
- * Represents a percentile taxation type. This is taken as a percentage of the total amount.
+ * TestTransaction
  *
- * @see TaxType
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class PercentileType implements TaxType {
-  @Override
-  @MapKey
-  public String name() {
-    return "percent";
-  }
-
-  @Override
-  public BigDecimal handleTaxation(BigDecimal amount, BigDecimal tax) {
-    return amount.add(amount.multiply(tax));
-  }
+public class TestTransaction {
 }

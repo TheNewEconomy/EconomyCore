@@ -96,7 +96,7 @@ public class AccountManager {
       account = nonPlayerAccount.get();
     }
 
-    accounts.put(account);
+    accounts.put(account.getIdentifier(), account);
     return AccountResponse.CREATED;
   }
 

@@ -112,7 +112,7 @@ public class Wallet {
 
     regionHoldings.setHoldingsEntry(entry, type);
 
-    holdings.put(entry.getCurrency(),regionHoldings);
+    holdings.put(entry.getRegion(), regionHoldings);
   }
 
   /**

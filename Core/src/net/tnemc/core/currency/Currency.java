@@ -19,6 +19,7 @@ package net.tnemc.core.currency;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.manager.CurrencyManager;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -65,6 +66,22 @@ public class Currency {
 
   //MISC configurations
   private Note note;
+
+  public Currency() {
+    this.startingHoldings = BigDecimal.ZERO;
+    this.maxBalance = CurrencyManager.largestSupported;
+    this.minBalance = BigDecimal.ZERO;
+
+    this.type = "virtual";
+
+    this.symbol = "$";
+    this.decimal = ".";
+    this.separateMajor = true;
+    this.majorSeparator = ",";
+
+    this.decimalPlaces = 2;
+    this.minorWeight = 100;
+  }
 
   public boolean isNotable() {
     return note != null;

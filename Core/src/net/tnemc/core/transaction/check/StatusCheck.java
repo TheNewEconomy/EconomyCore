@@ -23,6 +23,7 @@ import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.actions.response.GeneralResponse;
 import net.tnemc.core.actions.response.HoldingsResponse;
+import net.tnemc.core.io.maps.MapKey;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionCheck;
 import net.tnemc.core.transaction.TransactionParticipant;
@@ -46,6 +47,7 @@ public class StatusCheck implements TransactionCheck {
    * @return The unique identifier for this check.
    */
   @Override
+  @MapKey
   public String identifier() {
     return "status";
   }
@@ -72,12 +74,12 @@ public class StatusCheck implements TransactionCheck {
 
       if(modifier.isRemoval()) {
 
-        if(account.get().getStatus().receive()) {
+        if(!account.get().getStatus().receive()) {
           return HoldingsResponse.USE_LOCK;
         }
       } else {
 
-        if(account.get().getStatus().receive()) {
+        if(!account.get().getStatus().receive()) {
           return HoldingsResponse.RECEIVE_LOCK;
         }
       }

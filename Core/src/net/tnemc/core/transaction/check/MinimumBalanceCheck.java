@@ -25,6 +25,7 @@ import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.actions.response.GeneralResponse;
 import net.tnemc.core.actions.response.HoldingsResponse;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.io.maps.MapKey;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionCheck;
 import net.tnemc.core.transaction.TransactionParticipant;
@@ -48,6 +49,7 @@ public class MinimumBalanceCheck implements TransactionCheck {
    * @return The unique identifier for this check.
    */
   @Override
+  @MapKey
   public String identifier() {
     return "minbal";
   }
@@ -72,6 +74,9 @@ public class MinimumBalanceCheck implements TransactionCheck {
 
       final Optional<Currency> currency = TNECore.eco().currency().findCurrency(modifier.getCurrency());
 
+      System.out.println("ID: " + participant.getId());
+      System.out.println("Min: " + currency.get().getMinBalance().toPlainString());
+      System.out.println("End: " + participant.getEndingBalance().getAmount().toPlainString());
        if(participant.getEndingBalance().getAmount().compareTo(currency.get().getMinBalance()) < 0) {
         return HoldingsResponse.MIN_HOLDINGS;
       }

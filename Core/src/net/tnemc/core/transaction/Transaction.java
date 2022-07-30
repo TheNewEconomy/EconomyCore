@@ -94,27 +94,33 @@ public class Transaction {
    * participant.
    */
   public Transaction from(final String id, final HoldingsModifier modifier) {
-    final String currency = modifier.getCurrency();
-    final String region = modifier.getRegion();
-    final HoldingsEntry entry = new HoldingsEntry(currency,
-                                            region,
-                                            AccountHelper.getHoldings(id,region, currency));
 
-    this.from = new TransactionParticipant(id, entry);
-    this.from.setEndingBalance(entry.modifyGrab(modifier));
+    final Optional<Account> account = TNECore.eco().account().findAccount(id);
 
-    final Optional<TransactionType> type = TNECore.eco().transaction().findType(this.type);
+    if(account.isPresent()) {
+      final String currency = modifier.getCurrency();
+      final String region = modifier.getRegion();
 
-    if(type.isPresent() && type.get().fromTax().isPresent()) {
-      final BigDecimal amount = type.get().fromTax().get()
-          .calculateTax(modifier.getModifier()).multiply(new BigDecimal(-1));
+      final Optional<HoldingsEntry> balance = account.get().getHoldings(region, currency);
+      final BigDecimal bal = (balance.isPresent())? balance.get().getAmount() : BigDecimal.ZERO;
 
-      this.from.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount));
-    } else {
-      this.from.setEndingBalance(entry.modifyGrab(modifier));
+      final HoldingsEntry entry = new HoldingsEntry(region, currency, bal);
+
+      this.from = new TransactionParticipant(id, entry);
+
+      final Optional<TransactionType> type = TNECore.eco().transaction().findType(this.type);
+
+      if(type.isPresent() && type.get().fromTax().isPresent()) {
+        final BigDecimal amount = type.get().fromTax().get()
+            .calculateTax(modifier.getModifier()).multiply(new BigDecimal(-1));
+
+        this.from.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount));
+      } else {
+        this.from.setEndingBalance(entry.modifyGrab(modifier));
+      }
+
+      this.modifierFrom = modifier;
     }
-
-    this.modifierFrom = modifier;
     return this;
   }
   /**
@@ -127,26 +133,32 @@ public class Transaction {
    * participant.
    */
   public Transaction to(final String id, final HoldingsModifier modifier) {
-    final String currency = modifier.getCurrency();
-    final String region = modifier.getRegion();
-    final HoldingsEntry entry = new HoldingsEntry(currency,
-                                                  region,
-                                                  AccountHelper.getHoldings(id, region, currency));
+    final Optional<Account> account = TNECore.eco().account().findAccount(id);
 
-    this.to = new TransactionParticipant(id, entry);
+    if(account.isPresent()) {
+      final String currency = modifier.getCurrency();
+      final String region = modifier.getRegion();
 
-    final Optional<TransactionType> type = TNECore.eco().transaction().findType(this.type);
+      final Optional<HoldingsEntry> balance = account.get().getHoldings(region, currency);
+      final BigDecimal bal = (balance.isPresent())? balance.get().getAmount() : BigDecimal.ZERO;
 
-    if(type.isPresent() && type.get().toTax().isPresent()) {
-      final BigDecimal amount = type.get().toTax().get()
-          .calculateTax(modifier.getModifier()).multiply(new BigDecimal(-1));
+      final HoldingsEntry entry = new HoldingsEntry(region, currency, bal);
 
-      this.to.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount));
-    } else {
-      this.to.setEndingBalance(entry.modifyGrab(modifier));
+      this.to = new TransactionParticipant(id, entry);
+
+      final Optional<TransactionType> type = TNECore.eco().transaction().findType(this.type);
+
+      if(type.isPresent() && type.get().toTax().isPresent()) {
+        final BigDecimal amount = type.get().toTax().get()
+            .calculateTax(modifier.getModifier()).multiply(new BigDecimal(-1));
+
+        this.to.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount));
+      } else {
+        this.to.setEndingBalance(entry.modifyGrab(modifier));
+      }
+
+      this.modifierTo = modifier;
     }
-
-    this.modifierTo = modifier;
     return this;
   }
 
@@ -221,7 +233,9 @@ public class Transaction {
 
     if(resultConsumer != null) {
       resultConsumer.accept(processor.process(this));
+      return;
     }
+    processor.process(this);
   }
 
   public Optional<Account> getFromAccount() {

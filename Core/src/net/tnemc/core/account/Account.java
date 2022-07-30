@@ -56,6 +56,9 @@ public class Account {
     this.pin = "";
 
     this.status = TNECore.eco().account().findStatus("normal");
+
+    //Set our default wallet
+    this.wallet = new Wallet();
   }
 
   /**

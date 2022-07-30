@@ -19,17 +19,28 @@ package net.tnemc.test;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
+import net.tnemc.core.account.PlayerAccount;
+import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.account.holdings.modify.HoldingsModifier;
+import net.tnemc.core.currency.Currency;
 import net.tnemc.core.handlers.PlayerJoinHandler;
+import net.tnemc.core.transaction.Transaction;
+import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
+import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 import net.tnemc.test.compatibility.TestPlayerProvider;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * TNECoreTest
@@ -44,6 +55,11 @@ public class TestCore extends TNECore {
 
     //Startup
     setInstance(this);
+
+    Currency currency = new Currency();
+    currency.setIdentifier("USD");
+
+    eco().currency().addCurrency(currency);
 
     //This should throw an exception because it's already initialized.
     assertThrows(IllegalStateException.class, ()->setInstance(this), "Instance was set twice");
@@ -71,6 +87,42 @@ public class TestCore extends TNECore {
 
     //Non-Player Account Tests
     eco().account().createAccount("town-Test", "town-Test");
+    eco().account().createAccount(cfhID.toString(), "creatorfromhell");
     assertNotNull(eco().account().findAccount("town-Test").get().getIdentifier());
+
+
+    final Optional<Account> account = eco().account().findAccount(cfhID);
+    final Optional<Account> towny = eco().account().findAccount("town-Test");
+
+    if(towny.isPresent()) {
+      towny.get().setHoldings(new HoldingsEntry("world", "USD", new BigDecimal("1000")));
+
+      System.out.println("Towny Holdings: " + towny.get().getHoldings("world", "USD").get().getAmount().toPlainString());
+
+    }
+
+    if(account.isPresent()) {
+      System.out.println("Account exists");
+
+      assertTrue(account.get() instanceof PlayerAccount);
+
+      System.out.println("Holdings: " + account.get().getHoldings("world", "USD").get().getAmount().toPlainString());
+
+      final HoldingsModifier modifier = new HoldingsModifier(
+          "world",
+          "USD",
+          new BigDecimal("600"));
+
+      Transaction transaction = new Transaction("give").to(cfhID.toString(), modifier).from("town-Test", modifier.counter()).processor(new BaseTransactionProcessor());
+
+      try {
+        transaction.process((transactionResult -> System.out.println(transactionResult.getMessage())));
+      } catch(InvalidTransactionException e) {
+        e.printStackTrace();
+      }
+      System.out.println("Final Holdings: " + account.get().getHoldings("world", "USD").get().getAmount().toPlainString());
+      System.out.println("Towny Final Holdings: " + towny.get().getHoldings("world", "USD").get().getAmount().toPlainString());
+
+    }
   }
 }

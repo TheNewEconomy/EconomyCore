@@ -25,6 +25,7 @@ import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.actions.response.GeneralResponse;
 import net.tnemc.core.actions.response.HoldingsResponse;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.io.maps.MapKey;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionCheck;
 import net.tnemc.core.transaction.TransactionParticipant;
@@ -48,6 +49,7 @@ public class MaximumBalanceCheck implements TransactionCheck {
    * @return The unique identifier for this check.
    */
   @Override
+  @MapKey
   public String identifier() {
     return "maxbal";
   }

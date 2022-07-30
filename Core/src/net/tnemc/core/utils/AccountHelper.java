@@ -41,7 +41,4 @@ public class AccountHelper {
     return true;
   }
 
-  public static BigDecimal getHoldings(final String uuid, final String region, final String currency) {
-    return BigDecimal.ZERO;
-  }
 }

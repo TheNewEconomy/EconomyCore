@@ -52,6 +52,7 @@ public interface TransactionProcessor {
     }
 
     if(transaction.getTo() != null) {
+
       Optional<Account> to = TNECore.eco().account().findAccount(transaction.getTo().getId());
       to.ifPresent(account->account.setHoldings(transaction.getTo().getEndingBalance()));
     }

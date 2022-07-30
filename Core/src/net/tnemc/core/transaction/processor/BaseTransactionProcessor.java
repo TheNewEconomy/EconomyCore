@@ -18,6 +18,7 @@ package net.tnemc.core.transaction.processor;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionCheck;
 import net.tnemc.core.transaction.TransactionCheckGroup;
@@ -36,18 +37,8 @@ public class BaseTransactionProcessor implements TransactionProcessor {
 
   private final LinkedList<String> checks = new LinkedList<>();
 
-  /**
-   * Processes a transaction.
-   *
-   * @param transaction The {@link Transaction transaction} to handle.
-   *
-   * @return The {@link TransactionResult result} from performing the transaction.
-   */
-  @Override
-  public TransactionResult process(Transaction transaction) {
-
-
-    return null;
+  public BaseTransactionProcessor() {
+    checks.addAll(TNECore.eco().transaction().findGroup("core").get().getChecks());
   }
 
   /**
