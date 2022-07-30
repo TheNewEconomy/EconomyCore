@@ -22,8 +22,11 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.actions.EconomyResponse;
 
+import java.sql.Time;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * This is a class that handles the actual processing of a transaction.
@@ -56,7 +59,20 @@ public interface TransactionProcessor {
       Optional<Account> to = TNECore.eco().account().findAccount(transaction.getTo().getId());
       to.ifPresent(account->account.setHoldings(transaction.getTo().getEndingBalance()));
     }
-    return new TransactionResult(true, "");
+
+    final TransactionResult result = new TransactionResult(true, "");
+
+    final Receipt receipt = new Receipt(UUID.randomUUID(),
+                                        new Date().getTime(),
+                                        transaction);
+    result.setReceipt(receipt);
+
+    if(result.isSuccessful()) {
+
+      TNECore.eco().transaction().log(receipt);
+    }
+
+    return result;
   }
 
   default Optional<EconomyResponse> processChecks(Transaction transaction) {

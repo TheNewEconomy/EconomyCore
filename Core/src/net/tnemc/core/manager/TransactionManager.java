@@ -19,6 +19,7 @@ package net.tnemc.core.manager;
  */
 
 import net.tnemc.core.io.maps.EnhancedHashMap;
+import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionCheck;
 import net.tnemc.core.transaction.TransactionCheckGroup;
@@ -33,7 +34,10 @@ import net.tnemc.core.transaction.tax.type.PercentileType;
 import net.tnemc.core.transaction.type.PayType;
 
 import java.math.BigDecimal;
+import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Manages everything related to the transaction system. This is usually just keeping track of the
@@ -53,6 +57,8 @@ public class TransactionManager {
   private final EnhancedHashMap<String, TransactionType> types = new EnhancedHashMap<>();
 
   private final EnhancedHashMap<String, TaxType> tax = new EnhancedHashMap<>();
+
+  private final Map<UUID, Receipt> receipts = new ConcurrentHashMap<>();
 
   //TODO: Configuration loading.
   private boolean track = true;
@@ -178,6 +184,14 @@ public class TransactionManager {
    */
   public Optional<TransactionCheckGroup> findGroup(final String identifier) {
     return Optional.ofNullable(checkGroups.get(identifier));
+  }
+
+  /**
+   * Used to log a transaction receipt.
+   * @param receipt The receipt to log.
+   */
+  public void log(final Receipt receipt) {
+    receipts.put(receipt.getId(), receipt);
   }
 
   public boolean isTrack() {
