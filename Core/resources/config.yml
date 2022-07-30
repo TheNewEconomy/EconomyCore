@@ -111,6 +111,29 @@ Core:
         #The timezone to use for transactions.
         Timezone: US/Eastern
 
+        #Configurations relating to pay transactions.
+        Pay:
+
+            #Tax-related configurations.
+            Tax:
+
+                #The tax to apply to the sender
+                Sender: 0.0
+
+                #The tax to apply to the receiver
+                Receiver: 0.0
+
+        #Configurations relating to conversion transactions.
+        Conversion:
+
+            #Tax-related configurations.
+            Tax:
+
+                #The tax to apply to the sender
+                Rate: 0.0
+
+
+
     #All configurations relating to the data auto saver
     AutoSaver:
 
