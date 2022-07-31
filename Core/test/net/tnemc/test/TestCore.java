@@ -25,7 +25,9 @@ import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.handlers.PlayerJoinHandler;
+import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
+import net.tnemc.core.transaction.TransactionResult;
 import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 import net.tnemc.test.compatibility.TestPlayerProvider;
@@ -116,14 +118,25 @@ public class TestCore extends TNECore {
 
       Transaction transaction = new Transaction("pay").to(cfhID.toString(), modifier).from("town-Test", modifier.counter()).processor(new BaseTransactionProcessor());
 
+      Optional<Receipt> receipt = Optional.empty();
       try {
-        transaction.process((transactionResult -> System.out.println(transactionResult.getMessage())));
+        final TransactionResult result = transaction.process();
+        System.out.println(result.getMessage());
+        receipt = result.getReceipt();
       } catch(InvalidTransactionException e) {
         e.printStackTrace();
       }
+
       System.out.println("Final Holdings: " + account.get().getHoldings("world", "USD").get().getAmount().toPlainString());
       System.out.println("Towny Final Holdings: " + towny.get().getHoldings("world", "USD").get().getAmount().toPlainString());
 
+      if(receipt.isPresent()) {
+
+        receipt.get().voidTransaction();
+
+        System.out.println("Final Holdings: " + account.get().getHoldings("world", "USD").get().getAmount().toPlainString());
+        System.out.println("Towny Final Holdings: " + towny.get().getHoldings("world", "USD").get().getAmount().toPlainString());
+      }
     }
   }
 }

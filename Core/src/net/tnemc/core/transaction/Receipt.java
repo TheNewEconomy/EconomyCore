@@ -21,7 +21,9 @@ package net.tnemc.core.transaction;
 
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.ActionSource;
+import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 /**
@@ -54,6 +56,48 @@ public class Receipt {
     this.time = time;
     this.type = transaction.getType();
     this.source = transaction.getSource();
+
+    this.from = transaction.getFrom();
+    this.modifierFrom = transaction.getModifierFrom();
+    this.to = transaction.getTo();
+    this.modifierTo = transaction.getModifierTo();
+  }
+
+  public void voidTransaction() {
+    if(voided) return;
+
+    Transaction transaction = new Transaction("void").source(source);
+
+    if(from != null) {
+
+      final HoldingsModifier modifier = modifierFrom.counter();
+      final BigDecimal tax = (modifier.isRemoval())? from.getTax()
+          : from.getTax().multiply(new BigDecimal(-1));
+      modifier.modifier(tax);
+
+      transaction = transaction.from(from.getId(), modifier);
+    }
+
+    if(to != null) {
+
+      final HoldingsModifier modifier = modifierTo.counter();
+      final BigDecimal tax = (modifier.isRemoval())? to.getTax()
+          : to.getTax().multiply(new BigDecimal(-1));
+      modifier.modifier(tax);
+
+      transaction = transaction.to(to.getId(), modifier);
+    }
+
+    try {
+      transaction.process((transactionResult -> {
+        if(transactionResult.isSuccessful()) {
+              this.voided = true;
+        }
+      }));
+    } catch(InvalidTransactionException e) {
+      //TODO: print out tne stack trace about the transaction object.
+      e.printStackTrace();
+    }
   }
 
   public UUID getId() {

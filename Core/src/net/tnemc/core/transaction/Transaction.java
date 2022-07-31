@@ -24,6 +24,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.ActionSource;
+import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 
 import java.math.BigDecimal;
@@ -38,7 +39,7 @@ import java.util.function.Consumer;
  */
 public class Transaction {
 
-  private TransactionProcessor processor; //TODO: default processor(s).
+  private TransactionProcessor processor;
 
   private String type;
   private ActionSource source;
@@ -55,6 +56,8 @@ public class Transaction {
 
   public Transaction(String type) {
     this.type = type;
+
+    this.processor = new BaseTransactionProcessor();
   }
 
   /**
@@ -110,9 +113,10 @@ public class Transaction {
 
       if(type.isPresent() && type.get().fromTax().isPresent()) {
         final BigDecimal amount = type.get().fromTax().get()
-            .calculateTax(modifier.getModifier()).multiply(new BigDecimal(-1));
+            .calculateTax(modifier.getModifier());
 
-        this.from.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount));
+        this.from.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount.multiply(new BigDecimal(-1))));
+        this.from.setTax(amount);
       } else {
         this.from.setEndingBalance(entry.modifyGrab(modifier));
       }
@@ -148,9 +152,10 @@ public class Transaction {
 
       if(type.isPresent() && type.get().toTax().isPresent()) {
         final BigDecimal amount = type.get().toTax().get()
-            .calculateTax(modifier.getModifier()).multiply(new BigDecimal(-1));
+            .calculateTax(modifier.getModifier());
 
-        this.to.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount));
+        this.to.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount.multiply(new BigDecimal(-1))));
+        this.to.setTax(amount);
       } else {
         this.to.setEndingBalance(entry.modifyGrab(modifier));
       }
@@ -210,7 +215,7 @@ public class Transaction {
    *
    * @throws InvalidTransactionException If all required aspects of the transaction are not present.
    */
-  public void process() throws InvalidTransactionException {
+  public TransactionResult process() throws InvalidTransactionException {
     String missing = null;
 
     if(this.type == null) {
@@ -229,11 +234,13 @@ public class Transaction {
       throw new InvalidTransactionException(missing);
     }
 
+    final TransactionResult result = processor.process(this);
+
     if(resultConsumer != null) {
-      resultConsumer.accept(processor.process(this));
-      return;
+      resultConsumer.accept(result);
     }
-    processor.process(this);
+
+    return result;
   }
 
   public Optional<Account> getFromAccount() {

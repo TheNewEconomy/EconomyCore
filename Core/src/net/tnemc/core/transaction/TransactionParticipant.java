@@ -22,6 +22,7 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 /**
@@ -34,12 +35,14 @@ import java.util.Optional;
 public class TransactionParticipant {
 
   private final String id;
+  private BigDecimal tax;
   private final HoldingsEntry startingBalance;
   private HoldingsEntry endingBalance;
 
   public TransactionParticipant(final String id, final HoldingsEntry startingBalance) {
     this.id = id;
     this.startingBalance = startingBalance;
+    this.tax = BigDecimal.ZERO;
   }
 
   public Optional<Account> asAccount() {
@@ -48,6 +51,14 @@ public class TransactionParticipant {
 
   public String getId() {
     return id;
+  }
+
+  public BigDecimal getTax() {
+    return tax;
+  }
+
+  public void setTax(BigDecimal tax) {
+    this.tax = tax;
   }
 
   public HoldingsEntry getStartingBalance() {

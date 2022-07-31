@@ -33,7 +33,7 @@ public class HoldingsModifier {
 
   private final String currency;
   private final String region;
-  private final BigDecimal modifier;
+  private BigDecimal modifier;
   private final HoldingsOperation operation;
 
   /**
@@ -118,6 +118,10 @@ public class HoldingsModifier {
 
   public BigDecimal modify(final BigDecimal value) {
     return operation.perform(value, modifier);
+  }
+
+  public void modifier(final BigDecimal value) {
+    this.modifier = modifier.add(value);
   }
 
   public String getCurrency() {
