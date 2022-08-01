@@ -1,9 +1,9 @@
 Data:
 
-  #Files relating to purging old data.
+  #Configurations relating to purging old data.
   Purge:
 
-    #Whether old data purging is enabled.
+    #Should old data be purged?
     Enabled: false
 
     #The amount of days for a user to be logged off before purging their data?
@@ -47,9 +47,6 @@ Data:
 
   #Settings related to connection pool
   Pool:
-
-    #Should the connection pool be enabled?
-    Enable: true
 
     #The max size of our pool.
     MaxSize: 10

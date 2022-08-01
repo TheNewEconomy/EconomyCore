@@ -1,4 +1,4 @@
-package net.tnemc.core.command;
+package net.tnemc.core.command.money;
 
 /*
  * The New Economy

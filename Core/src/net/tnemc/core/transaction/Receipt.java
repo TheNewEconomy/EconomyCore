@@ -95,7 +95,6 @@ public class Receipt {
         }
       }));
     } catch(InvalidTransactionException e) {
-      //TODO: print out tne stack trace about the transaction object.
       e.printStackTrace();
     }
   }

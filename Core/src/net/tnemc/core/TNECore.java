@@ -18,6 +18,7 @@ package net.tnemc.core;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import cloud.commandframework.CommandManager;
 import net.tnemc.core.compatibility.LogProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.log.DebugLevel;
@@ -36,7 +37,7 @@ import java.util.regex.Pattern;
  * @since 0.1.1.17
  * @author creatorfromhell
  */
-public abstract class TNECore {
+public abstract class TNECore<C> {
 
   /*
    * Core final variables utilized within TNE.
@@ -58,6 +59,7 @@ public abstract class TNECore {
   //Manager Instances
   protected ServerConnector server;
   protected StorageManager storage;
+  protected CommandManager<C> command;
   protected EconomyManager economyManager = new EconomyManager();
   protected WorldProvider worldProvider = new WorldProvider();
 
@@ -69,7 +71,6 @@ public abstract class TNECore {
   private static TNECore instance;
 
   public static void setInstance(TNECore core) {
-
     if(instance == null) {
       instance = core;
     } else {
@@ -87,6 +88,10 @@ public abstract class TNECore {
    */
   public static LogProvider log() {
     return instance.logger;
+  }
+
+  public static CommandManager command() {
+    return instance.command;
   }
 
   /**

@@ -69,6 +69,16 @@
             <version>5.3.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>cloud.commandframework</groupId>
+            <artifactId>cloud-core</artifactId>
+            <version>1.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>cloud.commandframework</groupId>
+            <artifactId>cloud-annotations</artifactId>
+            <version>1.7.0</version>
+        </dependency>
     </dependencies>
 
     <parent>
@@ -147,6 +157,7 @@
                             <include>org.json.simple:*</include>
                             <include>com.zaxxer:*</include>
                             <include>co.aikar:*</include>
+                            <include>cloud.commandframework:*</include>
                             <include>me.carleslc:*</include>
                         </includes>
                     </artifactSet>
@@ -160,12 +171,16 @@
                             <shadedPattern>${tne.relocation}.zaxxer</shadedPattern>
                         </relocation>
                         <relocation>
-                            <pattern>co.aikar.idb-core</pattern>
-                            <shadedPattern>${tne.relocation}.idb</shadedPattern>
-                        </relocation>
-                        <relocation>
                             <pattern>me.carleslc.Simple-YAML</pattern>
                             <shadedPattern>${tne.relocation}.yaml</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>cloud.commandframework</pattern>
+                            <shadedPattern>${tne.relocation}.cloud</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>co.aikar.idb-core</pattern>
+                            <shadedPattern>${tne.relocation}.idb</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
