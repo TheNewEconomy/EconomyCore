@@ -70,14 +70,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>cloud.commandframework</groupId>
-            <artifactId>cloud-core</artifactId>
-            <version>1.7.0</version>
-        </dependency>
-        <dependency>
-            <groupId>cloud.commandframework</groupId>
-            <artifactId>cloud-annotations</artifactId>
-            <version>1.7.0</version>
+            <groupId>co.aikar</groupId>
+            <artifactId>acf-core</artifactId>
+            <version>0.5.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
@@ -177,6 +172,14 @@
                         <relocation>
                             <pattern>cloud.commandframework</pattern>
                             <shadedPattern>${tne.relocation}.cloud</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>co.aikar.commands</pattern>
+                            <shadedPattern>${tne.relocation}.acf</shadedPattern> <!-- Replace this -->
+                        </relocation>
+                        <relocation>
+                            <pattern>co.aikar.locales</pattern>
+                            <shadedPattern>${tne.relocation}.locales</shadedPattern> <!-- Replace this -->
                         </relocation>
                         <relocation>
                             <pattern>co.aikar.idb-core</pattern>

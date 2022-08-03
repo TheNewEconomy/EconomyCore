@@ -177,70 +177,101 @@ Messages:
     Voided: "<white>Successfully voided the transaction with the ID of <green>$transaction<white>."
 
   Commands:
-    Account:
-      PinReset: "/account pin reset <username/UUID> - Changes an account's pin to the default one."
-      PinSet: "/account pin set <pin> [old pin] - Used to change your account's pin."
     Admin:
-      Backup: "/tne backup - Creates a backup of all server data."
-      Balance: "/tne balance <player> [world] [currency] - Retrieves the balance of a player.<newline>- Player ~ The account owner.<newline>- World ~ The world to retrieve the balance from.<newline>- currency ~ The currency to retrieve the balance of."
-      Build: "/tne build - Displays the version of TNE currently running."
-      Caveats: "/tne caveats - Displays all known caveats for this version of TNE."
-      Create: "/tne create <player> [balance] - Creates a new economy account.<newline>- Player ~ The account owner.<newline>- Balance ~ The starting balance of the account."
-      Debug: "/tne debug - Toggles console debug mode."
-      Delete: "/tne delete <player> - Deletes a player account.<newline>- Player ~ The account owner."
-      Extract: "/tne extract - Extracts all player balances with their username attached for database-related debugging."
-      ID: "/tne id <player> - Retrieves a player's TNE UUID.<newline>- Player ~ The player you wish to discover the UUID of."
-      Maintenance: "tne maintenance - Toggles economy maintenance mode, which disables all economy functionality."
-      Menu: "/tne menu <player> - Opens a GUI for performing basic transactions on the specified player.<newline>-Player ~ The name/uuid of the player you wish to perform transactions with in the GUI."
-      Purge: "/tne purge - Deletes all player accounts that have the default balance"
-      Recreate: "/tne recreate - Attempts to recreate database tables. WARNING: This will delete all data in the database."
-      Reload: "/tne reload <configuration> - Saves modifications made via command, and reloads a configuration file.<newline>- Configuration ~ The identifier of the configuration to reload. Default is all."
-      Reset: "/tne reset - Deletes all economy-related data from the database."
-      Restore: "/tne restore - Restores all balances that are located in extracted.yml after /tne extract."
-      Save: "/tne save - Force saves all TNE data."
-      Status: "/tne status <player> [status] - Displays, or sets, the current account status of an account.<newline>- Player ~ The account owner."
-      Upload: "/tne upload - Uploads the TNE debug & latest server log to pastebin.com, and provides a link to each."
-      Version: "/tne version - Displays the version of TNE currently running."
+      Backup:
+        Description: "/tne backup - Creates a backup of all server data."
+      Balance:
+        Description: "/tne balance <player> [world] [currency] - Retrieves the balance of a player.<newline>- Player ~ The account owner.<newline>- World ~ The world to retrieve the balance from.<newline>- currency ~ The currency to retrieve the balance of."
+      Create:
+        Description: "/tne create <player> [balance] - Creates a new economy account.<newline>- Player ~ The account owner.<newline>- Balance ~ The starting balance of the account."
+      Debug:
+        Description: "/tne debug - Toggles console debug mode."
+      Delete:
+        Description: "/tne delete <player> - Deletes a player account.<newline>- Player ~ The account owner."
+      Extract:
+        Description: "/tne extract - Extracts all player balances with their username attached for database-related debugging."
+      Purge:
+        Description: "/tne purge - Deletes all player accounts that have the default balance"
+      Reload:
+        Description: "/tne reload <configuration> - Saves modifications made via command, and reloads a configuration file.<newline>- Configuration ~ The identifier of the configuration to reload. Default is all."
+      Reset:
+        Description: "/tne reset - Deletes all economy-related data from the database."
+      Restore:
+        Description: "/tne restore - Restores all balances that are located in extracted.yml after /tne extract."
+      Save:
+        Description: "/tne save - Force saves all TNE data."
+      Status:
+        Description: "/tne status <player> [status] - Displays, or sets, the current account status of an account.<newline>- Player ~ The account owner."
+      Upload:
+        Description: "/tne upload - Uploads the TNE debug & latest server log to pastebin.com, and provides a link to each."
+      Version:
+        Description: "/tne version - Displays the version of TNE currently running."
     Config:
-      Get: "/tnec get <node> [configuration] - Returns the value of a configuration.<newline>- Node ~ The configuration node to use.<newline>- Configuration ~ The configuration identifier to retrieve the value from. This may be retrieved automatically."
-      Save: "/tnec save [configuration] - Saves modifications made to a configuration value via command.<newline>- Configuration ~ The configuration identifier to retrieve the value from."
-      Set: "/tnec set <node> <value> [configuration] - Sets a configuration value. This will not save until you do /tnec save."
-      TNEGet: "/tnec tneget <node> [world] [player] - Returns the value of a configuration after TNE takes into account player & world configurations.<newline>- Node ~ The configuration node to use.<newline>- World ~ The name of the world to use for parsing.<newline>- Player ~ The name of the world to use for parsing."
-      Undo: "/tnec undo [configuration/all] - Undoes modifications made to configurations.<newline>- Configuration ~ The configuration identifier to retrieve the value from. This may be retrieved automatically."
-    Currency:
-      Rename: "/currency rename <currency> <new name> - Renames a currency to a different name."
-      List: "/currency list [world] - Displays the currencies available for a world.<newline> - World ~ The world to use."
-      Tiers: "/currency tiers [currency] [world] - Displays the tiers for a currency.<newline>- currency ~ The Currency to check.<newline>- World ~ The world that the Currency belongs to."
-    Language:
-      Current: "/language current - Displays your current language as set for your account."
-      List: "/language list - Lists available languages on this server."
-      Reload: "/language reload - Reloads all language files."
-      Set: "/language set <name> - Sets your current language to the one specified."
+      Get:
+        Arguments: "<node> [configuration]"
+        Description: "Returns the value of a configuration.<newline>- Node ~ The configuration node to use.<newline>- Configuration ~ The configuration identifier to retrieve the value from. This may be retrieved automatically."
+      Set:
+        Arguments: "<node> <value> [configuration]"
+        Description: "Sets a configuration value. This will not save until you do /tnec save."
     Module:
-      Available: "/tnem available [url] - Displays available modules at the specified url, or defaults to TNE's core modules.<newline>- url ~ The url to use for the check, only use if you know what you're doing."
-      Download: "/tnem download <name> [url] - Attempts to download the specified module.<newline>- url ~ The url to use, only use if you know what you're doing, defaults to TNE's core modules url."
-      Info: "/tnem info <module> - Displays some information about a module.<newline>- Module ~ The module to look up."
-      List: "/tnem list - Lists all loaded TNE modules."
-      Load: "/tnem load <module> - Load a module from the modules directory.<newline>- Module ~ The module to load."
-      Reload: "/tnem reload <module> - Reloads a module from the modules directory.<newline>- Module ~ The module to reload."
-      Unload: "/tnem unload <module> - Unload a module from the server.<newline>- Module ~ The module to unload."
+      Available:
+        Description: "/tnem available [url] - Displays available modules at the specified url, or defaults to TNE's core modules.<newline>- url ~ The url to use for the check, only use if you know what you're doing."
+      Download:
+        Description: "/tnem download <name> [url] - Attempts to download the specified module.<newline>- url ~ The url to use, only use if you know what you're doing, defaults to TNE's core modules url."
+      Info:
+        Description: "/tnem info <module> - Displays some information about a module.<newline>- Module ~ The module to look up."
+      List:
+        Description: "/tnem list - Lists all loaded TNE modules."
+      Load:
+        Description: "/tnem load <module> - Load a module from the modules directory.<newline>- Module ~ The module to load."
+      Reload:
+        Description: "/tnem reload <module> - Reloads a module from the modules directory.<newline>- Module ~ The module to reload."
+      Unload:
+        Description: "/tnem unload <module> - Unload a module from the server.<newline>- Module ~ The module to unload."
     Money:
-      Balance: "/money balance [world] [currency] - Displays your current holdings."
-      Consolidate: "/money consolidate [player] - Consolidate your item currency into the least number of items."
-      Convert: "/money convert <amount> <to currency[:world]> [from currency[:world]] - Convert some of your holdings to another currency."
-      Give: "/money give <player> <amount> [world] [currency] - Adds money into your economy, and gives it to a player."
-      Note: "/money note <amount> [currency] - Makes your virtual currency physical, for storage/trading purposes."
-      Pay: "/money pay <player> <amount> [currency] - Use some of your holdings to pay another player."
-      PayFrom: "/money payfrom <account> <player> <amount> [currency] - Use some of an account's holdings to pay another player."
-      Set: "/money set <player> <amount> [world] [currency] - Set the holdings of a player."
-      SetAll: "/money setall <amount> [world] - Set the holdings of all players."
-      Take: "/money take <player> <amount> [world] [currency] - Removes money from your economy, specifically from a player's balance."
-      Top: "/money top [page] [currency:name] [world:world] [limit:#] - A list of players with the highest balances.<newline>[page] - The page number to view. Defaults to 1.<newline>[Currency] - The name of the Currency to get balances from. Defaults to world default. Use overall for all currencies.<newline>[world] - The world name you wish to filter, or all for every world. Defaults to current world. Use overall for all worlds.<newline>[limit] - Limit changes how many players are displayed. Defaults to 10."
+      Balance:
+        Arguments: "[world] [currency]"
+        Description: "Displays your current holdings."
+      Convert:
+        Arguments: "<amount> <to currency[:world]> [from currency[:world]]"
+        Description: "Convert some of your holdings to another currency."
+      Give:
+        Arguments: "<player> <amount> [world] [currency]"
+        Description: "Adds money into your economy, and gives it to a player."
+      Note:
+        Arguments: "<amount> [currency]"
+        Description: "Makes your virtual currency physical, for storage/trading purposes."
+      Pay:
+        Arguments: "<player> <amount> [from:account] [currency]"
+        Description: "Use some of your holdings to pay another player."
+      Request:
+        Arguments: "<player> <amount> [currency]"
+        Description: "Request money from a player."
+      Set:
+        Arguments: "<player> <amount> [world] [currency]"
+        Description: "Set the holdings of a player."
+      SetAll:
+        Arguments: "<amount> [world]"
+        Description: "Set the holdings of all players."
+      Take:
+        Arguments: "<player> <amount> [world] [currency]"
+        Description: "Removes money from your economy, specifically from a player's balance."
+      Top:
+        Arguments: "[page] [currency:name] [world:world] [limit:#]"
+        Description: "A list of players with the highest balances.<newline>[page] - The page number to view. Defaults to 1.<newline>[Currency] - The name of the Currency to get balances from. Defaults to world default. Use overall for all currencies.<newline>[world] - The world name you wish to filter, or all for every world. Defaults to current world. Use overall for all worlds.<newline>[limit] - Limit changes how many players are displayed. Defaults to 10."
     Transaction:
-      Away: "/transaction away [page #] - Displays transactions that you missed since the last time you were on."
-      History: "/transaction history [player:name] [page:#] [world:name/all] - See a detailed break down of your transaction history.<newline>- Page ~ The page number you wish to view.<newline>- World ~ The world name you wish to filter, or all for every world. Defaults to current world."
-      Info: "/transaction info <uuid> - Displays information about a transaction.<newline>- UUID ~ The id of the transaction."
-      Void: "/transaction void <uuid> - Undoes a previously completed transaction.<newline>- UUID ~ The id of the transaction."
+      Away:
+        Arguments: "[page #]"
+        Description: "Displays transactions that you missed since the last time you were on."
+      History:
+        Arguments: "[player:name] [page:#] [world:name/all]"
+        Description: "See a detailed break down of your transaction history.<newline>- Page ~ The page number you wish to view.<newline>- World ~ The world name you wish to filter, or all for every world. Defaults to current world."
+      Info:
+        Arguments: "<uuid>"
+        Description: "Displays information about a transaction.<newline>- UUID ~ The id of the transaction."
+      Void:
+        Arguments: "<uuid>"
+        Description: "Undoes a previously completed transaction.<newline>- UUID ~ The id of the transaction."
 
   World:
     Change: "<red>You have been charged <gold> $amount<red> for changing worlds."

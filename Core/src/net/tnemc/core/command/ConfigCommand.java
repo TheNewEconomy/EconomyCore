@@ -17,25 +17,37 @@ package net.tnemc.core.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import cloud.commandframework.arguments.CommandArgument;
-
-import java.util.LinkedList;
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.Description;
+import co.aikar.commands.annotation.Subcommand;
+import co.aikar.commands.annotation.Syntax;
 
 /**
- * EcoCommand
+ * ConfigCommand
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public abstract class EcoCommand<C> {
+@CommandAlias("tneconfig|tnec|ecoconfig")
+public class ConfigCommand<C> extends BaseCommand {
 
-  public abstract String name();
+  @Default
+  @Subcommand("get|find|value")
+  @Syntax("%Config.Get.Arguments")
+  @Description("%Config.Get.Description")
+  @CommandPermission("tne.config.get")
+  public void get(C sender, String[] args) {
 
-  public abstract String[] aliases();
+  }
 
-  public abstract String node();
+  @Subcommand("set|=")
+  @Syntax("%Config.Set.Arguments")
+  @Description("%Config.Set.Description")
+  @CommandPermission("tne.config.set")
+  public void set(C sender, String[] args) {
 
-  public abstract boolean console();
-
-  public abstract LinkedList<CommandArgument<C, ?>> arguments();
+  }
 }

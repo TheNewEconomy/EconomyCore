@@ -18,7 +18,7 @@ package net.tnemc.core;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import cloud.commandframework.CommandManager;
+import co.aikar.commands.CommandManager;
 import net.tnemc.core.compatibility.LogProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.log.DebugLevel;
@@ -59,7 +59,7 @@ public abstract class TNECore<C> {
   //Manager Instances
   protected ServerConnector server;
   protected StorageManager storage;
-  protected CommandManager<C> command;
+  protected CommandManager<C, ?, ?, ?, ?, ?> command;
   protected EconomyManager economyManager = new EconomyManager();
   protected WorldProvider worldProvider = new WorldProvider();
 
@@ -68,9 +68,9 @@ public abstract class TNECore<C> {
   private MessageConfig message;
 
   /* Plugin Instance */
-  private static TNECore instance;
+  private static TNECore<?> instance;
 
-  public static void setInstance(TNECore core) {
+  public static void setInstance(TNECore<?> core) {
     if(instance == null) {
       instance = core;
     } else {
@@ -90,7 +90,7 @@ public abstract class TNECore<C> {
     return instance.logger;
   }
 
-  public static CommandManager command() {
+  public static CommandManager<?, ?, ?, ?, ?, ?> command() {
     return instance.command;
   }
 
