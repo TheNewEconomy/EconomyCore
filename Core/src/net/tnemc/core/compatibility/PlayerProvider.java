@@ -10,6 +10,8 @@ package net.tnemc.core.compatibility;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
+import net.tnemc.core.menu.Menu;
+
 import java.util.UUID;
 
 /**
@@ -73,6 +75,20 @@ public interface PlayerProvider {
    * @return The inventory object.
    */
   Object getInventory(boolean ender);
+
+  /**
+   * Used to determine if this player is inside of the specified {@link Menu}.
+   *
+   * @param name The name of the menu
+   * @return True if this player is inside the specified menu, otherwise false.
+   */
+  boolean inMenu(final String name);
+
+  /**
+   * Used to open the provided menu for this player.
+   * @param menu The menu to open.
+   */
+  void openMenu(final Menu menu);
 
   /**
    * Used to determine if this player has the specified permission node.
