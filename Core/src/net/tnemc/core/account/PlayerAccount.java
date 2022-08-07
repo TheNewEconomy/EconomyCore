@@ -19,6 +19,7 @@ package net.tnemc.core.account;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
 
 import java.util.Date;
@@ -66,6 +67,17 @@ public class PlayerAccount extends Account {
    */
   public Optional<PlayerProvider> getPlayer() {
     return TNECore.server().findPlayer(uuid);
+  }
+
+  /**
+   * Used to grab the location of the account holder. This will be an empty optional for all offline
+   * players accounts.
+   *
+   * @return The optional containing the account holder's location, or an empty optional if the
+   * holder is offline.
+   */
+  public Optional<Location> location() {
+    return getPlayer().map(PlayerProvider::getLocation);
   }
 
   public boolean isOnline() {

@@ -72,7 +72,7 @@ public class Receipt {
 
       final HoldingsModifier modifier = modifierFrom.counter();
       final BigDecimal tax = (modifier.isRemoval())? from.getTax()
-          : from.getTax().multiply(new BigDecimal(-1));
+          : from.getTax().negate();
       modifier.modifier(tax);
 
       transaction = transaction.from(from.getId(), modifier);
@@ -82,7 +82,7 @@ public class Receipt {
 
       final HoldingsModifier modifier = modifierTo.counter();
       final BigDecimal tax = (modifier.isRemoval())? to.getTax()
-          : to.getTax().multiply(new BigDecimal(-1));
+          : to.getTax().negate();
       modifier.modifier(tax);
 
       transaction = transaction.to(to.getId(), modifier);

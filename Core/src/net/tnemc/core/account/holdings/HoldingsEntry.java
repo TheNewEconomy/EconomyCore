@@ -18,10 +18,13 @@ package net.tnemc.core.account.holdings;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
+import net.tnemc.core.currency.Currency;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 /**
  * Represents an entry for holdings. This contains all the information including region, currency
@@ -87,6 +90,10 @@ public class HoldingsEntry {
     HoldingsEntry entry = new HoldingsEntry(region, currency, amount);
     entry.modify(modifier);
     return entry;
+  }
+
+  public Optional<Currency> currency() {
+    return TNECore.eco().currency().findCurrency(currency);
   }
 
   public String getCurrency() {

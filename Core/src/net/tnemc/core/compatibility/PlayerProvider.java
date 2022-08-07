@@ -35,6 +35,12 @@ public interface PlayerProvider {
   String getName();
 
   /**
+   * Used to get the location of this player.
+   * @return The location of this player.
+   */
+  Location getLocation();
+
+  /**
    * Used to get the name of the world this player is in.
    * @return The name of the world.
    */

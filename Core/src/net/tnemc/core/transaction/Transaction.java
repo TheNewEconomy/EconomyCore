@@ -115,7 +115,7 @@ public class Transaction {
         final BigDecimal amount = type.get().fromTax().get()
             .calculateTax(modifier.getModifier());
 
-        this.from.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount.multiply(new BigDecimal(-1))));
+        this.from.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount.negate()));
         this.from.setTax(amount);
       } else {
         this.from.setEndingBalance(entry.modifyGrab(modifier));
@@ -154,7 +154,7 @@ public class Transaction {
         final BigDecimal amount = type.get().toTax().get()
             .calculateTax(modifier.getModifier());
 
-        this.to.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount.multiply(new BigDecimal(-1))));
+        this.to.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount.negate()));
         this.to.setTax(amount);
       } else {
         this.to.setEndingBalance(entry.modifyGrab(modifier));

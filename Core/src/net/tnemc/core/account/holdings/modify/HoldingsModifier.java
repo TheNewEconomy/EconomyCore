@@ -103,7 +103,7 @@ public class HoldingsModifier {
    * @return The new opposite holdings modifier object.
    */
   public HoldingsModifier counter() {
-    return new HoldingsModifier(region, currency, modifier.multiply(new BigDecimal(-1)), operation);
+    return new HoldingsModifier(region, currency, modifier.negate(), operation);
   }
 
   /**
