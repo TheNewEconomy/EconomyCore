@@ -21,6 +21,7 @@ package net.tnemc.core.account.holdings;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.utils.Monetary;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
@@ -114,6 +115,11 @@ public class HoldingsEntry {
 
   public BigDecimal getAmount() {
     return amount;
+  }
+
+  public Monetary asMonetary() {
+    final Optional<Currency> cur = currency();
+    return new Monetary(amount, cur.map(Currency::getDecimalPlaces).orElse(2));
   }
 
   public void setAmount(BigDecimal amount) {

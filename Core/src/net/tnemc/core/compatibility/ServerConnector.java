@@ -75,4 +75,11 @@ public interface ServerConnector {
   default boolean pluginAvailable(final String name) {
     return false;
   }
+
+  /**
+   * Used to replace colour codes in a string.
+   * @param string The string to format.
+   * @return The formatted string.
+   */
+  String replaceColours(final String string);
 }

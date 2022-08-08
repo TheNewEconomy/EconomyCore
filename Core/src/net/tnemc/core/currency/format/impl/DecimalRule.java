@@ -1,4 +1,5 @@
-package net.tnemc.core.currency.format;
+package net.tnemc.core.currency.format.impl;
+
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
@@ -19,27 +20,19 @@ package net.tnemc.core.currency.format;
 
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.currency.format.FormatRule;
 
-/**
- * Represents a single formatting rule, which is used to add to a currency's formatting.
- *
- * @author creatorfromhell
- * @since 0.1.2.0
- */
-public interface FormatRule {
+public class DecimalRule implements FormatRule {
+  @Override
+  public String name() {
+    return "decimal";
+  }
 
-  /**
-   * The identifier for this rule.
-   * @return The human-friendly identifier for this rule.
-   */
-  String name();
-
-  /**
-   * Used to format a TNE format string based on the provided holdings and account information.
-   * @param account The account to use for this formatting.
-   * @param entry The holdings entry to use for formatting.
-   * @param format The format string that these should be provided for.
-   * @return The formatted string.
-   */
-  String format(Account account, HoldingsEntry entry, String format);
+  @Override
+  public String format(Account account, HoldingsEntry entry, String format) {
+    if(entry.currency().isPresent()) {
+      return format.replace("<decimal>", entry.currency().get().getDecimal());
+    }
+    return format;
+  }
 }
