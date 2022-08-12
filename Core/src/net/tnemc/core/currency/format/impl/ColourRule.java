@@ -23,8 +23,6 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.currency.format.FormatRule;
 
-import java.util.Map;
-
 public class ColourRule implements FormatRule {
   @Override
   public String name() {

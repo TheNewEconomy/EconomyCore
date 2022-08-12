@@ -1,5 +1,4 @@
-package net.tnemc.core.currency.format.impl;
-
+package net.tnemc.core.menu.icon;
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
@@ -18,23 +17,21 @@ package net.tnemc.core.currency.format.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.account.Account;
-import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.currency.Currency;
-import net.tnemc.core.currency.format.FormatRule;
+/**
+ * Represents when an {@link IconAction} should be performed.
+ *
+ * @author creatorfromhell
+ * @since 0.1.2.0
+ */
+public enum ActionType {
 
-import java.util.Optional;
-
-public class SymbolRule implements FormatRule {
-  @Override
-  public String name() {
-    return "symbol";
-  }
-
-  @Override
-  public String format(Account account, HoldingsEntry entry, String format) {
-
-    final Optional<Currency> currency = entry.currency();
-    return currency.map(value->format.replace("<symbol>", value.getSymbol())).orElse(format);
-  }
+  ANY,
+  DOUBLE_CLICK,
+  LEFT_CLICK,
+  LEFT_SHIFT,
+  SCROLL_CLICK,
+  RIGHT_CLICK,
+  RIGHT_SHIFT,
+  DROP,
+  DROP_CTRL,
 }

@@ -18,7 +18,9 @@ package net.tnemc.test.compatibility;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.menu.Menu;
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
@@ -55,6 +57,16 @@ public class TestPlayerProvider implements PlayerProvider {
   @Override
   public String getName() {
     return name;
+  }
+
+  /**
+   * Used to get the location of this player.
+   *
+   * @return The location of this player.
+   */
+  @Override
+  public Location getLocation() {
+    return null;
   }
 
   /**
@@ -117,6 +129,28 @@ public class TestPlayerProvider implements PlayerProvider {
   @Override
   public Object getInventory(boolean ender) {
     return null;
+  }
+
+  /**
+   * Used to determine if this player is inside of the specified {@link Menu}.
+   *
+   * @param name The name of the menu
+   *
+   * @return True if this player is inside the specified menu, otherwise false.
+   */
+  @Override
+  public boolean inMenu(String name) {
+    return false;
+  }
+
+  /**
+   * Used to open the provided menu for this player.
+   *
+   * @param menu The menu to open.
+   */
+  @Override
+  public void openMenu(Menu menu) {
+
   }
 
   /**

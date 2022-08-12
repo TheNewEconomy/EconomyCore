@@ -21,6 +21,8 @@ import net.tnemc.core.menu.Menu;
 import net.tnemc.core.menu.callbacks.IconClickCallback;
 import net.tnemc.item.AbstractItemStack;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -32,8 +34,17 @@ import java.util.function.Consumer;
  */
 public class Icon {
 
+  protected List<IconAction> actions = new LinkedList<>();
+
   protected int slot;
   protected AbstractItemStack<?> item;
+
+  //Enhanced functionality
+  protected String permission = "";
+  protected String message = "";
+
+
+  //TODO: Default actions? chat response, send message?, close, switch, add data?
 
   //Callbacks
   protected Consumer<IconClickCallback> click;

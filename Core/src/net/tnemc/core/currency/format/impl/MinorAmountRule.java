@@ -21,9 +21,6 @@ package net.tnemc.core.currency.format.impl;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.currency.format.FormatRule;
-import net.tnemc.core.utils.Monetary;
-
-import java.util.Locale;
 
 public class MinorAmountRule implements FormatRule {
   @Override
