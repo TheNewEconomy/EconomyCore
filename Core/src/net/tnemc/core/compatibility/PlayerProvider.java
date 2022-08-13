@@ -11,6 +11,7 @@ package net.tnemc.core.compatibility;
  */
 
 import net.tnemc.core.menu.Menu;
+import net.tnemc.item.AbstractItemStack;
 
 import java.util.UUID;
 
@@ -95,6 +96,17 @@ public interface PlayerProvider {
    * @param menu The menu to open.
    */
   void openMenu(final Menu menu);
+
+  /**
+   * Used to open the provided menu for this player.
+   * @param menu The menu to open.
+   */
+  void openMenu(final String menu);
+
+  /**
+   * Used to update the menu the player is in with a new item for a specific slot.
+   */
+  void updateMenu(int slot, AbstractItemStack<?> item);
 
   /**
    * Used to determine if this player has the specified permission node.

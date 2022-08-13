@@ -20,6 +20,7 @@ package net.tnemc.core.menu.callbacks;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.core.menu.Page;
+import net.tnemc.core.menu.icon.ActionType;
 import net.tnemc.core.menu.icon.Icon;
 
 /**
@@ -30,16 +31,22 @@ import net.tnemc.core.menu.icon.Icon;
  */
 public class IconClickCallback {
 
+  protected final ActionType type;
   protected final Menu menu;
   protected final Page page;
   protected final PlayerProvider player;
   protected final Icon icon;
 
-  public IconClickCallback(Menu menu, Page page, PlayerProvider player, Icon icon) {
+  public IconClickCallback(ActionType type, Menu menu, Page page, PlayerProvider player, Icon icon) {
+    this.type = type;
     this.menu = menu;
     this.page = page;
     this.player = player;
     this.icon = icon;
+  }
+
+  public ActionType getType() {
+    return type;
   }
 
   public Menu getMenu() {

@@ -17,12 +17,14 @@ package net.tnemc.core.menu;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.menu.callbacks.ClickCallback;
 import net.tnemc.core.menu.callbacks.CloseCallback;
 import net.tnemc.core.menu.callbacks.OpenCallback;
+import net.tnemc.item.AbstractItemStack;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.function.Consumer;
 
 /**
@@ -34,12 +36,14 @@ import java.util.function.Consumer;
  */
 public class Menu {
 
-  private final Map<Integer, Page> pages = new ConcurrentHashMap<>();
+  protected final ConcurrentSkipListMap<Integer, Page> pages = new ConcurrentSkipListMap<>();
 
-  private String name;
-  private String title;
-  private int size;
-  private boolean readOnly = true;
+  protected String name;
+  protected String title;
+  protected int size;
+  protected boolean readOnly = true;
+
+  protected int page;
 
   //Callbacks
   protected Consumer<OpenCallback> open;
@@ -50,6 +54,15 @@ public class Menu {
     this.name = name;
     this.title = title;
     this.size = size;
+    this.page = 1;
+  }
+
+  public void build(PlayerProvider player) {
+    player.openMenu(this);
+  }
+
+  public void update(PlayerProvider player, int slot, AbstractItemStack<?> item) {
+    player.updateMenu(slot, item);
   }
 
   public Map<Integer, Page> getPages() {

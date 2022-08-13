@@ -17,7 +17,10 @@ package net.tnemc.core.menu.icon;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.menu.Menu;
+import net.tnemc.core.menu.Page;
 import net.tnemc.core.menu.callbacks.IconClickCallback;
 import net.tnemc.item.AbstractItemStack;
 
@@ -38,6 +41,8 @@ public class Icon {
 
   protected int slot;
   protected AbstractItemStack<?> item;
+
+  //TODO: StateIcon? Changes item based on click?
 
   //Enhanced functionality
   protected String permission = "";
@@ -76,5 +81,35 @@ public class Icon {
 
   public void setClick(Consumer<IconClickCallback> click) {
     this.click = click;
+  }
+
+
+  public boolean onClick(ActionType type, Menu menu, Page page, PlayerProvider player) {
+
+    if(!permission.equalsIgnoreCase("") && !player.hasPermission(permission)) {
+      return true;
+    }
+
+    for(IconAction action : actions) {
+
+      if(action.type().equals(ActionType.ANY) || action.type().name().equalsIgnoreCase(type.name())) {
+        action.onPerform(menu, page, player, this);
+
+        if(!action.continueOther()) {
+          break;
+        }
+      }
+    }
+
+    if(click != null) {
+      click.accept(new IconClickCallback(type, menu, page, player, this));
+    }
+
+    if(!message.equalsIgnoreCase("")) {
+      //TODO: Send message translation
+      //TNECore.eco().translation().
+    }
+
+    return true;
   }
 }

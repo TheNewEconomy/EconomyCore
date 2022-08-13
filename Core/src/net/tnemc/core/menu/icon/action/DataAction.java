@@ -1,4 +1,4 @@
-package net.tnemc.core.menu.icon;
+package net.tnemc.core.menu.icon.action;
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
@@ -20,34 +20,53 @@ package net.tnemc.core.menu.icon;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.core.menu.Page;
+import net.tnemc.core.menu.icon.ActionType;
+import net.tnemc.core.menu.icon.Icon;
+import net.tnemc.core.menu.icon.IconAction;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Represents an action that is performed on an action.
+ * DataAction
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public interface IconAction {
+public class DataAction implements IconAction {
+
+  protected final Map<String, Object> data = new ConcurrentHashMap<>();
 
   /**
    * The action type that belongs to this icon action.
+   *
    * @return The {@link ActionType} for when this action should happen.
    */
-  ActionType type();
+  @Override
+  public ActionType type() {
+    return ActionType.ANY;
+  }
 
   /**
    * Determines if any other icon actions should be performed after this action is performed.
+   *
    * @return True if other actions should be performed, otherwise false.
    */
-  boolean continueOther();
+  @Override
+  public boolean continueOther() {
+    return true;
+  }
 
   /**
    * This method is called when the action happens.
    *
-   * @param menu The menu that the action happened in.
-   * @param page The page of the menu that the action happened in.
+   * @param menu   The menu that the action happened in.
+   * @param page   The page of the menu that the action happened in.
    * @param player The player that performed the action.
    * @param icon   The icon clicked in the action.
    */
-  void onPerform(Menu menu, Page page, PlayerProvider player, final Icon icon);
+  @Override
+  public void onPerform(Menu menu, Page page, PlayerProvider player, Icon icon) {
+
+  }
 }
