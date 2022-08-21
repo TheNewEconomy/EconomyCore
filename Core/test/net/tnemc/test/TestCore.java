@@ -54,7 +54,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class TestCore extends TNECore {
 
   public TestCore() {
-    super(null, null, null, null, new BaseTranslationProvider());
+    super(null, null, null, new BaseTranslationProvider());
   }
 
   @Test

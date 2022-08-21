@@ -23,6 +23,115 @@
         </repository>
     </repositories>
 
+
+
+    <build>
+        <defaultGoal>clean package</defaultGoal>
+        <directory>target</directory>
+        <outputDirectory>target/classes</outputDirectory>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <testOutputDirectory>target/test-classes</testOutputDirectory>
+        <sourceDirectory>src/</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>resources/</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${tne.java}</source>
+                    <target>${tne.java}</target>
+                    <compilerArgs>
+                        <arg>--enable-preview</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M7</version>
+                <configuration>
+                    <argLine>--enable-preview</argLine>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit47</artifactId>
+                        <version>3.0.0-M7</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <show>public</show>
+                    <failOnError>false</failOnError>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.3.1-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
+                    <artifactSet>
+                        <includes>
+                            <include>org.json.simple:*</include>
+                            <include>com.zaxxer:*</include>
+                            <include>co.aikar:*</include>
+                            <include>cloud.commandframework:*</include>
+                            <include>me.carleslc:*</include>
+                        </includes>
+                    </artifactSet>
+                    <relocations>
+                        <relocation>
+                            <pattern>org.json.simple</pattern>
+                            <shadedPattern>${tne.relocation}.json</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>com.zaxxer</pattern>
+                            <shadedPattern>${tne.relocation}.zaxxer</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>me.carleslc.Simple-YAML</pattern>
+                            <shadedPattern>${tne.relocation}.yaml</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>cloud.commandframework</pattern>
+                            <shadedPattern>${tne.relocation}.cloud</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>co.aikar.commands</pattern>
+                            <shadedPattern>${tne.relocation}.acf</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>co.aikar.locales</pattern>
+                            <shadedPattern>${tne.relocation}.locales</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>co.aikar.idb-core</pattern>
+                            <shadedPattern>${tne.relocation}.idb</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
 
         <dependency>
@@ -54,6 +163,7 @@
             <groupId>co.aikar</groupId>
             <artifactId>acf-paper</artifactId>
             <version>0.5.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

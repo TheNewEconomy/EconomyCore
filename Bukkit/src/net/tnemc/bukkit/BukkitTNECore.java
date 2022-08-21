@@ -32,13 +32,15 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class BukkitTNECore extends TNECore<CommandSender> {
+public class BukkitTNECore extends TNECore {
 
+  protected PaperCommandManager command;
 
   public BukkitTNECore(final JavaPlugin plugin) {
     super(new BukkitServerProvider(), new BukkitLogProvider(plugin.getLogger()),
-          new StorageManager(), new PaperCommandManager(plugin));
+          new StorageManager());
     setInstance(this);
+    command = new PaperCommandManager(plugin);
   }
 
   public static BukkitTNECore instance() {

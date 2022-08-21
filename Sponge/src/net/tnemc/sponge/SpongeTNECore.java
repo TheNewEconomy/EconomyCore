@@ -44,16 +44,17 @@ import org.spongepowered.api.plugin.PluginContainer;
 @Plugin(id="tne", name="The New Economy", version="0.1.2.0",
     description="The original feature-packed economy plugin for Minecraft.",
     authors = {"creatorfromhell"})
-public class SpongeTNECore extends TNECore<CommandSource> {
+public class SpongeTNECore extends TNECore {
 
   private final PluginContainer container;
+  protected final SpongeCommandManager command;
 
   @Inject
   SpongeTNECore(final PluginContainer container, final Logger log) {
-    super(new SpongeServerProvider(), new SpongeLogProvider(log), new StorageManager(),
-          new SpongeCommandManager(container));
+    super(new SpongeServerProvider(), new SpongeLogProvider(log), new StorageManager());
     this.container = container;
     this.logger = new SpongeLogProvider(log);
+    this.command = new SpongeCommandManager(container);
   }
 
   @Listener
