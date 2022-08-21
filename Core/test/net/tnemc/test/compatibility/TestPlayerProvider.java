@@ -76,7 +76,7 @@ public class TestPlayerProvider implements PlayerProvider {
    * @return The name of the world.
    */
   @Override
-  public String getWorld() {
+  public String getRegion() {
     return "world";
   }
 

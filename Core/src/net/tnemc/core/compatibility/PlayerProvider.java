@@ -42,10 +42,11 @@ public interface PlayerProvider {
   Location getLocation();
 
   /**
-   * Used to get the name of the world this player is in.
-   * @return The name of the world.
+   * Used to get the name of the region this player is in. This could be the world itself, or maybe
+   * a third-party related region such as world guard.
+   * @return The name of the region.
    */
-  String getWorld();
+  String getRegion();
 
   /**
    * Used to get the amount of experience this player has.

@@ -79,6 +79,6 @@ public class WorldProvider {
    */
   @NotNull
   public String resolveWorld(PlayerProvider player) {
-    return resolveWorld(player.getWorld());
+    return resolveWorld(player.getRegion());
   }
 }

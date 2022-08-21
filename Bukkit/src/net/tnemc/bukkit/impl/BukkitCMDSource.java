@@ -1,4 +1,4 @@
-package net.tnemc.core.compatibility;
+package net.tnemc.bukkit.impl;
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
@@ -17,53 +17,81 @@ package net.tnemc.core.compatibility;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.tnemc.bukkit.BukkitTNECore;
+import net.tnemc.bukkit.TNE;
+import net.tnemc.core.compatibility.CmdSource;
+import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.io.message.MessageHandler;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.Optional;
 import java.util.UUID;
 
 /**
- * CmdSource
+ * BukkitCMDSource
  *
  * @author creatorfromhell
  * @since 0.1.2.0
- * @see PlayerProvider
  */
-public interface CmdSource {
+public class BukkitCMDSource implements CmdSource {
+
+  private final CommandSender sender;
+  private final BukkitPlayerProvider provider;
+  private final UUID identifier;
+
+  public BukkitCMDSource(CommandSender sender) {
+    this.sender = sender;
+
+    if(sender instanceof Player) {
+      provider = new BukkitPlayerProvider(((Player)sender).getPlayer());
+      identifier = provider.getUUID();
+    } else {
+      provider = null;
+      //TODO: Server account.
+      identifier = UUID.randomUUID();
+    }
+  }
 
   /**
    * The UUID of this command source.
+   *
    * @return The UUID of this command source.
    */
-  UUID identifier();
+  @Override
+  public UUID identifier() {
+    return identifier;
+  }
 
   /**
    * The name of this command source.
+   *
    * @return The name of this command source.
    */
-  String name();
+  @Override
+  public String name() {
+    return sender.getName();
+  }
 
   /**
    * Used to get the related {@link PlayerProvider} for this command source.
+   *
    * @return An optional containing the related {@link PlayerProvider} if this command source is a
    * player, otherwise an empty {@link Optional}.
    */
-  Optional<PlayerProvider> player();
+  @Override
+  public Optional<PlayerProvider> player() {
+    return Optional.ofNullable(provider);
+  }
 
   /**
    * Used to send a message to this command source.
+   *
    * @param node The message node.
    */
-  void message(final String node);
-
-  /**
-   * Used to get the world for this command source.
-   * @return The name of the world that this command source is in.
-   */
-  default String region() {
-    if(player().isPresent()) {
-      return player().get().getRegion();
-    }
-    return TNECore.server().defaultWorld();
+  @Override
+  public void message(String node) {
+    MessageHandler.translate(node, BukkitAudiences.create(TNE.instance()).sender(sender));
   }
 }

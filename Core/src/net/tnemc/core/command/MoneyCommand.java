@@ -18,7 +18,12 @@ package net.tnemc.core.command;
  */
 
 import co.aikar.commands.BaseCommand;
+import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.compatibility.CmdSource;
+
+import java.util.Optional;
 
 /**
  * MoneyCommands
@@ -28,43 +33,83 @@ import net.tnemc.core.compatibility.CmdSource;
  */
 public class MoneyCommand extends BaseCommand {
 
-  public void onBalance(CmdSource sender, String[] args) {
+  //Arguments: [world] [currency]
+  public static void onBalance(CmdSource sender, String[] args) {
+
+    final String region = (args.length >= 1)? args[0] : sender.region();
+    final String currency = (args.length >= 2)? args[1] : "USD";
+    //TODO: Default currency.
+
+    Optional<Account> account = TNECore.eco().account().findAccount(sender.identifier());
+
+    if(account.isEmpty()) {
+
+      //Try to create and retry search
+      TNECore.eco().account().createAccount(sender.identifier().toString(), sender.name());
+
+      account = TNECore.eco().account().findAccount(sender.identifier());
+
+      if(account.isEmpty()) {
+        sender.message("Messages.Account.NoSuch");
+        return;
+      }
+    }
+
+    final Optional<HoldingsEntry> entry = account.get().getHoldings(region, currency);
+    if(entry.isEmpty()) {
+
+      //Shouldn't happen, but if it does handle it.
+      sender.message("Messages.Account.NoHoldings");
+      //TODO: message variables.
+      return;
+    }
+
+    sender.message("Messages.Money.Holdings");
+    //TODO: message variables.
+  }
+
+  //Arguments: <amount> <to currency[:world]> [from currency[:world]]
+  public static void onConvert(CmdSource sender, String[] args) {
 
   }
 
-  public void onConvert(CmdSource sender, String[] args) {
+  //Arguments: <player> <amount> [world] [currency]
+  public static void onGive(CmdSource sender, String[] args) {
 
   }
 
-  public void onGive(CmdSource sender, String[] args) {
+  //Arguments: <amount> [currency]
+  public static void onNote(CmdSource sender, String[] args) {
 
   }
 
-  public void onNote(CmdSource sender, String[] args) {
-
-  }
-  
-  public void onPay(CmdSource sender, String[] args) {
+  //Arguments: <player> <amount> [from:account] [currency]
+  public static void onPay(CmdSource sender, String[] args) {
 
   }
 
-  public void onRequest(CmdSource sender, String[] args) {
+  //Arguments: <player> <amount> [currency]
+  public static void onRequest(CmdSource sender, String[] args) {
 
   }
 
-  public void onSet(CmdSource sender, String[] args) {
+  //Arguments: <player> <amount> [world] [currency]
+  public static void onSet(CmdSource sender, String[] args) {
 
   }
 
-  public void onSetAll(CmdSource sender, String[] args) {
+  //Arguments: <amount> [world]
+  public static void onSetAll(CmdSource sender, String[] args) {
 
   }
 
-  public void onTake(CmdSource sender, String[] args) {
+  //Arguments: <player> <amount> [world] [currency]
+  public static void onTake(CmdSource sender, String[] args) {
 
   }
 
-  public void onTop(CmdSource sender, String[] args) {
+  //Arguments: [page] [currency:name] [world:world] [limit:#]
+  public static void onTop(CmdSource sender, String[] args) {
 
   }
 }

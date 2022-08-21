@@ -1,12 +1,10 @@
 #An example world configuration. This is led off by the world's name.
 Example:
 
-  #Should
-
   #Fees for teleporting to this world.
   Fee:
 
-    #Formt: <currency name>: <fee amount>
+    #Format: <currency name>: <fee amount>
     USD: 0.0
 
   #The worlds to share a balance with this world

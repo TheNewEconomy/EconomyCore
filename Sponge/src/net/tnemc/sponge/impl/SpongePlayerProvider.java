@@ -18,7 +18,10 @@ package net.tnemc.sponge.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.menu.Menu;
+import net.tnemc.item.AbstractItemStack;
 import org.spongepowered.api.data.Keys;
 import org.spongepowered.api.entity.living.player.server.ServerPlayer;
 
@@ -59,12 +62,22 @@ public class SpongePlayerProvider implements PlayerProvider {
   }
 
   /**
+   * Used to get the location of this player.
+   *
+   * @return The location of this player.
+   */
+  @Override
+  public Location getLocation() {
+    return null;
+  }
+
+  /**
    * Used to get the name of the world this player is in.
    *
    * @return The name of the world.
    */
   @Override
-  public String getWorld() {
+  public String getRegion() {
     return player.world().key().asString();
   }
 
@@ -121,6 +134,49 @@ public class SpongePlayerProvider implements PlayerProvider {
       return player.enderChestInventory();
     }
     return player.inventory();
+  }
+
+  /**
+   * Used to determine if this player is inside of the specified {@link Menu}.
+   *
+   * @param name The name of the menu
+   *
+   * @return True if this player is inside the specified menu, otherwise false.
+   */
+  @Override
+  public boolean inMenu(String name) {
+    return false;
+  }
+
+  /**
+   * Used to open the provided menu for this player.
+   *
+   * @param menu The menu to open.
+   */
+  @Override
+  public void openMenu(Menu menu) {
+
+  }
+
+  /**
+   * Used to open the provided menu for this player.
+   *
+   * @param menu The menu to open.
+   */
+  @Override
+  public void openMenu(String menu) {
+
+  }
+
+  /**
+   * Used to update the menu the player is in with a new item for a specific slot.
+   *
+   * @param slot
+   * @param item
+   */
+  @Override
+  public void updateMenu(int slot, AbstractItemStack<?> item) {
+
   }
 
   /**

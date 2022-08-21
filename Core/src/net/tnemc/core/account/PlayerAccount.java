@@ -54,7 +54,7 @@ public class PlayerAccount extends Account {
     final Optional<PlayerProvider> player = getPlayer();
 
     if(player.isPresent()) {
-      world = player.get().getWorld();
+      world = player.get().getRegion();
     }
     return TNECore.worldProvider().resolveWorld(world);
   }

@@ -24,6 +24,7 @@ import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
+import net.tnemc.bukkit.impl.BukkitCMDSource;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -41,8 +42,7 @@ public class MoneyCommand extends BaseCommand {
   @Description("%Money.Balance.Description")
   @CommandPermission("tne.money.balance")
   public void onBalance(CommandSender sender, String[] args) {
-
-
+    net.tnemc.core.command.MoneyCommand.onBalance(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("convert")

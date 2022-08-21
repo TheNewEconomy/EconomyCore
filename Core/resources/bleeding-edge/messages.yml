@@ -1,35 +1,9 @@
 # The New Economy v0.1.2.0
 # Author: creatorfromhell
-# License: http://creativecommons.org/licenses/by-nc-nd/4.0/
+# License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 # All configurable messages in TNE
-# Colour characters are supported, just use the colour code preceded by an ampersand character('&')
-# An alternate colouring format is also viable, just oldtype out the name of the colour inside a less than and greater than symbol
 #
-# Colour chart
-# Char  |   Alt
-# ------|-----------
-#  &b   |  <aqua>
-#  &0   |  <black>
-#  &9   |  <blue>
-#  &3   |  <dark_aqua>
-#  &1   |  <dark_blue>
-#  &8   |  <dark_gray>
-#  &2   |  <dark_green>
-#  &5   |  <dark_purple>
-#  &4   |  <dark_red>
-#  &6   |  <gold>
-#  &7   |  <gray>
-#  &a   |  <green>
-#  &d   |  <purple>
-#  &c   |  <red>
-#  &f   |  <white>
-#  &e   |  <yellow>
-#  &k   |  <magic>
-#  &l   |  <bold>
-#  &o   |  <italic>
-#  &r   |  <reset>
-#  &m   |  <strike>
-#  &n   |  <underline>
+
 Messages:
 
   Parameter:
@@ -78,6 +52,8 @@ Messages:
     Reset: "<white>Performed an economy reset using these parameters - world = $world, currency = $currency, and player = $player."
 
   Account:
+    NoSuch: "<red>Unable to locate your account!"
+    NoHoldings: "<red>You have no holdings for the currency \"$currency\"."
     PinSetAlready: "<red>You have already set a pin, please provide the old pin to set a new one."
     PinSet: "<white>Your pin has been set to $pin."
     PinReset: "<white>The pin of $player has been reset."
