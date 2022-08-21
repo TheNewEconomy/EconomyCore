@@ -24,6 +24,7 @@ import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
+import net.tnemc.bukkit.impl.BukkitCMDSource;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -40,7 +41,7 @@ public class TransactionCommand extends BaseCommand {
   @Description("%Transaction.Away.Description")
   @CommandPermission("tne.transaction.away")
   public void away(CommandSender sender, String[] args) {
-
+    net.tnemc.core.command.TransactionCommand.away(new BukkitCMDSource(sender), args);
   }
 
   @Default
@@ -49,7 +50,7 @@ public class TransactionCommand extends BaseCommand {
   @Description("%Transaction.History.Description")
   @CommandPermission("tne.transaction.history")
   public void history(CommandSender sender, String[] args) {
-
+    net.tnemc.core.command.TransactionCommand.history(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("info|i|about|brief")
@@ -57,7 +58,7 @@ public class TransactionCommand extends BaseCommand {
   @Description("%Transaction.Info.Description")
   @CommandPermission("tne.info.history")
   public void info(CommandSender sender, String[] args) {
-
+    net.tnemc.core.command.TransactionCommand.info(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("void|retract|undo")
@@ -65,6 +66,6 @@ public class TransactionCommand extends BaseCommand {
   @Description("%Transaction.Void.Description")
   @CommandPermission("tne.void.history")
   public void voidT(CommandSender sender, String[] args) {
-
+    net.tnemc.core.command.TransactionCommand.voidT(new BukkitCMDSource(sender), args);
   }
 }

@@ -22,8 +22,8 @@ import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.item.AbstractItemStack;
-import org.spongepowered.api.data.Keys;
-import org.spongepowered.api.entity.living.player.server.ServerPlayer;
+import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.entity.living.player.Player;
 
 import java.util.UUID;
 
@@ -35,9 +35,9 @@ import java.util.UUID;
  */
 public class SpongePlayerProvider implements PlayerProvider {
 
-  private ServerPlayer player;
+  private Player player;
 
-  public SpongePlayerProvider(ServerPlayer player) {
+  public SpongePlayerProvider(Player player) {
     this.player = player;
   }
 
@@ -48,7 +48,7 @@ public class SpongePlayerProvider implements PlayerProvider {
    */
   @Override
   public UUID getUUID() {
-    return player.uniqueId();
+    return player.getUniqueId();
   }
 
   /**
@@ -58,7 +58,7 @@ public class SpongePlayerProvider implements PlayerProvider {
    */
   @Override
   public String getName() {
-    return player.name();
+    return player.getName();
   }
 
   /**
@@ -78,7 +78,7 @@ public class SpongePlayerProvider implements PlayerProvider {
    */
   @Override
   public String getRegion() {
-    return player.world().key().asString();
+    return player.getWorld().getName();
   }
 
   /**
@@ -88,7 +88,7 @@ public class SpongePlayerProvider implements PlayerProvider {
    */
   @Override
   public int getExp() {
-    return player.experience().get();
+    return player.get(Keys.TOTAL_EXPERIENCE).orElse(0);
   }
 
   /**
@@ -98,7 +98,7 @@ public class SpongePlayerProvider implements PlayerProvider {
    */
   @Override
   public void setExp(int exp) {
-    player.offer(Keys.EXPERIENCE, exp);
+    player.offer(Keys.TOTAL_EXPERIENCE, exp);
   }
 
   /**
@@ -108,7 +108,7 @@ public class SpongePlayerProvider implements PlayerProvider {
    */
   @Override
   public int getExpLevel() {
-    return player.experienceLevel().get();
+    return player.get(Keys.EXPERIENCE_LEVEL).orElse(0);
   }
 
   /**
@@ -131,9 +131,9 @@ public class SpongePlayerProvider implements PlayerProvider {
   @Override
   public Object getInventory(boolean ender) {
     if(ender) {
-      return player.enderChestInventory();
+      return player.getEnderChestInventory();
     }
-    return player.inventory();
+    return player.getInventory();
   }
 
   /**

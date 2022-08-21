@@ -18,8 +18,12 @@ package net.tnemc.bukkit;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import co.aikar.commands.PaperCommandManager;
 import net.tnemc.bukkit.impl.BukkitLogProvider;
+import net.tnemc.bukkit.impl.BukkitServerProvider;
 import net.tnemc.core.TNECore;
+import net.tnemc.core.io.storage.StorageManager;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -28,12 +32,13 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class BukkitTNECore extends TNECore {
+public class BukkitTNECore extends TNECore<CommandSender> {
 
 
   public BukkitTNECore(final JavaPlugin plugin) {
+    super(new BukkitServerProvider(), new BukkitLogProvider(plugin.getLogger()),
+          new StorageManager(), new PaperCommandManager(plugin));
     setInstance(this);
-    this.logger = new BukkitLogProvider(plugin.getLogger());
   }
 
   public static BukkitTNECore instance() {

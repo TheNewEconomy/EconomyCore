@@ -18,18 +18,21 @@ package net.tnemc.sponge;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import co.aikar.commands.SpongeCommandManager;
 import com.google.inject.Inject;
 import net.tnemc.core.TNECore;
+import net.tnemc.core.io.storage.StorageManager;
 import net.tnemc.sponge.impl.SpongeLogProvider;
+import net.tnemc.sponge.impl.SpongeServerProvider;
 import net.tnemc.sponge.listeners.PlayerJoinListener;
 import org.slf4j.Logger;
-import org.spongepowered.api.Server;
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.event.Listener;
-import org.spongepowered.api.event.lifecycle.ConstructPluginEvent;
-import org.spongepowered.api.event.lifecycle.StartedEngineEvent;
-import org.spongepowered.plugin.PluginContainer;
-import org.spongepowered.plugin.builtin.jvm.Plugin;
+import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
+import org.spongepowered.api.event.game.state.GameStartedServerEvent;
+import org.spongepowered.api.plugin.Plugin;
+import org.spongepowered.api.plugin.PluginContainer;
 
 /**
  * The Sponge main plugin class.
@@ -38,28 +41,32 @@ import org.spongepowered.plugin.builtin.jvm.Plugin;
  * @since 0.1.2.0
  */
 
-@Plugin("tne")
-public class SpongeTNECore extends TNECore {
+@Plugin(id="tne", name="The New Economy", version="0.1.2.0",
+    description="The original feature-packed economy plugin for Minecraft.",
+    authors = {"creatorfromhell"})
+public class SpongeTNECore extends TNECore<CommandSource> {
 
   private final PluginContainer container;
 
   @Inject
   SpongeTNECore(final PluginContainer container, final Logger log) {
+    super(new SpongeServerProvider(), new SpongeLogProvider(log), new StorageManager(),
+          new SpongeCommandManager(container));
     this.container = container;
     this.logger = new SpongeLogProvider(log);
   }
 
   @Listener
-  public void onConstructPlugin(final ConstructPluginEvent event) {
+  public void onConstructPlugin(final GamePreInitializationEvent event) {
     setInstance(this);
 
 
     //Register our event listeners
-    Sponge.eventManager().registerListeners(container, new PlayerJoinListener());
+    Sponge.getEventManager().registerListeners(container, new PlayerJoinListener());
   }
 
   @Listener
-  public void onServerStart(final StartedEngineEvent<Server> event) {
+  public void onServerStart(final GameStartedServerEvent event) {
     logger.inform("Successfully running TheNewEconomy.");
   }
 }

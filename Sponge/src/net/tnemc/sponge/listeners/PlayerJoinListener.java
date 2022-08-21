@@ -18,12 +18,12 @@ package net.tnemc.sponge.listeners;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.kyori.adventure.text.Component;
 import net.tnemc.core.handlers.PlayerJoinHandler;
 import net.tnemc.core.utils.HandlerResponse;
 import net.tnemc.sponge.impl.SpongePlayerProvider;
 import org.spongepowered.api.event.Listener;
-import org.spongepowered.api.event.network.ServerSideConnectionEvent;
+import org.spongepowered.api.event.network.ClientConnectionEvent;
+import org.spongepowered.api.text.Text;
 
 /**
  * PlayerJoinHandler
@@ -34,13 +34,13 @@ import org.spongepowered.api.event.network.ServerSideConnectionEvent;
 public class PlayerJoinListener {
 
   @Listener
-  public void listen(ServerSideConnectionEvent.Join event) {
+  public void listen(ClientConnectionEvent.Join event) {
     final HandlerResponse handle = new PlayerJoinHandler()
-                                   .handle(new SpongePlayerProvider(event.player()));
+                                   .handle(new SpongePlayerProvider(event.getTargetEntity()));
 
 
     if(handle.isCancelled()) {
-      event.player().kick(Component.text(handle.getResponse()));
+      event.getTargetEntity().kick(Text.of(handle.getResponse()));
     }
   }
 }

@@ -18,7 +18,6 @@ package net.tnemc.bukkit.impl;
  */
 
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import net.tnemc.bukkit.BukkitTNECore;
 import net.tnemc.bukkit.TNE;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;

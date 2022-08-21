@@ -24,6 +24,7 @@ import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
+import net.tnemc.bukkit.impl.BukkitCMDSource;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -41,7 +42,7 @@ public class ConfigCommand extends BaseCommand {
   @Description("%Config.Get.Description")
   @CommandPermission("tne.config.get")
   public void get(CommandSender sender, String[] args) {
-
+    net.tnemc.core.command.ConfigCommand.get(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("set|=")
@@ -49,6 +50,6 @@ public class ConfigCommand extends BaseCommand {
   @Description("%Config.Set.Description")
   @CommandPermission("tne.config.set")
   public void set(CommandSender sender, String[] args) {
-
+    net.tnemc.core.command.ConfigCommand.set(new BukkitCMDSource(sender), args);
   }
 }

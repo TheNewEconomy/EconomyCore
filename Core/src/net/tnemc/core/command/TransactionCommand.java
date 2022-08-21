@@ -28,19 +28,19 @@ import net.tnemc.core.compatibility.CmdSource;
  */
 public class TransactionCommand extends BaseCommand {
 
-  public void away(CmdSource sender, String[] args) {
+  public static void away(CmdSource sender, String[] args) {
 
   }
 
-  public void history(CmdSource sender, String[] args) {
+  public static void history(CmdSource sender, String[] args) {
 
   }
 
-  public void info(CmdSource sender, String[] args) {
+  public static void info(CmdSource sender, String[] args) {
 
   }
 
-  public void voidT(CmdSource sender, String[] args) {
+  public static void voidT(CmdSource sender, String[] args) {
 
   }
 }

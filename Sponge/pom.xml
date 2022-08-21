@@ -10,6 +10,10 @@
             <name>Sponge Maven Repository</name>
             <url>https://repo.spongepowered.org/maven</url>
         </repository>
+        <repository>
+            <id>aikar</id>
+            <url>https://repo.aikar.co/content/groups/aikar/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -23,9 +27,14 @@
         <dependency>
             <groupId>org.spongepowered</groupId>
             <artifactId>spongeapi</artifactId>
-            <version>9.0.0</version>
+            <version>7.4.0</version>
             <type>jar</type>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>co.aikar</groupId>
+            <artifactId>acf-sponge</artifactId>
+            <version>0.5.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

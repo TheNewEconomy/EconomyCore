@@ -28,11 +28,11 @@ import net.tnemc.core.compatibility.CmdSource;
  */
 public class ConfigCommand extends BaseCommand {
 
-  public void get(CmdSource sender, String[] args) {
+  public static void get(CmdSource sender, String[] args) {
 
   }
 
-  public void set(CmdSource sender, String[] args) {
+  public static void set(CmdSource sender, String[] args) {
 
   }
 }

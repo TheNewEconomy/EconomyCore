@@ -50,7 +50,7 @@ public class MoneyCommand extends BaseCommand {
   @Description("%Money.Convert.Description")
   @CommandPermission("tne.money.convert")
   public void onConvert(CommandSender sender, String[] args) {
-
+    net.tnemc.core.command.MoneyCommand.onConvert(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("give|+|add")
@@ -58,7 +58,7 @@ public class MoneyCommand extends BaseCommand {
   @Description("%Money.Give.Description")
   @CommandPermission("tne.money.give")
   public void onGive(CommandSender sender, String[] args) {
-
+    net.tnemc.core.command.MoneyCommand.onGive(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("note|n")
@@ -66,7 +66,7 @@ public class MoneyCommand extends BaseCommand {
   @Description("%Money.Note.Description")
   @CommandPermission("tne.money.note")
   public void onNote(CommandSender sender, String[] args) {
-
+    net.tnemc.core.command.MoneyCommand.onNote(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("pay|send|transfer")
@@ -74,7 +74,7 @@ public class MoneyCommand extends BaseCommand {
   @Description("%Money.Pay.Description")
   @CommandPermission("tne.money.pay")
   public void onPay(CommandSender sender, String[] args) {
-
+    net.tnemc.core.command.MoneyCommand.onPay(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("request")
@@ -82,7 +82,7 @@ public class MoneyCommand extends BaseCommand {
   @Description("%Money.Request.Description")
   @CommandPermission("tne.money.Request")
   public void onRequest(CommandSender sender, String[] args) {
-
+    net.tnemc.core.command.MoneyCommand.onRequest(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("set|eq|=")
@@ -90,7 +90,7 @@ public class MoneyCommand extends BaseCommand {
   @Description("%Money.Set.Description")
   @CommandPermission("tne.money.set")
   public void onSet(CommandSender sender, String[] args) {
-
+    net.tnemc.core.command.MoneyCommand.onSet(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("setall")
@@ -98,7 +98,7 @@ public class MoneyCommand extends BaseCommand {
   @Description("%Money.SetAll.Description")
   @CommandPermission("tne.money.setall")
   public void onSetAll(CommandSender sender, String[] args) {
-
+    net.tnemc.core.command.MoneyCommand.onSetAll(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("take|minus|remove|-")
@@ -106,7 +106,7 @@ public class MoneyCommand extends BaseCommand {
   @Description("%Money.Take.Description")
   @CommandPermission("tne.money.take")
   public void onTake(CommandSender sender, String[] args) {
-
+    net.tnemc.core.command.MoneyCommand.onTake(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("top")
@@ -114,6 +114,6 @@ public class MoneyCommand extends BaseCommand {
   @Description("%Money.Top.Description")
   @CommandPermission("tne.money.top")
   public void onTop(CommandSender sender, String[] args) {
-
+    net.tnemc.core.command.MoneyCommand.onTop(new BukkitCMDSource(sender), args);
   }
 }

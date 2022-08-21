@@ -28,59 +28,59 @@ import net.tnemc.core.compatibility.CmdSource;
  */
 public class AdminCommand extends BaseCommand {
 
-  public void backup(CmdSource sender, String[] args) {
+  public static void backup(CmdSource sender, String[] args) {
 
   }
 
-  public void balance(CmdSource sender, String[] args) {
+  public static void balance(CmdSource sender, String[] args) {
 
   }
 
-  public void create(CmdSource sender, String[] args) {
+  public static void create(CmdSource sender, String[] args) {
 
   }
 
-  public void debug(CmdSource sender, String[] args) {
+  public static void debug(CmdSource sender, String[] args) {
 
   }
 
-  public void delete(CmdSource sender, String[] args) {
+  public static void delete(CmdSource sender, String[] args) {
 
   }
 
-  public void extract(CmdSource sender, String[] args) {
+  public static void extract(CmdSource sender, String[] args) {
 
   }
 
-  public void purge(CmdSource sender, String[] args) {
+  public static void purge(CmdSource sender, String[] args) {
 
   }
 
-  public void reload(CmdSource sender, String[] args) {
+  public static void reload(CmdSource sender, String[] args) {
 
   }
 
-  public void reset(CmdSource sender, String[] args) {
+  public static void reset(CmdSource sender, String[] args) {
 
   }
 
-  public void restore(CmdSource sender, String[] args) {
+  public static void restore(CmdSource sender, String[] args) {
 
   }
 
-  public void save(CmdSource sender, String[] args) {
+  public static void save(CmdSource sender, String[] args) {
 
   }
 
-  public void status(CmdSource sender, String[] args) {
+  public static void status(CmdSource sender, String[] args) {
 
   }
 
-  public void upload(CmdSource sender, String[] args) {
+  public static void upload(CmdSource sender, String[] args) {
 
   }
 
-  public void version(CmdSource sender, String[] args) {
+  public static void version(CmdSource sender, String[] args) {
 
   }
 }
