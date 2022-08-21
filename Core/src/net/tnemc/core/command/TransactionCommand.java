@@ -1,7 +1,7 @@
 package net.tnemc.core.command;
 /*
  * The New Economy
- * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
+ * Copyright (CmdSource) 2022 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,12 +18,7 @@ package net.tnemc.core.command;
  */
 
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Default;
-import co.aikar.commands.annotation.Description;
-import co.aikar.commands.annotation.Subcommand;
-import co.aikar.commands.annotation.Syntax;
+import net.tnemc.core.compatibility.CmdSource;
 
 /**
  * TransactionCommand
@@ -31,39 +26,21 @@ import co.aikar.commands.annotation.Syntax;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-@CommandAlias("transaction|trans|receipt")
-public class TransactionCommand<C> extends BaseCommand {
+public class TransactionCommand extends BaseCommand {
 
-  @Subcommand("away|gone|afk|afg")
-  @Syntax("%Transaction.Away.Arguments")
-  @Description("%Transaction.Away.Description")
-  @CommandPermission("tne.transaction.away")
-  public void away(C sender, String[] args) {
+  public void away(CmdSource sender, String[] args) {
 
   }
 
-  @Default
-  @Subcommand("history|list|hist|archive")
-  @Syntax("%Transaction.History.Arguments")
-  @Description("%Transaction.History.Description")
-  @CommandPermission("tne.transaction.history")
-  public void history(C sender, String[] args) {
+  public void history(CmdSource sender, String[] args) {
 
   }
 
-  @Subcommand("info|i|about|brief")
-  @Syntax("%Transaction.Info.Arguments")
-  @Description("%Transaction.Info.Description")
-  @CommandPermission("tne.info.history")
-  public void info(C sender, String[] args) {
+  public void info(CmdSource sender, String[] args) {
 
   }
 
-  @Subcommand("void|retract|undo")
-  @Syntax("%Transaction.Void.Arguments")
-  @Description("%Transaction.Void.Description")
-  @CommandPermission("tne.void.history")
-  public void voidT(C sender, String[] args) {
+  public void voidT(CmdSource sender, String[] args) {
 
   }
 }

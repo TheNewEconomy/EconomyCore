@@ -18,12 +18,7 @@ package net.tnemc.core.command;
  */
 
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Default;
-import co.aikar.commands.annotation.Description;
-import co.aikar.commands.annotation.Subcommand;
-import co.aikar.commands.annotation.Syntax;
+import net.tnemc.core.compatibility.CmdSource;
 
 /**
  * ConfigCommand
@@ -31,23 +26,13 @@ import co.aikar.commands.annotation.Syntax;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-@CommandAlias("tneconfig|tnec|ecoconfig")
-public class ConfigCommand<C> extends BaseCommand {
+public class ConfigCommand extends BaseCommand {
 
-  @Default
-  @Subcommand("get|find|value")
-  @Syntax("%Config.Get.Arguments")
-  @Description("%Config.Get.Description")
-  @CommandPermission("tne.config.get")
-  public void get(C sender, String[] args) {
+  public void get(CmdSource sender, String[] args) {
 
   }
 
-  @Subcommand("set|=")
-  @Syntax("%Config.Set.Arguments")
-  @Description("%Config.Set.Description")
-  @CommandPermission("tne.config.set")
-  public void set(C sender, String[] args) {
+  public void set(CmdSource sender, String[] args) {
 
   }
 }

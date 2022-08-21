@@ -1,5 +1,4 @@
-package net.tnemc.core.io.storage;
-
+package net.tnemc.core.compatibility;
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
@@ -18,30 +17,34 @@ package net.tnemc.core.io.storage;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import java.util.Optional;
+import java.util.UUID;
+
 /**
- * The manager, which manages everything related to storage.
- * Manages:
- * - Loading
- * - Saving
- * - Caching
- * - Connections
+ * CmdSource
  *
  * @author creatorfromhell
  * @since 0.1.2.0
+ * @see PlayerProvider
  */
-public class StorageManager {
+public interface CmdSource {
 
-  private static StorageManager instance;
+  /**
+   * The UUID of this command source.
+   * @return The UUID of this command source.
+   */
+  UUID identifier();
 
-  public StorageManager() {
-    instance = this;
-  }
+  /**
+   * Determines if this command source is a player, or not.
+   * @return True if this source is a player, otherwise false.
+   */
+  boolean isPlayer();
 
-  public static StorageManager instance() {
-    return instance;
-  }
-
-  public void backup() {
-
-  }
+  /**
+   * Used to get the related {@link PlayerProvider} for this command source.
+   * @return An optional containing the related {@link PlayerProvider} if this command source is a
+   * player, otherwise an empty {@link Optional}.
+   */
+  Optional<PlayerProvider> player();
 }

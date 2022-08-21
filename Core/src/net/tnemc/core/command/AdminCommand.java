@@ -1,7 +1,7 @@
 package net.tnemc.core.command;
 /*
  * The New Economy
- * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
+ * Copyright (CmdSource) 2022 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,11 +18,7 @@ package net.tnemc.core.command;
  */
 
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Description;
-import co.aikar.commands.annotation.Subcommand;
-import co.aikar.commands.annotation.Syntax;
+import net.tnemc.core.compatibility.CmdSource;
 
 /**
  * AdminCommand
@@ -30,118 +26,61 @@ import co.aikar.commands.annotation.Syntax;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-@CommandAlias("tne|ecomin|ecoadmin|ecomanage|theneweconomy")
-public class AdminCommand<C> extends BaseCommand {
+public class AdminCommand extends BaseCommand {
 
-  @Subcommand("backup|archive")
-  @Syntax("%Admin.Backup.Arguments")
-  @Description("%Admin.Backup.Description")
-  @CommandPermission("tne.admin.backup")
-  public void backup(C sender, String[] args) {
+  public void backup(CmdSource sender, String[] args) {
 
   }
 
-  @Subcommand("bal|balance|info")
-  @Syntax("%Admin.Balance.Arguments")
-  @Description("%Admin.Balance.Description")
-  @CommandPermission("tne.admin.balance")
-  public void balance(C sender, String[] args) {
+  public void balance(CmdSource sender, String[] args) {
 
   }
 
-  @Subcommand("create|add|new|make|+")
-  @Syntax("%Admin.Create.Arguments")
-  @Description("%Admin.Create.Description")
-  @CommandPermission("tne.admin.create")
-  public void create(C sender, String[] args) {
+  public void create(CmdSource sender, String[] args) {
 
   }
 
-  @Subcommand("debug")
-  @Syntax("%Admin.Debug.Arguments")
-  @Description("%Admin.Debug.Description")
-  @CommandPermission("tne.admin.debug")
-  public void debug(C sender, String[] args) {
+  public void debug(CmdSource sender, String[] args) {
 
   }
 
-  @Subcommand("delete|destroy|del|remove|-")
-  @Syntax("%Admin.Delete.Arguments")
-  @Description("%Admin.Delete.Description")
-  @CommandPermission("tne.admin.delete")
-  public void delete(C sender, String[] args) {
+  public void delete(CmdSource sender, String[] args) {
 
   }
 
-  @Subcommand("extract")
-  @Syntax("%Admin.Extract.Arguments")
-  @Description("%Admin.Extract.Description")
-  @CommandPermission("tne.admin.extract")
-  public void extract(C sender, String[] args) {
+  public void extract(CmdSource sender, String[] args) {
 
   }
 
-  @Subcommand("purge")
-  @Syntax("%Admin.Purge.Arguments")
-  @Description("%Admin.Purge.Description")
-  @CommandPermission("tne.admin.purge")
-  public void purge(C sender, String[] args) {
+  public void purge(CmdSource sender, String[] args) {
 
   }
 
-  @Subcommand("reload")
-  @Syntax("%Admin.Reload.Arguments")
-  @Description("%Admin.Reload.Description")
-  @CommandPermission("tne.admin.reload")
-  public void reload(C sender, String[] args) {
+  public void reload(CmdSource sender, String[] args) {
 
   }
 
-  @Subcommand("reset|nuke")
-  @Syntax("%Admin.Reset.Arguments")
-  @Description("%Admin.Reset.Description")
-  @CommandPermission("tne.admin.reset")
-  public void reset(C sender, String[] args) {
+  public void reset(CmdSource sender, String[] args) {
 
   }
 
-  @Subcommand("restore")
-  @Syntax("%Admin.Restore.Arguments")
-  @Description("%Admin.Restore.Description")
-  @CommandPermission("tne.admin.restore")
-  public void restore(C sender, String[] args) {
+  public void restore(CmdSource sender, String[] args) {
 
   }
 
-  @Subcommand("save")
-  @Syntax("%Admin.Save.Arguments")
-  @Description("%Admin.Save.Description")
-  @CommandPermission("tne.admin.save")
-  public void save(C sender, String[] args) {
+  public void save(CmdSource sender, String[] args) {
 
   }
 
-  @Subcommand("status")
-  @Syntax("%Admin.Status.Arguments")
-  @Description("%Admin.Status.Description")
-  @CommandPermission("tne.admin.status")
-  public void status(C sender, String[] args) {
+  public void status(CmdSource sender, String[] args) {
 
   }
 
-  @Subcommand("upload")
-  @Syntax("%Admin.Upload.Arguments")
-  @Description("%Admin.Upload.Description")
-  @CommandPermission("tne.admin.upload")
-  public void upload(C sender, String[] args) {
+  public void upload(CmdSource sender, String[] args) {
 
   }
 
-  @Subcommand("version|ver|build")
-  @Syntax("%Admin.Version.Arguments")
-  @Description("%Admin.Version.Description")
-  @CommandPermission("tne.admin.version")
-  public void version(C sender, String[] args) {
+  public void version(CmdSource sender, String[] args) {
 
   }
 }

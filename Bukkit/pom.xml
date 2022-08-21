@@ -17,6 +17,10 @@
             <id>factions repo</id>
             <url>https://ci.ender.zone/plugin/repository/everything/</url>
         </repository>
+        <repository>
+            <id>aikar</id>
+            <url>https://repo.aikar.co/content/groups/aikar/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -45,6 +49,11 @@
             <artifactId>Factions</artifactId>
             <version>1.6.9.5-U0.6.9</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>co.aikar</groupId>
+            <artifactId>acf-paper</artifactId>
+            <version>0.5.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
