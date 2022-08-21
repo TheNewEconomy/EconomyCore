@@ -1,5 +1,7 @@
 package net.tnemc.core.compatibility;
 
+import net.tnemc.core.io.message.TranslationProvider;
+import net.tnemc.core.io.message.translation.BaseTranslationProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -82,4 +84,6 @@ public interface ServerConnector {
    * @return The formatted string.
    */
   String replaceColours(final String string);
+
+  TranslationProvider translation();
 }

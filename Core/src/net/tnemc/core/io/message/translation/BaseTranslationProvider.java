@@ -18,8 +18,11 @@ package net.tnemc.core.io.message.translation;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
+import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.io.message.TranslationProvider;
 
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -38,6 +41,12 @@ public class BaseTranslationProvider implements TranslationProvider {
    */
   @Override
   public String getLang(UUID identifier) {
+
+    Optional<Account> account = TNECore.eco().account().findAccount(identifier);
+
+    if(account.isPresent() && account.get().isPlayer()) {
+      return ((PlayerAccount)account.get()).getLanguage();
+    }
     return "default";
   }
 

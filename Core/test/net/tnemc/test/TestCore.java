@@ -18,13 +18,19 @@ package net.tnemc.test;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import co.aikar.commands.CommandManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
+import net.tnemc.core.compatibility.LogProvider;
+import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.handlers.PlayerJoinHandler;
+import net.tnemc.core.io.message.TranslationProvider;
+import net.tnemc.core.io.message.translation.BaseTranslationProvider;
+import net.tnemc.core.io.storage.StorageManager;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
@@ -51,6 +57,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @since 0.1.2.0
  */
 public class TestCore extends TNECore {
+
+  public TestCore() {
+    super(null, null, null, null, new BaseTranslationProvider());
+  }
 
   @Test
   public void initialize() {

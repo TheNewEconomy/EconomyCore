@@ -20,6 +20,7 @@ package net.tnemc.core.io.message;
  */
 
 import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -49,13 +50,14 @@ public class MessageHandler {
     instance = this;
   }
 
-  public MessageHandler(final TranslationProvider translator, final BukkitAudiences audiences, final TagResolver... resolvers) {
+  public MessageHandler(final TranslationProvider translator, final TagResolver... resolvers) {
     this.translator = translator;
     this.mini = MiniMessage.builder().tags(TagResolver.builder().resolvers(resolvers).build())
         .build();
 
     instance = this;
   }
+
   /**
    * Used to translate a message for a player and return the translated {@link Component}.
    *
@@ -92,5 +94,17 @@ public class MessageHandler {
     for(Audience a : audiences) {
       a.sendMessage(instance.mini.deserialize(message));
     }
+  }
+
+  public MiniMessage getMini() {
+    return mini;
+  }
+
+  public TranslationProvider getTranslator() {
+    return translator;
+  }
+
+  public static MessageHandler getInstance() {
+    return instance;
   }
 }

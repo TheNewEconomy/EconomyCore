@@ -54,8 +54,8 @@ public class MessageConfig extends Config {
   }
 
   public String getString(final String node, final String lang) {
-    if(languages.containsKey(lang) && languages.get(lang).getConfig().contains(node)) {
-      return languages.get(lang).getConfig().getString(node);
+    if(languages.containsKey(lang) && languages.get(lang).hasTranslation(node)) {
+      return languages.get(lang).getTranslation(node);
     }
     return yaml.getString(node);
   }

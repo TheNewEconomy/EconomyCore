@@ -25,6 +25,9 @@ import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.config.MessageConfig;
+import net.tnemc.core.io.message.MessageHandler;
+import net.tnemc.core.io.message.TranslationProvider;
+import net.tnemc.core.io.message.translation.BaseTranslationProvider;
 import net.tnemc.core.io.storage.StorageManager;
 import net.tnemc.core.world.WorldProvider;
 
@@ -65,10 +68,29 @@ public abstract class TNECore<C> {
 
   private MainConfig config;
   private DataConfig data;
-  private MessageConfig message;
+  private MessageConfig messageConfig;
+  private MessageHandler messenger;
 
   /* Plugin Instance */
   private static TNECore<?> instance;
+
+  public TNECore(ServerConnector server, LogProvider logger, StorageManager storage,
+                 CommandManager<C, ?, ?, ?, ?, ?> command) {
+    this.server = server;
+    this.logger = logger;
+    this.storage = storage;
+    this.command = command;
+    this.messenger = new MessageHandler(new BaseTranslationProvider());
+  }
+
+  public TNECore(ServerConnector server, LogProvider logger, StorageManager storage,
+                 CommandManager<C, ?, ?, ?, ?, ?> command, TranslationProvider provider) {
+    this.server = server;
+    this.logger = logger;
+    this.storage = storage;
+    this.command = command;
+    this.messenger = new MessageHandler(provider);
+  }
 
   public static void setInstance(TNECore<?> core) {
     if(instance == null) {
@@ -78,8 +100,6 @@ public abstract class TNECore<C> {
                                           "to modify the instance variable.");
     }
   }
-
-  //TODO: Initialize method
 
   /**
    * The implementation's {@link LogProvider}.
@@ -138,14 +158,18 @@ public abstract class TNECore<C> {
   }
 
   public MessageConfig getMessage() {
-    return message;
+    return messageConfig;
+  }
+
+  public static MessageHandler messenger() {
+    return instance.messenger;
   }
 
   public static File directory() {
     return instance.directory;
   }
 
-  public static TNECore instance() {
+  public static TNECore<?> instance() {
     return instance;
   }
 
