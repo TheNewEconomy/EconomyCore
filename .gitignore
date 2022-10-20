@@ -29,3 +29,5 @@ hs_err_pid*
 /Bukkit/target/
 /target/
 /dependency-reduced-pom.xml
+/API/dependency-reduced-pom.xml
+/Sponge/dependency-reduced-pom.xml

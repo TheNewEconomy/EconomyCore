@@ -18,6 +18,7 @@ package net.tnemc.bukkit;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import co.aikar.commands.PaperCommandManager;
 import net.tnemc.bukkit.listeners.PlayerJoinListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,11 +43,14 @@ public class TNE extends JavaPlugin {
 
   public void onEnable() {
 
+    this.core.command = new PaperCommandManager(this);
+
     //Register our event listeners
     Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
+
   }
 
   public static TNE instance() {
-    return instance();
+    return instance;
   }
 }

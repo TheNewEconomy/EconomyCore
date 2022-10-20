@@ -40,7 +40,6 @@ public class BukkitTNECore extends TNECore {
     super(new BukkitServerProvider(), new BukkitLogProvider(plugin.getLogger()),
           new StorageManager());
     setInstance(this);
-    command = new PaperCommandManager(plugin);
   }
 
   public static BukkitTNECore instance() {

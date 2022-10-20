@@ -18,9 +18,11 @@ package net.tnemc.bukkit.listeners;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.tnemc.bukkit.TNE;
 import net.tnemc.bukkit.impl.BukkitPlayerProvider;
 import net.tnemc.core.handlers.PlayerJoinHandler;
+import net.tnemc.core.io.message.MessageHandler;
 import net.tnemc.core.utils.HandlerResponse;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -49,5 +51,8 @@ public class PlayerJoinListener implements Listener {
     if(handle.isCancelled()) {
       event.getPlayer().kickPlayer(handle.getResponse());
     }
+
+    MessageHandler.translate("Hello <rainbow>world</rainbow>, TNE messages just got <hover:show_text:'<red>EXTREMELY</red>'>a lot</hover> better!", BukkitAudiences.create(TNE.instance()).player(event.getPlayer()));
+    MessageHandler.translate("<gradient:green:blue>Gradients are the best!</gradient>", BukkitAudiences.create(TNE.instance()).player(event.getPlayer()));
   }
 }
