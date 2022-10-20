@@ -19,6 +19,10 @@ package net.tnemc.bukkit;
  */
 
 import co.aikar.commands.PaperCommandManager;
+import net.tnemc.bukkit.command.AdminCommand;
+import net.tnemc.bukkit.command.ConfigCommand;
+import net.tnemc.bukkit.command.MoneyCommand;
+import net.tnemc.bukkit.command.TransactionCommand;
 import net.tnemc.bukkit.listeners.PlayerJoinListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -44,6 +48,10 @@ public class TNE extends JavaPlugin {
   public void onEnable() {
 
     this.core.command = new PaperCommandManager(this);
+    this.core.command.registerCommand(new AdminCommand());
+    this.core.command.registerCommand(new ConfigCommand());
+    this.core.command.registerCommand(new MoneyCommand());
+    this.core.command.registerCommand(new TransactionCommand());
 
     //Register our event listeners
     Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
