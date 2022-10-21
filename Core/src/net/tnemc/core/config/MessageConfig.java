@@ -40,7 +40,7 @@ public class MessageConfig extends Config {
   private final Map<String, Language> languages = new HashMap<>();
 
   public MessageConfig() {
-    super(new File(TNECore.directory(), "messages.yml"), "resources/messages.yml", "Messages");
+    super(new File(TNECore.directory(), "messages.yml"), "resources/bleeding-edge/messages.yml", "Messages");
   }
 
   public String getString(final String node, final UUID player) {
@@ -50,14 +50,22 @@ public class MessageConfig extends Config {
 
       return getString(node, ((PlayerAccount)account.get()).getLanguage());
     }
-    return yaml.getString(node);
+
+    if(yaml.contains(node)) {
+      return yaml.getString(node);
+    }
+    return node;
   }
 
   public String getString(final String node, final String lang) {
     if(languages.containsKey(lang) && languages.get(lang).hasTranslation(node)) {
       return languages.get(lang).getTranslation(node);
     }
-    return yaml.getString(node);
+
+    if(yaml.contains(node)) {
+      return yaml.getString(node);
+    }
+    return node;
   }
 
   @Override

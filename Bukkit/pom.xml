@@ -92,10 +92,11 @@
                         <includes>
                             <include>net.tnemc:EconomyCore</include>
                             <include>org.json.simple:*</include>
+                            <include>org.yaml:*</include>
+                            <include>me.carleslc.Simple-YAML:*</include>
                             <include>com.zaxxer:*</include>
                             <include>co.aikar:*</include>
                             <include>cloud.commandframework:*</include>
-                            <include>me.carleslc:*</include>
                             <include>net.kyori:*</include>
                         </includes>
                     </artifactSet>
@@ -109,7 +110,8 @@
                             <shadedPattern>${tne.relocation}.zaxxer</shadedPattern>
                         </relocation>
                         <relocation>
-                            <pattern>me.carleslc.Simple-YAML</pattern>
+                            <pattern>me.carleslc</pattern>
+                            <pattern>org.yaml</pattern>
                             <shadedPattern>${tne.relocation}.yaml</shadedPattern>
                         </relocation>
                         <relocation>

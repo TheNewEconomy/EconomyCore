@@ -19,6 +19,10 @@ package net.tnemc.bukkit;
  */
 
 import co.aikar.commands.PaperCommandManager;
+import net.tnemc.bukkit.command.AdminCommand;
+import net.tnemc.bukkit.command.ConfigCommand;
+import net.tnemc.bukkit.command.MoneyCommand;
+import net.tnemc.bukkit.command.TransactionCommand;
 import net.tnemc.bukkit.impl.BukkitLogProvider;
 import net.tnemc.bukkit.impl.BukkitServerProvider;
 import net.tnemc.core.TNECore;
@@ -35,11 +39,26 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class BukkitTNECore extends TNECore {
 
   protected PaperCommandManager command;
+  private JavaPlugin plugin;
 
-  public BukkitTNECore(final JavaPlugin plugin) {
+  public BukkitTNECore(JavaPlugin plugin) {
     super(new BukkitServerProvider(), new BukkitLogProvider(plugin.getLogger()),
           new StorageManager());
     setInstance(this);
+    this.plugin = plugin;
+  }
+
+  @Override
+  protected void onEnable() {
+    this.directory = plugin.getDataFolder();
+
+    super.onEnable();
+
+    command = new PaperCommandManager(plugin);
+    command.registerCommand(new AdminCommand());
+    command.registerCommand(new ConfigCommand());
+    command.registerCommand(new MoneyCommand());
+    command.registerCommand(new TransactionCommand());
   }
 
   public static BukkitTNECore instance() {

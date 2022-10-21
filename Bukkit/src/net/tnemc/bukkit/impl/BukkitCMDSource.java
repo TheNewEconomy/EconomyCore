@@ -91,6 +91,6 @@ public class BukkitCMDSource implements CmdSource {
    */
   @Override
   public void message(String node) {
-    //MessageHandler.translate(node, BukkitAudiences.create(TNE.instance()).sender(sender));
+    MessageHandler.translate(node, identifier, BukkitAudiences.create(TNE.instance()).sender(sender));
   }
 }

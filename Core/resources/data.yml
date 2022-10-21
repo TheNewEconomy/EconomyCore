@@ -13,21 +13,21 @@ Data:
   Database:
 
     #The database type to use. Current options: MySQL, H2.
-    Type: h2
+    Type: "h2"
 
     #The prefix to use for TheNewEconomy MySQL and H2 Tables
-    Prefix: TNE
+    Prefix: "TNE"
 
     #The file to which all the data will be saved if using a file-based database
-    File: Economy
+    File: "Economy"
 
     #All configurations relating to the MySQL Database
     MySQL:
 
       #The MySQL host
-      Host: localhost
+      Host: "localhost"
 
-      #Whether or not to use SSL.
+      #Whether to use SSL.
       SSL: false
 
       #Should public key retrieval be enabled for SQL?
@@ -37,13 +37,13 @@ Data:
       Port: 3306
 
       #The MySQL database
-      DB: TheNewEconomy
+      DB: "TheNewEconomy"
 
       #Your MySQL user's name
-      User: user
+      User: "user"
 
       #Your MySQL user's password
-      Password: password
+      Password: "password"
 
   #Settings related to connection pool
   Pool:

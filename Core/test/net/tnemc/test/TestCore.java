@@ -144,4 +144,9 @@ public class TestCore extends TNECore {
       }
     }
   }
+
+  @Override
+  protected void onEnable() {
+
+  }
 }

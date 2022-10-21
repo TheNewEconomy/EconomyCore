@@ -77,8 +77,8 @@ public class MessageHandler {
    *                a configuration file.
    * @param audience The audience that should receive the translated message.
    */
-  public static void translate(String message, Audience audience) {
-    audience.sendMessage(instance.mini.deserialize(message));
+  public static void translate(String message, UUID identifier, Audience audience) {
+    audience.sendMessage(instance.mini.deserialize(instance.translator.translateNode(message, "default")));
   }
 
   /**
@@ -88,9 +88,9 @@ public class MessageHandler {
    *                a configuration file.
    * @param audiences The audiences that should receive the translated message.
    */
-  public static void translate(String message, Audience... audiences) {
+  public static void translate(String message, UUID identifier, Audience... audiences) {
     for(Audience a : audiences) {
-      a.sendMessage(instance.mini.deserialize(message));
+      a.sendMessage(instance.mini.deserialize(instance.translator.translateNode(message, "default")));
     }
   }
 

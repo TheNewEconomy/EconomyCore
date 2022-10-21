@@ -15,7 +15,7 @@ Core:
     #All configurations relating to the server in general.
     Server:
 
-        #Should TNE automatically group the world's realms with the main overworld world.
+        #Should TNE automatically group the world"s realms with the main overworld world.
         #Example: Setting this to true would make world, world_nether and world_the_end share balances automatically.
         GroupRealms: true
 
@@ -32,7 +32,7 @@ Core:
         #The name of this server for data-related purposes. Max length is 100 characters.
         Name: "Main Server"
 
-        #All configurations relating to the server's economy account.
+        #All configurations relating to the server"s economy account.
         Account:
 
             #Enable the server account?
@@ -65,10 +65,6 @@ Core:
     #All configurations relating to TNE commands
     Commands:
 
-        #The command trigger(s) used to identify what is and isn't a command.
-        #To use multiple triggers, separate with comma, i.e. /,!.
-        Triggers: "/"
-
         #Configurations relating to the money top command.
         Top:
 
@@ -86,7 +82,7 @@ Core:
         #Extra configurations regarding the pay command
         Pay:
 
-          #Can players use /pay on offline players? May result in additional polling requests to Mojang's API, which
+          #Can players use /pay on offline players? May result in additional polling requests to Mojang"s API, which
           #could result in slower response times.
           Offline: false
 
@@ -106,10 +102,10 @@ Core:
     Transactions:
 
         #The time format to use when displaying transaction history data.
-        Format: M, d y
+        Format: "M, d y"
 
         #The timezone to use for transactions.
-        Timezone: US/Eastern
+        Timezone: "US/Eastern"
 
         #Configurations relating to tracking large transactions
         Tracking:

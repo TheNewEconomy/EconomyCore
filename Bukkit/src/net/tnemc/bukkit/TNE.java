@@ -47,11 +47,7 @@ public class TNE extends JavaPlugin {
 
   public void onEnable() {
 
-    this.core.command = new PaperCommandManager(this);
-    this.core.command.registerCommand(new AdminCommand());
-    this.core.command.registerCommand(new ConfigCommand());
-    this.core.command.registerCommand(new MoneyCommand());
-    this.core.command.registerCommand(new TransactionCommand());
+    this.core.enable();
 
     //Register our event listeners
     Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);

@@ -17,7 +17,11 @@ package net.tnemc.core.config;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.simpleyaml.configuration.comments.format.YamlCommentFormat;
+import org.simpleyaml.configuration.file.YamlConfiguration;
 import org.simpleyaml.configuration.file.YamlFile;
+import org.simpleyaml.configuration.implementation.api.QuoteStyle;
+import org.simpleyaml.utils.SupplierIO;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,6 +44,7 @@ public abstract class Config {
   protected final File file;
 
   protected final String defaults;
+  private boolean create = false;
 
   protected final List<String> nodes;
 
@@ -48,7 +53,66 @@ public abstract class Config {
     this.defaults = defaults;
     this.nodes = List.of(nodes);
 
+
+    if(!file.exists()) create = true;
+
     this.yaml = new YamlFile(file);
+
+    try {
+      yaml.createOrLoadWithComments();
+    } catch(IOException e) {
+      e.printStackTrace();
+    }
+
+    yaml.options().useComments(true);
+    this.yaml.setCommentFormat(YamlCommentFormat.PRETTY);
+
+    System.out.println("Loading config with nodes: " + nodes);
+    try {
+      URL url = getClass().getClassLoader().getResource(defaults);
+      if(url != null) {
+
+        URLConnection connection = url.openConnection();
+        connection.setUseCaches(false);
+
+        try(InputStream stream = connection.getInputStream()) {
+
+          yaml.setDefaults(YamlConfiguration.loadConfiguration(stream));
+        }
+      } else {
+        throw new IOException("Default configuration file not found!");
+      }
+    } catch(IOException e) {
+      throw new RuntimeException(e);
+    }
+    yaml.options().copyDefaults(true);
+    try {
+      yaml.save();
+    } catch(IOException e) {
+      e.printStackTrace();
+    }
+    //load();
+  }
+
+  public void addDefaults() {
+    if(create) {
+      
+    }
+  }
+
+  InputStream getResourceUTF8(String filename) {
+    try {
+      URL url = getClass().getClassLoader().getResource(filename);
+      if (url == null) {
+        return null;
+      } else {
+        URLConnection connection = url.openConnection();
+        connection.setUseCaches(false);
+        return connection.getInputStream();
+      }
+    } catch (IOException var4) {
+      return null;
+    }
   }
 
   public boolean load() {

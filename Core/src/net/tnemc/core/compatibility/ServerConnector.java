@@ -3,6 +3,7 @@ package net.tnemc.core.compatibility;
 import net.tnemc.core.io.message.TranslationProvider;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Pattern;

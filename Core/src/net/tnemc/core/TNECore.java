@@ -72,6 +72,8 @@ public abstract class TNECore {
   /* Plugin Instance */
   private static TNECore instance;
 
+  private boolean enabled = false;
+
   public TNECore(ServerConnector server, LogProvider logger, StorageManager storage) {
     this.server = server;
     this.logger = logger;
@@ -94,6 +96,32 @@ public abstract class TNECore {
       throw new IllegalStateException("TNE has already been initiated. Please refrain from attempting" +
                                           "to modify the instance variable.");
     }
+  }
+
+  public void enable() {
+    if(!enabled) {
+
+      this.enabled = true;
+      onEnable();
+
+    } else {
+      throw new IllegalStateException("TNE has already been enabled!");
+    }
+  }
+
+  /**
+   * Used to enable the core. This should contain things that can't be initialized until after the
+   * server software is operational.
+   */
+  protected void onEnable() {
+
+    if(!directory.exists()) {
+      directory.mkdir();
+    }
+
+    this.config = new MainConfig();
+    this.data = new DataConfig();
+    this.messageConfig = new MessageConfig();
   }
 
   /**

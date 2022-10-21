@@ -31,3 +31,5 @@ hs_err_pid*
 /dependency-reduced-pom.xml
 /API/dependency-reduced-pom.xml
 /Sponge/dependency-reduced-pom.xml
+/API/target/maven-archiver/pom.properties
+/Sponge/target/maven-archiver/pom.properties

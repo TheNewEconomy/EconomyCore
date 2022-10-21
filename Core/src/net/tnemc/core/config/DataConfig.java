@@ -19,7 +19,10 @@ package net.tnemc.core.config;
 
 import net.tnemc.core.TNECore;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * DataConfig
@@ -27,7 +30,7 @@ import java.io.File;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class DataConfig extends Config{
+public class DataConfig extends Config {
 
   public DataConfig() {
     super(new File(TNECore.directory(), "data.yml"), "resources/data.yml", "Data");

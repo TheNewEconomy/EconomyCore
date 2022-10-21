@@ -52,7 +52,7 @@ public class PlayerJoinListener implements Listener {
       event.getPlayer().kickPlayer(handle.getResponse());
     }
 
-    MessageHandler.translate("Hello <rainbow>world</rainbow>, TNE messages just got <hover:show_text:'<red>EXTREMELY</red>'>a lot</hover> better!", BukkitAudiences.create(TNE.instance()).player(event.getPlayer()));
-    MessageHandler.translate("<gradient:green:blue>Gradients are the best!</gradient>", BukkitAudiences.create(TNE.instance()).player(event.getPlayer()));
+    MessageHandler.translate("Hello <rainbow>world</rainbow>, TNE messages just got <hover:show_text:'<red>EXTREMELY</red>'>a lot</hover> better!", event.getPlayer().getUniqueId(), BukkitAudiences.create(TNE.instance()).player(event.getPlayer()));
+    MessageHandler.translate("<gradient:green:blue>Gradients are the best!</gradient>", event.getPlayer().getUniqueId(), BukkitAudiences.create(TNE.instance()).player(event.getPlayer()));
   }
 }
