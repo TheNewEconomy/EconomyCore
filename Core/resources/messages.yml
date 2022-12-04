@@ -127,6 +127,8 @@ Messages:
         ExceedsCurrencyMaximum: "<red>I'm sorry, but the monetary value you've entered exceeds the maximum possible balance."
         ExceedsPlayerMaximum: "<red>I'm sorry, but performing this transaction will place your balance over the maximum allowed."
         ExceedsOtherPlayerMaximum: "<red>I'm sorry, but performing this transaction will place $player's balance over the maximum allowed."
+        RequestSender: "<green>You have sent a request to <white>$player <green> for $amount."
+        Request: "<white>You have received a money request from <green>$player<white> for <gold>$amount<white>! <click:run_command:/money pay $player $amount $currency><green><underlined>Click to send them the funds!</click>"
 
     Setup:
         General:

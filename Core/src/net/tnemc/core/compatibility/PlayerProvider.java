@@ -10,6 +10,7 @@ package net.tnemc.core.compatibility;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
+import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.item.AbstractItemStack;
 
@@ -116,6 +117,12 @@ public interface PlayerProvider {
    * @return True if the player has the permission, otherwise false.
    */
   boolean hasPermission(String permission);
+
+  /**
+   * Used to send a message to this command source.
+   * @param messageData The message data to utilize for this translation.
+   */
+  void message(final MessageData messageData);
 
   /*BigDecimal getItems(Currency currency, Object inventory);
 

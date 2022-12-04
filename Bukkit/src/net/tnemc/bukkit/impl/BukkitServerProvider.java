@@ -20,6 +20,7 @@ package net.tnemc.bukkit.impl;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.io.message.TranslationProvider;
+import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -43,7 +44,8 @@ public class BukkitServerProvider implements ServerConnector {
    */
   @Override
   public Optional<PlayerProvider> findPlayer(@NotNull UUID identifier) {
-    return Optional.empty();
+
+    return Optional.of(BukkitPlayerProvider.find(identifier.toString()));
   }
 
   /**
@@ -81,7 +83,7 @@ public class BukkitServerProvider implements ServerConnector {
    */
   @Override
   public boolean online(String name) {
-    return false;
+    return Bukkit.getPlayer(name) != null;
   }
 
   /**

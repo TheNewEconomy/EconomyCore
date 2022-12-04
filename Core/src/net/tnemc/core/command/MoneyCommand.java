@@ -20,10 +20,12 @@ package net.tnemc.core.command;
 import co.aikar.commands.BaseCommand;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.source.PlayerSource;
 import net.tnemc.core.compatibility.CmdSource;
+import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
@@ -52,16 +54,8 @@ public class MoneyCommand extends BaseCommand {
     Optional<Account> account = TNECore.eco().account().findAccount(sender.identifier());
 
     if(account.isEmpty()) {
-
-      //Try to create and retry search
-      TNECore.eco().account().createAccount(sender.identifier().toString(), sender.name());
-
-      account = TNECore.eco().account().findAccount(sender.identifier());
-
-      if(account.isEmpty()) {
-        sender.message(new MessageData("Messages.Account.NoSuch"));
-        return;
-      }
+      sender.message(new MessageData("Messages.Account.NoSuch"));
+      return;
     }
 
     final Optional<HoldingsEntry> entry = account.get().getHoldings(region, currency);
@@ -100,19 +94,14 @@ public class MoneyCommand extends BaseCommand {
     Optional<Account> account = TNECore.eco().account().findAccount(args[0]);
 
     if(account.isEmpty()) {
-      TNECore.eco().account().createAccount(sender.identifier().toString(), sender.name());
-
-      account = TNECore.eco().account().findAccount(sender.identifier());
-
-      if(account.isEmpty()) {
-        sender.message(new MessageData("Messages.General.NoPlayer"));
-        return;
-      }
+      sender.message(new MessageData("Messages.General.NoPlayer"));
+      return;
     }
 
     final HoldingsModifier modifier = new HoldingsModifier(region,
                                                            currency,
                                                            new BigDecimal(args[1]));
+    //TODO: Value args check
 
     final Transaction transaction = new Transaction("give")
         .to(account.get(), modifier)
@@ -127,6 +116,8 @@ public class MoneyCommand extends BaseCommand {
     } catch(InvalidTransactionException e) {
       e.printStackTrace();
     }
+
+    //TODO: Receipt logging and success checking
     long endTime = System.nanoTime();
 
     long duration = (endTime - startTime);
@@ -141,14 +132,101 @@ public class MoneyCommand extends BaseCommand {
 
   }
 
-  //Arguments: <player> <amount> [from:account] [currency]
+  //Arguments: <player> <amount> [currency] [from:account]
   public static void onPay(CmdSource sender, String[] args) {
+    long startTime = System.nanoTime();
+    if(args.length < 2) {
+      //TODO: Help
+      return;
+    }
 
+    final String currency = (args.length >= 3)? args[2] : "USD";
+    //TODO: Default currency.
+
+    Optional<Account> account = TNECore.eco().account().findAccount(args[0]);
+    Optional<Account> senderAccount = TNECore.eco().account().findAccount(sender.identifier());
+
+    if(account.isEmpty() || senderAccount.isEmpty()) {
+      sender.message(new MessageData("Messages.General.NoPlayer"));
+      return;
+    }
+
+    Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)account.get()).getUUID());
+    if(provider.isEmpty()) {
+      sender.message(new MessageData("Messages.General.NoPlayer"));
+      return;
+    }
+
+    final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
+                                                           currency,
+                                                           new BigDecimal(args[1]));
+    //TODO: Value args check
+
+    final Transaction transaction = new Transaction("pay")
+        .to(account.get(), modifier)
+        .from(senderAccount.get(), modifier.counter())
+        .processor(new BaseTransactionProcessor())
+        .source(new PlayerSource(sender.identifier()));
+
+    Optional<Receipt> receipt = Optional.empty();
+    try {
+      final TransactionResult result = transaction.process();
+      System.out.println(result.getMessage());
+      receipt = result.getReceipt();
+    } catch(InvalidTransactionException e) {
+      e.printStackTrace();
+    }
+
+    //TODO: Receipt logging and success checking
+    long endTime = System.nanoTime();
+
+    long duration = (endTime - startTime);
+
+    sender.message(new MessageData("<red>Transaction took " + duration + "to execute!"));
+
+    //TODO: Success message
   }
 
   //Arguments: <player> <amount> [currency]
   public static void onRequest(CmdSource sender, String[] args) {
+    long startTime = System.nanoTime();
+    if(args.length < 2) {
+      //TODO: Help
+      return;
+    }
 
+    final String currency = (args.length >= 3)? args[2] : "USD";
+    //TODO: Default currency.
+
+    Optional<Account> account = TNECore.eco().account().findAccount(args[0]);
+
+    if(account.isEmpty() || !TNECore.server().online(args[0])) {
+      sender.message(new MessageData("Messages.General.NoPlayer"));
+      return;
+    }
+
+    Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)account.get()).getUUID());
+    if(provider.isEmpty()) {
+      sender.message(new MessageData("Messages.General.NoPlayer"));
+      return;
+    }
+
+    final MessageData msg = new MessageData("Messages.Money.RequestSender");
+    msg.addReplacement("$player", args[0]);
+    msg.addReplacement("$amount", args[1]);
+    sender.message(msg);
+
+    final MessageData request = new MessageData("Messages.Money.Request");
+    request.addReplacement("$player", sender.name());
+    request.addReplacement("$amount", args[1]);
+    request.addReplacement("$currency", currency);
+    provider.get().message(request);
+
+    long endTime = System.nanoTime();
+
+    long duration = (endTime - startTime);
+
+    sender.message(new MessageData("<red>Transaction took " + duration + "to execute!"));
   }
 
   //Arguments: <player> <amount> [world] [currency]

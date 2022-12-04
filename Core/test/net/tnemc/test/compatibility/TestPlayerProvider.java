@@ -20,6 +20,7 @@ package net.tnemc.test.compatibility;
 
 import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.item.AbstractItemStack;
 
@@ -185,5 +186,10 @@ public class TestPlayerProvider implements PlayerProvider {
   @Override
   public boolean hasPermission(String permission) {
     return true;
+  }
+
+  @Override
+  public void message(MessageData messageData) {
+
   }
 }

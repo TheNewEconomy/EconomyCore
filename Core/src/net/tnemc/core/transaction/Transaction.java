@@ -186,7 +186,6 @@ public class Transaction {
     } else {
       this.to.setEndingBalance(entry.modifyGrab(modifier));
     }
-
     this.modifierTo = modifier;
     return this;
   }
