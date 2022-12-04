@@ -26,7 +26,9 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.maps.MapKey;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -115,6 +117,29 @@ public class Account {
                                                        currency,
                                                        value.type().getHoldings(this, region,
                                                                                 value, type)));
+  }
+
+  /**
+   * Used to get the holdings based on specific specifications, or returns an empty optional
+   * if no holdings for the specifications exists.
+   *
+   * @param region The region to use
+   * @param type The {@link HoldingsType type} to use.
+   *
+   * @return The holdings based on specific specifications, or an empty optional if no
+   * holdings for the specifications exists.
+   */
+  public List<HoldingsEntry> getAllHoldings(final @NotNull String region,
+                                            final @NotNull HoldingsType type) {
+
+    List<HoldingsEntry> holdings = new ArrayList<>();
+
+    TNECore.eco().currency().currencies().forEach((currency)->{
+      //TODO: World handler.
+      holdings.add(new HoldingsEntry(region, currency.getIdentifier(), currency.type()
+          .getHoldings(this, region, currency, type)));
+    });
+    return holdings;
   }
 
   /**

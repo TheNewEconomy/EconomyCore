@@ -103,5 +103,6 @@ public class Note {
     this.texture = texture;
   }
 
+
   //TODO: Build item stack(must be platform independent.. maybe an ItemProvider class?)
 }

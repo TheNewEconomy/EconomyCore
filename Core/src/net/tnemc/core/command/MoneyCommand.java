@@ -22,11 +22,13 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.account.holdings.modify.HoldingsOperation;
 import net.tnemc.core.actions.source.PlayerSource;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
@@ -35,6 +37,8 @@ import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -44,6 +48,11 @@ import java.util.Optional;
  * @since 0.1.2.0
  */
 public class MoneyCommand extends BaseCommand {
+
+  //Arguments:
+  public static void onMyBal(CmdSource sender, String[] args) {
+
+  }
 
   //Arguments: [world] [currency]
   public static void onBalance(CmdSource sender, String[] args) {
@@ -61,8 +70,16 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    final Optional<HoldingsEntry> entry = account.get().getHoldings(region, currency);
-    if(entry.isEmpty()) {
+    final List<HoldingsEntry> holdings = new ArrayList<>();
+
+    if(args.length >= 2) {
+      final Optional<HoldingsEntry> entry = account.get().getHoldings(region, currency);
+      entry.ifPresent(holdings::add);
+    } else {
+      holdings.addAll(account.get().getAllHoldings(region, HoldingsType.NORMAL_HOLDINGS));
+    }
+
+    if(holdings.isEmpty()) {
 
       //Shouldn't happen, but if it does handle it.
       final MessageData msg = new MessageData("Messages.Account.NoHoldings");
@@ -70,16 +87,99 @@ public class MoneyCommand extends BaseCommand {
       sender.message(msg);
       return;
     }
-
-    final MessageData msg = new MessageData("Messages.Money.Holdings");
-    msg.addReplacement("$amount", entry.get().getAmount().toPlainString());
+    final MessageData msg = new MessageData("Messages.Money.HoldingsMulti");
+    msg.addReplacement("$world", region);
     sender.message(msg);
+
+    for(HoldingsEntry entry : holdings) {
+      final MessageData entryMSG = new MessageData("Messages.Money.HoldingsMultiSingle");
+      entryMSG.addReplacement("$currency", entry.getCurrency());
+      entryMSG.addReplacement("$amount", entry.getAmount().toPlainString());
+      sender.message(entryMSG);
+    }
     //TODO: currency formatting.
   }
 
-  //Arguments: <amount> <to currency[:world]> [from currency[:world]]
+  //Arguments: <amount> <to currency> [from currency]
   public static void onConvert(CmdSource sender, String[] args) {
+    long startTime = System.nanoTime();
+    if(args.length < 2) {
+      //TODO: Help
+      return;
+    }
 
+    final String currency = args[1];
+    final String fromCurrency = (args.length >= 3)? args[2] : "USD";
+    //TODO: Default currency.
+
+    Optional<Currency> currencyOBJ = TNECore.eco().currency().findCurrency(currency);
+    Optional<Currency> currencyFromOBJ = TNECore.eco().currency().findCurrency(fromCurrency);
+
+    if(currencyOBJ.isEmpty() || currencyFromOBJ.isEmpty()) {
+      return;
+    }
+
+    if(currency.equalsIgnoreCase(fromCurrency)) {
+      final MessageData data = new MessageData("Messages.General.NoPlayer");
+      data.addReplacement("$player", sender.name());
+      sender.message(data);
+      return;
+    }
+
+    Optional<Account> account = TNECore.eco().account().findAccount(sender.identifier());
+
+    if(account.isEmpty()) {
+      sender.message(new MessageData("Messages.Money.ConvertSame"));
+      return;
+    }
+
+    final BigDecimal parsed = new BigDecimal(args[0]);
+    final BigDecimal parsedTo = new BigDecimal(args[0]).multiply(BigDecimal.valueOf(currencyFromOBJ.get().getConversion().get(currency)));
+
+    final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
+                                                           currency,
+                                                           parsedTo);
+
+    final HoldingsModifier modifierFrom = new HoldingsModifier(sender.region(),
+                                                               fromCurrency,
+                                                               parsed.negate());
+    //TODO: Value args check
+
+    final Transaction transaction = new Transaction("convert")
+        .from(account.get(), modifierFrom)
+        .to(account.get(), modifier)
+        .processor(new BaseTransactionProcessor())
+        .source(new PlayerSource(sender.identifier()));
+
+    Optional<Receipt> receipt = Optional.empty();
+    try {
+      final TransactionResult result = transaction.process();
+
+      if(!result.isSuccessful()) {
+        sender.message(new MessageData(result.getMessage()));
+        return;
+      }
+      System.out.println(result.getMessage());
+      receipt = result.getReceipt();
+    } catch(InvalidTransactionException e) {
+      e.printStackTrace();
+    }
+
+
+    //TODO: Better conversion success message!
+    final MessageData data = new MessageData("Messages.Money.Converted");
+    data.addReplacement("$from_amount", parsed.toPlainString());
+    data.addReplacement("$amount", parsedTo.toPlainString());
+    sender.message(data);
+
+    //TODO: Receipt logging and success checking
+    long endTime = System.nanoTime();
+
+    long duration = (endTime - startTime);
+
+    sender.message(new MessageData("<red>Transaction took " + duration + "to execute!"));
+
+    //TODO: Success message
   }
 
   //Arguments: <player> <amount> [world] [currency]
@@ -139,7 +239,55 @@ public class MoneyCommand extends BaseCommand {
 
   //Arguments: <amount> [currency]
   public static void onNote(CmdSource sender, String[] args) {
+    long startTime = System.nanoTime();
+    if(args.length < 1) {
+      //TODO: Help
+      return;
+    }
 
+    final String currency = (args.length >= 2)? args[1] : "USD";
+    //TODO: Default currency.
+
+    Optional<Account> account = TNECore.eco().account().findAccount(sender.identifier());
+
+    if(account.isEmpty()) {
+      final MessageData data = new MessageData("Messages.General.NoPlayer");
+      data.addReplacement("$player", args[0]);
+      sender.message(data);
+      return;
+    }
+
+    final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
+                                                           currency,
+                                                           new BigDecimal(args[0]));
+    //TODO: Value args check
+
+    final Transaction transaction = new Transaction("note")
+        .from(account.get(), modifier.counter())
+        .processor(new BaseTransactionProcessor())
+        .source(new PlayerSource(sender.identifier()));
+
+
+    Optional<Receipt> receipt = Optional.empty();
+    try {
+      final TransactionResult result = transaction.process();
+
+      if(!result.isSuccessful()) {
+        sender.message(new MessageData(result.getMessage()));
+        return;
+      }
+      System.out.println(result.getMessage());
+      receipt = result.getReceipt();
+    } catch(InvalidTransactionException e) {
+      e.printStackTrace();
+    }
+
+    //TODO: Receipt logging and success checking
+    long endTime = System.nanoTime();
+
+    long duration = (endTime - startTime);
+
+    sender.message(new MessageData("<red>Transaction took " + duration + "to execute!"));
   }
 
   //Arguments: <player> <amount> [currency] [from:account]
