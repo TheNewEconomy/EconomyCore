@@ -31,6 +31,7 @@ import net.tnemc.core.transaction.TransactionCheck;
 import net.tnemc.core.transaction.TransactionParticipant;
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 /**
@@ -77,7 +78,6 @@ public class MaximumBalanceCheck implements TransactionCheck {
       if(participant.getEndingBalance().getAmount().compareTo(currency.get().getMaxBalance()) > 0) {
         return HoldingsResponse.MAX_HOLDINGS;
       }
-
     }
     return GeneralResponse.SUCCESS;
   }
