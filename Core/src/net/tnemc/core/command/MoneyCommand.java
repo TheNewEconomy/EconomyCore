@@ -23,6 +23,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
+import net.tnemc.core.account.holdings.modify.HoldingsOperation;
 import net.tnemc.core.actions.source.PlayerSource;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
@@ -54,7 +55,9 @@ public class MoneyCommand extends BaseCommand {
     Optional<Account> account = TNECore.eco().account().findAccount(sender.identifier());
 
     if(account.isEmpty()) {
-      sender.message(new MessageData("Messages.Account.NoSuch"));
+      final MessageData data = new MessageData("Messages.General.NoPlayer");
+      data.addReplacement("$player", args[0]);
+      sender.message(data);
       return;
     }
 
@@ -94,7 +97,9 @@ public class MoneyCommand extends BaseCommand {
     Optional<Account> account = TNECore.eco().account().findAccount(args[0]);
 
     if(account.isEmpty()) {
-      sender.message(new MessageData("Messages.General.NoPlayer"));
+      final MessageData data = new MessageData("Messages.General.NoPlayer");
+      data.addReplacement("$player", args[0]);
+      sender.message(data);
       return;
     }
 
@@ -111,6 +116,11 @@ public class MoneyCommand extends BaseCommand {
     Optional<Receipt> receipt = Optional.empty();
     try {
       final TransactionResult result = transaction.process();
+
+      if(!result.isSuccessful()) {
+        sender.message(new MessageData(result.getMessage()));
+        return;
+      }
       System.out.println(result.getMessage());
       receipt = result.getReceipt();
     } catch(InvalidTransactionException e) {
@@ -147,13 +157,17 @@ public class MoneyCommand extends BaseCommand {
     Optional<Account> senderAccount = TNECore.eco().account().findAccount(sender.identifier());
 
     if(account.isEmpty() || senderAccount.isEmpty()) {
-      sender.message(new MessageData("Messages.General.NoPlayer"));
+      final MessageData data = new MessageData("Messages.General.NoPlayer");
+      data.addReplacement("$player", args[0]);
+      sender.message(data);
       return;
     }
 
     Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)account.get()).getUUID());
     if(provider.isEmpty()) {
-      sender.message(new MessageData("Messages.General.NoPlayer"));
+      final MessageData data = new MessageData("Messages.General.NoPlayer");
+      data.addReplacement("$player", args[0]);
+      sender.message(data);
       return;
     }
 
@@ -201,13 +215,17 @@ public class MoneyCommand extends BaseCommand {
     Optional<Account> account = TNECore.eco().account().findAccount(args[0]);
 
     if(account.isEmpty() || !TNECore.server().online(args[0])) {
-      sender.message(new MessageData("Messages.General.NoPlayer"));
+      final MessageData data = new MessageData("Messages.General.NoPlayer");
+      data.addReplacement("$player", args[0]);
+      sender.message(data);
       return;
     }
 
     Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)account.get()).getUUID());
     if(provider.isEmpty()) {
-      sender.message(new MessageData("Messages.General.NoPlayer"));
+      final MessageData data = new MessageData("Messages.General.NoPlayer");
+      data.addReplacement("$player", args[0]);
+      sender.message(data);
       return;
     }
 
@@ -231,7 +249,58 @@ public class MoneyCommand extends BaseCommand {
 
   //Arguments: <player> <amount> [world] [currency]
   public static void onSet(CmdSource sender, String[] args) {
+    long startTime = System.nanoTime();
+    if(args.length < 2) {
+      //TODO: Help
+      return;
+    }
 
+    final String region = (args.length >= 3)? args[2] : sender.region();
+    final String currency = (args.length >= 4)? args[3] : "USD";
+    //TODO: Default currency.
+
+    Optional<Account> account = TNECore.eco().account().findAccount(args[0]);
+
+    if(account.isEmpty()) {
+      final MessageData data = new MessageData("Messages.General.NoPlayer");
+      data.addReplacement("$player", args[0]);
+      sender.message(data);
+      return;
+    }
+
+    final HoldingsModifier modifier = new HoldingsModifier(region,
+                                                           currency,
+                                                           new BigDecimal(args[1]),
+                                                           HoldingsOperation.SET);
+    //TODO: Value args check
+
+    final Transaction transaction = new Transaction("set")
+        .to(account.get(), modifier)
+        .processor(new BaseTransactionProcessor())
+        .source(new PlayerSource(sender.identifier()));
+
+    Optional<Receipt> receipt = Optional.empty();
+    try {
+      final TransactionResult result = transaction.process();
+      System.out.println(result.getMessage());
+      receipt = result.getReceipt();
+    } catch(InvalidTransactionException e) {
+      e.printStackTrace();
+    }
+
+    final MessageData msg = new MessageData("Messages.Money.Set");
+    msg.addReplacement("$player", args[0]);
+    msg.addReplacement("$amount", args[1]);
+    sender.message(msg);
+
+    //TODO: Receipt logging and success checking
+    long endTime = System.nanoTime();
+
+    long duration = (endTime - startTime);
+
+    sender.message(new MessageData("<red>Transaction took " + duration + "to execute!"));
+
+    //TODO: Success message
   }
 
   //Arguments: <amount> [world]
@@ -242,6 +311,57 @@ public class MoneyCommand extends BaseCommand {
   //Arguments: <player> <amount> [world] [currency]
   public static void onTake(CmdSource sender, String[] args) {
 
+    long startTime = System.nanoTime();
+    if(args.length < 2) {
+      //TODO: Help
+      return;
+    }
+
+    final String region = (args.length >= 3)? args[2] : sender.region();
+    final String currency = (args.length >= 4)? args[3] : "USD";
+    //TODO: Default currency.
+
+    Optional<Account> account = TNECore.eco().account().findAccount(args[0]);
+
+    if(account.isEmpty()) {
+      final MessageData data = new MessageData("Messages.General.NoPlayer");
+      data.addReplacement("$player", args[0]);
+      sender.message(data);
+      return;
+    }
+
+    final HoldingsModifier modifier = new HoldingsModifier(region,
+                                                           currency,
+                                                           new BigDecimal(args[1]));
+    //TODO: Value args check
+
+    final Transaction transaction = new Transaction("give")
+        .to(account.get(), modifier.counter())
+        .processor(new BaseTransactionProcessor())
+        .source(new PlayerSource(sender.identifier()));
+
+    Optional<Receipt> receipt = Optional.empty();
+    try {
+      final TransactionResult result = transaction.process();
+
+      if(!result.isSuccessful()) {
+        sender.message(new MessageData(result.getMessage()));
+        return;
+      }
+      System.out.println(result.getMessage());
+      receipt = result.getReceipt();
+    } catch(InvalidTransactionException e) {
+      e.printStackTrace();
+    }
+
+    //TODO: Receipt logging and success checking
+    long endTime = System.nanoTime();
+
+    long duration = (endTime - startTime);
+
+    sender.message(new MessageData("<red>Transaction took " + duration + "to execute!"));
+
+    //TODO: Success message
   }
 
   //Arguments: [page] [currency:name] [world:world] [limit:#]

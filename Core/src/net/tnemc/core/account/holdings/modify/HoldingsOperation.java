@@ -50,6 +50,12 @@ public enum HoldingsOperation {
       return value.multiply(modifier);
     }
   },
+  SET {
+    @Override
+    public BigDecimal perform(final BigDecimal value, final BigDecimal modifier) {
+      return modifier;
+    }
+  },
   DIVIDE {
     @Override
     public BigDecimal perform(final BigDecimal value, final BigDecimal modifier) {
