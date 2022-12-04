@@ -2,6 +2,9 @@
 # Author: creatorfromhell
 # License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 Core:
+
+    #DO NOT MODIFY
+    Version: "0.1.2.0"
     
     #Should TNE separate account balances by world?
     Multiworld: false
@@ -15,7 +18,7 @@ Core:
     #All configurations relating to the server in general.
     Server:
 
-        #Should TNE automatically group the world"s realms with the main overworld world.
+        #Should TNE automatically group the world's realms with the main overworld world.
         #Example: Setting this to true would make world, world_nether and world_the_end share balances automatically.
         GroupRealms: true
 
@@ -70,7 +73,7 @@ Core:
 
           #How often should the data used for /baltop be refreshed?
           #This is in seconds.
-          Refresh: 600
+          Refresh: 1200
 
           #A list of values to use to exclude certain users from baltop if the username contains these values.
           Exclusions:

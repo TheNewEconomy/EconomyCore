@@ -17,15 +17,20 @@ package net.tnemc.core.config;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import org.simpleyaml.configuration.comments.format.YamlCommentFormat;
 import org.simpleyaml.configuration.file.YamlConfiguration;
 import org.simpleyaml.configuration.file.YamlFile;
 import org.simpleyaml.configuration.implementation.api.QuoteStyle;
+import org.simpleyaml.exceptions.InvalidConfigurationException;
 import org.simpleyaml.utils.SupplierIO;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.JarURLConnection;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
@@ -68,7 +73,29 @@ public abstract class Config {
     this.yaml.setCommentFormat(YamlCommentFormat.PRETTY);
 
     System.out.println("Loading config with nodes: " + nodes);
+
     try {
+      String path = "jar:file:\\" + TNECore.directory().getAbsolutePath() + "..\\TNE.jar!/" + defaults;
+
+      URL url = new URL(path.replaceAll(" ", "%20").replaceAll("//", "\\"));
+
+      System.out.println(url.getPath());
+      JarURLConnection connection = (JarURLConnection) url.openConnection();
+      YamlFile defaultYaml = new YamlFile(new File(connection.getJarFileURL().toURI()));
+
+
+      defaultYaml.options().useComments(true);
+      defaultYaml.setCommentFormat(YamlCommentFormat.PRETTY);
+      yaml.setDefaults(defaultYaml);
+
+    } catch(URISyntaxException e) {
+      throw new RuntimeException(e);
+    } catch(MalformedURLException e) {
+      throw new RuntimeException(e);
+    } catch(IOException e) {
+      throw new RuntimeException(e);
+    }
+    /*try {
       URL url = getClass().getClassLoader().getResource(defaults);
       if(url != null) {
 
@@ -84,7 +111,7 @@ public abstract class Config {
       }
     } catch(IOException e) {
       throw new RuntimeException(e);
-    }
+    }*/
     yaml.options().copyDefaults(true);
     try {
       yaml.save();
@@ -96,7 +123,7 @@ public abstract class Config {
 
   public void addDefaults() {
     if(create) {
-      
+
     }
   }
 

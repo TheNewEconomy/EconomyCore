@@ -25,17 +25,17 @@ Info:
 #Various options for currencies.
 Options:
 
-  #Whether or not this currency is the default currency for the world.
+  #Whether this currency is the default currency for the world.
   Default: true
 
   #The worlds this currency belongs to, if Global is set to false.
   Worlds:
     - "world"
 
-  #Whether or not this currency is a global currency.
+  #Whether this currency is a global currency.
   Global: true
 
-  #Whether or not this currency is enabled.
+  #Whether this currency is enabled.
   Disabled: false
 
   #The maximum balance possible for this currency.
@@ -145,14 +145,14 @@ Note:
     #All configurations relating to enchantment identification for the note item
     #The format is - enchantment name
     #Optional.
-    #Enchantments:
-    #  - 'example_enchant'
+    Enchantments:
+      - 'example_enchant'
 
     #All configurations relating to item flags identification for the note item
     #The format is - item flag
     #Optional.
-    #Flags:
-    #  - 'example_flag'
+    Flags:
+      - 'example_flag'
 
 Converting:
 

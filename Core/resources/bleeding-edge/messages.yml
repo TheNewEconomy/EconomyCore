@@ -4,11 +4,8 @@
 # All configurable messages in TNE
 Messages:
 
-  Parameter:
-    InvalidType: "<red>Parameter '$parameter' is of type $parameter_type."
-    InvalidLength: "<red>The max length of parameter '$parameter' is $max_length."
-    ParameterOption: "[$parameter]"
-    ParameterRequired: "<$parameter>"
+  #DO NOT MODIFY
+  Version: "0.1.2.0"
 
   Command:
     Unable: "<red>I'm sorry, but you're not allowed to use that command."
