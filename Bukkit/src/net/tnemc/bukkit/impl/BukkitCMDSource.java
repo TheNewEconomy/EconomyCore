@@ -92,6 +92,9 @@ public class BukkitCMDSource implements CmdSource {
    */
   @Override
   public void message(final MessageData messageData) {
-    MessageHandler.translate(messageData, identifier, BukkitAudiences.create(TNE.instance()).sender(sender));
+
+    try(BukkitAudiences provider = BukkitAudiences.create(TNE.instance())) {
+      MessageHandler.translate(messageData, identifier, provider.sender(sender));
+    }
   }
 }

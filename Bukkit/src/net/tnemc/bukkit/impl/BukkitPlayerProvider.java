@@ -18,12 +18,21 @@ package net.tnemc.bukkit.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.platform.AudienceProvider;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.tnemc.bukkit.BukkitTNECore;
+import net.tnemc.bukkit.TNE;
 import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.io.message.MessageData;
+import net.tnemc.core.io.message.MessageHandler;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.item.AbstractItemStack;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -34,9 +43,9 @@ import java.util.UUID;
  */
 public class BukkitPlayerProvider implements PlayerProvider {
 
-  private final Player player;
+  private final OfflinePlayer player;
 
-  public BukkitPlayerProvider(Player player) {
+  public BukkitPlayerProvider(OfflinePlayer player) {
     this.player = player;
   }
 
@@ -77,7 +86,11 @@ public class BukkitPlayerProvider implements PlayerProvider {
    */
   @Override
   public String getRegion() {
-    return player.getWorld().getName();
+    if(player.getPlayer() == null) {
+      return BukkitTNECore.server().defaultWorld();
+    }
+
+    return player.getPlayer().getWorld().getName();
   }
 
   /**
@@ -87,7 +100,10 @@ public class BukkitPlayerProvider implements PlayerProvider {
    */
   @Override
   public int getExp() {
-    return (int)player.getExp();
+    if(player.getPlayer() == null) {
+      return 0;
+    }
+    return (int)player.getPlayer().getExp();
   }
 
   /**
@@ -129,10 +145,12 @@ public class BukkitPlayerProvider implements PlayerProvider {
    */
   @Override
   public Object getInventory(boolean ender) {
+    if(player.getPlayer() == null) return null;
+
     if(ender) {
-      return player.getEnderChest();
+      return player.getPlayer().getEnderChest();
     }
-    return player.getInventory();
+    return player.getPlayer().getInventory();
   }
 
   /**
@@ -187,6 +205,33 @@ public class BukkitPlayerProvider implements PlayerProvider {
    */
   @Override
   public boolean hasPermission(String permission) {
-    return player.hasPermission(permission);
+    if(player.getPlayer() == null) {
+      return false;
+    }
+    return player.getPlayer().hasPermission(permission);
+  }
+
+  /**
+   * Used to send a message to this command source.
+   *
+   * @param messageData The message data to utilize for this translation.
+   */
+  @Override
+  public void message(final MessageData messageData) {
+    if(player.getPlayer() == null) {
+      return;
+    }
+
+    try(BukkitAudiences provider = BukkitAudiences.create(TNE.instance())) {
+      MessageHandler.translate(messageData, player.getUniqueId(), provider.sender(player.getPlayer()));
+    }
+  }
+
+  public static BukkitPlayerProvider find(final String identifier) {
+    try {
+      return new BukkitPlayerProvider(Bukkit.getOfflinePlayer(UUID.fromString(identifier)));
+    } catch (Exception ignore) {
+      return new BukkitPlayerProvider(Bukkit.getOfflinePlayer(identifier));
+    }
   }
 }
