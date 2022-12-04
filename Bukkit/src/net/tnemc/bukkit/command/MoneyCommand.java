@@ -38,6 +38,7 @@ public class MoneyCommand extends BaseCommand {
 
   @Default
   @Subcommand("balance|bal|val")
+  @CommandAlias("balance|bal|val")
   @Syntax("%Money.Balance.Arguments")
   @Description("%Money.Balance.Description")
   @CommandPermission("tne.money.balance")
@@ -70,6 +71,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   @Subcommand("pay|send|transfer")
+  @CommandAlias("pay|send|transfer")
   @Syntax("%Money.Pay.Arguments")
   @Description("%Money.Pay.Description")
   @CommandPermission("tne.money.pay")
@@ -110,6 +112,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   @Subcommand("top")
+  @CommandAlias("baltop")
   @Syntax("%Money.Top.Arguments")
   @Description("%Money.Top.Description")
   @CommandPermission("tne.money.top")
