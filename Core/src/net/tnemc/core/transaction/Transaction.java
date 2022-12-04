@@ -97,34 +97,47 @@ public class Transaction {
   public Transaction from(final String id, final HoldingsModifier modifier) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(id);
-
-    if(account.isPresent()) {
-      final String currency = modifier.getCurrency();
-      final String region = modifier.getRegion();
-
-      final Optional<HoldingsEntry> balance = account.get().getHoldings(region, currency);
-      final BigDecimal bal = (balance.isPresent())? balance.get().getAmount() : BigDecimal.ZERO;
-
-      final HoldingsEntry entry = new HoldingsEntry(region, currency, bal);
-
-      this.from = new TransactionParticipant(id, entry);
-
-      final Optional<TransactionType> type = TNECore.eco().transaction().findType(this.type);
-
-      if(type.isPresent() && type.get().fromTax().isPresent()) {
-        final BigDecimal amount = type.get().fromTax().get()
-            .calculateTax(modifier.getModifier());
-
-        this.from.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount.negate()));
-        this.from.setTax(amount);
-      } else {
-        this.from.setEndingBalance(entry.modifyGrab(modifier));
-      }
-
-      this.modifierFrom = modifier;
-    }
+    account.ifPresent(value->from(value, modifier));
     return this;
   }
+
+  /**
+   * Used to set the {@link TransactionParticipant from} participant.
+   *
+   * @param account The account reference of this participant.
+   * @param modifier The {@link HoldingsModifier modifier} associated with this participant.
+   * @return An instance of the Transaction object with the new
+   * participant.
+   */
+  public Transaction from(final Account account, final HoldingsModifier modifier) {
+
+    final String currency = modifier.getCurrency();
+    final String region = modifier.getRegion();
+
+    final Optional<HoldingsEntry> balance = account.getHoldings(region, currency);
+    final BigDecimal bal = (balance.isPresent())? balance.get().getAmount() : BigDecimal.ZERO;
+
+    final HoldingsEntry entry = new HoldingsEntry(region, currency, bal);
+
+    this.from = new TransactionParticipant(account.getIdentifier(), entry);
+
+    final Optional<TransactionType> type = TNECore.eco().transaction().findType(this.type);
+
+    if(type.isPresent() && type.get().fromTax().isPresent()) {
+      final BigDecimal amount = type.get().fromTax().get()
+          .calculateTax(modifier.getModifier());
+
+      this.from.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount.negate()));
+      this.from.setTax(amount);
+    } else {
+      this.from.setEndingBalance(entry.modifyGrab(modifier));
+    }
+
+    this.modifierFrom = modifier;
+
+    return this;
+  }
+
   /**
    * Used to set the {@link TransactionParticipant to} participant.
    *
@@ -135,33 +148,46 @@ public class Transaction {
    * participant.
    */
   public Transaction to(final String id, final HoldingsModifier modifier) {
+
     final Optional<Account> account = TNECore.eco().account().findAccount(id);
+    account.ifPresent(value->to(value, modifier));
+    return this;
+  }
 
-    if(account.isPresent()) {
-      final String currency = modifier.getCurrency();
-      final String region = modifier.getRegion();
+  /**
+   * Used to set the {@link TransactionParticipant to} participant.
+   *
+   *
+   * @param account The account reference of this participant.
+   * @param modifier The {@link HoldingsModifier modifier} associated with this participant.
+   * @return An instance of the Transaction object with the new
+   * participant.
+   */
+  public Transaction to(final Account account, final HoldingsModifier modifier) {
 
-      final Optional<HoldingsEntry> balance = account.get().getHoldings(region, currency);
-      final BigDecimal bal = (balance.isPresent())? balance.get().getAmount() : BigDecimal.ZERO;
+    final String currency = modifier.getCurrency();
+    final String region = modifier.getRegion();
 
-      final HoldingsEntry entry = new HoldingsEntry(region, currency, bal);
+    final Optional<HoldingsEntry> balance = account.getHoldings(region, currency);
+    final BigDecimal bal = (balance.isPresent())? balance.get().getAmount() : BigDecimal.ZERO;
 
-      this.to = new TransactionParticipant(id, entry);
+    final HoldingsEntry entry = new HoldingsEntry(region, currency, bal);
 
-      final Optional<TransactionType> type = TNECore.eco().transaction().findType(this.type);
+    this.to = new TransactionParticipant(account.getIdentifier(), entry);
 
-      if(type.isPresent() && type.get().toTax().isPresent()) {
-        final BigDecimal amount = type.get().toTax().get()
-            .calculateTax(modifier.getModifier());
+    final Optional<TransactionType> type = TNECore.eco().transaction().findType(this.type);
 
-        this.to.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount.negate()));
-        this.to.setTax(amount);
-      } else {
-        this.to.setEndingBalance(entry.modifyGrab(modifier));
-      }
+    if(type.isPresent() && type.get().toTax().isPresent()) {
+      final BigDecimal amount = type.get().toTax().get()
+          .calculateTax(modifier.getModifier());
 
-      this.modifierTo = modifier;
+      this.to.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount.negate()));
+      this.to.setTax(amount);
+    } else {
+      this.to.setEndingBalance(entry.modifyGrab(modifier));
     }
+
+    this.modifierTo = modifier;
     return this;
   }
 
