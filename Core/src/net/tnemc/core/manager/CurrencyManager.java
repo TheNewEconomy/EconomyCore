@@ -29,6 +29,7 @@ import net.tnemc.core.currency.type.ItemType;
 import net.tnemc.core.currency.type.MixedType;
 import net.tnemc.core.currency.type.VirtualType;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashMap;
@@ -55,6 +56,10 @@ public class CurrencyManager {
     addType(new ItemType());
     addType(new MixedType());
     addType(new VirtualType());
+  }
+
+  public void load(final File parent) {
+    loader.loadCurrencies(new File(parent, "currency"));
   }
 
   public CurrencyLoader getLoader() {

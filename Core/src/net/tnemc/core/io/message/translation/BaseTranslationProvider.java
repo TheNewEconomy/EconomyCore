@@ -20,8 +20,10 @@ package net.tnemc.core.io.message.translation;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
+import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.io.message.TranslationProvider;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -54,14 +56,20 @@ public class BaseTranslationProvider implements TranslationProvider {
    * Used to translate a node for the given language. This should resort to the default if the
    * specified language doesn't exist.
    *
-   * @param node     The node to translate.
+   * @param messageData The message data to utilize for this translation.
    * @param language The language to translate the node to.
    *
    * @return The translated message represented by the node, or the default for if the node doesn't
    * exist.
    */
   @Override
-  public String translateNode(String node, String language) {
-    return TNECore.instance().getMessage().getString(node, language);
+  public String translateNode(final MessageData messageData, String language) {
+    String string = TNECore.instance().getMessage().getString(messageData.getNode(), language);
+
+    for(Map.Entry<String, String> replacement : messageData.getReplacements().entrySet()) {
+      System.out.println("Replace: " + replacement.getKey() + ":" + replacement.getValue());
+      string = string.replace(replacement.getKey(), replacement.getValue());
+    }
+    return string;
   }
 }

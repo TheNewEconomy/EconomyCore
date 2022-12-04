@@ -22,6 +22,7 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.tnemc.bukkit.TNE;
 import net.tnemc.bukkit.impl.BukkitPlayerProvider;
 import net.tnemc.core.handlers.PlayerJoinHandler;
+import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.io.message.MessageHandler;
 import net.tnemc.core.utils.HandlerResponse;
 import org.bukkit.event.EventHandler;
@@ -52,7 +53,7 @@ public class PlayerJoinListener implements Listener {
       event.getPlayer().kickPlayer(handle.getResponse());
     }
 
-    MessageHandler.translate("Hello <rainbow>world</rainbow>, TNE messages just got <hover:show_text:'<red>EXTREMELY</red>'>a lot</hover> better!", event.getPlayer().getUniqueId(), BukkitAudiences.create(TNE.instance()).player(event.getPlayer()));
-    MessageHandler.translate("<gradient:green:blue>Gradients are the best!</gradient>", event.getPlayer().getUniqueId(), BukkitAudiences.create(TNE.instance()).player(event.getPlayer()));
+    MessageHandler.translate(new MessageData("Hello <rainbow>world</rainbow>, TNE messages just got <hover:show_text:'<red>EXTREMELY</red>'>a lot</hover> better!"), event.getPlayer().getUniqueId(), BukkitAudiences.create(TNE.instance()).player(event.getPlayer()));
+    MessageHandler.translate(new MessageData("<gradient:green:blue>Gradients are the best!</gradient>"), event.getPlayer().getUniqueId(), BukkitAudiences.create(TNE.instance()).player(event.getPlayer()));
   }
 }

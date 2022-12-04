@@ -22,6 +22,7 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.compatibility.CmdSource;
+import net.tnemc.core.io.message.MessageData;
 
 import java.util.Optional;
 
@@ -50,7 +51,7 @@ public class MoneyCommand extends BaseCommand {
       account = TNECore.eco().account().findAccount(sender.identifier());
 
       if(account.isEmpty()) {
-        sender.message("Messages.Account.NoSuch");
+        sender.message(new MessageData("Messages.Account.NoSuch"));
         return;
       }
     }
@@ -59,13 +60,16 @@ public class MoneyCommand extends BaseCommand {
     if(entry.isEmpty()) {
 
       //Shouldn't happen, but if it does handle it.
-      sender.message("Messages.Account.NoHoldings");
-      //TODO: message variables.
+      final MessageData msg = new MessageData("Messages.Account.NoHoldings");
+      msg.addReplacement("$currency", currency);
+      sender.message(msg);
       return;
     }
 
-    sender.message("Messages.Money.Holdings");
-    //TODO: message variables.
+    final MessageData msg = new MessageData("Messages.Money.Holdings");
+    msg.addReplacement("$amount", entry.get().getAmount().toPlainString());
+    sender.message(msg);
+    //TODO: currency formatting.
   }
 
   //Arguments: <amount> <to currency[:world]> [from currency[:world]]

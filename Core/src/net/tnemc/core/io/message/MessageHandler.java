@@ -59,38 +59,35 @@ public class MessageHandler {
   /**
    * Used to translate a message for a player and return the translated {@link Component}.
    *
-   * @param message The message to translate. This could also be a node that points to a message in
-   *                a configuration file.
+   * @param messageData The message data to utilize for this translation.
    * @param id The {@link UUID unique identifier} of the player to translate this for.
    *
    * @return The {@link Component} that is the result of the translation process of the message for
    * the given player.
    */
-  public static Component grab(String message, UUID id) {
-    return instance.mini.deserialize(instance.translator.translate(id, message));
+  public static Component grab(final MessageData messageData, UUID id) {
+    return instance.mini.deserialize(instance.translator.translate(id, messageData));
   }
 
   /**
    * Used to translate a message for an {@link Audience}.
    *
-   * @param message The message to translate. This could also be a node that points to a message in
-   *                a configuration file.
+   * @param messageData The message data to utilize for this translation.
    * @param audience The audience that should receive the translated message.
    */
-  public static void translate(String message, UUID identifier, Audience audience) {
-    audience.sendMessage(instance.mini.deserialize(instance.translator.translateNode(message, "default")));
+  public static void translate(final MessageData messageData, UUID identifier, Audience audience) {
+    audience.sendMessage(instance.mini.deserialize(instance.translator.translateNode(messageData, "default")));
   }
 
   /**
    * Used to translate a message for numerous players.
    *
-   * @param message The message to translate. This could also be a node that points to a message in
-   *                a configuration file.
+   * @param messageData The message data to utilize for this translation.
    * @param audiences The audiences that should receive the translated message.
    */
-  public static void translate(String message, UUID identifier, Audience... audiences) {
+  public static void translate(final MessageData messageData, UUID identifier, Audience... audiences) {
     for(Audience a : audiences) {
-      a.sendMessage(instance.mini.deserialize(instance.translator.translateNode(message, "default")));
+      a.sendMessage(instance.mini.deserialize(instance.translator.translateNode(messageData, "default")));
     }
   }
 

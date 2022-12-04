@@ -40,7 +40,7 @@ public class MessageConfig extends Config {
   private final Map<String, Language> languages = new HashMap<>();
 
   public MessageConfig() {
-    super(new File(TNECore.directory(), "messages.yml"), "resources/bleeding-edge/messages.yml", "Messages");
+    super(new File(TNECore.directory(), "messages.yml"), "resources/messages.yml", "Messages");
   }
 
   public String getString(final String node, final UUID player) {

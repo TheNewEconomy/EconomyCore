@@ -21,6 +21,7 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.tnemc.bukkit.TNE;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.io.message.MessageHandler;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -87,10 +88,10 @@ public class BukkitCMDSource implements CmdSource {
   /**
    * Used to send a message to this command source.
    *
-   * @param node The message node.
+   * @param messageData The message data to utilize for this translation.
    */
   @Override
-  public void message(String node) {
-    MessageHandler.translate(node, identifier, BukkitAudiences.create(TNE.instance()).sender(sender));
+  public void message(final MessageData messageData) {
+    MessageHandler.translate(messageData, identifier, BukkitAudiences.create(TNE.instance()).sender(sender));
   }
 }

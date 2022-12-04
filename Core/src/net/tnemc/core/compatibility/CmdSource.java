@@ -18,6 +18,7 @@ package net.tnemc.core.compatibility;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.io.message.MessageData;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -52,9 +53,9 @@ public interface CmdSource {
 
   /**
    * Used to send a message to this command source.
-   * @param node The message node.
+   * @param messageData The message data to utilize for this translation.
    */
-  void message(final String node);
+  void message(final MessageData messageData);
 
   /**
    * Used to get the world for this command source.
