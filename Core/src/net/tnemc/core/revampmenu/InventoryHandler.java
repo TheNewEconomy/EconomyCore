@@ -1,4 +1,4 @@
-package net.tnemc.core.menu;
+package net.tnemc.core.revampmenu;
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
@@ -17,38 +17,19 @@ package net.tnemc.core.menu;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.menu.icon.Icon;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
- * Represents a page inside a {@link Menu}.
+ * Class that is used to handle inventory-related matters.
  *
- * @see Menu
+ * @param <T> Represents the platform's Inventory object.
+ *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class Page {
+public interface InventoryHandler<T> {
 
-  private final Icon[] icons;
-
-  private int id;
-
-  public Page(int id, int size) {
-    this.id = id;
-    this.icons = new Icon[size];
-  }
-
-  public Icon[] getIcons() {
-    return icons;
-  }
-
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
+  /**
+   * Builds an inventory object from a menu.
+   * @return The built inventory.
+   */
+  T build();
 }

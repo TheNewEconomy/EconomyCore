@@ -53,7 +53,11 @@ public class Menu {
   public Menu(String name, String title, int size) {
     this.name = name;
     this.title = title;
-    this.size = size;
+    if(size % 9 > 0) {
+      size = size + (size % 9);
+    }
+    this.size = Math.min(size, 45);
+
     this.page = 1;
   }
 
@@ -87,10 +91,6 @@ public class Menu {
 
   public int getSize() {
     return size;
-  }
-
-  public void setSize(int size) {
-    this.size = size;
   }
 
   public boolean isReadOnly() {

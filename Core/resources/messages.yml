@@ -215,6 +215,9 @@ Messages:
             Note:
                 Arguments: "<amount> [currency]"
                 Description: "Makes your virtual currency physical, for storage/trading purposes."
+            MyBal:
+                Arguments: "[currency]"
+                Description: "Opens the MyBal menu"
             Pay:
                 Arguments: "<player> <amount> [from:account] [currency]"
                 Description: "Use some of your holdings to pay another player."

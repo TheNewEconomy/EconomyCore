@@ -18,6 +18,7 @@ package net.tnemc.core.menu.icon;
  */
 
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.core.menu.Page;
 import net.tnemc.core.menu.callbacks.IconClickCallback;
@@ -105,8 +106,7 @@ public class Icon {
     }
 
     if(!message.equalsIgnoreCase("")) {
-      //TODO: Send message translation
-      //TNECore.eco().translation().
+      player.message(new MessageData(message));
     }
 
     return true;

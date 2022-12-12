@@ -30,6 +30,7 @@ import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.message.MessageData;
+import net.tnemc.core.manager.MenuManager;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
@@ -49,9 +50,10 @@ import java.util.Optional;
  */
 public class MoneyCommand extends BaseCommand {
 
-  //Arguments:
+  //Arguments: [currency]
   public static void onMyBal(CmdSource sender, String[] args) {
-
+    //TODO: Menu manager
+    //MenuManager.open("mybal", sender).withData("currency", currency);
   }
 
   //Arguments: [world] [currency]

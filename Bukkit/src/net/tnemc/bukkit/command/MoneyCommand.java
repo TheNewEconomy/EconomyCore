@@ -37,6 +37,16 @@ import org.bukkit.command.CommandSender;
 public class MoneyCommand extends BaseCommand {
 
   @Default
+  @Subcommand("balmenu|menu")
+  @CommandAlias("mybal|balmenu")
+  @Syntax("%Money.MyBal.Arguments")
+  @Description("%Money.MyBal.Description")
+  @CommandPermission("tne.money.MyBal")
+  public void onMyBal(CommandSender sender, String[] args) {
+    net.tnemc.core.command.MoneyCommand.onMyBal(new BukkitCMDSource(sender), args);
+  }
+
+  @Default
   @Subcommand("balance|bal|val")
   @CommandAlias("balance|bal|val")
   @Syntax("%Money.Balance.Arguments")
