@@ -19,6 +19,9 @@ package net.tnemc.core.currency.item;
  */
 
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.currency.Denomination;
+
+import java.util.Optional;
 
 /**
  * Represents a {@link Currency currency} that is able to be represented by physical items in game.
@@ -30,6 +33,17 @@ import net.tnemc.core.currency.Currency;
 public class ItemCurrency extends Currency {
 
   protected boolean enderChest;
+
+  public Optional<ItemDenomination> getDenominationByMaterial(final String material) {
+    for(Denomination denom : getDenominations().values()) {
+      final ItemDenomination item = (ItemDenomination)denom;
+
+      if(item.getMaterial().equalsIgnoreCase(material)) {
+        return Optional.of(item);
+      }
+    }
+    return Optional.empty();
+  }
 
   public boolean canEnderChest() {
     return enderChest;

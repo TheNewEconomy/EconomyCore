@@ -35,7 +35,7 @@ import java.util.Optional;
 public class Currency {
 
   private final Map<String, Double> conversion = new HashMap<>();
-  private final Map<Double, Denomination> denominations = new HashMap<>();
+  private final Map<BigDecimal, Denomination> denominations = new HashMap<>();
 
   //World-related configurations.
 
@@ -240,7 +240,7 @@ public class Currency {
     this.note = note;
   }
 
-  public Map<Double, Denomination> getDenominations() {
+  public Map<BigDecimal, Denomination> getDenominations() {
     return denominations;
   }
 }
