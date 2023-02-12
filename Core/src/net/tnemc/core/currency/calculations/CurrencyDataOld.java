@@ -35,7 +35,7 @@ import java.util.TreeMap;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class CurrencyData {
+public class CurrencyDataOld {
   private final Map<String, Integer> inventoryMaterials = new HashMap<>();
 
   private final TreeMap<BigDecimal, Denomination> materialValues = new TreeMap<>();

@@ -24,6 +24,7 @@ import org.simpleyaml.configuration.file.YamlFile;
 import org.simpleyaml.configuration.implementation.api.QuoteStyle;
 import org.simpleyaml.exceptions.InvalidConfigurationException;
 import org.simpleyaml.utils.SupplierIO;
+import org.spongepowered.configurate.CommentedConfigurationNode;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +45,7 @@ import java.util.List;
  */
 public abstract class Config {
 
-  protected final YamlFile yaml;
+  protected final CommentedConfigurationNode root;
 
   protected final File file;
 
@@ -95,23 +96,6 @@ public abstract class Config {
     } catch(IOException e) {
       throw new RuntimeException(e);
     }
-    /*try {
-      URL url = getClass().getClassLoader().getResource(defaults);
-      if(url != null) {
-
-        URLConnection connection = url.openConnection();
-        connection.setUseCaches(false);
-
-        try(InputStream stream = connection.getInputStream()) {
-
-          yaml.setDefaults(YamlConfiguration.loadConfiguration(stream));
-        }
-      } else {
-        throw new IOException("Default configuration file not found!");
-      }
-    } catch(IOException e) {
-      throw new RuntimeException(e);
-    }*/
     yaml.options().copyDefaults(true);
     try {
       yaml.save();
@@ -147,6 +131,8 @@ public abstract class Config {
     if(!file.exists()) {
       saveDefaults();
     }
+
+    Commen
 
     try {
       yaml.createOrLoadWithComments();

@@ -40,7 +40,7 @@ public interface CalculationProvider {
    * Used to calculate the holdings of the inventory materials present.
    * @return The {@link BigDecimal} representation of the inventory materials balance value.
    */
-  default BigDecimal calculateHoldings(CurrencyData data) {
+  default BigDecimal calculateHoldings(CurrencyDataOld data) {
     BigDecimal holdings = BigDecimal.ZERO;
 
     for(Map.Entry<BigDecimal, Denomination> entry : data.getMaterialValues().entrySet()) {
@@ -53,7 +53,7 @@ public interface CalculationProvider {
     return holdings;
   }
 
-  default void clearItems(CurrencyData data) {
+  default void clearItems(CurrencyDataOld data) {
     for(Map.Entry<String, Integer> entry : data.getInventoryMaterials().entrySet()) {
       final Optional<ItemDenomination> tier = data.getCurrency().getDenominationByMaterial(entry.getKey());
 
@@ -61,7 +61,7 @@ public interface CalculationProvider {
     }
   }
 
-  default void setItems(CurrencyData data, BigDecimal amount) {
+  default void setItems(CurrencyDataOld data, BigDecimal amount) {
     final BigDecimal holdings = calculateHoldings(data);
 
     if(holdings.compareTo(amount) == 0) return;
@@ -79,7 +79,7 @@ public interface CalculationProvider {
    * @return The {@link BigDecimal} representation of the leftover amount that couldn't be removed
    * because there's no more materials left to remove.
    */
-  default BigDecimal calculateChange(CurrencyData data, BigDecimal change) {
+  default BigDecimal calculateChange(CurrencyDataOld data, BigDecimal change) {
     BigDecimal workingAmount = change;
 
     final NavigableMap<BigDecimal, Denomination> values = data.getMaterialValues().descendingMap();
@@ -135,7 +135,7 @@ public interface CalculationProvider {
    * the threshold is 1 then all denominations given to the inventory should be less than 1. If you don't wish
    * to use a threshold then you should pass null.
    */
-  default void provideMaterials(CurrencyData data, BigDecimal amount, @Nullable BigDecimal threshold) {
+  default void provideMaterials(CurrencyDataOld data, BigDecimal amount, @Nullable BigDecimal threshold) {
     BigDecimal workingAmount = amount;
     final NavigableMap<BigDecimal, Denomination> values = data.getMaterialValues().descendingMap();
 
@@ -163,11 +163,11 @@ public interface CalculationProvider {
   }
 
   /**
-   * Used to remove tiers from the {@link CurrencyData} being worked with.
+   * Used to remove tiers from the {@link CurrencyDataOld} being worked with.
    * @param tier The tier name in String form.
    * @param amount The amount of the material to remove from working materials.
    */
-  default void removeMaterials(CurrencyData data, Denomination tier, Integer amount) {
+  default void removeMaterials(CurrencyDataOld data, Denomination tier, Integer amount) {
     data.removeMaterials(tier, amount);
   }
 
@@ -176,7 +176,7 @@ public interface CalculationProvider {
    * @param value The value to utilize for the comparison.
    * @return The Map Entry containing the lowest denomination information.
    */
-  default Map.Entry<BigDecimal, Denomination> findLowestGreaterThan(CurrencyData data, BigDecimal value) {
+  default Map.Entry<BigDecimal, Denomination> findLowestGreaterThan(CurrencyDataOld data, BigDecimal value) {
     Map.Entry<BigDecimal, Denomination> entryLowest = null;
     for(Map.Entry<BigDecimal, Denomination> entry : data.getMaterialValues().entrySet()
         .stream().filter(entry->entry.getKey().compareTo(value) >= 0)

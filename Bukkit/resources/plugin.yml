@@ -7,8 +7,24 @@ api-version: 1.13
 
 #Plugin Data
 main: net.tnemc.bukkit.TNE
-loadbefore: [Towny]
-softdepend: [AdvancedAchievements, NoteBlockAPI, WorldEdit, WorldGuard, FastAsyncWorldEdit, PlaceholderAPI, Essentials, Vault, Reserve, mcMMO, GUIShop, DiscordSRV, Multiverse-Core]
+loadbefore:
+  - EconomyShopGUI
+  - Towny
+
+softdepend:
+  - AdvancedAchievements
+  - NoteBlockAPI
+  - WorldEdit
+  - WorldGuard
+  - FastAsyncWorldEdit
+  - PlaceholderAPI
+  - Essentials
+  - Vault
+  - Reserve
+  - mcMMO
+  - GUIShop
+  - DiscordSRV
+  - Multiverse-Core
 
 permissions:
   tne.*:

@@ -36,12 +36,7 @@
             <version>5.0.1</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>me.carleslc.Simple-YAML</groupId>
-            <artifactId>Simple-Yaml</artifactId>
-            <version>1.8.2</version>
-            <scope>compile</scope>
-        </dependency>
+        <!-- Fun Messages -->
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-text-minimessage</artifactId>
@@ -59,6 +54,11 @@
             <artifactId>acf-core</artifactId>
             <version>0.5.1-SNAPSHOT</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spongepowered</groupId>
+            <artifactId>configurate-yaml</artifactId>
+            <version>4.1.2</version>
         </dependency>
     </dependencies>
 
@@ -146,7 +146,6 @@
                             <include>org.json.simple:*</include>
                             <include>com.zaxxer:*</include>
                             <include>org.yaml:*</include>
-                            <include>me.carleslc.Simple-YAML:*</include>
                             <include>co.aikar:*</include>
                             <include>cloud.commandframework:*</include>
                             <include>net.kyori:*</include>
