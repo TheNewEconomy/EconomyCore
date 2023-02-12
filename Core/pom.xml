@@ -56,9 +56,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.spongepowered</groupId>
-            <artifactId>configurate-yaml</artifactId>
-            <version>4.1.2</version>
+            <groupId>me.carleslc.Simple-YAML</groupId>
+            <artifactId>Simple-Yaml</artifactId>
+            <version>1.8.3</version>
         </dependency>
     </dependencies>
 

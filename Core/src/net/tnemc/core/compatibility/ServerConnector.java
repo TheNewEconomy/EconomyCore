@@ -85,5 +85,16 @@ public interface ServerConnector {
    */
   String replaceColours(final String string);
 
+  /**
+   * Provides an instance of the {@link TranslationProvider} for this server.
+   * @return The instance of the {@link TranslationProvider}.
+   */
   TranslationProvider translation();
+
+  /**
+   * Used to save a resource from the plugin's jar file to the local system's storage.
+   * @param path The path to the resource inside the jar.
+   * @param replace If the file exists in the local system's storage, should it be replaced?
+   */
+  void saveResource(final String path, final boolean replace);
 }

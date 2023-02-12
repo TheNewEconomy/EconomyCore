@@ -18,11 +18,6 @@ package net.tnemc.bukkit;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import co.aikar.commands.PaperCommandManager;
-import net.tnemc.bukkit.command.AdminCommand;
-import net.tnemc.bukkit.command.ConfigCommand;
-import net.tnemc.bukkit.command.MoneyCommand;
-import net.tnemc.bukkit.command.TransactionCommand;
 import net.tnemc.bukkit.listeners.PlayerJoinListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;

@@ -18,23 +18,12 @@ package net.tnemc.core.config;
  */
 
 import net.tnemc.core.TNECore;
-import org.simpleyaml.configuration.comments.format.YamlCommentFormat;
-import org.simpleyaml.configuration.file.YamlConfiguration;
-import org.simpleyaml.configuration.file.YamlFile;
-import org.simpleyaml.configuration.implementation.api.QuoteStyle;
-import org.simpleyaml.exceptions.InvalidConfigurationException;
-import org.simpleyaml.utils.SupplierIO;
 import org.spongepowered.configurate.CommentedConfigurationNode;
+import org.spongepowered.configurate.ConfigurateException;
+import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.JarURLConnection;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.file.Files;
 import java.util.List;
 
 /**
@@ -45,130 +34,52 @@ import java.util.List;
  */
 public abstract class Config {
 
-  protected final CommentedConfigurationNode root;
-
-  protected final File file;
+  protected final YamlConfigurationLoader loader;
+  protected CommentedConfigurationNode root = null;
 
   protected final String defaults;
   private boolean create = false;
 
   protected final List<String> nodes;
 
-  public Config(File file, String defaults, String... nodes) {
-    this.file = file;
+  public Config(final String fileName, String defaults, String... nodes) {
     this.defaults = defaults;
     this.nodes = List.of(nodes);
 
-
-    if(!file.exists()) create = true;
-
-    this.yaml = new YamlFile(file);
-
-    try {
-      yaml.createOrLoadWithComments();
-    } catch(IOException e) {
-      e.printStackTrace();
-    }
-
-    yaml.options().useComments(true);
-    this.yaml.setCommentFormat(YamlCommentFormat.PRETTY);
-
-    System.out.println("Loading config with nodes: " + nodes);
-
-    try {
-      String path = "jar:file:\\" + TNECore.directory().getAbsolutePath() + "..\\TNE.jar!/" + defaults;
-
-      URL url = new URL(path.replaceAll(" ", "%20").replaceAll("//", "\\"));
-
-      System.out.println(url.getPath());
-      JarURLConnection connection = (JarURLConnection) url.openConnection();
-      YamlFile defaultYaml = new YamlFile(new File(connection.getJarFileURL().toURI()));
+    final File file = new File(TNECore.directory(), fileName);
 
 
-      defaultYaml.options().useComments(true);
-      defaultYaml.setCommentFormat(YamlCommentFormat.PRETTY);
-      yaml.setDefaults(defaultYaml);
+    if(!file.exists()) { create = true; }
 
-    } catch(URISyntaxException e) {
-      throw new RuntimeException(e);
-    } catch(MalformedURLException e) {
-      throw new RuntimeException(e);
-    } catch(IOException e) {
-      throw new RuntimeException(e);
-    }
-    yaml.options().copyDefaults(true);
-    try {
-      yaml.save();
-    } catch(IOException e) {
-      e.printStackTrace();
-    }
-    //load();
-  }
-
-  public void addDefaults() {
-    if(create) {
-
-    }
-  }
-
-  InputStream getResourceUTF8(String filename) {
-    try {
-      URL url = getClass().getClassLoader().getResource(filename);
-      if (url == null) {
-        return null;
-      } else {
-        URLConnection connection = url.openConnection();
-        connection.setUseCaches(false);
-        return connection.getInputStream();
-      }
-    } catch (IOException var4) {
-      return null;
-    }
+    loader = YamlConfigurationLoader.builder().path(file.toPath()).build();
   }
 
   public boolean load() {
 
-    if(!file.exists()) {
+    if(create) {
       saveDefaults();
     }
 
-    Commen
-
     try {
-      yaml.createOrLoadWithComments();
-    } catch(IOException e) {
+      root = loader.load();
+      return true;
+    } catch(ConfigurateException e) {
+      TNECore.log().error("Error while loading config \"" + nodes.get(0) + "\".");
       e.printStackTrace();
       return false;
     }
-    return true;
   }
 
   public void saveDefaults() {
-
-    final URL url = getClass().getResource(defaults);
-
-    if(url != null) {
-
-      try {
-        final URLConnection connection = url.openConnection();
-
-        try(InputStream stream = connection.getInputStream()) {
-
-          Files.copy(stream, file.toPath());
-        }
-
-
-      } catch(IOException e) {
-        e.printStackTrace();
-      }
-    }
+    TNECore.server().saveResource(defaults, false);
   }
 
   public boolean save() {
     try {
-      yaml.save();
+      loader.save(root);
       return true;
     } catch(IOException e) {
+      TNECore.log().error("Error while saving config \"" + nodes.get(0) + "\".");
       e.printStackTrace();
       return false;
     }

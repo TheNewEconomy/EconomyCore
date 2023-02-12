@@ -33,7 +33,7 @@ import java.io.IOException;
 public class DataConfig extends Config {
 
   public DataConfig() {
-    super(new File(TNECore.directory(), "data.yml"), "resources/data.yml", "Data");
+    super("data.yml", "resources/data.yml", "Data");
   }
 
   public void addDefaults() {

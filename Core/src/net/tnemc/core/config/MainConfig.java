@@ -29,6 +29,6 @@ import java.io.File;
  */
 public class MainConfig extends Config {
   public MainConfig() {
-    super(new File(TNECore.directory(), "config.yml"), "resources/config.yml", "Core");
+    super("config.yml", "resources/config.yml", "Core");
   }
 }
