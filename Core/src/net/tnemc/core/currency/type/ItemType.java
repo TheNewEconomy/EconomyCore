@@ -19,11 +19,14 @@ package net.tnemc.core.currency.type;
  */
 
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.PlayerAccount;
+import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 /**
  * Represents our currency type that is based on items.
@@ -61,7 +64,7 @@ public class ItemType implements CurrencyType {
    */
   @Override
   public BigDecimal getHoldings(Account account, String region, Currency currency, HoldingsType type) {
-    return null;
+    return echest(account, region, currency).add(inventory(account, region, currency));
   }
 
   /**
@@ -78,6 +81,51 @@ public class ItemType implements CurrencyType {
    */
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount) {
+    if(!account.isPlayer() || !((PlayerAccount)account).isOnline()) {
+
+    }
     return false;
+  }
+
+  public BigDecimal echest(Account account, String region, Currency currency) {
+    if(account.isPlayer()) {
+      if(!((PlayerAccount)account).isOnline()) {
+        //Offline players have their balances saved to their wallet so check it.
+        final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
+                                                                                 currency.getIdentifier(),
+                                                                                 HoldingsType.E_CHEST
+        );
+
+        if(holdings.isPresent()) {
+          return holdings.get().getAmount();
+        }
+        return BigDecimal.ZERO;
+      } else {
+        //Player is online.
+        //TODO: get player inventory holdings.
+      }
+    }
+    //Non-players can't have e-chest holdings so this is always zero.
+    return BigDecimal.ZERO;
+  }
+
+  public BigDecimal inventory(Account account, String region, Currency currency) {
+    if(!account.isPlayer() || !((PlayerAccount)account).isOnline()) {
+      //Offline players/non-players have their balances saved to their wallet so check it.
+      final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
+                                                                               currency.getIdentifier(),
+                                                                               HoldingsType.INVENTORY_ONLY
+      );
+
+      if(holdings.isPresent()) {
+        return holdings.get().getAmount();
+      }
+      return BigDecimal.ZERO;
+    } else {
+      //Player is online.
+      //TODO: get player inventory holdings.
+    }
+    //Non-players can't have e-chest holdings so this is always zero.
+    return BigDecimal.ZERO;
   }
 }

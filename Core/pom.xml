@@ -146,6 +146,7 @@
                             <include>org.json.simple:*</include>
                             <include>com.zaxxer:*</include>
                             <include>org.yaml:*</include>
+                            <include>me.carleslc.Simple-YAML:*</include>
                             <include>co.aikar:*</include>
                             <include>cloud.commandframework:*</include>
                             <include>net.kyori:*</include>

@@ -18,9 +18,7 @@ package net.tnemc.core.config;
  */
 
 import net.tnemc.core.TNECore;
-import org.spongepowered.configurate.CommentedConfigurationNode;
-import org.spongepowered.configurate.ConfigurateException;
-import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
+import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,8 +32,7 @@ import java.util.List;
  */
 public abstract class Config {
 
-  protected final YamlConfigurationLoader loader;
-  protected CommentedConfigurationNode root = null;
+  protected final YamlFile yaml;
 
   protected final String defaults;
   private boolean create = false;
@@ -51,7 +48,7 @@ public abstract class Config {
 
     if(!file.exists()) { create = true; }
 
-    loader = YamlConfigurationLoader.builder().path(file.toPath()).build();
+    this.yaml = new YamlFile(file.getPath());
   }
 
   public boolean load() {
@@ -61,9 +58,9 @@ public abstract class Config {
     }
 
     try {
-      root = loader.load();
+      yaml.loadWithComments();
       return true;
-    } catch(ConfigurateException e) {
+    } catch(Exception e) {
       TNECore.log().error("Error while loading config \"" + nodes.get(0) + "\".");
       e.printStackTrace();
       return false;
@@ -76,7 +73,7 @@ public abstract class Config {
 
   public boolean save() {
     try {
-      loader.save(root);
+      yaml.save();
       return true;
     } catch(IOException e) {
       TNECore.log().error("Error while saving config \"" + nodes.get(0) + "\".");

@@ -25,6 +25,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Represents a currency object.
@@ -45,6 +46,7 @@ public class Currency {
   private BigDecimal minBalance;
 
   //Utilized for backwards compat only
+  private UUID uid;
   private String identifier;
   private String type;
 
@@ -72,6 +74,7 @@ public class Currency {
     this.maxBalance = CurrencyManager.largestSupported;
     this.minBalance = BigDecimal.ZERO;
 
+    this.uid = UUID.randomUUID();
     this.type = "virtual";
 
     this.symbol = "$";
@@ -122,6 +125,14 @@ public class Currency {
 
   public void setMinBalance(BigDecimal minBalance) {
     this.minBalance = minBalance;
+  }
+
+  public UUID getUid() {
+    return uid;
+  }
+
+  public void setUid(UUID uid) {
+    this.uid = uid;
   }
 
   public String getIdentifier() {

@@ -303,7 +303,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     }
 
     //TODO: load denomination event
-    currency.getDenominations().put(weight, denomination);
+    currency.getDenominations().put(new BigDecimal(weight), denomination);
     return true;
   }
 }

@@ -109,4 +109,9 @@ public class SpongeServerProvider implements ServerConnector {
   public TranslationProvider translation() {
     return null;
   }
+
+  @Override
+  public void saveResource(String path, boolean replace) {
+
+  }
 }

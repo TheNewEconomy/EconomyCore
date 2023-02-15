@@ -10,6 +10,7 @@ package net.tnemc.core.compatibility;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
+import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.item.AbstractItemStack;

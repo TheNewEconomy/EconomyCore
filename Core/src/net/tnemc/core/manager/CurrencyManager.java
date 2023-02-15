@@ -35,6 +35,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * CurrencyManager
@@ -45,7 +46,8 @@ import java.util.Optional;
 public class CurrencyManager {
   public static final BigDecimal largestSupported= new BigDecimal("900000000000000000000000000000000000000000000");
 
-  private final Map<String, Currency> currencies = new HashMap<>();
+  private final Map<UUID, Currency> currencies = new HashMap<>();
+  private final Map<String, UUID> curIDMap = new HashMap<>();
   private final Map<String, CurrencyType> types = new HashMap<>();
 
   private CurrencyLoader loader = new DefaultCurrencyLoader();
@@ -83,16 +85,25 @@ public class CurrencyManager {
    * @param currency The currency to add.
    */
   public void addCurrency(final Currency currency) {
-    currencies.put(currency.getIdentifier(), currency);
+    currencies.put(currency.getUid(), currency);
   }
 
   /**
-   * Used to find a currency based on its identifier.
+   * Used to find a currency based on its unique identifier.
+   * @param identifier The identifier to look for.
+   * @return An Optional containing the currency if it exists, otherwise an empty Optional.
+   */
+  public Optional<Currency> findCurrency(final UUID identifier) {
+    return Optional.ofNullable(currencies.get(identifier));
+  }
+
+  /**
+   * Used to find a currency based on its user-friendly identifier.
    * @param identifier The identifier to look for.
    * @return An Optional containing the currency if it exists, otherwise an empty Optional.
    */
   public Optional<Currency> findCurrency(final String identifier) {
-    return Optional.ofNullable(currencies.get(identifier));
+    return Optional.ofNullable(currencies.get(curIDMap.get(identifier)));
   }
 
   public Collection<Currency> currencies() {

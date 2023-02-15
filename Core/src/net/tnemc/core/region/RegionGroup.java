@@ -19,16 +19,32 @@ package net.tnemc.core.region;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
- * A class that contains information related to regions such as configs, and region-sharing naming.
+ * Represents a group of regions that share information, and currencies.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class RegionProvider {
+public class RegionGroup {
+  private final Map<UUID, Boolean> currencies = new HashMap<>();
 
-  public final Map<String, String> sharing = new HashMap<>();
-  public final Map<String, RegionProvider> regions = new HashMap<>();
+  private String name;
 
+  public RegionGroup(final String name) {
+    this.name = name;
+  }
+
+  public Map<UUID, Boolean> getCurrencies() {
+    return currencies;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 }

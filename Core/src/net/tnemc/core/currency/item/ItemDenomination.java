@@ -19,6 +19,8 @@ package net.tnemc.core.currency.item;
  */
 
 import net.tnemc.core.currency.Denomination;
+import net.tnemc.item.AbstractItemStack;
+import net.tnemc.item.SerialItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +28,12 @@ import java.util.List;
 /**
  * Represents a denomination for an {@link ItemCurrency currency}.
  *
+ * @param <S> Represents this implementation's version on an item object
  * @see ItemCurrency
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class ItemDenomination extends Denomination {
+public class ItemDenomination<S> extends Denomination {
 
   private List<String> enchantments = new ArrayList<>();
   private List<String> flags = new ArrayList<>();
@@ -115,5 +118,17 @@ public class ItemDenomination extends Denomination {
     this.texture = texture;
   }
 
-  //TODO: Build item stack
+  public SerialItem<S> asSerial() {
+    //TODO: SerialItem
+    return null;
+  }
+
+  public static <S> ItemDenomination<S> of(SerialItem<S> serial) {
+    //TODO: SerialItem
+    return null;
+  }
+
+  public AbstractItemStack<S> buildStack() {
+    return asSerial().getStack();
+  }
 }

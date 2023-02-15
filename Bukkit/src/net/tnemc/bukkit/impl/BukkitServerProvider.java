@@ -17,6 +17,8 @@ package net.tnemc.bukkit.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.bukkit.BukkitTNECore;
+import net.tnemc.bukkit.TNE;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.io.message.TranslationProvider;
@@ -111,5 +113,10 @@ public class BukkitServerProvider implements ServerConnector {
   @Override
   public TranslationProvider translation() {
     return null;
+  }
+
+  @Override
+  public void saveResource(String path, boolean replace) {
+    TNE.instance().saveResource(path, replace);
   }
 }
