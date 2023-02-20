@@ -19,6 +19,7 @@ package net.tnemc.bukkit;
  */
 
 import net.tnemc.bukkit.listeners.PlayerJoinListener;
+import net.tnemc.bukkit.listeners.WorldLoadListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -47,7 +48,12 @@ public class TNE extends JavaPlugin {
     this.core.enable();
 
     //Register our event listeners
+
+    //Player Listeners
     Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
+
+    //World Listeners
+    Bukkit.getPluginManager().registerEvents(new WorldLoadListener(this), this);
 
   }
 

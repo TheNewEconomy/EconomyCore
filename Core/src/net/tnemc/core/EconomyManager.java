@@ -23,6 +23,7 @@ import net.tnemc.core.manager.CurrencyManager;
 import net.tnemc.core.manager.DataManager;
 import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.manager.TranslationManager;
+import net.tnemc.core.region.RegionProvider;
 
 /**
  * This class manages everything for the economy plugin, from language storage to holding instances
@@ -38,6 +39,7 @@ public class EconomyManager {
   private final TransactionManager transactionManager;
   private final TranslationManager translationManager;
   private final DataManager dataManager;
+  private final RegionProvider regionProvider;
 
   private static EconomyManager instance;
 
@@ -49,6 +51,7 @@ public class EconomyManager {
     this.transactionManager = new TransactionManager();
     this.translationManager = new TranslationManager();
     this.dataManager = new DataManager();
+    this.regionProvider = new RegionProvider(true);
   }
 
   public AccountManager account() {
@@ -69,6 +72,10 @@ public class EconomyManager {
 
   public DataManager data() {
     return dataManager;
+  }
+
+  public RegionProvider region() {
+    return regionProvider;
   }
 
   public static EconomyManager instance() {

@@ -38,7 +38,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
  */
 public class PlayerJoinListener implements Listener {
 
-  TNE plugin;
+  private final TNE plugin;
 
   public PlayerJoinListener(TNE plugin) {
     this.plugin = plugin;

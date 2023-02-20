@@ -22,6 +22,7 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -138,7 +139,7 @@ public class CurrencyDataOld {
     return dropped;
   }
 
-  public static void drop(Map<Integer, ItemStack> left, Location location) {
+  public static void drop(@NotNull Map<Integer, ItemStack> left, Location location) {
 
     for (Map.Entry<Integer, ItemStack> entry : left.entrySet()) {
       final ItemStack i = entry.getValue();

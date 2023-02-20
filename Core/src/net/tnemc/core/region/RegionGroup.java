@@ -17,6 +17,8 @@ package net.tnemc.core.region;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -40,11 +42,15 @@ public class RegionGroup {
     return currencies;
   }
 
-  public String getName() {
-    return name;
-  }
-
   public void setName(String name) {
     this.name = name;
+  }
+
+  /**
+   * @return The unique name tied to this RegionGroup.
+   */
+  @NotNull
+  public String name() {
+    return name;
   }
 }

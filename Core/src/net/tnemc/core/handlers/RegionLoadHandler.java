@@ -1,5 +1,4 @@
-package net.tnemc.bukkit.depend.towny;
-
+package net.tnemc.core.handlers;
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
@@ -18,17 +17,22 @@ package net.tnemc.bukkit.depend.towny;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.account.NonPlayerAccount;
+import net.tnemc.core.TNECore;
+import net.tnemc.core.region.RegionType;
+import net.tnemc.core.utils.HandlerResponse;
 
 /**
- * Represents an account linked to a Nation in the Towny Plugin.
+ * This class is utilized to handle regions being loaded. In TNE, a region could be anything from a
+ * world guard region to a world.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class NationAccount extends NonPlayerAccount {
+public class RegionLoadHandler {
 
-  public NationAccount(String identifier, String name) {
-    super(identifier, name);
+  public HandlerResponse handle(final String region, final RegionType type) {
+    TNECore.eco().region().initializeRegion(region, type);
+
+    return new HandlerResponse("", false);
   }
 }

@@ -1,5 +1,4 @@
-package net.tnemc.bukkit.depend.towny;
-
+package net.tnemc.core.region;
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
@@ -18,17 +17,14 @@ package net.tnemc.bukkit.depend.towny;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.account.NonPlayerAccount;
-
 /**
- * Represents an account linked to a Nation in the Towny Plugin.
+ * Contains the valid region types used by {@link RegionProvider}.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class NationAccount extends NonPlayerAccount {
-
-  public NationAccount(String identifier, String name) {
-    super(identifier, name);
-  }
+public enum RegionType {
+  WORLD,
+  PLUGIN_REGION,
+  BIOME
 }

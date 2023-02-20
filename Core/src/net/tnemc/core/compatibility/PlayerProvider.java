@@ -46,9 +46,12 @@ public interface PlayerProvider {
   /**
    * Used to get the name of the region this player is in. This could be the world itself, or maybe
    * a third-party related region such as world guard.
+   *
+   * @param resolve Whether the returned region should be resolved to using the {@link net.tnemc.core.region.RegionProvider}.
+   *
    * @return The name of the region.
    */
-  String getRegion();
+  String getRegion(final boolean resolve);
 
   /**
    * Used to get the amount of experience this player has.

@@ -1,5 +1,4 @@
-package net.tnemc.bukkit.depend.towny;
-
+package net.tnemc.bukkit.listeners;
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
@@ -18,17 +17,30 @@ package net.tnemc.bukkit.depend.towny;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.account.NonPlayerAccount;
+import net.tnemc.bukkit.TNE;
+import net.tnemc.core.handlers.RegionLoadHandler;
+import net.tnemc.core.region.RegionType;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.world.WorldLoadEvent;
 
 /**
- * Represents an account linked to a Nation in the Towny Plugin.
+ * WorldLoadListener
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class NationAccount extends NonPlayerAccount {
+public class WorldLoadListener implements Listener {
 
-  public NationAccount(String identifier, String name) {
-    super(identifier, name);
+  private final TNE plugin;
+
+  public WorldLoadListener(TNE plugin) {
+    this.plugin = plugin;
+  }
+
+  @EventHandler(priority = EventPriority.HIGHEST)
+  public void onLoad(final WorldLoadEvent event) {
+    new RegionLoadHandler().handle(event.getWorld().getName(), RegionType.WORLD);
   }
 }

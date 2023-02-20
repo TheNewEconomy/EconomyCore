@@ -28,7 +28,6 @@ import net.tnemc.core.io.message.MessageHandler;
 import net.tnemc.core.io.message.TranslationProvider;
 import net.tnemc.core.io.message.translation.BaseTranslationProvider;
 import net.tnemc.core.io.storage.StorageManager;
-import net.tnemc.core.world.WorldProvider;
 
 import java.io.File;
 import java.util.regex.Pattern;
@@ -62,7 +61,6 @@ public abstract class TNECore {
   protected ServerConnector server;
   protected StorageManager storage;
   protected EconomyManager economyManager = new EconomyManager();
-  protected WorldProvider worldProvider = new WorldProvider();
 
   private MainConfig config;
   private DataConfig data;
@@ -140,15 +138,6 @@ public abstract class TNECore {
    */
   public static EconomyManager eco() {
     return instance.economyManager;
-  }
-
-  /**
-   * The implementation's {@link WorldProvider}, which is used to manage everything related to world
-   * groups.
-   * @return The {@link WorldProvider World Provider}.
-   */
-  public static WorldProvider worldProvider() {
-    return instance.worldProvider;
   }
 
   /**
