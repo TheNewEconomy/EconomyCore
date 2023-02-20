@@ -3,7 +3,6 @@ package net.tnemc.core.account.shared;
 /**
  * Represents the {@link Permission permissions} for {@link Member members}.
  *
- *
  * @see Member
  * @see Permission
  * @since 0.1.1.17

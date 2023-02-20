@@ -6,7 +6,6 @@ import net.tnemc.core.account.Account;
  * Represents a permission for an {@link Member member} of an
  * {@link Account account}.
  *
- *
  * @see Member
  * @see Account
  * @since 0.1.1.17

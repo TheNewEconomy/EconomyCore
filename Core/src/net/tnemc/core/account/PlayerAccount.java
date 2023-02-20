@@ -49,14 +49,14 @@ public class PlayerAccount extends Account {
     this.language = "TNE_DEFAULT";
   }
 
-  public String world() {
-    String world = TNECore.server().defaultWorld();
+  public String region() {
+    String region = TNECore.server().defaultWorld();
     final Optional<PlayerProvider> player = getPlayer();
 
     if(player.isPresent()) {
-      world = player.get().getRegion();
+      region = player.get().getRegion(true);
     }
-    return TNECore.worldProvider().resolveWorld(world);
+    return region;
   }
 
   /**

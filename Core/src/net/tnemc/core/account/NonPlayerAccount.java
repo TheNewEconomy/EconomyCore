@@ -18,6 +18,9 @@ package net.tnemc.core.account;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
+
 /**
  * Represents an account that is not associated with a player.
  *
@@ -29,5 +32,7 @@ public class NonPlayerAccount extends SharedAccount {
 
   public NonPlayerAccount(String identifier, String name) {
     super(identifier, name, null);
+
+    this.identifier = UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8)).toString();
   }
 }
