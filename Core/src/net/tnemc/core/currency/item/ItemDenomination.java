@@ -28,12 +28,11 @@ import java.util.List;
 /**
  * Represents a denomination for an {@link ItemCurrency currency}.
  *
- * @param <S> Represents this implementation's version on an item object
  * @see ItemCurrency
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class ItemDenomination<S> extends Denomination {
+public class ItemDenomination extends Denomination {
 
   private List<String> enchantments = new ArrayList<>();
   private List<String> flags = new ArrayList<>();
@@ -118,17 +117,8 @@ public class ItemDenomination<S> extends Denomination {
     this.texture = texture;
   }
 
-  public SerialItem<S> asSerial() {
-    //TODO: SerialItem
+  public static ItemDenomination fromSerial(SerialItem<?> serial) {
+    //TODO: Finish
     return null;
-  }
-
-  public static <S> ItemDenomination<S> of(SerialItem<S> serial) {
-    //TODO: SerialItem
-    return null;
-  }
-
-  public AbstractItemStack<S> buildStack() {
-    return asSerial().getStack();
   }
 }

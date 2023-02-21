@@ -34,16 +34,16 @@ import java.util.stream.Collectors;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public interface CalculationProvider {
+public interface ItemCalculations<INV> {
 
   /**
    * Used to calculate the holdings of the inventory materials present.
    * @return The {@link BigDecimal} representation of the inventory materials balance value.
    */
-  default BigDecimal calculateHoldings(CurrencyDataOld data) {
+  default BigDecimal calculateHoldings(CalculationData<INV> data) {
     BigDecimal holdings = BigDecimal.ZERO;
 
-    for(Map.Entry<BigDecimal, Denomination> entry : data.getMaterialValues().entrySet()) {
+    for(Map.Entry<BigDecimal, Denomination> entry : data.getDenomValues().entrySet()) {
       final int amount = data.getInventoryMaterials().getOrDefault(((ItemDenomination)entry.getValue()).getMaterial(), 0);
 
       if(amount > 0) {
@@ -53,15 +53,15 @@ public interface CalculationProvider {
     return holdings;
   }
 
-  default void clearItems(CurrencyDataOld data) {
+  default void clearItems(CalculationData<INV> data) {
     for(Map.Entry<String, Integer> entry : data.getInventoryMaterials().entrySet()) {
-      final Optional<ItemDenomination> tier = data.getCurrency().getDenominationByMaterial(entry.getKey());
+      final Optional<ItemDenomination> denom = data.getCurrency().getDenominationByMaterial(entry.getKey());
 
-      tier.ifPresent(tneTier -> removeMaterials(data, tneTier, entry.getValue()));
+      denom.ifPresent(tneTier -> removeMaterials(data, tneTier, entry.getValue()));
     }
   }
 
-  default void setItems(CurrencyDataOld data, BigDecimal amount) {
+  default void setItems(CalculationData<INV> data, BigDecimal amount) {
     final BigDecimal holdings = calculateHoldings(data);
 
     if(holdings.compareTo(amount) == 0) return;
@@ -79,10 +79,10 @@ public interface CalculationProvider {
    * @return The {@link BigDecimal} representation of the leftover amount that couldn't be removed
    * because there's no more materials left to remove.
    */
-  default BigDecimal calculateChange(CurrencyDataOld data, BigDecimal change) {
+  default BigDecimal calculateChange(CalculationData<INV> data, BigDecimal change) {
     BigDecimal workingAmount = change;
 
-    final NavigableMap<BigDecimal, Denomination> values = data.getMaterialValues().descendingMap();
+    final NavigableMap<BigDecimal, Denomination> values = data.getDenomValues().descendingMap();
     Map.Entry<BigDecimal, Denomination> lowestWhole = findLowestGreaterThan(data, BigDecimal.ONE);
 
     int instance = 0;
@@ -135,9 +135,9 @@ public interface CalculationProvider {
    * the threshold is 1 then all denominations given to the inventory should be less than 1. If you don't wish
    * to use a threshold then you should pass null.
    */
-  default void provideMaterials(CurrencyDataOld data, BigDecimal amount, @Nullable BigDecimal threshold) {
+  default void provideMaterials(CalculationData<INV> data, BigDecimal amount, @Nullable BigDecimal threshold) {
     BigDecimal workingAmount = amount;
-    final NavigableMap<BigDecimal, Denomination> values = data.getMaterialValues().descendingMap();
+    final NavigableMap<BigDecimal, Denomination> values = data.getDenomValues().descendingMap();
 
     for(Map.Entry<BigDecimal, Denomination> entry : values.entrySet()) {
 
@@ -163,12 +163,12 @@ public interface CalculationProvider {
   }
 
   /**
-   * Used to remove tiers from the {@link CurrencyDataOld} being worked with.
-   * @param tier The tier name in String form.
+   * Used to remove tiers from the {@link CalculationData} being worked with.
+   * @param denom The denom name in String form.
    * @param amount The amount of the material to remove from working materials.
    */
-  default void removeMaterials(CurrencyDataOld data, Denomination tier, Integer amount) {
-    data.removeMaterials(tier, amount);
+  default void removeMaterials(CalculationData<INV> data, Denomination denom, Integer amount) {
+    data.removeMaterials(denom, amount);
   }
 
   /**
@@ -176,9 +176,9 @@ public interface CalculationProvider {
    * @param value The value to utilize for the comparison.
    * @return The Map Entry containing the lowest denomination information.
    */
-  default Map.Entry<BigDecimal, Denomination> findLowestGreaterThan(CurrencyDataOld data, BigDecimal value) {
+  default Map.Entry<BigDecimal, Denomination> findLowestGreaterThan(CalculationData<INV> data, BigDecimal value) {
     Map.Entry<BigDecimal, Denomination> entryLowest = null;
-    for(Map.Entry<BigDecimal, Denomination> entry : data.getMaterialValues().entrySet()
+    for(Map.Entry<BigDecimal, Denomination> entry : data.getDenomValues().entrySet()
         .stream().filter(entry->entry.getKey().compareTo(value) >= 0)
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)).entrySet()) {
 

@@ -1,6 +1,10 @@
 package net.tnemc.core.compatibility;
 
+import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.io.message.TranslationProvider;
+import net.tnemc.item.AbstractItemStack;
+import net.tnemc.item.SerialItem;
+import net.tnemc.item.providers.CalculationsProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -9,8 +13,8 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 
 /**
- * Acts like a bridge between various server softwares and classes specific to those
- * server softwares such as opening menus, and sending messages.
+ * Acts like a bridge between various server software and classes specific to each
+ * server software such as opening menus, and sending messages.
  *
  * @since 0.1.2.0
  * @author creatorfromhell
@@ -97,4 +101,12 @@ public interface ServerConnector {
    * @param replace If the file exists in the local system's storage, should it be replaced?
    */
   void saveResource(final String path, final boolean replace);
+
+  <S, T extends AbstractItemStack<S>, INV> CalculationsProvider<T, S, INV> calculations();
+
+  default SerialItem<?> denomToSerial(final ItemDenomination denomination) {
+    return new SerialItem<>(denomToStack(denomination));
+  }
+
+  <S> AbstractItemStack<S> denomToStack(final ItemDenomination denomination);
 }

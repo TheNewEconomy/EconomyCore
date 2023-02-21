@@ -17,12 +17,18 @@ package net.tnemc.bukkit.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.BukkitTNECore;
 import net.tnemc.bukkit.TNE;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
+import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.io.message.TranslationProvider;
+import net.tnemc.item.AbstractItemStack;
+import net.tnemc.item.bukkit.BukkitItemCalculations;
+import net.tnemc.item.bukkit.BukkitItemStack;
+import net.tnemc.item.providers.CalculationsProvider;
 import org.bukkit.Bukkit;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -35,6 +41,8 @@ import java.util.UUID;
  * @since 0.1.2.0
  */
 public class BukkitServerProvider implements ServerConnector {
+
+  private BukkitItemCalculations calc = new BukkitItemCalculations();
 
   /**
    * Attempts to find a {@link PlayerProvider player} based on an {@link UUID identifier}.
@@ -118,5 +126,15 @@ public class BukkitServerProvider implements ServerConnector {
   @Override
   public void saveResource(String path, boolean replace) {
     TNE.instance().saveResource(path, replace);
+  }
+
+  @Override
+  public BukkitItemStack denomToStack(ItemDenomination denomination) {
+    return null;
+  }
+
+  @Override
+  public BukkitItemCalculations calculations() {
+    return calc;
   }
 }

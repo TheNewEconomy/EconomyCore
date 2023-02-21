@@ -22,6 +22,7 @@ import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.tnemc.bukkit.BukkitTNECore;
 import net.tnemc.bukkit.TNE;
+import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
@@ -80,17 +81,26 @@ public class BukkitPlayerProvider implements PlayerProvider {
   }
 
   /**
-   * Used to get the name of the world this player is in.
+   * Used to get the name of the region this player is in. This could be the world itself, or maybe
+   * a third-party related region such as world guard.
    *
-   * @return The name of the world.
+   * @param resolve Whether the returned region should be resolved to using the {@link net.tnemc.core.region.RegionProvider}.
+   *
+   * @return The name of the region.
    */
   @Override
-  public String getRegion() {
-    if(player.getPlayer() == null) {
-      return BukkitTNECore.server().defaultWorld();
+  public String getRegion(final boolean resolve) {
+    String world = TNECore.server().defaultWorld();
+
+    if(player.getPlayer() != null) {
+      world = player.getPlayer().getWorld().getName();
     }
 
-    return player.getPlayer().getWorld().getName();
+    if(resolve) {
+      return TNECore.eco().region().resolveRegion(world);
+    }
+
+    return world;
   }
 
   /**

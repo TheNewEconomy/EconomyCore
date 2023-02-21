@@ -18,7 +18,10 @@ package net.tnemc.bukkit.depend.towny;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import com.palmergames.bukkit.towny.TownyAPI;
 import net.tnemc.core.account.NonPlayerAccount;
+
+import java.util.Objects;
 
 /**
  * Represents an account linked to a Nation in the Towny Plugin.
@@ -30,5 +33,16 @@ public class NationAccount extends NonPlayerAccount {
 
   public NationAccount(String identifier, String name) {
     super(identifier, name);
+    this.owner = Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getKing().getUUID();
+  }
+
+  @Override
+  public String generateIdentifier(String name) {
+
+    try {
+      return Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getUUID().toString();
+    } catch(Exception ignore) {
+      return super.generateIdentifier(name);
+    }
   }
 }

@@ -33,6 +33,10 @@ public class NonPlayerAccount extends SharedAccount {
   public NonPlayerAccount(String identifier, String name) {
     super(identifier, name, null);
 
-    this.identifier = UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8)).toString();
+    this.identifier = generateIdentifier(name);
+  }
+
+  public String generateIdentifier(final String name) {
+    return UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8)).toString();
   }
 }
