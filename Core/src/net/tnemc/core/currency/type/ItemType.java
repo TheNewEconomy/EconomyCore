@@ -18,12 +18,15 @@ package net.tnemc.core.currency.type;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
+import net.tnemc.core.currency.calculations.CalculationData;
+import net.tnemc.core.currency.item.ItemCurrency;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -64,7 +67,11 @@ public class ItemType implements CurrencyType {
    */
   @Override
   public BigDecimal getHoldings(Account account, String region, Currency currency, HoldingsType type) {
-    return echest(account, region, currency).add(inventory(account, region, currency));
+    return switch(type) {
+      case E_CHEST -> getEChest(account, region, currency);
+      case INVENTORY_ONLY -> getInventory(account, region, currency);
+      default -> getEChest(account, region, currency).add(getInventory(account, region, currency));
+    };
   }
 
   /**
@@ -82,12 +89,13 @@ public class ItemType implements CurrencyType {
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount) {
     if(!account.isPlayer() || !((PlayerAccount)account).isOnline()) {
-
+      account.getWallet().setHoldings(new HoldingsEntry(region, currency.getIdentifier(), amount), type);
+      return true;
     }
     return false;
   }
 
-  public BigDecimal echest(Account account, String region, Currency currency) {
+  public BigDecimal getEChest(Account account, String region, Currency currency) {
     if(account.isPlayer()) {
       if(!((PlayerAccount)account).isOnline()) {
         //Offline players have their balances saved to their wallet so check it.
@@ -100,17 +108,19 @@ public class ItemType implements CurrencyType {
           return holdings.get().getAmount();
         }
         return BigDecimal.ZERO;
-      } else {
-        //Player is online.
-        //TODO: get player inventory holdings.
       }
+      final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
+                                                                 ((PlayerAccount)account).getPlayer()
+                                                                     .get().getInventory(true),
+                                                                 ((PlayerAccount)account).getUUID());
+      return TNECore.server().itemCalculations().calculateHoldings(data);
     }
     //Non-players can't have e-chest holdings so this is always zero.
     return BigDecimal.ZERO;
   }
 
-  public BigDecimal inventory(Account account, String region, Currency currency) {
-    if(!account.isPlayer() || !((PlayerAccount)account).isOnline()) {
+  public BigDecimal getInventory(Account account, String region, Currency currency) {
+    if(!(currency instanceof ItemCurrency) || !account.isPlayer() || !((PlayerAccount)account).isOnline()) {
       //Offline players/non-players have their balances saved to their wallet so check it.
       final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
                                                                                currency.getIdentifier(),
@@ -121,11 +131,12 @@ public class ItemType implements CurrencyType {
         return holdings.get().getAmount();
       }
       return BigDecimal.ZERO;
-    } else {
-      //Player is online.
-      //TODO: get player inventory holdings.
     }
-    //Non-players can't have e-chest holdings so this is always zero.
-    return BigDecimal.ZERO;
+    //Player is online.
+    final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
+                                                               ((PlayerAccount)account).getPlayer()
+                                                                   .get().getInventory(false),
+                                                               ((PlayerAccount)account).getUUID());
+    return TNECore.server().itemCalculations().calculateHoldings(data);
   }
 }

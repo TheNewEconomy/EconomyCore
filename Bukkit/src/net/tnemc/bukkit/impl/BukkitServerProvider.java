@@ -20,15 +20,13 @@ package net.tnemc.bukkit.impl;
 import net.tnemc.bukkit.TNE;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
+import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.io.message.TranslationProvider;
-import net.tnemc.item.AbstractItemStack;
-import net.tnemc.item.bukkit.BukkitItemCalculations;
+import net.tnemc.item.bukkit.BukkitCalculationsProvider;
 import net.tnemc.item.bukkit.BukkitItemStack;
-import net.tnemc.item.providers.CalculationsProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -42,7 +40,7 @@ import java.util.UUID;
  */
 public class BukkitServerProvider implements ServerConnector {
 
-  private BukkitItemCalculations calc = new BukkitItemCalculations();
+  private BukkitCalculationsProvider calc = new BukkitCalculationsProvider();
 
   /**
    * Attempts to find a {@link PlayerProvider player} based on an {@link UUID identifier}.
@@ -103,6 +101,7 @@ public class BukkitServerProvider implements ServerConnector {
    */
   @Override
   public String defaultWorld() {
+    //TODO: This
     return null;
   }
 
@@ -115,11 +114,13 @@ public class BukkitServerProvider implements ServerConnector {
    */
   @Override
   public String replaceColours(String string) {
+    //TODO: This
     return null;
   }
 
   @Override
   public TranslationProvider translation() {
+    //TODO: This
     return null;
   }
 
@@ -129,12 +130,19 @@ public class BukkitServerProvider implements ServerConnector {
   }
 
   @Override
-  public BukkitItemStack denomToStack(ItemDenomination denomination) {
+  public BukkitItemStack denominationToStack(ItemDenomination denomination) {
+    //TODO: This
     return null;
   }
 
   @Override
-  public BukkitItemCalculations calculations() {
+  public BukkitCalculationsProvider calculations() {
     return calc;
+  }
+
+  @Override
+  public BukkitItemCalculations itemCalculations() {
+    //TODO: This
+    return null;
   }
 }

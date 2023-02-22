@@ -22,7 +22,6 @@ import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.item.AbstractItemStack;
-import net.tnemc.item.providers.CalculationsProvider;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -41,7 +40,7 @@ import java.util.UUID;
  */
 
 //TODO: Test this class.
-public abstract class CalculationData<INV> {
+public class CalculationData<INV> {
 
   private final Map<String, Integer> inventoryMaterials = new HashMap<>();
 
@@ -76,30 +75,29 @@ public abstract class CalculationData<INV> {
 
   private void inventoryCounts() {
     for(Map.Entry<BigDecimal, Denomination> entry : denomValues.entrySet()) {
-      if(entry.getValue() instanceof ItemDenomination) {
-        final ItemDenomination denom = (ItemDenomination)entry.getValue();
-        final AbstractItemStack<Object> stack = TNECore.server().denomToStack(denom);
-        inventoryMaterials.put(denom.singular(), TNECore.server().calculations().count(stack, inventory));
+      if(entry.getValue() instanceof final ItemDenomination denomination) {
+        final AbstractItemStack<Object> stack = TNECore.server().denominationToStack(denomination);
+        inventoryMaterials.put(denomination.singular(), TNECore.server().calculations().count(stack, inventory));
       }
     }
   }
 
-  public void removeMaterials(Denomination denom, Integer amount) {
-    final AbstractItemStack<Object> stack = TNECore.server().denomToStack((ItemDenomination)denom);
-    final int contains = inventoryMaterials.getOrDefault(denom.singular(), 0);
+  public void removeMaterials(Denomination denomination, Integer amount) {
+    final AbstractItemStack<Object> stack = TNECore.server().denominationToStack((ItemDenomination)denomination);
+    final int contains = inventoryMaterials.getOrDefault(denomination.singular(), 0);
     if(contains == amount) {
-      inventoryMaterials.remove(denom.singular());
+      inventoryMaterials.remove(denomination.singular());
       TNECore.server().calculations().removeAll(stack, inventory);
       return;
     }
     final int left = contains - amount;
-    inventoryMaterials.put(denom.singular(), left);
+    inventoryMaterials.put(denomination.singular(), left);
     final AbstractItemStack<Object> stackClone = stack.amount(left);
     TNECore.server().calculations().removeItem(stackClone, inventory);
   }
 
-  public void provideMaterials(final Denomination denom, Integer amount) {
-    final AbstractItemStack<Object> stack = TNECore.server().denomToStack((ItemDenomination)denom).amount(amount);
+  public void provideMaterials(final Denomination denomination, Integer amount) {
+    final AbstractItemStack<Object> stack = TNECore.server().denominationToStack((ItemDenomination)denomination).amount(amount);
     Collection<AbstractItemStack<Object>> left = TNECore.server().calculations().giveItems(Collections.singletonList(stack), inventory);
 
     if(left.size() > 0) {

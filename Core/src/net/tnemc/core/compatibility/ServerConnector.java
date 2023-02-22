@@ -1,5 +1,6 @@
 package net.tnemc.core.compatibility;
 
+import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.io.message.TranslationProvider;
 import net.tnemc.item.AbstractItemStack;
@@ -104,9 +105,11 @@ public interface ServerConnector {
 
   <S, T extends AbstractItemStack<S>, INV> CalculationsProvider<T, S, INV> calculations();
 
-  default SerialItem<?> denomToSerial(final ItemDenomination denomination) {
-    return new SerialItem<>(denomToStack(denomination));
+  default SerialItem<?> denominationToSerial(final ItemDenomination denomination) {
+    return new SerialItem<>(denominationToStack(denomination));
   }
 
-  <S> AbstractItemStack<S> denomToStack(final ItemDenomination denomination);
+  <S> AbstractItemStack<S> denominationToStack(final ItemDenomination denomination);
+
+  <INV> ItemCalculations<INV> itemCalculations();
 }

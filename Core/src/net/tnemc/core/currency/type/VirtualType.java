@@ -77,8 +77,7 @@ public class VirtualType implements CurrencyType {
    */
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount) {
-    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getIdentifier(), amount),
-                                           type);
+    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getIdentifier(), amount), type);
     return true;
   }
 }

@@ -34,13 +34,13 @@ import java.util.stream.Collectors;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public interface ItemCalculations<INV> {
+public class ItemCalculations<INV> {
 
   /**
    * Used to calculate the holdings of the inventory materials present.
    * @return The {@link BigDecimal} representation of the inventory materials balance value.
    */
-  default BigDecimal calculateHoldings(CalculationData<INV> data) {
+  public BigDecimal calculateHoldings(CalculationData<INV> data) {
     BigDecimal holdings = BigDecimal.ZERO;
 
     for(Map.Entry<BigDecimal, Denomination> entry : data.getDenomValues().entrySet()) {
@@ -53,7 +53,7 @@ public interface ItemCalculations<INV> {
     return holdings;
   }
 
-  default void clearItems(CalculationData<INV> data) {
+  public void clearItems(CalculationData<INV> data) {
     for(Map.Entry<String, Integer> entry : data.getInventoryMaterials().entrySet()) {
       final Optional<ItemDenomination> denom = data.getCurrency().getDenominationByMaterial(entry.getKey());
 
@@ -61,7 +61,7 @@ public interface ItemCalculations<INV> {
     }
   }
 
-  default void setItems(CalculationData<INV> data, BigDecimal amount) {
+  public void setItems(CalculationData<INV> data, BigDecimal amount) {
     final BigDecimal holdings = calculateHoldings(data);
 
     if(holdings.compareTo(amount) == 0) return;
@@ -79,7 +79,7 @@ public interface ItemCalculations<INV> {
    * @return The {@link BigDecimal} representation of the leftover amount that couldn't be removed
    * because there's no more materials left to remove.
    */
-  default BigDecimal calculateChange(CalculationData<INV> data, BigDecimal change) {
+  public BigDecimal calculateChange(CalculationData<INV> data, BigDecimal change) {
     BigDecimal workingAmount = change;
 
     final NavigableMap<BigDecimal, Denomination> values = data.getDenomValues().descendingMap();
@@ -135,7 +135,7 @@ public interface ItemCalculations<INV> {
    * the threshold is 1 then all denominations given to the inventory should be less than 1. If you don't wish
    * to use a threshold then you should pass null.
    */
-  default void provideMaterials(CalculationData<INV> data, BigDecimal amount, @Nullable BigDecimal threshold) {
+  public void provideMaterials(CalculationData<INV> data, BigDecimal amount, @Nullable BigDecimal threshold) {
     BigDecimal workingAmount = amount;
     final NavigableMap<BigDecimal, Denomination> values = data.getDenomValues().descendingMap();
 
@@ -167,7 +167,7 @@ public interface ItemCalculations<INV> {
    * @param denom The denom name in String form.
    * @param amount The amount of the material to remove from working materials.
    */
-  default void removeMaterials(CalculationData<INV> data, Denomination denom, Integer amount) {
+  public void removeMaterials(CalculationData<INV> data, Denomination denom, Integer amount) {
     data.removeMaterials(denom, amount);
   }
 
@@ -176,7 +176,7 @@ public interface ItemCalculations<INV> {
    * @param value The value to utilize for the comparison.
    * @return The Map Entry containing the lowest denomination information.
    */
-  default Map.Entry<BigDecimal, Denomination> findLowestGreaterThan(CalculationData<INV> data, BigDecimal value) {
+  public Map.Entry<BigDecimal, Denomination> findLowestGreaterThan(CalculationData<INV> data, BigDecimal value) {
     Map.Entry<BigDecimal, Denomination> entryLowest = null;
     for(Map.Entry<BigDecimal, Denomination> entry : data.getDenomValues().entrySet()
         .stream().filter(entry->entry.getKey().compareTo(value) >= 0)
