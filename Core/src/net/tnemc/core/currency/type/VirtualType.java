@@ -57,10 +57,11 @@ public class VirtualType implements CurrencyType {
   public BigDecimal getHoldings(Account account, String region, Currency currency, HoldingsType type) {
     final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region, currency.getIdentifier(), type);
 
+
     if(holdings.isPresent()) {
       return holdings.get().getAmount();
     }
-    return currency.getStartingHoldings();
+    return BigDecimal.ZERO;
   }
 
   /**

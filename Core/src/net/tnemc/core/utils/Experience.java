@@ -3,7 +3,21 @@ package net.tnemc.core.utils;
 
 import net.tnemc.core.compatibility.PlayerProvider;
 
+import java.math.BigDecimal;
+
 public class Experience {
+
+  /**
+   * Calculates a player's total exp based on level and progress to next.
+   *
+   * @param player the Player
+   *
+   * @return the amount of exp the Player has
+   */
+  public static BigDecimal getExperienceAsDecimal(PlayerProvider player) {
+    return new BigDecimal(getExperienceFromLevel(player.getExpLevel()))
+        .add(new BigDecimal(getExperienceToNext(player.getExpLevel()) * player.getExp()));
+  }
 
   /**
    * Calculates a player's total exp based on level and progress to next.

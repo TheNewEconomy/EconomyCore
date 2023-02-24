@@ -61,7 +61,7 @@ public class MixedType implements CurrencyType {
    */
   @Override
   public BigDecimal getHoldings(Account account, String region, Currency currency, HoldingsType type) {
-    return null;
+    return BigDecimal.ZERO;
   }
 
   /**

@@ -18,10 +18,12 @@ package net.tnemc.core.currency.type;
  */
 
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
+import net.tnemc.core.utils.Experience;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -48,18 +50,26 @@ public class ExperienceType implements CurrencyType {
    * @param region   The name of the region involved. This is usually a world, but could be something
    *                 else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
-   * @param type     The holdings type
+   * @param type     The holdings type. For Experience-based holdings we disregard this as there's
+   *                 no other options for experience-based currencies that are valid.
    *
    * @return The holdings for the specific account.
    */
   @Override
   public BigDecimal getHoldings(Account account, String region, Currency currency, HoldingsType type) {
-    final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region, currency.getIdentifier(), type);
+    if(!account.isPlayer() || !((PlayerAccount)account).isOnline()) {
+      //Offline players/non-players have their balances saved to their wallet so check it.
+      final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
+                                                                               currency.getIdentifier(),
+                                                                               HoldingsType.NORMAL_HOLDINGS
+      );
 
-    if(holdings.isPresent()) {
-      return holdings.get().getAmount();
+      if(holdings.isPresent()) {
+        return holdings.get().getAmount();
+      }
+      return BigDecimal.ZERO;
     }
-    return currency.getStartingHoldings();
+    return Experience.getExperienceAsDecimal(((PlayerAccount)account).getPlayer().get());
   }
 
   /**
@@ -69,15 +79,18 @@ public class ExperienceType implements CurrencyType {
    * @param region   The name of the region involved. This is usually a world, but could be something
    *                 else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
-   * @param type     The holdings type
+   * @param type     The holdings type. For Experience-based holdings we disregard this as there's
+   *                 no other options for experience-based currencies that are valid.
    * @param amount   The amount to set the player's holdings to.
    *
    * @return True if the holdings have been set, otherwise false.
    */
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount) {
-    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getIdentifier(), amount),
-                                    type);
+    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getIdentifier(), amount), HoldingsType.NORMAL_HOLDINGS);
+    if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
+      Experience.setExperience(((PlayerAccount)account).getPlayer().get(), amount.intValueExact());
+    }
     return true;
   }
 }
