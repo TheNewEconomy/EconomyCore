@@ -27,7 +27,7 @@ import net.tnemc.core.menu.Page;
  */
 public class MainPage extends Page {
 
-  public MainPage() {
-    super(1);
+  public MainPage(int id, int size) {
+    super(id, size);
   }
 }

@@ -106,7 +106,7 @@ public interface ServerConnector {
   <S, T extends AbstractItemStack<S>, INV> CalculationsProvider<T, S, INV> calculations();
 
   default SerialItem<?> denominationToSerial(final ItemDenomination denomination) {
-    return new SerialItem<>(denominationToStack(denomination));
+    return denomination.toSerial();
   }
 
   <S> AbstractItemStack<S> denominationToStack(final ItemDenomination denomination);

@@ -71,13 +71,8 @@ public class TestPlayerProvider implements PlayerProvider {
     return null;
   }
 
-  /**
-   * Used to get the name of the world this player is in.
-   *
-   * @return The name of the world.
-   */
   @Override
-  public String getRegion() {
+  public String getRegion(boolean resolve) {
     return "world";
   }
 

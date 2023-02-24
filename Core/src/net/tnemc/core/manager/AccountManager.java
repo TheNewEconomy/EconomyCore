@@ -97,6 +97,11 @@ public class AccountManager {
     }
 
     accounts.put(account.getIdentifier(), account);
+    try {
+      uuidProvider.store(new UUIDPair(UUID.fromString(account.getIdentifier()), account.getName()));
+    } catch(Exception ignore) {
+      //identifier isn't an uuid, so it'll be a string, most likely a non-player.
+    }
     return AccountResponse.CREATED;
   }
 

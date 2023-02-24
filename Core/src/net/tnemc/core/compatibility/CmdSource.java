@@ -63,7 +63,7 @@ public interface CmdSource {
    */
   default String region() {
     if(player().isPresent()) {
-      return player().get().getRegion();
+      return player().get().getRegion(true);
     }
     return TNECore.server().defaultWorld();
   }

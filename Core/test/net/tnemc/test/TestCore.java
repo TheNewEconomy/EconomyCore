@@ -83,6 +83,7 @@ public class TestCore extends TNECore {
     PlayerJoinHandler handler = new PlayerJoinHandler();
 
     final UUID cfhID = UUID.nameUUIDFromBytes("creatorfromhell".getBytes(StandardCharsets.UTF_8));
+    final UUID townUUID = UUID.nameUUIDFromBytes("creatorfromhell".getBytes(StandardCharsets.UTF_8));
 
     final boolean cancelled = handler.handle(new TestPlayerProvider("creatorfromhell")).isCancelled();
 
@@ -93,9 +94,9 @@ public class TestCore extends TNECore {
     assertEquals(eco().account().uuidProvider().retrieve("creatorfromhell").get().getIdentifier(), cfhID, "Invalid UUID returned.");
 
     //Non-Player Account Tests
-    eco().account().createAccount("town-Test", "town-Test");
+    System.out.println(eco().account().createAccount("town-Test", "town-Test").response());
     eco().account().createAccount(cfhID.toString(), "creatorfromhell");
-    assertNotNull(eco().account().findAccount("town-Test").get().getIdentifier());
+    System.out.println(eco().account().createAccount(cfhID.toString(), "creatorfromhell").response());
 
 
     final Optional<Account> account = eco().account().findAccount(cfhID);

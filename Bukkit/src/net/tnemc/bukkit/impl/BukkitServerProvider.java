@@ -101,8 +101,7 @@ public class BukkitServerProvider implements ServerConnector {
    */
   @Override
   public String defaultWorld() {
-    //TODO: This
-    return null;
+    return Bukkit.getServer().getWorlds().get(0).getName();
   }
 
   /**
@@ -131,8 +130,13 @@ public class BukkitServerProvider implements ServerConnector {
 
   @Override
   public BukkitItemStack denominationToStack(ItemDenomination denomination) {
-    //TODO: This
-    return null;
+    return new BukkitItemStack().of(denomination.getMaterial(), 1)
+        .enchant(denomination.getEnchantments())
+        .lore(denomination.getLore())
+        .flags(denomination.getFlags())
+        .damage(denomination.getDamage())
+        .display(denomination.getName())
+        .modelData(denomination.getCustomModel());
   }
 
   @Override
@@ -142,7 +146,6 @@ public class BukkitServerProvider implements ServerConnector {
 
   @Override
   public BukkitItemCalculations itemCalculations() {
-    //TODO: This
-    return null;
+    return new BukkitItemCalculations();
   }
 }
