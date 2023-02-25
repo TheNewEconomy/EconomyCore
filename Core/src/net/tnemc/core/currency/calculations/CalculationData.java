@@ -100,6 +100,7 @@ public class CalculationData<INV> {
     final AbstractItemStack<Object> stack = TNECore.server().denominationToStack((ItemDenomination)denomination).amount(amount);
     Collection<AbstractItemStack<Object>> left = TNECore.server().calculations().giveItems(Collections.singletonList(stack), inventory);
 
+    System.out.println("Left: " + left.size());
     if(left.size() > 0) {
       failedDrop = TNECore.server().calculations().drop(left, player);
 

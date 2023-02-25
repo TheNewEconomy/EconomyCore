@@ -20,6 +20,7 @@ package net.tnemc.sponge.impl;
 
 import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.item.AbstractItemStack;
 import org.spongepowered.api.data.key.Keys;
@@ -71,14 +72,9 @@ public class SpongePlayerProvider implements PlayerProvider {
     return null;
   }
 
-  /**
-   * Used to get the name of the world this player is in.
-   *
-   * @return The name of the world.
-   */
   @Override
-  public String getRegion() {
-    return player.getWorld().getName();
+  public String getRegion(boolean resolve) {
+    return null;
   }
 
   /**
@@ -189,5 +185,10 @@ public class SpongePlayerProvider implements PlayerProvider {
   @Override
   public boolean hasPermission(String permission) {
     return player.hasPermission(permission);
+  }
+
+  @Override
+  public void message(MessageData messageData) {
+
   }
 }

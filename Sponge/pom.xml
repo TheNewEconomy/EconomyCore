@@ -158,7 +158,7 @@
     <parent>
         <groupId>net.tnemc</groupId>
         <artifactId>TNE</artifactId>
-        <version>0.1.2.0</version>
+        <version>0.1.2.0-PRE-1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 </project>

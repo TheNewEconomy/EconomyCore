@@ -104,7 +104,9 @@ public class TestCore extends TNECore {
     final Optional<Account> towny = eco().account().findAccount("town-Test");
 
     if(towny.isPresent()) {
-      towny.get().setHoldings(new HoldingsEntry("world", "USD", new BigDecimal("1000")));
+      System.out.println("Set Value: " + towny.get().setHoldings(new HoldingsEntry("world", "USD", new BigDecimal("1000"))));
+
+      System.out.println("Null Check: " + (towny.get().getHoldings("world", "USD").isPresent()));
 
       System.out.println("Towny Holdings: " + towny.get().getHoldings("world", "USD").get().getAmount().toPlainString());
 

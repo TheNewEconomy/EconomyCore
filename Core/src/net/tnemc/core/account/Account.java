@@ -146,8 +146,8 @@ public class Account {
    * Sets the holdings for the specified entry in this wallet.
    * @param entry The entry to set in this wallet.
    */
-  public void setHoldings(final @NotNull HoldingsEntry entry) {
-    setHoldings(entry, HoldingsType.NORMAL_HOLDINGS);
+  public boolean setHoldings(final @NotNull HoldingsEntry entry) {
+    return setHoldings(entry, HoldingsType.NORMAL_HOLDINGS);
   }
 
   /**

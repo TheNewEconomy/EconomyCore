@@ -19,7 +19,11 @@ package net.tnemc.sponge.impl;
 
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
+import net.tnemc.core.currency.calculations.ItemCalculations;
+import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.io.message.TranslationProvider;
+import net.tnemc.item.AbstractItemStack;
+import net.tnemc.item.providers.CalculationsProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -113,5 +117,20 @@ public class SpongeServerProvider implements ServerConnector {
   @Override
   public void saveResource(String path, boolean replace) {
 
+  }
+
+  @Override
+  public <S, T extends AbstractItemStack<S>, INV> CalculationsProvider<T, S, INV> calculations() {
+    return null;
+  }
+
+  @Override
+  public <S> AbstractItemStack<S> denominationToStack(ItemDenomination denomination) {
+    return null;
+  }
+
+  @Override
+  public <INV> ItemCalculations<INV> itemCalculations() {
+    return null;
   }
 }

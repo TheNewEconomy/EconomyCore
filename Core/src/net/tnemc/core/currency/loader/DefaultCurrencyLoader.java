@@ -227,7 +227,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       if(denominations.length > 0) {
         for (File denomination : denominations) {
 
-          final boolean loaded = loadCurrency(directory, denomination);
+          final boolean loaded = loadDenomination(currency, denomination);
 
           if(!loaded) {
             //TODO: Send translation of unable to load denomination.

@@ -90,7 +90,7 @@
                     <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
                     <artifactSet>
                         <includes>
-                            <include>net.tnemc:EconomyCore</include>
+                            <include>net.tnemc:*</include>
                             <include>org.json.simple:*</include>
                             <include>org.yaml:*</include>
                             <include>me.carleslc.Simple-YAML:*</include>
@@ -181,7 +181,7 @@
         <dependency>
             <groupId>net.tnemc</groupId>
             <artifactId>TNIL-Bukkit</artifactId>
-            <version>0.1.5.0</version>
+            <version>0.1.6.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
@@ -189,7 +189,7 @@
     <parent>
         <groupId>net.tnemc</groupId>
         <artifactId>TNE</artifactId>
-        <version>0.1.2.0</version>
+        <version>0.1.2.0-PRE-1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 </project>

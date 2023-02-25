@@ -19,7 +19,7 @@
         <dependency>
             <groupId>net.tnemc</groupId>
             <artifactId>TNIL-Core</artifactId>
-            <version>0.1.5.0</version>
+            <version>0.1.6.0</version>
             <scope>compile</scope>
         </dependency>
         <!-- Database Stuff is Fun -->
@@ -65,7 +65,7 @@
     <parent>
         <groupId>net.tnemc</groupId>
         <artifactId>TNE</artifactId>
-        <version>0.1.2.0</version>
+        <version>0.1.2.0-PRE-1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -144,6 +144,7 @@
                     <artifactSet>
                         <includes>
                             <include>org.json.simple:*</include>
+                            <include>net.tnemc:*</include>
                             <include>com.zaxxer:*</include>
                             <include>org.yaml:*</include>
                             <include>me.carleslc.Simple-YAML:*</include>

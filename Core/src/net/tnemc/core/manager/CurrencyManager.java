@@ -86,6 +86,7 @@ public class CurrencyManager {
    */
   public void addCurrency(final Currency currency) {
     currencies.put(currency.getUid(), currency);
+    curIDMap.put(currency.getIdentifier(), currency.getUid());
   }
 
   /**

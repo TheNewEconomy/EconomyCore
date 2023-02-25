@@ -88,8 +88,14 @@ public class ItemType implements CurrencyType {
    */
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount) {
-    if(!account.isPlayer() || !((PlayerAccount)account).isOnline()) {
-      account.getWallet().setHoldings(new HoldingsEntry(region, currency.getIdentifier(), amount), type);
+    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getIdentifier(), amount), type);
+
+    if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
+      final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
+                                                                 ((PlayerAccount)account).getPlayer()
+                                                                     .get().getInventory(false),
+                                                                 ((PlayerAccount)account).getUUID());
+      TNECore.server().itemCalculations().setItems(data, amount);
       return true;
     }
     return false;

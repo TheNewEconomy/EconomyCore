@@ -63,12 +63,16 @@ public class ItemCalculations<INV> {
 
   public void setItems(CalculationData<INV> data, BigDecimal amount) {
     final BigDecimal holdings = calculateHoldings(data);
+    System.out.println("set items");
 
     if(holdings.compareTo(amount) == 0) return;
 
     if(holdings.compareTo(amount) > 0) {
+      System.out.println("take items");
       calculateChange(data, holdings.subtract(amount));
+      return;
     }
+    System.out.println("add items");
     provideMaterials(data, amount.subtract(holdings), null);
   }
 
@@ -139,6 +143,7 @@ public class ItemCalculations<INV> {
     BigDecimal workingAmount = amount;
     final NavigableMap<BigDecimal, Denomination> values = data.getDenomValues().descendingMap();
 
+    System.out.println("Values Left: " + values.size());
     for(Map.Entry<BigDecimal, Denomination> entry : values.entrySet()) {
 
       if(threshold != null && entry.getKey().compareTo(threshold) >= 0) {
