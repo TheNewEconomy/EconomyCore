@@ -45,7 +45,6 @@ public class ItemCalculations<INV> {
 
     for(Map.Entry<BigDecimal, Denomination> entry : data.getDenomValues().entrySet()) {
       final int amount = data.getInventoryMaterials().getOrDefault(entry.getValue().singular(), 0);
-      System.out.println("Calc Amount: " + amount);
 
       if(amount > 0) {
         holdings = holdings.add(entry.getKey().multiply(new BigDecimal("" + amount)));
@@ -64,16 +63,13 @@ public class ItemCalculations<INV> {
 
   public void setItems(CalculationData<INV> data, BigDecimal amount) {
     final BigDecimal holdings = calculateHoldings(data);
-    System.out.println("set items");
 
     if(holdings.compareTo(amount) == 0) return;
 
     if(holdings.compareTo(amount) > 0) {
-      System.out.println("take items");
       calculateChange(data, holdings.subtract(amount));
       return;
     }
-    System.out.println("add items");
     provideMaterials(data, amount.subtract(holdings), null);
   }
 
@@ -87,14 +83,12 @@ public class ItemCalculations<INV> {
   public BigDecimal calculateChange(CalculationData<INV> data, BigDecimal change) {
     BigDecimal workingAmount = change;
 
-    System.out.println("Working Amount: " + workingAmount);
     final NavigableMap<BigDecimal, Denomination> values = data.getDenomValues().descendingMap();
     Map.Entry<BigDecimal, Denomination> lowestWhole = findLowestGreaterThan(data, BigDecimal.ONE);
 
     int instance = 0;
     do {
 
-      System.out.println("Working Amount: " + workingAmount);
       if(instance > 0) {
         if(!data.getInventoryMaterials().containsKey(lowestWhole.getValue().singular())) {
           lowestWhole = findLowestGreaterThan(data, BigDecimal.ONE);
@@ -147,7 +141,6 @@ public class ItemCalculations<INV> {
     BigDecimal workingAmount = amount;
     final NavigableMap<BigDecimal, Denomination> values = data.getDenomValues().descendingMap();
 
-    System.out.println("Values Left: " + values.size());
     for(Map.Entry<BigDecimal, Denomination> entry : values.entrySet()) {
 
       if(threshold != null && entry.getKey().compareTo(threshold) >= 0) {
