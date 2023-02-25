@@ -485,7 +485,7 @@ public class MoneyCommand extends BaseCommand {
                                                            new BigDecimal(args[1]));
     //TODO: Value args check
 
-    final Transaction transaction = new Transaction("give")
+    final Transaction transaction = new Transaction("take")
         .to(account.get(), modifier.counter())
         .processor(new BaseTransactionProcessor())
         .source(new PlayerSource(sender.identifier()));

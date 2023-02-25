@@ -44,7 +44,8 @@ public class ItemCalculations<INV> {
     BigDecimal holdings = BigDecimal.ZERO;
 
     for(Map.Entry<BigDecimal, Denomination> entry : data.getDenomValues().entrySet()) {
-      final int amount = data.getInventoryMaterials().getOrDefault(((ItemDenomination)entry.getValue()).getMaterial(), 0);
+      final int amount = data.getInventoryMaterials().getOrDefault(entry.getValue().singular(), 0);
+      System.out.println("Calc Amount: " + amount);
 
       if(amount > 0) {
         holdings = holdings.add(entry.getKey().multiply(new BigDecimal("" + amount)));
@@ -86,14 +87,16 @@ public class ItemCalculations<INV> {
   public BigDecimal calculateChange(CalculationData<INV> data, BigDecimal change) {
     BigDecimal workingAmount = change;
 
+    System.out.println("Working Amount: " + workingAmount);
     final NavigableMap<BigDecimal, Denomination> values = data.getDenomValues().descendingMap();
     Map.Entry<BigDecimal, Denomination> lowestWhole = findLowestGreaterThan(data, BigDecimal.ONE);
 
     int instance = 0;
     do {
 
+      System.out.println("Working Amount: " + workingAmount);
       if(instance > 0) {
-        if(!data.getInventoryMaterials().containsKey(((ItemDenomination)lowestWhole.getValue()).getMaterial())) {
+        if(!data.getInventoryMaterials().containsKey(lowestWhole.getValue().singular())) {
           lowestWhole = findLowestGreaterThan(data, BigDecimal.ONE);
         }
         provideMaterials(data, workingAmount, BigDecimal.ONE);
@@ -103,6 +106,7 @@ public class ItemCalculations<INV> {
 
       for(Map.Entry<BigDecimal, Denomination> entry : values.entrySet()) {
 
+
         if(entry.getKey().compareTo(workingAmount) > 0) {
           continue;
         }
@@ -111,11 +115,11 @@ public class ItemCalculations<INV> {
           continue;
         }
 
-        if(!data.getInventoryMaterials().containsKey(((ItemDenomination)entry.getValue()).getMaterial())) {
+        if(!data.getInventoryMaterials().containsKey(entry.getValue().singular())) {
           continue;
         }
 
-        final int max = data.getInventoryMaterials().get(((ItemDenomination)entry.getValue()).getMaterial());
+        final int max = data.getInventoryMaterials().get(entry.getValue().singular());
 
         int amountPossible = workingAmount.divide(entry.getKey(), RoundingMode.DOWN).toBigInteger().intValue();
 
@@ -161,8 +165,8 @@ public class ItemCalculations<INV> {
 
       final int amountPossible = workingAmount.divide(entry.getKey(), RoundingMode.DOWN).toBigInteger().intValue();
       workingAmount = workingAmount.subtract(entry.getKey().multiply(new BigDecimal(amountPossible)));
-      int holding = data.getInventoryMaterials().getOrDefault(((ItemDenomination)entry.getValue()).getMaterial(), 0);
-      data.getInventoryMaterials().put(((ItemDenomination)entry.getValue()).getMaterial(), holding + amountPossible);
+      int holding = data.getInventoryMaterials().getOrDefault(entry.getValue().singular(), 0);
+      data.getInventoryMaterials().put(entry.getValue().singular(), holding + amountPossible);
       data.provideMaterials(entry.getValue(), amountPossible);
     }
   }
@@ -188,7 +192,7 @@ public class ItemCalculations<INV> {
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)).entrySet()) {
 
       if(entryLowest == null || entryLowest.getKey().compareTo(entry.getKey()) > 0) {
-        if(data.getInventoryMaterials().containsKey(((ItemDenomination)entry.getValue()).getMaterial())) {
+        if(data.getInventoryMaterials().containsKey(entry.getValue().singular())) {
           entryLowest = entry;
         }
       }
