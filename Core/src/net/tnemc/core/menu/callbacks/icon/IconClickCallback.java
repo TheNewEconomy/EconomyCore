@@ -1,7 +1,7 @@
 package net.tnemc.core.menu.callbacks.icon;
 /*
  * The New Economy
- * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,8 +18,8 @@ package net.tnemc.core.menu.callbacks.icon;
  */
 
 import net.tnemc.core.compatibility.PlayerProvider;
-import net.tnemc.core.revampmenu.Icon;
-import net.tnemc.core.revampmenu.callbacks.utils.IconClickType;
+import net.tnemc.core.menu.icon.ActionType;
+import net.tnemc.core.menu.icon.Icon;
 
 /**
  * Represents a callback, which is called when an {@link Icon} is clicked.
@@ -29,16 +29,16 @@ import net.tnemc.core.revampmenu.callbacks.utils.IconClickType;
  */
 public class IconClickCallback extends IconCallback {
 
-  protected final IconClickType clickType;
+  protected final ActionType clickType;
   protected final PlayerProvider player;
 
-  public IconClickCallback(Icon icon, IconClickType clickType, PlayerProvider player) {
+  public IconClickCallback(Icon icon, ActionType clickType, PlayerProvider player) {
     super(icon);
     this.clickType = clickType;
     this.player = player;
   }
 
-  public IconClickType getClickType() {
+  public ActionType getClickType() {
     return clickType;
   }
 

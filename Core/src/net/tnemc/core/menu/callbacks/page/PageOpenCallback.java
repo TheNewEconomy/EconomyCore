@@ -1,7 +1,7 @@
-package net.tnemc.core.revampmenu.handler;
+package net.tnemc.core.menu.callbacks.page;
 /*
  * The New Economy
- * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,24 +17,26 @@ package net.tnemc.core.revampmenu.handler;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.menu.InventoryHandler;
-import net.tnemc.core.revampmenu.Menu;
-
-import java.util.HashMap;
-import java.util.Map;
+import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.menu.Page;
 
 /**
- * The MenuHandler is utilized to handle every operation in a menu, from creating an inventory to
- * filling the menu and setting icons.
- *
- * @param <T> Represents the platform's Inventory object.
+ * Represents a callback, which is called when a page is opened in a menu. This could be due to a
+ * switch, or due to the menu opening.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public abstract class MenuHandler<T> {
+public class PageOpenCallback extends PageCallback {
 
-  public final Map<String, Menu> menus = new HashMap<>();
+  protected final PlayerProvider player;
 
-  public abstract InventoryHandler<T> handler();
+  public PageOpenCallback(Page page, PlayerProvider player) {
+    super(page);
+    this.player = player;
+  }
+
+  public PlayerProvider getPlayer() {
+    return player;
+  }
 }

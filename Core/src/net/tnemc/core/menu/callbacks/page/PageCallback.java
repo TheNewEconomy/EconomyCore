@@ -1,7 +1,7 @@
-package net.tnemc.core.revampmenu;
+package net.tnemc.core.menu.callbacks.page;
 /*
  * The New Economy
- * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,42 +17,27 @@ package net.tnemc.core.revampmenu;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.utils.constraints.ConstraintHolder;
-import net.tnemc.core.utils.constraints.impl.BoolConstraint;
-import net.tnemc.item.SerialItem;
-
-import java.util.HashMap;
-import java.util.Map;
+import net.tnemc.core.menu.Page;
 
 /**
- * Icon
+ * Represents a callback, which is related to a {@link net.tnemc.core.menu.Page}.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class Icon implements ConstraintHolder {
+public class PageCallback {
 
-  protected final Map<String, String> constraints = new HashMap<>();
+  protected Page page;
 
-  protected SerialItem<?> item;
-
-  @Override
-  public Map<String, String> constraints() {
-    return constraints;
+  public PageCallback(Page page) {
+    this.page = page;
   }
-}
 
-enum IconBooleanConstraints implements BoolConstraint {
+  public Page getPage() {
+    return page;
+  }
 
-  READ_ONLY {
-    @Override
-    public String identifier() {
-      return "READ_ONLY";
-    }
-
-    @Override
-    public Boolean defaultValue() {
-      return true;
-    }
+  public void setPage(Page page) {
+    this.page = page;
   }
 }

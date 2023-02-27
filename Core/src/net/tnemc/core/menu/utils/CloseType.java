@@ -1,7 +1,7 @@
-package net.tnemc.core.revampmenu.callbacks.utils;
+package net.tnemc.core.menu.utils;
 /*
  * The New Economy
- * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,19 +18,14 @@ package net.tnemc.core.revampmenu.callbacks.utils;
  */
 
 /**
- * IconClickType
+ * Represents the various close types for a {@link net.tnemc.core.revampmenu.Menu}.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public enum IconClickType {
-  ANY,
-  DOUBLE_CLICK,
-  LEFT_CLICK,
-  LEFT_SHIFT,
-  SCROLL_CLICK,
-  RIGHT_CLICK,
-  RIGHT_SHIFT,
-  DROP,
-  DROP_CTRL,
+public enum CloseType {
+  CLOSE,
+  //If a menu needs to be temporarily closed. This doesn't remove the player from being a viewer. This
+  //could be for something such as requiring a text chat.
+  TEMPORARY
 }

@@ -18,7 +18,7 @@ import java.util.UUID;
 import static net.tnemc.core.utils.PlayerHelper.playerMatcher;
 
 /**
- * Represents an provider that is used to resolve and store UUID<->Username Pairs.
+ * Represents a provider that is used to resolve and store UUID<->Username Pairs.
  *
  * @author creatorfromhell
  * @since 0.1.2.0

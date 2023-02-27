@@ -1,7 +1,7 @@
 package net.tnemc.core.menu.icon;
 /*
  * The New Economy
- * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -22,10 +22,14 @@ import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.core.menu.Page;
 import net.tnemc.core.menu.callbacks.IconClickCallback;
+import net.tnemc.core.utils.constraints.ConstraintHolder;
+import net.tnemc.core.utils.constraints.impl.StringConstraint;
 import net.tnemc.item.AbstractItemStack;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 /**
@@ -35,18 +39,16 @@ import java.util.function.Consumer;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class Icon {
+public class Icon implements ConstraintHolder {
 
-  protected List<IconAction> actions = new LinkedList<>();
+  protected final Map<String, String> constraints = new HashMap<>();
+
+  protected final List<IconAction> actions = new LinkedList<>();
 
   protected int slot;
   protected AbstractItemStack<?> item;
 
   //TODO: StateIcon? Changes item based on click?
-
-  //Enhanced functionality
-  protected String permission = "";
-  protected String message = "";
 
 
   //TODO: Default actions? chat response, send message?, close, switch, add data?
@@ -57,6 +59,9 @@ public class Icon {
   public Icon(int slot, AbstractItemStack<?> item) {
     this.slot = slot;
     this.item = item;
+
+    addConstraint(IconStringConstraints.ICON_MESSAGE, "");
+    addConstraint(IconStringConstraints.ICON_PERMISSION, "");
   }
 
   public int getSlot() {
@@ -83,9 +88,15 @@ public class Icon {
     this.click = click;
   }
 
+  @Override
+  public Map<String, String> constraints() {
+    return constraints;
+  }
+
 
   public boolean onClick(ActionType type, Menu menu, Page page, PlayerProvider player) {
 
+    final String permission = getConstraint(IconStringConstraints.ICON_PERMISSION);
     if(!permission.equalsIgnoreCase("") && !player.hasPermission(permission)) {
       return true;
     }
@@ -105,10 +116,38 @@ public class Icon {
       click.accept(new IconClickCallback(type, menu, page, player, this));
     }
 
+    final String message = getConstraint(IconStringConstraints.ICON_MESSAGE);
     if(!message.equalsIgnoreCase("")) {
       player.message(new MessageData(message));
     }
 
     return true;
+  }
+}
+
+enum IconStringConstraints implements StringConstraint {
+
+  ICON_PERMISSION {
+    @Override
+    public String identifier() {
+      return "ICON_PERMISSION";
+    }
+
+    @Override
+    public String defaultValue() {
+      return "";
+    }
+  },
+  ICON_MESSAGE {
+
+    @Override
+    public String identifier() {
+      return "ICON_MESSAGE";
+    }
+
+    @Override
+    public String defaultValue() {
+      return "";
+    }
   }
 }

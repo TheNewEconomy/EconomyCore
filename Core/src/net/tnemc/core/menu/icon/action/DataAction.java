@@ -1,7 +1,7 @@
 package net.tnemc.core.menu.icon.action;
 /*
  * The New Economy
- * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -67,6 +67,6 @@ public class DataAction implements IconAction {
    */
   @Override
   public void onPerform(Menu menu, Page page, PlayerProvider player, Icon icon) {
-
+    //TODO: appy data to menu viewer profile.
   }
 }

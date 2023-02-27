@@ -1,7 +1,7 @@
 package net.tnemc.core.currency.calculations;
 /*
  * The New Economy
- * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -80,12 +80,28 @@ public class ItemCalculations<INV> {
    * @return The {@link BigDecimal} representation of the leftover amount that couldn't be removed
    * because there's no more materials left to remove.
    */
+  public BigDecimal calculation(CalculationData<INV> data, BigDecimal change) {
+    BigDecimal workingAmount = change.add(BigDecimal.ZERO);
+
+
+    //TODO: Redo calculateChange as it is convoluted and doesn't work.
+    return BigDecimal.ZERO;
+  }
+
+  /**
+   * Used to calculate the materials that need to be removed when a player in an item-based economy
+   * has money taken from their account.
+   * @param change The amount to remove from the player's account.
+   * @return The {@link BigDecimal} representation of the leftover amount that couldn't be removed
+   * because there's no more materials left to remove.
+   */
   public BigDecimal calculateChange(CalculationData<INV> data, BigDecimal change) {
     BigDecimal workingAmount = change;
 
     final NavigableMap<BigDecimal, Denomination> values = data.getDenomValues().descendingMap();
     Map.Entry<BigDecimal, Denomination> lowestWhole = findLowestGreaterThan(data, BigDecimal.ONE);
 
+    System.out.println("WorkingAmount: " + workingAmount);
     int instance = 0;
     do {
 
@@ -122,6 +138,7 @@ public class ItemCalculations<INV> {
         }
 
         workingAmount = workingAmount.subtract(entry.getKey().multiply(new BigDecimal(amountPossible)));
+        System.out.println("removeMaterials: " + entry.getValue().singular() + " - " + amountPossible);
         removeMaterials(data, entry.getValue(), amountPossible);
       }
       instance++;

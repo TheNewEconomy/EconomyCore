@@ -1,7 +1,7 @@
-package net.tnemc.core.revampmenu.callbacks.utils.actions;
+package net.tnemc.core.menu.callbacks.page;
 /*
  * The New Economy
- * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,11 +17,26 @@ package net.tnemc.core.revampmenu.callbacks.utils.actions;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.menu.Page;
+
 /**
- * Represents an object that is able to have actions associated with it on click.
+ * Represents a callback, which is called when a page is closed in a menu. This could be due to a
+ * switch, or due to the menu closing.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public interface ClickActionable {
+public class PageCloseCallback extends PageCallback {
+
+  protected final PlayerProvider player;
+
+  public PageCloseCallback(Page page, PlayerProvider player) {
+    super(page);
+    this.player = player;
+  }
+
+  public PlayerProvider getPlayer() {
+    return player;
+  }
 }

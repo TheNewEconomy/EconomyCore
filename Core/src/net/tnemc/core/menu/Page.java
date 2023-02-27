@@ -1,7 +1,7 @@
 package net.tnemc.core.menu;
 /*
  * The New Economy
- * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -31,16 +31,15 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Page {
 
-  private final Icon[] icons;
+  protected final ConcurrentHashMap<Integer, Icon> icons = new ConcurrentHashMap<>();
 
   private int id;
 
-  public Page(int id, int size) {
+  public Page(int id) {
     this.id = id;
-    this.icons = new Icon[size];
   }
 
-  public Icon[] getIcons() {
+  public ConcurrentHashMap<Integer, Icon> getIcons() {
     return icons;
   }
 
