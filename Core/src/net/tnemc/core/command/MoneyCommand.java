@@ -30,7 +30,6 @@ import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.message.MessageData;
-import net.tnemc.core.manager.MenuManager;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;

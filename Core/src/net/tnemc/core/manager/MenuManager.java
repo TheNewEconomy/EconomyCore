@@ -50,6 +50,14 @@ public class MenuManager {
     return Optional.empty();
   }
 
+  public void appendViewerData(UUID viewer, Map<String, Object> toAppend) {
+    if(!data.containsKey(viewer)) {
+      data.put(viewer, new ViewerData(viewer, toAppend));
+      return;
+    }
+    data.get(viewer).getData().putAll(toAppend);
+  }
+
   public void setViewerData(UUID viewer, String identifier, Object value) {
     if(!data.containsKey(viewer)) {
       data.put(viewer, new ViewerData(viewer));

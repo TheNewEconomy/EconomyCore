@@ -36,6 +36,11 @@ public class ViewerData {
     this.viewer = viewer;
   }
 
+  public ViewerData(UUID viewer, Map<String, Object> data) {
+    this.viewer = viewer;
+    this.data.putAll(data);
+  }
+
   public Map<String, Object> getData() {
     return data;
   }
