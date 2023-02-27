@@ -1,4 +1,4 @@
-package net.tnemc.core.utils.validator;
+package net.tnemc.core.menu.callbacks.icon;
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
@@ -17,30 +17,27 @@ package net.tnemc.core.utils.validator;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.util.Optional;
+import net.tnemc.core.revampmenu.Icon;
 
 /**
- * BoolValidator
+ * Represents a callback, which is related to an {@link net.tnemc.core.revampmenu.Icon}.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class BoolValidator implements InputValidator<Boolean> {
+public class IconCallback {
 
-  /**
-   * Used to convert the provided input into the specified object.
-   *
-   * @param input The string to convert into the object.
-   *
-   * @return An optional containing the converted value, or an empty optional if the provided input
-   * is not able to be converted into the specified object.
-   */
-  @Override
-  public Optional<Boolean> convert(String input) {
-    try {
-      return Optional.of(Boolean.parseBoolean(input));
-    } catch(Exception ignore) {
-      return Optional.empty();
-    }
+  protected Icon icon;
+
+  public IconCallback(Icon icon) {
+    this.icon = icon;
+  }
+
+  public Icon getIcon() {
+    return icon;
+  }
+
+  public void setIcon(Icon icon) {
+    this.icon = icon;
   }
 }

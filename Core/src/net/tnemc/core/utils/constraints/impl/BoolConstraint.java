@@ -1,4 +1,4 @@
-package net.tnemc.core.utils.validator;
+package net.tnemc.core.utils.constraints.impl;
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
@@ -17,29 +17,32 @@ package net.tnemc.core.utils.validator;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.util.Optional;
+import net.tnemc.core.utils.constraints.Constraint;
 
 /**
- * DoubleValidator
+ * Represents a {@link Constraint} of the {@link Boolean} type.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class DoubleValidator implements InputValidator<Double> {
-  /**
-   * Used to convert the provided input into the specified object.
-   *
-   * @param input The string to convert into the object.
-   *
-   * @return An optional containing the converted value, or an empty optional if the provided input
-   * is not able to be converted into the specified object.
-   */
+public interface BoolConstraint extends Constraint<Boolean> {
+
   @Override
-  public Optional<Double> convert(String input) {
+  default Boolean convert(final String value) {
     try {
-      return Optional.of(Double.parseDouble(input));
+      return Boolean.parseBoolean(value);
     } catch(Exception ignore) {
-      return Optional.empty();
+      return defaultValue();
+    }
+  }
+
+  @Override
+  default boolean validate(final String value) {
+    try {
+      Boolean.parseBoolean(value);
+      return true;
+    } catch(Exception ignore) {
+      return false;
     }
   }
 }

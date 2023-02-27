@@ -1,4 +1,4 @@
-package net.tnemc.core.utils.validator;
+package net.tnemc.core.utils.constraints.impl;
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
@@ -17,29 +17,32 @@ package net.tnemc.core.utils.validator;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.util.Optional;
+import net.tnemc.core.utils.constraints.Constraint;
 
 /**
- * IntegerValidator
+ * Represents a {@link Constraint} of the {@link Integer} type.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class IntegerValidator implements InputValidator<Integer> {
+public interface IntConstraint extends Constraint<Integer> {
 
-  /**
-   * Used to convert the provided input into the specified object.
-   *
-   * @param input The string to convert into the object.
-   *
-   * @return The object converted from the string.
-   */
   @Override
-  public Optional<Integer> convert(String input) {
+  default Integer convert(final String value) {
     try {
-      return Optional.of(Integer.parseInt(input));
+      return Integer.parseInt(value);
     } catch(Exception ignore) {
-      return Optional.empty();
+      return defaultValue();
+    }
+  }
+
+  @Override
+  default boolean validate(final String value) {
+    try {
+      Integer.parseInt(value);
+      return true;
+    } catch(Exception ignore) {
+      return false;
     }
   }
 }

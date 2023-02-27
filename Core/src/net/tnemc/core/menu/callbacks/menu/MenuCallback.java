@@ -1,4 +1,4 @@
-package net.tnemc.core.utils.validator;
+package net.tnemc.core.menu.callbacks.menu;
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
@@ -17,22 +17,27 @@ package net.tnemc.core.utils.validator;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.util.Optional;
+import net.tnemc.core.revampmenu.Menu;
 
 /**
- * Represents a validator that takes a string and determines if it is able to be converted into the
- * appropriate object.
+ * Presents a callback related directly to a {@link net.tnemc.core.revampmenu.Menu}.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public interface InputValidator<K> {
+public class MenuCallback {
 
-  /**
-   * Used to convert the provided input into the specified object.
-   * @param input The string to convert into the object.
-   * @return An optional containing the converted value, or an empty optional if the provided input
-   * is not able to be converted into the specified object.
-   */
-  Optional<K> convert(final String input);
+  protected Menu menu;
+
+  public MenuCallback(Menu menu) {
+    this.menu = menu;
+  }
+
+  public Menu getMenu() {
+    return menu;
+  }
+
+  public void setMenu(Menu menu) {
+    this.menu = menu;
+  }
 }
