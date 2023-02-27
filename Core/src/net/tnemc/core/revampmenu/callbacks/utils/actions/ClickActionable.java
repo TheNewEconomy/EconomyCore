@@ -1,4 +1,4 @@
-package net.tnemc.core.revampmenu;
+package net.tnemc.core.revampmenu.callbacks.utils.actions;
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
@@ -18,13 +18,10 @@ package net.tnemc.core.revampmenu;
  */
 
 /**
- * The MenuHandler is utilized to handle every operation in a menu, from creating an inventory to
- * filling the menu and setting icons.
+ * Represents an object that is able to have actions associated with it on click.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class MenuHandler<T> {
-
-
+public interface ClickActionable {
 }

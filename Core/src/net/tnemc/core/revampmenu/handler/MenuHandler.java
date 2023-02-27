@@ -1,4 +1,4 @@
-package net.tnemc.core.revampmenu;
+package net.tnemc.core.revampmenu.handler;
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
@@ -17,19 +17,24 @@ package net.tnemc.core.revampmenu;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.menu.InventoryHandler;
+import net.tnemc.core.revampmenu.Menu;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * Class that is used to handle inventory-related matters.
+ * The MenuHandler is utilized to handle every operation in a menu, from creating an inventory to
+ * filling the menu and setting icons.
  *
  * @param <T> Represents the platform's Inventory object.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public interface InventoryHandler<T> {
+public abstract class MenuHandler<T> {
 
-  /**
-   * Builds an inventory object from a menu.
-   * @return The built inventory.
-   */
-  T build();
+  public final Map<String, Menu> menus = new HashMap<>();
+
+  public abstract InventoryHandler<T> handler();
 }
