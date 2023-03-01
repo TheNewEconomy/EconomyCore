@@ -50,7 +50,7 @@ public class MenuBuilder {
     return this;
   }
 
-  public Menu createMenu() {
+  public Menu create() {
     Menu menu = new Menu(name, title, size);
     menu.setOpen(open);
     menu.setClose(close);

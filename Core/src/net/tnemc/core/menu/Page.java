@@ -74,4 +74,12 @@ public class Page {
   public void setId(int id) {
     this.id = id;
   }
+
+  public Consumer<PageSlotClickCallback> getClick() {
+    return click;
+  }
+
+  public void setClick(Consumer<PageSlotClickCallback> click) {
+    this.click = click;
+  }
 }
