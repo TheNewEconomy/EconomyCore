@@ -1,7 +1,7 @@
-package net.tnemc.core.menu.callbacks;
+package net.tnemc.core.menu.callbacks.page;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -21,22 +21,31 @@ import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.core.menu.Page;
 
+import java.util.Optional;
+
 /**
- * CloseCallback
+ * Represents an event that occurs when a slot is clicked in a page.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class CloseCallback {
+public class PageSlotClickCallback extends PageCallback {
 
   protected final Menu menu;
   protected final Page page;
   protected final PlayerProvider player;
+  protected final int slot;
 
-  public CloseCallback(Menu menu, Page page, PlayerProvider player) {
+  public PageSlotClickCallback(Menu menu, Page page, PlayerProvider player) {
+    this(menu, page, player, -1);
+  }
+
+  public PageSlotClickCallback(Menu menu, Page page, PlayerProvider player, int slot) {
+    super(page);
     this.menu = menu;
     this.page = page;
     this.player = player;
+    this.slot = slot;
   }
 
   public Menu getMenu() {
@@ -49,5 +58,10 @@ public class CloseCallback {
 
   public PlayerProvider getPlayer() {
     return player;
+  }
+
+  public Optional<Integer> getSlot() {
+    if(slot == -1) return Optional.empty();
+    return Optional.of(slot);
   }
 }

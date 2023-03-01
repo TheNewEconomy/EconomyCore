@@ -1,4 +1,4 @@
-package net.tnemc.core.menu.callbacks;
+package net.tnemc.core.menu.callbacks.menu;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -21,34 +21,21 @@ import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.core.menu.Page;
 
-import java.util.Optional;
-
 /**
- * ClickCallback
+ * MenuCloseCallback
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class ClickCallback {
+public class MenuCloseCallback extends MenuCallback {
 
-  protected final Menu menu;
   protected final Page page;
   protected final PlayerProvider player;
-  protected final int slot;
 
-  public ClickCallback(Menu menu, Page page, PlayerProvider player) {
-    this(menu, page, player, -1);
-  }
-
-  public ClickCallback(Menu menu, Page page, PlayerProvider player, int slot) {
-    this.menu = menu;
+  public MenuCloseCallback(Menu menu, Page page, PlayerProvider player) {
+    super(menu);
     this.page = page;
     this.player = player;
-    this.slot = slot;
-  }
-
-  public Menu getMenu() {
-    return menu;
   }
 
   public Page getPage() {
@@ -57,10 +44,5 @@ public class ClickCallback {
 
   public PlayerProvider getPlayer() {
     return player;
-  }
-
-  public Optional<Integer> getSlot() {
-    if(slot == -1) return Optional.empty();
-    return Optional.of(slot);
   }
 }

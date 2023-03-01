@@ -18,9 +18,8 @@ package net.tnemc.core.menu;
  */
 
 import net.tnemc.core.compatibility.PlayerProvider;
-import net.tnemc.core.menu.callbacks.ClickCallback;
-import net.tnemc.core.menu.callbacks.CloseCallback;
-import net.tnemc.core.menu.callbacks.OpenCallback;
+import net.tnemc.core.menu.callbacks.menu.MenuCloseCallback;
+import net.tnemc.core.menu.callbacks.menu.MenuOpenCallback;
 import net.tnemc.item.AbstractItemStack;
 
 import java.util.Map;
@@ -46,9 +45,8 @@ public class Menu {
   protected int page;
 
   //Callbacks
-  protected Consumer<OpenCallback> open;
-  protected Consumer<CloseCallback> close;
-  protected Consumer<ClickCallback> click;
+  protected Consumer<MenuOpenCallback> open;
+  protected Consumer<MenuCloseCallback> close;
 
   public Menu(String name, String title, int size) {
     this.name = name;
@@ -101,27 +99,19 @@ public class Menu {
     this.readOnly = readOnly;
   }
 
-  public Consumer<OpenCallback> getOpen() {
+  public Consumer<MenuOpenCallback> getOpen() {
     return open;
   }
 
-  public void setOpen(Consumer<OpenCallback> open) {
+  public void setOpen(Consumer<MenuOpenCallback> open) {
     this.open = open;
   }
 
-  public Consumer<CloseCallback> getClose() {
+  public Consumer<MenuCloseCallback> getClose() {
     return close;
   }
 
-  public void setClose(Consumer<CloseCallback> close) {
+  public void setClose(Consumer<MenuCloseCallback> close) {
     this.close = close;
-  }
-
-  public Consumer<ClickCallback> getClick() {
-    return click;
-  }
-
-  public void setClick(Consumer<ClickCallback> click) {
-    this.click = click;
   }
 }

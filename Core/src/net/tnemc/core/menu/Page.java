@@ -17,10 +17,12 @@ package net.tnemc.core.menu;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.menu.callbacks.page.PageSlotClickCallback;
 import net.tnemc.core.menu.icon.Icon;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 
 /**
  * Represents a page inside a {@link Menu}.
@@ -32,6 +34,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Page {
 
   protected final ConcurrentHashMap<Integer, Icon> icons = new ConcurrentHashMap<>();
+
+  protected Consumer<PageSlotClickCallback> click;
 
   private int id;
 

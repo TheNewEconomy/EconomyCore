@@ -1,4 +1,4 @@
-package net.tnemc.core.menu.callbacks;
+package net.tnemc.core.menu.callbacks.menu;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -22,19 +22,18 @@ import net.tnemc.core.menu.Menu;
 import net.tnemc.core.menu.Page;
 
 /**
- * OpenCallback
+ * MenuOpenCallback
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class OpenCallback {
+public class MenuOpenCallback extends MenuCallback {
 
-  protected final Menu menu;
   protected final Page page;
   protected final PlayerProvider player;
 
-  public OpenCallback(Menu menu, Page page, PlayerProvider player) {
-    this.menu = menu;
+  public MenuOpenCallback(Menu menu, Page page, PlayerProvider player) {
+    super(menu);
     this.page = page;
     this.player = player;
   }

@@ -18,6 +18,8 @@ package net.tnemc.core.menu.callbacks.icon;
  */
 
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.menu.Menu;
+import net.tnemc.core.menu.Page;
 import net.tnemc.core.menu.icon.ActionType;
 import net.tnemc.core.menu.icon.Icon;
 
@@ -29,20 +31,38 @@ import net.tnemc.core.menu.icon.Icon;
  */
 public class IconClickCallback extends IconCallback {
 
-  protected final ActionType clickType;
+  protected final ActionType type;
+  protected final Menu menu;
+  protected final Page page;
   protected final PlayerProvider player;
+  protected final Icon icon;
 
-  public IconClickCallback(Icon icon, ActionType clickType, PlayerProvider player) {
+  public IconClickCallback(ActionType type, Menu menu, Page page, PlayerProvider player, Icon icon) {
     super(icon);
-    this.clickType = clickType;
+    this.type = type;
+    this.menu = menu;
+    this.page = page;
     this.player = player;
+    this.icon = icon;
   }
 
-  public ActionType getClickType() {
-    return clickType;
+  public ActionType getType() {
+    return type;
+  }
+
+  public Menu getMenu() {
+    return menu;
+  }
+
+  public Page getPage() {
+    return page;
   }
 
   public PlayerProvider getPlayer() {
     return player;
+  }
+
+  public Icon getIcon() {
+    return icon;
   }
 }

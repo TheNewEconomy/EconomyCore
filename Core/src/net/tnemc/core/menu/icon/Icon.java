@@ -21,7 +21,7 @@ import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.core.menu.Page;
-import net.tnemc.core.menu.callbacks.IconClickCallback;
+import net.tnemc.core.menu.callbacks.icon.IconClickCallback;
 import net.tnemc.core.utils.constraints.ConstraintHolder;
 import net.tnemc.core.utils.constraints.impl.StringConstraint;
 import net.tnemc.item.AbstractItemStack;
