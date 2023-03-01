@@ -1,7 +1,7 @@
-package net.tnemc.core.menu;
+package net.tnemc.core.compatibility;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,19 +17,28 @@ package net.tnemc.core.menu;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.menu.Menu;
+
 /**
- * Class that is used to handle inventory-related matters.
+ * A class that acts as a bridge between various inventory objects on different server software providers.
  *
- * @param <T> Represents the platform's Inventory object.
- *
+ * @param <INV> Represents the platform's Inventory object.
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public interface InventoryHandler<T> {
+public interface InventoryProvider<INV> {
 
   /**
    * Builds an inventory object from a menu.
    * @return The built inventory.
    */
-  T build();
+  INV build(final Menu menu);
+
+  /**
+   * Used to get an inventory object.
+   *
+   * @param ender True if the ender chest object should be returned, otherwise false.
+   * @return The inventory object.
+   */
+  INV getInventory(boolean ender);
 }

@@ -37,8 +37,6 @@ public class MenuManager {
   public final Map<String, Menu> menus = new HashMap<>();
   public final ConcurrentHashMap<UUID, ViewerData> data = new ConcurrentHashMap<>();
 
-
-
   public void removeData(UUID id) {
     data.remove(id);
   }

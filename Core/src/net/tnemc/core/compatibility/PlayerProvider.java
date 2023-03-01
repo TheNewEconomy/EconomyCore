@@ -10,7 +10,6 @@ package net.tnemc.core.compatibility;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
-import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.item.AbstractItemStack;
@@ -82,12 +81,10 @@ public interface PlayerProvider {
   void setExpLevel(int level);
 
   /**
-   * Used to get an inventory object.
-   *
-   * @param ender True if the ender chest object should be returned, otherwise false.
-   * @return The inventory object.
+   * Provides access to an {@link InventoryProvider} for this player.
+   * @return An {@link InventoryProvider} for this player object.
    */
-  Object getInventory(boolean ender);
+  InventoryProvider<?> inventory();
 
   /**
    * Used to determine if this player is inside of the specified {@link Menu}.

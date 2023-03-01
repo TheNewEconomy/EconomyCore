@@ -23,6 +23,7 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.tnemc.bukkit.BukkitTNECore;
 import net.tnemc.bukkit.TNE;
 import net.tnemc.core.TNECore;
+import net.tnemc.core.compatibility.InventoryProvider;
 import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
@@ -146,21 +147,9 @@ public class BukkitPlayerProvider implements PlayerProvider {
 
   }
 
-  /**
-   * Used to get an inventory object.
-   *
-   * @param ender True if the ender chest object should be returned, otherwise false.
-   *
-   * @return The inventory object.
-   */
   @Override
-  public Object getInventory(boolean ender) {
-    if(player.getPlayer() == null) return null;
-
-    if(ender) {
-      return player.getPlayer().getEnderChest();
-    }
-    return player.getPlayer().getInventory();
+  public InventoryProvider<?> inventory() {
+    return null;
   }
 
   /**

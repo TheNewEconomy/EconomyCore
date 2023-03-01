@@ -93,7 +93,7 @@ public class ItemType implements CurrencyType {
     if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
       final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
                                                                  ((PlayerAccount)account).getPlayer()
-                                                                     .get().getInventory(false),
+                                                                     .get().inventory().getInventory(false),
                                                                  ((PlayerAccount)account).getUUID());
       TNECore.server().itemCalculations().setItems(data, amount);
       return true;
@@ -117,7 +117,7 @@ public class ItemType implements CurrencyType {
       }
       final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
                                                                  ((PlayerAccount)account).getPlayer()
-                                                                     .get().getInventory(true),
+                                                                     .get().inventory().getInventory(true),
                                                                  ((PlayerAccount)account).getUUID());
       return TNECore.server().itemCalculations().calculateHoldings(data);
     }
@@ -141,7 +141,7 @@ public class ItemType implements CurrencyType {
     //Player is online.
     final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
                                                                ((PlayerAccount)account).getPlayer()
-                                                                   .get().getInventory(false),
+                                                                   .get().inventory().getInventory(false),
                                                                ((PlayerAccount)account).getUUID());
     return TNECore.server().itemCalculations().calculateHoldings(data);
   }

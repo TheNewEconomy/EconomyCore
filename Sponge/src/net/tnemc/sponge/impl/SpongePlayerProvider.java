@@ -18,6 +18,7 @@ package net.tnemc.sponge.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.compatibility.InventoryProvider;
 import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
@@ -117,19 +118,9 @@ public class SpongePlayerProvider implements PlayerProvider {
     player.offer(Keys.EXPERIENCE_LEVEL, level);
   }
 
-  /**
-   * Used to get an inventory object.
-   *
-   * @param ender True if the ender chest object should be returned, otherwise false.
-   *
-   * @return The inventory object.
-   */
   @Override
-  public Object getInventory(boolean ender) {
-    if(ender) {
-      return player.getEnderChestInventory();
-    }
-    return player.getInventory();
+  public InventoryProvider<?> inventory() {
+    return null;
   }
 
   /**
