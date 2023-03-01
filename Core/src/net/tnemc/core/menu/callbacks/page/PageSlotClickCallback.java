@@ -20,6 +20,7 @@ package net.tnemc.core.menu.callbacks.page;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.core.menu.Page;
+import net.tnemc.core.menu.icon.ActionType;
 
 import java.util.Optional;
 
@@ -34,17 +35,19 @@ public class PageSlotClickCallback extends PageCallback {
   protected final Menu menu;
   protected final Page page;
   protected final PlayerProvider player;
+  protected final ActionType type;
   protected final int slot;
 
-  public PageSlotClickCallback(Menu menu, Page page, PlayerProvider player) {
-    this(menu, page, player, -1);
+  public PageSlotClickCallback(Menu menu, Page page, ActionType type, PlayerProvider player) {
+    this(menu, page, type, player, -1);
   }
 
-  public PageSlotClickCallback(Menu menu, Page page, PlayerProvider player, int slot) {
+  public PageSlotClickCallback(Menu menu, Page page, ActionType type, PlayerProvider player, int slot) {
     super(page);
     this.menu = menu;
     this.page = page;
     this.player = player;
+    this.type = type;
     this.slot = slot;
   }
 

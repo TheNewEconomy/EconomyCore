@@ -20,6 +20,7 @@ package net.tnemc.core.menu;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.menu.callbacks.menu.MenuCloseCallback;
 import net.tnemc.core.menu.callbacks.menu.MenuOpenCallback;
+import net.tnemc.core.menu.icon.ActionType;
 import net.tnemc.item.AbstractItemStack;
 
 import java.util.Map;
@@ -65,6 +66,13 @@ public class Menu {
 
   public void update(PlayerProvider player, int slot, AbstractItemStack<?> item) {
     player.updateMenu(slot, item);
+  }
+
+  public boolean onClick(ActionType type, PlayerProvider provider, int page, int slot) {
+    if(pages.containsKey(page)) {
+      return pages.get(page).onClick(type, provider, this, slot);
+    }
+    return false;
   }
 
   public Map<Integer, Page> getPages() {

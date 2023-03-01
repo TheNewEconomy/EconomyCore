@@ -17,7 +17,10 @@ package net.tnemc.core.menu;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.menu.callbacks.icon.IconClickCallback;
 import net.tnemc.core.menu.callbacks.page.PageSlotClickCallback;
+import net.tnemc.core.menu.icon.ActionType;
 import net.tnemc.core.menu.icon.Icon;
 
 import java.util.Map;
@@ -45,6 +48,23 @@ public class Page {
 
   public ConcurrentHashMap<Integer, Icon> getIcons() {
     return icons;
+  }
+
+  public boolean onClick(ActionType type, PlayerProvider player, Menu menu, int slot) {
+    boolean result = true;
+
+    if(icons.containsKey(slot)) {
+      result = icons.get(slot).onClick(type, player, menu, this);
+    }
+
+    if(result) {
+
+      if(click != null) {
+        click.accept(new PageSlotClickCallback(menu, this, type, player, slot));
+      }
+    }
+
+    return result;
   }
 
   public int getId() {

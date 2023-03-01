@@ -48,11 +48,6 @@ public class Icon implements ConstraintHolder {
   protected int slot;
   protected AbstractItemStack<?> item;
 
-  //TODO: StateIcon? Changes item based on click?
-
-
-  //TODO: Default actions? chat response, send message?, close, switch, add data?
-
   //Callbacks
   protected Consumer<IconClickCallback> click;
 
@@ -94,7 +89,7 @@ public class Icon implements ConstraintHolder {
   }
 
 
-  public boolean onClick(ActionType type, Menu menu, Page page, PlayerProvider player) {
+  public boolean onClick(ActionType type, PlayerProvider player, Menu menu, Page page) {
 
     final String permission = getConstraint(IconStringConstraints.ICON_PERMISSION);
     if(!permission.equalsIgnoreCase("") && !player.hasPermission(permission)) {
