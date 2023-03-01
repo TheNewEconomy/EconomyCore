@@ -10,15 +10,15 @@ import java.util.function.Consumer;
 
 public class MenuBuilder {
 
-  protected final ConcurrentSkipListMap<Integer, Page> pages = new ConcurrentSkipListMap<>();
+  private final ConcurrentSkipListMap<Integer, Page> pages = new ConcurrentSkipListMap<>();
 
   private String name;
   private String title;
   private int size;
 
   //Callbacks
-  protected Consumer<MenuOpenCallback> open;
-  protected Consumer<MenuCloseCallback> close;
+  private Consumer<MenuOpenCallback> open;
+  private Consumer<MenuCloseCallback> close;
 
   public MenuBuilder withName(String name) {
     this.name = name;

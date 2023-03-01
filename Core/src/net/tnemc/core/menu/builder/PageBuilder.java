@@ -9,9 +9,9 @@ import java.util.function.Consumer;
 
 public class PageBuilder {
 
-  protected final ConcurrentHashMap<Integer, Icon> icons = new ConcurrentHashMap<>();
+  private final ConcurrentHashMap<Integer, Icon> icons = new ConcurrentHashMap<>();
 
-  protected Consumer<PageSlotClickCallback> click;
+  private Consumer<PageSlotClickCallback> click;
 
   private int id;
 

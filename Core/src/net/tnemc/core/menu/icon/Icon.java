@@ -83,6 +83,10 @@ public class Icon implements ConstraintHolder {
     this.click = click;
   }
 
+  public List<IconAction> getActions() {
+    return actions;
+  }
+
   @Override
   public Map<String, String> constraints() {
     return constraints;
