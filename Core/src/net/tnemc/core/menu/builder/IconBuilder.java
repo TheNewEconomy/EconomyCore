@@ -24,6 +24,14 @@ public class IconBuilder {
   //Callbacks
   protected Consumer<IconClickCallback> click;
 
+  public static IconBuilder of(AbstractItemStack<?> item) {
+    return new IconBuilder(item);
+  }
+
+  public IconBuilder(AbstractItemStack<?> item) {
+    this.item = item;
+  }
+
   public IconBuilder withSlot(int slot) {
     this.slot = slot;
     return this;

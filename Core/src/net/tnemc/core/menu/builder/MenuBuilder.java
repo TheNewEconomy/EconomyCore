@@ -20,6 +20,14 @@ public class MenuBuilder {
   private Consumer<MenuOpenCallback> open;
   private Consumer<MenuCloseCallback> close;
 
+  public static MenuBuilder of(final String name) {
+    return new MenuBuilder(name);
+  }
+
+  public MenuBuilder(String name) {
+    this.name = name;
+  }
+
   public MenuBuilder withName(String name) {
     this.name = name;
     return this;

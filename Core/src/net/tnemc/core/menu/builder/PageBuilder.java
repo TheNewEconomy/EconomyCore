@@ -15,6 +15,14 @@ public class PageBuilder {
 
   private int id;
 
+  public static PageBuilder of(final int id) {
+    return new PageBuilder(id);
+  }
+
+  public PageBuilder(int id) {
+    this.id = id;
+  }
+
   public PageBuilder withID(int id) {
     this.id = id;
     return this;
