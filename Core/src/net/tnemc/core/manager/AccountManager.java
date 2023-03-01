@@ -22,6 +22,7 @@ package net.tnemc.core.manager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.AccountStatus;
+import net.tnemc.core.account.GeyserAccount;
 import net.tnemc.core.account.NonPlayerAccount;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.SharedAccount;
@@ -82,6 +83,16 @@ public class AccountManager {
       try {
         final UUID id = UUID.fromString(identifier);
         account = new PlayerAccount(id, name);
+
+        uuidProvider.store(new UUIDPair(id, name));
+      } catch(Exception ignore) {
+        return AccountResponse.CREATION_FAILED;
+      }
+    } else if(TNECore.server().online(name)) {
+      //This is most definitely a geyser player, they're only but not of valid names
+      try {
+        final UUID id = UUID.fromString(identifier);
+        account = new GeyserAccount(id, name);
 
         uuidProvider.store(new UUIDPair(id, name));
       } catch(Exception ignore) {

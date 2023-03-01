@@ -148,6 +148,16 @@ public class BukkitPlayerProvider implements PlayerProvider {
   }
 
   @Override
+  public Object getInventory(boolean ender) {
+    if(player.getPlayer() == null) return null;
+
+    if(ender) {
+      return player.getPlayer().getEnderChest();
+    }
+    return player.getPlayer().getInventory();
+  }
+
+  @Override
   public InventoryProvider<?> inventory() {
     return null;
   }

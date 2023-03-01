@@ -32,6 +32,7 @@ import net.tnemc.core.transaction.TransactionResult;
 import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 import net.tnemc.test.compatibility.TestPlayerProvider;
+import net.tnemc.test.compatibility.TestServerProvider;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -62,6 +63,8 @@ public class TestCore extends TNECore {
 
     //Startup
     setInstance(this);
+
+    this.server = new TestServerProvider();
 
     Currency currency = new Currency();
     currency.setIdentifier("USD");

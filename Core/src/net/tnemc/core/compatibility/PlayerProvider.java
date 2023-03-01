@@ -81,6 +81,14 @@ public interface PlayerProvider {
   void setExpLevel(int level);
 
   /**
+   * Used to get an inventory object.
+   *
+   * @param ender True if the ender chest object should be returned, otherwise false.
+   * @return The inventory object.
+   */
+  Object getInventory(boolean ender);
+
+  /**
    * Provides access to an {@link InventoryProvider} for this player.
    * @return An {@link InventoryProvider} for this player object.
    */

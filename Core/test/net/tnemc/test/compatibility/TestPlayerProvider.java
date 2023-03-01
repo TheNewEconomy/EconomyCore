@@ -118,6 +118,11 @@ public class TestPlayerProvider implements PlayerProvider {
   }
 
   @Override
+  public Object getInventory(boolean ender) {
+    return null;
+  }
+
+  @Override
   public InventoryProvider<?> inventory() {
     return null;
   }
