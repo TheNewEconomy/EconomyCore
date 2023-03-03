@@ -124,7 +124,7 @@ public class SpongePlayerProvider implements PlayerProvider {
   }
 
   @Override
-  public InventoryProvider<?> inventory() {
+  public Object build(Menu menu, int page) {
     return null;
   }
 
@@ -150,6 +150,11 @@ public class SpongePlayerProvider implements PlayerProvider {
 
   }
 
+  @Override
+  public void openMenu(Menu menu, int page) {
+
+  }
+
   /**
    * Used to open the provided menu for this player.
    *
@@ -157,6 +162,11 @@ public class SpongePlayerProvider implements PlayerProvider {
    */
   @Override
   public void openMenu(String menu) {
+
+  }
+
+  @Override
+  public void openMenu(String menu, int page) {
 
   }
 

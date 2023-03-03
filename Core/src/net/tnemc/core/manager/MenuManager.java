@@ -17,7 +17,11 @@ package net.tnemc.core.manager;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.menu.Menu;
+import net.tnemc.core.menu.icon.ActionType;
+import net.tnemc.core.menu.impl.myeco.MyEcoMenu;
 import net.tnemc.core.menu.viewer.ViewerData;
 
 import java.util.HashMap;
@@ -36,6 +40,24 @@ public class MenuManager {
 
   public final Map<String, Menu> menus = new HashMap<>();
   public final ConcurrentHashMap<UUID, ViewerData> data = new ConcurrentHashMap<>();
+
+  public MenuManager() {
+    if(TNECore.server() != null) {
+      menus.put("my_eco", new MyEcoMenu());
+    }
+  }
+
+  public boolean onClick(final String menu, ActionType type, PlayerProvider provider, int page, int slot) {
+    if(!menus.containsKey(menu) || !inMenu(provider)) {
+      return false;
+    }
+
+    return menus.get(menu).onClick(type, provider, page, slot);
+  }
+
+  public boolean inMenu(PlayerProvider provider) {
+    return data.containsKey(provider.getUUID());
+  }
 
   public void removeData(UUID id) {
     data.remove(id);

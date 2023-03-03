@@ -1,4 +1,4 @@
-package net.tnemc.core.compatibility;
+package net.tnemc.core.handlers;
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
@@ -17,34 +17,27 @@ package net.tnemc.core.compatibility;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.menu.Menu;
+import net.tnemc.core.TNECore;
+import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.menu.icon.ActionType;
+import net.tnemc.core.utils.HandlerResponse;
 
 /**
- * A class that acts as a bridge between various inventory objects on different server software providers.
+ * InventoryClickHandler
  *
- * @param <INV> Represents the platform's Inventory object.
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public interface InventoryProvider<INV> {
+public class InventoryClickHandler {
 
-  /**
-   * The player associated with this inventory provider.
-   * @return The {@link PlayerProvider} for this {@link InventoryProvider}
-   */
-  PlayerProvider player();
+  public HandlerResponse handle(final String menu, ActionType type, PlayerProvider provider, int page, int slot) {
+    final HandlerResponse response = new HandlerResponse("", true);
 
-  /**
-   * Builds an inventory object from a menu.
-   * @return The built inventory.
-   */
-  INV build(final Menu menu);
+    if(TNECore.menu().inMenu(provider)) {
+      response.setCancelled(true);
 
-  /**
-   * Used to get an inventory object.
-   *
-   * @param ender True if the ender chest object should be returned, otherwise false.
-   * @return The inventory object.
-   */
-  INV getInventory(boolean ender);
+      TNECore.menu().onClick(menu, type, provider, page, slot);
+    }
+    return response;
+  }
 }

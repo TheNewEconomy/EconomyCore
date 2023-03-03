@@ -1,7 +1,7 @@
 package net.tnemc.core.menu.icon.action;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,6 +17,7 @@ package net.tnemc.core.menu.icon.action;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.core.menu.Page;
@@ -25,18 +26,18 @@ import net.tnemc.core.menu.icon.Icon;
 import net.tnemc.core.menu.icon.IconAction;
 
 /**
- * SwitchAction
+ * SwitchPageAction
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class SwitchAction implements IconAction {
+public class SwitchPageAction implements IconAction {
 
-  private final String menu;
+  private final int page;
   private final ActionType type;
 
-  public SwitchAction(String menu, ActionType type) {
-    this.menu = menu;
+  public SwitchPageAction(Integer page, ActionType type) {
+    this.page = page;
     this.type = type;
   }
 
@@ -70,6 +71,6 @@ public class SwitchAction implements IconAction {
    */
   @Override
   public void onPerform(Menu menu, Page page, PlayerProvider player, Icon icon) {
-    player.openMenu(this.menu);
+    player.openMenu(menu, this.page);
   }
 }

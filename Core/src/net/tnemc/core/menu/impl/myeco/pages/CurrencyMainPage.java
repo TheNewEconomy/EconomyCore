@@ -1,7 +1,7 @@
 package net.tnemc.core.menu.impl.myeco.pages;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,30 +18,38 @@ package net.tnemc.core.menu.impl.myeco.pages;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.currency.Currency;
 import net.tnemc.core.menu.Page;
 import net.tnemc.core.menu.builder.IconBuilder;
-import net.tnemc.core.menu.icon.ActionType;
-import net.tnemc.core.menu.icon.action.SwitchPageAction;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 /**
- * MainPage
+ * CurrencyMainPage
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class MainPage extends Page {
+public class CurrencyMainPage extends Page {
 
-  public MainPage() {
-    super(1);
+  public CurrencyMainPage() {
+    super(2);
 
-    icons.put(10, IconBuilder.of(TNECore.server()
-                                     .stackBuilder()
-                                     .of("GOLD_INGOT", 1)
-                                     .display("Currency Editor")
-                                     .lore(Collections.singletonList("Click to open currency editor.")))
-        .withAction(new SwitchPageAction(2, ActionType.ANY))
-        .create());
+    int i = 10;
+
+    for(Currency currency : TNECore.eco().currency().currencies()) {
+      icons.put(i, IconBuilder.of(TNECore.server()
+                                       .stackBuilder()
+                                       .of("PAPER", 1)
+                                       .display(currency.getIdentifier())
+                                       .lore(Arrays.asList("Left Click to View",
+                                                           "Middle Click to Delete",
+                                                           "Right Click to Edit"
+                                       )))
+          .create());
+
+      i += 2;
+    }
   }
 }

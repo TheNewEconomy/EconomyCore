@@ -114,6 +114,13 @@ public interface ServerConnector {
   TranslationProvider translation();
 
   /**
+   * Provides direct access to the implementation's instance of TNIL's AbstractItemStack, which acts
+   * as a builder.
+   * @return The software's implementation of {@link AbstractItemStack}.
+   */
+  AbstractItemStack<?> stackBuilder();
+
+  /**
    * Used to save a resource from the plugin's jar file to the local system's storage.
    * @param path The path to the resource inside the jar.
    * @param replace If the file exists in the local system's storage, should it be replaced?

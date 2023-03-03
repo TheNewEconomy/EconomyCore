@@ -107,6 +107,14 @@ public class Menu {
     this.readOnly = readOnly;
   }
 
+  public int getPage() {
+    return page;
+  }
+
+  public void setPage(int page) {
+    this.page = page;
+  }
+
   public Consumer<MenuOpenCallback> getOpen() {
     return open;
   }

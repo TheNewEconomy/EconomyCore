@@ -19,6 +19,8 @@ import java.util.UUID;
 /**
  * A class that acts as a bridge between various player objects on different server software providers.
  *
+ * @param <INV> The implementation's inventory object.
+ *
  * @since 0.1.2.0
  * @author creatorfromhell
  */
@@ -89,10 +91,10 @@ public interface PlayerProvider {
   Object getInventory(boolean ender);
 
   /**
-   * Provides access to an {@link InventoryProvider} for this player.
-   * @return An {@link InventoryProvider} for this player object.
+   * Builds an inventory object from a menu.
+   * @return The built inventory.
    */
-  InventoryProvider<?> inventory();
+  Object build(final Menu menu, int page);
 
   /**
    * Used to determine if this player is inside of the specified {@link Menu}.
@@ -109,10 +111,24 @@ public interface PlayerProvider {
   void openMenu(final Menu menu);
 
   /**
+   * Used to open the provided menu for this player on the specified page.
+   * @param menu The menu to open.
+   * @param page The page to open.
+   */
+  void openMenu(final Menu menu, final int page);
+
+  /**
    * Used to open the provided menu for this player.
    * @param menu The menu to open.
    */
   void openMenu(final String menu);
+
+  /**
+   * Used to open the provided menu for this player on the specified page.
+   * @param menu The menu to open.
+   * @param page The page to open.
+   */
+  void openMenu(final String menu, final int page);
 
   /**
    * Used to update the menu the player is in with a new item for a specific slot.

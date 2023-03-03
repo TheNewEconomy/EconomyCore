@@ -115,6 +115,11 @@ public class SpongeServerProvider implements ServerConnector {
   }
 
   @Override
+  public AbstractItemStack<?> stackBuilder() {
+    return null;
+  }
+
+  @Override
   public void saveResource(String path, boolean replace) {
 
   }

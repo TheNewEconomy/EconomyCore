@@ -40,7 +40,6 @@ public class EconomyManager {
   private final TransactionManager transactionManager;
   private final TranslationManager translationManager;
   private final DataManager dataManager;
-  private final MenuManager menuManager;
   private final RegionProvider regionProvider;
 
   private static EconomyManager instance;
@@ -53,7 +52,6 @@ public class EconomyManager {
     this.transactionManager = new TransactionManager();
     this.translationManager = new TranslationManager();
     this.dataManager = new DataManager();
-    this.menuManager = new MenuManager();
     this.regionProvider = new RegionProvider(true);
   }
 
@@ -75,10 +73,6 @@ public class EconomyManager {
 
   public DataManager data() {
     return dataManager;
-  }
-
-  public MenuManager menu() {
-    return menuManager;
   }
 
   public RegionProvider region() {

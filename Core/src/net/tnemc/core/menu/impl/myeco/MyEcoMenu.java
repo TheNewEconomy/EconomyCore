@@ -18,6 +18,8 @@ package net.tnemc.core.menu.impl.myeco;
  */
 
 import net.tnemc.core.menu.Menu;
+import net.tnemc.core.menu.impl.myeco.pages.CurrencyMainPage;
+import net.tnemc.core.menu.impl.myeco.pages.MainPage;
 
 /**
  * EcoMainMenu
@@ -45,9 +47,11 @@ import net.tnemc.core.menu.Menu;
 public class MyEcoMenu extends Menu {
 
   public MyEcoMenu() {
-    super("my_eco", "Economy Configurations", 36);
+    super("my_eco", "MyEco Menu", 36);
 
     //Add our pages.
 
+    pages.put(1, new MainPage());
+    pages.put(2, new CurrencyMainPage());
   }
 }

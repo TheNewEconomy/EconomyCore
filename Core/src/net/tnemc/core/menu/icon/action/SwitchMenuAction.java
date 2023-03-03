@@ -17,7 +17,6 @@ package net.tnemc.core.menu.icon.action;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.core.menu.Page;
@@ -25,18 +24,21 @@ import net.tnemc.core.menu.icon.ActionType;
 import net.tnemc.core.menu.icon.Icon;
 import net.tnemc.core.menu.icon.IconAction;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
- * DataAction
+ * SwitchMenuAction
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class DataAction implements IconAction {
+public class SwitchMenuAction implements IconAction {
 
-  protected final Map<String, Object> data = new ConcurrentHashMap<>();
+  private final String menu;
+  private final ActionType type;
+
+  public SwitchMenuAction(String menu, ActionType type) {
+    this.menu = menu;
+    this.type = type;
+  }
 
   /**
    * The action type that belongs to this icon action.
@@ -45,7 +47,7 @@ public class DataAction implements IconAction {
    */
   @Override
   public ActionType type() {
-    return ActionType.ANY;
+    return type;
   }
 
   /**
@@ -68,6 +70,6 @@ public class DataAction implements IconAction {
    */
   @Override
   public void onPerform(Menu menu, Page page, PlayerProvider player, Icon icon) {
-    TNECore.menu().appendViewerData(player.getUUID(), data);
+    player.openMenu(this.menu);
   }
 }
