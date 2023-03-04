@@ -56,6 +56,10 @@ public class MenuManager {
     return data.containsKey(provider.getUUID());
   }
 
+  public boolean inMenu(UUID id) {
+    return data.containsKey(id);
+  }
+
   public void updateViewer(final UUID id, final String menu, final int page) {
     ViewerData viewer = data.getOrDefault(id, new ViewerData(id, menu));
     viewer.setMenu(menu);

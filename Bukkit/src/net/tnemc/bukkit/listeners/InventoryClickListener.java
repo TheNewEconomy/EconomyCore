@@ -52,7 +52,7 @@ public class InventoryClickListener implements Listener {
     BukkitPlayerProvider provider = new BukkitPlayerProvider((OfflinePlayer)event.getWhoClicked());
 
     final Optional<ViewerData> data = TNECore.menu().getData(provider.getUUID());
-    if(provider.inMenu() && data.isPresent()) {
+    if(provider.inventory().inMenu() && data.isPresent()) {
 
       final HandlerResponse handle = new InventoryClickHandler().handle(data.get().getMenu(),
                                                                         convertClick(event.getClick()),

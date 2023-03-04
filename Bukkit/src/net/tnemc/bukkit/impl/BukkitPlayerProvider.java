@@ -21,6 +21,7 @@ package net.tnemc.bukkit.impl;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.tnemc.bukkit.TNE;
 import net.tnemc.core.TNECore;
+import net.tnemc.core.compatibility.InventoryProvider;
 import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
@@ -164,43 +165,8 @@ public class BukkitPlayerProvider implements PlayerProvider {
   }
 
   @Override
-  public Inventory getInventory(boolean ender) {
-    if(player.getPlayer() == null) return null;
-
-    if(ender) {
-      return player.getPlayer().getEnderChest();
-    }
-    return player.getPlayer().getInventory();
-  }
-
-  @Override
-  public void openInventory(Object inventory) {
-    if(inventory instanceof Inventory && player.getPlayer() != null) {
-      player.getPlayer().openInventory((Inventory)inventory);
-    }
-  }
-
-  @Override
-  public Inventory build(Menu menu, int page) {
-    Inventory inventory = Bukkit.createInventory(null, menu.getSize(), menu.getTitle());
-
-    for(Map.Entry<Integer, Icon> entry : menu.getPages().get(page).getIcons().entrySet()) {
-
-      inventory.setItem(entry.getKey(), (ItemStack)entry.getValue().getItem().locale());
-    }
-
-    return inventory;
-  }
-
-  /**
-   * Used to update the menu the player is in with a new item for a specific slot.
-   *
-   * @param slot The slot to update.
-   * @param item The item to update the specified slot with.
-   */
-  @Override
-  public void updateMenu(int slot, AbstractItemStack<?> item) {
-
+  public BukkitInventoryProvider inventory() {
+    return new BukkitInventoryProvider(getUUID());
   }
 
   /**
