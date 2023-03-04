@@ -18,6 +18,7 @@ package net.tnemc.bukkit;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.bukkit.hook.economy.VaultHook;
 import net.tnemc.bukkit.listeners.InventoryClickListener;
 import net.tnemc.bukkit.listeners.PlayerJoinListener;
 import net.tnemc.bukkit.listeners.WorldLoadListener;
@@ -47,6 +48,9 @@ public class TNE extends JavaPlugin {
   public void onEnable() {
 
     this.core.enable();
+
+    //Register our hooks
+    new VaultHook().register(this);
 
     //Register our event listeners
 
