@@ -23,6 +23,7 @@ import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.io.message.TranslationProvider;
+import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.bukkit.BukkitCalculationsProvider;
 import net.tnemc.item.bukkit.BukkitItemStack;
 import org.bukkit.Bukkit;
@@ -121,6 +122,11 @@ public class BukkitServerProvider implements ServerConnector {
   public TranslationProvider translation() {
     //TODO: This
     return null;
+  }
+
+  @Override
+  public AbstractItemStack<?> stackBuilder() {
+    return new BukkitItemStack();
   }
 
   @Override

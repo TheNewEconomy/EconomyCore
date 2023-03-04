@@ -18,22 +18,22 @@ package net.tnemc.bukkit.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import net.tnemc.bukkit.BukkitTNECore;
 import net.tnemc.bukkit.TNE;
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.InventoryProvider;
 import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.io.message.MessageHandler;
 import net.tnemc.core.menu.Menu;
+import net.tnemc.core.menu.icon.Icon;
 import net.tnemc.item.AbstractItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -77,8 +77,17 @@ public class BukkitPlayerProvider implements PlayerProvider {
    * @return The location of this player.
    */
   @Override
-  public Location getLocation() {
-    return null;
+  public Optional<Location> getLocation() {
+    if(player.getPlayer() == null) {
+      return Optional.empty();
+    }
+
+    final org.bukkit.Location locale = player.getPlayer().getLocation();
+
+    return Optional.of(new Location(locale.getWorld().getName(),
+                                    locale.getX(), locale.getY(),
+                                    locale.getZ()
+    ));
   }
 
   /**
@@ -124,7 +133,9 @@ public class BukkitPlayerProvider implements PlayerProvider {
    */
   @Override
   public void setExp(int exp) {
-
+    if(player.getPlayer() != null) {
+      player.getPlayer().setTotalExperience(exp);
+    }
   }
 
   /**
@@ -134,7 +145,10 @@ public class BukkitPlayerProvider implements PlayerProvider {
    */
   @Override
   public int getExpLevel() {
-    return 0;
+    if(player.getPlayer() == null) {
+      return 0;
+    }
+    return player.getPlayer().getLevel();
   }
 
   /**
@@ -144,11 +158,13 @@ public class BukkitPlayerProvider implements PlayerProvider {
    */
   @Override
   public void setExpLevel(int level) {
-
+    if(player.getPlayer() != null) {
+      player.getPlayer().setLevel(level);
+    }
   }
 
   @Override
-  public Object getInventory(boolean ender) {
+  public Inventory getInventory(boolean ender) {
     if(player.getPlayer() == null) return null;
 
     if(ender) {
@@ -158,47 +174,29 @@ public class BukkitPlayerProvider implements PlayerProvider {
   }
 
   @Override
-  public InventoryProvider<?> inventory() {
-    return null;
+  public void openInventory(Object inventory) {
+    if(inventory instanceof Inventory && player.getPlayer() != null) {
+      player.getPlayer().openInventory((Inventory)inventory);
+    }
   }
 
-  /**
-   * Used to determine if this player is inside of the specified {@link Menu}.
-   *
-   * @param name The name of the menu
-   *
-   * @return True if this player is inside the specified menu, otherwise false.
-   */
   @Override
-  public boolean inMenu(String name) {
-    return false;
-  }
+  public Inventory build(Menu menu, int page) {
+    Inventory inventory = Bukkit.createInventory(null, menu.getSize(), menu.getTitle());
 
-  /**
-   * Used to open the provided menu for this player.
-   *
-   * @param menu The menu to open.
-   */
-  @Override
-  public void openMenu(Menu menu) {
+    for(Map.Entry<Integer, Icon> entry : menu.getPages().get(page).getIcons().entrySet()) {
 
-  }
+      inventory.setItem(entry.getKey(), (ItemStack)entry.getValue().getItem().locale());
+    }
 
-  /**
-   * Used to open the provided menu for this player.
-   *
-   * @param menu The menu to open.
-   */
-  @Override
-  public void openMenu(String menu) {
-
+    return inventory;
   }
 
   /**
    * Used to update the menu the player is in with a new item for a specific slot.
    *
-   * @param slot
-   * @param item
+   * @param slot The slot to update.
+   * @param item The item to update the specified slot with.
    */
   @Override
   public void updateMenu(int slot, AbstractItemStack<?> item) {

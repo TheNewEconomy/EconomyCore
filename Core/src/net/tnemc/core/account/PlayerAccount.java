@@ -77,7 +77,10 @@ public class PlayerAccount extends Account {
    * holder is offline.
    */
   public Optional<Location> location() {
-    return getPlayer().map(PlayerProvider::getLocation);
+    if(getPlayer().isEmpty()) {
+      return Optional.empty();
+    }
+    return getPlayer().get().getLocation();
   }
 
   public boolean isOnline() {

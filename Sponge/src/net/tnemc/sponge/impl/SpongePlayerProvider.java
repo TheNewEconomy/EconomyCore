@@ -27,6 +27,7 @@ import net.tnemc.item.AbstractItemStack;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.living.player.Player;
 
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -69,7 +70,7 @@ public class SpongePlayerProvider implements PlayerProvider {
    * @return The location of this player.
    */
   @Override
-  public Location getLocation() {
+  public Optional<Location> getLocation() {
     return null;
   }
 
@@ -124,50 +125,13 @@ public class SpongePlayerProvider implements PlayerProvider {
   }
 
   @Override
+  public void openInventory(Object inventory) {
+
+  }
+
+  @Override
   public Object build(Menu menu, int page) {
     return null;
-  }
-
-  /**
-   * Used to determine if this player is inside of the specified {@link Menu}.
-   *
-   * @param name The name of the menu
-   *
-   * @return True if this player is inside the specified menu, otherwise false.
-   */
-  @Override
-  public boolean inMenu(String name) {
-    return false;
-  }
-
-  /**
-   * Used to open the provided menu for this player.
-   *
-   * @param menu The menu to open.
-   */
-  @Override
-  public void openMenu(Menu menu) {
-
-  }
-
-  @Override
-  public void openMenu(Menu menu, int page) {
-
-  }
-
-  /**
-   * Used to open the provided menu for this player.
-   *
-   * @param menu The menu to open.
-   */
-  @Override
-  public void openMenu(String menu) {
-
-  }
-
-  @Override
-  public void openMenu(String menu, int page) {
-
   }
 
   /**

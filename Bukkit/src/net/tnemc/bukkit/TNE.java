@@ -18,6 +18,7 @@ package net.tnemc.bukkit;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.bukkit.listeners.InventoryClickListener;
 import net.tnemc.bukkit.listeners.PlayerJoinListener;
 import net.tnemc.bukkit.listeners.WorldLoadListener;
 import org.bukkit.Bukkit;
@@ -51,6 +52,9 @@ public class TNE extends JavaPlugin {
 
     //Player Listeners
     Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
+
+
+    Bukkit.getPluginManager().registerEvents(new InventoryClickListener(this), this);
 
     //World Listeners
     Bukkit.getPluginManager().registerEvents(new WorldLoadListener(this), this);

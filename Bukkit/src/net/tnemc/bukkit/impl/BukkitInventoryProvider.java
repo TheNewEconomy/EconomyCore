@@ -1,7 +1,7 @@
-package net.tnemc.core.menu.icon;
+package net.tnemc.bukkit.impl;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,23 +17,32 @@ package net.tnemc.core.menu.icon;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.compatibility.InventoryProvider;
+import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.menu.Menu;
+import org.bukkit.inventory.Inventory;
+
 /**
- * Represents when an {@link IconAction} should be performed.
+ * BukkitInventoryProvider
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public enum ActionType {
+public class BukkitInventoryProvider implements InventoryProvider<Inventory> {
 
-  ANY,
-  DOUBLE_CLICK,
-  LEFT_CLICK,
-  LEFT_SHIFT,
-  SCROLL_CLICK,
-  RIGHT_CLICK,
-  RIGHT_SHIFT,
-  DROP,
-  DROP_CTRL,
-  NUMBER,
-  OFFHAND_SWAP
+
+  @Override
+  public PlayerProvider player() {
+    return null;
+  }
+
+  @Override
+  public Inventory build(Menu menu) {
+    return null;
+  }
+
+  @Override
+  public Inventory getInventory(boolean ender) {
+    return null;
+  }
 }

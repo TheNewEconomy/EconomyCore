@@ -1,7 +1,7 @@
-package net.tnemc.test.transaction;
+package net.tnemc.bukkit.impl;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,11 +17,29 @@ package net.tnemc.test.transaction;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+
 /**
- * TestTransaction
+ * IconItems
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class TestTransaction {
+public class IconItems {
+
+  public static final ItemStack currency;
+
+  static {
+    currency = new ItemStack(Material.GOLD_INGOT);
+    ItemMeta meta = Bukkit.getItemFactory().getItemMeta(Material.GOLD_INGOT);
+    meta.setDisplayName(ChatColor.GOLD + "Currency Editor");
+    meta.setLore(Arrays.asList(ChatColor.DARK_PURPLE + "Click to open currency editor."));
+    currency.setItemMeta(meta);
+  }
 }

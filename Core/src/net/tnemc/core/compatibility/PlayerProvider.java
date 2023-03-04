@@ -10,16 +10,17 @@ package net.tnemc.core.compatibility;
  * Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.item.AbstractItemStack;
 
+import java.util.HashMap;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
  * A class that acts as a bridge between various player objects on different server software providers.
- *
- * @param <INV> The implementation's inventory object.
  *
  * @since 0.1.2.0
  * @author creatorfromhell
@@ -42,7 +43,7 @@ public interface PlayerProvider {
    * Used to get the location of this player.
    * @return The location of this player.
    */
-  Location getLocation();
+  Optional<Location> getLocation();
 
   /**
    * Used to get the name of the region this player is in. This could be the world itself, or maybe
@@ -91,47 +92,75 @@ public interface PlayerProvider {
   Object getInventory(boolean ender);
 
   /**
+   * Used to open the provided inventory for this player.
+   *
+   * @param inventory The inventory to open.
+   */
+  void openInventory(final Object inventory);
+
+  /**
    * Builds an inventory object from a menu.
    * @return The built inventory.
    */
   Object build(final Menu menu, int page);
 
   /**
-   * Used to determine if this player is inside of the specified {@link Menu}.
+   * Used to determine if this player is inside of a {@link Menu}
    *
-   * @param name The name of the menu
    * @return True if this player is inside the specified menu, otherwise false.
    */
-  boolean inMenu(final String name);
+  default boolean inMenu() {
+    return TNECore.menu().inMenu(this);
+  }
 
   /**
    * Used to open the provided menu for this player.
    * @param menu The menu to open.
    */
-  void openMenu(final Menu menu);
+  default void openMenu(final Menu menu) {
+    openMenu(menu, 1);
+  }
 
   /**
    * Used to open the provided menu for this player on the specified page.
    * @param menu The menu to open.
    * @param page The page to open.
    */
-  void openMenu(final Menu menu, final int page);
+  default void openMenu(final Menu menu, final int page) {
+
+    openInventory(build(menu, page));
+    TNECore.menu().updateViewer(getUUID(), menu.getName(), page);
+    //TODO: menu views? should implement inventory views essentially.
+  }
 
   /**
    * Used to open the provided menu for this player.
    * @param menu The menu to open.
    */
-  void openMenu(final String menu);
+  default void openMenu(final String menu) {
+    openMenu(menu, 1);
+  }
 
   /**
    * Used to open the provided menu for this player on the specified page.
    * @param menu The menu to open.
    * @param page The page to open.
    */
-  void openMenu(final String menu, final int page);
+  default void openMenu(final String menu, final int page) {
+
+    if(TNECore.menu().menus.containsKey(menu)) {
+
+      openInventory(build(TNECore.menu().menus.get(menu), page));
+      TNECore.menu().updateViewer(getUUID(), menu, page);
+      //TODO: menu views? should implement inventory views essentially.
+    }
+  }
 
   /**
    * Used to update the menu the player is in with a new item for a specific slot.
+   *
+   * @param slot The slot to update.
+   * @param item The item to update the specified slot with.
    */
   void updateMenu(int slot, AbstractItemStack<?> item);
 
@@ -148,19 +177,4 @@ public interface PlayerProvider {
    * @param messageData The message data to utilize for this translation.
    */
   void message(final MessageData messageData);
-
-  /*BigDecimal getItems(Currency currency, Object inventory);
-
-  default void setItems(Account account, Currency currency, BigDecimal amount, Object inventory,
-                        boolean remove) {
-
-    boolean consolidate = EconomyManager.instance().canConsolidate();
-    if(currency instanceof ItemCurrrency) {
-      consolidate = ((ItemCurrrency)currency).isConsolidate();
-    }
-    setItems(account, currency, amount, inventory, remove, consolidate);
-  }
-
-  void setItems(Account account, Currency currency, BigDecimal amount, Object inventory,
-                boolean remove, boolean consolidate);*/
 }

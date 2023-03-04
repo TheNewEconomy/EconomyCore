@@ -51,4 +51,12 @@ public class StateIcon extends Icon {
       this.item = states.get(state);
     }
   }
+
+  @Override
+  public AbstractItemStack<?> getItem() {
+    if(states.containsKey(state)) {
+      return states.get(state);
+    }
+    return item;
+  }
 }

@@ -17,7 +17,6 @@ package net.tnemc.core.manager;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.core.menu.icon.ActionType;
@@ -42,9 +41,7 @@ public class MenuManager {
   public final ConcurrentHashMap<UUID, ViewerData> data = new ConcurrentHashMap<>();
 
   public MenuManager() {
-    if(TNECore.server() != null) {
-      menus.put("my_eco", new MyEcoMenu());
-    }
+    menus.put("my_eco", new MyEcoMenu());
   }
 
   public boolean onClick(final String menu, ActionType type, PlayerProvider provider, int page, int slot) {
@@ -57,6 +54,18 @@ public class MenuManager {
 
   public boolean inMenu(PlayerProvider provider) {
     return data.containsKey(provider.getUUID());
+  }
+
+  public void updateViewer(final UUID id, final String menu, final int page) {
+    ViewerData viewer = data.getOrDefault(id, new ViewerData(id, menu));
+    viewer.setMenu(menu);
+    viewer.setPage(page);
+
+    data.put(id, viewer);
+  }
+
+  public Optional<ViewerData> getData(final UUID id) {
+    return Optional.ofNullable(data.get(id));
   }
 
   public void removeData(UUID id) {
@@ -78,9 +87,9 @@ public class MenuManager {
     data.get(viewer).getData().putAll(toAppend);
   }
 
-  public void setViewerData(UUID viewer, String identifier, Object value) {
+  public void setViewerData(UUID viewer, final String menu, String identifier, Object value) {
     if(!data.containsKey(viewer)) {
-      data.put(viewer, new ViewerData(viewer));
+      data.put(viewer, new ViewerData(viewer, menu));
     }
     data.get(viewer).setValue(identifier, value);
   }

@@ -31,9 +31,13 @@ public class ViewerData {
 
   private final Map<String, Object> data = new HashMap<>();
   private UUID viewer;
+  private String menu;
 
-  public ViewerData(UUID viewer) {
+  private int page = 1;
+
+  public ViewerData(UUID viewer, final String menu) {
     this.viewer = viewer;
+    this.menu = menu;
   }
 
   public ViewerData(UUID viewer, Map<String, Object> data) {
@@ -56,6 +60,22 @@ public class ViewerData {
 
   public void setViewer(UUID viewer) {
     this.viewer = viewer;
+  }
+
+  public String getMenu() {
+    return menu;
+  }
+
+  public void setMenu(String menu) {
+    this.menu = menu;
+  }
+
+  public int getPage() {
+    return page;
+  }
+
+  public void setPage(int page) {
+    this.page = page;
   }
 
   public Object getValue(String identifier) {
