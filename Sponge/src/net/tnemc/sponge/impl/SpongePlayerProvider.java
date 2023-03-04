@@ -18,6 +18,7 @@ package net.tnemc.sponge.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.compatibility.InventoryProvider;
 import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
@@ -119,29 +120,8 @@ public class SpongePlayerProvider implements PlayerProvider {
   }
 
   @Override
-  public Object getInventory(boolean ender) {
-    return null;
-  }
-
-  @Override
-  public void openInventory(Object inventory) {
-
-  }
-
-  @Override
-  public Object build(Menu menu, int page) {
-    return null;
-  }
-
-  /**
-   * Used to update the menu the player is in with a new item for a specific slot.
-   *
-   * @param slot
-   * @param item
-   */
-  @Override
-  public void updateMenu(int slot, AbstractItemStack<?> item) {
-
+  public SpongeInventory inventory() {
+    return new SpongeInventory(getUUID());
   }
 
   /**
