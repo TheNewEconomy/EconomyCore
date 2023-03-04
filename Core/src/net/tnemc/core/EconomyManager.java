@@ -21,7 +21,6 @@ package net.tnemc.core;
 import net.tnemc.core.manager.AccountManager;
 import net.tnemc.core.manager.CurrencyManager;
 import net.tnemc.core.manager.DataManager;
-import net.tnemc.core.manager.MenuManager;
 import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.manager.TranslationManager;
 import net.tnemc.core.region.RegionProvider;

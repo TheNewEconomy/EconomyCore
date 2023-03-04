@@ -19,7 +19,6 @@ package net.tnemc.core.currency.item;
  */
 
 import net.tnemc.core.currency.Denomination;
-import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.SerialItem;
 
 import java.util.ArrayList;

@@ -18,12 +18,10 @@ package net.tnemc.core.menu;
  */
 
 import net.tnemc.core.compatibility.PlayerProvider;
-import net.tnemc.core.menu.callbacks.icon.IconClickCallback;
 import net.tnemc.core.menu.callbacks.page.PageSlotClickCallback;
 import net.tnemc.core.menu.icon.ActionType;
 import net.tnemc.core.menu.icon.Icon;
 
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 

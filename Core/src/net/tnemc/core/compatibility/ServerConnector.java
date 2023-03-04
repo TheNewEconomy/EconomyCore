@@ -25,7 +25,6 @@ import net.tnemc.item.SerialItem;
 import net.tnemc.item.providers.CalculationsProvider;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Pattern;

@@ -23,7 +23,6 @@ import net.tnemc.core.menu.Page;
 import net.tnemc.core.menu.builder.IconBuilder;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * CurrencyMainPage

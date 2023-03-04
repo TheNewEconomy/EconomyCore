@@ -15,7 +15,6 @@ import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.menu.Menu;
 import net.tnemc.item.AbstractItemStack;
 
-import java.util.HashMap;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -130,7 +129,6 @@ public interface PlayerProvider {
 
     openInventory(build(menu, page));
     TNECore.menu().updateViewer(getUUID(), menu.getName(), page);
-    //TODO: menu views? should implement inventory views essentially.
   }
 
   /**
@@ -152,7 +150,6 @@ public interface PlayerProvider {
 
       openInventory(build(TNECore.menu().menus.get(menu), page));
       TNECore.menu().updateViewer(getUUID(), menu, page);
-      //TODO: menu views? should implement inventory views essentially.
     }
   }
 
