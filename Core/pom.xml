@@ -22,6 +22,18 @@
     <dependencies>
         <dependency>
             <groupId>net.tnemc</groupId>
+            <artifactId>TNML-CORE</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.tnemc</groupId>
+                    <artifactId>TNIL-Core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>net.tnemc</groupId>
             <artifactId>TNIL-Core</artifactId>
             <version>0.1.6.0</version>
             <scope>compile</scope>

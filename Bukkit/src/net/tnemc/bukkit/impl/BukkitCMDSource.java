@@ -47,7 +47,7 @@ public class BukkitCMDSource implements CmdSource {
 
     if(sender instanceof Player) {
       provider = new BukkitPlayerProvider(((Player)sender).getPlayer());
-      identifier = provider.getUUID();
+      identifier = provider.identifier();
     } else {
       provider = null;
       //TODO: Server account.

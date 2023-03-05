@@ -19,10 +19,8 @@ package net.tnemc.bukkit.impl;
  */
 
 import net.tnemc.core.compatibility.InventoryProvider;
-import net.tnemc.core.compatibility.PlayerProvider;
-import net.tnemc.core.menu.Menu;
-import net.tnemc.core.menu.icon.Icon;
 import net.tnemc.item.AbstractItemStack;
+import net.tnemc.menu.bukkit.BukkitInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.Inventory;
@@ -37,42 +35,10 @@ import java.util.UUID;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class BukkitInventoryProvider implements InventoryProvider<Inventory> {
-
-  final UUID id;
+public class BukkitInventoryProvider extends BukkitInventory implements InventoryProvider<Inventory> {
 
   public BukkitInventoryProvider(UUID id) {
-    this.id = id;
-  }
-
-  /**
-   * The player associated with this inventory provider.
-   *
-   * @return The {@link UUID} for the player for this {@link InventoryProvider}
-   */
-  @Override
-  public UUID player() {
-    return id;
-  }
-
-  /**
-   * Builds an inventory object from a menu.
-   *
-   * @param menu
-   * @param page
-   *
-   * @return The built inventory.
-   */
-  @Override
-  public Inventory build(Menu menu, int page) {
-    Inventory inventory = Bukkit.createInventory(null, menu.getSize(), menu.getTitle());
-
-    for(Map.Entry<Integer, Icon> entry : menu.getPages().get(page).getIcons().entrySet()) {
-
-      inventory.setItem(entry.getKey(), (ItemStack)entry.getValue().getItem().locale());
-    }
-
-    return inventory;
+    super(id);
   }
 
   /**
@@ -91,29 +57,5 @@ public class BukkitInventoryProvider implements InventoryProvider<Inventory> {
       return player.getPlayer().getEnderChest();
     }
     return player.getPlayer().getInventory();
-  }
-
-  /**
-   * Used to open the provided inventory for this player.
-   *
-   * @param inventory The inventory to open.
-   */
-  @Override
-  public void openInventory(Inventory inventory) {
-    final OfflinePlayer player = Bukkit.getOfflinePlayer(player());
-    if(player.getPlayer() != null) {
-      player.getPlayer().openInventory(inventory);
-    }
-  }
-
-  /**
-   * Used to update the menu the player is in with a new item for a specific slot.
-   *
-   * @param slot The slot to update.
-   * @param item The item to update the specified slot with.
-   */
-  @Override
-  public void updateMenu(int slot, AbstractItemStack<?> item) {
-
   }
 }

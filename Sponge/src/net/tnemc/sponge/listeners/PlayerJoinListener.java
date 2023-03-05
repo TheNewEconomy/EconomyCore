@@ -22,7 +22,9 @@ import net.tnemc.core.handlers.PlayerJoinHandler;
 import net.tnemc.core.utils.HandlerResponse;
 import net.tnemc.sponge.impl.SpongePlayerProvider;
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.filter.cause.Root;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
+import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.text.Text;
 
 /**
@@ -34,9 +36,9 @@ import org.spongepowered.api.text.Text;
 public class PlayerJoinListener {
 
   @Listener
-  public void listen(ClientConnectionEvent.Join event) {
+  public void listen(ClientConnectionEvent.Join event, @Root Plugin plugin) {
     final HandlerResponse handle = new PlayerJoinHandler()
-                                   .handle(new SpongePlayerProvider(event.getTargetEntity()));
+                                   .handle(new SpongePlayerProvider(event.getTargetEntity(), plugin));
 
 
     if(handle.isCancelled()) {

@@ -18,14 +18,14 @@ package net.tnemc.sponge.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.compatibility.InventoryProvider;
 import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
-import net.tnemc.core.menu.Menu;
-import net.tnemc.item.AbstractItemStack;
+import net.tnemc.menu.sponge7.SpongePlayer;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.entity.living.player.User;
+import org.spongepowered.api.plugin.Plugin;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -36,22 +36,9 @@ import java.util.UUID;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class SpongePlayerProvider implements PlayerProvider {
-
-  private Player player;
-
-  public SpongePlayerProvider(Player player) {
-    this.player = player;
-  }
-
-  /**
-   * Used to get the {@link UUID} of this player.
-   *
-   * @return The {@link UUID} of this player.
-   */
-  @Override
-  public UUID getUUID() {
-    return player.getUniqueId();
+public class SpongePlayerProvider extends SpongePlayer implements PlayerProvider {
+  public SpongePlayerProvider(User user, Plugin plugin) {
+    super(user, plugin);
   }
 
   /**
@@ -61,7 +48,7 @@ public class SpongePlayerProvider implements PlayerProvider {
    */
   @Override
   public String getName() {
-    return player.getName();
+    return user.getName();
   }
 
   /**
@@ -86,7 +73,7 @@ public class SpongePlayerProvider implements PlayerProvider {
    */
   @Override
   public int getExp() {
-    return player.get(Keys.TOTAL_EXPERIENCE).orElse(0);
+    return user.getPlayer().get().get(Keys.TOTAL_EXPERIENCE).orElse(0);
   }
 
   /**
@@ -96,7 +83,7 @@ public class SpongePlayerProvider implements PlayerProvider {
    */
   @Override
   public void setExp(int exp) {
-    player.offer(Keys.TOTAL_EXPERIENCE, exp);
+    user.getPlayer().get().offer(Keys.TOTAL_EXPERIENCE, exp);
   }
 
   /**
@@ -106,7 +93,7 @@ public class SpongePlayerProvider implements PlayerProvider {
    */
   @Override
   public int getExpLevel() {
-    return player.get(Keys.EXPERIENCE_LEVEL).orElse(0);
+    return user.getPlayer().get().get(Keys.EXPERIENCE_LEVEL).orElse(0);
   }
 
   /**
@@ -116,24 +103,17 @@ public class SpongePlayerProvider implements PlayerProvider {
    */
   @Override
   public void setExpLevel(int level) {
-    player.offer(Keys.EXPERIENCE_LEVEL, level);
+    user.getPlayer().get().offer(Keys.EXPERIENCE_LEVEL, level);
   }
 
   @Override
-  public SpongeInventory inventory() {
-    return new SpongeInventory(getUUID());
+  public SpongeInventoryProvider inventory() {
+    return new SpongeInventoryProvider(identifier(), plugin);
   }
 
-  /**
-   * Used to determine if this player has the specified permission node.
-   *
-   * @param permission The node to check for.
-   *
-   * @return True if the player has the permission, otherwise false.
-   */
   @Override
-  public boolean hasPermission(String permission) {
-    return player.hasPermission(permission);
+  public void message(String message) {
+    message(new MessageData(message));
   }
 
   @Override

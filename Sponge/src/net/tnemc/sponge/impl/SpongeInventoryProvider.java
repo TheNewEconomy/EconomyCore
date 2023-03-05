@@ -19,47 +19,22 @@ package net.tnemc.sponge.impl;
  */
 
 import net.tnemc.core.compatibility.InventoryProvider;
-import net.tnemc.core.menu.Menu;
-import net.tnemc.item.AbstractItemStack;
+import net.tnemc.menu.sponge7.SpongeInventory;
 import org.spongepowered.api.item.inventory.Inventory;
+import org.spongepowered.api.plugin.Plugin;
 
 import java.util.UUID;
 
 /**
- * SpongeInventory
+ * SpongeInventoryProvider
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class SpongeInventory implements InventoryProvider<Inventory> {
+public class SpongeInventoryProvider extends SpongeInventory implements InventoryProvider<Inventory> {
 
-  private final UUID id;
-
-  public SpongeInventory(UUID id) {
-    this.id = id;
-  }
-
-  /**
-   * The player associated with this inventory provider.
-   *
-   * @return The {@link UUID} for the player for this {@link InventoryProvider}
-   */
-  @Override
-  public UUID player() {
-    return null;
-  }
-
-  /**
-   * Builds an inventory object from a menu.
-   *
-   * @param menu
-   * @param page
-   *
-   * @return The built inventory.
-   */
-  @Override
-  public Inventory build(Menu menu, int page) {
-    return null;
+  public SpongeInventoryProvider(UUID id, Plugin plugin) {
+    super(id, plugin);
   }
 
   /**
@@ -72,26 +47,5 @@ public class SpongeInventory implements InventoryProvider<Inventory> {
   @Override
   public Inventory getInventory(boolean ender) {
     return null;
-  }
-
-  /**
-   * Used to open the provided inventory for this player.
-   *
-   * @param inventory The inventory to open.
-   */
-  @Override
-  public void openInventory(Inventory inventory) {
-
-  }
-
-  /**
-   * Used to update the menu the player is in with a new item for a specific slot.
-   *
-   * @param slot The slot to update.
-   * @param item The item to update the specified slot with.
-   */
-  @Override
-  public void updateMenu(int slot, AbstractItemStack<?> item) {
-
   }
 }

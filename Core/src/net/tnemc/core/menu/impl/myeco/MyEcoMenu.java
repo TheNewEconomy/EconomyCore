@@ -18,9 +18,9 @@ package net.tnemc.core.menu.impl.myeco;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.menu.Menu;
 import net.tnemc.core.menu.impl.myeco.pages.CurrencyMainPage;
 import net.tnemc.core.menu.impl.myeco.pages.MainPage;
+import net.tnemc.menu.core.Menu;
 
 /**
  * EcoMainMenu

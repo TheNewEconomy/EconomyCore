@@ -19,10 +19,10 @@ package net.tnemc.core.menu.impl.myeco.pages;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.menu.Page;
-import net.tnemc.core.menu.builder.IconBuilder;
-import net.tnemc.core.menu.icon.ActionType;
-import net.tnemc.core.menu.icon.action.SwitchPageAction;
+import net.tnemc.menu.core.Page;
+import net.tnemc.menu.core.builder.IconBuilder;
+import net.tnemc.menu.core.icon.ActionType;
+import net.tnemc.menu.core.icon.action.SwitchPageAction;
 
 import java.util.Collections;
 

@@ -136,6 +136,18 @@
     <dependencies>
         <dependency>
             <groupId>net.tnemc</groupId>
+            <artifactId>TNML-Sponge-API-7</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.tnemc</groupId>
+                    <artifactId>TNIL-Core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>net.tnemc</groupId>
             <artifactId>EconomyCore</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>

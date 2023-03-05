@@ -28,7 +28,6 @@ import net.tnemc.core.io.message.MessageHandler;
 import net.tnemc.core.io.message.TranslationProvider;
 import net.tnemc.core.io.message.translation.BaseTranslationProvider;
 import net.tnemc.core.io.storage.StorageManager;
-import net.tnemc.core.manager.MenuManager;
 
 import java.io.File;
 import java.util.regex.Pattern;
@@ -62,7 +61,6 @@ public abstract class TNECore {
   protected ServerConnector server;
   protected StorageManager storage;
   protected final EconomyManager economyManager = new EconomyManager();
-  protected MenuManager menuManager;
 
   private MainConfig config;
   private DataConfig data;
@@ -104,8 +102,6 @@ public abstract class TNECore {
       this.enabled = true;
       onEnable();
 
-      instance.menuManager = new MenuManager();
-
     } else {
       throw new IllegalStateException("TNE has already been enabled!");
     }
@@ -142,15 +138,6 @@ public abstract class TNECore {
    */
   public static EconomyManager eco() {
     return instance.economyManager;
-  }
-
-  /**
-   * The implementation's {@link MenuManager}, which is used to manage everything menu related
-   * in TNE.
-   * @return The {@link MenuManager MenuManager}.
-   */
-  public static MenuManager menu() {
-    return instance.menuManager;
   }
 
   /**

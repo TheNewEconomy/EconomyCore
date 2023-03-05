@@ -21,18 +21,12 @@ package net.tnemc.bukkit.impl;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.tnemc.bukkit.TNE;
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.InventoryProvider;
 import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.io.message.MessageHandler;
-import net.tnemc.core.menu.Menu;
-import net.tnemc.core.menu.icon.Icon;
-import net.tnemc.item.AbstractItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Map;
 import java.util.Optional;
@@ -58,7 +52,7 @@ public class BukkitPlayerProvider implements PlayerProvider {
    * @return The {@link UUID} of this player.
    */
   @Override
-  public UUID getUUID() {
+  public UUID identifier() {
     return player.getUniqueId();
   }
 
@@ -166,7 +160,7 @@ public class BukkitPlayerProvider implements PlayerProvider {
 
   @Override
   public BukkitInventoryProvider inventory() {
-    return new BukkitInventoryProvider(getUUID());
+    return new BukkitInventoryProvider(identifier());
   }
 
   /**
@@ -182,6 +176,13 @@ public class BukkitPlayerProvider implements PlayerProvider {
       return false;
     }
     return player.getPlayer().hasPermission(permission);
+  }
+
+  @Override
+  public void message(String message) {
+    if(player.getPlayer() != null) {
+      message(new MessageData(message));
+    }
   }
 
   /**

@@ -19,6 +19,7 @@ package net.tnemc.core.compatibility;
  */
 
 import net.tnemc.core.io.message.MessageData;
+import net.tnemc.menu.core.compatibility.MenuPlayer;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -29,13 +30,7 @@ import java.util.UUID;
  * @since 0.1.2.0
  * @author creatorfromhell
  */
-public interface PlayerProvider {
-
-  /**
-   * Used to get the {@link UUID} of this player.
-   * @return The {@link UUID} of this player.
-   */
-  UUID getUUID();
+public interface PlayerProvider extends MenuPlayer {
 
   /**
    * Used to get the name of this player.

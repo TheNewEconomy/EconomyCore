@@ -41,13 +41,13 @@ public class PlayerJoinHandler {
   public HandlerResponse handle(PlayerProvider provider) {
     final HandlerResponse response = new HandlerResponse("", false);
 
-    Optional<Account> account = TNECore.eco().account().findAccount(provider.getUUID());
+    Optional<Account> account = TNECore.eco().account().findAccount(provider.identifier());
 
     //Our account doesn't exist, so now we need to continue from here
     if(account.isEmpty()) {
 
       //Create our account.
-      if(!TNECore.eco().account().createAccount(provider.getUUID().toString(), provider.getName()).success()) {
+      if(!TNECore.eco().account().createAccount(provider.identifier().toString(), provider.getName()).success()) {
         response.setResponse(response.getResponse());
         response.setCancelled(true);
         return response;
