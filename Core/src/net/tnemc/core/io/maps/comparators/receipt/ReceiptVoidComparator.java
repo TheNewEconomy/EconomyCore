@@ -1,4 +1,5 @@
 package net.tnemc.core.io.maps.comparators.receipt;
+
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar

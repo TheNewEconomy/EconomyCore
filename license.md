@@ -9,7 +9,8 @@ What this means to you in basic terms:
 - Include any installation information necessary to update and reinstall the software if the program is being used as 
 part of a consumer device
 - If you make access to modified software available to users over a network, you must make your source code available to
-those users.
+those users. This means if you modify this plugin for your server, the modified source must be made public under this same 
+license.
 
 ## Full License Text
 

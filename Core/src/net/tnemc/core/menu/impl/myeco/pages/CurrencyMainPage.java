@@ -1,4 +1,5 @@
 package net.tnemc.core.menu.impl.myeco.pages;
+
 /*
  * The New Economy
  * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
