@@ -19,7 +19,8 @@ without Minecraft by not being platform-dependent.
 
 ## Platform Agnostic
 Use TNE on the platform you want!
-- Sponge? Sure
+- Sponge? If you want
+- Minestom? Sure
 - Spigot/Paper? Definitely!
 - Use both? We support cross-server balances on both. That's right, you can send money from your Spigot server to your
 Sponge Server!
