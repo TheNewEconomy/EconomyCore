@@ -62,11 +62,11 @@ public class Menu {
   }
 
   public void build(PlayerProvider player) {
-    player.openMenu(this);
+    player.inventory().openMenu(this);
   }
 
   public void update(PlayerProvider player, int slot, AbstractItemStack<?> item) {
-    player.updateMenu(slot, item);
+    player.inventory().updateMenu(slot, item);
   }
 
   public boolean onClick(ActionType type, PlayerProvider provider, int page, int slot) {

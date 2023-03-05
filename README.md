@@ -37,6 +37,7 @@ TNE offers support for Vault, which lets any third-party plugin hook into your e
 Key Supported Plugins:
 - Factions
 - Towny
+- Geyser
 
 ## Easy to Use
 TNE has been recoded with ease-of-use in mind. This means whether you're a power user who loves your YAML files, or a
