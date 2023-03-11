@@ -1,8 +1,7 @@
-package net.tnemc.core.menu.impl.myeco;
-
+package net.tnemc.core.menu.impl.mybal;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,36 +17,27 @@ package net.tnemc.core.menu.impl.myeco;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.menu.impl.myeco.pages.AdminPage;
-import net.tnemc.core.menu.impl.myeco.pages.MainPage;
+import net.tnemc.core.menu.impl.mycurrency.pages.CurrencyMainPage;
 import net.tnemc.menu.core.Menu;
 
 /**
- * EcoMainMenu
+ * MyBalMenu
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
+public class MyBalMenu extends Menu {
 
-/*
- * Functionality:
- * https://prnt.sc/-AaWtcykxNDj
- * - Modify World Stuff
- * - Modify Configurations
- * - Perform admin tasks
- * - - Reset Economy
- * - - Purge Economy
- * - - View Admin Alerts
- *
- *
- */
-public class MyEcoMenu extends Menu {
+  /*
+   * - Currencies https://prnt.sc/WI8YCcAiFtk8
+   * - - Add
+   * - - Remove - simple confirmation menu
+   * - - Edit
+   */
 
-  public MyEcoMenu() {
-    super("my_eco", "MyEco Menu", 36);
+  public MyBalMenu() {
+    super("my_bal", "MyBal Menu", 36);
 
     //Add our pages.
-    pages.put(1, new MainPage());
-    pages.put(4, new AdminPage());
   }
 }

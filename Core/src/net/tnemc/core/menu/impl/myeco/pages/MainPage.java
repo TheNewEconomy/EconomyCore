@@ -22,6 +22,7 @@ import net.tnemc.core.TNECore;
 import net.tnemc.menu.core.Page;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.icon.ActionType;
+import net.tnemc.menu.core.icon.action.SwitchMenuAction;
 import net.tnemc.menu.core.icon.action.SwitchPageAction;
 
 import java.util.Collections;
@@ -37,12 +38,36 @@ public class MainPage extends Page {
   public MainPage() {
     super(1);
 
-    icons.put(10, IconBuilder.of(TNECore.server()
+    icons.put(19, IconBuilder.of(TNECore.server()
                                      .stackBuilder()
                                      .of("GOLD_INGOT", 1)
                                      .display("Currency Editor")
                                      .lore(Collections.singletonList("Click to open currency editor.")))
-        .withAction(new SwitchPageAction(2, ActionType.ANY))
+        .withAction(new SwitchMenuAction("my_cur", ActionType.ANY))
+        .create());
+
+    icons.put(21, IconBuilder.of(TNECore.server()
+                                     .stackBuilder()
+                                     .of("COMPASS", 1)
+                                     .display("World Editor")
+                                     .lore(Collections.singletonList("Click to open world editor.")))
+        //.withAction(new SwitchPageAction(2, ActionType.ANY))
+        .create());
+
+    icons.put(23, IconBuilder.of(TNECore.server()
+                                     .stackBuilder()
+                                     .of("REDSTONE", 1)
+                                     .display("Configuration Editor")
+                                     .lore(Collections.singletonList("Click to open config editor.")))
+        .withAction(new SwitchPageAction(3, ActionType.ANY))
+        .create());
+
+    icons.put(25, IconBuilder.of(TNECore.server()
+                                     .stackBuilder()
+                                     .of("TORCH", 1)
+                                     .display("Admin Tasks")
+                                     .lore(Collections.singletonList("Click to open admin menu.")))
+        .withAction(new SwitchPageAction(4, ActionType.ANY))
         .create());
   }
 }

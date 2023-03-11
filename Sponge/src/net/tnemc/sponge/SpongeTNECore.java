@@ -22,12 +22,14 @@ import co.aikar.commands.SpongeCommandManager;
 import com.google.inject.Inject;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.io.storage.StorageManager;
+import net.tnemc.menu.sponge7.Sponge7InventoryClickListener;
 import net.tnemc.sponge.impl.SpongeLogProvider;
 import net.tnemc.sponge.impl.SpongeServerProvider;
 import net.tnemc.sponge.listeners.PlayerJoinListener;
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.filter.cause.Root;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.plugin.Plugin;
@@ -57,12 +59,13 @@ public class SpongeTNECore extends TNECore {
   }
 
   @Listener
-  public void onConstructPlugin(final GamePreInitializationEvent event) {
+  public void onConstructPlugin(final GamePreInitializationEvent event, @Root Plugin plugin) {
     setInstance(this);
 
 
     //Register our event listeners
     Sponge.getEventManager().registerListeners(container, new PlayerJoinListener());
+    Sponge.getEventManager().registerListeners(container, new Sponge7InventoryClickListener(plugin));
   }
 
   @Listener

@@ -1,4 +1,4 @@
-package net.tnemc.core.menu.impl.myeco.pages;
+package net.tnemc.core.menu.impl.mycurrency.pages;
 
 /*
  * The New Economy
@@ -34,7 +34,7 @@ import java.util.Arrays;
 public class CurrencyMainPage extends Page {
 
   public CurrencyMainPage() {
-    super(2);
+    super(1);
 
     int i = 10;
 

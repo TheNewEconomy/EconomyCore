@@ -22,7 +22,6 @@ import net.tnemc.core.io.message.MessageData;
 import net.tnemc.menu.core.compatibility.MenuPlayer;
 
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * A class that acts as a bridge between various player objects on different server software providers.

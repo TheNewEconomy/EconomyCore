@@ -40,8 +40,6 @@ public interface TNEAPI {
 
   //Our Core API methods. Mainly account-related methods
 
-  //TODO: Implement these methods.
-
   /**
    * Used to determine if an {@link Account} exists with the specified identifier.
    *
