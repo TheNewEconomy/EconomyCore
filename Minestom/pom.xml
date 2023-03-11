@@ -9,11 +9,6 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
-        <repository>
-            <id>sponge-repo</id>
-            <name>Sponge Maven Repository</name>
-            <url>https://repo.spongepowered.org/maven</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -25,9 +20,27 @@
         </dependency>
 
         <dependency>
+            <groupId>net.tnemc</groupId>
+            <artifactId>TNML-Minestom</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.tnemc</groupId>
+                    <artifactId>TNIL-Minestom</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>net.tnemc</groupId>
+                    <artifactId>TNIL-CORE</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
             <groupId>com.github.Minestom</groupId>
             <artifactId>Minestom</artifactId>
             <version>-ebb6dffb31-1</version>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.jboss.shrinkwrap.resolver</groupId>
