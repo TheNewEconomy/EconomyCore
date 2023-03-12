@@ -113,13 +113,11 @@ public class Transaction {
    */
   public Transaction from(final Account account, final HoldingsModifier modifier) {
 
-    final String currency = modifier.getCurrency();
-    final String region = modifier.getRegion();
-
-    final List<HoldingsEntry> balances = account.getHoldings(region, currency);
+    final List<HoldingsEntry> balances = account.getHoldings(modifier.getRegion(), modifier.getCurrency());
 
     if(balances.isEmpty()) {
-      balances.add(new HoldingsEntry(region, currency, BigDecimal.ZERO, HoldingsType.NORMAL_HOLDINGS));
+      balances.add(new HoldingsEntry(modifier.getRegion(), modifier.getCurrency(),
+                                     BigDecimal.ZERO, HoldingsType.NORMAL_HOLDINGS));
     }
 
     this.from = new TransactionParticipant(account.getIdentifier(), balances);
@@ -172,13 +170,11 @@ public class Transaction {
    */
   public Transaction to(final Account account, final HoldingsModifier modifier) {
 
-    final String currency = modifier.getCurrency();
-    final String region = modifier.getRegion();
-
-    final List<HoldingsEntry> balances = account.getHoldings(region, currency);
+    final List<HoldingsEntry> balances = account.getHoldings(modifier.getRegion(), modifier.getCurrency());
 
     if(balances.isEmpty()) {
-      balances.add(new HoldingsEntry(region, currency, BigDecimal.ZERO, HoldingsType.NORMAL_HOLDINGS));
+      balances.add(new HoldingsEntry(modifier.getRegion(), modifier.getCurrency(),
+                                     BigDecimal.ZERO, HoldingsType.NORMAL_HOLDINGS));
     }
 
     this.to = new TransactionParticipant(account.getIdentifier(), balances);
