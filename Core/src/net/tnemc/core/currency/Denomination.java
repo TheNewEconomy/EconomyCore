@@ -31,7 +31,6 @@ import java.math.BigDecimal;
  */
 public class Denomination {
 
-  private boolean major;
   private String single;
   private String plural;
   private BigDecimal weight;
@@ -52,21 +51,12 @@ public class Denomination {
     this.plural = plural;
   }
 
-
-  public void setMajor(boolean major) {
-    this.major = major;
-  }
-
   public String singular() {
     return single;
   }
 
   public String plural() {
     return plural;
-  }
-
-  public boolean isMajor() {
-    return major;
   }
 
   public BigDecimal weight() {
