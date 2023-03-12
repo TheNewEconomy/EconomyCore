@@ -274,13 +274,12 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     final String single = denom.getString("Info.Single", "Dollar");
     final String plural = denom.getString("Info.Plural", "Dollars");
 
-    final double weight = denom.getDouble("Options.Weight", 1);
+    final BigDecimal weight = BigDecimal.valueOf(denom.getDouble("Options.Weight", 1));
     final String material = denom.getString("Options.Material", "PAPER");
 
     Denomination denomination = (currency instanceof ItemCurrency)?
-        new ItemDenomination(material) : new Denomination();
+        new ItemDenomination(weight, material) : new Denomination(weight);
 
-    denomination.setWeight(weight);
     denomination.setSingle(single);
     denomination.setPlural(plural);
 
@@ -303,7 +302,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     }
 
     //TODO: load denomination event
-    currency.getDenominations().put(new BigDecimal(weight), denomination);
+    currency.getDenominations().put(weight, denomination);
     return true;
   }
 }

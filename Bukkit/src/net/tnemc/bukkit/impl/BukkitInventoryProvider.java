@@ -2,7 +2,7 @@ package net.tnemc.bukkit.impl;
 
 /*
  * The New Economy
- * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -19,14 +19,11 @@ package net.tnemc.bukkit.impl;
  */
 
 import net.tnemc.core.compatibility.InventoryProvider;
-import net.tnemc.item.AbstractItemStack;
 import net.tnemc.menu.bukkit.BukkitInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.Map;
 import java.util.UUID;
 
 /**

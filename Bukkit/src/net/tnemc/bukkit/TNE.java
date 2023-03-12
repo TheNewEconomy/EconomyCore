@@ -21,7 +21,8 @@ package net.tnemc.bukkit;
 import net.tnemc.bukkit.hook.economy.VaultHook;
 import net.tnemc.bukkit.listeners.PlayerJoinListener;
 import net.tnemc.bukkit.listeners.WorldLoadListener;
-import net.tnemc.menu.bukkit.BukkitInventoryClickListener;
+import net.tnemc.menu.bukkit.listener.BukkitInventoryClickListener;
+import net.tnemc.menu.bukkit.listener.BukkitInventoryCloseListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -50,7 +51,7 @@ public class TNE extends JavaPlugin {
     this.core.enable();
 
     //Register our hooks
-    new VaultHook().register(this);
+    new VaultHook().register();
 
     //Register our event listeners
 
@@ -59,6 +60,7 @@ public class TNE extends JavaPlugin {
 
 
     Bukkit.getPluginManager().registerEvents(new BukkitInventoryClickListener(), this);
+    Bukkit.getPluginManager().registerEvents(new BukkitInventoryCloseListener(), this);
 
     //World Listeners
     Bukkit.getPluginManager().registerEvents(new WorldLoadListener(this), this);

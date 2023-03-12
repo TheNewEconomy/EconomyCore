@@ -21,6 +21,7 @@ package net.tnemc.core.currency.item;
 import net.tnemc.core.currency.Denomination;
 import net.tnemc.item.SerialItem;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,13 +44,18 @@ public class ItemDenomination extends Denomination {
   private Integer customModel = null;
   private String texture;
 
-  public ItemDenomination(String material) {
-    this(material, (short)0);
+  public ItemDenomination(BigDecimal weight, String material) {
+    this(weight, material, (short)0);
   }
 
-  public ItemDenomination(String material, short damage) {
+  public ItemDenomination(BigDecimal weight, String material, short damage) {
+    super(weight);
     this.material = material;
     this.damage = damage;
+  }
+
+  public ItemDenomination(BigDecimal weight) {
+    super(weight);
   }
 
   public List<String> getEnchantments() {

@@ -23,12 +23,10 @@ import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.menu.sponge7.SpongePlayer;
 import org.spongepowered.api.data.key.Keys;
-import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.living.player.User;
 import org.spongepowered.api.plugin.Plugin;
 
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * The Sponge implementation of the {@link PlayerProvider}.

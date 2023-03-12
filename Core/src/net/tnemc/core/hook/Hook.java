@@ -1,8 +1,8 @@
-package net.tnemc.bukkit.hook;
+package net.tnemc.core.hook;
 
 /*
  * The New Economy
- * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,7 +18,6 @@ package net.tnemc.bukkit.hook;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.TNE;
 
 /**
  * Hook represents a Third-party service. that TNE ties into such as Vault.
@@ -35,8 +34,6 @@ public interface Hook {
 
   /**
    * Used to register this service.
-   *
-   * @param plugin The instance of our main plugin class.
    */
-  void register(TNE plugin);
+  void register();
 }

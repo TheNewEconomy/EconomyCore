@@ -19,15 +19,9 @@ package net.tnemc.core.currency.calculations;
  */
 
 import net.tnemc.core.currency.Denomination;
-import net.tnemc.core.currency.item.ItemDenomination;
-import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Map;
-import java.util.NavigableMap;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * CalculationProvider
@@ -44,8 +38,8 @@ public class ItemCalculations<INV> {
   public BigDecimal calculateHoldings(CalculationData<INV> data) {
     BigDecimal holdings = BigDecimal.ZERO;
 
-    for(Map.Entry<BigDecimal, Denomination> entry : data.getDenomValues().entrySet()) {
-      final int amount = data.getInventoryMaterials().getOrDefault(entry.getValue().singular(), 0);
+    for(Map.Entry<BigDecimal, Denomination> entry : data.getDenominations().entrySet()) {
+      final int amount = data.getInventoryMaterials().getOrDefault(entry.getKey(), 0);
 
       if(amount > 0) {
         holdings = holdings.add(entry.getKey().multiply(new BigDecimal("" + amount)));
@@ -54,131 +48,60 @@ public class ItemCalculations<INV> {
     return holdings;
   }
 
-  public void clearItems(CalculationData<INV> data) {
-    for(Map.Entry<String, Integer> entry : data.getInventoryMaterials().entrySet()) {
-      final Optional<ItemDenomination> denom = data.getCurrency().getDenominationByMaterial(entry.getKey());
-
-      denom.ifPresent(tneTier -> removeMaterials(data, tneTier, entry.getValue()));
-    }
-  }
-
   public void setItems(CalculationData<INV> data, BigDecimal amount) {
     final BigDecimal holdings = calculateHoldings(data);
 
     if(holdings.compareTo(amount) == 0) return;
 
     if(holdings.compareTo(amount) > 0) {
-      calculateChange(data, holdings.subtract(amount));
+      calculation(data, holdings.subtract(amount));
       return;
     }
-    provideMaterials(data, amount.subtract(holdings), null);
+    provideMaterials(data, amount.subtract(holdings));
   }
 
   /**
    * Used to calculate the materials that need to be removed when a player in an item-based economy
    * has money taken from their account.
+   *
    * @param change The amount to remove from the player's account.
+   *
    * @return The {@link BigDecimal} representation of the leftover amount that couldn't be removed
    * because there's no more materials left to remove.
    */
   public BigDecimal calculation(CalculationData<INV> data, BigDecimal change) {
-    BigDecimal workingAmount = change.add(BigDecimal.ZERO);
+
+    data.getCalculator().initialize(data.getCurrency(), data.getInventoryMaterials());
+
+    data.getCalculator().calculateDenominationCounts(change);
+
+    for(Map.Entry<BigDecimal, Integer> entry : data.getCalculator().getToAdd().entrySet()) {
+      data.provideMaterials(data.getDenominations().get(entry.getKey()), entry.getValue());
+    }
+
+    for(Map.Entry<BigDecimal, Integer> entry : data.getCalculator().getToRemove().entrySet()) {
+      data.removeMaterials(data.getDenominations().get(entry.getKey()), entry.getValue());
+    }
 
 
-    //TODO: Redo calculateChange as it is convoluted and doesn't work.
     return BigDecimal.ZERO;
-  }
-
-  /**
-   * Used to calculate the materials that need to be removed when a player in an item-based economy
-   * has money taken from their account.
-   * @param change The amount to remove from the player's account.
-   * @return The {@link BigDecimal} representation of the leftover amount that couldn't be removed
-   * because there's no more materials left to remove.
-   */
-  public BigDecimal calculateChange(CalculationData<INV> data, BigDecimal change) {
-    BigDecimal workingAmount = change;
-
-    final NavigableMap<BigDecimal, Denomination> values = data.getDenomValues().descendingMap();
-    Map.Entry<BigDecimal, Denomination> lowestWhole = findLowestGreaterThan(data, BigDecimal.ONE);
-
-    System.out.println("WorkingAmount: " + workingAmount);
-    int instance = 0;
-    do {
-
-      if(instance > 0) {
-        if(!data.getInventoryMaterials().containsKey(lowestWhole.getValue().singular())) {
-          lowestWhole = findLowestGreaterThan(data, BigDecimal.ONE);
-        }
-        provideMaterials(data, workingAmount, BigDecimal.ONE);
-        provideMaterials(data, lowestWhole.getKey().subtract(workingAmount), BigDecimal.ONE);
-        removeMaterials(data, lowestWhole.getValue(), 1);
-      }
-
-      for(Map.Entry<BigDecimal, Denomination> entry : values.entrySet()) {
-
-
-        if(entry.getKey().compareTo(workingAmount) > 0) {
-          continue;
-        }
-
-        if(workingAmount.compareTo(BigDecimal.ZERO) == 0) {
-          continue;
-        }
-
-        if(!data.getInventoryMaterials().containsKey(entry.getValue().singular())) {
-          continue;
-        }
-
-        final int max = data.getInventoryMaterials().get(entry.getValue().singular());
-
-        int amountPossible = workingAmount.divide(entry.getKey(), RoundingMode.DOWN).toBigInteger().intValue();
-
-        if(amountPossible > max) {
-          amountPossible = max;
-        }
-
-        workingAmount = workingAmount.subtract(entry.getKey().multiply(new BigDecimal(amountPossible)));
-        System.out.println("removeMaterials: " + entry.getValue().singular() + " - " + amountPossible);
-        removeMaterials(data, entry.getValue(), amountPossible);
-      }
-      instance++;
-    } while(workingAmount.compareTo(BigDecimal.ZERO) != 0 && data.getInventoryMaterials().size() > 0);
-    return workingAmount;
   }
 
   /**
    * Used to exchange an amount to inventory items. This is mostly used for when a larger denomination
    * needs to be broken into smaller denominations for calculation purposes.
+   *
    * @param amount The amount that the items should add up to.
-   * @param threshold The threshold that all items should be valued under when given back. I.E. if
-   * the threshold is 1 then all denominations given to the inventory should be less than 1. If you don't wish
-   * to use a threshold then you should pass null.
    */
-  public void provideMaterials(CalculationData<INV> data, BigDecimal amount, @Nullable BigDecimal threshold) {
-    BigDecimal workingAmount = amount;
-    final NavigableMap<BigDecimal, Denomination> values = data.getDenomValues().descendingMap();
+  public void provideMaterials(CalculationData<INV> data, BigDecimal amount) {
 
-    for(Map.Entry<BigDecimal, Denomination> entry : values.entrySet()) {
+    data.getCalculator().initialize(data.getCurrency(), data.getInventoryMaterials());
 
-      if(threshold != null && entry.getKey().compareTo(threshold) >= 0) {
-        continue;
-      }
+    for(Map.Entry<BigDecimal, Integer> entry : data.getCalculator().breakdown(amount).entrySet()) {
 
-      if(entry.getKey().compareTo(workingAmount) > 0) {
-        continue;
-      }
-
-      if(workingAmount.compareTo(BigDecimal.ZERO) == 0) {
-        continue;
-      }
-
-
-      final int amountPossible = workingAmount.divide(entry.getKey(), RoundingMode.DOWN).toBigInteger().intValue();
-      workingAmount = workingAmount.subtract(entry.getKey().multiply(new BigDecimal(amountPossible)));
-      int holding = data.getInventoryMaterials().getOrDefault(entry.getValue().singular(), 0);
-      data.getInventoryMaterials().put(entry.getValue().singular(), holding + amountPossible);
-      data.provideMaterials(entry.getValue(), amountPossible);
+      int holding = data.getInventoryMaterials().getOrDefault(entry.getKey(), 0);
+      data.getInventoryMaterials().put(entry.getKey(), holding + entry.getValue());
+      data.provideMaterials(data.getDenominations().get(entry.getKey()), entry.getValue());
     }
   }
 
@@ -189,25 +112,5 @@ public class ItemCalculations<INV> {
    */
   public void removeMaterials(CalculationData<INV> data, Denomination denom, Integer amount) {
     data.removeMaterials(denom, amount);
-  }
-
-  /**
-   * Finds the lowest denomination that is greater than the specified value.
-   * @param value The value to utilize for the comparison.
-   * @return The Map Entry containing the lowest denomination information.
-   */
-  public Map.Entry<BigDecimal, Denomination> findLowestGreaterThan(CalculationData<INV> data, BigDecimal value) {
-    Map.Entry<BigDecimal, Denomination> entryLowest = null;
-    for(Map.Entry<BigDecimal, Denomination> entry : data.getDenomValues().entrySet()
-        .stream().filter(entry->entry.getKey().compareTo(value) >= 0)
-        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)).entrySet()) {
-
-      if(entryLowest == null || entryLowest.getKey().compareTo(entry.getKey()) > 0) {
-        if(data.getInventoryMaterials().containsKey(entry.getValue().singular())) {
-          entryLowest = entry;
-        }
-      }
-    }
-    return entryLowest;
   }
 }

@@ -89,6 +89,7 @@ public class MoneyCommand extends BaseCommand {
       sender.message(msg);
       return;
     }
+
     final MessageData msg = new MessageData("Messages.Money.HoldingsMulti");
     msg.addReplacement("$world", region);
     sender.message(msg);

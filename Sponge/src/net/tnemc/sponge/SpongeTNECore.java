@@ -22,7 +22,7 @@ import co.aikar.commands.SpongeCommandManager;
 import com.google.inject.Inject;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.io.storage.StorageManager;
-import net.tnemc.menu.sponge7.Sponge7InventoryClickListener;
+import net.tnemc.menu.sponge7.listeners.Sponge7InventoryClickListener;
 import net.tnemc.sponge.impl.SpongeLogProvider;
 import net.tnemc.sponge.impl.SpongeServerProvider;
 import net.tnemc.sponge.listeners.PlayerJoinListener;

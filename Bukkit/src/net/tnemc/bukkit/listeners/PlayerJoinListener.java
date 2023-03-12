@@ -55,7 +55,7 @@ public class PlayerJoinListener implements Listener {
       event.getPlayer().kickPlayer(handle.getResponse());
     }
 
-    provider.inventory().openMenu(new MyEcoMenu());
+    provider.inventory().openMenu(provider, new MyEcoMenu());
 
     MessageHandler.translate(new MessageData("Hello <rainbow>world</rainbow>, TNE messages just got <hover:show_text:'<red>EXTREMELY</red>'>a lot</hover> better!"), event.getPlayer().getUniqueId(), BukkitAudiences.create(TNE.instance()).player(event.getPlayer()));
     MessageHandler.translate(new MessageData("<gradient:green:blue>Gradients are the best!</gradient>"), event.getPlayer().getUniqueId(), BukkitAudiences.create(TNE.instance()).player(event.getPlayer()));

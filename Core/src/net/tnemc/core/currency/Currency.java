@@ -25,6 +25,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 import java.util.UUID;
 
 /**
@@ -36,7 +37,7 @@ import java.util.UUID;
 public class Currency {
 
   private final Map<String, Double> conversion = new HashMap<>();
-  private final Map<BigDecimal, Denomination> denominations = new HashMap<>();
+  private final TreeMap<BigDecimal, Denomination> denominations = new TreeMap<>();
 
   //World-related configurations.
 
@@ -45,8 +46,10 @@ public class Currency {
   private BigDecimal maxBalance;
   private BigDecimal minBalance;
 
-  //Utilized for backwards compat only
+  //identifier
   private UUID uid;
+
+  //Utilized for backwards compat only
   private String identifier;
   private String type;
 
@@ -84,6 +87,10 @@ public class Currency {
 
     this.decimalPlaces = 2;
     this.minorWeight = 100;
+  }
+
+  public Denomination getDenominationByWeight(final BigDecimal weight) {
+    return denominations.get(weight);
   }
 
   public boolean isNotable() {
@@ -251,7 +258,7 @@ public class Currency {
     this.note = note;
   }
 
-  public Map<BigDecimal, Denomination> getDenominations() {
+  public TreeMap<BigDecimal, Denomination> getDenominations() {
     return denominations;
   }
 }

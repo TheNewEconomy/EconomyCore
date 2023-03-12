@@ -20,6 +20,8 @@ package net.tnemc.core.currency;
 
 import net.tnemc.core.currency.item.ItemDenomination;
 
+import java.math.BigDecimal;
+
 /**
  * Represents a denomination for an {@link Currency currency}.
  *
@@ -32,7 +34,11 @@ public class Denomination {
   private boolean major;
   private String single;
   private String plural;
-  private double weight;
+  private BigDecimal weight;
+
+  public Denomination(BigDecimal weight) {
+    this.weight = weight;
+  }
 
   public boolean isItem() {
     return (this instanceof ItemDenomination);
@@ -46,10 +52,6 @@ public class Denomination {
     this.plural = plural;
   }
 
-  public void setWeight(double weight) {
-    this.weight = weight;
-    this.major = weight >= 1.0;
-  }
 
   public void setMajor(boolean major) {
     this.major = major;
@@ -67,7 +69,7 @@ public class Denomination {
     return major;
   }
 
-  public double weight() {
+  public BigDecimal weight() {
     return weight;
   }
 }

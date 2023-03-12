@@ -2,7 +2,7 @@ package net.tnemc.bukkit.hook.economy;
 
 /*
  * The New Economy
- * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,10 +18,8 @@ package net.tnemc.bukkit.hook.economy;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.TNE;
-import net.tnemc.bukkit.hook.Hook;
-import org.bukkit.plugin.ServicePriority;
 
+import net.tnemc.core.hook.Hook;
 
 /**
  * VaultHook represents a hook into the Vault economy API.
@@ -41,11 +39,9 @@ public class VaultHook implements Hook {
 
   /**
    * Used to register this service.
-   *
-   * @param plugin The instance of our main plugin class.
    */
   @Override
-  public void register(TNE plugin) {
+  public void register() {
     //TODO: our vault economy service.
   }
 }

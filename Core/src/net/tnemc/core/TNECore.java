@@ -28,6 +28,7 @@ import net.tnemc.core.io.message.MessageHandler;
 import net.tnemc.core.io.message.TranslationProvider;
 import net.tnemc.core.io.message.translation.BaseTranslationProvider;
 import net.tnemc.core.io.storage.StorageManager;
+import net.tnemc.menu.core.MenuManager;
 
 import java.io.File;
 import java.util.regex.Pattern;
@@ -120,6 +121,8 @@ public abstract class TNECore {
     this.config = new MainConfig();
     this.data = new DataConfig();
     this.messageConfig = new MessageConfig();
+
+    new MenuManager();
   }
 
   /**

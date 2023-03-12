@@ -43,18 +43,18 @@ import java.util.UUID;
 //TODO: Test this class.
 public class CalculationData<INV> {
 
-  private final Map<String, Integer> inventoryMaterials = new HashMap<>();
+  private final Map<BigDecimal, Integer> inventoryMaterials = new HashMap<>();
 
-  private final TreeMap<BigDecimal, Denomination> denomValues = new TreeMap<>();
+  //Our Calculator
+  private final MonetaryCalculation calculator = new MonetaryCalculation();
 
-  INV inventory;
-  final ItemCurrency currency;
-  final UUID player;
-  boolean dropped = false;
-  boolean failedDrop = false;
+  private final INV inventory;
+  private final ItemCurrency currency;
+  private final UUID player;
+  private boolean dropped = false;
+  private boolean failedDrop = false;
 
   public CalculationData(final ItemCurrency currency, INV inventory, final UUID player) {
-    this.denomValues.putAll(currency.getDenominations());
     this.currency = currency;
     this.inventory = inventory;
     this.player = player;
@@ -62,50 +62,65 @@ public class CalculationData<INV> {
     inventoryCounts();
   }
 
-  public Map<String, Integer> getInventoryMaterials() {
+  public Map<BigDecimal, Integer> getInventoryMaterials() {
     return inventoryMaterials;
   }
 
-  public TreeMap<BigDecimal, Denomination> getDenomValues() {
-    return denomValues;
+  public TreeMap<BigDecimal, Denomination> getDenominations() {
+    return currency.getDenominations();
+  }
+
+  public MonetaryCalculation getCalculator() {
+    return calculator;
   }
 
   public ItemCurrency getCurrency() {
     return currency;
   }
 
-  private void inventoryCounts() {
-    for(Map.Entry<BigDecimal, Denomination> entry : denomValues.entrySet()) {
+  public void inventoryCounts() {
+    for(Map.Entry<BigDecimal, Denomination> entry : currency.getDenominations().entrySet()) {
       if(entry.getValue() instanceof final ItemDenomination denomination) {
+
         final AbstractItemStack<Object> stack = TNECore.server().denominationToStack(denomination);
-        inventoryMaterials.put(denomination.singular(), TNECore.server().calculations().count(stack, inventory));
+        final int count = TNECore.server().calculations().count(stack, inventory);
+
+        if(count > 0) {
+          inventoryMaterials.put(entry.getKey(), count);
+        }
       }
     }
   }
 
   public void removeMaterials(Denomination denomination, Integer amount) {
     final AbstractItemStack<Object> stack = TNECore.server().denominationToStack((ItemDenomination)denomination);
-    final int contains = inventoryMaterials.getOrDefault(denomination.singular(), 0);
+    final int contains = inventoryMaterials.getOrDefault(denomination.weight(), 0);
 
     if(contains == amount) {
-      inventoryMaterials.remove(denomination.singular());
+      inventoryMaterials.remove(denomination.weight());
       TNECore.server().calculations().removeAll(stack, inventory);
       return;
     }
+
     final int left = contains - amount;
-    inventoryMaterials.put(denomination.singular(), left);
+    inventoryMaterials.put(denomination.weight(), left);
     final AbstractItemStack<Object> stackClone = stack.amount(amount);
     TNECore.server().calculations().removeItem(stackClone, inventory);
   }
 
   public void provideMaterials(final Denomination denomination, Integer amount) {
+    int contains = (inventoryMaterials.getOrDefault(denomination.weight(), 0) + amount);
+
     final AbstractItemStack<Object> stack = TNECore.server().denominationToStack((ItemDenomination)denomination).amount(amount);
     Collection<AbstractItemStack<Object>> left = TNECore.server().calculations().giveItems(Collections.singletonList(stack), inventory);
 
     if(left.size() > 0) {
+      contains = contains - left.stream().findFirst().get().amount();
       failedDrop = TNECore.server().calculations().drop(left, player);
 
       dropped = true;
     }
+
+    inventoryMaterials.put(denomination.weight(), contains);
   }
 }

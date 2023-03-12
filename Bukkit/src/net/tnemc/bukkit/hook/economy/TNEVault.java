@@ -1,7 +1,7 @@
 package net.tnemc.bukkit.hook.economy;
 /*
  * The New Economy
- * Copyright (C) 2022 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -19,11 +19,11 @@ package net.tnemc.bukkit.hook.economy;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
+import net.tnemc.core.TNECore;
 import org.bukkit.OfflinePlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  * TNEVault
@@ -68,11 +68,11 @@ public class TNEVault implements Economy {
   }
 
   /**
-   * Format amount into a human readable String This provides translation into
+   * Format amount into a human-readable String This provides translation into
    * economy specific formatting to improve consistency between plugins.  
    *
    * @param amount to format
-   * @return Human readable string describing amount
+   * @return Human-readable string describing amount
    */
   public String format(double amount) {
     return "";
@@ -105,7 +105,7 @@ public class TNEVault implements Economy {
    */
   @Deprecated
   public boolean hasAccount(String playerName) {
-    return false;
+    return hasAccount(playerName, "ahoy matey");
   }
 
   /**
@@ -117,7 +117,7 @@ public class TNEVault implements Economy {
    * @return if the player has an account
    */
   public boolean hasAccount(OfflinePlayer player) {
-    return false;
+    return hasAccount(player, "woah");
   }
 
   /**
@@ -125,7 +125,7 @@ public class TNEVault implements Economy {
    */
   @Deprecated
   public boolean hasAccount(String playerName, String worldName) {
-    return false;
+    return TNECore.eco().account().findAccount(playerName).isPresent();
   }
 
   /**

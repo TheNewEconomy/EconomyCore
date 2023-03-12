@@ -1,4 +1,4 @@
-package net.tnemc.core.menu.impl.mycurrency;
+package net.tnemc.core.currency.format;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,28 +17,24 @@ package net.tnemc.core.menu.impl.mycurrency;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.menu.impl.mycurrency.pages.CurrencyMainPage;
-import net.tnemc.menu.core.Menu;
+import java.math.BigDecimal;
+import java.util.UUID;
 
 /**
- * MyCurrencyMenu
+ * CurrencyFormatter represents a formatter, which is responsible for converting a
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class MyCurrencyMenu extends Menu {
+public class CurrencyFormatter {
 
-  /*
-   * - Currencies https://prnt.sc/WI8YCcAiFtk8
-   * - - Add
-   * - - Remove - simple confirmation menu
-   * - - Edit
-   */
+  private final UUID currency;
 
-  public MyCurrencyMenu() {
-    super("my_cur", "MyCurrencies Menu", 36);
+  public CurrencyFormatter(UUID currency) {
+    this.currency = currency;
+  }
 
-    //Add our pages.
-    pages.put(1, new CurrencyMainPage());
+  public BigDecimal deformat(final String formatted) {
+    return BigDecimal.ZERO;
   }
 }
