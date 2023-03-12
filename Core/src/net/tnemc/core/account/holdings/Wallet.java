@@ -93,24 +93,15 @@ public class Wallet {
   }
 
   /**
-   * Sets the holdings for the specified entry in this wallet.
+   * Sets the holdings for the specified entry and in this wallet.
    * @param entry The entry to set in this wallet.
    */
   public void setHoldings(final @NotNull HoldingsEntry entry) {
-    setHoldings(entry, HoldingsType.NORMAL_HOLDINGS);
-  }
-
-  /**
-   * Sets the holdings for the specified entry and in this wallet.
-   * @param entry The entry to set in this wallet.
-   * @param type The type to use for this set operation.
-   */
-  public void setHoldings(final @NotNull HoldingsEntry entry, final @NotNull HoldingsType type) {
 
     final RegionHoldings regionHoldings =
         holdings.getOrDefault(entry.getRegion(), new RegionHoldings(entry.getRegion()));
 
-    regionHoldings.setHoldingsEntry(entry, type);
+    regionHoldings.setHoldingsEntry(entry, entry.getType());
 
     holdings.put(entry.getRegion(), regionHoldings);
   }
@@ -132,17 +123,16 @@ public class Wallet {
    * @param modifier The modifier to use
    * @param type The type to use.
    */
-  public void modifyHoldings(final @NotNull HoldingsModifier modifier,
-                             final @NotNull HoldingsType type) {
+  public void modifyHoldings(final @NotNull HoldingsModifier modifier, HoldingsType type) {
 
     Optional<HoldingsEntry> entry = getHoldings(modifier.getRegion(), modifier.getCurrency(), type);
 
     if(entry.isPresent()) {
       entry.get().modify(modifier);
-      setHoldings(entry.get(), type);
+      setHoldings(entry.get());
       return;
     }
-    setHoldings(new HoldingsEntry(modifier), type);
+    setHoldings(new HoldingsEntry(modifier));
   }
 
   /**

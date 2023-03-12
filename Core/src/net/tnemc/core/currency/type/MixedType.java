@@ -25,7 +25,13 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
+import static net.tnemc.core.account.holdings.HoldingsType.E_CHEST;
+import static net.tnemc.core.account.holdings.HoldingsType.INVENTORY_ONLY;
 import static net.tnemc.core.account.holdings.HoldingsType.VIRTUAL_HOLDINGS;
 
 /**
@@ -63,14 +69,15 @@ public class MixedType extends ItemType {
    * @return The holdings for the specific account.
    */
   @Override
-  public BigDecimal getHoldings(Account account, String region, Currency currency, HoldingsType type) {
+  public List<HoldingsEntry> getHoldings(Account account, String region, Currency currency, HoldingsType type) {
     return switch(type) {
-      case E_CHEST -> getEChest(account, region, currency);
-      case INVENTORY_ONLY -> getInventory(account, region, currency);
-      case VIRTUAL_HOLDINGS -> virtual(account, region, currency);
-      default -> getEChest(account, region, currency)
-                 .add(getInventory(account, region, currency))
-                 .add(virtual(account, region, currency));
+      case E_CHEST -> Collections.singletonList(getEChest(account, region, currency));
+      case INVENTORY_ONLY -> Collections.singletonList(getInventory(account, region, currency));
+      case VIRTUAL_HOLDINGS -> Collections.singletonList(virtual(account, region, currency));
+
+      default -> Arrays.asList(getEChest(account, region, currency),
+                               getInventory(account, region, currency),
+                               virtual(account, region, currency));
     };
   }
 
@@ -89,9 +96,11 @@ public class MixedType extends ItemType {
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount) {
 
-    //TODO: separate holdings balances. i.e. do we need to set item and virtual or just item?
+    if(type.equals(E_CHEST) || type.equals(INVENTORY_ONLY)) {
+      return super.setHoldings(account, region, currency, type, amount);
+    }
 
-    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getIdentifier(), amount), VIRTUAL_HOLDINGS);
+    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getIdentifier(), amount, VIRTUAL_HOLDINGS));
     return true;
   }
 }

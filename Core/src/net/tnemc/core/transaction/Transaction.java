@@ -22,12 +22,14 @@ package net.tnemc.core.transaction;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.ActionSource;
 import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -114,12 +116,13 @@ public class Transaction {
     final String currency = modifier.getCurrency();
     final String region = modifier.getRegion();
 
-    final Optional<HoldingsEntry> balance = account.getHoldings(region, currency);
-    final BigDecimal bal = (balance.isPresent())? balance.get().getAmount() : BigDecimal.ZERO;
+    final List<HoldingsEntry> balances = account.getHoldings(region, currency);
 
-    final HoldingsEntry entry = new HoldingsEntry(region, currency, bal);
+    if(balances.isEmpty()) {
+      balances.add(new HoldingsEntry(region, currency, BigDecimal.ZERO, HoldingsType.NORMAL_HOLDINGS));
+    }
 
-    this.from = new TransactionParticipant(account.getIdentifier(), entry);
+    this.from = new TransactionParticipant(account.getIdentifier(), balances);
 
     final Optional<TransactionType> type = TNECore.eco().transaction().findType(this.type);
 
@@ -127,10 +130,14 @@ public class Transaction {
       final BigDecimal amount = type.get().fromTax().get()
           .calculateTax(modifier.getModifier());
 
-      this.from.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount.negate()));
+      for(HoldingsEntry entry : balances) {
+        this.from.getEndingBalances().add(entry.modifyGrab(modifier).modifyGrab(amount.negate()));
+      }
       this.from.setTax(amount);
     } else {
-      this.from.setEndingBalance(entry.modifyGrab(modifier));
+      for(HoldingsEntry entry : balances) {
+        this.from.getEndingBalances().add(entry.modifyGrab(modifier));
+      }
     }
 
     this.modifierFrom = modifier;
@@ -168,12 +175,13 @@ public class Transaction {
     final String currency = modifier.getCurrency();
     final String region = modifier.getRegion();
 
-    final Optional<HoldingsEntry> balance = account.getHoldings(region, currency);
-    final BigDecimal bal = (balance.isPresent())? balance.get().getAmount() : BigDecimal.ZERO;
+    final List<HoldingsEntry> balances = account.getHoldings(region, currency);
 
-    final HoldingsEntry entry = new HoldingsEntry(region, currency, bal);
+    if(balances.isEmpty()) {
+      balances.add(new HoldingsEntry(region, currency, BigDecimal.ZERO, HoldingsType.NORMAL_HOLDINGS));
+    }
 
-    this.to = new TransactionParticipant(account.getIdentifier(), entry);
+    this.to = new TransactionParticipant(account.getIdentifier(), balances);
 
     final Optional<TransactionType> type = TNECore.eco().transaction().findType(this.type);
 
@@ -181,10 +189,15 @@ public class Transaction {
       final BigDecimal amount = type.get().toTax().get()
           .calculateTax(modifier.getModifier());
 
-      this.to.setEndingBalance(entry.modifyGrab(modifier).modifyGrab(amount.negate()));
+      for(HoldingsEntry entry : balances) {
+        this.to.getEndingBalances().add(entry.modifyGrab(modifier).modifyGrab(amount.negate()));
+      }
       this.to.setTax(amount);
     } else {
-      this.to.setEndingBalance(entry.modifyGrab(modifier));
+
+      for(HoldingsEntry entry : balances) {
+        this.to.getEndingBalances().add(entry.modifyGrab(modifier));
+      }
     }
     this.modifierTo = modifier;
     return this;

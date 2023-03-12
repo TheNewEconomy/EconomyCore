@@ -53,6 +53,11 @@ public class HoldingsEntry {
   private BigDecimal amount;
 
   /**
+   * The {@link HoldingsType type} that this should be used for this.
+   */
+  private HoldingsType type = HoldingsType.VIRTUAL_HOLDINGS;
+
+  /**
    * Constructs an object that represents a holdings entry.
    *
    * @param region The name of the region involved. This is usually a world, but could be something
@@ -60,10 +65,12 @@ public class HoldingsEntry {
    * @param currency The identifier of the currency involved.
    * @param amount The {@link BigDecimal amount} that this charge is for.
    */
-  public HoldingsEntry(final @NotNull String region, final @NotNull String currency, final @NotNull BigDecimal amount) {
+  public HoldingsEntry(final @NotNull String region, final @NotNull String currency,
+                       final @NotNull BigDecimal amount, final @NotNull HoldingsType type) {
     this.region = region;
     this.currency = currency;
     this.amount = amount;
+    this.type = type;
   }
 
   /**
@@ -82,13 +89,13 @@ public class HoldingsEntry {
   }
 
   public HoldingsEntry modifyGrab(final BigDecimal modifier) {
-    HoldingsEntry entry = new HoldingsEntry(region, currency, amount);
+    HoldingsEntry entry = new HoldingsEntry(region, currency, amount, type);
     entry.modify(new HoldingsModifier(region, currency, modifier));
     return entry;
   }
 
   public HoldingsEntry modifyGrab(final HoldingsModifier modifier) {
-    HoldingsEntry entry = new HoldingsEntry(region, currency, amount);
+    HoldingsEntry entry = new HoldingsEntry(region, currency, amount, type);
     entry.modify(modifier);
     return entry;
   }
@@ -124,5 +131,13 @@ public class HoldingsEntry {
 
   public void setAmount(BigDecimal amount) {
     this.amount = amount;
+  }
+
+  public HoldingsType getType() {
+    return type;
+  }
+
+  public void setType(HoldingsType type) {
+    this.type = type;
   }
 }

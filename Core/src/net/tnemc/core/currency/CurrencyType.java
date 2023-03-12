@@ -19,9 +19,12 @@ package net.tnemc.core.currency;
  */
 
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a type of currency.
@@ -76,7 +79,7 @@ public interface CurrencyType {
    * @param currency The instance of the currency to use.
    * @return The holdings for the specific account.
    */
-  BigDecimal getHoldings(Account account, String region, Currency currency, HoldingsType type);
+  List<HoldingsEntry> getHoldings(Account account, String region, Currency currency, HoldingsType type);
 
   /**
    * Used to set the holdings for a specific account.

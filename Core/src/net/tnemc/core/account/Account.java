@@ -92,7 +92,7 @@ public class Account {
    * @return The holdings based on specific specifications, or an empty optional if no
    * holdings for the specifications exists.
    */
-  public Optional<HoldingsEntry> getHoldings(final @NotNull String region,
+  public List<HoldingsEntry> getHoldings(final @NotNull String region,
                                              final @NotNull String currency) {
     return getHoldings(region, currency, HoldingsType.NORMAL_HOLDINGS);
   }
@@ -108,15 +108,16 @@ public class Account {
    * @return The holdings based on specific specifications, or an empty optional if no
    * holdings for the specifications exists.
    */
-  public Optional<HoldingsEntry> getHoldings(final @NotNull String region,
+  public List<HoldingsEntry> getHoldings(final @NotNull String region,
                                              final @NotNull String currency,
                                              final @NotNull HoldingsType type) {
 
     final Optional<Currency> currencyObject = TNECore.eco().currency().findCurrency(currency);
-    return currencyObject.map(value->new HoldingsEntry(region,
-                                                       currency,
-                                                       value.type().getHoldings(this, region,
-                                                                                value, type)));
+
+    if(currencyObject.isPresent()) {
+      return currencyObject.get().type().getHoldings(this, region, currencyObject.get(), type);
+    }
+    return new ArrayList<>();
   }
 
   /**
@@ -136,8 +137,7 @@ public class Account {
 
     TNECore.eco().currency().currencies().forEach((currency)->{
       //TODO: World handler.
-      holdings.add(new HoldingsEntry(region, currency.getIdentifier(), currency.type()
-          .getHoldings(this, region, currency, type)));
+      holdings.addAll(currency.type().getHoldings(this, region, currency, type));
     });
     return holdings;
   }

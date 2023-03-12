@@ -20,6 +20,7 @@ package net.tnemc.core.transaction;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.actions.EconomyResponse;
 
 import java.util.Date;
@@ -50,13 +51,21 @@ public interface TransactionProcessor {
 
     if(transaction.getFrom() != null) {
       Optional<Account> from = TNECore.eco().account().findAccount(transaction.getFrom().getId());
-      from.ifPresent(account->account.setHoldings(transaction.getFrom().getEndingBalance()));
+      if(from.isPresent()) {
+        for(HoldingsEntry entry : transaction.getFrom().getEndingBalances()) {
+          from.get().setHoldings(entry);
+        }
+      }
     }
 
     if(transaction.getTo() != null) {
 
       Optional<Account> to = TNECore.eco().account().findAccount(transaction.getTo().getId());
-      to.ifPresent(account->account.setHoldings(transaction.getTo().getEndingBalance()));
+      if(to.isPresent()) {
+        for(HoldingsEntry entry : transaction.getTo().getEndingBalances()) {
+          to.get().setHoldings(entry);
+        }
+      }
     }
 
     final TransactionResult result = new TransactionResult(true, "");

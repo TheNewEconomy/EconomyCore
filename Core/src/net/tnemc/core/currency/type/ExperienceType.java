@@ -27,7 +27,11 @@ import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.utils.Experience;
 
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+
+import static net.tnemc.core.account.holdings.HoldingsType.VIRTUAL_HOLDINGS;
 
 /**
  * ExperienceType
@@ -57,20 +61,28 @@ public class ExperienceType implements CurrencyType {
    * @return The holdings for the specific account.
    */
   @Override
-  public BigDecimal getHoldings(Account account, String region, Currency currency, HoldingsType type) {
+  public List<HoldingsEntry> getHoldings(Account account, String region, Currency currency, HoldingsType type) {
     if(!account.isPlayer() || !((PlayerAccount)account).isOnline()) {
       //Offline players/non-players have their balances saved to their wallet so check it.
       final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
                                                                                currency.getIdentifier(),
-                                                                               HoldingsType.NORMAL_HOLDINGS
+                                                                               VIRTUAL_HOLDINGS
       );
 
       if(holdings.isPresent()) {
-        return holdings.get().getAmount();
+        return Collections.singletonList(holdings.get());
       }
-      return BigDecimal.ZERO;
+      return Collections.singletonList(new HoldingsEntry(region,
+                                                         currency.getIdentifier(),
+                                                         BigDecimal.ZERO,
+                                                         VIRTUAL_HOLDINGS));
     }
-    return Experience.getExperienceAsDecimal(((PlayerAccount)account).getPlayer().get());
+
+    final BigDecimal amount = Experience.getExperienceAsDecimal(((PlayerAccount)account).getPlayer().get());
+    final HoldingsEntry entry = new HoldingsEntry(region, currency.getIdentifier(), amount, VIRTUAL_HOLDINGS);
+
+    account.getWallet().setHoldings(entry);
+    return Collections.singletonList(entry);
   }
 
   /**
@@ -88,7 +100,7 @@ public class ExperienceType implements CurrencyType {
    */
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount) {
-    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getIdentifier(), amount), HoldingsType.NORMAL_HOLDINGS);
+    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getIdentifier(), amount, VIRTUAL_HOLDINGS));
     if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
       Experience.setExperience(((PlayerAccount)account).getPlayer().get(), amount.intValueExact());
     }

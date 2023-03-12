@@ -23,6 +23,8 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -34,14 +36,15 @@ import java.util.Optional;
  */
 public class TransactionParticipant {
 
+  private final List<HoldingsEntry> startingBalances = new ArrayList<>();
+  private final List<HoldingsEntry> endingBalances = new ArrayList<>();
+
   private final String id;
   private BigDecimal tax;
-  private final HoldingsEntry startingBalance;
-  private HoldingsEntry endingBalance;
 
-  public TransactionParticipant(final String id, final HoldingsEntry startingBalance) {
+  public TransactionParticipant(final String id, List<HoldingsEntry> startBalances) {
     this.id = id;
-    this.startingBalance = startingBalance;
+    this.startingBalances.addAll(startBalances);
     this.tax = BigDecimal.ZERO;
   }
 
@@ -61,15 +64,20 @@ public class TransactionParticipant {
     this.tax = tax;
   }
 
-  public HoldingsEntry getStartingBalance() {
-    return startingBalance;
+  public List<HoldingsEntry> getStartingBalances() {
+    return startingBalances;
   }
 
-  public HoldingsEntry getEndingBalance() {
-    return endingBalance;
+  public List<HoldingsEntry> getEndingBalances() {
+    return endingBalances;
   }
 
-  public void setEndingBalance(HoldingsEntry endingBalance) {
-    this.endingBalance = endingBalance;
+  public BigDecimal getCombinedEnding() {
+    BigDecimal combined = BigDecimal.ZERO;
+
+    for(HoldingsEntry entry : getEndingBalances()) {
+      combined = combined.add(entry.getAmount());
+    }
+    return combined;
   }
 }

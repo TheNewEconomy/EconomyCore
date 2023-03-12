@@ -75,8 +75,7 @@ public class MoneyCommand extends BaseCommand {
     final List<HoldingsEntry> holdings = new ArrayList<>();
 
     if(args.length >= 2) {
-      final Optional<HoldingsEntry> entry = account.get().getHoldings(region, currency);
-      entry.ifPresent(holdings::add);
+      holdings.addAll(account.get().getHoldings(region, currency));
     } else {
       holdings.addAll(account.get().getAllHoldings(region, HoldingsType.NORMAL_HOLDINGS));
     }

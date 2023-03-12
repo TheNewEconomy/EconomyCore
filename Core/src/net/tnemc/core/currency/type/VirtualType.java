@@ -25,6 +25,8 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
 
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static net.tnemc.core.account.holdings.HoldingsType.VIRTUAL_HOLDINGS;
@@ -56,8 +58,8 @@ public class VirtualType implements CurrencyType {
    * @return The holdings for the specific account.
    */
   @Override
-  public BigDecimal getHoldings(Account account, String region, Currency currency, HoldingsType type) {
-    return virtual(account, region, currency);
+  public List<HoldingsEntry> getHoldings(Account account, String region, Currency currency, HoldingsType type) {
+    return Collections.singletonList(virtual(account, region, currency));
   }
 
   /**
@@ -74,19 +76,22 @@ public class VirtualType implements CurrencyType {
    */
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount) {
-    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getIdentifier(), amount), VIRTUAL_HOLDINGS);
+    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getIdentifier(), amount, VIRTUAL_HOLDINGS));
     return true;
   }
 
-  protected BigDecimal virtual(Account account, String region, Currency currency) {
+  protected HoldingsEntry virtual(Account account, String region, Currency currency) {
     final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
                                                                              currency.getIdentifier(),
                                                                              VIRTUAL_HOLDINGS);
 
 
     if(holdings.isPresent()) {
-      return holdings.get().getAmount();
+      return holdings.get();
     }
-    return BigDecimal.ZERO;
+    return new HoldingsEntry(region,
+                             currency.getIdentifier(),
+                             BigDecimal.ZERO,
+                             VIRTUAL_HOLDINGS);
   }
 }
