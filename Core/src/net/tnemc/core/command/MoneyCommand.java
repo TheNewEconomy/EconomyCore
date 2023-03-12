@@ -75,7 +75,11 @@ public class MoneyCommand extends BaseCommand {
     final List<HoldingsEntry> holdings = new ArrayList<>();
 
     if(args.length >= 2) {
-      holdings.addAll(account.get().getHoldings(region, currency));
+      BigDecimal amount = BigDecimal.ZERO;
+      for(HoldingsEntry entry : account.get().getHoldings(region, currency)) {
+        amount = amount.add(entry.getAmount());
+      }
+      holdings.add(new HoldingsEntry(region, currency, amount, HoldingsType.NORMAL_HOLDINGS));
     } else {
       holdings.addAll(account.get().getAllHoldings(region, HoldingsType.NORMAL_HOLDINGS));
     }

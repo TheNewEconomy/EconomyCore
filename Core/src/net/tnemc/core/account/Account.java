@@ -26,6 +26,7 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.maps.MapKey;
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -136,8 +137,12 @@ public class Account {
     List<HoldingsEntry> holdings = new ArrayList<>();
 
     TNECore.eco().currency().currencies().forEach((currency)->{
+      BigDecimal amount = BigDecimal.ZERO;
+      for(HoldingsEntry entry : currency.type().getHoldings(this, region, currency, type)) {
+        amount = amount.add(entry.getAmount());
+      }
       //TODO: World handler.
-      holdings.addAll(currency.type().getHoldings(this, region, currency, type));
+      holdings.add(new HoldingsEntry(region, currency.getIdentifier(), amount, type));
     });
     return holdings;
   }
