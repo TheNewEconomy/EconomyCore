@@ -35,7 +35,6 @@ public class Experience {
    * Calculates total experience based on level.
    *
    * "One can determine how much experience has been collected to reach a level using the equations:
-   *
    *  Total Experience = [Level]2 + 6[Level] (at levels 0-15)
    *                     2.5[Level]2 - 40.5[Level] + 360 (at levels 16-30)
    *                     4.5[Level]2 - 162.5[Level] + 2220 (at level 31+)"
