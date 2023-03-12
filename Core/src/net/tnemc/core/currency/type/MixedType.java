@@ -19,11 +19,14 @@ package net.tnemc.core.currency.type;
  */
 
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
 
 import java.math.BigDecimal;
+
+import static net.tnemc.core.account.holdings.HoldingsType.VIRTUAL_HOLDINGS;
 
 /**
  * Represents a currency type that is a mixture of items and virtual.
@@ -31,7 +34,7 @@ import java.math.BigDecimal;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class MixedType implements CurrencyType {
+public class MixedType extends ItemType {
   /**
    * @return The name of this currency type. Examples: Virtual, Item
    */
@@ -61,7 +64,14 @@ public class MixedType implements CurrencyType {
    */
   @Override
   public BigDecimal getHoldings(Account account, String region, Currency currency, HoldingsType type) {
-    return BigDecimal.ZERO;
+    return switch(type) {
+      case E_CHEST -> getEChest(account, region, currency);
+      case INVENTORY_ONLY -> getInventory(account, region, currency);
+      case VIRTUAL_HOLDINGS -> virtual(account, region, currency);
+      default -> getEChest(account, region, currency)
+                 .add(getInventory(account, region, currency))
+                 .add(virtual(account, region, currency));
+    };
   }
 
   /**
@@ -78,6 +88,10 @@ public class MixedType implements CurrencyType {
    */
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount) {
+
+    //TODO: separate holdings balances. i.e. do we need to set item and virtual or just item?
+
+    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getIdentifier(), amount), VIRTUAL_HOLDINGS);
     return true;
   }
 }

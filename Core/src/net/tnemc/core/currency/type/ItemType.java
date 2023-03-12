@@ -37,7 +37,7 @@ import java.util.Optional;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class ItemType implements CurrencyType {
+public class ItemType extends VirtualType {
   /**
    * @return The name of this currency type. Examples: Virtual, Item
    */
@@ -101,7 +101,7 @@ public class ItemType implements CurrencyType {
     return false;
   }
 
-  public BigDecimal getEChest(Account account, String region, Currency currency) {
+  protected BigDecimal getEChest(Account account, String region, Currency currency) {
     if(account.isPlayer()) {
       if(!((PlayerAccount)account).isOnline()) {
         //Offline players have their balances saved to their wallet so check it.
@@ -125,7 +125,7 @@ public class ItemType implements CurrencyType {
     return BigDecimal.ZERO;
   }
 
-  public BigDecimal getInventory(Account account, String region, Currency currency) {
+  protected BigDecimal getInventory(Account account, String region, Currency currency) {
     if(!(currency instanceof ItemCurrency) || !account.isPlayer() || !((PlayerAccount)account).isOnline()) {
       //Offline players/non-players have their balances saved to their wallet so check it.
       final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
