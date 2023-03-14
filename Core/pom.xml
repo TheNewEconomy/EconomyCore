@@ -35,7 +35,7 @@
         <dependency>
             <groupId>net.tnemc</groupId>
             <artifactId>TNIL-Core</artifactId>
-            <version>0.1.6.0</version>
+            <version>0.1.7.0</version>
             <scope>compile</scope>
         </dependency>
         <!-- Database Stuff is Fun -->
