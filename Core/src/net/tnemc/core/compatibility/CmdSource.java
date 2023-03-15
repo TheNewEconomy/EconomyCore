@@ -19,6 +19,7 @@ package net.tnemc.core.compatibility;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
 import net.tnemc.core.io.message.MessageData;
 
 import java.util.Optional;
@@ -51,6 +52,14 @@ public interface CmdSource {
    * player, otherwise an empty {@link Optional}.
    */
   Optional<PlayerProvider> player();
+
+  /**
+   * Used to get the account associated with this specific {@link CmdSource}.
+   * @return An Optional containing the {@link Account account} class, or an empty Optional.
+   */
+  default Optional<Account> account() {
+    return TNECore.eco().account().findAccount(identifier());
+  }
 
   /**
    * Used to send a message to this command source.

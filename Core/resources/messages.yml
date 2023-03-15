@@ -104,7 +104,7 @@ Messages:
         Received: "<white>You were paid <gold>$amount <white>by<white> $player."
         Taken: "<white>$player took <gold>$amount<white> from you."
         Insufficient: "<red>I'm sorry, but you do not have <gold>$amount<red>."
-        HoldingsMulti: "<white>Your current balances for world '$world' are: "
+        HoldingsMulti: "<white>Balances for world '$world' are: "
         HoldingsMultiSingle: "<white>$currency: <gold>$amount"
         Holdings: "<white>You currently have <gold>$amount<white> on you."
         Gave: "<white>Successfully gave $player <gold>$amount<white>."

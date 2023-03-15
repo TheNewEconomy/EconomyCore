@@ -86,6 +86,15 @@ public class MoneyCommand extends BaseCommand {
   @Syntax("%Money.Pay.Arguments")
   @Description("%Money.Pay.Description")
   @CommandPermission("tne.money.pay")
+  public void onOther(CommandSender sender, String[] args) {
+    net.tnemc.core.command.MoneyCommand.onPay(new BukkitCMDSource(sender), args);
+  }
+
+  @Subcommand("pay|send|transfer")
+  @CommandAlias("pay|send|transfer")
+  @Syntax("%Money.Pay.Arguments")
+  @Description("%Money.Pay.Description")
+  @CommandPermission("tne.money.pay")
   public void onPay(CommandSender sender, String[] args) {
     net.tnemc.core.command.MoneyCommand.onPay(new BukkitCMDSource(sender), args);
   }

@@ -39,6 +39,7 @@ import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,18 +53,27 @@ public class MoneyCommand extends BaseCommand {
 
   //Arguments: [currency]
   public static void onMyBal(CmdSource sender, String[] args) {
-    //TODO: Menu manager
-    //MenuManager.open("mybal", sender).withData("currency", currency);
+    if(sender.player().isPresent()) {
+      sender.player().get().inventory().openMenu(sender.player().get(), "my_bal");
+    }
   }
 
-  //Arguments: [world] [currency]
+  //Arguments: [currency] [world]
   public static void onBalance(CmdSource sender, String[] args) {
 
-    final String region = (args.length >= 1)? args[0] : sender.region();
-    final String currency = (args.length >= 2)? args[1] : "USD";
+    final String currency = (args.length >= 1)? args[0] : "USD";
+    final String region = (args.length >= 2)? args[1] : sender.region();
+
+    //If our currency doesn't exist this is probably a username, so check for their balance instead.
+    Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency(currency);
+    if(currencyOptional.isEmpty()) {
+      onOther(sender, Arrays.copyOfRange(args, 1, args.length));
+      return;
+    }
+
     //TODO: Default currency.
 
-    Optional<Account> account = TNECore.eco().account().findAccount(sender.identifier());
+    Optional<Account> account = sender.account();
 
     if(account.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
@@ -108,6 +118,7 @@ public class MoneyCommand extends BaseCommand {
 
   //Arguments: <amount> <to currency> [from currency]
   public static void onConvert(CmdSource sender, String[] args) {
+
     long startTime = System.nanoTime();
     if(args.length < 2) {
       //TODO: Help
@@ -132,7 +143,7 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    Optional<Account> account = TNECore.eco().account().findAccount(sender.identifier());
+    Optional<Account> account = sender.account();
 
     if(account.isEmpty()) {
       sender.message(new MessageData("Messages.Money.ConvertSame"));
@@ -157,19 +168,7 @@ public class MoneyCommand extends BaseCommand {
         .processor(new BaseTransactionProcessor())
         .source(new PlayerSource(sender.identifier()));
 
-    Optional<Receipt> receipt = Optional.empty();
-    try {
-      final TransactionResult result = transaction.process();
-
-      if(!result.isSuccessful()) {
-        sender.message(new MessageData(result.getMessage()));
-        return;
-      }
-      System.out.println(result.getMessage());
-      receipt = result.getReceipt();
-    } catch(InvalidTransactionException e) {
-      e.printStackTrace();
-    }
+    Optional<Receipt> receipt = processTransaction(sender, transaction);
 
 
     //TODO: Better conversion success message!
@@ -219,19 +218,7 @@ public class MoneyCommand extends BaseCommand {
         .processor(new BaseTransactionProcessor())
         .source(new PlayerSource(sender.identifier()));
 
-    Optional<Receipt> receipt = Optional.empty();
-    try {
-      final TransactionResult result = transaction.process();
-
-      if(!result.isSuccessful()) {
-        sender.message(new MessageData(result.getMessage()));
-        return;
-      }
-      System.out.println(result.getMessage());
-      receipt = result.getReceipt();
-    } catch(InvalidTransactionException e) {
-      e.printStackTrace();
-    }
+    Optional<Receipt> receipt = processTransaction(sender, transaction);
 
     //TODO: Receipt logging and success checking
     long endTime = System.nanoTime();
@@ -254,7 +241,7 @@ public class MoneyCommand extends BaseCommand {
     final String currency = (args.length >= 2)? args[1] : "USD";
     //TODO: Default currency.
 
-    Optional<Account> account = TNECore.eco().account().findAccount(sender.identifier());
+    Optional<Account> account = sender.account();
 
     if(account.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
@@ -274,19 +261,7 @@ public class MoneyCommand extends BaseCommand {
         .source(new PlayerSource(sender.identifier()));
 
 
-    Optional<Receipt> receipt = Optional.empty();
-    try {
-      final TransactionResult result = transaction.process();
-
-      if(!result.isSuccessful()) {
-        sender.message(new MessageData(result.getMessage()));
-        return;
-      }
-      System.out.println(result.getMessage());
-      receipt = result.getReceipt();
-    } catch(InvalidTransactionException e) {
-      e.printStackTrace();
-    }
+    Optional<Receipt> receipt = processTransaction(sender, transaction);
 
     //TODO: Receipt logging and success checking
     long endTime = System.nanoTime();
@@ -294,6 +269,14 @@ public class MoneyCommand extends BaseCommand {
     long duration = (endTime - startTime);
 
     sender.message(new MessageData("<red>Transaction took " + duration + "to execute!"));
+  }
+
+  //Arguments: <player> [world] [currency]
+  public static void onOther(CmdSource sender, String[] args) {
+    if(args.length < 1) {
+
+    }
+
   }
 
   //Arguments: <player> <amount> [currency] [from:account]
@@ -308,7 +291,7 @@ public class MoneyCommand extends BaseCommand {
     //TODO: Default currency.
 
     Optional<Account> account = TNECore.eco().account().findAccount(args[0]);
-    Optional<Account> senderAccount = TNECore.eco().account().findAccount(sender.identifier());
+    Optional<Account> senderAccount = sender.account();
 
     if(account.isEmpty() || senderAccount.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
@@ -336,14 +319,7 @@ public class MoneyCommand extends BaseCommand {
         .processor(new BaseTransactionProcessor())
         .source(new PlayerSource(sender.identifier()));
 
-    Optional<Receipt> receipt = Optional.empty();
-    try {
-      final TransactionResult result = transaction.process();
-      System.out.println(result.getMessage());
-      receipt = result.getReceipt();
-    } catch(InvalidTransactionException e) {
-      e.printStackTrace();
-    }
+    Optional<Receipt> receipt = processTransaction(sender, transaction);
 
     //TODO: Receipt logging and success checking
     long endTime = System.nanoTime();
@@ -433,14 +409,7 @@ public class MoneyCommand extends BaseCommand {
         .processor(new BaseTransactionProcessor())
         .source(new PlayerSource(sender.identifier()));
 
-    Optional<Receipt> receipt = Optional.empty();
-    try {
-      final TransactionResult result = transaction.process();
-      System.out.println(result.getMessage());
-      receipt = result.getReceipt();
-    } catch(InvalidTransactionException e) {
-      e.printStackTrace();
-    }
+    Optional<Receipt> receipt = processTransaction(sender, transaction);
 
     final MessageData msg = new MessageData("Messages.Money.Set");
     msg.addReplacement("$player", args[0]);
@@ -494,19 +463,7 @@ public class MoneyCommand extends BaseCommand {
         .processor(new BaseTransactionProcessor())
         .source(new PlayerSource(sender.identifier()));
 
-    Optional<Receipt> receipt = Optional.empty();
-    try {
-      final TransactionResult result = transaction.process();
-
-      if(!result.isSuccessful()) {
-        sender.message(new MessageData(result.getMessage()));
-        return;
-      }
-      System.out.println(result.getMessage());
-      receipt = result.getReceipt();
-    } catch(InvalidTransactionException e) {
-      e.printStackTrace();
-    }
+    Optional<Receipt> receipt = processTransaction(sender, transaction);
 
     //TODO: Receipt logging and success checking
     long endTime = System.nanoTime();
@@ -521,5 +478,21 @@ public class MoneyCommand extends BaseCommand {
   //Arguments: [page] [currency:name] [world:world] [limit:#]
   public static void onTop(CmdSource sender, String[] args) {
 
+  }
+
+  private static Optional<Receipt> processTransaction(CmdSource sender, Transaction transaction) {
+    try {
+      final TransactionResult result = transaction.process();
+
+      if(!result.isSuccessful()) {
+        sender.message(new MessageData(result.getMessage()));
+        return Optional.empty();
+      }
+      System.out.println(result.getMessage());
+      return result.getReceipt();
+    } catch(InvalidTransactionException e) {
+      e.printStackTrace();
+    }
+    return Optional.empty();
   }
 }
