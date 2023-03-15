@@ -60,60 +60,14 @@ public class MoneyCommand extends BaseCommand {
 
   //Arguments: [currency] [world]
   public static void onBalance(CmdSource sender, String[] args) {
-
     final String currency = (args.length >= 1)? args[0] : "USD";
-    final String region = (args.length >= 2)? args[1] : sender.region();
 
     //If our currency doesn't exist this is probably a username, so check for their balance instead.
     Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency(currency);
     if(currencyOptional.isEmpty()) {
-      onOther(sender, Arrays.copyOfRange(args, 1, args.length));
-      return;
+      final String identifier = (args.length > 0)? args[0] : sender.identifier().toString();
+      onOther(sender, identifier, ((args.length > 1)? Arrays.copyOfRange(args, 1, args.length) : new String[0]));
     }
-
-    //TODO: Default currency.
-
-    Optional<Account> account = sender.account();
-
-    if(account.isEmpty()) {
-      final MessageData data = new MessageData("Messages.General.NoPlayer");
-      data.addReplacement("$player", args[0]);
-      sender.message(data);
-      return;
-    }
-
-    final List<HoldingsEntry> holdings = new ArrayList<>();
-
-    if(args.length >= 2) {
-      BigDecimal amount = BigDecimal.ZERO;
-      for(HoldingsEntry entry : account.get().getHoldings(region, currency)) {
-        amount = amount.add(entry.getAmount());
-      }
-      holdings.add(new HoldingsEntry(region, currency, amount, HoldingsType.NORMAL_HOLDINGS));
-    } else {
-      holdings.addAll(account.get().getAllHoldings(region, HoldingsType.NORMAL_HOLDINGS));
-    }
-
-    if(holdings.isEmpty()) {
-
-      //Shouldn't happen, but if it does handle it.
-      final MessageData msg = new MessageData("Messages.Account.NoHoldings");
-      msg.addReplacement("$currency", currency);
-      sender.message(msg);
-      return;
-    }
-
-    final MessageData msg = new MessageData("Messages.Money.HoldingsMulti");
-    msg.addReplacement("$world", region);
-    sender.message(msg);
-
-    for(HoldingsEntry entry : holdings) {
-      final MessageData entryMSG = new MessageData("Messages.Money.HoldingsMultiSingle");
-      entryMSG.addReplacement("$currency", entry.getCurrency());
-      entryMSG.addReplacement("$amount", entry.getAmount().toPlainString());
-      sender.message(entryMSG);
-    }
-    //TODO: currency formatting.
   }
 
   //Arguments: <amount> <to currency> [from currency]
@@ -271,12 +225,63 @@ public class MoneyCommand extends BaseCommand {
     sender.message(new MessageData("<red>Transaction took " + duration + "to execute!"));
   }
 
-  //Arguments: <player> [world] [currency]
   public static void onOther(CmdSource sender, String[] args) {
     if(args.length < 1) {
+      //TODO: help
+      return;
+    }
+    onOther(sender, args[0], ((args.length > 1)? Arrays.copyOfRange(args, 1, args.length) : new String[0]));
+  }
 
+  //Arguments: <player> [world] [currency]
+  public static void onOther(CmdSource sender, String identifier, String[] args) {
+
+    final String currency = (args.length >= 1)? args[0] : "USD";
+    final String region = (args.length >= 2)? args[1] : sender.region();
+
+    //TODO: Default currency.
+
+    Optional<Account> account = TNECore.eco().account().findAccount(identifier);
+
+    if(account.isEmpty()) {
+      final MessageData data = new MessageData("Messages.General.NoPlayer");
+      data.addReplacement("$player", identifier);
+      sender.message(data);
+      return;
     }
 
+    final List<HoldingsEntry> holdings = new ArrayList<>();
+
+    if(args.length >= 2) {
+      BigDecimal amount = BigDecimal.ZERO;
+      for(HoldingsEntry entry : account.get().getHoldings(region, currency)) {
+        amount = amount.add(entry.getAmount());
+      }
+      holdings.add(new HoldingsEntry(region, currency, amount, HoldingsType.NORMAL_HOLDINGS));
+    } else {
+      holdings.addAll(account.get().getAllHoldings(region, HoldingsType.NORMAL_HOLDINGS));
+    }
+
+    if(holdings.isEmpty()) {
+
+      //Shouldn't happen, but if it does handle it.
+      final MessageData msg = new MessageData("Messages.Account.NoHoldings");
+      msg.addReplacement("$currency", currency);
+      sender.message(msg);
+      return;
+    }
+
+    final MessageData msg = new MessageData("Messages.Money.HoldingsMulti");
+    msg.addReplacement("$world", region);
+    sender.message(msg);
+
+    for(HoldingsEntry entry : holdings) {
+      final MessageData entryMSG = new MessageData("Messages.Money.HoldingsMultiSingle");
+      entryMSG.addReplacement("$currency", entry.getCurrency());
+      entryMSG.addReplacement("$amount", entry.getAmount().toPlainString());
+      sender.message(entryMSG);
+    }
+    //TODO: currency formatting.
   }
 
   //Arguments: <player> <amount> [currency] [from:account]
