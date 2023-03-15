@@ -71,6 +71,14 @@ public interface CurrencyType {
   }
 
   /**
+   * @return True if this currency type supports the exchange command set, which is used to exchange
+   * from items <--> virtual.
+   */
+  default boolean supportsExchange() {
+    return false;
+  }
+
+  /**
    * Used to get the holdings for a specific account from this currency type.
    *
    * @param account The uuid of the account.

@@ -28,6 +28,8 @@ import net.tnemc.core.io.message.MessageHandler;
 import net.tnemc.core.io.message.TranslationProvider;
 import net.tnemc.core.io.message.translation.BaseTranslationProvider;
 import net.tnemc.core.io.storage.StorageManager;
+import net.tnemc.core.menu.impl.mybal.MyBalMenu;
+import net.tnemc.core.menu.impl.myeco.MyEcoMenu;
 import net.tnemc.menu.core.MenuManager;
 
 import java.io.File;
@@ -123,6 +125,8 @@ public abstract class TNECore {
     this.messageConfig = new MessageConfig();
 
     new MenuManager();
+    MenuManager.instance().addMenu(new MyEcoMenu());
+    MenuManager.instance().addMenu(new MyBalMenu());
   }
 
   /**

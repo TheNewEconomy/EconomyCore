@@ -19,11 +19,25 @@ package net.tnemc.core.menu.impl.mybal.pages;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.menu.core.Page;
+import net.tnemc.menu.core.icon.ActionType;
+import net.tnemc.menu.core.icon.action.DataAction;
+import net.tnemc.menu.core.icon.action.SwitchPageAction;
+import net.tnemc.menu.core.page.Page;
 import net.tnemc.menu.core.builder.IconBuilder;
+import net.tnemc.menu.core.compatibility.MenuPlayer;
+import net.tnemc.menu.core.icon.Icon;
+import net.tnemc.menu.core.page.impl.PlayerPage;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * CurrencyMainPage
@@ -31,25 +45,54 @@ import java.util.Arrays;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class CurrencyMainPage extends Page {
+public class CurrencyMainPage extends PlayerPage {
 
   public CurrencyMainPage() {
     super(1);
+  }
+
+  @Override
+  public Map<Integer, Icon> defaultIcons(MenuPlayer player) {
+
+    Map<Integer, Icon> icons = new HashMap<>();
 
     int i = 10;
 
+    LinkedList<String> lore = new LinkedList<>();
+
     for(Currency currency : TNECore.eco().currency().currencies()) {
+      lore.clear();
+
+      lore.add("Bal: " + balance(TNECore.server().findPlayer(player.identifier()).get(), currency.getIdentifier()));
+      lore.add("Left Click to Perform Actions.");
+      if(currency.type().supportsExchange()) {
+        lore.add("Middle Click to Exchange.");
+      }
+      lore.add("Right Click to View Balances.");
+
       icons.put(i, IconBuilder.of(TNECore.server()
-                                       .stackBuilder()
-                                       .of("PAPER", 1)
-                                       .display(currency.getIdentifier())
-                                       .lore(Arrays.asList("Left Click to View",
-                                                           "Middle Click to Delete",
-                                                           "Right Click to Edit"
-                                       )))
-          .create());
+                                      .stackBuilder()
+                                      .of("PAPER", 1)
+                                      .display(currency.getIdentifier())
+                                      .lore(lore))
+          .withAction(new DataAction("currency", currency.getUid()))
+          .withAction(new SwitchPageAction(2, ActionType.RIGHT_CLICK)).create());
 
       i += 2;
     }
+    return icons;
+  }
+
+  private BigDecimal balance(PlayerProvider player, final String currency) {
+
+    BigDecimal amount = BigDecimal.ZERO;
+
+    final Optional<Account> account = TNECore.eco().account().findAccount(player.identifier());
+    if(account.isPresent()) {
+      for(HoldingsEntry entry : account.get().getHoldings(player.getRegion(true), currency)) {
+        amount = amount.add(entry.getAmount());
+      }
+    }
+    return amount;
   }
 }

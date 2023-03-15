@@ -17,6 +17,8 @@ package net.tnemc.core.menu.impl.mybal;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.menu.impl.mybal.pages.BalancePage;
+import net.tnemc.core.menu.impl.mybal.pages.CurrencyMainPage;
 import net.tnemc.menu.core.Menu;
 
 /**
@@ -38,5 +40,7 @@ public class MyBalMenu extends Menu {
     super("my_bal", "MyBal Menu", 36);
 
     //Add our pages.
+    pages.put(2, new CurrencyMainPage());
+    pages.put(1, new BalancePage());
   }
 }

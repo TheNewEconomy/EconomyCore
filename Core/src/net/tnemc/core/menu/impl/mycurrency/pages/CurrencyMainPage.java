@@ -20,7 +20,7 @@ package net.tnemc.core.menu.impl.mycurrency.pages;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.menu.core.Page;
+import net.tnemc.menu.core.page.Page;
 import net.tnemc.menu.core.builder.IconBuilder;
 
 import java.util.Arrays;

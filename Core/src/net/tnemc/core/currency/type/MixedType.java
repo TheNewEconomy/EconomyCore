@@ -58,6 +58,15 @@ public class MixedType extends ItemType {
   }
 
   /**
+   * @return True if this currency type supports the exchange command set, which is used to exchange
+   * from items <--> virtual.
+   */
+  @Override
+  public boolean supportsExchange() {
+    return true;
+  }
+
+  /**
    * Used to get the holdings for a specific account from this currency type.
    *
    * @param account  The uuid of the account.

@@ -26,7 +26,7 @@ import java.util.List;
  * Represents a currency note object, which is a way to make virtual balances into a physical note
  * to be traded or stored in a chest.
  *
- * @since 0.1.1.17
+ * @since 0.1.2.0
  * @author creatorfromhell
  */
 public class Note {

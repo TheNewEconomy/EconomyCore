@@ -24,6 +24,7 @@ import net.tnemc.bukkit.impl.BukkitPlayerProvider;
 import net.tnemc.core.handlers.PlayerJoinHandler;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.io.message.MessageHandler;
+import net.tnemc.core.menu.impl.mybal.MyBalMenu;
 import net.tnemc.core.menu.impl.myeco.MyEcoMenu;
 import net.tnemc.core.utils.HandlerResponse;
 import org.bukkit.event.EventHandler;
@@ -55,7 +56,7 @@ public class PlayerJoinListener implements Listener {
       event.getPlayer().kickPlayer(handle.getResponse());
     }
 
-    provider.inventory().openMenu(provider, new MyEcoMenu());
+    provider.inventory().openMenu(provider, "my_bal");
 
     MessageHandler.translate(new MessageData("Hello <rainbow>world</rainbow>, TNE messages just got <hover:show_text:'<red>EXTREMELY</red>'>a lot</hover> better!"), event.getPlayer().getUniqueId(), BukkitAudiences.create(TNE.instance()).player(event.getPlayer()));
     MessageHandler.translate(new MessageData("<gradient:green:blue>Gradients are the best!</gradient>"), event.getPlayer().getUniqueId(), BukkitAudiences.create(TNE.instance()).player(event.getPlayer()));
