@@ -24,7 +24,6 @@ import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.currency.calculations.CalculationData;
 import net.tnemc.core.currency.item.ItemCurrency;
 
@@ -36,8 +35,6 @@ import java.util.Optional;
 
 import static net.tnemc.core.account.holdings.HoldingsType.E_CHEST;
 import static net.tnemc.core.account.holdings.HoldingsType.INVENTORY_ONLY;
-import static net.tnemc.core.account.holdings.HoldingsType.NORMAL_HOLDINGS;
-import static net.tnemc.core.account.holdings.HoldingsType.VIRTUAL_HOLDINGS;
 
 /**
  * Represents our currency type that is based on items.

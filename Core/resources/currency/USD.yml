@@ -7,6 +7,10 @@ Info:
     #The identifier of this currency used for various commands.
     Identifier: "USD"
 
+    #The material name to use as the icon for this currency in
+    #the plugin menus.
+    Icon: "PAPER"
+
     #The singular form of this currency's major denomination.
     Major_Single: "Dollar"
 

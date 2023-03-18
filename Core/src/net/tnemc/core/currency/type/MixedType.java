@@ -22,13 +22,11 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.core.currency.CurrencyType;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import static net.tnemc.core.account.holdings.HoldingsType.E_CHEST;
 import static net.tnemc.core.account.holdings.HoldingsType.INVENTORY_ONLY;

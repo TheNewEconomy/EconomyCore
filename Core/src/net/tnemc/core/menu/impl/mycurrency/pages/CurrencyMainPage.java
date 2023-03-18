@@ -20,8 +20,8 @@ package net.tnemc.core.menu.impl.mycurrency.pages;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.menu.core.page.Page;
 import net.tnemc.menu.core.builder.IconBuilder;
+import net.tnemc.menu.core.page.Page;
 
 import java.util.Arrays;
 
@@ -39,9 +39,10 @@ public class CurrencyMainPage extends Page {
     int i = 10;
 
     for(Currency currency : TNECore.eco().currency().currencies()) {
+
       icons.put(i, IconBuilder.of(TNECore.server()
                                        .stackBuilder()
-                                       .of("PAPER", 1)
+                                       .of(currency.getIconMaterial(), 1)
                                        .display(currency.getIdentifier())
                                        .lore(Arrays.asList("Left Click to View",
                                                            "Middle Click to Delete",

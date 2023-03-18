@@ -23,19 +23,16 @@ import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.item.AbstractItemStack;
-import net.tnemc.menu.core.MenuManager;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.compatibility.MenuPlayer;
 import net.tnemc.menu.core.icon.Icon;
 import net.tnemc.menu.core.page.impl.PlayerPage;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * BalancePage
@@ -62,17 +59,11 @@ public class BalancePage extends PlayerPage {
 
       if(currency.isPresent()) {
 
-        final AbstractItemStack<?> stack = TNECore.server()
-            .stackBuilder()
-            .of("PAPER", 1)
-            .display(currency.get().getDisplay())
-            .lore(Arrays.asList("Combined Balance: " + balance(provider.get(), currency.get().getIdentifier()).toString()));
-
         icons.put(4, IconBuilder.of(TNECore.server()
                                         .stackBuilder()
-                                        .of("GOLD_INGOT", 1)
+                                        .of(currency.get().getIconMaterial(), 1)
                                         .display(currency.get().getDisplay())
-                                        .lore(Arrays.asList("Combined Balance: " + balance(provider.get(), currency.get().getIdentifier()).toString()))).create());
+                                        .lore(List.of("Combined Balance: " + balance(provider.get(), currency.get().getIdentifier()).toString()))).create());
 
         //balance check
         int i = 10;
@@ -85,14 +76,14 @@ public class BalancePage extends PlayerPage {
             if(entry.getType().equals(HoldingsType.E_CHEST)) {
               item = "ENDER_CHEST";
             } else if(entry.getType().equals(HoldingsType.INVENTORY_ONLY)) {
-              item = "GOLD_BLOCK";
+              item = currency.get().getIconMaterial();
             }
 
             icons.put(i, IconBuilder.of(TNECore.server()
                                             .stackBuilder()
                                             .of(item, 1)
                                             .display(entry.getType().getIdentifier())
-                                            .lore(Arrays.asList("Balance: " + entry.getAmount().toString()))).create());
+                                            .lore(List.of("Balance: " + entry.getAmount().toString()))).create());
 
             i += 3;
           }

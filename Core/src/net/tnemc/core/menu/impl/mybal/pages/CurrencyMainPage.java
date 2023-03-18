@@ -23,17 +23,15 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.menu.core.icon.ActionType;
-import net.tnemc.menu.core.icon.action.DataAction;
-import net.tnemc.menu.core.icon.action.SwitchPageAction;
-import net.tnemc.menu.core.page.Page;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.compatibility.MenuPlayer;
+import net.tnemc.menu.core.icon.ActionType;
 import net.tnemc.menu.core.icon.Icon;
+import net.tnemc.menu.core.icon.action.DataAction;
+import net.tnemc.menu.core.icon.action.SwitchPageAction;
 import net.tnemc.menu.core.page.impl.PlayerPage;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -72,7 +70,7 @@ public class CurrencyMainPage extends PlayerPage {
 
       icons.put(i, IconBuilder.of(TNECore.server()
                                       .stackBuilder()
-                                      .of("PAPER", 1)
+                                      .of(currency.getIconMaterial(), 1)
                                       .display(currency.getIdentifier())
                                       .lore(lore))
           .withAction(new DataAction("currency", currency.getUid()))

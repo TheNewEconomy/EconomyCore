@@ -49,6 +49,9 @@ public class Currency {
   //identifier
   private UUID uid;
 
+  //Icon used for menus.
+  private String iconMaterial;
+
   //Utilized for backwards compat only
   private String identifier;
   private String type;
@@ -148,6 +151,14 @@ public class Currency {
 
   public void setIdentifier(String identifier) {
     this.identifier = identifier;
+  }
+
+  public String getIconMaterial() {
+    return iconMaterial;
+  }
+
+  public void setIconMaterial(String iconMaterial) {
+    this.iconMaterial = iconMaterial;
   }
 
   public String getType() {

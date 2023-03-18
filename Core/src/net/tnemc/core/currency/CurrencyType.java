@@ -24,7 +24,6 @@ import net.tnemc.core.account.holdings.HoldingsType;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Represents a type of currency.
