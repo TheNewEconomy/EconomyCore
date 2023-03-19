@@ -18,19 +18,14 @@ package net.tnemc.core.menu.impl.mybal.pages;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.account.Account;
-import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.menu.core.MenuManager;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.compatibility.MenuPlayer;
 import net.tnemc.menu.core.icon.Icon;
-import net.tnemc.menu.core.icon.action.DataAction;
 import net.tnemc.menu.core.page.impl.PlayerPage;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,15 +33,15 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * BalancePage
+ * ActionsPage
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class BalancePage extends PlayerPage {
+public class ActionsPage extends PlayerPage {
 
-  public BalancePage() {
-    super(2);
+  public ActionsPage() {
+    super(3);
   }
 
   @Override
@@ -66,50 +61,34 @@ public class BalancePage extends PlayerPage {
                                         .stackBuilder()
                                         .of(currency.get().getIconMaterial(), 1)
                                         .display(currency.get().getDisplay())
-                                        .lore(List.of("Combined Balance: " + balance(provider.get(), currency.get().getIdentifier()).toString())))
+                                        .lore(List.of("Chose an Action!")))
             .create());
 
-        //balance check
-        int i = 10;
 
-        final Optional<Account> account = TNECore.eco().account().findAccount(player.identifier());
-        if(account.isPresent()) {
-          for(HoldingsEntry entry : account.get().getHoldings(provider.get().getRegion(true), currency.get().getIdentifier())) {
+        icons.put(10, IconBuilder.of(TNECore.server()
+                                         .stackBuilder()
+                                         .of("ARROW", 1)
+                                         .display("Send Funds")
+                                         .lore(List.of("Send money to another player!")))
+            .create());
 
-            String item = "PAPER";
-            if(entry.getType().equals(HoldingsType.E_CHEST)) {
-              item = "ENDER_CHEST";
-            } else if(entry.getType().equals(HoldingsType.INVENTORY_ONLY)) {
-              item = currency.get().getIconMaterial();
-            }
 
-            icons.put(i, IconBuilder.of(TNECore.server()
-                                            .stackBuilder()
-                                            .of(item, 1)
-                                            .display(entry.getType().getIdentifier())
-                                            .lore(List.of("Balance: " + entry.getAmount().toString())))
-                .create());
+        icons.put(12, IconBuilder.of(TNECore.server()
+                                         .stackBuilder()
+                                         .of("EMERALD", 1)
+                                         .display("Convert Funds")
+                                         .lore(List.of("Convert to another currency!")))
+            .create());
 
-            i += 3;
-          }
-        }
 
+        icons.put(14, IconBuilder.of(TNECore.server()
+                                         .stackBuilder()
+                                         .of("GOLD_INGOT", 1)
+                                         .display("Request Funds")
+                                         .lore(List.of("Request money from another player!")))
+            .create());
       }
     }
-
     return icons;
-  }
-
-  private BigDecimal balance(PlayerProvider player, final String currency) {
-
-    BigDecimal amount = BigDecimal.ZERO;
-
-    final Optional<Account> account = TNECore.eco().account().findAccount(player.identifier());
-    if(account.isPresent()) {
-      for(HoldingsEntry entry : account.get().getHoldings(player.getRegion(true), currency)) {
-        amount = amount.add(entry.getAmount());
-      }
-    }
-    return amount;
   }
 }

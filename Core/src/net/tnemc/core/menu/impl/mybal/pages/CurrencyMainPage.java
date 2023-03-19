@@ -63,9 +63,7 @@ public class CurrencyMainPage extends PlayerPage {
 
       lore.add("Bal: " + balance(TNECore.server().findPlayer(player.identifier()).get(), currency.getIdentifier()));
       lore.add("Left Click to Perform Actions.");
-      if(currency.type().supportsExchange()) {
-        lore.add("Middle Click to Exchange.");
-      }
+      lore.add("Middle Click to convert to physical form!");
       lore.add("Right Click to View Balances.");
 
       icons.put(i, IconBuilder.of(TNECore.server()
@@ -73,8 +71,11 @@ public class CurrencyMainPage extends PlayerPage {
                                       .of(currency.getIconMaterial(), 1)
                                       .display(currency.getIdentifier())
                                       .lore(lore))
-          .withAction(new DataAction("currency", currency.getUid()))
-          .withAction(new SwitchPageAction(2, ActionType.RIGHT_CLICK)).create());
+          .withAction(new DataAction("cur_uid", currency.getUid()))
+          .withAction(new SwitchPageAction(3, ActionType.LEFT_CLICK))
+          .withAction(new SwitchPageAction(4, ActionType.SCROLL_CLICK))
+          .withAction(new SwitchPageAction(2, ActionType.RIGHT_CLICK))
+          .create());
 
       i += 2;
     }

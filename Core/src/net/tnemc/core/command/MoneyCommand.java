@@ -305,7 +305,7 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)account.get()).getUUID());
+    final Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)account.get()).getUUID());
     if(provider.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
       data.addReplacement("$player", args[0]);
@@ -324,7 +324,7 @@ public class MoneyCommand extends BaseCommand {
         .processor(new BaseTransactionProcessor())
         .source(new PlayerSource(sender.identifier()));
 
-    Optional<Receipt> receipt = processTransaction(sender, transaction);
+    final Optional<Receipt> receipt = processTransaction(sender, transaction);
 
     //TODO: Receipt logging and success checking
     long endTime = System.nanoTime();
