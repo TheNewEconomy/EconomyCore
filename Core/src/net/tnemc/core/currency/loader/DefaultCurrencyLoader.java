@@ -108,6 +108,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
     //Currency Info configs.
     final String identifier = cur.getString("Info.Identifier", "Dollar");
+    final String icon = cur.getString("Info.Icon", "PAPER");
     final String single = cur.getString("Info.Major_Single", "Dollar");
     final String plural = cur.getString("Info.Major_Plural", "Dollars");
     final String singleMinor = cur.getString("Info.Minor_Single", "Cent");
@@ -146,6 +147,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     final BigDecimal balance = new BigDecimal(cur.getString("Options.Balance", "200.00"));
 
     currency.setIdentifier(identifier);
+    currency.setIconMaterial(icon);
     currency.setMaxBalance(maxBalance);
     currency.setMinBalance(minBalance);
     currency.setStartingHoldings(balance);

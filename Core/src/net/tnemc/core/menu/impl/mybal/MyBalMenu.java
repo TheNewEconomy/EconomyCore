@@ -40,7 +40,7 @@ public class MyBalMenu extends Menu {
     super("my_bal", "MyBal Menu", 36);
 
     //Add our pages.
-    pages.put(2, new CurrencyMainPage());
-    pages.put(1, new BalancePage());
+    pages.put(1, new CurrencyMainPage());
+    pages.put(2, new BalancePage());
   }
 }

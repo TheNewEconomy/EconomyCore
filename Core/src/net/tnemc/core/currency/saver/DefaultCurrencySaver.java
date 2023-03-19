@@ -76,6 +76,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     //TODO: Translation: Saving currency...
 
     //Currency Info configs.
+    cur.set("Info.Icon", currency.getIconMaterial());
     cur.set("Info.Major_Single", currency.getDisplay());
     cur.set("Info.Major_Plural", currency.getDisplayPlural());
     cur.set("Info.Minor_Single", currency.getDisplayMinor());
