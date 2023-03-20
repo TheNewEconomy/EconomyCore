@@ -19,6 +19,7 @@ package net.tnemc.core.menu.impl.myeco.pages;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.menu.impl.shared.icons.PreviousPageIcon;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.page.Page;
 
@@ -34,6 +35,8 @@ public class AdminPage extends Page {
 
   public AdminPage() {
     super(4);
+
+    icons.put(0, new PreviousPageIcon(0, 1));
 
     icons.put(19, IconBuilder.of(TNECore.server()
                                      .stackBuilder()

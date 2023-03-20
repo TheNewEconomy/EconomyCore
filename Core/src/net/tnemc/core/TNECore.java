@@ -29,6 +29,7 @@ import net.tnemc.core.io.message.TranslationProvider;
 import net.tnemc.core.io.message.translation.BaseTranslationProvider;
 import net.tnemc.core.io.storage.StorageManager;
 import net.tnemc.core.menu.impl.mybal.MyBalMenu;
+import net.tnemc.core.menu.impl.mycurrency.MyCurrencyMenu;
 import net.tnemc.core.menu.impl.myeco.MyEcoMenu;
 import net.tnemc.menu.core.MenuManager;
 
@@ -126,6 +127,7 @@ public abstract class TNECore {
 
     new MenuManager();
     MenuManager.instance().addMenu(new MyEcoMenu());
+    MenuManager.instance().addMenu(new MyCurrencyMenu());
     MenuManager.instance().addMenu(new MyBalMenu());
   }
 

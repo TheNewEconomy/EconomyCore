@@ -21,6 +21,7 @@ package net.tnemc.bukkit.command;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
@@ -36,12 +37,22 @@ import org.bukkit.command.CommandSender;
 @CommandAlias("tne|ecomin|ecoadmin|ecomanage|theneweconomy")
 public class AdminCommand extends BaseCommand {
 
+  @Default
+  @Subcommand("ecomenu|menu")
+  @CommandAlias("myeco|ecomenu")
+  @Syntax("%Money.MyEco.Arguments")
+  @Description("%Money.MyEco.Description")
+  @CommandPermission("tne.money.myeco")
+  public void onMyEco(CommandSender sender, String[] args) {
+    net.tnemc.core.command.AdminCommand.onMyEco(new BukkitCMDSource(sender), args);
+  }
+
   @Subcommand("backup|archive")
   @Syntax("%Admin.Backup.Arguments")
   @Description("%Admin.Backup.Description")
   @CommandPermission("tne.admin.backup")
   public void backup(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.backup(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onBackup(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("bal|balance|info")
@@ -49,7 +60,7 @@ public class AdminCommand extends BaseCommand {
   @Description("%Admin.Balance.Description")
   @CommandPermission("tne.admin.balance")
   public void balance(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.balance(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onBalance(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("create|add|new|make|+")
@@ -57,7 +68,7 @@ public class AdminCommand extends BaseCommand {
   @Description("%Admin.Create.Description")
   @CommandPermission("tne.admin.create")
   public void create(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.create(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onCreate(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("debug")
@@ -65,7 +76,7 @@ public class AdminCommand extends BaseCommand {
   @Description("%Admin.Debug.Description")
   @CommandPermission("tne.admin.debug")
   public void debug(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.debug(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onDebug(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("delete|destroy|del|remove|-")
@@ -73,7 +84,7 @@ public class AdminCommand extends BaseCommand {
   @Description("%Admin.Delete.Description")
   @CommandPermission("tne.admin.delete")
   public void delete(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.delete(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onDelete(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("extract")
@@ -81,7 +92,7 @@ public class AdminCommand extends BaseCommand {
   @Description("%Admin.Extract.Description")
   @CommandPermission("tne.admin.extract")
   public void extract(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.extract(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onExtract(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("purge")
@@ -89,7 +100,7 @@ public class AdminCommand extends BaseCommand {
   @Description("%Admin.Purge.Description")
   @CommandPermission("tne.admin.purge")
   public void purge(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.purge(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onPurge(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("reload")
@@ -97,7 +108,7 @@ public class AdminCommand extends BaseCommand {
   @Description("%Admin.Reload.Description")
   @CommandPermission("tne.admin.reload")
   public void reload(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.reload(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onReload(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("reset|nuke")
@@ -105,7 +116,7 @@ public class AdminCommand extends BaseCommand {
   @Description("%Admin.Reset.Description")
   @CommandPermission("tne.admin.reset")
   public void reset(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.reset(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onReset(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("restore")
@@ -113,7 +124,7 @@ public class AdminCommand extends BaseCommand {
   @Description("%Admin.Restore.Description")
   @CommandPermission("tne.admin.restore")
   public void restore(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.restore(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onRestore(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("save")
@@ -121,7 +132,7 @@ public class AdminCommand extends BaseCommand {
   @Description("%Admin.Save.Description")
   @CommandPermission("tne.admin.save")
   public void save(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.save(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onSave(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("status")
@@ -129,7 +140,7 @@ public class AdminCommand extends BaseCommand {
   @Description("%Admin.Status.Description")
   @CommandPermission("tne.admin.status")
   public void status(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.status(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onStatus(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("upload")
@@ -137,7 +148,7 @@ public class AdminCommand extends BaseCommand {
   @Description("%Admin.Upload.Description")
   @CommandPermission("tne.admin.upload")
   public void upload(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.upload(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onUpload(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("version|ver|build")
@@ -145,6 +156,6 @@ public class AdminCommand extends BaseCommand {
   @Description("%Admin.Version.Description")
   @CommandPermission("tne.admin.version")
   public void version(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.version(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onVersion(new BukkitCMDSource(sender), args);
   }
 }

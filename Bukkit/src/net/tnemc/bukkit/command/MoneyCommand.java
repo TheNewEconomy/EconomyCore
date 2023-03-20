@@ -42,7 +42,7 @@ public class MoneyCommand extends BaseCommand {
   @CommandAlias("mybal|balmenu")
   @Syntax("%Money.MyBal.Arguments")
   @Description("%Money.MyBal.Description")
-  @CommandPermission("tne.money.MyBal")
+  @CommandPermission("tne.money.mybal")
   public void onMyBal(CommandSender sender, String[] args) {
     net.tnemc.core.command.MoneyCommand.onMyBal(new BukkitCMDSource(sender), args);
   }

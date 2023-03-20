@@ -1,4 +1,4 @@
-package net.tnemc.core.menu.impl.mycurrency;
+package net.tnemc.core.menu.impl.shared.icons;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,30 +17,23 @@ package net.tnemc.core.menu.impl.mycurrency;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.menu.impl.mycurrency.pages.CurrencyEditorPage;
-import net.tnemc.core.menu.impl.mycurrency.pages.CurrencyMainPage;
-import net.tnemc.menu.core.Menu;
+import net.tnemc.core.TNECore;
+import net.tnemc.menu.core.icon.Icon;
+import net.tnemc.menu.core.icon.action.SwitchPageAction;
 
 /**
- * MyCurrencyMenu
+ * BackIcon
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class MyCurrencyMenu extends Menu {
+public class PreviousPageIcon extends Icon {
+  public PreviousPageIcon(int slot, int previousPage) {
+    super(slot, TNECore.server()
+        .stackBuilder()
+        .of("RED_WOOL", 1)
+        .display("Previous Page"));
 
-  /*
-   * - Currencies https://prnt.sc/WI8YCcAiFtk8
-   * - - Add
-   * - - Remove - simple confirmation menu
-   * - - Edit
-   */
-
-  public MyCurrencyMenu() {
-    super("my_cur", "MyCurrencies Menu", 36);
-
-    //Add our pages.
-    pages.put(1, new CurrencyMainPage());
-    pages.put(2, new CurrencyEditorPage());
+    actions.add(new SwitchPageAction(previousPage));
   }
 }

@@ -18,12 +18,15 @@ package net.tnemc.core.menu.impl.mybal.pages;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.menu.impl.shared.icons.PreviousPageIcon;
 import net.tnemc.menu.core.MenuManager;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.compatibility.MenuPlayer;
 import net.tnemc.menu.core.icon.Icon;
+import net.tnemc.menu.core.icon.action.ChatAction;
 import net.tnemc.menu.core.page.impl.PlayerPage;
 
 import java.util.HashMap;
@@ -57,6 +60,8 @@ public class ActionsPage extends PlayerPage {
 
       if(currency.isPresent()) {
 
+        icons.put(0, new PreviousPageIcon(0, 1));
+
         icons.put(4, IconBuilder.of(TNECore.server()
                                         .stackBuilder()
                                         .of(currency.get().getIconMaterial(), 1)
@@ -86,6 +91,28 @@ public class ActionsPage extends PlayerPage {
                                          .of("GOLD_INGOT", 1)
                                          .display("Request Funds")
                                          .lore(List.of("Request money from another player!")))
+            .create());
+
+
+        icons.put(16, IconBuilder.of(TNECore.server()
+                                         .stackBuilder()
+                                         .of("BOOK", 1)
+                                         .display("Chat Test")
+                                         .lore(List.of("Test Chat")))
+                .click((click)->{
+                  click.getPlayer().message("Enter player name!");
+                })
+                .withAction(new ChatAction((callback)->{
+                  System.out.println(callback.getMessage());
+
+                  final Optional<Account> account = TNECore.eco().account().findAccount(callback.getMessage());
+                  if(account.isPresent()) {
+                    System.out.println("Player : " + account.get().getName() + " exists!");
+                    return true;
+                  }
+
+                  return false;
+                }))
             .create());
       }
     }

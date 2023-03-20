@@ -1,4 +1,4 @@
-package net.tnemc.core.menu.impl.mycurrency;
+package net.tnemc.core.menu.impl.mycurrency.pages;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,30 +17,33 @@ package net.tnemc.core.menu.impl.mycurrency;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.menu.impl.mycurrency.pages.CurrencyEditorPage;
-import net.tnemc.core.menu.impl.mycurrency.pages.CurrencyMainPage;
-import net.tnemc.menu.core.Menu;
+import net.tnemc.core.menu.impl.shared.icons.PreviousPageIcon;
+import net.tnemc.menu.core.compatibility.MenuPlayer;
+import net.tnemc.menu.core.icon.Icon;
+import net.tnemc.menu.core.page.impl.PlayerPage;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * MyCurrencyMenu
+ * CurrencyEditorPage
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class MyCurrencyMenu extends Menu {
+public class CurrencyEditorPage extends PlayerPage {
+  public CurrencyEditorPage() {
+    super(2);
+  }
 
-  /*
-   * - Currencies https://prnt.sc/WI8YCcAiFtk8
-   * - - Add
-   * - - Remove - simple confirmation menu
-   * - - Edit
-   */
+  @Override
+  public Map<Integer, Icon> defaultIcons(MenuPlayer menuPlayer) {
 
-  public MyCurrencyMenu() {
-    super("my_cur", "MyCurrencies Menu", 36);
+    Map<Integer, Icon> icons = new HashMap<>();
 
-    //Add our pages.
-    pages.put(1, new CurrencyMainPage());
-    pages.put(2, new CurrencyEditorPage());
+    icons.put(0, new PreviousPageIcon(0, 1));
+
+
+    return icons;
   }
 }

@@ -23,11 +23,11 @@ import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.menu.impl.shared.icons.PreviousPageIcon;
 import net.tnemc.menu.core.MenuManager;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.compatibility.MenuPlayer;
 import net.tnemc.menu.core.icon.Icon;
-import net.tnemc.menu.core.icon.action.DataAction;
 import net.tnemc.menu.core.page.impl.PlayerPage;
 
 import java.math.BigDecimal;
@@ -61,6 +61,8 @@ public class BalancePage extends PlayerPage {
       Optional<Currency> currency = TNECore.eco().currency().findCurrency(((UUID)curID.get()));
 
       if(currency.isPresent()) {
+
+        icons.put(0, new PreviousPageIcon(0, 1));
 
         icons.put(4, IconBuilder.of(TNECore.server()
                                         .stackBuilder()

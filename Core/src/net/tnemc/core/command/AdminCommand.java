@@ -29,59 +29,66 @@ import net.tnemc.core.compatibility.CmdSource;
  */
 public class AdminCommand extends BaseCommand {
 
-  public static void backup(CmdSource sender, String[] args) {
+  public static void onMyEco(CmdSource sender, String[] args) {
+    if(sender.player().isPresent()) {
+      sender.player().get().inventory().openMenu(sender.player().get(), "my_eco");
+    }
+  }
+
+  public static void onBackup(CmdSource sender, String[] args) {
 
   }
 
-  public static void balance(CmdSource sender, String[] args) {
+  //TODO: Remove this? /money other instead?
+  public static void onBalance(CmdSource sender, String[] args) {
 
   }
 
-  public static void create(CmdSource sender, String[] args) {
+  public static void onCreate(CmdSource sender, String[] args) {
 
   }
 
-  public static void debug(CmdSource sender, String[] args) {
+  public static void onDebug(CmdSource sender, String[] args) {
 
   }
 
-  public static void delete(CmdSource sender, String[] args) {
+  public static void onDelete(CmdSource sender, String[] args) {
 
   }
 
-  public static void extract(CmdSource sender, String[] args) {
+  public static void onExtract(CmdSource sender, String[] args) {
 
   }
 
-  public static void purge(CmdSource sender, String[] args) {
+  public static void onPurge(CmdSource sender, String[] args) {
 
   }
 
-  public static void reload(CmdSource sender, String[] args) {
+  public static void onReload(CmdSource sender, String[] args) {
 
   }
 
-  public static void reset(CmdSource sender, String[] args) {
+  public static void onReset(CmdSource sender, String[] args) {
 
   }
 
-  public static void restore(CmdSource sender, String[] args) {
+  public static void onRestore(CmdSource sender, String[] args) {
 
   }
 
-  public static void save(CmdSource sender, String[] args) {
+  public static void onSave(CmdSource sender, String[] args) {
 
   }
 
-  public static void status(CmdSource sender, String[] args) {
+  public static void onStatus(CmdSource sender, String[] args) {
 
   }
 
-  public static void upload(CmdSource sender, String[] args) {
+  public static void onUpload(CmdSource sender, String[] args) {
 
   }
 
-  public static void version(CmdSource sender, String[] args) {
+  public static void onVersion(CmdSource sender, String[] args) {
 
   }
 }

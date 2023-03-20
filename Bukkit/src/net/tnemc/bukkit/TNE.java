@@ -21,6 +21,7 @@ package net.tnemc.bukkit;
 import net.tnemc.bukkit.hook.economy.VaultHook;
 import net.tnemc.bukkit.listeners.PlayerJoinListener;
 import net.tnemc.bukkit.listeners.WorldLoadListener;
+import net.tnemc.menu.bukkit.listener.BukkitChatListener;
 import net.tnemc.menu.bukkit.listener.BukkitInventoryClickListener;
 import net.tnemc.menu.bukkit.listener.BukkitInventoryCloseListener;
 import org.bukkit.Bukkit;
@@ -57,6 +58,7 @@ public class TNE extends JavaPlugin {
 
     //Player Listeners
     Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
+    Bukkit.getPluginManager().registerEvents(new BukkitChatListener(this), this);
 
 
     Bukkit.getPluginManager().registerEvents(new BukkitInventoryClickListener(), this);
