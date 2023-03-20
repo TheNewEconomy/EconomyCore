@@ -55,14 +55,6 @@ public class AdminCommand extends BaseCommand {
     net.tnemc.core.command.AdminCommand.onBackup(new BukkitCMDSource(sender), args);
   }
 
-  @Subcommand("bal|balance|info")
-  @Syntax("%Admin.Balance.Arguments")
-  @Description("%Admin.Balance.Description")
-  @CommandPermission("tne.admin.balance")
-  public void balance(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.onBalance(new BukkitCMDSource(sender), args);
-  }
-
   @Subcommand("create|add|new|make|+")
   @Syntax("%Admin.Create.Arguments")
   @Description("%Admin.Create.Description")
@@ -141,14 +133,6 @@ public class AdminCommand extends BaseCommand {
   @CommandPermission("tne.admin.status")
   public void status(CommandSender sender, String[] args) {
     net.tnemc.core.command.AdminCommand.onStatus(new BukkitCMDSource(sender), args);
-  }
-
-  @Subcommand("upload")
-  @Syntax("%Admin.Upload.Arguments")
-  @Description("%Admin.Upload.Description")
-  @CommandPermission("tne.admin.upload")
-  public void upload(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.onUpload(new BukkitCMDSource(sender), args);
   }
 
   @Subcommand("version|ver|build")

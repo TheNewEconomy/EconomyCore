@@ -38,7 +38,7 @@ public class MainPage extends Page {
   public MainPage() {
     super(1);
 
-    icons.put(19, IconBuilder.of(TNECore.server()
+    icons.put(10, IconBuilder.of(TNECore.server()
                                      .stackBuilder()
                                      .of("GOLD_INGOT", 1)
                                      .display("Currency Editor")
@@ -46,15 +46,15 @@ public class MainPage extends Page {
         .withAction(new SwitchMenuAction("my_cur", ActionType.ANY))
         .create());
 
-    icons.put(21, IconBuilder.of(TNECore.server()
+    icons.put(12, IconBuilder.of(TNECore.server()
                                      .stackBuilder()
                                      .of("COMPASS", 1)
                                      .display("World Editor")
                                      .lore(Collections.singletonList("Click to open world editor.")))
-        //.withAction(new SwitchPageAction(2, ActionType.ANY))
+        .withAction(new SwitchPageAction(2, ActionType.ANY))
         .create());
 
-    icons.put(23, IconBuilder.of(TNECore.server()
+    icons.put(14, IconBuilder.of(TNECore.server()
                                      .stackBuilder()
                                      .of("REDSTONE", 1)
                                      .display("Configuration Editor")
@@ -62,7 +62,7 @@ public class MainPage extends Page {
         .withAction(new SwitchPageAction(3, ActionType.ANY))
         .create());
 
-    icons.put(25, IconBuilder.of(TNECore.server()
+    icons.put(16, IconBuilder.of(TNECore.server()
                                      .stackBuilder()
                                      .of("TORCH", 1)
                                      .display("Admin Tasks")

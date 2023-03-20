@@ -20,7 +20,6 @@ package net.tnemc.bukkit;
 
 import co.aikar.commands.PaperCommandManager;
 import net.tnemc.bukkit.command.AdminCommand;
-import net.tnemc.bukkit.command.ConfigCommand;
 import net.tnemc.bukkit.command.MoneyCommand;
 import net.tnemc.bukkit.command.TransactionCommand;
 import net.tnemc.bukkit.impl.BukkitLogProvider;
@@ -55,7 +54,6 @@ public class BukkitTNECore extends TNECore {
 
     command = new PaperCommandManager(plugin);
     command.registerCommand(new AdminCommand());
-    command.registerCommand(new ConfigCommand());
     command.registerCommand(new MoneyCommand());
     command.registerCommand(new TransactionCommand());
   }

@@ -25,7 +25,10 @@ import net.tnemc.menu.bukkit.listener.BukkitChatListener;
 import net.tnemc.menu.bukkit.listener.BukkitInventoryClickListener;
 import net.tnemc.menu.bukkit.listener.BukkitInventoryCloseListener;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.logging.Level;
 
 /**
  * TNE
@@ -60,12 +63,13 @@ public class TNE extends JavaPlugin {
     Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
     Bukkit.getPluginManager().registerEvents(new BukkitChatListener(this), this);
 
-
     Bukkit.getPluginManager().registerEvents(new BukkitInventoryClickListener(), this);
     Bukkit.getPluginManager().registerEvents(new BukkitInventoryCloseListener(), this);
 
     //World Listeners
     Bukkit.getPluginManager().registerEvents(new WorldLoadListener(this), this);
+
+    getLogger().log(Level.INFO, ChatColor.GREEN + "The New Economy has been enabled!");
 
   }
 

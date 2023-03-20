@@ -39,11 +39,6 @@ public class AdminCommand extends BaseCommand {
 
   }
 
-  //TODO: Remove this? /money other instead?
-  public static void onBalance(CmdSource sender, String[] args) {
-
-  }
-
   public static void onCreate(CmdSource sender, String[] args) {
 
   }
@@ -81,10 +76,6 @@ public class AdminCommand extends BaseCommand {
   }
 
   public static void onStatus(CmdSource sender, String[] args) {
-
-  }
-
-  public static void onUpload(CmdSource sender, String[] args) {
 
   }
 
