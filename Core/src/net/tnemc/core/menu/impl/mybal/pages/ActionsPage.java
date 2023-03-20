@@ -74,7 +74,28 @@ public class ActionsPage extends PlayerPage {
                                          .stackBuilder()
                                          .of("ARROW", 1)
                                          .display("Send Funds")
-                                         .lore(List.of("Send money to another player!")))
+                                         .lore(List.of("Send money to another account!")))
+            .click((click)->{
+              click.getPlayer().message("Enter the name of the account you'd like to send funds to!" +
+                                            "Or type \"exit\" to quit.");
+            })
+            .withAction(new ChatAction((callback)->{
+              System.out.println(callback.getMessage());
+              if(callback.getMessage().equalsIgnoreCase("exit")) {
+                return true;
+              }
+
+              final Optional<Account> account = TNECore.eco().account().findAccount(callback.getMessage());
+              if(account.isPresent()) {
+                System.out.println("Player : " + account.get().getName() + " exists!");
+                //TODO: open amount selection menu.
+                return true;
+              } else {
+                //TODO: Account doesn't exist.
+              }
+
+              return false;
+            }))
             .create());
 
 
@@ -83,6 +104,7 @@ public class ActionsPage extends PlayerPage {
                                          .of("EMERALD", 1)
                                          .display("Convert Funds")
                                          .lore(List.of("Convert to another currency!")))
+            //TODO: Currency Selection Menu.
             .create());
 
 
@@ -90,8 +112,28 @@ public class ActionsPage extends PlayerPage {
                                          .stackBuilder()
                                          .of("GOLD_INGOT", 1)
                                          .display("Request Funds")
-                                         .lore(List.of("Request money from another player!")))
-            .create());
+                                         .lore(List.of("Request money from another account!")))
+            .click((click)->{
+              click.getPlayer().message("Enter the name of the account you'd like to request funds from!" +
+                                            "Or type \"exit\" to quit.");
+            })
+            .withAction(new ChatAction((callback)->{
+              System.out.println(callback.getMessage());
+              if(callback.getMessage().equalsIgnoreCase("exit")) {
+                return true;
+              }
+
+              final Optional<Account> account = TNECore.eco().account().findAccount(callback.getMessage());
+              if(account.isPresent()) {
+                System.out.println("Player : " + account.get().getName() + " exists!");
+                //TODO: open amount selection menu.
+                return true;
+              } else {
+                //TODO: Account doesn't exist.
+              }
+
+              return false;
+            })).create());
 
 
         icons.put(16, IconBuilder.of(TNECore.server()
@@ -99,20 +141,6 @@ public class ActionsPage extends PlayerPage {
                                          .of("BOOK", 1)
                                          .display("Chat Test")
                                          .lore(List.of("Test Chat")))
-                .click((click)->{
-                  click.getPlayer().message("Enter player name!");
-                })
-                .withAction(new ChatAction((callback)->{
-                  System.out.println(callback.getMessage());
-
-                  final Optional<Account> account = TNECore.eco().account().findAccount(callback.getMessage());
-                  if(account.isPresent()) {
-                    System.out.println("Player : " + account.get().getName() + " exists!");
-                    return true;
-                  }
-
-                  return false;
-                }))
             .create());
       }
     }
