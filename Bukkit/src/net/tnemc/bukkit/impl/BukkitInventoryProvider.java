@@ -23,6 +23,7 @@ import net.tnemc.menu.bukkit.BukkitInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.UUID;
 
@@ -34,8 +35,8 @@ import java.util.UUID;
  */
 public class BukkitInventoryProvider extends BukkitInventory implements InventoryProvider<Inventory> {
 
-  public BukkitInventoryProvider(UUID id) {
-    super(id);
+  public BukkitInventoryProvider(UUID id, JavaPlugin plugin) {
+    super(id, plugin);
   }
 
   /**

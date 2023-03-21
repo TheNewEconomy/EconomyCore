@@ -50,7 +50,7 @@ public class ActionsPage extends PlayerPage {
   @Override
   public Map<Integer, Icon> defaultIcons(MenuPlayer player) {
 
-    Map<Integer, Icon> icons = new HashMap<>();
+    final Map<Integer, Icon> icons = new HashMap<>();
 
     Optional<Object> curID = MenuManager.instance().getViewerData(player.identifier(), "cur_uid");
     Optional<PlayerProvider> provider = TNECore.server().findPlayer(player.identifier());
@@ -59,6 +59,9 @@ public class ActionsPage extends PlayerPage {
       Optional<Currency> currency = TNECore.eco().currency().findCurrency(((UUID)curID.get()));
 
       if(currency.isPresent()) {
+
+        MenuManager.instance().setViewerData(player.identifier(), "my_bal",
+                                             "prev_page", 3);
 
         icons.put(0, new PreviousPageIcon(0, 1));
 
@@ -88,6 +91,7 @@ public class ActionsPage extends PlayerPage {
               final Optional<Account> account = TNECore.eco().account().findAccount(callback.getMessage());
               if(account.isPresent()) {
                 System.out.println("Player : " + account.get().getName() + " exists!");
+                callback.getPlayer().inventory().openMenu(player, "my_bal", 4);
                 //TODO: open amount selection menu.
                 return true;
               } else {
@@ -126,6 +130,7 @@ public class ActionsPage extends PlayerPage {
               final Optional<Account> account = TNECore.eco().account().findAccount(callback.getMessage());
               if(account.isPresent()) {
                 System.out.println("Player : " + account.get().getName() + " exists!");
+                callback.getPlayer().inventory().openMenu(player, "my_bal", 4);
                 //TODO: open amount selection menu.
                 return true;
               } else {

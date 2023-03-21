@@ -17,11 +17,27 @@ package net.tnemc.core.menu.impl.shared.pages;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.currency.Currency;
+import net.tnemc.core.currency.Denomination;
+import net.tnemc.core.currency.item.ItemDenomination;
+import net.tnemc.core.menu.impl.shared.icons.PreviousPageIcon;
+import net.tnemc.menu.core.Menu;
+import net.tnemc.menu.core.MenuManager;
+import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.compatibility.MenuPlayer;
+import net.tnemc.menu.core.icon.ActionType;
 import net.tnemc.menu.core.icon.Icon;
+import net.tnemc.menu.core.icon.action.ChatAction;
+import net.tnemc.menu.core.icon.action.UpdateAction;
 import net.tnemc.menu.core.page.impl.PlayerPage;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * AmountSelectionPage
@@ -31,15 +47,127 @@ import java.util.Map;
  */
 public class AmountSelectionPage extends PlayerPage {
 
-  private final int previousPage;
+  private final String menu;
 
-  public AmountSelectionPage(int id, int previousPage) {
+  private final int[] minorAdd = new int[] {
+      42, 43, 44, 51, 52, 53
+  };
+
+  private final int[] majorAdd = new int[] {
+      24, 25, 26, 33, 34, 35
+  };
+
+  public AmountSelectionPage(int id, final String menu) {
     super(id);
-    this.previousPage = previousPage;
+    this.menu = menu;
   }
 
   @Override
-  public Map<Integer, Icon> defaultIcons(MenuPlayer menuPlayer) {
-    return null;
+  public Map<Integer, Icon> defaultIcons(MenuPlayer player) {
+
+    final Map<Integer, Icon> icons = new HashMap<>();
+
+    final Optional<Object> curID = MenuManager.instance().getViewerData(player.identifier(), "cur_uid");
+    final Optional<Object> amtObj = MenuManager.instance().getViewerData(player.identifier(), "action_amt");
+    final Optional<Object> prevPage = MenuManager.instance().getViewerData(player.identifier(), "prev_page");
+    final Optional<PlayerProvider> provider = TNECore.server().findPlayer(player.identifier());
+
+    final BigDecimal amount = amtObj.map(o->(BigDecimal)o).orElse(BigDecimal.ZERO);
+
+    if(provider.isPresent() && curID.isPresent()) {
+      final Optional<Currency> currency = TNECore.eco().currency().findCurrency(((UUID)curID.get()));
+
+      if(currency.isPresent()) {
+
+        icons.put(0, new PreviousPageIcon(0, (Integer)prevPage.get()));
+
+        icons.put(4, IconBuilder.of(TNECore.server()
+                                        .stackBuilder()
+                                        .of("PAPER", 1)
+                                        .display("Amount: " + amount.toPlainString())).create());
+
+        icons.put(22, IconBuilder.of(TNECore.server()
+                                        .stackBuilder()
+                                        .of("BOOK", 1)
+                                        .display("Enter Amount"))
+            .click((click)->{
+              click.getPlayer().message("Enter the custom amount, in decimal form." +
+                                            "Or type \"exit\" to quit.");
+              updateAmount(click.getPlayer());
+            })
+            .withAction(new ChatAction((callback)->{
+              if(callback.getMessage().equalsIgnoreCase("exit")) {
+                return true;
+              }
+
+              try {
+                final BigDecimal parsed = new BigDecimal(callback.getMessage());
+                MenuManager.instance().setViewerData(player.identifier(), menu, "action_amt", parsed);
+                return true;
+              } catch(Exception ignore) {
+                //TODO: Invalid number entered.
+                return false;
+              }
+            })).create());
+
+        icons.put(40, IconBuilder.of(TNECore.server()
+                                        .stackBuilder()
+                                        .of("GREEN_WOOL", 1)
+                                        .display("Confirm Amount"))
+            .click((click)->{
+              //TODO: Run transaction?
+            })
+            .create());
+
+        int minor = 0;
+        int major = 0;
+
+        for(Denomination denom : currency.get().getDenominations().values()) {
+
+          int add = 0;
+          if(denom.weight().compareTo(BigDecimal.ONE) >= 0) {
+            add = majorAdd[major];
+            major++;
+          } else {
+            add = minorAdd[minor];
+            minor++;
+          }
+
+          int remove = add - 6;
+
+          final String material = (denom.isItem())? ((ItemDenomination)denom).getMaterial() : "STONE_BUTTON";
+
+          icons.put(add, build(material, "Add " + denom.weight().toPlainString(),
+                              amount, denom.weight()));
+
+          icons.put(remove, build(material, "Remove " + denom.weight().toPlainString(),
+                              amount, denom.weight().multiply(new BigDecimal(-1))));
+        }
+      }
+    }
+
+    return icons;
+  }
+
+  private Icon build(final String material, final String display, final BigDecimal amount,
+                     final BigDecimal modify) {
+    return IconBuilder.of(TNECore.server()
+                       .stackBuilder()
+                       .of(material, 1)
+                       .display(display))
+        .click((click)->{
+          MenuManager.instance().setViewerData(click.getPlayer().identifier(), menu,
+                                               "action_amt", amount.add(modify));
+        }).withAction(new UpdateAction()).create();
+  }
+
+  private void updateAmount(final MenuPlayer player) {
+    final Optional<Object> amtObj = MenuManager.instance().getViewerData(player.identifier(), "action_amt");
+    final BigDecimal amount = amtObj.map(o->(BigDecimal)o).orElse(BigDecimal.ZERO);
+
+    player.inventory().updateInventory(4, TNECore.server()
+        .stackBuilder()
+        .of("PAPER", 1)
+        .display("Amount: " + amount.toPlainString()));
   }
 }

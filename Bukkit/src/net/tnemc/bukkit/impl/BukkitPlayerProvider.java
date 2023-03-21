@@ -159,7 +159,7 @@ public class BukkitPlayerProvider implements PlayerProvider {
 
   @Override
   public BukkitInventoryProvider inventory() {
-    return new BukkitInventoryProvider(identifier());
+    return new BukkitInventoryProvider(identifier(), TNE.instance());
   }
 
   /**
