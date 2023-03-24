@@ -23,7 +23,7 @@
         <dependency>
             <groupId>net.tnemc</groupId>
             <artifactId>TNML-CORE</artifactId>
-            <version>1.0-SNAPSHOT-8</version>
+            <version>1.0-SNAPSHOT-15.10</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>

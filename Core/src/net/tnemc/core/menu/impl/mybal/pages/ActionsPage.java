@@ -22,12 +22,15 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.menu.impl.shared.icons.PreviousPageIcon;
+import net.tnemc.menu.core.Menu;
 import net.tnemc.menu.core.MenuManager;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.compatibility.MenuPlayer;
+import net.tnemc.menu.core.icon.ActionType;
 import net.tnemc.menu.core.icon.Icon;
 import net.tnemc.menu.core.icon.action.ChatAction;
 import net.tnemc.menu.core.page.impl.PlayerPage;
+import net.tnemc.menu.core.viewer.ViewerData;
 
 import java.util.HashMap;
 import java.util.List;
@@ -91,6 +94,7 @@ public class ActionsPage extends PlayerPage {
               final Optional<Account> account = TNECore.eco().account().findAccount(callback.getMessage());
               if(account.isPresent()) {
                 System.out.println("Player : " + account.get().getName() + " exists!");
+                callback.setPage(4);
                 callback.getPlayer().inventory().openMenu(player, "my_bal", 4);
                 //TODO: open amount selection menu.
                 return true;
@@ -130,6 +134,9 @@ public class ActionsPage extends PlayerPage {
               final Optional<Account> account = TNECore.eco().account().findAccount(callback.getMessage());
               if(account.isPresent()) {
                 System.out.println("Player : " + account.get().getName() + " exists!");
+                callback.setMenu("my_bal");
+                callback.setPage(4);
+                //MenuManager.instance().updateViewer(player.identifier(), "my_bal", 4);
                 callback.getPlayer().inventory().openMenu(player, "my_bal", 4);
                 //TODO: open amount selection menu.
                 return true;
@@ -139,14 +146,6 @@ public class ActionsPage extends PlayerPage {
 
               return false;
             })).create());
-
-
-        icons.put(16, IconBuilder.of(TNECore.server()
-                                         .stackBuilder()
-                                         .of("BOOK", 1)
-                                         .display("Chat Test")
-                                         .lore(List.of("Test Chat")))
-            .create());
       }
     }
     return icons;

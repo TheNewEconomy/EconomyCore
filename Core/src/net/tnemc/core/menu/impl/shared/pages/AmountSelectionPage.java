@@ -30,8 +30,11 @@ import net.tnemc.menu.core.compatibility.MenuPlayer;
 import net.tnemc.menu.core.icon.ActionType;
 import net.tnemc.menu.core.icon.Icon;
 import net.tnemc.menu.core.icon.action.ChatAction;
+import net.tnemc.menu.core.icon.action.DataAction;
+import net.tnemc.menu.core.icon.action.SwitchPageAction;
 import net.tnemc.menu.core.icon.action.UpdateAction;
 import net.tnemc.menu.core.page.impl.PlayerPage;
+import net.tnemc.menu.core.viewer.ViewerData;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -74,7 +77,10 @@ public class AmountSelectionPage extends PlayerPage {
 
     final BigDecimal amount = amtObj.map(o->(BigDecimal)o).orElse(BigDecimal.ZERO);
 
+    System.out.println(curID.isPresent());
+    System.out.println(provider.isPresent());
     if(provider.isPresent() && curID.isPresent()) {
+
       final Optional<Currency> currency = TNECore.eco().currency().findCurrency(((UUID)curID.get()));
 
       if(currency.isPresent()) {
@@ -91,9 +97,10 @@ public class AmountSelectionPage extends PlayerPage {
                                         .of("BOOK", 1)
                                         .display("Enter Amount"))
             .click((click)->{
+              System.out.println("Custom Amount");
               click.getPlayer().message("Enter the custom amount, in decimal form." +
                                             "Or type \"exit\" to quit.");
-              updateAmount(click.getPlayer());
+              //updateAmount(click.getPlayer());
             })
             .withAction(new ChatAction((callback)->{
               if(callback.getMessage().equalsIgnoreCase("exit")) {
@@ -103,6 +110,8 @@ public class AmountSelectionPage extends PlayerPage {
               try {
                 final BigDecimal parsed = new BigDecimal(callback.getMessage());
                 MenuManager.instance().setViewerData(player.identifier(), menu, "action_amt", parsed);
+                updateAmountIcon(callback.getPlayer());
+                callback.getPlayer().inventory().openMenu(player, "my_bal", 4);
                 return true;
               } catch(Exception ignore) {
                 //TODO: Invalid number entered.
@@ -137,28 +146,41 @@ public class AmountSelectionPage extends PlayerPage {
 
           final String material = (denom.isItem())? ((ItemDenomination)denom).getMaterial() : "STONE_BUTTON";
 
-          icons.put(add, build(material, "Add " + denom.weight().toPlainString(),
-                              amount, denom.weight()));
+          icons.put(add, build(player, material, "Add " + denom.weight().toPlainString(),
+                              denom.weight()));
 
-          icons.put(remove, build(material, "Remove " + denom.weight().toPlainString(),
-                              amount, denom.weight().multiply(new BigDecimal(-1))));
+          icons.put(remove, build(player, material, "Remove " + denom.weight().toPlainString(),
+                              denom.weight().multiply(new BigDecimal(-1))));
         }
       }
     }
-
     return icons;
   }
 
-  private Icon build(final String material, final String display, final BigDecimal amount,
+  private Icon build(final MenuPlayer player, final String material, final String display,
                      final BigDecimal modify) {
     return IconBuilder.of(TNECore.server()
                        .stackBuilder()
                        .of(material, 1)
                        .display(display))
         .click((click)->{
-          MenuManager.instance().setViewerData(click.getPlayer().identifier(), menu,
+          final Optional<Object> amtObj = MenuManager.instance().getViewerData(player.identifier(), "action_amt");
+          final BigDecimal amount = amtObj.map(o->(BigDecimal)o).orElse(BigDecimal.ZERO);
+          MenuManager.instance().setViewerData(player.identifier(), click.getMenu().getName(),
                                                "action_amt", amount.add(modify));
-        }).withAction(new UpdateAction()).create();
+          updateAmountIcon(player);
+        })
+        .withAction(new SwitchPageAction(4)).create();
+  }
+
+  private void updateAmountIcon(final MenuPlayer player) {
+    final Optional<Object> amtObj = MenuManager.instance().getViewerData(player.identifier(), "action_amt");
+    final BigDecimal amount = amtObj.map(o->(BigDecimal)o).orElse(BigDecimal.ZERO);
+
+    playerIcons.get(player.identifier()).getIcons().put(4, IconBuilder.of(TNECore.server()
+                                                                              .stackBuilder()
+                                                                              .of("PAPER", 1)
+                                                                              .display("Amount: " + amount.toPlainString())).create());
   }
 
   private void updateAmount(final MenuPlayer player) {

@@ -18,6 +18,7 @@ package net.tnemc.bukkit.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.bukkit.TNE;
 import net.tnemc.core.compatibility.InventoryProvider;
 import net.tnemc.menu.bukkit.BukkitInventory;
 import org.bukkit.Bukkit;

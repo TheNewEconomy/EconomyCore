@@ -39,7 +39,7 @@ public class MyBalMenu extends Menu {
    */
 
   public MyBalMenu() {
-    super("my_bal", "MyBal Menu", 36);
+    super("my_bal", "MyBal Menu", 54);
 
     //Add our pages.
     pages.put(1, new CurrencyMainPage());
