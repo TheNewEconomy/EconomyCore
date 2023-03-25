@@ -38,6 +38,7 @@ import java.util.Optional;
  *
  * @author creatorfromhell
  * @since 0.1.2.0
+ * @see ReceiptBox
  */
 public class Account extends ReceiptBox {
 

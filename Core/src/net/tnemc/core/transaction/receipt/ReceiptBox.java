@@ -19,6 +19,7 @@ package net.tnemc.core.transaction.receipt;
 
 import net.tnemc.core.transaction.Receipt;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Optional;
@@ -43,6 +44,28 @@ public class ReceiptBox {
    */
   public void log(final Receipt receipt) {
     receipts.put(receipt.getTime(), receipt);
+  }
+
+  /**
+   * Used to destroy a receipt based on the time it occurred.
+   * @param time The time to use for the destruction.
+   */
+  public void destroy(final long time) {
+    receipts.remove(time);
+  }
+
+  /**
+   * Used to destroy a receipt based on the {@link UUID} it occurred.
+   * @param identifier The identifier to use for the destruction.
+   */
+  public void destroy(final UUID identifier) {
+    Iterator<ConcurrentHashMap.Entry<Long, Receipt>> iterator = receipts.entrySet().iterator();
+    while (iterator.hasNext()) {
+      ConcurrentHashMap.Entry<Long, Receipt> entry = iterator.next();
+      if(entry.getValue().getId().equals(identifier)){
+        iterator.remove();
+      }
+    }
   }
 
   /**
