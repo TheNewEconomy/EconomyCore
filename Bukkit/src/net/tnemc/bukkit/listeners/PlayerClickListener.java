@@ -51,8 +51,7 @@ public class PlayerClickListener implements Listener {
     final BukkitPlayer player = new BukkitPlayer((OfflinePlayer)event.getWhoClicked(), plugin);
 
     final Optional<ViewerData> data = MenuManager.instance().getViewer(player.identifier());
-    System.out.println("Click: " + event.getSlot());
-    System.out.println("Click: " + event.getClick().name());
+
     if(player.inventory().inMenu() && data.isPresent()) {
 
       final boolean cancel = new InventoryClickHandler().handle(convertClick(event.getClick()),

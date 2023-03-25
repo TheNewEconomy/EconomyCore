@@ -21,6 +21,7 @@ import net.tnemc.core.menu.impl.mybal.pages.ActionsPage;
 import net.tnemc.core.menu.impl.mybal.pages.BalancePage;
 import net.tnemc.core.menu.impl.mybal.pages.CurrencyMainPage;
 import net.tnemc.core.menu.impl.shared.pages.AmountSelectionPage;
+import net.tnemc.core.menu.impl.shared.pages.CurrencySelectionPage;
 import net.tnemc.menu.core.Menu;
 
 /**
@@ -46,5 +47,6 @@ public class MyBalMenu extends Menu {
     pages.put(2, new BalancePage());
     pages.put(3, new ActionsPage());
     pages.put(4, new AmountSelectionPage(4, "my_bal"));
+    pages.put(5, new CurrencySelectionPage(5, "my_bal", 4));
   }
 }

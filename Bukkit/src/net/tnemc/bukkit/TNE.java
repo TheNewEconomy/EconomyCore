@@ -19,17 +19,13 @@ package net.tnemc.bukkit;
  */
 
 import net.tnemc.bukkit.hook.economy.VaultHook;
-import net.tnemc.bukkit.listeners.PlayerChatListener;
 import net.tnemc.bukkit.listeners.PlayerClickListener;
-import net.tnemc.bukkit.listeners.PlayerCloseInventoryEvent;
 import net.tnemc.bukkit.listeners.PlayerJoinListener;
 import net.tnemc.bukkit.listeners.WorldLoadListener;
 import net.tnemc.menu.bukkit.listener.BukkitChatListener;
-import net.tnemc.menu.bukkit.listener.BukkitInventoryClickListener;
 import net.tnemc.menu.bukkit.listener.BukkitInventoryCloseListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;

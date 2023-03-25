@@ -76,7 +76,7 @@ public class BalancePage extends PlayerPage {
 
         final Optional<Account> account = TNECore.eco().account().findAccount(player.identifier());
         if(account.isPresent()) {
-          for(HoldingsEntry entry : account.get().getHoldings(provider.get().getRegion(true), currency.get().getIdentifier())) {
+          for(HoldingsEntry entry : account.get().getHoldings(provider.get().region(true), currency.get().getIdentifier())) {
 
             String item = "PAPER";
             if(entry.getType().equals(HoldingsType.E_CHEST)) {
@@ -108,7 +108,7 @@ public class BalancePage extends PlayerPage {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(player.identifier());
     if(account.isPresent()) {
-      for(HoldingsEntry entry : account.get().getHoldings(player.getRegion(true), currency)) {
+      for(HoldingsEntry entry : account.get().getHoldings(player.region(true), currency)) {
         amount = amount.add(entry.getAmount());
       }
     }

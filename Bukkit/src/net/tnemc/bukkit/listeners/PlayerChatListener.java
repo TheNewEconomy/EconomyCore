@@ -1,18 +1,10 @@
 package net.tnemc.bukkit.listeners;
 
-import net.tnemc.bukkit.impl.BukkitPlayerProvider;
-import net.tnemc.menu.bukkit.BukkitPlayer;
-import net.tnemc.menu.core.MenuManager;
-import net.tnemc.menu.core.callbacks.player.PlayerChatCallback;
-import net.tnemc.menu.core.viewer.ViewerData;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.Optional;
 
 /*
  * The New Menu Library

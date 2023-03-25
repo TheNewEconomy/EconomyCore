@@ -21,16 +21,18 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.menu.impl.mybal.consumer.ConvertConfirmation;
+import net.tnemc.core.menu.impl.mybal.consumer.RequestConfirmation;
+import net.tnemc.core.menu.impl.mybal.consumer.SendConfirmation;
 import net.tnemc.core.menu.impl.shared.icons.PreviousPageIcon;
-import net.tnemc.menu.core.Menu;
 import net.tnemc.menu.core.MenuManager;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.compatibility.MenuPlayer;
-import net.tnemc.menu.core.icon.ActionType;
 import net.tnemc.menu.core.icon.Icon;
 import net.tnemc.menu.core.icon.action.ChatAction;
+import net.tnemc.menu.core.icon.action.DataAction;
+import net.tnemc.menu.core.icon.action.SwitchPageAction;
 import net.tnemc.menu.core.page.impl.PlayerPage;
-import net.tnemc.menu.core.viewer.ViewerData;
 
 import java.util.HashMap;
 import java.util.List;
@@ -88,15 +90,19 @@ public class ActionsPage extends PlayerPage {
             .withAction(new ChatAction((callback)->{
               System.out.println(callback.getMessage());
               if(callback.getMessage().equalsIgnoreCase("exit")) {
+                player.inventory().close();
                 return true;
               }
 
               final Optional<Account> account = TNECore.eco().account().findAccount(callback.getMessage());
               if(account.isPresent()) {
-                System.out.println("Player : " + account.get().getName() + " exists!");
-                callback.setPage(4);
+
+                MenuManager.instance().setViewerData(player.identifier(), "my_bal",
+                                                     "confirm", new SendConfirmation());
+
+                MenuManager.instance().setViewerData(player.identifier(), "my_bal",
+                                                     "target", account.get().getIdentifier());
                 callback.getPlayer().inventory().openMenu(player, "my_bal", 4);
-                //TODO: open amount selection menu.
                 return true;
               } else {
                 //TODO: Account doesn't exist.
@@ -112,7 +118,9 @@ public class ActionsPage extends PlayerPage {
                                          .of("EMERALD", 1)
                                          .display("Convert Funds")
                                          .lore(List.of("Convert to another currency!")))
-            //TODO: Currency Selection Menu.
+            .withAction(new DataAction("prev_page", 3))
+                .withAction(new DataAction("confirm", new ConvertConfirmation()))
+            .withAction(new SwitchPageAction(5))
             .create());
 
 
@@ -128,24 +136,25 @@ public class ActionsPage extends PlayerPage {
             .withAction(new ChatAction((callback)->{
               System.out.println(callback.getMessage());
               if(callback.getMessage().equalsIgnoreCase("exit")) {
+                player.inventory().close();
                 return true;
               }
 
               final Optional<Account> account = TNECore.eco().account().findAccount(callback.getMessage());
               if(account.isPresent()) {
                 System.out.println("Player : " + account.get().getName() + " exists!");
-                callback.setMenu("my_bal");
-                callback.setPage(4);
-                //MenuManager.instance().updateViewer(player.identifier(), "my_bal", 4);
+
+                MenuManager.instance().setViewerData(player.identifier(), "my_bal",
+                                                     "confirm", new RequestConfirmation());
                 callback.getPlayer().inventory().openMenu(player, "my_bal", 4);
-                //TODO: open amount selection menu.
                 return true;
               } else {
                 //TODO: Account doesn't exist.
               }
 
               return false;
-            })).create());
+            }))
+            .create());
       }
     }
     return icons;

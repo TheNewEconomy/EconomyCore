@@ -88,7 +88,7 @@ public class CurrencyMainPage extends PlayerPage {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(player.identifier());
     if(account.isPresent()) {
-      for(HoldingsEntry entry : account.get().getHoldings(player.getRegion(true), currency)) {
+      for(HoldingsEntry entry : account.get().getHoldings(player.region(true), currency)) {
         amount = amount.add(entry.getAmount());
       }
     }

@@ -54,7 +54,7 @@ public class PlayerAccount extends Account {
     final Optional<PlayerProvider> player = getPlayer();
 
     if(player.isPresent()) {
-      region = player.get().getRegion(true);
+      region = player.get().region(true);
     }
     return region;
   }

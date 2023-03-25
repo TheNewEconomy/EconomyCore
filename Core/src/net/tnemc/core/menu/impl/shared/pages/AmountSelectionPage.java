@@ -22,19 +22,14 @@ import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.item.ItemDenomination;
-import net.tnemc.core.menu.impl.shared.icons.PreviousPageIcon;
-import net.tnemc.menu.core.Menu;
+import net.tnemc.core.menu.impl.shared.consumer.AmountConfirmation;
 import net.tnemc.menu.core.MenuManager;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.compatibility.MenuPlayer;
-import net.tnemc.menu.core.icon.ActionType;
 import net.tnemc.menu.core.icon.Icon;
 import net.tnemc.menu.core.icon.action.ChatAction;
-import net.tnemc.menu.core.icon.action.DataAction;
 import net.tnemc.menu.core.icon.action.SwitchPageAction;
-import net.tnemc.menu.core.icon.action.UpdateAction;
 import net.tnemc.menu.core.page.impl.PlayerPage;
-import net.tnemc.menu.core.viewer.ViewerData;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -71,21 +66,21 @@ public class AmountSelectionPage extends PlayerPage {
     final Map<Integer, Icon> icons = new HashMap<>();
 
     final Optional<Object> curID = MenuManager.instance().getViewerData(player.identifier(), "cur_uid");
+    final Optional<Object> target = MenuManager.instance().getViewerData(player.identifier(), "target");
     final Optional<Object> amtObj = MenuManager.instance().getViewerData(player.identifier(), "action_amt");
     final Optional<Object> prevPage = MenuManager.instance().getViewerData(player.identifier(), "prev_page");
+    final Optional<Object> confirm = MenuManager.instance().getViewerData(player.identifier(), "confirm");
     final Optional<PlayerProvider> provider = TNECore.server().findPlayer(player.identifier());
 
     final BigDecimal amount = amtObj.map(o->(BigDecimal)o).orElse(BigDecimal.ZERO);
 
-    System.out.println(curID.isPresent());
-    System.out.println(provider.isPresent());
-    if(provider.isPresent() && curID.isPresent()) {
+    if(target.isPresent() && provider.isPresent() && curID.isPresent()) {
 
       final Optional<Currency> currency = TNECore.eco().currency().findCurrency(((UUID)curID.get()));
 
       if(currency.isPresent()) {
 
-        icons.put(0, new PreviousPageIcon(0, (Integer)prevPage.get()));
+        //prevPage.ifPresent(o->icons.put(0, new PreviousPageIcon(0, (Integer)o)));
 
         icons.put(4, IconBuilder.of(TNECore.server()
                                         .stackBuilder()
@@ -124,7 +119,17 @@ public class AmountSelectionPage extends PlayerPage {
                                         .of("GREEN_WOOL", 1)
                                         .display("Confirm Amount"))
             .click((click)->{
-              //TODO: Run transaction?
+
+              if(confirm.isPresent()) {
+                AmountConfirmation confirmation = (AmountConfirmation)confirm.get();
+                final Optional<Object> aObj = MenuManager.instance().getViewerData(player.identifier(), "action_amt");
+                final BigDecimal amt = aObj.map(o->(BigDecimal)o).orElse(BigDecimal.ZERO);
+
+                confirmation.confirm(player.identifier(), (UUID)target.get(),
+                                     currency.get().getIdentifier(),
+                                     provider.get().region(true), amt);
+                player.inventory().close();
+              }
             })
             .create());
 
@@ -164,6 +169,7 @@ public class AmountSelectionPage extends PlayerPage {
                        .of(material, 1)
                        .display(display))
         .click((click)->{
+
           final Optional<Object> amtObj = MenuManager.instance().getViewerData(player.identifier(), "action_amt");
           final BigDecimal amount = amtObj.map(o->(BigDecimal)o).orElse(BigDecimal.ZERO);
           MenuManager.instance().setViewerData(player.identifier(), click.getMenu().getName(),

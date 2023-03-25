@@ -28,7 +28,6 @@ import net.tnemc.core.io.message.MessageHandler;
 import net.tnemc.menu.bukkit.BukkitPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -96,7 +95,7 @@ public class BukkitPlayerProvider extends BukkitPlayer implements PlayerProvider
    * @return The name of the region.
    */
   @Override
-  public String getRegion(final boolean resolve) {
+  public String region(final boolean resolve) {
     String world = TNECore.server().defaultWorld();
 
     if(player.getPlayer() != null) {

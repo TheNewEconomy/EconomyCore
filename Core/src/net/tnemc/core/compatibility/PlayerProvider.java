@@ -51,7 +51,7 @@ public interface PlayerProvider extends MenuPlayer {
    *
    * @return The name of the region.
    */
-  String getRegion(final boolean resolve);
+  String region(final boolean resolve);
 
   /**
    * Used to get the amount of experience this player has.

@@ -60,7 +60,7 @@ public class SpongePlayerProvider extends SpongePlayer implements PlayerProvider
   }
 
   @Override
-  public String getRegion(boolean resolve) {
+  public String region(boolean resolve) {
     return null;
   }
 
