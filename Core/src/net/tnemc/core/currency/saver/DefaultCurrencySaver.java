@@ -53,6 +53,18 @@ public class DefaultCurrencySaver implements CurrencySaver {
   }
 
   /**
+   * Saves all currency UUIDs only.
+   *
+   * @param directory The directory used for saving.
+   */
+  @Override
+  public void saveCurrenciesUUID(File directory) {
+    for(final Currency currency : TNECore.eco().currency().currencies()) {
+      saveID(directory, currency);
+    }
+  }
+
+  /**
    * Saves a specific currency
    *
    * @param directory The directory used for saving.
@@ -133,6 +145,33 @@ public class DefaultCurrencySaver implements CurrencySaver {
 
     for(final Denomination denomination : currency.getDenominations().values()) {
       saveDenomination(new File(directory, currency.getIdentifier()), currency, denomination);
+    }
+  }
+
+  public void saveID(final File directory, Currency currency) {
+
+    final YamlFile cur = new YamlFile(new File(directory, currency.getIdentifier() + ".yml"));
+
+    try {
+      cur.createOrLoadWithComments();
+
+    } catch(IOException e) {
+      //TODO: Translation Failed to load, exception attached.
+      e.printStackTrace();
+      return;
+    }
+
+    if(!cur.contains("Info.UUID")) {
+      cur.setComment("Info.UUID", "Used for data saving. Do NOT modify.");
+    }
+
+    cur.set("Info.UUID", currency.getUid().toString());
+
+    try {
+      cur.save();
+    } catch(IOException e) {
+      //TODO: Translation Failed to write to file, exception attached.
+      e.printStackTrace();
     }
   }
 

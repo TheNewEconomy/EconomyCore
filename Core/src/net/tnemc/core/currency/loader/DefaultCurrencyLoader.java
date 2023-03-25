@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 import static net.tnemc.core.manager.CurrencyManager.largestSupported;
 
@@ -145,6 +146,10 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     final BigDecimal maxBalance = ((new BigDecimal(cur.getString("Options.MaxBalance", largestSupported.toPlainString())).compareTo(largestSupported) > 0)? largestSupported : new BigDecimal(cur.getString("MaxBalance", largestSupported.toPlainString())));
     final BigDecimal minBalance = (type.get().supportsItems())? BigDecimal.ZERO : new BigDecimal(cur.getString("Options.MinBalance", "0.00"));
     final BigDecimal balance = new BigDecimal(cur.getString("Options.Balance", "200.00"));
+
+    if(cur.contains("Info.UUID")) {
+      currency.setUid(UUID.fromString(cur.getString("Info.UUID")));
+    }
 
     currency.setIdentifier(identifier);
     currency.setIconMaterial(icon);

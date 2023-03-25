@@ -36,6 +36,12 @@ public interface CurrencySaver {
   void saveCurrencies(final File directory);
 
   /**
+   * Saves all currency UUIDs only.
+   * @param directory The directory used for saving.
+   */
+  void saveCurrenciesUUID(final File directory);
+
+  /**
    * Saves a specific currency
    * @param directory The directory used for saving.
    * @param currency The currency to save.

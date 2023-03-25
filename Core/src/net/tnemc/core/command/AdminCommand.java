@@ -65,7 +65,7 @@ public class AdminCommand extends BaseCommand {
       switch(args[0].toLowerCase()) {
         case "config" -> {
           TNECore.instance().config().load();
-          TNECore.eco().currency().getLoader().loadCurrencies(TNECore.directory());
+          TNECore.eco().currency().load(TNECore.directory());
           return;
         }
         case "data" -> {
@@ -79,7 +79,7 @@ public class AdminCommand extends BaseCommand {
       }
     }
     TNECore.instance().config().load();
-    TNECore.eco().currency().getLoader().loadCurrencies(TNECore.directory());
+    TNECore.eco().currency().load(TNECore.directory());
     TNECore.instance().data().load();
     //TODO: Reload data manager.
     TNECore.instance().message().load();

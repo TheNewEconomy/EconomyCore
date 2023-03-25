@@ -47,7 +47,8 @@ public class TNE extends JavaPlugin {
     //Initialize our TNE Core Class
     this.core = new BukkitTNECore(instance);
 
-    BukkitTNECore.eco().currency().load(getDataFolder());
+    BukkitTNECore.eco().currency().load(getDataFolder(), false);
+    BukkitTNECore.eco().currency().saveCurrenciesUUID(getDataFolder());
   }
 
   public void onEnable() {

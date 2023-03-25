@@ -65,10 +65,20 @@ public class CurrencyManager {
   }
 
   public void load(final File parent, boolean reset) {
+    saver.saveCurrenciesUUID(new File(parent, "currency"));
     if(reset) {
       currencies.clear();
+      curIDMap.clear();
     }
     loader.loadCurrencies(new File(parent, "currency"));
+  }
+
+  /**
+   * Saves all currency UUIDs only.
+   * @param parent The directory used for saving.
+   */
+  public void saveCurrenciesUUID(final File parent) {
+    saver.saveCurrenciesUUID(new File(parent, "currency"));
   }
 
   public CurrencyLoader getLoader() {
