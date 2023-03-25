@@ -20,10 +20,13 @@ package net.tnemc.bukkit.hook.economy;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
 import org.bukkit.OfflinePlayer;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * TNEVault
@@ -54,7 +57,7 @@ public class TNEVault implements Economy {
    * @return true if the implementation supports banks
    */
   public boolean hasBankSupport() {
-    return true;
+    return false;
   }
 
   /**
@@ -64,7 +67,7 @@ public class TNEVault implements Economy {
    * @return number of digits after the decimal point kept
    */
   public int fractionalDigits() {
-    return 2;
+    return TNECore.eco().currency().getDefaultCurrency().getDecimalPlaces();
   }
 
   /**
@@ -85,7 +88,7 @@ public class TNEVault implements Economy {
    * @return name of the currency (plural)
    */
   public String currencyNamePlural() {
-    return "";
+    return TNECore.eco().currency().getDefaultCurrency().getDisplayPlural();
   }
 
 
@@ -96,7 +99,7 @@ public class TNEVault implements Economy {
    * @return name of the currency (singular)
    */
   public String currencyNameSingular() {
-    return "";
+    return TNECore.eco().currency().getDefaultCurrency().getDisplay();
   }
 
   /**
@@ -104,8 +107,8 @@ public class TNEVault implements Economy {
    * @deprecated As of VaultAPI 1.4 use {@link #hasAccount(OfflinePlayer)} instead.
    */
   @Deprecated
-  public boolean hasAccount(String playerName) {
-    return hasAccount(playerName, "ahoy matey");
+  public boolean hasAccount(String name) {
+    return hasAccount(name, "ahoy matey");
   }
 
   /**
@@ -124,8 +127,8 @@ public class TNEVault implements Economy {
    * @deprecated As of VaultAPI 1.4 use {@link #hasAccount(OfflinePlayer, String)} instead.
    */
   @Deprecated
-  public boolean hasAccount(String playerName, String worldName) {
-    return TNECore.eco().account().findAccount(playerName).isPresent();
+  public boolean hasAccount(String name, String world) {
+    return TNECore.eco().account().findAccount(name).isPresent();
   }
 
   /**
@@ -134,19 +137,19 @@ public class TNEVault implements Economy {
    * as all major economy plugins auto-generate a player account when the player joins the server
    *
    * @param player to check in the world
-   * @param worldName world-specific account
+   * @param world world-specific account
    * @return if the player has an account
    */
-  public boolean hasAccount(OfflinePlayer player, String worldName) {
-    return false;
+  public boolean hasAccount(OfflinePlayer player, String world) {
+    return hasAccount(player.getUniqueId().toString(), world);
   }
 
   /**
    * @deprecated As of VaultAPI 1.4 use {@link #getBalance(OfflinePlayer)} instead.
    */
   @Deprecated
-  public double getBalance(String playerName) {
-    return 0;
+  public double getBalance(String name) {
+    return getBalance(name, TNECore.server().defaultWorld());
   }
 
   /**
@@ -156,14 +159,18 @@ public class TNEVault implements Economy {
    * @return Amount currently held in players account
    */
   public double getBalance(OfflinePlayer player) {
-    return 0;
+    return getBalance(player.getUniqueId().toString(), TNECore.server().defaultWorld());
   }
 
   /**
    * @deprecated As of VaultAPI 1.4 use {@link #getBalance(OfflinePlayer, String)} instead.
    */
   @Deprecated
-  public double getBalance(String playerName, String world) {
+  public double getBalance(String name, String world) {
+    final Optional<Account> account = TNECore.eco().account().findAccount(name);
+    if(account.isPresent()) {
+      return account.get().getHoldingsTotal(world, TNECore.eco().currency().getDefaultCurrency(world).getIdentifier()).doubleValue();
+    }
     return 0;
   }
 
@@ -175,15 +182,15 @@ public class TNEVault implements Economy {
    * @return Amount currently held in players account
    */
   public double getBalance(OfflinePlayer player, String world) {
-    return 0;
+    return getBalance(player.getUniqueId().toString(), world);
   }
 
   /**
    * @deprecated As of VaultAPI 1.4 use {@link #has(OfflinePlayer, double)} instead.
    */
   @Deprecated
-  public boolean has(String playerName, double amount) {
-    return false;
+  public boolean has(String name, double amount) {
+    return has(name, TNECore.server().defaultWorld(), amount);
   }
 
   /**
@@ -194,15 +201,17 @@ public class TNEVault implements Economy {
    * @return True if <b>player</b> has <b>amount</b>, False else wise
    */
   public boolean has(OfflinePlayer player, double amount) {
-    return false;
+    return has(player.getUniqueId().toString(), TNECore.server().defaultWorld(), amount);
   }
 
   /**
    * @deprecated As of VaultAPI 1.4 use @{link {@link #has(OfflinePlayer, String, double)} instead.
    */
   @Deprecated
-  public boolean has(String playerName, String worldName, double amount) {
-    return false;
+  public boolean has(String name, String world, double amount) {
+    final Optional<Account> account = TNECore.eco().account().findAccount(name);
+    return account.filter(value->value.getHoldingsTotal(world, TNECore.eco().currency().getDefaultCurrency(world).getIdentifier())
+        .compareTo(new BigDecimal(amount)) >= 0).isPresent();
   }
 
   /**
@@ -210,20 +219,20 @@ public class TNEVault implements Economy {
    * IMPLEMENTATION SPECIFIC - if an economy plugin does not support this the global balance will be returned.
    *
    * @param player to check
-   * @param worldName to check with
+   * @param world to check with
    * @param amount to check for
    * @return True if <b>player</b> has <b>amount</b>, False else wise
    */
-  public boolean has(OfflinePlayer player, String worldName, double amount) {
-    return false;
+  public boolean has(OfflinePlayer player, String world, double amount) {
+    return has(player.getUniqueId().toString(), world, amount);
   }
 
   /**
    * @deprecated As of VaultAPI 1.4 use {@link #withdrawPlayer(OfflinePlayer, double)} instead.
    */
   @Deprecated
-  public EconomyResponse withdrawPlayer(String playerName, double amount) {
-    return null;
+  public EconomyResponse withdrawPlayer(String name, double amount) {
+    return withdrawPlayer(name, TNECore.server().defaultWorld(), amount);
   }
 
   /**
@@ -234,14 +243,14 @@ public class TNEVault implements Economy {
    * @return Detailed response of transaction
    */
   public EconomyResponse withdrawPlayer(OfflinePlayer player, double amount) {
-    return null;
+    return withdrawPlayer(player.getUniqueId().toString(), TNECore.server().defaultWorld(), amount);
   }
 
   /**
    * @deprecated As of VaultAPI 1.4 use {@link #withdrawPlayer(OfflinePlayer, String, double)} instead.
    */
   @Deprecated
-  public EconomyResponse withdrawPlayer(String playerName, String worldName, double amount) {
+  public EconomyResponse withdrawPlayer(String name, String world, double amount) {
     return null;
   }
 
@@ -249,20 +258,20 @@ public class TNEVault implements Economy {
    * Withdraw an amount from a player on a given world - DO NOT USE NEGATIVE AMOUNTS
    * IMPLEMENTATION SPECIFIC - if an economy plugin does not support this the global balance will be returned.
    * @param player to withdraw from
-   * @param worldName - name of the world
+   * @param world - name of the world
    * @param amount Amount to withdraw
    * @return Detailed response of transaction
    */
-  public EconomyResponse withdrawPlayer(OfflinePlayer player, String worldName, double amount) {
-    return null;
+  public EconomyResponse withdrawPlayer(OfflinePlayer player, String world, double amount) {
+    return withdrawPlayer(player.getUniqueId().toString(), world, amount);
   }
 
   /**
    * @deprecated As of VaultAPI 1.4 use {@link #depositPlayer(OfflinePlayer, double)} instead.
    */
   @Deprecated
-  public EconomyResponse depositPlayer(String playerName, double amount) {
-    return null;
+  public EconomyResponse depositPlayer(String name, double amount) {
+    return depositPlayer(name, TNECore.server().defaultWorld(), amount);
   }
 
   /**
@@ -273,14 +282,14 @@ public class TNEVault implements Economy {
    * @return Detailed response of transaction
    */
   public EconomyResponse depositPlayer(OfflinePlayer player, double amount) {
-    return null;
+    return depositPlayer(player.getUniqueId().toString(), TNECore.server().defaultWorld(), amount);
   }
 
   /**
    * @deprecated As of VaultAPI 1.4 use {@link #depositPlayer(OfflinePlayer, String, double)} instead.
    */
   @Deprecated
-  public EconomyResponse depositPlayer(String playerName, String worldName, double amount) {
+  public EconomyResponse depositPlayer(String name, String world, double amount) {
     return null;
   }
 
@@ -289,12 +298,12 @@ public class TNEVault implements Economy {
    * IMPLEMENTATION SPECIFIC - if an economy plugin does not support this the global balance will be returned.
    *
    * @param player to deposit to
-   * @param worldName name of the world
+   * @param world name of the world
    * @param amount Amount to deposit
    * @return Detailed response of transaction
    */
-  public EconomyResponse depositPlayer(OfflinePlayer player, String worldName, double amount) {
-    return null;
+  public EconomyResponse depositPlayer(OfflinePlayer player, String world, double amount) {
+    return depositPlayer(player.getUniqueId().toString(), world, amount);
   }
 
   /**
@@ -302,7 +311,7 @@ public class TNEVault implements Economy {
    */
   @Deprecated
   public EconomyResponse createBank(String name, String player) {
-    return null;
+    return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
 
   /**
@@ -312,7 +321,7 @@ public class TNEVault implements Economy {
    * @return EconomyResponse Object
    */
   public EconomyResponse createBank(String name, OfflinePlayer player) {
-    return null;
+    return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
 
   /**
@@ -321,7 +330,7 @@ public class TNEVault implements Economy {
    * @return if the operation completed successfully
    */
   public EconomyResponse deleteBank(String name) {
-    return null;
+    return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
 
   /**
@@ -330,7 +339,7 @@ public class TNEVault implements Economy {
    * @return EconomyResponse Object
    */
   public EconomyResponse bankBalance(String name) {
-    return null;
+    return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
 
   /**
@@ -341,7 +350,7 @@ public class TNEVault implements Economy {
    * @return EconomyResponse Object
    */
   public EconomyResponse bankHas(String name, double amount) {
-    return null;
+    return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
 
   /**
@@ -352,7 +361,7 @@ public class TNEVault implements Economy {
    * @return EconomyResponse Object
    */
   public EconomyResponse bankWithdraw(String name, double amount) {
-    return null;
+    return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
 
   /**
@@ -363,7 +372,7 @@ public class TNEVault implements Economy {
    * @return EconomyResponse Object
    */
   public EconomyResponse bankDeposit(String name, double amount) {
-    return null;
+    return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
 
   /**
@@ -371,7 +380,7 @@ public class TNEVault implements Economy {
    */
   @Deprecated
   public EconomyResponse isBankOwner(String name, String playerName) {
-    return null;
+    return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
 
   /**
@@ -382,7 +391,7 @@ public class TNEVault implements Economy {
    * @return EconomyResponse Object
    */
   public EconomyResponse isBankOwner(String name, OfflinePlayer player) {
-    return null;
+    return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
 
   /**
@@ -390,7 +399,7 @@ public class TNEVault implements Economy {
    */
   @Deprecated
   public EconomyResponse isBankMember(String name, String playerName) {
-    return null;
+    return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
 
   /**
@@ -401,7 +410,7 @@ public class TNEVault implements Economy {
    * @return EconomyResponse Object
    */
   public EconomyResponse isBankMember(String name, OfflinePlayer player) {
-    return null;
+    return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
 
   /**
@@ -416,8 +425,8 @@ public class TNEVault implements Economy {
    * @deprecated As of VaultAPI 1.4 use {{@link #createPlayerAccount(OfflinePlayer)} instead.
    */
   @Deprecated
-  public boolean createPlayerAccount(String playerName) {
-    return false;
+  public boolean createPlayerAccount(String name) {
+    return createPlayerAccount(name, "this doesn't matter.");
   }
 
   /**
@@ -426,25 +435,25 @@ public class TNEVault implements Economy {
    * @return if the account creation was successful
    */
   public boolean createPlayerAccount(OfflinePlayer player) {
-    return false;
+    return createPlayerAccount(player, "this doesn't matter.");
   }
 
   /**
    * @deprecated As of VaultAPI 1.4 use {{@link #createPlayerAccount(OfflinePlayer, String)} instead.
    */
   @Deprecated
-  public boolean createPlayerAccount(String playerName, String worldName) {
-    return false;
+  public boolean createPlayerAccount(String name, String world) {
+    return TNECore.eco().account().createAccount(name, name).success();
   }
 
   /**
    * Attempts to create a player account for the given player on the specified world
    * IMPLEMENTATION SPECIFIC - if an economy plugin does not support this then false will always be returned.
    * @param player OfflinePlayer
-   * @param worldName String name of the world
+   * @param world String name of the world
    * @return if the account creation was successful
    */
-  public boolean createPlayerAccount(OfflinePlayer player, String worldName) {
-    return false;
+  public boolean createPlayerAccount(OfflinePlayer player, String world) {
+    return TNECore.eco().account().createAccount(player.getUniqueId().toString(), player.getName()).success();
   }
 }

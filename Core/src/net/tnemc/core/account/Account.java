@@ -86,6 +86,25 @@ public class Account extends ReceiptBox {
   }
 
   /**
+   * Used to get the BigDecimal value of this account's holding based on the specifications.
+   *
+   * @param region The region to use
+   * @param currency The currency to use.
+   *
+   * @return The total of every {@link HoldingsEntry} for the specifications.
+   */
+  public BigDecimal getHoldingsTotal(final @NotNull String region,
+                                     final @NotNull String currency) {
+
+    BigDecimal amount = BigDecimal.ZERO;
+
+    for(HoldingsEntry entry : getHoldings(region, currency)) {
+      amount = amount.add(entry.getAmount());
+    }
+    return amount;
+  }
+
+  /**
    * Used to get the holdings based on specific specifications, or returns an empty optional
    * if no holdings for the specifications exists.
    *

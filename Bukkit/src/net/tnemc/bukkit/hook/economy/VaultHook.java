@@ -19,7 +19,10 @@ package net.tnemc.bukkit.hook.economy;
  */
 
 
+import net.milkbowl.vault.economy.Economy;
+import net.tnemc.bukkit.TNE;
 import net.tnemc.core.hook.Hook;
+import org.bukkit.plugin.ServicePriority;
 
 /**
  * VaultHook represents a hook into the Vault economy API.
@@ -42,6 +45,9 @@ public class VaultHook implements Hook {
    */
   @Override
   public void register() {
-    //TODO: our vault economy service.
+    TNEVault vaultEconomy = new TNEVault();
+    TNE.instance().getServer().getServicesManager().register(Economy.class, vaultEconomy,
+                                                             TNE.instance(), ServicePriority.Highest);
+    TNE.instance().getLogger().info("Hooked into Vault");
   }
 }

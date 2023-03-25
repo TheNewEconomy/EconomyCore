@@ -64,11 +64,19 @@ public class TNE extends JavaPlugin {
     Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
     Bukkit.getPluginManager().registerEvents(new BukkitChatListener(this), this);
 
+    //Menu-related Listeners from TNML
     Bukkit.getPluginManager().registerEvents(new PlayerClickListener(this), this);
     Bukkit.getPluginManager().registerEvents(new BukkitInventoryCloseListener(this), this);
 
     //World Listeners
     Bukkit.getPluginManager().registerEvents(new WorldLoadListener(this), this);
+
+    //Register our service providers.
+
+    //Vault
+    if(Bukkit.getPluginManager().isPluginEnabled("Vault")) {
+      new VaultHook().register();
+    }
 
     getLogger().log(Level.INFO, ChatColor.GREEN + "The New Economy has been enabled!");
 
