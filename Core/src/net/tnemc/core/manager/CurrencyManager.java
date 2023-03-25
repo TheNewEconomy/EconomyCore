@@ -28,9 +28,11 @@ import net.tnemc.core.currency.type.ExperienceType;
 import net.tnemc.core.currency.type.ItemType;
 import net.tnemc.core.currency.type.MixedType;
 import net.tnemc.core.currency.type.VirtualType;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -102,8 +104,71 @@ public class CurrencyManager {
    * @param currency The currency to add.
    */
   public void addCurrency(final Currency currency) {
+
     currencies.put(currency.getUid(), currency);
     curIDMap.put(currency.getIdentifier(), currency.getUid());
+  }
+
+  /**
+   * Used to get the default currency. This could be the default currency for the server globally or
+   * for the default world if the implementation supports multi-world.
+   * @return The currency that is the default for the server if multi-world support is not available
+   * otherwise the default for the default world.
+   *
+   * @since 0.1.2.0
+   */
+  @NotNull
+  public Currency getDefaultCurrency() {
+
+    for(Currency currency : currencies.values()) {
+      if(currency.isGlobalDefault()) {
+        return currency;
+      }
+    }
+    return currencies.values().iterator().next();
+  }
+
+  /**
+   * Used to get the default currency for the specified world if this implementation has multi-world
+   * support, otherwise the default currency for the server.
+   * @param region The region to get the default currency for. This could be a world, biomes, or a
+   *               third party based region.
+   * @return The default currency for the specified world if this implementation has multi-world
+   * support, otherwise the default currency for the server.
+   *
+   * @since 0.1.2.0
+   */
+  @NotNull
+  public Currency getDefaultCurrency(@NotNull String region) {
+
+    for(Currency currency : currencies.values()) {
+      if(currency.isRegionDefault(region)) {
+        return currency;
+      }
+    }
+    return currencies.values().iterator().next();
+  }
+
+  /**
+   * Used to get a set of every {@link Currency} object that is available in the specified world if
+   * this implementation has multi-world support, otherwise all {@link Currency} objects for the server.
+   * @param region The region to get the currencies for. This could be a world, biomes, or a
+   *               third party based region.
+   * @return A set of every {@link Currency} object that is available in the specified world if
+   * this implementation has multi-world support, otherwise all {@link Currency} objects for the server.
+   *
+   * @since 0.1.2.0
+   */
+  public Collection<Currency> getCurrencies(@NotNull String region) {
+
+    Collection<Currency> regionCurrencies = new ArrayList<>();
+
+    for(Currency currency : currencies.values()) {
+      if(currency.regionEnabled(region)) {
+        regionCurrencies.add(currency);
+      }
+    }
+    return regionCurrencies;
   }
 
   /**

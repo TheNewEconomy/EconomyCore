@@ -29,15 +29,30 @@ Info:
 #Various options for currencies.
 Options:
 
-    #Whether this currency is the default currency for the world.
-    Default: true
+    #Configurations relating to multi region support.
+    #This would make it so players have a different balance per region(i.e. per world balances)
+    MultiRegion:
 
-    #The worlds this currency belongs to, if Global is set to false.
-    Worlds:
-        - "world"
+        #Should multi region support be enabled?
+        Enabled: true
 
-    #Whether this currency is a global currency.
-    Global: true
+        #Configurations relating to regions this currency is enabled in.
+        Regions:
+
+            #The name of the world/region.
+            world:
+
+                #Should this currency be the default in this world?
+                Default: true
+
+    #Configurations relating to global configurations for this currency.
+    Global:
+
+        #Should this currency be global?(i.e. usable in every world)
+        Enabled: true
+
+        #Should this currency be the global default?
+        Default: true
 
     #Whether this currency is enabled.
     Disabled: false
@@ -114,7 +129,7 @@ Formatting:
     #Nonvigintillion - ₮
     Prefixes: 'kMGTPEZYXWVUN₮'
 
-    #Whether or not the major value should be separated every three numeric places.
+    #Whether the major value should be separated every three numeric places.
     Major_Separate: true
 
     #The separator to use for numeric separation.

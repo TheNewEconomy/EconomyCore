@@ -21,6 +21,7 @@ package net.tnemc.core.currency.loader;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyLoader;
+import net.tnemc.core.currency.CurrencyRegion;
 import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.Note;
@@ -117,10 +118,6 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     final String symbol = cur.getString("Info.Symbol", "$");
 
     //Currency Options configs.
-    //TODO: World Handling for currencies.
-    /*final boolean worldDefault = cur.getBoolean("Options.Default", true);
-    List<String> worlds = cur.getStringList("Options.Worlds");
-    final boolean global = cur.getBoolean("Options.Global", true);*/
     final String decimal = cur.getString("Options.Decimal", ".");
     final int decimalPlaces = (Math.min(cur.getInt("Options.DecimalPlaces", 2), 4));
     final String currencyType = cur.getString("Options.Type", "virtual");
@@ -170,11 +167,17 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     currency.setMajorSeparator(separator);
     currency.setMinorWeight(minorWeight);
 
-    //TODO: World Handling for currencies.
-      /*currency.setWorldDefault(worldDefault);
-      currency.setWorlds(worlds);
-      currency.setGlobal(global);
-      currency.setRate(rate);*/
+    final boolean global = cur.getBoolean("Options.Global.Enabled", true);
+    final boolean globalDefault = cur.getBoolean("Options.Global.Default", false);
+    currency.getRegions().put("global", new CurrencyRegion("global", global, globalDefault));
+
+    if(cur.contains("Options.MultiRegion.Regions")) {
+      for(String region : cur.getConfigurationSection("Options.MultiRegion.Regions").getKeys(false)) {
+
+        final boolean isDefault = cur.getBoolean("Options.MultiRegion.Regions." + region + ".Default", true);
+        currency.getRegions().put(region, new CurrencyRegion(region, true, isDefault));
+      }
+    }
 
     if(cur.contains("Converting")) {
       final Set<String> converting = cur.getConfigurationSection("Converting").getKeys(false);

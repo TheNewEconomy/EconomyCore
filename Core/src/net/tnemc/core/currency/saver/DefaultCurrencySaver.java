@@ -20,6 +20,7 @@ package net.tnemc.core.currency.saver;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.currency.CurrencyRegion;
 import net.tnemc.core.currency.CurrencySaver;
 import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.Note;
@@ -110,8 +111,18 @@ public class DefaultCurrencySaver implements CurrencySaver {
     cur.set("Formatting.Major_Separate", currency.isSeparateMajor());
     cur.set("Formatting.Major_Separator", currency.getMajorSeparator());
 
-    //TODO: World Handling for currencies.
+    //World Configurations
+    for(CurrencyRegion region : currency.getRegions().values()) {
+      if(region.region().equalsIgnoreCase("global")) {
+        cur.set("Options.Global.Enabled", region.isEnabled());
+        cur.set("Options.Global.Default", region.isDefault());
+        continue;
+      }
+      cur.set("Options.MultiRegion.Regions." + region.region() + ".Enabled", region.isEnabled());
+      cur.set("Options.MultiRegion.Regions." + region.region() + ".Default", region.isDefault());
+    }
 
+    //Conversion
     if(currency.getConversion().size() > 0) {
       for(Map.Entry<String, Double> entry : currency.getConversion().entrySet()) {
         cur.set("Converting." + entry.getKey(), entry.getValue());

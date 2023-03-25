@@ -22,7 +22,9 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.manager.CurrencyManager;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
@@ -40,6 +42,7 @@ public class Currency {
   private final TreeMap<BigDecimal, Denomination> denominations = new TreeMap<>();
 
   //World-related configurations.
+  private final Map<String, CurrencyRegion> regions = new HashMap<>();
 
   //Balance-related configurations.
   private BigDecimal startingHoldings;
@@ -271,5 +274,31 @@ public class Currency {
 
   public TreeMap<BigDecimal, Denomination> getDenominations() {
     return denominations;
+  }
+
+  public boolean isGlobal() {
+    return (regions.containsKey("global") && regions.get("global").isEnabled());
+  }
+
+  public boolean isGlobalDefault() {
+    if(isGlobal()) {
+      return regions.get("global").isDefault();
+    }
+    return false;
+  }
+
+  public boolean regionEnabled(final String region) {
+    return (regions.containsKey(region) && regions.get(region).isEnabled());
+  }
+
+  public boolean isRegionDefault(final String region) {
+    if(regionEnabled(region)) {
+      return regions.get(region).isDefault();
+    }
+    return false;
+  }
+
+  public Map<String, CurrencyRegion> getRegions() {
+    return regions;
   }
 }
