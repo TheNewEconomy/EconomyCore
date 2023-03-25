@@ -59,13 +59,7 @@ public class ReceiptBox {
    * @param identifier The identifier to use for the destruction.
    */
   public void destroy(final UUID identifier) {
-    Iterator<ConcurrentHashMap.Entry<Long, Receipt>> iterator = receipts.entrySet().iterator();
-    while (iterator.hasNext()) {
-      ConcurrentHashMap.Entry<Long, Receipt> entry = iterator.next();
-      if(entry.getValue().getId().equals(identifier)){
-        iterator.remove();
-      }
-    }
+    receipts.entrySet().removeIf(entry->entry.getValue().getId().equals(identifier));
   }
 
   /**
