@@ -36,6 +36,7 @@ import net.tnemc.core.io.maps.EnhancedHashMap;
 import net.tnemc.core.manager.id.UUIDPair;
 import net.tnemc.core.manager.id.UUIDProvider;
 import net.tnemc.core.manager.id.impl.provider.BaseUUIDProvider;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -141,6 +142,31 @@ public class AccountManager {
     return Optional.empty();
   }
 
+
+  /**
+   * Used to delete an {@link Account account} from an identifier.
+   *
+   * @param identifier The identifier to use for the search.
+   * @return The corresponding {@link EconomyResponse response}.
+   */
+  public EconomyResponse deleteAccount(@NotNull final UUID identifier) {
+    return deleteAccount(identifier.toString());
+  }
+
+  /**
+   * Used to delete an {@link Account account} from an identifier.
+   *
+   * @param identifier The identifier to use for the search.
+   * @return The corresponding {@link EconomyResponse response}.
+   */
+  public EconomyResponse deleteAccount(@NotNull final String identifier) {
+    if(!accounts.containsKey(identifier)) {
+      return AccountResponse.DOESNT_EXIST;
+    }
+    accounts.remove(identifier);
+    return AccountResponse.DELETED;
+  }
+
   /**
    * Used to find an {@link Account account} from a {@link UUID unique identifier}.
    * @param id The id to use in the search.
@@ -149,6 +175,21 @@ public class AccountManager {
    */
   public Optional<Account> findAccount(final UUID id) {
     return Optional.ofNullable(accounts.get(id.toString()));
+  }
+
+  /**
+   * Used to find an {@link PlayerAccount account} from a {@link UUID unique identifier}.
+   * @param id The id to use in the search.
+   * @return An optional containing the {@link PlayerAccount account} if it exists, otherwise an empty
+   * optional.
+   */
+  public Optional<PlayerAccount> findPlayerAccount(final UUID id) {
+    final Account account = accounts.get(id.toString());
+
+    if((account instanceof PlayerAccount)) {
+      return Optional.of((PlayerAccount)account);
+    }
+    return Optional.empty();
   }
 
   /**

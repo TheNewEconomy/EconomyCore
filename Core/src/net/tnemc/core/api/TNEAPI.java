@@ -1,5 +1,4 @@
-package net.tnemc.api;
-
+package net.tnemc.core.api;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -21,11 +20,14 @@ package net.tnemc.api;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.NonPlayerAccount;
 import net.tnemc.core.account.PlayerAccount;
+import net.tnemc.core.account.SharedAccount;
 import net.tnemc.core.actions.ActionSource;
 import net.tnemc.core.actions.EconomyResponse;
+import net.tnemc.core.api.response.AccountAPIResponse;
+import net.tnemc.core.currency.Currency;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Currency;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -74,14 +76,13 @@ public interface TNEAPI {
    * - {@link net.tnemc.core.account.SharedAccount}
    *
    * This method is safe to search for non-player accounts.
-   *
    * @param identifier The string identifier for the account that is being looked for.
+   * @param name The string name for the account that is being looked for.
    *
-   * @return The correlating {@link Account account} object if found, otherwise the one created.
-   *
+   * @return The correlating {@link AccountAPIResponse response}.
    * @since 0.1.2.0
    */
-  Account getOrCreateAccount(@NotNull String identifier);
+  AccountAPIResponse getOrCreateAccount(@NotNull String identifier, @NotNull String name);
 
   /**
    * Looks for an account based on the provided identifier and if none is found, creates it.
@@ -91,12 +92,12 @@ public interface TNEAPI {
    * This method is not safe to search for non-player accounts.
    *
    * @param identifier The {@link UUID} identifier for the account that is being looked for.
+   * @param name The string name for the account that is being looked for.
    *
-   * @return The correlating {@link PlayerAccount account} object if found, otherwise the one created.
-   *
+   * @return The correlating {@link AccountAPIResponse response}.
    * @since 0.1.2.0
    */
-  PlayerAccount getOrCreatePlayerAccount(@NotNull UUID identifier, @NotNull String name);
+  AccountAPIResponse getOrCreatePlayerAccount(@NotNull UUID identifier, @NotNull String name);
 
   /**
    * Attempts to create an account with the given identifier. This method returns true if the account
@@ -106,11 +107,11 @@ public interface TNEAPI {
    *
    * @param identifier The String identifier for the account that is being created.
    *
-   * @return True if the account was created. If the account was not created this returns false.
-   *
+   * @return If the account is created an Optional containing the {@link SharedAccount account}, or
+   *         an empty Optional.
    * @since 0.1.2.0
    */
-  boolean createAccount(@NotNull String identifier);
+  Optional<SharedAccount> createAccount(@NotNull String identifier);
 
   /**
    * Attempts to create an account with the given identifier. This method returns true if the account
@@ -122,11 +123,10 @@ public interface TNEAPI {
    * @param name The String representation of the name for the account being created, usually the username
    *             of the player.
    *
-   * @return True if the account was created. If the account was not created this returns false.
-   *
+   * @return The correlating {@link EconomyResponse response}.
    * @since 0.1.2.0
    */
-  boolean createPlayerAccount(@NotNull UUID identifier, @NotNull String name);
+  EconomyResponse createPlayerAccount(@NotNull UUID identifier, @NotNull String name);
 
   /**
    * Looks for an account based on the provided identifier.
@@ -200,14 +200,15 @@ public interface TNEAPI {
   /**
    * Used to get the default currency for the specified world if this implementation has multi-world
    * support, otherwise the default currency for the server.
-   * @param world The world to get the default currency for.
+   * @param region The region to get the default currency for. This could be a world, biomes, or a
+   *               third party based region.
    * @return The default currency for the specified world if this implementation has multi-world
    * support, otherwise the default currency for the server.
    *
    * @since 0.1.2.0
    */
   @NotNull
-  Currency getDefaultCurrency(@NotNull String world);
+  Currency getDefaultCurrency(@NotNull String region);
 
   /**
    * Used to get a set of every  {@link Currency} object for the server.
@@ -215,20 +216,17 @@ public interface TNEAPI {
    *
    * @since 0.1.2.0
    */
-  Set<Currency> getCurrencies();
+  Collection<Currency> getCurrencies();
 
   /**
    * Used to get a set of every {@link Currency} object that is available in the specified world if
    * this implementation has multi-world support, otherwise all {@link Currency} objects for the server.
-   * @param world The world we want to get the {@link Currency} objects for.
+   * @param region The region to get the currencies for. This could be a world, biomes, or a
+   *               third party based region.
    * @return A set of every {@link Currency} object that is available in the specified world if
    * this implementation has multi-world support, otherwise all {@link Currency} objects for the server.
    *
    * @since 0.1.2.0
    */
-  Set<Currency> getCurrencies(@NotNull String world);
-
-  //Holdings-related API methods
-
-  //BalTop-related API Methods
+  Collection<Currency> getCurrencies(@NotNull String region);
 }

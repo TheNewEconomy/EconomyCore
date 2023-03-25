@@ -10,7 +10,6 @@
         <module>Core</module>
         <module>Bukkit</module>
         <module>Sponge</module>
-        <module>API</module>
     </modules>
 
     <properties>
