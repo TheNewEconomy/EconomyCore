@@ -24,6 +24,7 @@ import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.account.holdings.Wallet;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.maps.MapKey;
+import net.tnemc.core.transaction.receipt.ReceiptBox;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
@@ -38,7 +39,7 @@ import java.util.Optional;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class Account {
+public class Account extends ReceiptBox {
 
   protected String identifier;
   protected String name;
