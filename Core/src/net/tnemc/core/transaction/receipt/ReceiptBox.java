@@ -19,9 +19,6 @@ package net.tnemc.core.transaction.receipt;
 
 import net.tnemc.core.transaction.Receipt;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.UUID;

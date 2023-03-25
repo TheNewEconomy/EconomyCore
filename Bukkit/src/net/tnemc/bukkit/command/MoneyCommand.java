@@ -26,7 +26,6 @@ import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
 import net.tnemc.bukkit.impl.BukkitCMDSource;
-import net.tnemc.bukkit.impl.BukkitPlayerProvider;
 import org.bukkit.command.CommandSender;
 
 /**

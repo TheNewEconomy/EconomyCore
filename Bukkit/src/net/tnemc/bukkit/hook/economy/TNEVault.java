@@ -21,7 +21,14 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.modify.HoldingsModifier;
+import net.tnemc.core.actions.source.PluginSource;
+import net.tnemc.core.transaction.Transaction;
+import net.tnemc.core.transaction.TransactionResult;
+import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
+import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 import org.bukkit.OfflinePlayer;
+import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -251,7 +258,28 @@ public class TNEVault implements Economy {
    */
   @Deprecated
   public EconomyResponse withdrawPlayer(String name, String world, double amount) {
-    return null;
+
+    final Optional<Account> account = TNECore.eco().account().findAccount(name);
+
+    final HoldingsModifier modifier = new HoldingsModifier(world,
+                                                           TNECore.eco().currency().getDefaultCurrency(world).getIdentifier(),
+                                                           new BigDecimal(amount));
+
+    final Transaction transaction = new Transaction("take")
+        .to(account.get(), modifier.counter())
+        .processor(new BaseTransactionProcessor())
+        .source(new PluginSource("Vault"));
+
+    try {
+      TransactionResult result = transaction.process();
+      return new EconomyResponse(amount, transaction.getTo().getCombinedEnding().doubleValue(),
+                                 fromResult(result),
+                                 result.getMessage());
+    } catch(InvalidTransactionException e) {
+
+      return new EconomyResponse(amount, transaction.getTo().getCombinedEnding().doubleValue(),
+                                 EconomyResponse.ResponseType.FAILURE, e.getMessage());
+    }
   }
 
   /**
@@ -290,7 +318,29 @@ public class TNEVault implements Economy {
    */
   @Deprecated
   public EconomyResponse depositPlayer(String name, String world, double amount) {
-    return null;
+
+    final Optional<Account> account = TNECore.eco().account().findAccount(name);
+
+    final HoldingsModifier modifier = new HoldingsModifier(world,
+                                                           TNECore.eco().currency().getDefaultCurrency(world).getIdentifier(),
+                                                           new BigDecimal(amount));
+
+
+    final Transaction transaction = new Transaction("give")
+        .to(account.get(), modifier)
+        .processor(new BaseTransactionProcessor())
+        .source(new PluginSource("Vault"));
+
+    try {
+      TransactionResult result = transaction.process();
+      return new EconomyResponse(amount, transaction.getTo().getCombinedEnding().doubleValue(),
+                                 fromResult(result),
+                                 result.getMessage());
+    } catch(InvalidTransactionException e) {
+
+      return new EconomyResponse(amount, transaction.getTo().getCombinedEnding().doubleValue(),
+                                 EconomyResponse.ResponseType.FAILURE, e.getMessage());
+    }
   }
 
   /**
@@ -455,5 +505,12 @@ public class TNEVault implements Economy {
    */
   public boolean createPlayerAccount(OfflinePlayer player, String world) {
     return TNECore.eco().account().createAccount(player.getUniqueId().toString(), player.getName()).success();
+  }
+
+  private EconomyResponse.ResponseType fromResult(@Nullable TransactionResult result) {
+    if(result != null && result.isSuccessful()) {
+      return EconomyResponse.ResponseType.SUCCESS;
+    }
+    return EconomyResponse.ResponseType.FAILURE;
   }
 }
