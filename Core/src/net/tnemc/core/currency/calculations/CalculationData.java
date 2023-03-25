@@ -39,8 +39,6 @@ import java.util.UUID;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-
-//TODO: Test this class.
 public class CalculationData<INV> {
 
   private final Map<BigDecimal, Integer> inventoryMaterials = new HashMap<>();

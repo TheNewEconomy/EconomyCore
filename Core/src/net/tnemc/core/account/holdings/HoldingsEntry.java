@@ -58,7 +58,7 @@ public class HoldingsEntry {
   private HoldingsType type = HoldingsType.VIRTUAL_HOLDINGS;
 
   /**
-   * Constructs an object that represents a holdings entry.
+   * Constructs an object that represents a holding's entry.
    *
    * @param region The name of the region involved. This is usually a world, but could be something
    *               else such as a world guard region name/identifier.

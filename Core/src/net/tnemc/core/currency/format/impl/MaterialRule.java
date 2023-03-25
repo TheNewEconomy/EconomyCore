@@ -45,7 +45,6 @@ public class MaterialRule implements FormatRule {
 
         final ItemDenomination denom = (ItemDenomination)denomination;
         if(formatted.contains(denom.getName())) {
-          //TODO: ItemCalculations.
           formatted = formatted.replace("<" + denom.getName() + ">", "");
         }
       }
