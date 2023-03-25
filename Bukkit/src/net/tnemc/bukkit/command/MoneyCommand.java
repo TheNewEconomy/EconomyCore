@@ -34,7 +34,7 @@ import org.bukkit.command.CommandSender;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-@CommandAlias("money")
+@CommandAlias("money|eco")
 public class MoneyCommand extends BaseCommand {
 
   @Default
