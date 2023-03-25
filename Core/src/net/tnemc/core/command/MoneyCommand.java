@@ -493,6 +493,17 @@ public class MoneyCommand extends BaseCommand {
         sender.message(new MessageData(result.getMessage()));
         return Optional.empty();
       }
+
+      if(result.getReceipt().isPresent()) {
+        if(transaction.getTo() != null) {
+          transaction.getTo().asAccount().ifPresent((account->account.log(result.getReceipt().get())));
+        }
+
+        if(transaction.getFrom() != null) {
+          transaction.getFrom().asAccount().ifPresent((account->account.log(result.getReceipt().get())));
+        }
+      }
+
       System.out.println(result.getMessage());
       return result.getReceipt();
     } catch(InvalidTransactionException e) {
