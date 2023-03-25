@@ -166,15 +166,15 @@ public abstract class TNECore {
     return instance.server;
   }
 
-  public MainConfig getConfig() {
+  public MainConfig config() {
     return config;
   }
 
-  public DataConfig getData() {
+  public DataConfig data() {
     return data;
   }
 
-  public MessageConfig getMessage() {
+  public MessageConfig message() {
     return messageConfig;
   }
 

@@ -61,6 +61,13 @@ public class CurrencyManager {
   }
 
   public void load(final File parent) {
+    load(parent, true);
+  }
+
+  public void load(final File parent, boolean reset) {
+    if(reset) {
+      currencies.clear();
+    }
     loader.loadCurrencies(new File(parent, "currency"));
   }
 

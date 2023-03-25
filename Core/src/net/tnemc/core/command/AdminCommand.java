@@ -19,6 +19,7 @@ package net.tnemc.core.command;
  */
 
 import co.aikar.commands.BaseCommand;
+import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.CmdSource;
 
 /**
@@ -60,7 +61,28 @@ public class AdminCommand extends BaseCommand {
   }
 
   public static void onReload(CmdSource sender, String[] args) {
-
+    if(args.length >= 1) {
+      switch(args[0].toLowerCase()) {
+        case "config" -> {
+          TNECore.instance().config().load();
+          TNECore.eco().currency().getLoader().loadCurrencies(TNECore.directory());
+          return;
+        }
+        case "data" -> {
+          TNECore.instance().data().load();
+          return;
+        }
+        case "message" -> {
+          TNECore.instance().message().load();
+          return;
+        }
+      }
+    }
+    TNECore.instance().config().load();
+    TNECore.eco().currency().getLoader().loadCurrencies(TNECore.directory());
+    TNECore.instance().data().load();
+    //TODO: Reload data manager.
+    TNECore.instance().message().load();
   }
 
   public static void onReset(CmdSource sender, String[] args) {

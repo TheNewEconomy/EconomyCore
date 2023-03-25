@@ -7,19 +7,6 @@ Messages:
     #DO NOT MODIFY
     Version: "0.1.2.0"
 
-    Command:
-        Unable: "<red>I'm sorry, but you're not allowed to use that command."
-        None: "<yellow>Command $command $arguments could not be found! Try using $command help."
-        InActive: "<red>Command $command $arguments has been deactivated! Try using $command help."
-        Charge: "<white>You have been charged <gold>$amount<white> for using $command."
-        Cooldown: "<red>This command is on cooldown."
-        CommandHelp: "Correct usage: /$command $parameters - $description"
-        CommandHelpHeader: "Command Help for $command"
-        Developer: "<red>You must be a developer to use that command."
-        Console: "<red>This command is not usable from console."
-        Player: "<red>This command is not usable from in-game."
-        InvalidPermission: "<red>I'm sorry, but you're not allowed to use that command."
-
     General:
         NoPerm: "<red>I'm sorry, but you do not have permission to do that."
         Saved: "<yellow>Successfully saved all TNE Data!"
@@ -154,8 +141,6 @@ Messages:
         Admin:
             Backup:
                 Description: "/tne backup - Creates a backup of all server data."
-            Balance:
-                Description: "/tne balance <player> [world] [currency] - Retrieves the balance of a player.<newline>- Player ~ The account owner.<newline>- World ~ The world to retrieve the balance from.<newline>- currency ~ The currency to retrieve the balance of."
             Create:
                 Description: "/tne create <player> [balance] - Creates a new economy account.<newline>- Player ~ The account owner.<newline>- Balance ~ The starting balance of the account."
             Debug:
@@ -167,7 +152,7 @@ Messages:
             Purge:
                 Description: "/tne purge - Deletes all player accounts that have the default balance"
             Reload:
-                Description: "/tne reload <configuration> - Saves modifications made via command, and reloads a configuration file.<newline>- Configuration ~ The identifier of the configuration to reload. Default is all."
+                Description: "/tne reload [configuration] - Saves modifications made via command, and reloads a configuration file.<newline>- Configuration ~ The identifier of the configuration to reload. Default is all."
             Reset:
                 Description: "/tne reset - Deletes all economy-related data from the database."
             Restore:
@@ -176,17 +161,8 @@ Messages:
                 Description: "/tne save - Force saves all TNE data."
             Status:
                 Description: "/tne status <player> [status] - Displays, or sets, the current account status of an account.<newline>- Player ~ The account owner."
-            Upload:
-                Description: "/tne upload - Uploads the TNE debug & latest server log to pastebin.com, and provides a link to each."
             Version:
                 Description: "/tne version - Displays the version of TNE currently running."
-        Config:
-            Get:
-                Arguments: "<node> [configuration]"
-                Description: "Returns the value of a configuration.<newline>- Node ~ The configuration node to use.<newline>- Configuration ~ The configuration identifier to retrieve the value from. This may be retrieved automatically."
-            Set:
-                Arguments: "<node> <value> [configuration]"
-                Description: "Sets a configuration value. This will not save until you do /tnec save."
         Module:
             Available:
                 Description: "/tnem available [url] - Displays available modules at the specified url, or defaults to TNE's core modules.<newline>- url ~ The url to use for the check, only use if you know what you're doing."
@@ -204,7 +180,7 @@ Messages:
                 Description: "/tnem unload <module> - Unload a module from the server.<newline>- Module ~ The module to unload."
         Money:
             Balance:
-                Arguments: "[world] [currency]"
+                Arguments: "[player] [world] [currency]"
                 Description: "Displays your current holdings."
             Convert:
                 Arguments: "<amount> <to currency[:world]> [from currency[:world]]"
@@ -218,6 +194,9 @@ Messages:
             MyBal:
                 Arguments: "[currency]"
                 Description: "Opens the MyBal menu"
+            Other:
+                Arguments: "<player> [world] [currency]"
+                Description: "Retrieves the balance of a player.<newline>- Player ~ The account owner.<newline>- World ~ The world to retrieve the balance from.<newline>- currency ~ The currency to retrieve the balance of."
             Pay:
                 Arguments: "<player> <amount> [from:account] [currency]"
                 Description: "Use some of your holdings to pay another player."

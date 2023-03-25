@@ -65,7 +65,7 @@ public class BaseTranslationProvider implements TranslationProvider {
    */
   @Override
   public String translateNode(final MessageData messageData, String language) {
-    String string = TNECore.instance().getMessage().getString(messageData.getNode(), language);
+    String string = TNECore.instance().message().getString(messageData.getNode(), language);
 
     for(Map.Entry<String, String> replacement : messageData.getReplacements().entrySet()) {
       System.out.println("Replace: " + replacement.getKey() + ":" + replacement.getValue());
