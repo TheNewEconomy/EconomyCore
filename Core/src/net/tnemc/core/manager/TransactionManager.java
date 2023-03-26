@@ -186,14 +186,6 @@ public class TransactionManager {
     return Optional.ofNullable(checkGroups.get(identifier));
   }
 
-  /**
-   * Used to log a transaction receipt.
-   * @param receipt The receipt to log.
-   */
-  public void log(final Receipt receipt) {
-    receipts.put(receipt.getId(), receipt);
-  }
-
   public boolean isTrack() {
     return track;
   }

@@ -22,7 +22,6 @@ import net.tnemc.core.manager.AccountManager;
 import net.tnemc.core.manager.CurrencyManager;
 import net.tnemc.core.manager.DataManager;
 import net.tnemc.core.manager.TransactionManager;
-import net.tnemc.core.manager.TranslationManager;
 import net.tnemc.core.region.RegionProvider;
 
 /**
@@ -37,7 +36,6 @@ public class EconomyManager {
   private final AccountManager accountManager;
   private final CurrencyManager currencyManager;
   private final TransactionManager transactionManager;
-  private final TranslationManager translationManager;
   private final DataManager dataManager;
   private final RegionProvider regionProvider;
 
@@ -49,7 +47,6 @@ public class EconomyManager {
     this.accountManager = new AccountManager();
     this.currencyManager = new CurrencyManager();
     this.transactionManager = new TransactionManager();
-    this.translationManager = new TranslationManager();
     this.dataManager = new DataManager();
     this.regionProvider = new RegionProvider(true);
   }
@@ -60,10 +57,6 @@ public class EconomyManager {
 
   public CurrencyManager currency() {
     return currencyManager;
-  }
-
-  public TranslationManager translation() {
-    return translationManager;
   }
 
   public TransactionManager transaction() {

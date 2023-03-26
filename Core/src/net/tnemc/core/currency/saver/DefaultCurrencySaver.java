@@ -80,13 +80,12 @@ public class DefaultCurrencySaver implements CurrencySaver {
       cur.createOrLoadWithComments();
 
     } catch(IOException e) {
-      //TODO: Translation Failed to load, exception attached.
+      TNECore.log().error("Failed to save currency: " + currency.getIdentifier());
       e.printStackTrace();
       return;
     }
 
-
-    //TODO: Translation: Saving currency...
+    TNECore.log().inform("Saving Currency: " + currency.getIdentifier());
 
     //Currency Info configs.
     cur.set("Info.Icon", currency.getIconMaterial());
@@ -150,7 +149,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     try {
       cur.save();
     } catch(IOException e) {
-      //TODO: Translation Failed to write to file, exception attached.
+      TNECore.log().error("Failed to save currency: " + currency.getIdentifier());
       e.printStackTrace();
     }
 
@@ -167,7 +166,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
       cur.createOrLoadWithComments();
 
     } catch(IOException e) {
-      //TODO: Translation Failed to load, exception attached.
+      TNECore.log().error("Failed to save currency: " + currency.getIdentifier());
       e.printStackTrace();
       return;
     }
@@ -181,7 +180,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     try {
       cur.save();
     } catch(IOException e) {
-      //TODO: Translation Failed to write to file, exception attached.
+      TNECore.log().error("Failed to save currency: " + currency.getIdentifier());
       e.printStackTrace();
     }
   }
@@ -199,12 +198,12 @@ public class DefaultCurrencySaver implements CurrencySaver {
     try {
       denom.createOrLoadWithComments();
     } catch(IOException e) {
-      //TODO: Translation Failed to load, exception attached.
+      TNECore.log().error("Failed to save currency denomination: " + denomination.singular());
       e.printStackTrace();
       return;
     }
 
-    //TODO: Translation Saving denomination...
+    TNECore.log().inform("Attempting to save currency denomination: " + denomination.singular());
 
     denom.set("Info.Single", denomination.singular());
     denom.set("Info.Plural", denomination.plural());
@@ -243,7 +242,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     try {
       denom.save();
     } catch(IOException e) {
-      //TODO: Translation Failed to write to file, exception attached.
+      TNECore.log().error("Failed to save currency denomination: " + denomination.singular());
       e.printStackTrace();
     }
   }

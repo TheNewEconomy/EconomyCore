@@ -22,7 +22,6 @@ import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
-import net.tnemc.core.io.message.TranslationProvider;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.providers.CalculationsProvider;
 import org.jetbrains.annotations.NotNull;
@@ -107,11 +106,6 @@ public class SpongeServerProvider implements ServerConnector {
    */
   @Override
   public String replaceColours(String string) {
-    return null;
-  }
-
-  @Override
-  public TranslationProvider translation() {
     return null;
   }
 

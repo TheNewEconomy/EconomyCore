@@ -20,7 +20,6 @@ package net.tnemc.core.compatibility;
 
 import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
-import net.tnemc.core.io.message.TranslationProvider;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.SerialItem;
 import net.tnemc.item.providers.CalculationsProvider;
@@ -106,12 +105,6 @@ public interface ServerConnector {
    * @return The formatted string.
    */
   String replaceColours(final String string);
-
-  /**
-   * Provides an instance of the {@link TranslationProvider} for this server.
-   * @return The instance of the {@link TranslationProvider}.
-   */
-  TranslationProvider translation();
 
   /**
    * Provides direct access to the implementation's instance of TNIL's AbstractItemStack, which acts

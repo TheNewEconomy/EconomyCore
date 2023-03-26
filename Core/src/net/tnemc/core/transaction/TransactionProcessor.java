@@ -74,12 +74,6 @@ public interface TransactionProcessor {
                                         new Date().getTime(),
                                         transaction);
     result.setReceipt(receipt);
-
-    if(result.isSuccessful()) {
-
-      TNECore.eco().transaction().log(receipt);
-    }
-
     return result;
   }
 

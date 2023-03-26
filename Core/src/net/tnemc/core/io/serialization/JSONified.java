@@ -2,7 +2,6 @@ package net.tnemc.core.io.serialization;
 
 import org.json.simple.JSONObject;
 
-
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -27,29 +26,21 @@ import org.json.simple.JSONObject;
  * @since 0.1.2.0
  * @author creatorfromhell
  */
-public abstract class JSONified<T> {
+public abstract class JSONified {
 
   protected String serialized;
-
-  public JSONified(String serialized) {
-    this.serialized = serialized;
-  }
-
-  public JSONified(T object) {
-    this.serialized = serialize(object).toJSONString();
-  }
 
   /**
    * Used to serialize this object to a JSON-valid string.
    * @param object Our object to serialize.
    * @return The {@link JSONObject} associated with the JSON-valid String.
    */
-  abstract JSONObject serialize(T object);
+  abstract JSONObject serialize(JSONified object);
 
   /**
    * Used to generate information for this object from
    * @param serialized The JSON-valid String that we are going to deserialize.
    *
    */
-  abstract T deserialize(String serialized);
+  abstract JSONified deserialize(String serialized);
 }

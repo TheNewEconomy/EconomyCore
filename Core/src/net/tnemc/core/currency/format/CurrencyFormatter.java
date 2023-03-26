@@ -33,10 +33,8 @@ import net.tnemc.core.currency.format.impl.MinorRule;
 import net.tnemc.core.currency.format.impl.ShortenRule;
 import net.tnemc.core.currency.format.impl.SymbolRule;
 
-import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * CurrencyFormatter represents a formatter, which is responsible for converting a

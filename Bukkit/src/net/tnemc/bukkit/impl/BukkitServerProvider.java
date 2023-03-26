@@ -22,7 +22,6 @@ import net.tnemc.bukkit.TNE;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.currency.item.ItemDenomination;
-import net.tnemc.core.io.message.TranslationProvider;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.bukkit.BukkitCalculationsProvider;
 import net.tnemc.item.bukkit.BukkitItemStack;
@@ -113,12 +112,6 @@ public class BukkitServerProvider implements ServerConnector {
    */
   @Override
   public String replaceColours(String string) {
-    //TODO: This
-    return null;
-  }
-
-  @Override
-  public TranslationProvider translation() {
     //TODO: This
     return null;
   }

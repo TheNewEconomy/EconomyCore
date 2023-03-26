@@ -63,11 +63,11 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
         final boolean loaded = loadCurrency(directory, curFile);
 
         if(!loaded) {
-          //TODO: Send translation of unable to load currency.
+          TNECore.log().error("Failed to load currency: " + curFile);
         }
       }
     }
-    //TODO: Send translation no currencies directory exists.
+    TNECore.log().error("There are no currencies to load.");
   }
 
   /**
@@ -96,17 +96,17 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       cur.loadWithComments();
 
     } catch(IOException e) {
-      //TODO: Translation Failed to load, exception attached.
+      TNECore.log().error("Failed to load currency: " + cur.getName());
       e.printStackTrace();
       return false;
     }
 
     if(cur.getBoolean("Options.Disabled", false)) {
-      //TODO: Translation: Currency failed to load, is disabled.
+      TNECore.log().error("Currency wasn't loaded as it's disabled: " + cur.getName());
       return false;
     }
 
-    //TODO: Translation: Loading currency...
+    TNECore.log().error("Attempting to load currency: " + curDirectory.getName());
 
     //Currency Info configs.
     final String identifier = cur.getString("Info.Identifier", "Dollar");
@@ -215,7 +215,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
     //TODO: Currency load event
     if(!loadDenominations(new File(directory, identifier), currency)) {
-      //TODO: Translation Failed to load currency, denominations failed to load.
+      TNECore.log().error("Failed to load currency. Unable to load denominations: " + currency.getIdentifier());
       return false;
     }
 
@@ -240,15 +240,15 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
           final boolean loaded = loadDenomination(currency, denomination);
 
           if(!loaded) {
-            //TODO: Send translation of unable to load denomination.
+            TNECore.log().error("Unable to load denomination: " + denomination.getName());
           }
         }
         return true;
       }
-      //TODO: Translation send no tiers found.
+      TNECore.log().error("No denominations found for currency: " + currency.getIdentifier());
       return false;
     }
-    //TODO: Translation send no tiers directory found.
+    TNECore.log().error("No denominations found for currency: " + currency.getIdentifier());
     return false;
   }
 
@@ -276,7 +276,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     try {
       denom.loadWithComments();
     } catch(IOException e) {
-      //TODO: Translation Failed to load, exception attached.
+      TNECore.log().error("Failed to load denomination: " + denomFile.getName());
       e.printStackTrace();
       return false;
     }
