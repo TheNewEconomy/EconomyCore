@@ -1,7 +1,4 @@
-package net.tnemc.core.io.serialization;
-
-import org.json.simple.JSONObject;
-
+package net.tnemc.core.io.serialization.impl;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -20,26 +17,41 @@ import org.json.simple.JSONObject;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.currency.Denomination;
+import net.tnemc.core.io.serialization.JSONified;
+import org.json.simple.JSONObject;
+
 /**
- * A class which represents an object that can be parsed to or from JSON.
+ * SerialDenomination
  *
- * @since 0.1.2.0
  * @author creatorfromhell
+ * @since 0.1.2.0
  */
-public interface JSONified<T> {
+public class SerialDenomination implements JSONified<Denomination> {
 
   /**
    * Used to serialize this object to a JSON-valid string.
    *
-   * @param object The object to serialize.
+   * @param denom The object to serialize.
    * @return The {@link JSONObject} associated with the JSON-valid String.
    */
-  JSONObject serialize(T object);
+  @Override
+  public JSONObject serialize(Denomination denom) {
+    JSONObject json = new JSONObject();
+    json.put("single", denom.singular());
+    json.put("plural", denom.plural());
+    json.put("weight", denom.weight().toPlainString());
+    json.put("item", denom.isItem());
+    return json;
+  }
 
   /**
    * Used to generate information for this object from
    * @param serialized The JSON-valid String that we are going to deserialize.
    * @return The object that was deserialized from the JSON string.
    */
-  T deserialize(String serialized);
+  @Override
+  public Denomination deserialize(String serialized) {
+    return null;
+  }
 }
