@@ -53,7 +53,8 @@ casual user who wants Menu-based interactions, TNE is right for you!
 networks that add improvements to their version must also provide them for everyone else to enjoy!
 
 ## Translations
-TNE utilizes Crowdin for Translation management. More documentation coming soon.
+TNE utilizes Crowdin for Translation management. Find more about contributing to translations
+for TNE on the [Translation Guide](https://github.com/TheNewEconomy/EconomyCore/wiki/Translation-Guide).
 
 ## Documented
 TNE has lots of documentation for the power users that like all the documentation.
