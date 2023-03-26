@@ -37,24 +37,6 @@ public class Timings implements AutoCloseable {
    * Starts our timings in order to measure duration of methods or actions.
    * @return The timings object.
    */
-  public static Timings time() {
-    return new Timings().start();
-  }
-
-
-  /**
-   * Used to start our timings with a statement for logging purposes.
-   * @param statement The statement to use.
-   * @return The timings instance.
-   */
-  public static Timings time(String statement) {
-    return new Timings().start().withStatement(statement);
-  }
-
-  /**
-   * Starts our timings in order to measure duration of methods or actions.
-   * @return The timings object.
-   */
   public Timings start() {
     start = System.nanoTime();
     return this;
@@ -72,7 +54,7 @@ public class Timings implements AutoCloseable {
 
   /**
    * Stops the timings and returns the duration.
-   * @return Return the duration this timings lasted.
+   * @return Return the duration this timing lasted.
    */
   public long stop() {
     this.end = System.nanoTime();
@@ -90,6 +72,6 @@ public class Timings implements AutoCloseable {
 
   @Override
   public void close() throws Exception {
-    stop();
+    stopLog(DebugLevel.DETAILED);
   }
 }

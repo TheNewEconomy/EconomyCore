@@ -29,8 +29,4 @@ public class DataConfig extends Config {
   public DataConfig() {
     super("data.yml", "resources/data.yml", "Data");
   }
-
-  public void addDefaults() {
-
-  }
 }

@@ -42,7 +42,7 @@ public class RegionProvider {
   }
 
   public void initializeRegion(final String name, final RegionType type) {
-
+    //TODO: This
   }
 
   /**
@@ -77,5 +77,9 @@ public class RegionProvider {
 
   public boolean isSharing() {
     return realmSharing;
+  }
+
+  public void setRealmSharing(boolean realmSharing) {
+    this.realmSharing = realmSharing;
   }
 }

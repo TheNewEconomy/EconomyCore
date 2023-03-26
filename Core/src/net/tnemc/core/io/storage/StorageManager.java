@@ -40,8 +40,4 @@ public class StorageManager {
   public static StorageManager instance() {
     return instance;
   }
-
-  public void backup() {
-
-  }
 }

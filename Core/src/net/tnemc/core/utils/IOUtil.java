@@ -28,9 +28,11 @@ public class IOUtil {
           }
 
           public void checkClientTrusted(X509Certificate[] certs, String authType) {
+            //TODO: This
           }
 
           public void checkServerTrusted(X509Certificate[] certs, String authType) {
+            //TODO: This
           }
         }
     };

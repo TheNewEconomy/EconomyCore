@@ -423,7 +423,7 @@ public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: <amount> [world]
   public static void onSetAll(ArgumentsParser parser) {
-
+    //TODO: This
   }
 
   //ArgumentsParser: <player> <amount> [world] [currency]
@@ -467,7 +467,7 @@ public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: [page] [currency:name] [world:world] [limit:#]
   public static void onTop(ArgumentsParser parser) {
-
+    //TODO: This
   }
 
   private static Optional<Receipt> processTransaction(CmdSource sender, Transaction transaction) {

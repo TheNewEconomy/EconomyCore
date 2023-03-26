@@ -29,7 +29,7 @@ package net.tnemc.core.compatibility;
 public interface SetupProvider {
 
   default void setup() {
-
+    //TODO: This
   }
 
   /**

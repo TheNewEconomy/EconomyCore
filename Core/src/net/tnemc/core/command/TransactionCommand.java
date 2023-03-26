@@ -30,18 +30,18 @@ import net.tnemc.core.command.args.ArgumentsParser;
 public class TransactionCommand extends BaseCommand {
 
   public static void away(ArgumentsParser parser) {
-
+    //TODO: This
   }
 
   public static void history(ArgumentsParser parser) {
-
+    //TODO: This
   }
 
   public static void info(ArgumentsParser parser) {
-
+    //TODO: This
   }
 
   public static void voidT(ArgumentsParser parser) {
-
+    //TODO: This
   }
 }
