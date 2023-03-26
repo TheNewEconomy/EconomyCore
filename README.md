@@ -1,4 +1,8 @@
 # The New Economy
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/246101510dca4eb9a729ef178dae682c)](https://app.codacy.com/gh/TheNewEconomy/EconomyCore/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Build Status](https://ci.codemc.io/job/creatorfromhell/job/TNE/badge/icon)](https://ci.codemc.io/job/creatorfromhell/job/TNE/)
+
 The New Economy, TNE, is the ultimate economy plugin for your Minecraft server, no matter what platform you're on. While
 TNE is pushed as being "feature-packed," it's not feature packed in the normal sense of jamming a bunch of useless features
 into the core plugin, but rather using modules.
@@ -14,10 +18,6 @@ into the core plugin, but rather using modules.
 TNE was originally created for hey0's hMod long before Bukkit/Spigot/Paper was a thing. Since then, it has taken on many
 forms and this is the future form of the plugin. This core is designed to be robust and carry TNE into the future with or
 without Minecraft by not being platform-dependent.
-
-# Code Checks
-
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/246101510dca4eb9a729ef178dae682c)](https://app.codacy.com/gh/TheNewEconomy/EconomyCore/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 # Why TNE?
 
