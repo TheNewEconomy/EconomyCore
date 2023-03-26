@@ -20,6 +20,7 @@ package net.tnemc.core.account.holdings.modify;
 
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.account.holdings.HoldingsType;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -139,5 +140,9 @@ public class HoldingsModifier {
 
   public HoldingsOperation getOperation() {
     return operation;
+  }
+
+  public HoldingsEntry asEntry() {
+    return new HoldingsEntry(region, currency, modifier, HoldingsType.NORMAL_HOLDINGS);
   }
 }

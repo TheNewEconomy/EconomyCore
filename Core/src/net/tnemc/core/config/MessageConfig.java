@@ -64,7 +64,10 @@ public class MessageConfig extends Config {
       return languages.get(lang).getTranslation(node);
     }
 
+    System.out.println("YAML Check");
     if(yaml.contains(node)) {
+
+      System.out.println("YAML exists");
       return yaml.getString(node);
     }
     return node;

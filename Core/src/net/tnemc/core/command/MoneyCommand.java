@@ -31,6 +31,7 @@ import net.tnemc.core.command.args.ArgumentsParser;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
@@ -73,7 +74,6 @@ public class MoneyCommand extends BaseCommand {
   //ArgumentsParser: <amount> <to currency> [from currency]
   public static void onConvert(ArgumentsParser parser) {
 
-    long startTime = System.nanoTime();
     if(parser.args().length < 2) {
       //TODO: Help
       return;
@@ -130,20 +130,11 @@ public class MoneyCommand extends BaseCommand {
         parser.sender().message(data);
       }
     }
-
-    //TODO: Receipt logging and success checking
-    long endTime = System.nanoTime();
-
-    long duration = (endTime - startTime);
-
-    parser.sender().message(new MessageData("<red>Transaction took " + duration + "to execute!"));
-
-    //TODO: Success message
   }
 
   //ArgumentsParser: <player> <amount> [world] [currency]
   public static void onGive(ArgumentsParser parser) {
-    long startTime = System.nanoTime();
+
     if(parser.args().length < 2) {
       //TODO: Help
       return;
@@ -171,19 +162,11 @@ public class MoneyCommand extends BaseCommand {
         //TODO: Success handler
       }
     }
-
-    long endTime = System.nanoTime();
-
-    long duration = (endTime - startTime);
-
-    parser.sender().message(new MessageData("<red>Transaction took " + duration + "to execute!"));
-
-    //TODO: Success message
   }
 
   //ArgumentsParser: <amount> [currency]
   public static void onNote(ArgumentsParser parser) {
-    long startTime = System.nanoTime();
+
     if(parser.args().length < 1) {
       //TODO: Help
       return;
@@ -212,13 +195,6 @@ public class MoneyCommand extends BaseCommand {
         //TODO: Success checking.
       }
     }
-
-    //TODO: Receipt logging and success checking
-    long endTime = System.nanoTime();
-
-    long duration = (endTime - startTime);
-
-    parser.sender().message(new MessageData("<red>Transaction took " + duration + "to execute!"));
   }
 
   public static void onOther(ArgumentsParser parser) {
@@ -269,11 +245,10 @@ public class MoneyCommand extends BaseCommand {
         Optional<Currency> entryCur = TNECore.eco().currency().findCurrency(entry.getCurrency());
 
         if(entryCur.isPresent()) {
-          //TODO: currency formatting.
 
           final MessageData entryMSG = new MessageData("Messages.Money.HoldingsMultiSingle");
           entryMSG.addReplacement("$currency", entryCur.get().getIdentifier());
-          entryMSG.addReplacement("$amount", entry.getAmount().toPlainString());
+          entryMSG.addReplacement("$amount", CurrencyFormatter.format(account.get(), entry));
           parser.sender().message(entryMSG);
         }
       }
@@ -282,7 +257,7 @@ public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: <player> <amount> [currency] [from:account]
   public static void onPay(ArgumentsParser parser) {
-    long startTime = System.nanoTime();
+
     if(parser.args().length < 2) {
       //TODO: Help
       return;
@@ -324,20 +299,14 @@ public class MoneyCommand extends BaseCommand {
 
       final Optional<Receipt> receipt = processTransaction(parser.sender(), transaction);
       if(receipt.isPresent()) {
-        //TODO: Success handler.
+
       }
     }
-
-    long endTime = System.nanoTime();
-
-    long duration = (endTime - startTime);
-
-    parser.sender().message(new MessageData("<red>Transaction took " + duration + "to execute!"));
   }
 
   //ArgumentsParser: <player> <amount> [currency]
   public static void onRequest(ArgumentsParser parser) {
-    long startTime = System.nanoTime();
+
     if(parser.args().length < 2) {
       //TODO: Help
       return;
@@ -368,17 +337,10 @@ public class MoneyCommand extends BaseCommand {
       request.addReplacement("$currency", currency.getIdentifier());
       provider.get().message(request);
     }
-
-    long endTime = System.nanoTime();
-
-    long duration = (endTime - startTime);
-
-    parser.sender().message(new MessageData("<red>Transaction took " + duration + "to execute!"));
   }
 
   //ArgumentsParser: <player> <amount> [world] [currency]
   public static void onSet(ArgumentsParser parser) {
-    long startTime = System.nanoTime();
 
     if(parser.args().length < 2) {
       //TODO: Help
@@ -404,16 +366,12 @@ public class MoneyCommand extends BaseCommand {
 
       Optional<Receipt> receipt = processTransaction(parser.sender(), transaction);
 
-      long endTime = System.nanoTime();
-
-      long duration = (endTime - startTime);
-
-      parser.sender().message(new MessageData("<red>Transaction took " + duration + "to execute!"));
-
       if(receipt.isPresent()) {
         final MessageData msg = new MessageData("Messages.Money.Set");
         msg.addReplacement("$player", parser.args()[0]);
-        msg.addReplacement("$amount", parser.args()[1]);
+        msg.addReplacement("$amount", CurrencyFormatter.format(account.get(),
+                                                               modifier.asEntry())
+        );
         parser.sender().message(msg);
         return;
       }
@@ -429,7 +387,6 @@ public class MoneyCommand extends BaseCommand {
   //ArgumentsParser: <player> <amount> [world] [currency]
   public static void onTake(ArgumentsParser parser) {
 
-    long startTime = System.nanoTime();
     if(parser.args().length < 2) {
       //TODO: Help
       return;
@@ -456,12 +413,6 @@ public class MoneyCommand extends BaseCommand {
       if(receipt.isPresent()) {
         //TODO: Success message.
       }
-
-      long endTime = System.nanoTime();
-      //TODO: Remove timing code.
-      long duration = (endTime - startTime);
-
-      parser.sender().message(new MessageData("<red>Transaction took " + duration + "to execute!"));
     }
   }
 

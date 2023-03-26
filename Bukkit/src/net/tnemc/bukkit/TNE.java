@@ -78,7 +78,7 @@ public class TNE extends JavaPlugin {
       new VaultHook().register();
     }
 
-    getLogger().log(Level.INFO, ChatColor.GREEN + "The New Economy has been enabled!");
+    getLogger().log(Level.INFO, "The New Economy has been enabled!");
 
   }
 

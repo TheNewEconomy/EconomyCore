@@ -17,7 +17,25 @@ package net.tnemc.core.currency.format;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.currency.Currency;
+import net.tnemc.core.currency.format.impl.ColourRule;
+import net.tnemc.core.currency.format.impl.DecimalRule;
+import net.tnemc.core.currency.format.impl.MajorAmountRule;
+import net.tnemc.core.currency.format.impl.MajorNameRule;
+import net.tnemc.core.currency.format.impl.MajorRule;
+import net.tnemc.core.currency.format.impl.MaterialRule;
+import net.tnemc.core.currency.format.impl.MinorAmountRule;
+import net.tnemc.core.currency.format.impl.MinorNameRule;
+import net.tnemc.core.currency.format.impl.MinorRule;
+import net.tnemc.core.currency.format.impl.ShortenRule;
+import net.tnemc.core.currency.format.impl.SymbolRule;
+
 import java.math.BigDecimal;
+import java.util.LinkedHashMap;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -28,13 +46,40 @@ import java.util.UUID;
  */
 public class CurrencyFormatter {
 
-  protected final UUID currency;
+  final static LinkedHashMap<String, FormatRule> rulesMap = new LinkedHashMap<>();
 
-  public CurrencyFormatter(UUID currency) {
-    this.currency = currency;
+  static {
+    addRule(new ShortenRule());
+
+    addRule(new DecimalRule());
+    addRule(new MajorAmountRule());
+    addRule(new MajorNameRule());
+    addRule(new MajorRule());
+    addRule(new MinorAmountRule());
+    addRule(new MinorNameRule());
+    addRule(new MinorRule());
+    addRule(new SymbolRule());
+    addRule(new ColourRule());
+    addRule(new MaterialRule());
   }
 
-  public BigDecimal deformat(final String formatted) {
-    return BigDecimal.ZERO;
+  public static void addRule(FormatRule rule) {
+    rulesMap.put(rule.name(), rule);
+  }
+
+  public static String format(Account account, HoldingsEntry entry) {
+    String format = "";
+
+    final Optional<Currency> currency = TNECore.eco().currency().findCurrency(entry.getCurrency());
+    if(currency.isPresent()) {
+
+      format = currency.get().getFormat();
+
+      for(FormatRule rule : rulesMap.values()) {
+        format = rule.format(account, entry, format);
+      }
+    }
+
+    return format;
   }
 }
