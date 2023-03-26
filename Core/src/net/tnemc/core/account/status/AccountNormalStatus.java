@@ -39,9 +39,9 @@ public class AccountNormalStatus implements AccountStatus {
   }
 
   /**
-   * Whether this status is unlockable by entering the account's pin.
+   * Whether this status can be unlocked by entering the account's pin.
    *
-   * @return True if this status is able to be unlocked using the pin, otherwise false.
+   * @return True if this status can be unlocked by entering the account's pin, otherwise false.
    */
   @Override
   public boolean unlockable() {

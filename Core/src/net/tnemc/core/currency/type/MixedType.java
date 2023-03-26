@@ -107,7 +107,7 @@ public class MixedType extends ItemType {
       return super.setHoldings(account, region, currency, type, amount);
     }
 
-    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getIdentifier(), amount, VIRTUAL_HOLDINGS));
+    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, VIRTUAL_HOLDINGS));
     return true;
   }
 }

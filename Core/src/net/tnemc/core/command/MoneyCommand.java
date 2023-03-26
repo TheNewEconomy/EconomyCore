@@ -108,11 +108,11 @@ public class MoneyCommand extends BaseCommand {
     final BigDecimal parsedTo = new BigDecimal(args[0]).multiply(BigDecimal.valueOf(currencyFromOBJ.get().getConversion().get(currency)));
 
     final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
-                                                           currency,
+                                                           currencyOBJ.get().getUid(),
                                                            parsedTo);
 
     final HoldingsModifier modifierFrom = new HoldingsModifier(sender.region(),
-                                                               fromCurrency,
+                                                               currencyFromOBJ.get().getUid(),
                                                                parsed.negate());
     //TODO: Value args check
 
@@ -152,6 +152,9 @@ public class MoneyCommand extends BaseCommand {
     final String region = (args.length >= 3)? args[2] : sender.region();
     final String currency = (args.length >= 4)? args[3] : "USD";
     //TODO: Default currency.
+    //TODO: Check if currency exists.
+
+    Optional<Currency> cur = TNECore.eco().currency().findCurrency(currency);
 
     Optional<Account> account = TNECore.eco().account().findAccount(args[0]);
 
@@ -163,7 +166,7 @@ public class MoneyCommand extends BaseCommand {
     }
 
     final HoldingsModifier modifier = new HoldingsModifier(region,
-                                                           currency,
+                                                           cur.get().getUid(),
                                                            new BigDecimal(args[1]));
     //TODO: Value args check
 
@@ -204,8 +207,10 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
+    Optional<Currency> cur = TNECore.eco().currency().findCurrency(currency);
+
     final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
-                                                           currency,
+                                                           cur.get().getUid(),
                                                            new BigDecimal(args[0]));
     //TODO: Value args check
 
@@ -241,6 +246,8 @@ public class MoneyCommand extends BaseCommand {
 
     //TODO: Default currency.
 
+    Optional<Currency> cur = TNECore.eco().currency().findCurrency(currency);
+
     Optional<Account> account = TNECore.eco().account().findAccount(identifier);
 
     if(account.isEmpty()) {
@@ -254,10 +261,10 @@ public class MoneyCommand extends BaseCommand {
 
     if(args.length >= 2) {
       BigDecimal amount = BigDecimal.ZERO;
-      for(HoldingsEntry entry : account.get().getHoldings(region, currency)) {
+      for(HoldingsEntry entry : account.get().getHoldings(region, cur.get().getUid())) {
         amount = amount.add(entry.getAmount());
       }
-      holdings.add(new HoldingsEntry(region, currency, amount, HoldingsType.NORMAL_HOLDINGS));
+      holdings.add(new HoldingsEntry(region, cur.get().getUid(), amount, HoldingsType.NORMAL_HOLDINGS));
     } else {
       holdings.addAll(account.get().getAllHoldings(region, HoldingsType.NORMAL_HOLDINGS));
     }
@@ -276,8 +283,11 @@ public class MoneyCommand extends BaseCommand {
     sender.message(msg);
 
     for(HoldingsEntry entry : holdings) {
+
+      Optional<Currency> entryCur = TNECore.eco().currency().findCurrency(entry.getCurrency());
+
       final MessageData entryMSG = new MessageData("Messages.Money.HoldingsMultiSingle");
-      entryMSG.addReplacement("$currency", entry.getCurrency());
+      entryMSG.addReplacement("$currency", entryCur.get().getIdentifier());
       entryMSG.addReplacement("$amount", entry.getAmount().toPlainString());
       sender.message(entryMSG);
     }
@@ -293,6 +303,8 @@ public class MoneyCommand extends BaseCommand {
     }
 
     final String currency = (args.length >= 3)? args[2] : "USD";
+
+    Optional<Currency> cur = TNECore.eco().currency().findCurrency(currency);
     //TODO: Default currency.
 
     Optional<Account> account = TNECore.eco().account().findAccount(args[0]);
@@ -314,7 +326,7 @@ public class MoneyCommand extends BaseCommand {
     }
 
     final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
-                                                           currency,
+                                                           cur.get().getUid(),
                                                            new BigDecimal(args[1]));
     //TODO: Value args check
 
@@ -392,6 +404,8 @@ public class MoneyCommand extends BaseCommand {
 
     final String region = (args.length >= 3)? args[2] : sender.region();
     final String currency = (args.length >= 4)? args[3] : "USD";
+
+    Optional<Currency> cur = TNECore.eco().currency().findCurrency(currency);
     //TODO: Default currency.
 
     Optional<Account> account = TNECore.eco().account().findAccount(args[0]);
@@ -404,7 +418,7 @@ public class MoneyCommand extends BaseCommand {
     }
 
     final HoldingsModifier modifier = new HoldingsModifier(region,
-                                                           currency,
+                                                           cur.get().getUid(),
                                                            new BigDecimal(args[1]),
                                                            HoldingsOperation.SET);
     //TODO: Value args check
@@ -447,6 +461,8 @@ public class MoneyCommand extends BaseCommand {
 
     final String region = (args.length >= 3)? args[2] : sender.region();
     final String currency = (args.length >= 4)? args[3] : "USD";
+
+    Optional<Currency> cur = TNECore.eco().currency().findCurrency(currency);
     //TODO: Default currency.
 
     Optional<Account> account = TNECore.eco().account().findAccount(args[0]);
@@ -459,7 +475,7 @@ public class MoneyCommand extends BaseCommand {
     }
 
     final HoldingsModifier modifier = new HoldingsModifier(region,
-                                                           currency,
+                                                           cur.get().getUid(),
                                                            new BigDecimal(args[1]));
     //TODO: Value args check
 

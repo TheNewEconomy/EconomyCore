@@ -44,7 +44,7 @@ public abstract class AmountConfirmation {
    * @param region The region involved.
    * @param amount The amount from the selection.
    */
-  public abstract void confirm(UUID player, UUID target, String currency, String region, BigDecimal amount);
+  public abstract void confirm(UUID player, UUID target, UUID currency, String region, BigDecimal amount);
 
   protected static Optional<Receipt> processTransaction(PlayerProvider provider, Transaction transaction) {
     try {

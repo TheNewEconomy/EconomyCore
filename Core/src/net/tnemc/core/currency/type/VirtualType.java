@@ -76,13 +76,13 @@ public class VirtualType implements CurrencyType {
    */
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount) {
-    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getIdentifier(), amount, VIRTUAL_HOLDINGS));
+    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, VIRTUAL_HOLDINGS));
     return true;
   }
 
   protected HoldingsEntry virtual(Account account, String region, Currency currency) {
     final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
-                                                                             currency.getIdentifier(),
+                                                                             currency.getUid(),
                                                                              VIRTUAL_HOLDINGS);
 
 
@@ -90,7 +90,7 @@ public class VirtualType implements CurrencyType {
       return holdings.get();
     }
     return new HoldingsEntry(region,
-                             currency.getIdentifier(),
+                             currency.getUid(),
                              BigDecimal.ZERO,
                              VIRTUAL_HOLDINGS);
   }

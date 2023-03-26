@@ -126,7 +126,7 @@ public class AmountSelectionPage extends PlayerPage {
                 final BigDecimal amt = aObj.map(o->(BigDecimal)o).orElse(BigDecimal.ZERO);
 
                 confirmation.confirm(player.identifier(), (UUID)target.get(),
-                                     currency.get().getIdentifier(),
+                                     currency.get().getUid(),
                                      provider.get().region(true), amt);
                 player.inventory().close();
               }

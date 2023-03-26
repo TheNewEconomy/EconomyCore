@@ -68,7 +68,7 @@ public class BalancePage extends PlayerPage {
                                         .stackBuilder()
                                         .of(currency.get().getIconMaterial(), 1)
                                         .display(currency.get().getDisplay())
-                                        .lore(List.of("Combined Balance: " + balance(provider.get(), currency.get().getIdentifier()).toString())))
+                                        .lore(List.of("Combined Balance: " + balance(provider.get(), currency.get().getUid()).toString())))
             .create());
 
         //balance check
@@ -76,7 +76,7 @@ public class BalancePage extends PlayerPage {
 
         final Optional<Account> account = TNECore.eco().account().findAccount(player.identifier());
         if(account.isPresent()) {
-          for(HoldingsEntry entry : account.get().getHoldings(provider.get().region(true), currency.get().getIdentifier())) {
+          for(HoldingsEntry entry : account.get().getHoldings(provider.get().region(true), currency.get().getUid())) {
 
             String item = "PAPER";
             if(entry.getType().equals(HoldingsType.E_CHEST)) {
@@ -102,7 +102,7 @@ public class BalancePage extends PlayerPage {
     return icons;
   }
 
-  private BigDecimal balance(PlayerProvider player, final String currency) {
+  private BigDecimal balance(PlayerProvider player, final UUID currency) {
 
     BigDecimal amount = BigDecimal.ZERO;
 

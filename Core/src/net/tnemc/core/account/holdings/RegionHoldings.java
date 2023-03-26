@@ -20,6 +20,7 @@ package net.tnemc.core.account.holdings;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -30,7 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class RegionHoldings {
 
-  private final Map<String, CurrencyHoldings> holdings = new ConcurrentHashMap<>();
+  private final Map<UUID, CurrencyHoldings> holdings = new ConcurrentHashMap<>();
 
   private final String region;
 
@@ -47,18 +48,18 @@ public class RegionHoldings {
     holdings.put(entry.getCurrency(), currencyHoldings);
   }
 
-  public Optional<HoldingsEntry> getHoldingsEntry(final String currency) {
+  public Optional<HoldingsEntry> getHoldingsEntry(final UUID currency) {
     return getHoldingsEntry(currency, HoldingsType.NORMAL_HOLDINGS);
   }
 
-  public Optional<HoldingsEntry> getHoldingsEntry(final String currency, final HoldingsType type) {
+  public Optional<HoldingsEntry> getHoldingsEntry(final UUID currency, final HoldingsType type) {
     if(holdings.containsKey(currency)) {
       return holdings.get(currency).getHoldingsEntry(type);
     }
     return Optional.empty();
   }
 
-  public Map<String, CurrencyHoldings> getHoldings() {
+  public Map<UUID, CurrencyHoldings> getHoldings() {
     return holdings;
   }
 }

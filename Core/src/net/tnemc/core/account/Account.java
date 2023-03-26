@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * An object that is used to represent an Account within the economy plugin.
@@ -94,7 +95,7 @@ public class Account extends ReceiptBox {
    * @return The total of every {@link HoldingsEntry} for the specifications.
    */
   public BigDecimal getHoldingsTotal(final @NotNull String region,
-                                     final @NotNull String currency) {
+                                     final @NotNull UUID currency) {
 
     BigDecimal amount = BigDecimal.ZERO;
 
@@ -115,7 +116,7 @@ public class Account extends ReceiptBox {
    * holdings for the specifications exists.
    */
   public List<HoldingsEntry> getHoldings(final @NotNull String region,
-                                             final @NotNull String currency) {
+                                             final @NotNull UUID currency) {
     return getHoldings(region, currency, HoldingsType.NORMAL_HOLDINGS);
   }
 
@@ -131,7 +132,7 @@ public class Account extends ReceiptBox {
    * holdings for the specifications exists.
    */
   public List<HoldingsEntry> getHoldings(final @NotNull String region,
-                                             final @NotNull String currency,
+                                             final @NotNull UUID currency,
                                              final @NotNull HoldingsType type) {
 
     final Optional<Currency> currencyObject = TNECore.eco().currency().findCurrency(currency);
@@ -163,7 +164,7 @@ public class Account extends ReceiptBox {
         amount = amount.add(entry.getAmount());
       }
       //TODO: World handler.
-      holdings.add(new HoldingsEntry(region, currency.getIdentifier(), amount, type));
+      holdings.add(new HoldingsEntry(region, currency.getUid(), amount, type));
     });
     return holdings;
   }

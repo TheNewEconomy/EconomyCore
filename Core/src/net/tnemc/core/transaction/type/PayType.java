@@ -51,7 +51,7 @@ public class PayType implements TransactionType {
    */
   @Override
   public Optional<TaxEntry> toTax() {
-    return Optional.of(new TaxEntry("flat", 100.0));
+    return Optional.empty();
   }
 
   /**

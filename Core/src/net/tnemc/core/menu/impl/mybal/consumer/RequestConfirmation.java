@@ -19,6 +19,7 @@ package net.tnemc.core.menu.impl.mybal.consumer;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.menu.impl.shared.consumer.AmountConfirmation;
 
@@ -44,12 +45,13 @@ public class RequestConfirmation extends AmountConfirmation {
    * @param amount   The amount from the selection.
    */
   @Override
-  public void confirm(UUID player, UUID target, String currency, String region, BigDecimal amount) {
+  public void confirm(UUID player, UUID target, UUID currency, String region, BigDecimal amount) {
 
     final Optional<PlayerProvider> targetProvider = TNECore.server().findPlayer(target);
     final Optional<PlayerProvider> provider = TNECore.server().findPlayer(player);
+    final Optional<Currency> cur = TNECore.eco().currency().findCurrency(currency);
 
-    if(provider.isPresent() && targetProvider.isPresent()) {
+    if(provider.isPresent() && targetProvider.isPresent() && cur.isPresent()) {
 
       final MessageData msg = new MessageData("Messages.Money.RequestSender");
       msg.addReplacement("$player", targetProvider.get().getName());
@@ -59,7 +61,7 @@ public class RequestConfirmation extends AmountConfirmation {
       final MessageData request = new MessageData("Messages.Money.Request");
       request.addReplacement("$player", provider.get().getName());
       request.addReplacement("$amount", amount.toPlainString());
-      request.addReplacement("$currency", currency);
+      request.addReplacement("$currency", cur.get().getIdentifier());
       targetProvider.get().message(request);
     }
   }

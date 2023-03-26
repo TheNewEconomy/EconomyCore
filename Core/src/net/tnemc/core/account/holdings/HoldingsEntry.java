@@ -26,6 +26,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Represents an entry for holdings. This contains all the information including region, currency
@@ -45,7 +46,7 @@ public class HoldingsEntry {
   /**
    * The identifier of the currency involved.
    */
-  private String currency;
+  private UUID currency;
 
   /**
    * The {@link BigDecimal amount} that this charge is for.
@@ -65,7 +66,7 @@ public class HoldingsEntry {
    * @param currency The identifier of the currency involved.
    * @param amount The {@link BigDecimal amount} that this charge is for.
    */
-  public HoldingsEntry(final @NotNull String region, final @NotNull String currency,
+  public HoldingsEntry(final @NotNull String region, final @NotNull UUID currency,
                        final @NotNull BigDecimal amount, final @NotNull HoldingsType type) {
     this.region = region;
     this.currency = currency;
@@ -104,11 +105,11 @@ public class HoldingsEntry {
     return TNECore.eco().currency().findCurrency(currency);
   }
 
-  public String getCurrency() {
+  public UUID getCurrency() {
     return currency;
   }
 
-  public void setCurrency(String currency) {
+  public void setCurrency(UUID currency) {
     this.currency = currency;
   }
 

@@ -43,7 +43,7 @@ public class Transaction {
 
   private TransactionProcessor processor;
 
-  private String type;
+  private final String type;
   private ActionSource source;
 
   private TransactionParticipant from;

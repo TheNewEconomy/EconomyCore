@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -35,9 +36,9 @@ public class CurrencyHoldings {
   //TODO: Storage
   private final Map<String, HoldingsEntry> holdings = new ConcurrentHashMap<>();
 
-  private final String currency;
+  private final UUID currency;
 
-  public CurrencyHoldings(String currency) {
+  public CurrencyHoldings(UUID currency) {
     this.currency = currency;
   }
 

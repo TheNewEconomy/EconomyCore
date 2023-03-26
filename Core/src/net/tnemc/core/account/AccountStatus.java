@@ -38,8 +38,9 @@ public interface AccountStatus {
   @NotNull String identifier();
 
   /**
-   * Whether this status is unlockable by entering the account's pin.
-   * @return True if this status is able to be unlocked using the pin, otherwise false.
+   * Whether this status can be unlocked by entering the account's pin.
+   *
+   * @return True if this status can be unlocked by entering the account's pin, otherwise false.
    */
   boolean unlockable();
 

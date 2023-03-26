@@ -22,6 +22,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 /**
  * Represents an object that may be utilized to modify an {@link Account account's} holdings.
@@ -31,7 +32,7 @@ import java.math.BigDecimal;
  */
 public class HoldingsModifier {
 
-  private final String currency;
+  private final UUID currency;
   private final String region;
   private BigDecimal modifier;
   private final HoldingsOperation operation;
@@ -46,7 +47,7 @@ public class HoldingsModifier {
    * @param modifier The amount we are utilizing to modify the holdings. This may be negative to
    *                 take the holdings down.
    */
-  public HoldingsModifier(final String region, final String currency, final BigDecimal modifier) {
+  public HoldingsModifier(final String region, final UUID currency, final BigDecimal modifier) {
     this.region = region;
     this.currency = currency;
     this.modifier = modifier;
@@ -76,7 +77,7 @@ public class HoldingsModifier {
    *                 take the holdings down.
    * @param operation The operation that should be performed with the modifier.
    */
-  public HoldingsModifier(final String region, final String currency, final BigDecimal modifier,
+  public HoldingsModifier(final String region, final UUID currency, final BigDecimal modifier,
                           final HoldingsOperation operation) {
     this.currency = currency;
     this.region = region;
@@ -124,7 +125,7 @@ public class HoldingsModifier {
     this.modifier = modifier.add(value);
   }
 
-  public String getCurrency() {
+  public UUID getCurrency() {
     return currency;
   }
 

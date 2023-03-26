@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -46,7 +47,7 @@ public class Wallet {
    * holdings for the specifications exists.
    */
   public Optional<HoldingsEntry> getHoldings(final @NotNull String region,
-                                             final @NotNull String currency) {
+                                             final @NotNull UUID currency) {
     return getHoldings(region, currency, HoldingsType.NORMAL_HOLDINGS);
   }
 
@@ -62,7 +63,7 @@ public class Wallet {
    * holdings for the specifications exists.
    */
   public Optional<HoldingsEntry> getHoldings(final @NotNull String region,
-                                             final @NotNull String currency,
+                                             final @NotNull UUID currency,
                                              final @NotNull HoldingsType type) {
     if(holdings.containsKey(region)) {
       return holdings.get(region).getHoldingsEntry(currency, type);
@@ -83,7 +84,7 @@ public class Wallet {
    * holdings for the specifications exists.
    */
   public HoldingsEntry getHoldings(final @NotNull String region,
-                                             final @NotNull String currency,
+                                             final @NotNull UUID currency,
                                              final @NotNull HoldingsType type,
                                              final @NotNull HoldingsEntry defaultValue) {
     if(holdings.containsKey(region)) {
@@ -148,7 +149,7 @@ public class Wallet {
    * @param region The region from which to delete the holdings
    * @param currency The currency from which to delete the holdings
    */
-  public void deleteHoldings(final @NotNull String region, final @NotNull String currency) {
+  public void deleteHoldings(final @NotNull String region, final @NotNull UUID currency) {
     if(holdings.containsKey(region)) {
       holdings.get(region).getHoldings().remove(currency);
     }
@@ -161,7 +162,7 @@ public class Wallet {
    * @param type The {@link HoldingsType type} from which to delete the holdings.
    */
   public void deleteHoldings(final @NotNull String region,
-                             final @NotNull String currency,
+                             final @NotNull UUID currency,
                              final @NotNull HoldingsType type) {
 
     if(holdings.containsKey(region)) {

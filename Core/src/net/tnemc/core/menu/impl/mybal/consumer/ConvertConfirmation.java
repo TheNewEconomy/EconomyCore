@@ -51,7 +51,7 @@ public class ConvertConfirmation extends AmountConfirmation {
    * @param amount   The amount from the selection.
    */
   @Override
-  public void confirm(UUID player, UUID target, String currency, String region, BigDecimal amount) {
+  public void confirm(UUID player, UUID target, UUID currency, String region, BigDecimal amount) {
 
     final Optional<PlayerProvider> provider = TNECore.server().findPlayer(player);
     final Optional<Account> account = TNECore.eco().account().findAccount(player);
@@ -62,7 +62,7 @@ public class ConvertConfirmation extends AmountConfirmation {
       Optional<Currency> currencyFromOBJ = TNECore.eco().currency().findCurrency((UUID)curID.get());
 
       if(currencyFromOBJ.isPresent()) {
-        final BigDecimal parsedTo = amount.multiply(BigDecimal.valueOf(currencyFromOBJ.get().getConversion().get(currency)));
+        final BigDecimal parsedTo = amount.multiply(BigDecimal.valueOf(currencyFromOBJ.get().getConversion().get(currencyFromOBJ.get().getIdentifier())));
 
         final HoldingsModifier modifier = new HoldingsModifier(provider.get().region(true),
                                                                currency,
@@ -70,7 +70,7 @@ public class ConvertConfirmation extends AmountConfirmation {
         );
 
         final HoldingsModifier modifierFrom = new HoldingsModifier(provider.get().region(true),
-                                                                   currencyFromOBJ.get().getIdentifier(),
+                                                                   currencyFromOBJ.get().getUid(),
                                                                    amount.negate()
         );
 

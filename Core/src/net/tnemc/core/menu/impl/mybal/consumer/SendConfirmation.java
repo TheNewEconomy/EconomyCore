@@ -49,7 +49,7 @@ public class SendConfirmation extends AmountConfirmation {
    * @param amount   The amount from the selection.
    */
   @Override
-  public void confirm(UUID player, UUID target, String currency, String region, BigDecimal amount) {
+  public void confirm(UUID player, UUID target, UUID currency, String region, BigDecimal amount) {
 
     final Optional<PlayerProvider> targetProvider = TNECore.server().findPlayer(target);
     final Optional<PlayerProvider> provider = TNECore.server().findPlayer(player);

@@ -176,7 +176,7 @@ public class TNEVault implements Economy {
   public double getBalance(String name, String world) {
     final Optional<Account> account = TNECore.eco().account().findAccount(name);
     if(account.isPresent()) {
-      return account.get().getHoldingsTotal(world, TNECore.eco().currency().getDefaultCurrency(world).getIdentifier()).doubleValue();
+      return account.get().getHoldingsTotal(world, TNECore.eco().currency().getDefaultCurrency(world).getUid()).doubleValue();
     }
     return 0;
   }
@@ -217,7 +217,7 @@ public class TNEVault implements Economy {
   @Deprecated
   public boolean has(String name, String world, double amount) {
     final Optional<Account> account = TNECore.eco().account().findAccount(name);
-    return account.filter(value->value.getHoldingsTotal(world, TNECore.eco().currency().getDefaultCurrency(world).getIdentifier())
+    return account.filter(value->value.getHoldingsTotal(world, TNECore.eco().currency().getDefaultCurrency(world).getUid())
         .compareTo(new BigDecimal(amount)) >= 0).isPresent();
   }
 
@@ -262,7 +262,7 @@ public class TNEVault implements Economy {
     final Optional<Account> account = TNECore.eco().account().findAccount(name);
 
     final HoldingsModifier modifier = new HoldingsModifier(world,
-                                                           TNECore.eco().currency().getDefaultCurrency(world).getIdentifier(),
+                                                           TNECore.eco().currency().getDefaultCurrency(world).getUid(),
                                                            new BigDecimal(amount));
 
     final Transaction transaction = new Transaction("take")
@@ -322,7 +322,7 @@ public class TNEVault implements Economy {
     final Optional<Account> account = TNECore.eco().account().findAccount(name);
 
     final HoldingsModifier modifier = new HoldingsModifier(world,
-                                                           TNECore.eco().currency().getDefaultCurrency(world).getIdentifier(),
+                                                           TNECore.eco().currency().getDefaultCurrency(world).getUid(),
                                                            new BigDecimal(amount));
 
 

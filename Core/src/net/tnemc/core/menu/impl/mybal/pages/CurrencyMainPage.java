@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * CurrencyMainPage
@@ -61,7 +62,7 @@ public class CurrencyMainPage extends PlayerPage {
     for(Currency currency : TNECore.eco().currency().currencies()) {
       lore.clear();
 
-      lore.add("Bal: " + balance(TNECore.server().findPlayer(player.identifier()).get(), currency.getIdentifier()));
+      lore.add("Bal: " + balance(TNECore.server().findPlayer(player.identifier()).get(), currency.getUid()));
       lore.add("Left Click to Perform Actions.");
       lore.add("Middle Click to convert to physical form!");
       lore.add("Right Click to View Balances.");
@@ -82,7 +83,7 @@ public class CurrencyMainPage extends PlayerPage {
     return icons;
   }
 
-  private BigDecimal balance(PlayerProvider player, final String currency) {
+  private BigDecimal balance(PlayerProvider player, final UUID currency) {
 
     BigDecimal amount = BigDecimal.ZERO;
 

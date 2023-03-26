@@ -65,7 +65,7 @@ public class ExperienceType implements CurrencyType {
     if(!account.isPlayer() || !((PlayerAccount)account).isOnline()) {
       //Offline players/non-players have their balances saved to their wallet so check it.
       final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
-                                                                               currency.getIdentifier(),
+                                                                               currency.getUid(),
                                                                                VIRTUAL_HOLDINGS
       );
 
@@ -73,13 +73,13 @@ public class ExperienceType implements CurrencyType {
         return Collections.singletonList(holdings.get());
       }
       return Collections.singletonList(new HoldingsEntry(region,
-                                                         currency.getIdentifier(),
+                                                         currency.getUid(),
                                                          BigDecimal.ZERO,
                                                          VIRTUAL_HOLDINGS));
     }
 
     final BigDecimal amount = Experience.getExperienceAsDecimal(((PlayerAccount)account).getPlayer().get());
-    final HoldingsEntry entry = new HoldingsEntry(region, currency.getIdentifier(), amount, VIRTUAL_HOLDINGS);
+    final HoldingsEntry entry = new HoldingsEntry(region, currency.getUid(), amount, VIRTUAL_HOLDINGS);
 
     account.getWallet().setHoldings(entry);
     return Collections.singletonList(entry);
@@ -100,7 +100,7 @@ public class ExperienceType implements CurrencyType {
    */
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount) {
-    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getIdentifier(), amount, VIRTUAL_HOLDINGS));
+    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, VIRTUAL_HOLDINGS));
     if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
       Experience.setExperience(((PlayerAccount)account).getPlayer().get(), amount.intValueExact());
     }
