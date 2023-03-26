@@ -54,3 +54,5 @@ networks that add improvements to their version must also provide them for every
 
 ## Documented
 TNE has lots of documentation for the power users that like all the documentation.
+
+*Please note: As the new TNE Core is a work in progress, documentation is very limited at the moment.*
