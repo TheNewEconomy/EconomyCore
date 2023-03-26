@@ -34,12 +34,6 @@ import org.bukkit.event.world.WorldLoadEvent;
  */
 public class WorldLoadListener implements Listener {
 
-  private final TNE plugin;
-
-  public WorldLoadListener(TNE plugin) {
-    this.plugin = plugin;
-  }
-
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onLoad(final WorldLoadEvent event) {
     new RegionLoadHandler().handle(event.getWorld().getName(), RegionType.WORLD);

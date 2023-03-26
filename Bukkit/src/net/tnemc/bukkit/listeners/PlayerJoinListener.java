@@ -38,12 +38,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
  */
 public class PlayerJoinListener implements Listener {
 
-  private final TNE plugin;
-
-  public PlayerJoinListener(TNE plugin) {
-    this.plugin = plugin;
-  }
-
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onJoin(final PlayerJoinEvent event) {
     BukkitPlayerProvider provider = new BukkitPlayerProvider(event.getPlayer());

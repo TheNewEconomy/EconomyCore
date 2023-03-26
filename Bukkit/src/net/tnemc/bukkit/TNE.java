@@ -61,7 +61,7 @@ public class TNE extends JavaPlugin {
     //Register our event listeners
 
     //Player Listeners
-    Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
+    Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
     Bukkit.getPluginManager().registerEvents(new BukkitChatListener(this), this);
 
     //Menu-related Listeners from TNML
@@ -69,7 +69,7 @@ public class TNE extends JavaPlugin {
     Bukkit.getPluginManager().registerEvents(new BukkitInventoryCloseListener(this), this);
 
     //World Listeners
-    Bukkit.getPluginManager().registerEvents(new WorldLoadListener(this), this);
+    Bukkit.getPluginManager().registerEvents(new WorldLoadListener(), this);
 
     //Register our service providers.
 

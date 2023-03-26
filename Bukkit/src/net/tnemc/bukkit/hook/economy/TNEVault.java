@@ -218,7 +218,7 @@ public class TNEVault implements Economy {
   public boolean has(String name, String world, double amount) {
     final Optional<Account> account = TNECore.eco().account().findAccount(name);
     return account.filter(value->value.getHoldingsTotal(world, TNECore.eco().currency().getDefaultCurrency(world).getUid())
-        .compareTo(new BigDecimal(amount)) >= 0).isPresent();
+        .compareTo(BigDecimal.valueOf(amount)) >= 0).isPresent();
   }
 
   /**
@@ -263,7 +263,7 @@ public class TNEVault implements Economy {
 
     final HoldingsModifier modifier = new HoldingsModifier(world,
                                                            TNECore.eco().currency().getDefaultCurrency(world).getUid(),
-                                                           new BigDecimal(amount));
+                                                           BigDecimal.valueOf(amount));
 
     final Transaction transaction = new Transaction("take")
         .to(account.get(), modifier.counter())
@@ -323,7 +323,7 @@ public class TNEVault implements Economy {
 
     final HoldingsModifier modifier = new HoldingsModifier(world,
                                                            TNECore.eco().currency().getDefaultCurrency(world).getUid(),
-                                                           new BigDecimal(amount));
+                                                           BigDecimal.valueOf(amount));
 
 
     final Transaction transaction = new Transaction("give")

@@ -100,7 +100,7 @@ public class Wallet {
   public void setHoldings(final @NotNull HoldingsEntry entry) {
 
     final RegionHoldings regionHoldings =
-        holdings.getOrDefault(entry.getRegion(), new RegionHoldings(entry.getRegion()));
+        holdings.getOrDefault(entry.getRegion(), new RegionHoldings());
 
     regionHoldings.setHoldingsEntry(entry, entry.getType());
 
@@ -165,10 +165,8 @@ public class Wallet {
                              final @NotNull UUID currency,
                              final @NotNull HoldingsType type) {
 
-    if(holdings.containsKey(region)) {
-      if(holdings.get(region).getHoldings().containsKey(currency)) {
-        holdings.get(region).getHoldings().get(currency).getHoldings().remove(type.getIdentifier());
-      }
+    if(holdings.containsKey(region) && holdings.get(region).getHoldings().containsKey(currency)) {
+      holdings.get(region).getHoldings().get(currency).getHoldings().remove(type.getIdentifier());
     }
   }
 

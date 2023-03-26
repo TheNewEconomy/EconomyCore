@@ -75,4 +75,7 @@ public class RegionProvider {
     return sharing.getOrDefault(region, region);
   }
 
+  public boolean isSharing() {
+    return realmSharing;
+  }
 }

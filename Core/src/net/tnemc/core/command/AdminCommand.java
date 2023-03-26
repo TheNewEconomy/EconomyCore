@@ -66,23 +66,22 @@ public class AdminCommand extends BaseCommand {
         case "config" -> {
           TNECore.instance().config().load();
           TNECore.eco().currency().load(TNECore.directory());
-          return;
         }
         case "data" -> {
           TNECore.instance().data().load();
-          return;
         }
         case "message" -> {
           TNECore.instance().message().load();
-          return;
+        }
+        default -> {
+          TNECore.instance().config().load();
+          TNECore.eco().currency().load(TNECore.directory());
+          TNECore.instance().data().load();
+          //TODO: Reload data manager.
+          TNECore.instance().message().load();
         }
       }
     }
-    TNECore.instance().config().load();
-    TNECore.eco().currency().load(TNECore.directory());
-    TNECore.instance().data().load();
-    //TODO: Reload data manager.
-    TNECore.instance().message().load();
   }
 
   public static void onReset(ArgumentsParser parser) {

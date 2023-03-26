@@ -33,15 +33,9 @@ public class RegionHoldings {
 
   private final Map<UUID, CurrencyHoldings> holdings = new ConcurrentHashMap<>();
 
-  private final String region;
-
-  public RegionHoldings(String region) {
-    this.region = region;
-  }
-
   public void setHoldingsEntry(final HoldingsEntry entry, final HoldingsType type) {
     final CurrencyHoldings currencyHoldings =
-        holdings.getOrDefault(entry.getCurrency(), new CurrencyHoldings(entry.getCurrency()));
+        holdings.getOrDefault(entry.getCurrency(), new CurrencyHoldings());
 
     currencyHoldings.setHoldingsEntry(entry, type);
 

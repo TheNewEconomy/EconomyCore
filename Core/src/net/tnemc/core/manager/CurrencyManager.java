@@ -141,7 +141,6 @@ public class CurrencyManager {
    */
   @NotNull
   public Currency getDefaultCurrency(@NotNull String region) {
-    region = TNECore.eco().region().resolveRegion(region);
 
     for(Currency currency : currencies.values()) {
       if(currency.isRegionDefault(region)) {

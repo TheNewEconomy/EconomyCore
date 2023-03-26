@@ -39,20 +39,20 @@ import java.util.UUID;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class CalculationData<INV> {
+public class CalculationData<I> {
 
   private final Map<BigDecimal, Integer> inventoryMaterials = new HashMap<>();
 
   //Our Calculator
   private final MonetaryCalculation calculator = new MonetaryCalculation();
 
-  private final INV inventory;
+  private final I inventory;
   private final ItemCurrency currency;
   private final UUID player;
   private boolean dropped = false;
   private boolean failedDrop = false;
 
-  public CalculationData(final ItemCurrency currency, INV inventory, final UUID player) {
+  public CalculationData(final ItemCurrency currency, I inventory, final UUID player) {
     this.currency = currency;
     this.inventory = inventory;
     this.player = player;
@@ -120,5 +120,13 @@ public class CalculationData<INV> {
     }
 
     inventoryMaterials.put(denomination.weight(), contains);
+  }
+
+  public boolean isDropped() {
+    return dropped;
+  }
+
+  public boolean isFailedDrop() {
+    return failedDrop;
   }
 }

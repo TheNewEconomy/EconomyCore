@@ -44,14 +44,12 @@ public class PlayerJoinHandler {
     Optional<Account> account = TNECore.eco().account().findAccount(provider.identifier());
 
     //Our account doesn't exist, so now we need to continue from here
-    if(account.isEmpty()) {
+    if(account.isEmpty() &&
+        !TNECore.eco().account().createAccount(provider.identifier().toString(), provider.getName()).success()) {
 
-      //Create our account.
-      if(!TNECore.eco().account().createAccount(provider.identifier().toString(), provider.getName()).success()) {
-        response.setResponse(response.getResponse());
-        response.setCancelled(true);
-        return response;
-      }
+      response.setResponse(response.getResponse());
+      response.setCancelled(true);
+      return response;
     }
 
     //TODO: Check item currency balances.

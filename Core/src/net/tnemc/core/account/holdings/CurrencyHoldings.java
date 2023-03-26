@@ -36,12 +36,6 @@ public class CurrencyHoldings {
   //TODO: Storage
   private final Map<String, HoldingsEntry> holdings = new ConcurrentHashMap<>();
 
-  private final UUID currency;
-
-  public CurrencyHoldings(UUID currency) {
-    this.currency = currency;
-  }
-
   /**
    * Used to add {@link HoldingsEntry holdings} for a specific {@link HoldingsType}.
    * @param type The type to add the holdings to.
