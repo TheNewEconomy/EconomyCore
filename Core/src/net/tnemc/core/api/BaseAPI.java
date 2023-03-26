@@ -41,6 +41,7 @@ import java.util.UUID;
  * @since 0.1.2.0
  */
 public class BaseAPI implements TNEAPI {
+
   /**
    * Used to determine if an {@link Account} exists with the specified identifier.
    * <p>
