@@ -148,7 +148,7 @@
         <dependency>
             <groupId>net.tnemc</groupId>
             <artifactId>TNML-Bukkit</artifactId>
-            <version>1.0-SNAPSHOT-15.10</version>
+            <version>1.0-SNAPSHOT-16</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>

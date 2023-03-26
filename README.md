@@ -15,6 +15,10 @@ TNE was originally created for hey0's hMod long before Bukkit/Spigot/Paper was a
 forms and this is the future form of the plugin. This core is designed to be robust and carry TNE into the future with or
 without Minecraft by not being platform-dependent.
 
+# Code Checks
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/246101510dca4eb9a729ef178dae682c)](https://app.codacy.com/gh/TheNewEconomy/EconomyCore/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+
 # Why TNE?
 
 ## Platform Agnostic
