@@ -18,6 +18,8 @@ package net.tnemc.core;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.api.BaseAPI;
+import net.tnemc.core.api.TNEAPI;
 import net.tnemc.core.compatibility.LogProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.log.DebugLevel;
@@ -74,6 +76,8 @@ public abstract class TNECore {
   /* Plugin Instance */
   private static TNECore instance;
 
+  private TNEAPI api;
+
   private boolean enabled = false;
 
   public TNECore(ServerConnector server, LogProvider logger, StorageManager storage) {
@@ -104,6 +108,7 @@ public abstract class TNECore {
     if(!enabled) {
 
       this.enabled = true;
+      this.api = new BaseAPI();
       onEnable();
 
     } else {
@@ -188,6 +193,10 @@ public abstract class TNECore {
 
   public static TNECore instance() {
     return instance;
+  }
+
+  public static TNEAPI api() {
+    return instance.api;
   }
 
   public DebugLevel getLevel() {
