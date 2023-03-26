@@ -40,12 +40,10 @@ import java.util.Optional;
  */
 public class CurrencySelectionPage extends PlayerPage {
 
-  private final String menu;
   private final int nextPage;
 
-  public CurrencySelectionPage(int id, final String menu, final int nextPage) {
+  public CurrencySelectionPage(int id, final int nextPage) {
     super(id);
-    this.menu = menu;
     this.nextPage = nextPage;
   }
 

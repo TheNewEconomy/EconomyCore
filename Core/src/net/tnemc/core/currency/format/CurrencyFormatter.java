@@ -28,7 +28,7 @@ import java.util.UUID;
  */
 public class CurrencyFormatter {
 
-  private final UUID currency;
+  protected final UUID currency;
 
   public CurrencyFormatter(UUID currency) {
     this.currency = currency;

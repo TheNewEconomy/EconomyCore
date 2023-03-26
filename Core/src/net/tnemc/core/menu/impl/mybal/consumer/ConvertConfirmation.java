@@ -81,6 +81,9 @@ public class ConvertConfirmation extends AmountConfirmation {
             .source(new PlayerSource(provider.get().identifier()));
 
         Optional<Receipt> receipt = processTransaction(provider.get(), transaction);
+        if(receipt.isPresent()) {
+          //TODO: Success
+        }
       }
     }
   }

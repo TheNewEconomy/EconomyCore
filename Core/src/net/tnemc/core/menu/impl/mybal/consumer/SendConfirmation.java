@@ -72,6 +72,9 @@ public class SendConfirmation extends AmountConfirmation {
           .source(new PlayerSource(player));
 
       final Optional<Receipt> receipt = processTransaction(provider.get(), transaction);
+      if(receipt.isPresent()) {
+        //TODO: Success
+      }
     }
   }
 }

@@ -22,12 +22,12 @@ package net.tnemc.core.utils.constraints;
  * Represents a constraint applied to an object, which serves as a property. This may be any
  * type of object, but must be validated by the class utilizing the constraint.
  *
- * @param <TYPE> The type associated with this specific constraint for validation purposes.
+ * @param <T> The type associated with this specific constraint for validation purposes.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public interface Constraint<TYPE> {
+public interface Constraint<T> {
 
   /**
    * The identifier of the constraint.
@@ -39,7 +39,7 @@ public interface Constraint<TYPE> {
    * The default value for this constraint.
    * @return The default value for this constraint.
    */
-  TYPE defaultValue();
+  T defaultValue();
 
   /**
    * Used to convert the provided input into the specified object.
@@ -47,7 +47,7 @@ public interface Constraint<TYPE> {
    * @return An optional containing the converted value, or an empty optional if the provided input
    * can't be converted into the specified object.
    */
-  TYPE convert(final String value);
+  T convert(final String value);
 
   /**
    * Used to validate that the provided input is of the valid type.
@@ -62,7 +62,7 @@ public interface Constraint<TYPE> {
    * @param value The value to convert.
    * @return The String representation of the value provided.
    */
-  default String asString(TYPE value) {
+  default String asString(T value) {
     return value.toString();
   }
 }

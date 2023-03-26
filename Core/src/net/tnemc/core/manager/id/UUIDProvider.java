@@ -79,7 +79,7 @@ public interface UUIDProvider {
    */
   static boolean isUUID(final String identifier) {
     try {
-      final UUID uuid = UUID.fromString(identifier);
+      UUID.fromString(identifier);
       return true;
     } catch(Exception ignore) {
       return false;

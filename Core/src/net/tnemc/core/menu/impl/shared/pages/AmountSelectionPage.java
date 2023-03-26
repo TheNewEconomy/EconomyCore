@@ -68,7 +68,6 @@ public class AmountSelectionPage extends PlayerPage {
     final Optional<Object> curID = MenuManager.instance().getViewerData(player.identifier(), "cur_uid");
     final Optional<Object> target = MenuManager.instance().getViewerData(player.identifier(), "target");
     final Optional<Object> amtObj = MenuManager.instance().getViewerData(player.identifier(), "action_amt");
-    final Optional<Object> prevPage = MenuManager.instance().getViewerData(player.identifier(), "prev_page");
     final Optional<Object> confirm = MenuManager.instance().getViewerData(player.identifier(), "confirm");
     final Optional<PlayerProvider> provider = TNECore.server().findPlayer(player.identifier());
 
@@ -79,8 +78,6 @@ public class AmountSelectionPage extends PlayerPage {
       final Optional<Currency> currency = TNECore.eco().currency().findCurrency(((UUID)curID.get()));
 
       if(currency.isPresent()) {
-
-        //prevPage.ifPresent(o->icons.put(0, new PreviousPageIcon(0, (Integer)o)));
 
         icons.put(4, IconBuilder.of(TNECore.server()
                                         .stackBuilder()

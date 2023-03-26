@@ -47,6 +47,6 @@ public class MyBalMenu extends Menu {
     pages.put(2, new BalancePage());
     pages.put(3, new ActionsPage());
     pages.put(4, new AmountSelectionPage(4, "my_bal"));
-    pages.put(5, new CurrencySelectionPage(5, "my_bal", 4));
+    pages.put(5, new CurrencySelectionPage(5, 4));
   }
 }

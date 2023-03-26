@@ -18,7 +18,6 @@ package net.tnemc.bukkit.listeners;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.TNE;
 import net.tnemc.core.handlers.RegionLoadHandler;
 import net.tnemc.core.region.RegionType;
 import org.bukkit.event.EventHandler;
