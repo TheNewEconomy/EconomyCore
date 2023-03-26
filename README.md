@@ -52,6 +52,9 @@ casual user who wants Menu-based interactions, TNE is right for you!
 [TNE is licensed under the AGPLv3](license.md), which means you're free to use it how you want. This also means that
 networks that add improvements to their version must also provide them for everyone else to enjoy!
 
+## Translations
+TNE utilizes Crowdin for Translation management. More documentation coming soon.
+
 ## Documented
 TNE has lots of documentation for the power users that like all the documentation.
 
