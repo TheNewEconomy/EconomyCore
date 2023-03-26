@@ -185,14 +185,4 @@ public class AmountSelectionPage extends PlayerPage {
                                                                               .of("PAPER", 1)
                                                                               .display("Amount: " + amount.toPlainString())).create());
   }
-
-  private void updateAmount(final MenuPlayer player) {
-    final Optional<Object> amtObj = MenuManager.instance().getViewerData(player.identifier(), "action_amt");
-    final BigDecimal amount = amtObj.map(o->(BigDecimal)o).orElse(BigDecimal.ZERO);
-
-    player.inventory().updateInventory(4, TNECore.server()
-        .stackBuilder()
-        .of("PAPER", 1)
-        .display("Amount: " + amount.toPlainString()));
-  }
 }

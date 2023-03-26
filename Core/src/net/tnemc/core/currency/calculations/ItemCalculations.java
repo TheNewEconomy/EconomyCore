@@ -29,13 +29,13 @@ import java.util.Map;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class ItemCalculations<INV> {
+public class ItemCalculations<I> {
 
   /**
    * Used to calculate the holdings of the inventory materials present.
    * @return The {@link BigDecimal} representation of the inventory materials balance value.
    */
-  public BigDecimal calculateHoldings(CalculationData<INV> data) {
+  public BigDecimal calculateHoldings(CalculationData<I> data) {
     BigDecimal holdings = BigDecimal.ZERO;
 
     for(Map.Entry<BigDecimal, Denomination> entry : data.getDenominations().entrySet()) {
@@ -48,7 +48,7 @@ public class ItemCalculations<INV> {
     return holdings;
   }
 
-  public void setItems(CalculationData<INV> data, BigDecimal amount) {
+  public void setItems(CalculationData<I> data, BigDecimal amount) {
     final BigDecimal holdings = calculateHoldings(data);
 
     if(holdings.compareTo(amount) == 0) return;
@@ -69,7 +69,7 @@ public class ItemCalculations<INV> {
    * @return The {@link BigDecimal} representation of the leftover amount that couldn't be removed
    * because there's no more materials left to remove.
    */
-  public BigDecimal calculation(CalculationData<INV> data, BigDecimal change) {
+  public BigDecimal calculation(CalculationData<I> data, BigDecimal change) {
 
     data.getCalculator().initialize(data.getCurrency(), data.getInventoryMaterials());
 
@@ -93,7 +93,7 @@ public class ItemCalculations<INV> {
    *
    * @param amount The amount that the items should add up to.
    */
-  public void provideMaterials(CalculationData<INV> data, BigDecimal amount) {
+  public void provideMaterials(CalculationData<I> data, BigDecimal amount) {
 
     data.getCalculator().initialize(data.getCurrency(), data.getInventoryMaterials());
 
@@ -110,7 +110,7 @@ public class ItemCalculations<INV> {
    * @param denom The denom name in String form.
    * @param amount The amount of the material to remove from working materials.
    */
-  public void removeMaterials(CalculationData<INV> data, Denomination denom, Integer amount) {
+  public void removeMaterials(CalculationData<I> data, Denomination denom, Integer amount) {
     data.removeMaterials(denom, amount);
   }
 }
