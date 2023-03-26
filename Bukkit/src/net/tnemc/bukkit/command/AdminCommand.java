@@ -26,6 +26,7 @@ import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
 import net.tnemc.bukkit.impl.BukkitCMDSource;
+import net.tnemc.core.command.args.ArgumentsParser;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -40,106 +41,106 @@ public class AdminCommand extends BaseCommand {
   @Default
   @Subcommand("ecomenu|menu")
   @CommandAlias("myeco|ecomenu")
-  @Syntax("%Money.MyEco.Arguments")
+  @Syntax("%Money.MyEco.ArgumentsParser")
   @Description("%Money.MyEco.Description")
   @CommandPermission("tne.money.myeco")
   public void onMyEco(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.onMyEco(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onMyEco(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
   @Subcommand("backup|archive")
-  @Syntax("%Admin.Backup.Arguments")
+  @Syntax("%Admin.Backup.ArgumentsParser")
   @Description("%Admin.Backup.Description")
   @CommandPermission("tne.admin.backup")
   public void backup(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.onBackup(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onBackup(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
   @Subcommand("create|add|new|make|+")
-  @Syntax("%Admin.Create.Arguments")
+  @Syntax("%Admin.Create.ArgumentsParser")
   @Description("%Admin.Create.Description")
   @CommandPermission("tne.admin.create")
   public void create(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.onCreate(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onCreate(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
   @Subcommand("debug")
-  @Syntax("%Admin.Debug.Arguments")
+  @Syntax("%Admin.Debug.ArgumentsParser")
   @Description("%Admin.Debug.Description")
   @CommandPermission("tne.admin.debug")
   public void debug(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.onDebug(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onDebug(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
   @Subcommand("delete|destroy|del|remove|-")
-  @Syntax("%Admin.Delete.Arguments")
+  @Syntax("%Admin.Delete.ArgumentsParser")
   @Description("%Admin.Delete.Description")
   @CommandPermission("tne.admin.delete")
   public void delete(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.onDelete(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onDelete(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
   @Subcommand("extract")
-  @Syntax("%Admin.Extract.Arguments")
+  @Syntax("%Admin.Extract.ArgumentsParser")
   @Description("%Admin.Extract.Description")
   @CommandPermission("tne.admin.extract")
   public void extract(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.onExtract(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onExtract(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
   @Subcommand("purge")
-  @Syntax("%Admin.Purge.Arguments")
+  @Syntax("%Admin.Purge.ArgumentsParser")
   @Description("%Admin.Purge.Description")
   @CommandPermission("tne.admin.purge")
   public void purge(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.onPurge(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onPurge(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
   @Subcommand("reload")
-  @Syntax("%Admin.Reload.Arguments")
+  @Syntax("%Admin.Reload.ArgumentsParser")
   @Description("%Admin.Reload.Description")
   @CommandPermission("tne.admin.reload")
   public void reload(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.onReload(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onReload(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
   @Subcommand("reset|nuke")
-  @Syntax("%Admin.Reset.Arguments")
+  @Syntax("%Admin.Reset.ArgumentsParser")
   @Description("%Admin.Reset.Description")
   @CommandPermission("tne.admin.reset")
   public void reset(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.onReset(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onReset(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
   @Subcommand("restore")
-  @Syntax("%Admin.Restore.Arguments")
+  @Syntax("%Admin.Restore.ArgumentsParser")
   @Description("%Admin.Restore.Description")
   @CommandPermission("tne.admin.restore")
   public void restore(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.onRestore(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onRestore(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
   @Subcommand("save")
-  @Syntax("%Admin.Save.Arguments")
+  @Syntax("%Admin.Save.ArgumentsParser")
   @Description("%Admin.Save.Description")
   @CommandPermission("tne.admin.save")
   public void save(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.onSave(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onSave(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
   @Subcommand("status")
-  @Syntax("%Admin.Status.Arguments")
+  @Syntax("%Admin.Status.ArgumentsParser")
   @Description("%Admin.Status.Description")
   @CommandPermission("tne.admin.status")
   public void status(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.onStatus(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onStatus(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
   @Subcommand("version|ver|build")
-  @Syntax("%Admin.Version.Arguments")
+  @Syntax("%Admin.Version.ArgumentsParser")
   @Description("%Admin.Version.Description")
   @CommandPermission("tne.admin.version")
   public void version(CommandSender sender, String[] args) {
-    net.tnemc.core.command.AdminCommand.onVersion(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.AdminCommand.onVersion(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 }

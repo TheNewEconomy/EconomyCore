@@ -18,6 +18,7 @@ package net.tnemc.core.manager;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyLoader;
 import net.tnemc.core.currency.CurrencySaver;
@@ -140,6 +141,7 @@ public class CurrencyManager {
    */
   @NotNull
   public Currency getDefaultCurrency(@NotNull String region) {
+    region = TNECore.eco().region().resolveRegion(region);
 
     for(Currency currency : currencies.values()) {
       if(currency.isRegionDefault(region)) {

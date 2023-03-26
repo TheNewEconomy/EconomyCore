@@ -20,7 +20,7 @@ package net.tnemc.core.command;
 
 import co.aikar.commands.BaseCommand;
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.CmdSource;
+import net.tnemc.core.command.args.ArgumentsParser;
 
 /**
  * AdminCommand
@@ -30,39 +30,39 @@ import net.tnemc.core.compatibility.CmdSource;
  */
 public class AdminCommand extends BaseCommand {
 
-  public static void onMyEco(CmdSource sender, String[] args) {
-    if(sender.player().isPresent()) {
-      sender.player().get().inventory().openMenu(sender.player().get(), "my_eco");
+  public static void onMyEco(ArgumentsParser parser) {
+    if(parser.sender().player().isPresent()) {
+      parser.sender().player().get().inventory().openMenu(parser.sender().player().get(), "my_eco");
     }
   }
 
-  public static void onBackup(CmdSource sender, String[] args) {
+  public static void onBackup(ArgumentsParser parser) {
 
   }
 
-  public static void onCreate(CmdSource sender, String[] args) {
+  public static void onCreate(ArgumentsParser parser) {
 
   }
 
-  public static void onDebug(CmdSource sender, String[] args) {
+  public static void onDebug(ArgumentsParser parser) {
 
   }
 
-  public static void onDelete(CmdSource sender, String[] args) {
+  public static void onDelete(ArgumentsParser parser) {
 
   }
 
-  public static void onExtract(CmdSource sender, String[] args) {
+  public static void onExtract(ArgumentsParser parser) {
 
   }
 
-  public static void onPurge(CmdSource sender, String[] args) {
+  public static void onPurge(ArgumentsParser parser) {
 
   }
 
-  public static void onReload(CmdSource sender, String[] args) {
-    if(args.length >= 1) {
-      switch(args[0].toLowerCase()) {
+  public static void onReload(ArgumentsParser parser) {
+    if(parser.args().length >= 1) {
+      switch(parser.args()[0].toLowerCase()) {
         case "config" -> {
           TNECore.instance().config().load();
           TNECore.eco().currency().load(TNECore.directory());
@@ -85,23 +85,23 @@ public class AdminCommand extends BaseCommand {
     TNECore.instance().message().load();
   }
 
-  public static void onReset(CmdSource sender, String[] args) {
+  public static void onReset(ArgumentsParser parser) {
 
   }
 
-  public static void onRestore(CmdSource sender, String[] args) {
+  public static void onRestore(ArgumentsParser parser) {
 
   }
 
-  public static void onSave(CmdSource sender, String[] args) {
+  public static void onSave(ArgumentsParser parser) {
 
   }
 
-  public static void onStatus(CmdSource sender, String[] args) {
+  public static void onStatus(ArgumentsParser parser) {
 
   }
 
-  public static void onVersion(CmdSource sender, String[] args) {
+  public static void onVersion(ArgumentsParser parser) {
 
   }
 }

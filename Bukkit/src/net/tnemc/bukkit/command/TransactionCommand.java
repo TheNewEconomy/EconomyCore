@@ -26,6 +26,7 @@ import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
 import net.tnemc.bukkit.impl.BukkitCMDSource;
+import net.tnemc.core.command.args.ArgumentsParser;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -38,35 +39,35 @@ import org.bukkit.command.CommandSender;
 public class TransactionCommand extends BaseCommand {
 
   @Subcommand("away|gone|afk|afg")
-  @Syntax("%Transaction.Away.Arguments")
+  @Syntax("%Transaction.Away.ArgumentsParser")
   @Description("%Transaction.Away.Description")
   @CommandPermission("tne.transaction.away")
   public void away(CommandSender sender, String[] args) {
-    net.tnemc.core.command.TransactionCommand.away(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.TransactionCommand.away(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
   @Default
   @Subcommand("history|list|hist|archive")
-  @Syntax("%Transaction.History.Arguments")
+  @Syntax("%Transaction.History.ArgumentsParser")
   @Description("%Transaction.History.Description")
   @CommandPermission("tne.transaction.history")
   public void history(CommandSender sender, String[] args) {
-    net.tnemc.core.command.TransactionCommand.history(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.TransactionCommand.history(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
   @Subcommand("info|i|about|brief")
-  @Syntax("%Transaction.Info.Arguments")
+  @Syntax("%Transaction.Info.ArgumentsParser")
   @Description("%Transaction.Info.Description")
   @CommandPermission("tne.info.history")
   public void info(CommandSender sender, String[] args) {
-    net.tnemc.core.command.TransactionCommand.info(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.TransactionCommand.info(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
   @Subcommand("void|retract|undo")
-  @Syntax("%Transaction.Void.Arguments")
+  @Syntax("%Transaction.Void.ArgumentsParser")
   @Description("%Transaction.Void.Description")
   @CommandPermission("tne.void.history")
   public void voidT(CommandSender sender, String[] args) {
-    net.tnemc.core.command.TransactionCommand.voidT(new BukkitCMDSource(sender), args);
+    net.tnemc.core.command.TransactionCommand.voidT(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 }

@@ -19,7 +19,7 @@ package net.tnemc.core.command;
  */
 
 import co.aikar.commands.BaseCommand;
-import net.tnemc.core.compatibility.CmdSource;
+import net.tnemc.core.command.args.ArgumentsParser;
 
 /**
  * TransactionCommand
@@ -29,19 +29,19 @@ import net.tnemc.core.compatibility.CmdSource;
  */
 public class TransactionCommand extends BaseCommand {
 
-  public static void away(CmdSource sender, String[] args) {
+  public static void away(ArgumentsParser parser) {
 
   }
 
-  public static void history(CmdSource sender, String[] args) {
+  public static void history(ArgumentsParser parser) {
 
   }
 
-  public static void info(CmdSource sender, String[] args) {
+  public static void info(ArgumentsParser parser) {
 
   }
 
-  public static void voidT(CmdSource sender, String[] args) {
+  public static void voidT(ArgumentsParser parser) {
 
   }
 }

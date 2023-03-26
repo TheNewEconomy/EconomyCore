@@ -110,6 +110,13 @@ public class Currency {
     return type.orElseGet(()->TNECore.eco().currency().findType("virtual").get());
   }
 
+  public Optional<BigDecimal> convertValue(final String currency, final BigDecimal amount) {
+    if(conversion.containsKey(currency)) {
+      return Optional.of(amount.multiply(BigDecimal.valueOf(conversion.get(currency))));
+    }
+    return Optional.empty();
+  }
+
   public Map<String, Double> getConversion() {
     return conversion;
   }
