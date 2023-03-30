@@ -24,14 +24,28 @@ import net.tnemc.core.io.storage.StorageEngine;
 
 public class PostgreSQL implements StorageEngine {
 
+  /**
+   * The name of this engine.
+   *
+   * @return The engine name.
+   */
   @Override
-  public String driver() {
-    return "org.postgresql.Driver";
+  public String name() {
+    return "postgre";
   }
 
   @Override
-  public String dataSource() {
-    return "org.postgresql.ds.PGSimpleDataSource";
+  public String[] driver() {
+    return new String[] {
+        "org.postgresql.Driver"
+    };
+  }
+
+  @Override
+  public String[] dataSource() {
+    return new String[]{
+        "org.postgresql.ds.PGSimpleDataSource"
+    };
   }
 
   @Override

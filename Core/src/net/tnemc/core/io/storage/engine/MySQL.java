@@ -23,14 +23,28 @@ import net.tnemc.core.io.storage.StorageEngine;
 
 public class MySQL implements StorageEngine {
 
+  /**
+   * The name of this engine.
+   *
+   * @return The engine name.
+   */
   @Override
-  public String driver() {
-    return "com.mysql.jdbc.Driver";
+  public String name() {
+    return "mysql";
   }
 
   @Override
-  public String dataSource() {
-    return "com.mysql.jdbc.jdbc2.optional.MysqlDataSource";
+  public String[] driver() {
+    return new String[] {
+      "com.mysql.jdbc.Driver"
+    };
+  }
+
+  @Override
+  public String[] dataSource() {
+    return new String[] {
+      "com.mysql.jdbc.jdbc2.optional.MysqlDataSource"
+    };
   }
 
   @Override

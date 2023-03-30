@@ -23,14 +23,29 @@ import net.tnemc.core.io.storage.StorageEngine;
 
 public class H2 implements StorageEngine {
 
+  /**
+   * The name of this engine.
+   *
+   * @return The engine name.
+   */
   @Override
-  public String driver() {
-    return "org.h2.Driver";
+  public String name() {
+    return "h2";
   }
 
   @Override
-  public String dataSource() {
-    return "org.h2.jdbcx.JdbcDataSource";
+  public String[] driver() {
+    return new String[] {
+      "org.h2.Driver"
+    };
+  }
+
+  @Override
+  public String[] dataSource() {
+
+    return new String[]{
+      "org.h2.jdbcx.JdbcDataSource"
+    };
   }
 
   @Override

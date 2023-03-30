@@ -20,7 +20,16 @@ package net.tnemc.core.command;
 
 import co.aikar.commands.BaseCommand;
 import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
+import net.tnemc.core.account.AccountStatus;
+import net.tnemc.core.account.status.AccountLockedStatus;
+import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.command.args.ArgumentsParser;
+import net.tnemc.core.compatibility.log.DebugLevel;
+import net.tnemc.core.io.message.MessageData;
+import net.tnemc.core.io.storage.StorageManager;
+
+import java.util.Optional;
 
 /**
  * AdminCommand
@@ -37,27 +46,101 @@ public class AdminCommand extends BaseCommand {
   }
 
   public static void onBackup(ArgumentsParser parser) {
-    //TODO: This
+    if(StorageManager.instance().backup()) {
+
+      parser.sender().message(new MessageData("Messages.Data.Backup"));
+      return;
+    }
+    parser.sender().message(new MessageData("Messages.Data.BackupFailed"));
   }
 
+  //<player> [balance]
   public static void onCreate(ArgumentsParser parser) {
-    //TODO: This
+    if(parser.args().length < 1) {
+      //TODO: Help
+
+      return;
+    }
+
+    if(TNECore.eco().account().findAccount(parser.args()[0]).isPresent()) {
+
+      //Our account already exists, so we can't make it.
+      final MessageData data = new MessageData("Messages.Admin.Exists");
+      data.addReplacement("$name", parser.args()[0]);
+      parser.sender().message(data);
+      return;
+    }
+
+    final EconomyResponse response = TNECore.eco().account().createAccount(parser.args()[0]);
+    if(response.success()) {
+      final MessageData data = new MessageData("Messages.Admin.Created");
+      data.addReplacement("$name", parser.args()[0]);
+      parser.sender().message(data);
+      return;
+    }
+    final MessageData data = new MessageData("Messages.Admin.CreationFailed");
+    data.addReplacement("$name", parser.args()[0]);
+    parser.sender().message(data);
   }
 
+  //<standard/detailed/developer>
   public static void onDebug(ArgumentsParser parser) {
-    //TODO: This
+    if(parser.args().length < 1) {
+      //TODO: Help
+
+      return;
+    }
+
+    DebugLevel level = switch(parser.args()[0].toLowerCase()) {
+      case "detailed" -> DebugLevel.DETAILED;
+      case "developer" -> DebugLevel.DEVELOPER;
+      default -> DebugLevel.STANDARD;
+    };
+
+    TNECore.instance().setLevel(level);
+    final MessageData data = new MessageData("Messages.Data.Debug");
+    data.addReplacement("$level", level.name());
+    parser.sender().message(data);
   }
 
   public static void onDelete(ArgumentsParser parser) {
-    //TODO: This
+    if(parser.args().length < 1) {
+      //TODO: Help
+
+      return;
+    }
+
+    if(parser.parseAccount(0).isEmpty()) {
+
+      //Our account doesn't exist, so we can't delete it.
+      final MessageData data = new MessageData("Messages.Admin.NoAccount");
+      data.addReplacement("$name", parser.args()[0]);
+      parser.sender().message(data);
+      return;
+    }
+
+    final EconomyResponse response = TNECore.eco().account().deleteAccount(parser.args()[0]);
+    if(response.success()) {
+
+      //deleted
+      final MessageData data = new MessageData("Messages.Admin.Deleted");
+      data.addReplacement("$name", parser.args()[0]);
+      parser.sender().message(data);
+      return;
+    }
+
+    //failed deletion
+    final MessageData data = new MessageData("Messages.Admin.DeletionFailed");
+    data.addReplacement("$name", parser.args()[0]);
+    parser.sender().message(data);
   }
 
   public static void onExtract(ArgumentsParser parser) {
-    //TODO: This
+    //TODO: Storage Manager
   }
 
   public static void onPurge(ArgumentsParser parser) {
-    //TODO: This
+    //TODO: Storage Manager
   }
 
   public static void onReload(ArgumentsParser parser) {
@@ -85,22 +168,56 @@ public class AdminCommand extends BaseCommand {
   }
 
   public static void onReset(ArgumentsParser parser) {
-    //TODO: This
+    StorageManager.instance().reset();
   }
 
   public static void onRestore(ArgumentsParser parser) {
-    //TODO: This
+    //TODO: StorageManager
   }
 
   public static void onSave(ArgumentsParser parser) {
-    //TODO: This
+    StorageManager.instance().saveAll();
+    parser.sender().message(new MessageData("Messages.Data.Save"));
   }
 
+  //<account> [status]
   public static void onStatus(ArgumentsParser parser) {
-    //TODO: This
+    if(parser.args().length < 1) {
+      //TODO: Help
+
+      return;
+    }
+
+    final Optional<Account> account = parser.parseAccount(0);
+    if(account.isEmpty()) {
+      return;
+    }
+
+    if(parser.args().length < 2) {
+
+      //We are just checking for the account's status now.
+      final MessageData data = new MessageData("Messages.Admin.Status");
+      data.addReplacement("$name", parser.args()[0]);
+      data.addReplacement("$status", account.get().getStatus().identifier());
+      parser.sender().message(data);
+      return;
+    }
+
+    final AccountStatus status = TNECore.eco().account().findStatus(parser.args()[0]);
+
+    //Set the account's status to the new one.
+    account.get().setStatus(status);
+
+    final MessageData data = new MessageData("Messages.Admin.StatusChange");
+    data.addReplacement("$name", parser.args()[0]);
+    data.addReplacement("$status", status.identifier());
+    parser.sender().message(data);
   }
 
   public static void onVersion(ArgumentsParser parser) {
-    //TODO: This
+    final MessageData data = new MessageData("Messages.General.Version");
+    data.addReplacement("$version", TNECore.version);
+    data.addReplacement("$build", TNECore.build);
+    parser.sender().message(data);
   }
 }

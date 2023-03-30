@@ -23,14 +23,28 @@ import net.tnemc.core.io.storage.StorageEngine;
 
 public class DB2 implements StorageEngine {
 
+  /**
+   * The name of this engine.
+   *
+   * @return The engine name.
+   */
   @Override
-  public String driver() {
-    return "com.ibm.db2.jcc.DB2Driver";
+  public String name() {
+    return "db2";
   }
 
   @Override
-  public String dataSource() {
-    return "com.ibm.db2.jcc.DB2SimpleDataSource";
+  public String[] driver() {
+    return new String[] {
+      "com.ibm.db2.jcc.DB2Driver"
+    };
+  }
+
+  @Override
+  public String[] dataSource() {
+    return new String[] {
+      "com.ibm.db2.jcc.DB2SimpleDataSource"
+    };
   }
 
   @Override

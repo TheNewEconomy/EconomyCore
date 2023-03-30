@@ -90,8 +90,8 @@ public class ArgumentsParser {
       final Optional<Account> account = TNECore.eco().account().findAccount(arguments[index]);
 
       if(account.isEmpty() || (online && !TNECore.server().online(arguments[index]))) {
-        final MessageData data = new MessageData("Messages.General.NoPlayer");
-        data.addReplacement("$player", arguments[index]);
+        final MessageData data = new MessageData("Messages.Admin.NoAccount");
+        data.addReplacement("$name", arguments[index]);
         sender.message(data);
         return Optional.empty();
       }

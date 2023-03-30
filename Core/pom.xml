@@ -38,13 +38,6 @@
             <version>0.1.7.0</version>
             <scope>compile</scope>
         </dependency>
-        <!-- Database Stuff is Fun -->
-        <dependency>
-            <groupId>co.aikar</groupId>
-            <artifactId>idb-core</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
         <!-- Pooling For Performance -->
         <dependency>
             <groupId>com.zaxxer</groupId>

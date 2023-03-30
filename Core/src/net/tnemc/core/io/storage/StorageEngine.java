@@ -29,18 +29,24 @@ import com.zaxxer.hikari.HikariConfig;
 public interface StorageEngine {
 
   /**
-   * The driver String for this storage engine.
-   *
-   * @return The driver String for this storage engine.
+   * The name of this engine.
+   * @return The engine name.
    */
-  String driver();
+  String name();
 
   /**
-   * The data source String for this storage engine.
+   * The driver Strings for this storage engine.
    *
-   * @return The data source String for this storage engine.
+   * @return The driver Strings for this storage engine.
    */
-  String dataSource();
+  String[] driver();
+
+  /**
+   * The data source Strings for this storage engine.
+   *
+   * @return The data source Strings for this storage engine.
+   */
+  String[] dataSource();
 
   /**
    * Generates the connection URL String based on the provided details.

@@ -8,6 +8,7 @@ Messages:
     Version: "0.1.2.0"
 
     General:
+        Version: "<white>TNE Version: <green>$version <white>- Build: <green>$build"
         NoPerm: "<red>I'm sorry, but you do not have permission to do that."
         Saved: "<yellow>Successfully saved all TNE Data!"
         NoPlayer: "<red>Unable to locate player '$player'!"
@@ -26,11 +27,14 @@ Messages:
         SetConfiguration: "<white>The value of $node has been set to $value."
         ID: "<white>The UUID for $player is $id."
         Exists: "<red>A player with that name already exists."
-        Created: "<white>Successfully created account for $player."
-        Deleted: "<white>Successfully deleted account for $player."
+        Created: "<white>Successfully created account for $name."
+        CreationFailed: "<red>Failed to create account for $name."
+        Deleted: "<white>Successfully deleted account for $name."
+        DeletionFailed: "<red>Failed to delete account for $name."
+        NoAccount: "<red>No account with the name $name exists!"
         PurgeWorld: "<white>Successfully purged economy accounts in $world."
-        StatusChange: "<white>Status for $player has been changed to <green>$status<white>."
-        Status: "<white>Status for $player is <green>$status<white>."
+        StatusChange: "<white>Status for $name has been changed to <green>$status<white>."
+        Status: "<white>Status for $name is <green>$status<white>."
         Reset: "<white>Performed an economy reset using these parameters - world = $world, currency = $currency, and player = $player."
 
     Account:
@@ -46,30 +50,11 @@ Messages:
         NoTransactions: "<white>You have no transactions to display at this time."
         StatusChange: "<white>Your account's status has been changed to <green>$status<white>."
 
-    Configuration:
-        NoSuch: "The configuration node $node does not exist."
-        Invalid: "The value you specified for $node is invalid."
-        InvalidFile: "The configuration file you specified is invalid."
-        Get: "The value for node $node is $value."
-        Set: "Successfully set the value for $node to $value."
-        TNEGet: "The parsed value for node $node is $value."
-        Saved: "Successfully saved all modified nodes for file $configuration."
-        SavedAll: "Successfully saved all modified configurations."
-        Undone: "Successfully undid all configuration modifications to $modified."
-        UndoneAll: "Successfully undid all configuration modifications."
-
-    Currency:
-        List: "<white>The current currencies for $world are: $currencies."
-        Tiers: "<white>The currency '$currency' currently has these tiers;<newline>Major: $major_tiers<newline>Minor: $minor_tiers"
-        AlreadyExists: "<white>A currency with the name $currency already exists in world $world."
-        Renamed: "<white>Successfully renamed $currency in world $world to $new_Name."
-
-    Language:
-        Current: "<white>Your language is currently set as $language."
-        List: "<white>The available languages are $languages."
-        None: "<red>There is no language with the name '$language'."
-        Reload: "<white>Successfully reloaded all language files."
-        Set: "<white>Successfully set your language to $language."
+    Data:
+        Backup: "<gold>Successfully backed up database!"
+        BackupFailed: "<red>The database backup failed!"
+        Debug: "<green>Debug level has been set to $level."
+        Save: "<green>Saved all TNE data."
 
     Module:
         AvailableHeader: "=== Modules Available at $url ==="
@@ -140,29 +125,33 @@ Messages:
     Commands:
         Admin:
             Backup:
-                Description: "/tne backup - Creates a backup of all server data."
+                Description: "Creates a backup of all server data."
             Create:
-                Description: "/tne create <player> [balance] - Creates a new economy account.<newline>- Player ~ The account owner.<newline>- Balance ~ The starting balance of the account."
+                Arguments: "<name> [balance]"
+                Description: "Creates a new non-player economy account.<newline>- name - The name of the account.<newline>- Balance ~ The starting balance of the account."
             Debug:
-                Description: "/tne debug - Toggles console debug mode."
+                Description: "Toggles console debug mode."
             Delete:
-                Description: "/tne delete <player> - Deletes a player account.<newline>- Player ~ The account owner."
+                Arguments: "<player>"
+                Description: "Deletes a player account.<newline>- Player ~ The account owner."
             Extract:
-                Description: "/tne extract - Extracts all player balances with their username attached for database-related debugging."
+                Description: "Extracts all player balances with their username attached for database-related debugging."
             Purge:
-                Description: "/tne purge - Deletes all player accounts that have the default balance"
+                Description: "Deletes all player accounts that have the default balance"
             Reload:
-                Description: "/tne reload [configuration] - Saves modifications made via command, and reloads a configuration file.<newline>- Configuration ~ The identifier of the configuration to reload. Default is all."
+                Arguments: "[configuration]"
+                Description: "Saves modifications made via command, and reloads a configuration file.<newline>- Configuration ~ The identifier of the configuration to reload. Default is all."
             Reset:
-                Description: "/tne reset - Deletes all economy-related data from the database."
+                Description: "Deletes all economy-related data from the database."
             Restore:
-                Description: "/tne restore - Restores all balances that are located in extracted.yml after /tne extract."
+                Description: "Restores all balances that are located in extracted.yml after /tne extract."
             Save:
-                Description: "/tne save - Force saves all TNE data."
+                Description: "Force saves all TNE data."
             Status:
-                Description: "/tne status <player> [status] - Displays, or sets, the current account status of an account.<newline>- Player ~ The account owner."
+                Arguments: "<player> [status]"
+                Description: "Displays, or sets, the current account status of an account.<newline>- Player ~ The account owner."
             Version:
-                Description: "/tne version - Displays the version of TNE currently running."
+                Description: "Displays the version of TNE currently running."
         Module:
             Available:
                 Description: "/tnem available [url] - Displays available modules at the specified url, or defaults to TNE's core modules.<newline>- url ~ The url to use for the check, only use if you know what you're doing."

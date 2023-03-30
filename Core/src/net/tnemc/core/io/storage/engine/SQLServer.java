@@ -23,14 +23,28 @@ import net.tnemc.core.io.storage.StorageEngine;
 
 public class SQLServer implements StorageEngine {
 
+  /**
+   * The name of this engine.
+   *
+   * @return The engine name.
+   */
   @Override
-  public String driver() {
-    return "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+  public String name() {
+    return "sqlserver";
   }
 
   @Override
-  public String dataSource() {
-    return "com.microsoft.sqlserver.jdbc.SQLServerDataSource";
+  public String[] driver() {
+    return new String[] {
+      "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+    };
+  }
+
+  @Override
+  public String[] dataSource() {
+    return new String[] {
+      "com.microsoft.sqlserver.jdbc.SQLServerDataSource"
+    };
   }
 
   @Override

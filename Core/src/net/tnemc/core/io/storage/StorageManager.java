@@ -48,4 +48,27 @@ public class StorageManager {
   public static StorageManager instance() {
     return instance;
   }
+
+  /**
+   * Used to save all data in TNE.
+   */
+  public void saveAll() {
+    //TODO: Storage Manager. Will this be in TNDL?
+  }
+
+  /**
+   * Used to reset all data in TNE.
+   */
+  public void reset() {
+    //TODO: Storage Manager. Will this be in TNDL?
+  }
+
+  /**
+   * Used to back up data that is currently in the database.
+   * @return True if the backup was successful, otherwise false.
+   */
+  public boolean backup() {
+    //TODO: Storage Manager. Will this be in TNDL?
+    return false;
+  }
 }

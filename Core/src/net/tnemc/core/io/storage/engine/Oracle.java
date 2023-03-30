@@ -23,14 +23,28 @@ import net.tnemc.core.io.storage.StorageEngine;
 
 public class Oracle implements StorageEngine {
 
+  /**
+   * The name of this engine.
+   *
+   * @return The engine name.
+   */
   @Override
-  public String driver() {
-    return "oracle.jdbc.driver.OracleDriver";
+  public String name() {
+    return "oracle";
   }
 
   @Override
-  public String dataSource() {
-    return "oracle.jdbc.pool.OracleDataSource";
+  public String[] driver() {
+    return new String[] {
+      "oracle.jdbc.driver.OracleDriver"
+    };
+  }
+
+  @Override
+  public String[] dataSource() {
+    return new String[] {
+      "oracle.jdbc.pool.OracleDataSource"
+    };
   }
 
   @Override

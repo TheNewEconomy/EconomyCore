@@ -67,29 +67,54 @@ public class AccountManager {
   }
 
   /**
+   * Used to create a new non-player account based on the provided name.
+   * @param name The name to use for this account.
+   * @return A correlating {@link EconomyResponse response} containing the results.
+   */
+  public EconomyResponse createAccount(final String name) {
+    return createAccount(name, name, true);
+  }
+
+  /**
    * Used to create a new account based on the provided identifier and name.
-   * @param identifier The identifierr to use for the creation, if this is a player then this should
+   * @param identifier The identifier to use for the creation, if this is a player then this should
    *                   be the String value of the UUID for that player.
    * @param name The name to use for this account.
    * @return A correlating {@link EconomyResponse response} containing the results.
    */
   public EconomyResponse createAccount(final String identifier, final String name) {
+    return createAccount(identifier, name, false);
+  }
+
+  /**
+   * Used to create a new account based on the provided identifier and name.
+   * @param identifier The identifier to use for the creation, if this is a player then this should
+   *                   be the String value of the UUID for that player.
+   * @param name The name to use for this account.
+   * @param nonPlayer True if the new account should be a non-player account.
+   * @return A correlating {@link EconomyResponse response} containing the results.
+   */
+  public EconomyResponse createAccount(final String identifier, final String name, boolean nonPlayer) {
     if(accounts.containsKey(identifier)) {
       return AccountResponse.ALREADY_EXISTS;
     }
 
     Account account;
 
-    if(UUIDProvider.validate(name)) {
+    if(!nonPlayer && UUIDProvider.validate(name)) {
       try {
         final UUID id = UUID.fromString(identifier);
         account = new PlayerAccount(id, name);
 
         uuidProvider.store(new UUIDPair(id, name));
       } catch(Exception ignore) {
+
+        //Our identifier is an invalid UUID, let's search for it.
+        //TODO:
+
         return AccountResponse.CREATION_FAILED;
       }
-    } else if(TNECore.server().online(name)) {
+    } else if(!nonPlayer && TNECore.server().online(name)) {
       //This is most definitely a geyser player, they're only but not of valid names
       try {
         final UUID id = UUID.fromString(identifier);
