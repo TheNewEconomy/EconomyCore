@@ -1,4 +1,4 @@
-package net.tnemc.core.io.storage;
+package net.tnemc.core.io.storage.engine;
 
 /*
  * The New Economy
@@ -19,33 +19,32 @@ package net.tnemc.core.io.storage;
  */
 
 import com.zaxxer.hikari.HikariConfig;
-import net.tnemc.core.config.DataConfig;
+import net.tnemc.core.io.storage.StorageEngine;
 
-/**
- * The manager, which manages everything related to storage.
- * Manages:
- * - Loading
- * - Saving
- * - Caching
- * - Connections
- *
- * @author creatorfromhell
- * @since 0.1.2.0
- */
-public class StorageManager {
+public class SQLServer implements StorageEngine {
 
-  private static StorageManager instance;
-
-  HikariConfig hikariConfig = new HikariConfig();
-
-  private final String pool = "TNE-Pool-1";
-
-
-  public StorageManager(DataConfig config) {
-    instance = this;
+  @Override
+  public String driver() {
+    return "com.microsoft.sqlserver.jdbc.SQLServerDriver";
   }
 
-  public static StorageManager instance() {
-    return instance;
+  @Override
+  public String dataSource() {
+    return "com.microsoft.sqlserver.jdbc.SQLServerDataSource";
+  }
+
+  @Override
+  public String url(String file, String host, int port, String database) {
+    return "jdbc:sqlserver://" + host + ":" + port + ";databaseName=" + database + ";";
+  }
+
+  /**
+   * Used to get the {@link HikariConfig} for this {@link StorageEngine}.
+   *
+   * @return The {@link HikariConfig}.
+   */
+  @Override
+  public HikariConfig config() {
+    return null;
   }
 }

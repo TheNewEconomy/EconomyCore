@@ -21,7 +21,6 @@ package net.tnemc.sponge;
 import co.aikar.commands.SpongeCommandManager;
 import com.google.inject.Inject;
 import net.tnemc.core.TNECore;
-import net.tnemc.core.io.storage.StorageManager;
 import net.tnemc.menu.sponge7.listeners.Sponge7InventoryClickListener;
 import net.tnemc.sponge.impl.SpongeLogProvider;
 import net.tnemc.sponge.impl.SpongeServerProvider;
@@ -52,7 +51,7 @@ public class SpongeTNECore extends TNECore {
 
   @Inject
   SpongeTNECore(final PluginContainer container, final Logger log) {
-    super(new SpongeServerProvider(), new SpongeLogProvider(log), new StorageManager());
+    super(new SpongeServerProvider(), new SpongeLogProvider(log));
     this.container = container;
     this.logger = new SpongeLogProvider(log);
     this.command = new SpongeCommandManager(container);

@@ -25,7 +25,6 @@ import net.tnemc.bukkit.command.TransactionCommand;
 import net.tnemc.bukkit.impl.BukkitLogProvider;
 import net.tnemc.bukkit.impl.BukkitServerProvider;
 import net.tnemc.core.TNECore;
-import net.tnemc.core.io.storage.StorageManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -40,8 +39,7 @@ public class BukkitTNECore extends TNECore {
   private JavaPlugin plugin;
 
   public BukkitTNECore(JavaPlugin plugin) {
-    super(new BukkitServerProvider(), new BukkitLogProvider(plugin.getLogger()),
-          new StorageManager());
+    super(new BukkitServerProvider(), new BukkitLogProvider(plugin.getLogger()));
     setInstance(this);
     this.plugin = plugin;
   }

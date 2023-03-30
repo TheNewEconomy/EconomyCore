@@ -18,34 +18,11 @@ package net.tnemc.core.io.storage;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.zaxxer.hikari.HikariConfig;
-import net.tnemc.core.config.DataConfig;
-
 /**
- * The manager, which manages everything related to storage.
- * Manages:
- * - Loading
- * - Saving
- * - Caching
- * - Connections
+ * StorageWrapper
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class StorageManager {
-
-  private static StorageManager instance;
-
-  HikariConfig hikariConfig = new HikariConfig();
-
-  private final String pool = "TNE-Pool-1";
-
-
-  public StorageManager(DataConfig config) {
-    instance = this;
-  }
-
-  public static StorageManager instance() {
-    return instance;
-  }
+public class StorageWrapper {
 }

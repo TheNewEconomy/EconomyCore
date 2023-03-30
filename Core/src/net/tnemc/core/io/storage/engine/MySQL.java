@@ -1,6 +1,4 @@
-package net.tnemc.core.io.serialization;
-
-import org.json.simple.JSONObject;
+package net.tnemc.core.io.storage.engine;
 
 /*
  * The New Economy
@@ -20,26 +18,34 @@ import org.json.simple.JSONObject;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * A class which represents an object that can be parsed to or from JSON.
- *
- * @since 0.1.2.0
- * @author creatorfromhell
- */
-public interface JSONified<T> {
+import com.zaxxer.hikari.HikariConfig;
+import net.tnemc.core.io.storage.StorageEngine;
+
+public class MySQL implements StorageEngine {
+
+  @Override
+  public String driver() {
+    return "com.mysql.jdbc.Driver";
+  }
+
+  @Override
+  public String dataSource() {
+    return "com.mysql.jdbc.jdbc2.optional.MysqlDataSource";
+  }
+
+  @Override
+  public String url(String file, String host, int port, String database) {
+    return "jdbc:mysql://" + host + ":" + port + "/" +
+        database;
+  }
 
   /**
-   * Used to serialize this object to a JSON-valid string.
+   * Used to get the {@link HikariConfig} for this {@link StorageEngine}.
    *
-   * @param object The object to serialize.
-   * @return The {@link JSONObject} associated with the JSON-valid String.
+   * @return The {@link HikariConfig}.
    */
-  JSONObject serialize(T object);
-
-  /**
-   * Used to generate information for this object from
-   * @param serialized The JSON-valid String that we are going to deserialize.
-   * @return The object that was deserialized from the JSON string.
-   */
-  T deserialize(String serialized);
+  @Override
+  public HikariConfig config() {
+    return null;
+  }
 }

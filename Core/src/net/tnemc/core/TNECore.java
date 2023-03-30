@@ -80,18 +80,15 @@ public abstract class TNECore {
 
   private boolean enabled = false;
 
-  public TNECore(ServerConnector server, LogProvider logger, StorageManager storage) {
+  public TNECore(ServerConnector server, LogProvider logger) {
     this.server = server;
     this.logger = logger;
-    this.storage = storage;
     this.messenger = new MessageHandler(new BaseTranslationProvider());
   }
 
-  public TNECore(ServerConnector server, LogProvider logger, StorageManager storage,
-                 TranslationProvider provider) {
+  public TNECore(ServerConnector server, LogProvider logger, TranslationProvider provider) {
     this.server = server;
     this.logger = logger;
-    this.storage = storage;
     this.messenger = new MessageHandler(provider);
   }
 
@@ -129,6 +126,8 @@ public abstract class TNECore {
     this.config = new MainConfig();
     this.data = new DataConfig();
     this.messageConfig = new MessageConfig();
+
+    this.storage = new StorageManager(data);
 
     new MenuManager();
     MenuManager.instance().addMenu(new MyEcoMenu());
