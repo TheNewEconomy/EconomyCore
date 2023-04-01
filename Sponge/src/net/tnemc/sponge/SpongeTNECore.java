@@ -69,6 +69,6 @@ public class SpongeTNECore extends TNECore {
 
   @Listener
   public void onServerStart(final GameStartedServerEvent event) {
-    logger.inform("Successfully running TheNewEconomy.");
+    logger.inform("The New Economy has been enabled.");
   }
 }

@@ -19,10 +19,10 @@ package net.tnemc.folia.impl;
  */
 
 import net.tnemc.bukkit.impl.BukkitItemCalculations;
-import net.tnemc.folia.TNE;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.currency.item.ItemDenomination;
+import net.tnemc.folia.TNE;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.bukkit.BukkitCalculationsProvider;
 import net.tnemc.item.bukkit.BukkitItemStack;

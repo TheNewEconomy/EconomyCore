@@ -19,12 +19,12 @@ package net.tnemc.folia.impl;
  */
 
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import net.tnemc.folia.TNE;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.io.message.MessageHandler;
+import net.tnemc.folia.TNE;
 import net.tnemc.menu.folia.FoliaPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

@@ -1,4 +1,4 @@
-package net.tnemc.core.io.storage;
+package net.tnemc.core.io.storage.engine;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,27 +17,38 @@ package net.tnemc.core.io.storage;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.io.storage.Datable;
+import net.tnemc.core.io.storage.SQLEngine;
+import net.tnemc.core.io.storage.StorageConnector;
+import net.tnemc.core.io.storage.StorageEngine;
+import net.tnemc.core.io.storage.connect.SQLConnector;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * StorageConnector represents a connection helper class for a storage method.
- *
- * @param <C> Represents the connection object for this connector.
+ * StandardSQL
  *
  * @author creatorfromhell
  * @since 0.1.2.0
- * @see StorageEngine
  */
-public interface StorageConnector<C> {
+public abstract class StandardSQL implements SQLEngine {
+  
+  private final Map<Class<?>, Datable<?>> datables = new HashMap<>();
+
+  private final SQLConnector connector;
+
+  public StandardSQL(SQLConnector connector) {
+    this.connector = connector;
+  }
 
   /**
-   * Used to initialize a connection to the specified {@link StorageEngine}
-   */
-  void initialize();
-
-
-  /**
-   * Used to get the connection from the
+   * The {@link StorageConnector} for this {@link StorageEngine}.
    *
-   * @return The connection.
+   * @return The storage connector for this engine.
    */
-  C connection() throws Exception;
+  @Override
+  public SQLConnector connector() {
+    return connector;
+  }
 }

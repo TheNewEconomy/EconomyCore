@@ -34,7 +34,7 @@ import java.sql.SQLException;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class SQLConnector implements StorageConnector<Connection, SQLEngine> {
+public class SQLConnector implements StorageConnector<Connection> {
 
   private DataSource source;
   private SQLEngine engine;
@@ -45,24 +45,20 @@ public class SQLConnector implements StorageConnector<Connection, SQLEngine> {
 
   /**
    * Used to initialize a connection to the specified {@link StorageEngine}
-   *
-   * @param engine The storage engine.
    */
   @Override
-  public void initialize(SQLEngine engine) {
+  public void initialize() {
     this.source = new HikariDataSource(engine.config());
   }
 
   /**
    * Used to get the connection from the
    *
-   * @param engine The storage engine.
-   *
    * @return The connection.
    */
   @Override
-  public Connection connection(SQLEngine engine) throws SQLException {
-    if(source == null) initialize(engine);
+  public Connection connection() throws SQLException {
+    if(source == null) initialize();
     return source.getConnection();
   }
 
@@ -73,7 +69,7 @@ public class SQLConnector implements StorageConnector<Connection, SQLEngine> {
    * @return The {@link ResultSet}.
    */
   public ResultSet executeQuery(final String query, Object[] variables) {
-    try(Connection connection = connection(engine);
+    try(Connection connection = connection();
         PreparedStatement statement = connection.prepareStatement(query)) {
 
       for(int i = 0; i < variables.length; i++) {
@@ -93,7 +89,7 @@ public class SQLConnector implements StorageConnector<Connection, SQLEngine> {
    * @param variables An array of variables for the prepared statement.
    */
   public void executeUpdate(final String query, Object[] variables) {
-    try(Connection connection = connection(engine);
+    try(Connection connection = connection();
         PreparedStatement statement = connection.prepareStatement(query)) {
 
       for(int i = 0; i < variables.length; i++) {

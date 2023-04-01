@@ -20,16 +20,12 @@ package net.tnemc.core.io.storage.engine;
 
 import com.zaxxer.hikari.HikariConfig;
 import net.tnemc.core.io.storage.SQLEngine;
-import net.tnemc.core.io.storage.StorageConnector;
-import net.tnemc.core.io.storage.StorageEngine;
 import net.tnemc.core.io.storage.connect.SQLConnector;
 
-public class DB2 implements SQLEngine {
-
-  private final SQLConnector connector;
+public class DB2 extends StandardSQL {
 
   public DB2(SQLConnector connector) {
-    this.connector = connector;
+    super(connector);
   }
 
   /**
@@ -40,16 +36,6 @@ public class DB2 implements SQLEngine {
   @Override
   public String name() {
     return "db2";
-  }
-
-  /**
-   * The {@link StorageConnector} for this {@link StorageEngine}.
-   *
-   * @return The storage connector for this engine.
-   */
-  @Override
-  public SQLConnector connector() {
-    return connector;
   }
 
   @Override
