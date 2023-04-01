@@ -19,11 +19,11 @@ package net.tnemc.folia;
  */
 
 import co.aikar.commands.PaperCommandManager;
-import net.tnemc.bukkit.command.AdminCommand;
-import net.tnemc.bukkit.command.MoneyCommand;
-import net.tnemc.bukkit.command.TransactionCommand;
 import net.tnemc.bukkit.impl.BukkitLogProvider;
 import net.tnemc.core.TNECore;
+import net.tnemc.folia.command.AdminCommand;
+import net.tnemc.folia.command.MoneyCommand;
+import net.tnemc.folia.command.TransactionCommand;
 import net.tnemc.folia.impl.FoliaServerProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 

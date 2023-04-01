@@ -169,6 +169,18 @@
         </dependency>
         <dependency>
             <groupId>net.tnemc</groupId>
+            <artifactId>EconomyCore</artifactId>
+            <version>0.1.2.0-PRE-1</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.tnemc</groupId>
+                    <artifactId>TNML-Bukkit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>net.tnemc</groupId>
             <artifactId>BukkitCore</artifactId>
             <version>0.1.2.0-PRE-1</version>
             <scope>compile</scope>
