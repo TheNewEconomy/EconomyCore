@@ -35,6 +35,7 @@ public abstract class Config {
 
   protected final YamlFile yaml;
 
+  protected final File file;
   protected final String defaults;
   private boolean create = false;
 
@@ -44,7 +45,7 @@ public abstract class Config {
     this.defaults = defaults;
     this.nodes = List.of(nodes);
 
-    final File file = new File(TNECore.directory(), fileName);
+    file = new File(TNECore.directory(), fileName);
 
 
     if(!file.exists()) { create = true; }
@@ -74,7 +75,7 @@ public abstract class Config {
 
   public boolean save() {
     try {
-      yaml.save();
+      yaml.save(file);
       return true;
     } catch(IOException e) {
       TNECore.log().error("Error while saving config \"" + nodes.get(0) + "\".");

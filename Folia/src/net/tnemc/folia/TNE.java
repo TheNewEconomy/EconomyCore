@@ -1,4 +1,4 @@
-package net.tnemc.bukkit;
+package net.tnemc.folia;
 
 /*
  * The New Economy
@@ -17,13 +17,11 @@ package net.tnemc.bukkit;
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import net.tnemc.bukkit.hook.economy.VaultHook;
-import net.tnemc.bukkit.listeners.PlayerClickListener;
 import net.tnemc.bukkit.listeners.PlayerJoinListener;
 import net.tnemc.bukkit.listeners.WorldLoadListener;
-import net.tnemc.menu.bukkit.listener.BukkitChatListener;
-import net.tnemc.menu.bukkit.listener.BukkitInventoryCloseListener;
+import net.tnemc.menu.folia.listener.FoliaChatListener;
+import net.tnemc.menu.folia.listener.FoliaInventoryClickListener;
+import net.tnemc.menu.folia.listener.FoliaInventoryCloseListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -38,16 +36,16 @@ import java.util.logging.Level;
 public class TNE extends JavaPlugin {
 
   private static TNE instance;
-  private BukkitCore core;
+  private FoliaCore core;
 
   public void onLoad() {
     instance = this;
 
     //Initialize our TNE Core Class
-    this.core = new BukkitCore(instance);
+    this.core = new FoliaCore(instance);
 
-    BukkitCore.eco().currency().load(getDataFolder(), false);
-    BukkitCore.eco().currency().saveCurrenciesUUID(getDataFolder());
+    FoliaCore.eco().currency().load(getDataFolder(), false);
+    FoliaCore.eco().currency().saveCurrenciesUUID(getDataFolder());
   }
 
   public void onEnable() {
@@ -55,17 +53,16 @@ public class TNE extends JavaPlugin {
     this.core.enable();
 
     //Register our hooks
-    new VaultHook().register();
 
     //Register our event listeners
 
     //Player Listeners
     Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
-    Bukkit.getPluginManager().registerEvents(new BukkitChatListener(this), this);
 
     //Menu-related Listeners from TNML
-    Bukkit.getPluginManager().registerEvents(new PlayerClickListener(this), this);
-    Bukkit.getPluginManager().registerEvents(new BukkitInventoryCloseListener(this), this);
+    Bukkit.getPluginManager().registerEvents(new FoliaChatListener(this), this);
+    Bukkit.getPluginManager().registerEvents(new FoliaInventoryClickListener(this), this);
+    Bukkit.getPluginManager().registerEvents(new FoliaInventoryCloseListener(this), this);
 
     //World Listeners
     Bukkit.getPluginManager().registerEvents(new WorldLoadListener(), this);
@@ -73,9 +70,6 @@ public class TNE extends JavaPlugin {
     //Register our service providers.
 
     //Vault
-    if(Bukkit.getPluginManager().isPluginEnabled("Vault")) {
-      new VaultHook().register();
-    }
 
     getLogger().log(Level.INFO, "The New Economy has been enabled!");
 

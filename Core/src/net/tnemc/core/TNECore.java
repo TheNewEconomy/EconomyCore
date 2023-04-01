@@ -129,6 +129,10 @@ public abstract class TNECore {
     this.data = new DataConfig();
     this.messageConfig = new MessageConfig();
 
+    this.config.load();
+    this.data.load();
+    this.messageConfig.load();
+
     this.storage = new StorageManager(data);
 
     new MenuManager();

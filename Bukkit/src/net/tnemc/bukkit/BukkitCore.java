@@ -28,17 +28,17 @@ import net.tnemc.core.TNECore;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * BukkitTNECore
+ * BukkitCore
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class BukkitTNECore extends TNECore {
+public class BukkitCore extends TNECore {
 
   protected PaperCommandManager command;
   private JavaPlugin plugin;
 
-  public BukkitTNECore(JavaPlugin plugin) {
+  public BukkitCore(JavaPlugin plugin) {
     super(new BukkitServerProvider(), new BukkitLogProvider(plugin.getLogger()));
     setInstance(this);
     this.plugin = plugin;
@@ -56,7 +56,7 @@ public class BukkitTNECore extends TNECore {
     command.registerCommand(new TransactionCommand());
   }
 
-  public static BukkitTNECore instance() {
-    return (BukkitTNECore)TNECore.instance();
+  public static BukkitCore instance() {
+    return (BukkitCore)TNECore.instance();
   }
 }
