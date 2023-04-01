@@ -17,11 +17,13 @@ package net.tnemc.core.io.storage.engine;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.account.Account;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.SQLEngine;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.StorageEngine;
 import net.tnemc.core.io.storage.connect.SQLConnector;
+import net.tnemc.core.io.storage.datables.sql.SQLAccount;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +42,9 @@ public abstract class StandardSQL implements SQLEngine {
 
   public StandardSQL(SQLConnector connector) {
     this.connector = connector;
+
+    //add our datables.
+    datables.put(Account.class, new SQLAccount());
   }
 
   /**
@@ -50,5 +55,23 @@ public abstract class StandardSQL implements SQLEngine {
   @Override
   public SQLConnector connector() {
     return connector;
+  }
+
+  /**
+   * Used to reset all data for this engine.
+   */
+  @Override
+  public void reset() {
+    //TODO: Reset all data.
+  }
+
+  /**
+   * Used to get the {@link Datable} classes for this engine.
+   *
+   * @return A map with the datables.
+   */
+  @Override
+  public Map<Class<?>, Datable<?>> datables() {
+    return datables;
   }
 }

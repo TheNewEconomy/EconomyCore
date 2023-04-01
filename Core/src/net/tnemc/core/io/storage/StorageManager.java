@@ -18,7 +18,6 @@ package net.tnemc.core.io.storage;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.zaxxer.hikari.HikariConfig;
 import net.tnemc.core.config.DataConfig;
 
 /**
@@ -35,10 +34,7 @@ import net.tnemc.core.config.DataConfig;
 public class StorageManager {
 
   private static StorageManager instance;
-
-  final HikariConfig hikariConfig = new HikariConfig();
-
-  private final String pool = "TNE-Pool-1";
+  private StorageEngine engine;
 
 
   public StorageManager(DataConfig config) {
@@ -49,18 +45,36 @@ public class StorageManager {
     return instance;
   }
 
+  public <T> void store(T object) {
+    final Datable<T> data = (Datable<T>)engine.datables().get(object.getClass());
+    if(data != null) {
+      data.store(engine.connector(), object);
+    }
+  }
+
   /**
    * Used to save all data in TNE.
    */
   public void saveAll() {
-    //TODO: Storage Manager. Will this be in TNDL?
+    for(Datable<?> data : engine.datables().values()) {
+      data.storeAll(engine.connector());
+    }
+  }
+
+  /**
+   * Used to purge TNE data.
+   */
+  public void purge() {
+    for(Datable<?> data : engine.datables().values()) {
+      data.purge(engine.connector());
+    }
   }
 
   /**
    * Used to reset all data in TNE.
    */
   public void reset() {
-    //TODO: Storage Manager. Will this be in TNDL?
+    engine.reset();
   }
 
   /**

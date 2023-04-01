@@ -18,6 +18,8 @@ package net.tnemc.core.io.storage;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import java.util.Map;
+
 /**
  * StorageEngine
  *
@@ -36,5 +38,16 @@ public interface StorageEngine {
    * The {@link StorageConnector} for this {@link StorageEngine}.
    * @return The storage connector for this engine.
    */
-  StorageConnector<?, ?> connector();
+  StorageConnector<?> connector();
+
+  /**
+   * Used to reset all data for this engine.
+   */
+  void reset();
+
+  /**
+   * Used to get the {@link Datable} classes for this engine.
+   * @return A map with the datables.
+   */
+  Map<Class<?>, Datable<?>> datables();
 }

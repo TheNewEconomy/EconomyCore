@@ -44,13 +44,33 @@ public class SQLAccount implements Datable<Account> {
   }
 
   /**
-   * Used to save this object.
+   * USed to purge the objects of this datable.
    *
    * @param connector The storage connector to use for this transaction.
-   * @param account    The object to be saved.
    */
   @Override
-  public void save(StorageConnector<?, ?> connector, Account account) {
+  public void purge(StorageConnector<?> connector) {
+
+  }
+
+  /**
+   * Used to store this object.
+   *
+   * @param connector The storage connector to use for this transaction.
+   * @param account    The object to be stored.
+   */
+  @Override
+  public void store(StorageConnector<?> connector, Account account) {
+
+  }
+
+  /**
+   * Used to store all objects of this type.
+   *
+   * @param connector The storage connector to use for this transaction.
+   */
+  @Override
+  public void storeAll(StorageConnector<?> connector) {
 
   }
 
@@ -63,7 +83,7 @@ public class SQLAccount implements Datable<Account> {
    * @return The object to load.
    */
   @Override
-  public Optional<Account> load(StorageConnector<?, ?> connector, String identifier) {
+  public Optional<Account> load(StorageConnector<?> connector, String identifier) {
     if(connector instanceof SQLConnector) {
 
     }
@@ -78,7 +98,7 @@ public class SQLAccount implements Datable<Account> {
    * @return A collection containing the objects loaded.
    */
   @Override
-  public Collection<Account> loadAll(StorageConnector<?, ?> connector) {
+  public Collection<Account> loadAll(StorageConnector<?> connector) {
     return null;
   }
 }

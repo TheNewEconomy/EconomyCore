@@ -38,11 +38,23 @@ public interface Datable<O> {
   Class<? extends O> clazz();
 
   /**
-   * Used to save this object.
+   * USed to purge the objects of this datable.
    * @param connector The storage connector to use for this transaction.
-   * @param object The object to be saved.
    */
-  void save(StorageConnector<?, ?> connector, O object);
+  void purge(StorageConnector<?> connector);
+
+  /**
+   * Used to store this object.
+   * @param connector The storage connector to use for this transaction.
+   * @param object The object to be stored.
+   */
+  void store(StorageConnector<?> connector, O object);
+
+  /**
+   * Used to store all objects of this type.
+   * @param connector The storage connector to use for this transaction.
+   */
+  void storeAll(StorageConnector<?> connector);
 
   /**
    * Used to load this object.
@@ -50,12 +62,12 @@ public interface Datable<O> {
    * @param identifier The identifier used to identify the object to load.
    * @return The object to load.
    */
-  Optional<O> load(StorageConnector<?, ?> connector, final String identifier);
+  Optional<O> load(StorageConnector<?> connector, final String identifier);
 
   /**
    * Used to load all objects of this type.
    * @param connector The storage connector to use for this transaction.
    * @return A collection containing the objects loaded.
    */
-  Collection<O> loadAll(StorageConnector<?, ?> connector);
+  Collection<O> loadAll(StorageConnector<?> connector);
 }
