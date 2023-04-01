@@ -36,7 +36,7 @@ public class StorageManager {
 
   private static StorageManager instance;
 
-  HikariConfig hikariConfig = new HikariConfig();
+  final HikariConfig hikariConfig = new HikariConfig();
 
   private final String pool = "TNE-Pool-1";
 

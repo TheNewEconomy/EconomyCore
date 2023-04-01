@@ -1,5 +1,4 @@
 package net.tnemc.core.io.storage;
-
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -19,10 +18,29 @@ package net.tnemc.core.io.storage;
  */
 
 /**
- * StorageWrapper
+ * StorageConnector represents a connection helper class for a storage method.
+ *
+ * @param <C> Represents the connection object for this connector.
+ * @param <E> Represents the {@link StorageEngine} type for this connector.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
+ * @see StorageEngine
  */
-public class StorageWrapper {
+public interface StorageConnector<C,E> {
+
+  /**
+   * Used to initialize a connection to the specified {@link StorageEngine}
+   * @param engine The storage engine.
+   */
+  void initialize(E engine);
+
+
+  /**
+   * Used to get the connection from the
+   * @param engine The storage engine.
+   *
+   * @return The connection.
+   */
+  C connection(E engine) throws Exception;
 }

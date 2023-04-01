@@ -18,8 +18,6 @@ package net.tnemc.core.io.storage;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.zaxxer.hikari.HikariConfig;
-
 /**
  * StorageEngine
  *
@@ -35,33 +33,8 @@ public interface StorageEngine {
   String name();
 
   /**
-   * The driver Strings for this storage engine.
-   *
-   * @return The driver Strings for this storage engine.
+   * The {@link StorageConnector} for this {@link StorageEngine}.
+   * @return The storage connector for this engine.
    */
-  String[] driver();
-
-  /**
-   * The data source Strings for this storage engine.
-   *
-   * @return The data source Strings for this storage engine.
-   */
-  String[] dataSource();
-
-  /**
-   * Generates the connection URL String based on the provided details.
-   *
-   * @param file The file name, if applicable.
-   * @param host The host to connect to.
-   * @param port The port to connect to.
-   * @param database The database name to connect to.
-   * @return The generated connection URL using the details provided.
-   */
-  String url(String file, String host, int port, String database);
-
-  /**
-   * Used to get the {@link HikariConfig} for this {@link StorageEngine}.
-   * @return The {@link HikariConfig}.
-   */
-  HikariConfig config();
+  StorageConnector<?, ?> connector();
 }

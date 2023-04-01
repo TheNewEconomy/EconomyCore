@@ -19,10 +19,19 @@ package net.tnemc.core.io.storage.engine;
  */
 
 import com.zaxxer.hikari.HikariConfig;
+import net.tnemc.core.io.storage.SQLEngine;
+import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.StorageEngine;
+import net.tnemc.core.io.storage.connect.SQLConnector;
 
 
-public class PostgreSQL implements StorageEngine {
+public class PostgreSQL implements SQLEngine {
+
+  private final SQLConnector connector;
+
+  public PostgreSQL(SQLConnector connector) {
+    this.connector = connector;
+  }
 
   /**
    * The name of this engine.
@@ -32,6 +41,16 @@ public class PostgreSQL implements StorageEngine {
   @Override
   public String name() {
     return "postgre";
+  }
+
+  /**
+   * The {@link StorageConnector} for this {@link StorageEngine}.
+   *
+   * @return The storage connector for this engine.
+   */
+  @Override
+  public SQLConnector connector() {
+    return connector;
   }
 
   @Override
@@ -54,7 +73,7 @@ public class PostgreSQL implements StorageEngine {
   }
 
   /**
-   * Used to get the {@link HikariConfig} for this {@link StorageEngine}.
+   * Used to get the {@link HikariConfig} for this {@link SQLEngine}.
    *
    * @return The {@link HikariConfig}.
    */

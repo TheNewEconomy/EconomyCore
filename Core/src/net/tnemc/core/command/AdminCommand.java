@@ -22,7 +22,6 @@ import co.aikar.commands.BaseCommand;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.AccountStatus;
-import net.tnemc.core.account.status.AccountLockedStatus;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.command.args.ArgumentsParser;
 import net.tnemc.core.compatibility.log.DebugLevel;
