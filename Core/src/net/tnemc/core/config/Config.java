@@ -48,7 +48,11 @@ public abstract class Config {
     file = new File(TNECore.directory(), fileName);
 
 
-    if(!file.exists()) { create = true; }
+    if(!file.exists()) {
+      create = true;
+    }
+
+    System.out.println("Create file: " + fileName + " - " + create);
 
     this.yaml = new YamlFile(file.getPath());
   }

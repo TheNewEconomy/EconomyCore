@@ -68,7 +68,9 @@ public class MoneyCommand extends BaseCommand {
     if(currencyOptional.isEmpty()) {
       final String identifier = (parser.args().length > 0)? parser.args()[0] : parser.sender().identifier().toString();
       onOther(parser.splitArgsAt(1), identifier);
+      return;
     }
+    onOther(parser, parser.sender().identifier().toString());
   }
 
   //ArgumentsParser: <amount> <to currency> [from currency]
@@ -159,7 +161,21 @@ public class MoneyCommand extends BaseCommand {
 
       Optional<Receipt> receipt = processTransaction(parser.sender(), transaction);
       if(receipt.isPresent()) {
-        //TODO: Success handler
+        final MessageData data = new MessageData("Messages.Money.Gave");
+        data.addReplacement("$player", account.get().getName());
+        data.addReplacement("$amount", amount.get().toPlainString());
+        parser.sender().message(data);
+
+        if(account.get().isPlayer() && ((PlayerAccount)account.get()).isOnline()) {
+
+          final Optional<PlayerProvider> player = ((PlayerAccount)account.get()).getPlayer();
+
+          if(player.isPresent()) {
+            final MessageData msgData = new MessageData("Messages.Money.Given");
+            msgData.addReplacement("$amount", amount.get().toPlainString());
+            player.get().message(msgData);
+          }
+        }
       }
     }
   }
@@ -248,10 +264,12 @@ public class MoneyCommand extends BaseCommand {
 
           final MessageData entryMSG = new MessageData("Messages.Money.HoldingsMultiSingle");
           entryMSG.addReplacement("$currency", entryCur.get().getIdentifier());
-          entryMSG.addReplacement("$amount", CurrencyFormatter.format(account.get(), entry));
+          entryMSG.addReplacement("$amount", entry.getAmount().toPlainString());
           parser.sender().message(entryMSG);
+          System.out.println("send balances");
         }
       }
+      return;
     }
   }
 
@@ -299,7 +317,22 @@ public class MoneyCommand extends BaseCommand {
 
       final Optional<Receipt> receipt = processTransaction(parser.sender(), transaction);
       if(receipt.isPresent()) {
+        final MessageData data = new MessageData("Messages.Money.Paid");
+        data.addReplacement("$player", account.get().getName());
+        data.addReplacement("$amount", amount.get().toPlainString());
+        parser.sender().message(data);
 
+        if(account.get().isPlayer() && ((PlayerAccount)account.get()).isOnline()) {
+
+          final Optional<PlayerProvider> player = ((PlayerAccount)account.get()).getPlayer();
+
+          if(player.isPresent()) {
+            final MessageData msgData = new MessageData("Messages.Money.Received");
+            data.addReplacement("$player", parser.sender().name());
+            msgData.addReplacement("$amount", amount.get().toPlainString());
+            player.get().message(msgData);
+          }
+        }
       }
     }
   }
@@ -411,7 +444,22 @@ public class MoneyCommand extends BaseCommand {
 
       Optional<Receipt> receipt = processTransaction(parser.sender(), transaction);
       if(receipt.isPresent()) {
-        //TODO: Success message.
+        final MessageData data = new MessageData("Messages.Money.Took");
+        data.addReplacement("$player", account.get().getName());
+        data.addReplacement("$amount", amount.get().toPlainString());
+        parser.sender().message(data);
+
+        if(account.get().isPlayer() && ((PlayerAccount)account.get()).isOnline()) {
+
+          final Optional<PlayerProvider> player = ((PlayerAccount)account.get()).getPlayer();
+
+          if(player.isPresent()) {
+            final MessageData msgData = new MessageData("Messages.Money.Taken");
+            data.addReplacement("$player", parser.sender().name());
+            msgData.addReplacement("$amount", amount.get().toPlainString());
+            player.get().message(msgData);
+          }
+        }
       }
     }
   }

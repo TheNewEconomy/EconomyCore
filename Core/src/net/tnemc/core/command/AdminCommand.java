@@ -175,7 +175,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   public static void onSave(ArgumentsParser parser) {
-    StorageManager.instance().saveAll();
+    StorageManager.instance().storeAll();
     parser.sender().message(new MessageData("Messages.Data.Save"));
   }
 

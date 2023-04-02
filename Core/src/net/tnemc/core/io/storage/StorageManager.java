@@ -53,9 +53,9 @@ public class StorageManager {
   }
 
   /**
-   * Used to save all data in TNE.
+   * Used to store all data in TNE.
    */
-  public void saveAll() {
+  public void storeAll() {
     for(Datable<?> data : engine.datables().values()) {
       data.storeAll(engine.connector());
     }
