@@ -20,7 +20,6 @@ package net.tnemc.sponge.impl;
 
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
-import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.providers.CalculationsProvider;
@@ -40,6 +39,9 @@ import java.util.UUID;
  * @since 0.1.2.0
  */
 public class SpongeServerProvider implements ServerConnector {
+
+  private final SpongeItemCalculations calc = new SpongeItemCalculations();
+
   /**
    * Attempts to find a {@link PlayerProvider player} based on an {@link UUID identifier}.
    *
@@ -139,6 +141,6 @@ public class SpongeServerProvider implements ServerConnector {
 
   @Override
   public SpongeItemCalculations itemCalculations() {
-    return new SpongeItemCalculations();
+    return calc;
   }
 }

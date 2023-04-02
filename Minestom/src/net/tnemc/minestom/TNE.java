@@ -20,8 +20,6 @@ package net.tnemc.minestom;
 
 import net.minestom.server.extensions.Extension;
 
-import java.util.logging.Level;
-
 /**
  * TNE
  *

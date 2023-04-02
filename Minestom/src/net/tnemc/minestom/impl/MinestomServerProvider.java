@@ -21,7 +21,6 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
-import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.providers.CalculationsProvider;

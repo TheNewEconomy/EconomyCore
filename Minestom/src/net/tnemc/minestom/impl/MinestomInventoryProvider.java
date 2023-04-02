@@ -20,7 +20,6 @@ package net.tnemc.minestom.impl;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.inventory.AbstractInventory;
-import net.minestom.server.inventory.Inventory;
 import net.tnemc.core.compatibility.InventoryProvider;
 import net.tnemc.menu.minestom.MinestomInventory;
 

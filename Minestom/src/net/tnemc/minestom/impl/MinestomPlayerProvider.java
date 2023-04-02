@@ -21,7 +21,6 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.InventoryProvider;
 import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
