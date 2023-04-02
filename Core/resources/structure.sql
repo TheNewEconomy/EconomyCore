@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS tne_player_names (
 CREATE TABLE IF NOT EXISTS tne_accounts (
     uid BINARY(16) NOT NULL PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
+    account_type VARCHAR(30) NOT NULL,
     created DATETIME NOT NULL,
     pin VARCHAR(16),
     status VARCHAR(36)

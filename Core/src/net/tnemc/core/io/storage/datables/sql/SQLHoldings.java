@@ -17,10 +17,8 @@ package net.tnemc.core.io.storage.datables.sql;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
-import net.tnemc.core.account.PlayerAccount;
-import net.tnemc.core.account.SharedAccount;
+import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.connect.SQLConnector;
@@ -30,12 +28,12 @@ import java.util.Collection;
 import java.util.Optional;
 
 /**
- * SQLAccount
+ * SQLHoldings
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class SQLAccount implements Datable<Account> {
+public class SQLHoldings implements Datable<HoldingsEntry> {
 
   /**
    * The class that is represented by the O parameter.
@@ -43,8 +41,8 @@ public class SQLAccount implements Datable<Account> {
    * @return The class that represents the parameter.
    */
   @Override
-  public Class<? extends Account> clazz() {
-    return Account.class;
+  public Class<? extends HoldingsEntry> clazz() {
+    return HoldingsEntry.class;
   }
 
   /**
@@ -62,27 +60,11 @@ public class SQLAccount implements Datable<Account> {
    * Used to store this object.
    *
    * @param connector The storage connector to use for this transaction.
-   * @param account    The object to be stored.
+   * @param object    The object to be stored.
    */
   @Override
-  public void store(StorageConnector<?> connector, Account account) {
+  public void store(StorageConnector<?> connector, HoldingsEntry object) {
     if(connector instanceof SQLConnector) {
-
-      //store our uuid and username(player_names table)
-
-      //store the basic account information(accounts table)
-
-      if(account instanceof PlayerAccount) {
-
-        //Player account storage.(players_accounts table)
-      }
-
-      if(account instanceof SharedAccount) {
-
-        //Non-player accounts.(non_players_accounts table)
-
-        //Account members(account_members table)
-      }
     }
   }
 
@@ -94,9 +76,6 @@ public class SQLAccount implements Datable<Account> {
   @Override
   public void storeAll(StorageConnector<?> connector) {
     if(connector instanceof SQLConnector) {
-      for(Account account : TNECore.eco().account().getAccounts().values()) {
-        store(connector, account);
-      }
     }
   }
 
@@ -109,9 +88,8 @@ public class SQLAccount implements Datable<Account> {
    * @return The object to load.
    */
   @Override
-  public Optional<Account> load(StorageConnector<?> connector, String identifier) {
+  public Optional<HoldingsEntry> load(StorageConnector<?> connector, String identifier) {
     if(connector instanceof SQLConnector) {
-
     }
     return Optional.empty();
   }
@@ -124,12 +102,12 @@ public class SQLAccount implements Datable<Account> {
    * @return A collection containing the objects loaded.
    */
   @Override
-  public Collection<Account> loadAll(StorageConnector<?> connector) {
-    final Collection<Account> accounts = new ArrayList<>();
+  public Collection<HoldingsEntry> loadAll(StorageConnector<?> connector) {
+    final Collection<HoldingsEntry> holdings = new ArrayList<>();
 
     if(connector instanceof SQLConnector) {
 
     }
-    return accounts;
+    return holdings;
   }
 }

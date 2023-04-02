@@ -286,6 +286,10 @@ public class AccountManager {
     addAccountStatus(new AccountRestrictedStatus());
   }
 
+  public EnhancedHashMap<String, Account> getAccounts() {
+    return accounts;
+  }
+
   public UUIDProvider uuidProvider() {
     return uuidProvider;
   }
