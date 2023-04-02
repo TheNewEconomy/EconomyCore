@@ -20,9 +20,12 @@ package net.tnemc.sponge.impl;
 
 import net.tnemc.core.compatibility.InventoryProvider;
 import net.tnemc.menu.sponge7.SpongeInventory;
+import org.spongepowered.api.Sponge;
+import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.item.inventory.Inventory;
 import org.spongepowered.api.plugin.Plugin;
 
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -46,6 +49,14 @@ public class SpongeInventoryProvider extends SpongeInventory implements Inventor
    */
   @Override
   public Inventory getInventory(boolean ender) {
+    final Optional<Player> player = Sponge.getServer().getPlayer(this.id);
+    if(player.isPresent()) {
+
+      if(ender) {
+        return player.get().getEnderChestInventory();
+      }
+      return player.get().getInventory();
+    }
     return null;
   }
 }

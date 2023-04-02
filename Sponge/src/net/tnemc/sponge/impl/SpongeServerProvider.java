@@ -24,7 +24,11 @@ import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.providers.CalculationsProvider;
+import net.tnemc.sponge.SpongeCore;
 import org.jetbrains.annotations.NotNull;
+import org.spongepowered.api.Sponge;
+import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.entity.living.player.User;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -46,19 +50,21 @@ public class SpongeServerProvider implements ServerConnector {
    */
   @Override
   public Optional<PlayerProvider> findPlayer(@NotNull UUID identifier) {
-    return Optional.empty();
+    final Optional<Player> player = Sponge.getServer().getPlayer(identifier);
+    return player.map(value->new SpongePlayerProvider(value, SpongeCore.instance().getPlugin()));
   }
 
   /**
    * Used to determine if this player has played on this server before.
    *
-   * @param uuid The {@link UUID} that is associated with the player.
+   * @param identifier The {@link UUID} that is associated with the player.
    *
    * @return True if the player has played on the server before, otherwise false.
    */
   @Override
-  public boolean playedBefore(UUID uuid) {
-    return false;
+  public boolean playedBefore(UUID identifier) {
+    final Optional<Player> player = Sponge.getServer().getPlayer(identifier);
+    return player.map(Player::hasPlayedBefore).orElse(false);
   }
 
   /**
@@ -72,7 +78,8 @@ public class SpongeServerProvider implements ServerConnector {
    */
   @Override
   public boolean playedBefore(String name) {
-    return false;
+    final Optional<Player> player = Sponge.getServer().getPlayer(name);
+    return player.map(Player::hasPlayedBefore).orElse(false);
   }
 
   /**
@@ -84,7 +91,8 @@ public class SpongeServerProvider implements ServerConnector {
    */
   @Override
   public boolean online(String name) {
-    return false;
+    final Optional<Player> player = Sponge.getServer().getPlayer(name);
+    return player.map(User::isOnline).orElse(false);
   }
 
   /**
@@ -94,7 +102,7 @@ public class SpongeServerProvider implements ServerConnector {
    */
   @Override
   public String defaultWorld() {
-    return null;
+    return Sponge.getServer().getDefaultWorldName();
   }
 
   /**
@@ -130,7 +138,7 @@ public class SpongeServerProvider implements ServerConnector {
   }
 
   @Override
-  public <INV> ItemCalculations<INV> itemCalculations() {
-    return null;
+  public SpongeItemCalculations itemCalculations() {
+    return new SpongeItemCalculations();
   }
 }

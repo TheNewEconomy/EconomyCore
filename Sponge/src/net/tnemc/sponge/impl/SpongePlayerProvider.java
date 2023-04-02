@@ -18,13 +18,16 @@ package net.tnemc.sponge.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.menu.sponge7.SpongePlayer;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.living.player.User;
 import org.spongepowered.api.plugin.Plugin;
+import org.spongepowered.api.world.World;
 
 import java.util.Optional;
 
@@ -56,12 +59,37 @@ public class SpongePlayerProvider extends SpongePlayer implements PlayerProvider
    */
   @Override
   public Optional<Location> getLocation() {
-    return null;
+    if(user.isOnline()) {
+
+      final Optional<Player> player = user.getPlayer();
+      if(player.isPresent()) {
+        final org.spongepowered.api.world.Location<?> locale = player.get().getLocation();
+
+        return Optional.of(new Location(((World)locale.getExtent()).getName(),
+                                        locale.getX(), locale.getY(),
+                                        locale.getZ()));
+      }
+    }
+    return Optional.empty();
   }
 
   @Override
   public String region(boolean resolve) {
-    return null;
+
+    String world = TNECore.server().defaultWorld();
+
+    if(user.isOnline()) {
+
+      final Optional<Player> player = user.getPlayer();
+      if(player.isPresent()) {
+        world = player.get().getLocation().getExtent().getName();
+      }
+    }
+
+    if(resolve) {
+      return TNECore.eco().region().resolveRegion(world);
+    }
+    return world;
   }
 
   /**

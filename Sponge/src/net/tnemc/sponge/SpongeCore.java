@@ -44,13 +44,14 @@ import org.spongepowered.api.plugin.PluginContainer;
 @Plugin(id="tne", name="The New Economy", version="0.1.2.0",
     description="The original feature-packed economy plugin for Minecraft.",
     authors = {"creatorfromhell"})
-public class SpongeTNECore extends TNECore {
+public class SpongeCore extends TNECore {
 
   private final PluginContainer container;
+  private Plugin plugin;
   protected final SpongeCommandManager command;
 
   @Inject
-  SpongeTNECore(final PluginContainer container, final Logger log) {
+  SpongeCore(final PluginContainer container, final Logger log) {
     super(new SpongeServerProvider(), new SpongeLogProvider(log));
     this.container = container;
     this.logger = new SpongeLogProvider(log);
@@ -61,6 +62,7 @@ public class SpongeTNECore extends TNECore {
   public void onConstructPlugin(final GamePreInitializationEvent event, @Root Plugin plugin) {
     setInstance(this);
 
+    this.plugin = plugin;
 
     //Register our event listeners
     Sponge.getEventManager().registerListeners(container, new PlayerJoinListener());
@@ -70,5 +72,17 @@ public class SpongeTNECore extends TNECore {
   @Listener
   public void onServerStart(final GameStartedServerEvent event) {
     logger.inform("The New Economy has been enabled.");
+  }
+
+  public PluginContainer getContainer() {
+    return container;
+  }
+
+  public Plugin getPlugin() {
+    return plugin;
+  }
+
+  public static SpongeCore instance() {
+    return (SpongeCore)TNECore.instance();
   }
 }
