@@ -32,7 +32,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CurrencyHoldings {
 
-  //TODO: Storage
   private final Map<String, HoldingsEntry> holdings = new ConcurrentHashMap<>();
 
   /**

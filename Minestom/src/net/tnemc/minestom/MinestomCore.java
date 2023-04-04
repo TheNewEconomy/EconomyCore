@@ -17,9 +17,10 @@ package net.tnemc.minestom;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.minestom.server.extensions.Extension;
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.LogProvider;
-import net.tnemc.core.compatibility.ServerConnector;
+import net.tnemc.minestom.impl.MinestomLogProvider;
+import net.tnemc.minestom.impl.MinestomServerProvider;
 
 /**
  * MinestomCore
@@ -28,7 +29,7 @@ import net.tnemc.core.compatibility.ServerConnector;
  * @since 0.1.2.0
  */
 public class MinestomCore extends TNECore {
-  public MinestomCore(ServerConnector server, LogProvider logger) {
-    super(server, logger);
+  public MinestomCore(Extension extension) {
+    super(new MinestomServerProvider(), new MinestomLogProvider(extension.getLogger()));
   }
 }
