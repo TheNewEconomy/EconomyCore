@@ -18,7 +18,10 @@ package net.tnemc.core.io.storage;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.account.Account;
 import net.tnemc.core.config.DataConfig;
+
+import java.util.Optional;
 
 /**
  * The manager, which manages everything related to storage.
@@ -56,9 +59,10 @@ public class StorageManager {
    * Used to store all data in TNE.
    */
   public void storeAll() {
-    for(Datable<?> data : engine.datables().values()) {
-      data.storeAll(engine.connector());
-    }
+    final Optional<Datable<?>> data = Optional.ofNullable(engine.datables().get(Account.class));
+
+    //Our account storeAll requires no identifier, so we set it to null
+    data.ifPresent(datable->datable.storeAll(engine.connector(), null));
   }
 
   /**

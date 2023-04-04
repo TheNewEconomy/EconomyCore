@@ -24,6 +24,8 @@ import net.tnemc.core.account.SharedAccount;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.connect.SQLConnector;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -92,7 +94,7 @@ public class SQLAccount implements Datable<Account> {
    * @param connector The storage connector to use for this transaction.
    */
   @Override
-  public void storeAll(StorageConnector<?> connector) {
+  public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
     if(connector instanceof SQLConnector) {
       for(Account account : TNECore.eco().account().getAccounts().values()) {
         store(connector, account);
@@ -109,7 +111,7 @@ public class SQLAccount implements Datable<Account> {
    * @return The object to load.
    */
   @Override
-  public Optional<Account> load(StorageConnector<?> connector, String identifier) {
+  public Optional<Account> load(StorageConnector<?> connector, @NotNull String identifier) {
     if(connector instanceof SQLConnector) {
 
     }
@@ -124,7 +126,7 @@ public class SQLAccount implements Datable<Account> {
    * @return A collection containing the objects loaded.
    */
   @Override
-  public Collection<Account> loadAll(StorageConnector<?> connector) {
+  public Collection<Account> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
     final Collection<Account> accounts = new ArrayList<>();
 
     if(connector instanceof SQLConnector) {

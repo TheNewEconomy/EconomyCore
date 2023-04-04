@@ -22,6 +22,8 @@ import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.connect.SQLConnector;
 import net.tnemc.core.transaction.Receipt;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -73,7 +75,7 @@ public class SQLReceipt implements Datable<Receipt> {
    * @param connector The storage connector to use for this transaction.
    */
   @Override
-  public void storeAll(StorageConnector<?> connector) {
+  public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
     if(connector instanceof SQLConnector) {
     }
   }
@@ -87,7 +89,7 @@ public class SQLReceipt implements Datable<Receipt> {
    * @return The object to load.
    */
   @Override
-  public Optional<Receipt> load(StorageConnector<?> connector, String identifier) {
+  public Optional<Receipt> load(StorageConnector<?> connector, @NotNull String identifier) {
     if(connector instanceof SQLConnector) {
     }
     return Optional.empty();
@@ -101,7 +103,7 @@ public class SQLReceipt implements Datable<Receipt> {
    * @return A collection containing the objects loaded.
    */
   @Override
-  public Collection<Receipt> loadAll(StorageConnector<?> connector) {
+  public Collection<Receipt> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
     final Collection<Receipt> receipts = new ArrayList<>();
 
     if(connector instanceof SQLConnector) {

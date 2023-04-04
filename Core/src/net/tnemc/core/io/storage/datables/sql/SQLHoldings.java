@@ -22,6 +22,8 @@ import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.connect.SQLConnector;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -74,7 +76,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    * @param connector The storage connector to use for this transaction.
    */
   @Override
-  public void storeAll(StorageConnector<?> connector) {
+  public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
     if(connector instanceof SQLConnector) {
     }
   }
@@ -88,7 +90,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    * @return The object to load.
    */
   @Override
-  public Optional<HoldingsEntry> load(StorageConnector<?> connector, String identifier) {
+  public Optional<HoldingsEntry> load(StorageConnector<?> connector, @NotNull String identifier) {
     if(connector instanceof SQLConnector) {
     }
     return Optional.empty();
@@ -102,7 +104,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    * @return A collection containing the objects loaded.
    */
   @Override
-  public Collection<HoldingsEntry> loadAll(StorageConnector<?> connector) {
+  public Collection<HoldingsEntry> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
     final Collection<HoldingsEntry> holdings = new ArrayList<>();
 
     if(connector instanceof SQLConnector) {

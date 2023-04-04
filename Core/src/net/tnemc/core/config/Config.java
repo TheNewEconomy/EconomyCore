@@ -52,8 +52,6 @@ public abstract class Config {
       create = true;
     }
 
-    System.out.println("Create file: " + fileName + " - " + create);
-
     this.yaml = new YamlFile(file.getPath());
   }
 

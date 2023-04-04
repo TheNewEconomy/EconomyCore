@@ -17,6 +17,9 @@ package net.tnemc.core.io.storage;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Collection;
 import java.util.Optional;
 
@@ -53,8 +56,10 @@ public interface Datable<O> {
   /**
    * Used to store all objects of this type.
    * @param connector The storage connector to use for this transaction.
+   * @param identifier The identifier used to load objects, if they relate to a specific
+   *                   identifier, otherwise this will be null.
    */
-  void storeAll(StorageConnector<?> connector);
+  void storeAll(StorageConnector<?> connector, @Nullable String identifier);
 
   /**
    * Used to load this object.
@@ -62,12 +67,14 @@ public interface Datable<O> {
    * @param identifier The identifier used to identify the object to load.
    * @return The object to load.
    */
-  Optional<O> load(StorageConnector<?> connector, final String identifier);
+  Optional<O> load(StorageConnector<?> connector, @NotNull final String identifier);
 
   /**
    * Used to load all objects of this type.
    * @param connector The storage connector to use for this transaction.
+   * @param identifier The identifier used to load objects, if they relate to a specific
+   *                   identifier, otherwise this will be null.
    * @return A collection containing the objects loaded.
    */
-  Collection<O> loadAll(StorageConnector<?> connector);
+  Collection<O> loadAll(StorageConnector<?> connector, @Nullable final String identifier);
 }
