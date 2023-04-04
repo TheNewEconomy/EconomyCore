@@ -26,6 +26,6 @@ package net.tnemc.core.config;
  */
 public class MainConfig extends Config {
   public MainConfig() {
-    super("config.yml", "resources/config.yml", "Core");
+    super("config.yml", "config.yml", "Core");
   }
 }

@@ -21,6 +21,8 @@ package net.tnemc.core.handlers;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.currency.Currency;
+import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.utils.HandlerResponse;
 
 import java.util.Optional;
@@ -41,7 +43,7 @@ public class PlayerJoinHandler {
   public HandlerResponse handle(PlayerProvider provider) {
     final HandlerResponse response = new HandlerResponse("", false);
 
-    Optional<Account> account = TNECore.eco().account().findAccount(provider.identifier());
+    final Optional<Account> account = TNECore.eco().account().findAccount(provider.identifier());
 
     //Our account doesn't exist, so now we need to continue from here
     if(account.isEmpty() &&
@@ -52,7 +54,12 @@ public class PlayerJoinHandler {
       return response;
     }
 
-    //TODO: Check item currency balances.
+    for(Currency currency : TNECore.eco().currency().currencies()) {
+      if(currency instanceof ItemCurrency) {
+
+        //TODO: Check item currency balances.
+      }
+    }
 
     //TODO: Check for transactions that happened while away if player has notify settings active.
 

@@ -27,6 +27,6 @@ package net.tnemc.core.config;
 public class DataConfig extends Config {
 
   public DataConfig() {
-    super("data.yml", "resources/data.yml", "Data");
+    super("data.yml", "data.yml", "Data");
   }
 }

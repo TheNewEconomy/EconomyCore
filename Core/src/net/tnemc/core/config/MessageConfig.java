@@ -41,7 +41,7 @@ public class MessageConfig extends Config {
   private final Map<String, Language> languages = new HashMap<>();
 
   public MessageConfig() {
-    super("messages.yml", "resources/messages.yml", "Messages");
+    super("messages.yml", "messages.yml", "Messages");
   }
 
   public String getString(final String node, final UUID player) {

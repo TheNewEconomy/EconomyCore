@@ -54,16 +54,13 @@ public class TNE extends JavaPlugin {
 
     this.core.enable();
 
-    //Register our hooks
-    new VaultHook().register();
-
     //Register our event listeners
 
     //Player Listeners
     Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
-    Bukkit.getPluginManager().registerEvents(new BukkitChatListener(this), this);
 
     //Menu-related Listeners from TNML
+    Bukkit.getPluginManager().registerEvents(new BukkitChatListener(this), this);
     Bukkit.getPluginManager().registerEvents(new PlayerClickListener(this), this);
     Bukkit.getPluginManager().registerEvents(new BukkitInventoryCloseListener(this), this);
 
