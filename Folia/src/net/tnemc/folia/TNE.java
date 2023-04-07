@@ -17,6 +17,7 @@ package net.tnemc.folia;
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+import net.tnemc.bukkit.hook.economy.VaultHook;
 import net.tnemc.bukkit.listeners.PlayerJoinListener;
 import net.tnemc.bukkit.listeners.WorldLoadListener;
 import net.tnemc.menu.folia.listener.FoliaChatListener;
@@ -52,8 +53,6 @@ public class TNE extends JavaPlugin {
 
     this.core.enable();
 
-    //Register our hooks
-
     //Register our event listeners
 
     //Player Listeners
@@ -70,6 +69,9 @@ public class TNE extends JavaPlugin {
     //Register our service providers.
 
     //Vault
+    if(Bukkit.getPluginManager().isPluginEnabled("Vault")) {
+      new VaultHook().register();
+    }
 
     getLogger().log(Level.INFO, "The New Economy has been enabled!");
 

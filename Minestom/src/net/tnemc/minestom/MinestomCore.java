@@ -29,7 +29,23 @@ import net.tnemc.minestom.impl.MinestomServerProvider;
  * @since 0.1.2.0
  */
 public class MinestomCore extends TNECore {
+
+  private Extension extension;
+
   public MinestomCore(Extension extension) {
     super(new MinestomServerProvider(), new MinestomLogProvider(extension.getLogger()));
+
+    this.extension = extension;
+  }
+
+  /**
+   * Used to enable the core. This should contain things that can't be initialized until after the
+   * server software is operational.
+   */
+  @Override
+  protected void onEnable() {
+    this.directory = extension.getDataDirectory().toFile();
+
+    super.onEnable();
   }
 }

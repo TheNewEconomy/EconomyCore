@@ -31,15 +31,32 @@ public class TNE extends Extension {
   private static TNE instance;
   private MinestomCore core;
 
-  public void initialize() {
-    this.instance = this;
+  @Override
+  public void preInitialize() {
 
+    instance = this;
+
+    //Initialize our TNE Core Class
+    this.core = new MinestomCore(instance);
 
     MinestomCore.eco().currency().load(getDataDirectory().toFile(), false);
     MinestomCore.eco().currency().saveCurrenciesUUID(getDataDirectory().toFile());
+  }
+
+  public void initialize() {
+
+    this.core.enable();
+
+    //Register our hooks
+
+    //Register our event listeners
+
+    //Player Listeners
 
     getLogger().info("The New Economy has been enabled!");
   }
+
+
 
   public void terminate() {
 
