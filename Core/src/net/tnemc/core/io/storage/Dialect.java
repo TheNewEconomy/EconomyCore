@@ -17,15 +17,13 @@ package net.tnemc.core.io.storage;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.util.UUID;
-
 /**
- * SQLDialect
+ * Dialect
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public interface SQLDialect {
+public interface Dialect {
 
   //player names load
   String loadNames();
@@ -74,6 +72,12 @@ public interface SQLDialect {
 
   //receipt save
   String saveReceipt();
+
+  //receipts load
+  String loadReceiptHolding();
+
+  //receipt holding save
+  String saveReceiptHolding();
 
   //receipt participants load
   String loadParticipants();

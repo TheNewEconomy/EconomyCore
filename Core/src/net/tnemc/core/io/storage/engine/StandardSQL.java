@@ -19,11 +19,13 @@ package net.tnemc.core.io.storage.engine;
 
 import net.tnemc.core.account.Account;
 import net.tnemc.core.io.storage.Datable;
+import net.tnemc.core.io.storage.Dialect;
 import net.tnemc.core.io.storage.SQLEngine;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.StorageEngine;
 import net.tnemc.core.io.storage.connect.SQLConnector;
 import net.tnemc.core.io.storage.datables.sql.SQLAccount;
+import net.tnemc.core.io.storage.dialect.MySQLDialect;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,8 +42,16 @@ public abstract class StandardSQL implements SQLEngine {
 
   private final SQLConnector connector;
 
+  private final Dialect dialect;
+
   public StandardSQL(SQLConnector connector) {
+    //TODO: SQL Settings.
+    this(connector, new MySQLDialect(""));
+  }
+
+  public StandardSQL(SQLConnector connector, Dialect dialect) {
     this.connector = connector;
+    this.dialect = dialect;
 
     //add our datables.
     datables.put(Account.class, new SQLAccount());
@@ -55,6 +65,16 @@ public abstract class StandardSQL implements SQLEngine {
   @Override
   public SQLConnector connector() {
     return connector;
+  }
+
+  /**
+   * The dialiect for this engine. This will be used for query purposes.
+   *
+   * @return The dialect for the engine.
+   */
+  @Override
+  public Dialect dialect() {
+    return dialect;
   }
 
   /**

@@ -18,6 +18,8 @@ package net.tnemc.core.io.storage;
  */
 
 import com.zaxxer.hikari.HikariConfig;
+import net.tnemc.core.TNECore;
+import net.tnemc.core.io.storage.dialect.MySQLDialect;
 
 /**
  * SQLEngine
@@ -51,6 +53,12 @@ public interface SQLEngine extends StorageEngine {
    * @return The generated connection URL using the details provided.
    */
   String url(String file, String host, int port, String database);
+
+  /**
+   * The dialiect for this engine. This will be used for query purposes.
+   * @return The dialect for the engine.
+   */
+  Dialect dialect();
 
   /**
    * Used to get the {@link HikariConfig} for this {@link StorageEngine}.

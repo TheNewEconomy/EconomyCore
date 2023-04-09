@@ -17,7 +17,7 @@ package net.tnemc.core.io.storage.dialect;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.io.storage.SQLDialect;
+import net.tnemc.core.io.storage.Dialect;
 
 /**
  * MySQLDialect
@@ -25,7 +25,7 @@ import net.tnemc.core.io.storage.SQLDialect;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class MySQLDialect implements SQLDialect {
+public class MySQLDialect implements Dialect {
 
   private final String loadNames;
   private final String loadName;
@@ -43,6 +43,8 @@ public class MySQLDialect implements SQLDialect {
   private final String saveHolding;
   private final String loadReceipts;
   private final String saveReceipt;
+  private final String loadReceiptHolding;
+  private final String saveReceiptHolding;
   private final String loadParticipants;
   private final String saveParticipant;
   private final String loadModifiers;
@@ -50,33 +52,64 @@ public class MySQLDialect implements SQLDialect {
 
   public MySQLDialect(final String prefix) {
     this.loadNames = "SELECT uid, username FROM " + prefix + "player_names";
+
     this.loadName = "SELECT username FROM " + prefix + "player_names WHERE uid = ?";
+
     this.saveName = "INSERT INTO " + prefix + "player_names (uid, username) VALUES (?, ?) ON DUPLICATE KEY UPDATE username = ?";
+
     this.loadAccounts = "SELECT uid, username, account_type, created, pin, status FROM " + prefix + "tne_accounts";
+
     this.loadAccount = "SELECT username, account_type, created, pin, status FROM " + prefix + "tne_accounts WHERE uid = ?";
+
     this.saveAccount = "INSERT INTO " + prefix + "tne_accounts (uid, username, account_type, created, pin, status)" +
                        "VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE username = ?, status = ?, pin = ?";
+
     this.loadNonPlayer = "SELECT owner FROM " + prefix + "non_players_accounts WHERE uid = ?";
+
     this.saveNonPlayer = "INSERT INTO " + prefix + "non_players_accounts (uid, owner) VALUES (?, ?) " +
                          "ON DUPLICATE KEY UPDATE owner = ?";
+
     this.loadPlayer = "SELECT last_online FROM " + prefix + "players_accounts WHERE uid = ?";
+
     this.savePlayer = "INSERT INTO " + prefix + "players_accounts (uid, last_online) VALUES (?, ?) " +
                       "ON DUPLICATE KEY UPDATE last_online = ?";
+
     this.loadMembers = "SELECT uid, perm, perm_value FROM " + prefix + "account_members WHERE account = ?";
+
     this.saveMember = "INSERT INTO " + prefix + "account_members (uid, perm, perm_value) VALUES (?, ?, ?) " +
                       "ON DUPLICATE KEY UPDATE perm_value = ?";
+
     this.loadHoldings = "SELECT server, region, currency, holdings_type, holdings FROM " + prefix +
                         "tne_holdings WHERE uid = ?";
+
     this.saveHolding = "INSERT INTO " + prefix + "tne_holdings (uid, server, region, currency, holdings_type, holdings) " +
                        "VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE holdings = ?";
-    this.loadReceipts = "SELECT server, region, currency, holdings_type, holdings FROM " + prefix +
-                        "tne_holdings";
-    this.saveReceipt = "INSERT INTO " + prefix + "tne_holdings (uid, server, region, currency, holdings_type, holdings) " +
-                       "VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE holdings = ?";
-    this.loadParticipants = "";
-    this.saveParticipant = "";
-    this.loadModifiers = "";
-    this.saveModifier = "";
+
+    this.loadReceipts = "SELECT uid, performed, receipt_type, receipt_source, receipt_source_type, archive, voided FROM " +
+                        prefix + "receipts";
+
+    this.saveReceipt = "INSERT INTO " + prefix + "receipts (uid, performed, receipt_type, receipt_source, " +
+                       "receipt_source_type, archive, voided) " +
+                       "VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE archive = ?, voided = ?";
+
+    this.loadReceiptHolding = "SELECT participant, ending, server, region, currency, holdings_type, holdings FROM " +
+                              prefix + "receipts_holdings WHERE uid = ?";
+
+    this.saveReceiptHolding = "INSERT INTO " + prefix + "receipts_holdings (uid, participant, ending, " +
+                              "server, region, currency, holdings_type, holdings) " +
+                              "VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE uid=uid";
+
+    this.loadParticipants = "SELECT participant, participant_type, tax FROM " + prefix + "receipts_participants WHERE uid = ?";
+
+    this.saveParticipant = "INSERT INTO " + prefix + "receipts_participants (uid, participant, participant_type, tax) " +
+                           "VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE uid=uid";
+
+    this.loadModifiers = "SELECT participant, participant_type, operation, region, currency, modifier FROM " +
+                         prefix + "receipts_modifiers WHERE uid = ?";
+
+    this.saveModifier = "INSERT INTO " + prefix + "receipts_modifiers (uid, participant, participant_type, operation, region, currency, modifier) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE uid = uid";
+
   }
 
   @Override
@@ -157,6 +190,16 @@ public class MySQLDialect implements SQLDialect {
   @Override
   public String saveReceipt() {
     return saveReceipt;
+  }
+
+  @Override
+  public String loadReceiptHolding() {
+    return loadReceiptHolding;
+  }
+
+  @Override
+  public String saveReceiptHolding() {
+    return saveReceiptHolding;
   }
 
   @Override

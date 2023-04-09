@@ -77,7 +77,8 @@ CREATE TABLE IF NOT EXISTS tne_receipts_holdings (
 
 -- Participants of transactions/receipts.
 CREATE TABLE IF NOT EXISTS tne_receipts_participants (
-    uid VARCHAR(36) NOT NULL PRIMARY KEY,
+    uid BINARY(16) NOT NULL PRIMARY KEY,
+    participant BINARY(16) NOT NULL,
     participant_type VARCHAR(10) NOT NULL,
     tax DECIMAL(49, 4) NOT NULL,
 
@@ -87,6 +88,7 @@ CREATE TABLE IF NOT EXISTS tne_receipts_participants (
 -- Holdings modifiers for receipts
 CREATE TABLE IF NOT EXISTS tne_receipts_modifiers (
     uid VARCHAR(36) NOT NULL PRIMARY KEY,
+    participant BINARY(16) NOT NULL,
     participant_type VARCHAR(10) NOT NULL,
     operation VARCHAR(10) NOT NULL,
     region VARCHAR(40) NOT NULL,
