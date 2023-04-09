@@ -1,6 +1,6 @@
 -- username table
 CREATE TABLE IF NOT EXISTS tne_player_names (
-    uuid BINARY(16) NOT NULL PRIMARY KEY,
+    uid BINARY(16) NOT NULL PRIMARY KEY,
     username VARCHAR(60) NOT NULL UNIQUE
     );
 
@@ -25,15 +25,14 @@ CREATE TABLE IF NOT EXISTS tne_non_players_accounts (
 CREATE TABLE IF NOT EXISTS tne_player_accounts (
     uid BINARY(16) NOT NULL,
     last_online DATETIME NOT NULL,
-    account_language VARCHAR(36) NOT NULL,
     FOREIGN KEY(uid) REFERENCES tne_accounts(uid) ON DELETE CASCADE
     );
 
 CREATE TABLE IF NOT EXISTS tne_account_members (
     uid BINARY(16) NOT NULL,
     account BINARY(16) NOT NULL,
-    permission VARCHAR(36) NOT NULL,
-    value TINYINT(1) NOT NULL,
+    perm VARCHAR(36) NOT NULL,
+    perm_value TINYINT(1) NOT NULL,
 
     FOREIGN KEY(uid) REFERENCES tne_accounts(uid) ON DELETE CASCADE,
     FOREIGN KEY(account) REFERENCES tne_accounts(uid) ON DELETE CASCADE
