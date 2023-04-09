@@ -17,10 +17,15 @@ package net.tnemc.core.io.storage.datables.sql;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.connect.SQLConnector;
 import net.tnemc.core.transaction.Receipt;
+import net.tnemc.core.transaction.TransactionParticipant;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -67,23 +72,93 @@ public class SQLReceipt implements Datable<Receipt> {
     if(connector instanceof SQLConnector) {
 
       //Store the receipt info
+      ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveReceipt(),
+                                              new Object[]{
+                                                  object.getId().toString(),
+                                                  object.getTime(),
+                                                  object.getType(),
+                                                  object.getSource().name(),
+                                                  object.getSource().type(),
+                                                  object.isArchive(),
+                                                  object.isVoided(),
+                                                  object.isArchive(),
+                                                  object.isVoided()
+                                              });
 
-      //store the holdings
-
-      //store the participants
-
-      //store the modifiers
+      storeParticipant(connector, object.getFrom(), object.getModifierFrom(), object.getId().toString());
+      storeParticipant(connector, object.getTo(), object.getModifierTo(), object.getId().toString());
     }
   }
 
-  /**
+  private void storeParticipant(StorageConnector<?> connector, @Nullable TransactionParticipant participant,
+                                @Nullable HoldingsModifier modifier, @NotNull String identifier) {
+
+    if(connector instanceof SQLConnector && participant != null && modifier != null) {
+
+      //store participant info
+      ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveParticipant(),
+                                              new Object[]{
+                                                  identifier,
+                                                  participant.getId(),
+                                                  "account",
+                                                  participant.getTax()
+                                              });
+
+      //store holdings
+      for(HoldingsEntry entry : participant.getStartingBalances()) {
+        storeReceiptHolding(connector, entry, participant.getId(), identifier, false);
+      }
+
+      for(HoldingsEntry entry : participant.getEndingBalances()) {
+        storeReceiptHolding(connector, entry, participant.getId(), identifier, true);
+      }
+
+      //store modifier
+      ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveModifier(),
+                                              new Object[]{
+                                                  identifier,
+                                                  participant.getId(),
+                                                  "account",
+                                                  modifier.getOperation().name(),
+                                                  modifier.getRegion(),
+                                                  modifier.getCurrency().toString(),
+                                                  modifier.getModifier()
+                                              });
+    }
+  }
+
+  private void storeReceiptHolding(StorageConnector<?> connector, @NotNull HoldingsEntry entry, final String participant,
+                                   final String receipt, final boolean ending) {
+
+    ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveReceiptHolding(),
+                                            new Object[]{
+                                                receipt,
+                                                participant,
+                                                ending,
+                                                //TODO: Config for server name
+                                                "Main Server",
+                                                entry.getRegion(),
+                                                entry.getCurrency().toString(),
+                                                entry.getType().getIdentifier(),
+                                                entry.getAmount()
+                                            });
+  }
+
+                                /**
    * Used to store all objects of this type.
    *
    * @param connector The storage connector to use for this transaction.
    */
-  @Override
+                                @Override
   public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
-    if(connector instanceof SQLConnector) {
+    if(connector instanceof SQLConnector && identifier != null) {
+
+      final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
+      if(account.isPresent()) {
+        for(Receipt receipt : account.get().getReceipts().values()) {
+          store(connector, receipt, identifier);
+        }
+      }
     }
   }
 

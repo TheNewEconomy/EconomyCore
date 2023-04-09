@@ -46,6 +46,16 @@ public record PlayerSource(UUID id) implements ActionSource {
   }
 
   /**
+   * Used to get the type of action source.
+   *
+   * @return The name of the type of action source.
+   */
+  @Override
+  public String type() {
+    return "player";
+  }
+
+  /**
    * Used to get a description of the reason for why the action was performed.
    *
    * @return The reason for the action that was performed.

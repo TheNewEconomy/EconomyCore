@@ -43,6 +43,12 @@ public interface ActionSource {
   String name();
 
   /**
+   * Used to get the type of action source.
+   * @return The name of the type of action source.
+   */
+  String type();
+
+  /**
    * Used to get a description of the reason for why the action was performed.
    *
    * @return The reason for the action that was performed.

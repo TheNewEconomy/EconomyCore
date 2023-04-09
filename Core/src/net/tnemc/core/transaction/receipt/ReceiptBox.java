@@ -100,4 +100,8 @@ public class ReceiptBox {
     }
     return range;
   }
+
+  public ConcurrentHashMap<Long, Receipt> getReceipts() {
+    return receipts;
+  }
 }
