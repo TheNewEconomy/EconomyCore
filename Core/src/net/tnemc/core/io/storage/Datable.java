@@ -51,7 +51,7 @@ public interface Datable<O> {
    * @param connector The storage connector to use for this transaction.
    * @param object The object to be stored.
    */
-  void store(StorageConnector<?> connector, O object);
+  void store(StorageConnector<?> connector, @NotNull O object, @Nullable String identifier);
 
   /**
    * Used to store all objects of this type.

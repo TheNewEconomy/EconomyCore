@@ -21,6 +21,7 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.SharedAccount;
+import net.tnemc.core.account.shared.Member;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.connect.SQLConnector;
@@ -29,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -67,23 +69,67 @@ public class SQLAccount implements Datable<Account> {
    * @param account    The object to be stored.
    */
   @Override
-  public void store(StorageConnector<?> connector, Account account) {
+  public void store(StorageConnector<?> connector, @NotNull Account account, @Nullable String identifier) {
     if(connector instanceof SQLConnector) {
 
-      //store our uuid and username(player_names table)
-
       //store the basic account information(accounts table)
+      ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveAccount(),
+                                              new Object[] {
+                                                  account.getIdentifier(),
+                                                  account.getName(),
+                                                  account.getClass().getName(),
+                                                  account.getCreationDate(),
+                                                  account.getPin(),
+                                                  account.getStatus().identifier(),
+                                                  account.getName(),
+                                                  account.getPin(),
+                                                  account.getStatus().identifier(),
+                                              });
 
       if(account instanceof PlayerAccount) {
 
+        //store our uuid and username(player_names table)
+        ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveName(),
+                                                new Object[]{
+                                                    account.getIdentifier(),
+                                                    account.getName(),
+                                                    account.getName()
+                                                });
+
         //Player account storage.(players_accounts table)
+        ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().savePlayer(),
+                                                new Object[]{
+                                                    account.getIdentifier(),
+                                                    ((PlayerAccount)account).getLastOnline(),
+                                                    ((PlayerAccount)account).getLastOnline()
+                                                });
+
       }
 
       if(account instanceof SharedAccount) {
 
         //Non-player accounts.(non_players_accounts table)
+        ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveNonPlayer(),
+                                                new Object[]{
+                                                    account.getIdentifier(),
+                                                    ((SharedAccount)account).getOwner().toString(),
+                                                    ((SharedAccount)account).getOwner().toString()
+                                                });
 
         //Account members(account_members table)
+        for(Member member : ((SharedAccount)account).getMembers().values()) {
+          for(Map.Entry<String, Boolean> entry : member.getPermissions().entrySet()) {
+            ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveMembers(),
+                                                    new Object[]{
+                                                        member.getId().toString(),
+                                                        account.getIdentifier(),
+                                                        entry.getKey(),
+                                                        entry.getValue(),
+                                                        entry.getValue()
+                                                    }
+            );
+          }
+        }
       }
     }
   }
@@ -97,7 +143,7 @@ public class SQLAccount implements Datable<Account> {
   public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
     if(connector instanceof SQLConnector) {
       for(Account account : TNECore.eco().account().getAccounts().values()) {
-        store(connector, account);
+        store(connector, account, account.getIdentifier());
       }
     }
   }

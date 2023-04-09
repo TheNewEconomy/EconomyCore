@@ -20,6 +20,7 @@ package net.tnemc.core.io.storage;
 
 import net.tnemc.core.account.Account;
 import net.tnemc.core.config.DataConfig;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -48,10 +49,10 @@ public class StorageManager {
     return instance;
   }
 
-  public <T> void store(T object) {
+  public <T> void store(T object, @Nullable String identifier) {
     final Datable<T> data = (Datable<T>)engine.datables().get(object.getClass());
     if(data != null) {
-      data.store(engine.connector(), object);
+      data.store(engine.connector(), object, identifier);
     }
   }
 

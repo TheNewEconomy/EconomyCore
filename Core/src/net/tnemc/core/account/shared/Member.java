@@ -33,7 +33,7 @@ import java.util.UUID;
  */
 public class Member {
 
-  public Map<String, Boolean> permissions = new HashMap<>();
+  private Map<String, Boolean> permissions = new HashMap<>();
 
   /**
    * The {@link UUID identifier} associated with the player that is
@@ -77,5 +77,9 @@ public class Member {
    */
   public boolean hasPermission(Permission permission) {
     return permissions.getOrDefault(permission.identifier(), permission.defaultValue());
+  }
+
+  public Map<String, Boolean> getPermissions() {
+    return permissions;
   }
 }

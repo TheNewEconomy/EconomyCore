@@ -18,6 +18,7 @@ package net.tnemc.core.io.storage.connect;
  */
 
 import com.zaxxer.hikari.HikariDataSource;
+import net.tnemc.core.io.storage.Dialect;
 import net.tnemc.core.io.storage.SQLEngine;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.StorageEngine;
@@ -100,5 +101,9 @@ public class SQLConnector implements StorageConnector<Connection> {
     } catch(SQLException e) {
       e.printStackTrace();
     }
+  }
+
+  public Dialect dialect() {
+    return engine.dialect();
   }
 }

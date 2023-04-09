@@ -100,4 +100,16 @@ public class SharedAccount extends Account {
     return findMember(identifier).map(value->value.hasPermission(permission))
         .orElseGet(permission::defaultValue);
   }
+
+  public ConcurrentHashMap<UUID, Member> getMembers() {
+    return members;
+  }
+
+  public UUID getOwner() {
+    return owner;
+  }
+
+  public void setOwner(UUID owner) {
+    this.owner = owner;
+  }
 }

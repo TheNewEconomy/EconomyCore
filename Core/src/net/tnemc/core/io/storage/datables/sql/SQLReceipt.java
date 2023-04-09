@@ -63,8 +63,16 @@ public class SQLReceipt implements Datable<Receipt> {
    * @param object    The object to be stored.
    */
   @Override
-  public void store(StorageConnector<?> connector, Receipt object) {
+  public void store(StorageConnector<?> connector, @NotNull Receipt object, @Nullable String identifier) {
     if(connector instanceof SQLConnector) {
+
+      //Store the receipt info
+
+      //store the holdings
+
+      //store the participants
+
+      //store the modifiers
     }
   }
 

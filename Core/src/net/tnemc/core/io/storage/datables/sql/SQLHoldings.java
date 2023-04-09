@@ -17,7 +17,11 @@ package net.tnemc.core.io.storage.datables.sql;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.CurrencyHoldings;
 import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.account.holdings.RegionHoldings;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.connect.SQLConnector;
@@ -26,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -54,6 +59,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
   @Override
   public void purge(StorageConnector<?> connector) {
     if(connector instanceof SQLConnector) {
+      //This isn't required, it'll be deleted with the account.
     }
   }
 
@@ -64,8 +70,20 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    * @param object    The object to be stored.
    */
   @Override
-  public void store(StorageConnector<?> connector, HoldingsEntry object) {
-    if(connector instanceof SQLConnector) {
+  public void store(StorageConnector<?> connector, @NotNull HoldingsEntry object, @Nullable String identifier) {
+    if(connector instanceof SQLConnector && identifier != null) {
+
+      ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveHoldings(),
+                                              new Object[] {
+                                                  identifier,
+                                                  //TODO: Server name config.
+                                                  "Main Server",
+                                                  object.getRegion(),
+                                                  object.getCurrency().toString(),
+                                                  object.getType().getIdentifier(),
+                                                  object.getAmount(),
+                                                  object.getAmount()
+                                              });
     }
   }
 
@@ -76,7 +94,19 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    */
   @Override
   public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
-    if(connector instanceof SQLConnector) {
+    if(connector instanceof SQLConnector && identifier != null) {
+
+      final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
+      if(account.isPresent()) {
+        for(RegionHoldings region : account.get().getWallet().getHoldings().values()) {
+          for(CurrencyHoldings currency : region.getHoldings().values()) {
+            for(HoldingsEntry entry : currency.getHoldings().values()) {
+              store(connector, entry, identifier);
+            }
+          }
+        }
+      }
+
     }
   }
 
