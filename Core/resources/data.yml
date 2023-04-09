@@ -10,10 +10,22 @@ Data:
     Purge:
 
         #Should old data be purged?
-        Enabled: false
+        Enabled: true
 
-        #The amount of days for a user to be logged off before purging their data?
-        Days: 10
+        #Purge configurations relating to transactions.
+        Transaction:
+
+            #Should archived transactions be skipped during a data purge
+            Archive: true
+
+            #The amount of days before a transaction log is purged.
+            Days: 20
+
+        #Purge configurations relating to accounts
+        Accounts:
+
+            #The amount of days for a user to be logged off before purging their data?
+            Days: 90
 
     #All configurations relating to the database
     Database:
