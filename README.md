@@ -60,3 +60,8 @@ for TNE on the [Translation Guide](https://github.com/TheNewEconomy/EconomyCore/
 TNE has lots of documentation for the power users that like all the documentation.
 
 *Please note: As the new TNE Core is a work in progress, documentation is very limited at the moment.*
+
+## Requirements
+TNE has some minimum requirements that should be followed.
+- MySQL 8.0+ (if using MySQL for storage)
+- Java 17+
