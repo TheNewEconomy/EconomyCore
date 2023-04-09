@@ -51,64 +51,65 @@ public class MySQLDialect implements Dialect {
   private final String saveModifier;
 
   public MySQLDialect(final String prefix) {
-    this.loadNames = "SELECT uid, username FROM " + prefix + "player_names";
+    this.loadNames = "SELECT BIN_TO_UUID(uid) AS uid, username FROM " + prefix + "player_names";
 
-    this.loadName = "SELECT username FROM " + prefix + "player_names WHERE uid = ?";
+    this.loadName = "SELECT username FROM " + prefix + "player_names WHERE uid = UUID_TO_BIN(?)";
 
-    this.saveName = "INSERT INTO " + prefix + "player_names (uid, username) VALUES (?, ?) ON DUPLICATE KEY UPDATE username = ?";
+    this.saveName = "INSERT INTO " + prefix + "player_names (uid, username) VALUES (UUID_TO_BIN(?), ?) ON DUPLICATE KEY UPDATE username = ?";
 
-    this.loadAccounts = "SELECT uid, username, account_type, created, pin, status FROM " + prefix + "tne_accounts";
+    this.loadAccounts = "SELECT BIN_TO_UUID(uid) AS uid, username, account_type, created, pin, status FROM " + prefix + "tne_accounts";
 
-    this.loadAccount = "SELECT username, account_type, created, pin, status FROM " + prefix + "tne_accounts WHERE uid = ?";
+    this.loadAccount = "SELECT username, account_type, created, pin, status FROM " + prefix + "tne_accounts WHERE uid = UUID_TO_BIN(?)";
 
     this.saveAccount = "INSERT INTO " + prefix + "tne_accounts (uid, username, account_type, created, pin, status)" +
-                       "VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE username = ?, status = ?, pin = ?";
+                       "VALUES (UUID_TO_BIN(?), ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE username = ?, status = ?, pin = ?";
 
-    this.loadNonPlayer = "SELECT owner FROM " + prefix + "non_players_accounts WHERE uid = ?";
+    this.loadNonPlayer = "SELECT BIN_TO_UUID(owner) AS owner FROM " + prefix + "non_players_accounts WHERE uid = UUID_TO_BIN(?)";
 
-    this.saveNonPlayer = "INSERT INTO " + prefix + "non_players_accounts (uid, owner) VALUES (?, ?) " +
-                         "ON DUPLICATE KEY UPDATE owner = ?";
+    this.saveNonPlayer = "INSERT INTO " + prefix + "non_players_accounts (uid, owner) VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?)) " +
+                         "ON DUPLICATE KEY UPDATE owner = UUID_TO_BIN(?)";
 
-    this.loadPlayer = "SELECT last_online FROM " + prefix + "players_accounts WHERE uid = ?";
+    this.loadPlayer = "SELECT last_online FROM " + prefix + "players_accounts WHERE uid = UUID_TO_BIN(?)";
 
-    this.savePlayer = "INSERT INTO " + prefix + "players_accounts (uid, last_online) VALUES (?, ?) " +
+    this.savePlayer = "INSERT INTO " + prefix + "players_accounts (uid, last_online) VALUES (UUID_TO_BIN(?), ?) " +
                       "ON DUPLICATE KEY UPDATE last_online = ?";
 
-    this.loadMembers = "SELECT uid, perm, perm_value FROM " + prefix + "account_members WHERE account = ?";
+    this.loadMembers = "SELECT BIN_TO_UUID(uid) AS uid, perm, perm_value FROM " + prefix + "account_members WHERE account = UUID_TO_BIN(?)";
 
-    this.saveMember = "INSERT INTO " + prefix + "account_members (uid, perm, perm_value) VALUES (?, ?, ?) " +
+    this.saveMember = "INSERT INTO " + prefix + "account_members (uid, perm, perm_value) VALUES (UUID_TO_BIN(?), ?, ?) " +
                       "ON DUPLICATE KEY UPDATE perm_value = ?";
 
     this.loadHoldings = "SELECT server, region, currency, holdings_type, holdings FROM " + prefix +
-                        "tne_holdings WHERE uid = ?";
+                        "tne_holdings WHERE uid = UUID_TO_BIN(?)";
 
     this.saveHolding = "INSERT INTO " + prefix + "tne_holdings (uid, server, region, currency, holdings_type, holdings) " +
-                       "VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE holdings = ?";
+                       "VALUES (UUID_TO_BIN(?), ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE holdings = ?";
 
-    this.loadReceipts = "SELECT uid, performed, receipt_type, receipt_source, receipt_source_type, archive, voided FROM " +
+    this.loadReceipts = "SELECT BIN_TO_UUID(uid) AS uid, performed, receipt_type, receipt_source, receipt_source_type, archive, voided FROM " +
                         prefix + "receipts";
 
     this.saveReceipt = "INSERT INTO " + prefix + "receipts (uid, performed, receipt_type, receipt_source, " +
                        "receipt_source_type, archive, voided) " +
-                       "VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE archive = ?, voided = ?";
+                       "VALUES (UUID_TO_BIN(?), ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE archive = ?, voided = ?";
 
-    this.loadReceiptHolding = "SELECT participant, ending, server, region, currency, holdings_type, holdings FROM " +
-                              prefix + "receipts_holdings WHERE uid = ?";
+    this.loadReceiptHolding = "SELECT BIN_TO_UUID(participant) AS participant, ending, server, region, currency, holdings_type, holdings FROM " +
+                              prefix + "receipts_holdings WHERE uid = UUID_TO_BIN(?)";
 
     this.saveReceiptHolding = "INSERT INTO " + prefix + "receipts_holdings (uid, participant, ending, " +
                               "server, region, currency, holdings_type, holdings) " +
-                              "VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE uid=uid";
+                              "VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?), ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE uid=uid";
 
-    this.loadParticipants = "SELECT participant, participant_type, tax FROM " + prefix + "receipts_participants WHERE uid = ?";
+    this.loadParticipants = "SELECT BIN_TO_UUID(participant) AS participant, participant_type, tax FROM " +
+                            prefix + "receipts_participants WHERE uid = UUID_TO_BIN(?)";
 
     this.saveParticipant = "INSERT INTO " + prefix + "receipts_participants (uid, participant, participant_type, tax) " +
-                           "VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE uid=uid";
+                           "VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?), ?, ?) ON DUPLICATE KEY UPDATE uid=uid";
 
-    this.loadModifiers = "SELECT participant, participant_type, operation, region, currency, modifier FROM " +
-                         prefix + "receipts_modifiers WHERE uid = ?";
+    this.loadModifiers = "SELECT BIN_TO_UUID(participant) AS participant, participant_type, operation, region, currency, modifier FROM " +
+                         prefix + "receipts_modifiers WHERE uid = UUID_TO_BIN(?)";
 
     this.saveModifier = "INSERT INTO " + prefix + "receipts_modifiers (uid, participant, participant_type, operation, region, currency, modifier) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE uid = uid";
+                        "VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?), ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE uid = uid";
 
   }
 
