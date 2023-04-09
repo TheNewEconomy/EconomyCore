@@ -27,10 +27,10 @@ Data:
         #The file to which all the data will be saved if using a file-based database
         File: "Economy"
 
-        #All configurations relating to the MySQL Database
-        MySQL:
+        #All configurations relating to the SQL Database
+        SQL:
 
-            #The MySQL host
+            #The SQL host
             Host: "localhost"
 
             #Whether to use SSL.
@@ -39,16 +39,16 @@ Data:
             #Should public key retrieval be enabled for SQL?
             PublicKey: false
 
-            #The MySQL port
+            #The SQL port
             Port: 3306
 
-            #The MySQL database
+            #The SQL database
             DB: "TheNewEconomy"
 
-            #Your MySQL user's name
+            #Your SQL user's name
             User: "user"
 
-            #Your MySQL user's password
+            #Your SQL user's password
             Password: "password"
 
     #Settings related to connection pool

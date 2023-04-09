@@ -76,7 +76,7 @@ public class MySQLDialect implements Dialect {
 
     this.loadMembers = "SELECT BIN_TO_UUID(uid) AS uid, perm, perm_value FROM " + prefix + "account_members WHERE account = UUID_TO_BIN(?)";
 
-    this.saveMember = "INSERT INTO " + prefix + "account_members (uid, perm, perm_value) VALUES (UUID_TO_BIN(?), ?, ?) " +
+    this.saveMember = "INSERT INTO " + prefix + "account_members (uid, account, perm, perm_value) VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?), ?, ?) " +
                       "ON DUPLICATE KEY UPDATE perm_value = ?";
 
     this.loadHoldings = "SELECT server, region, currency, holdings_type, holdings FROM " + prefix +
