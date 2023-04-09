@@ -79,11 +79,11 @@ public class MySQLDialect implements Dialect {
     this.saveMember = "INSERT INTO " + prefix + "account_members (uid, account, perm, perm_value) VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?), ?, ?) " +
                       "ON DUPLICATE KEY UPDATE perm_value = ?";
 
-    this.loadHoldings = "SELECT server, region, currency, holdings_type, holdings FROM " + prefix +
+    this.loadHoldings = "SELECT server, region, BIN_TO_UUID(currency) AS currency, holdings_type, holdings FROM " + prefix +
                         "tne_holdings WHERE uid = UUID_TO_BIN(?)";
 
     this.saveHolding = "INSERT INTO " + prefix + "tne_holdings (uid, server, region, currency, holdings_type, holdings) " +
-                       "VALUES (UUID_TO_BIN(?), ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE holdings = ?";
+                       "VALUES (UUID_TO_BIN(?), ?, ?, UUID_TO_BIN(?), ?, ?) ON DUPLICATE KEY UPDATE holdings = ?";
 
     this.loadReceipts = "SELECT BIN_TO_UUID(uid) AS uid, performed, receipt_type, receipt_source, receipt_source_type, archive, voided FROM " +
                         prefix + "receipts";
@@ -92,12 +92,13 @@ public class MySQLDialect implements Dialect {
                        "receipt_source_type, archive, voided) " +
                        "VALUES (UUID_TO_BIN(?), ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE archive = ?, voided = ?";
 
-    this.loadReceiptHolding = "SELECT BIN_TO_UUID(participant) AS participant, ending, server, region, currency, holdings_type, holdings FROM " +
+    this.loadReceiptHolding = "SELECT BIN_TO_UUID(participant) AS participant, ending, server, region, " +
+                              "BIN_TO_UUID(currency) AS currency, holdings_type, holdings FROM " +
                               prefix + "receipts_holdings WHERE uid = UUID_TO_BIN(?)";
 
     this.saveReceiptHolding = "INSERT INTO " + prefix + "receipts_holdings (uid, participant, ending, " +
                               "server, region, currency, holdings_type, holdings) " +
-                              "VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?), ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE uid=uid";
+                              "VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?), ?, ?, ?, UUID_TO_BIN(?), ?, ?) ON DUPLICATE KEY UPDATE uid=uid";
 
     this.loadParticipants = "SELECT BIN_TO_UUID(participant) AS participant, participant_type, tax FROM " +
                             prefix + "receipts_participants WHERE uid = UUID_TO_BIN(?)";
@@ -105,11 +106,11 @@ public class MySQLDialect implements Dialect {
     this.saveParticipant = "INSERT INTO " + prefix + "receipts_participants (uid, participant, participant_type, tax) " +
                            "VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?), ?, ?) ON DUPLICATE KEY UPDATE uid=uid";
 
-    this.loadModifiers = "SELECT BIN_TO_UUID(participant) AS participant, participant_type, operation, region, currency, modifier FROM " +
-                         prefix + "receipts_modifiers WHERE uid = UUID_TO_BIN(?)";
+    this.loadModifiers = "SELECT BIN_TO_UUID(participant) AS participant, participant_type, operation, region, " +
+                          "BIN_TO_UUID(currency) AS currency, modifier FROM " + prefix + "receipts_modifiers WHERE uid = UUID_TO_BIN(?)";
 
     this.saveModifier = "INSERT INTO " + prefix + "receipts_modifiers (uid, participant, participant_type, operation, region, currency, modifier) " +
-                        "VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?), ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE uid = uid";
+                        "VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?), ?, ?, ?, UUID_TO_BIN(?), ?) ON DUPLICATE KEY UPDATE uid = uid";
 
   }
 

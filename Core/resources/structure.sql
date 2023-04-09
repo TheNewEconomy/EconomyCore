@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS tne_holdings (
     uid BINARY(16) NOT NULL,
     server VARCHAR(40) NOT NULL,
     region VARCHAR(40) NOT NULL,
-    currency VARCHAR(40) NOT NULL,
+    currency BINARY(16) NOT NULL,
     holdings_type VARCHAR(30) NOT NULL,
     holdings DECIMAL(49, 4) NOT NULL,
 
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS tne_receipts_holdings (
     ending TINYINT(1) NOT NULL,
     server VARCHAR(40) NOT NULL,
     region VARCHAR(40) NOT NULL,
-    currency VARCHAR(40) NOT NULL,
+    currency BINARY(16) NOT NULL,
     holdings_type VARCHAR(30) NOT NULL,
     holdings DECIMAL(49, 4) NOT NULL,
 
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS tne_receipts_modifiers (
     participant_type VARCHAR(10) NOT NULL,
     operation VARCHAR(10) NOT NULL,
     region VARCHAR(40) NOT NULL,
-    currency VARCHAR(40) NOT NULL,
+    currency BINARY(16) NOT NULL,
     modifier DECIMAL(49, 4) NOT NULL,
 
     FOREIGN KEY(uid) REFERENCES tne_receipts(uid) ON DELETE CASCADE
