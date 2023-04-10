@@ -21,6 +21,7 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
+import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.connect.SQLConnector;
@@ -135,8 +136,7 @@ public class SQLReceipt implements Datable<Receipt> {
                                                 receipt,
                                                 participant,
                                                 ending,
-                                                //TODO: Config for server name
-                                                "Main Server",
+                                                MainConfig.yaml().getString("Core.Server.Name"),
                                                 entry.getRegion(),
                                                 entry.getCurrency().toString(),
                                                 entry.getType().getIdentifier(),

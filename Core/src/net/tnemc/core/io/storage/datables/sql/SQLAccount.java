@@ -22,16 +22,23 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.SharedAccount;
 import net.tnemc.core.account.shared.Member;
+import net.tnemc.core.account.shared.Permission;
+import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.io.storage.Datable;
+import net.tnemc.core.io.storage.Dialect;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.connect.SQLConnector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * SQLAccount
@@ -77,7 +84,7 @@ public class SQLAccount implements Datable<Account> {
                                               new Object[] {
                                                   account.getIdentifier(),
                                                   account.getName(),
-                                                  account.getClass().getName(),
+                                                  (account.type()),
                                                   account.getCreationDate(),
                                                   account.getPin(),
                                                   account.getStatus().identifier(),
@@ -160,6 +167,87 @@ public class SQLAccount implements Datable<Account> {
   public Optional<Account> load(StorageConnector<?> connector, @NotNull String identifier) {
     if(connector instanceof SQLConnector) {
 
+      Account account = null;
+
+      //Loading/creating our account object.
+      try(ResultSet result = ((SQLConnector)connector).executeQuery(((SQLConnector)connector).dialect().loadAccount(),
+                                                                    new Object[] {
+                                                                        identifier
+                                                                    })) {
+        if(result.next()) {
+          final String type = result.getString("account_type");
+
+          //create our account from the type
+          final EconomyResponse response = TNECore.eco().account().createAccount(result.getString("uid"),
+                                                                        result.getString("username"),
+                                                                        (type.equalsIgnoreCase("player") ||
+                                                                                     type.equalsIgnoreCase("bedrock")));
+          if(response.success()) {
+            final Optional<Account> acc = TNECore.eco().account().findAccount(result.getString("uid"));
+
+            //load our basic account information
+            if(acc.isPresent()) {
+              account = acc.get();
+
+              account.setStatus(TNECore.eco().account().findStatus(result.getString("status")));
+              account.setCreationDate(result.getLong("created"));
+              account.setPin(result.getString("pin"));
+            }
+          }
+        }
+
+      } catch(SQLException e) {
+        e.printStackTrace();
+      }
+
+      if(account != null) {
+
+        //Load our player account info
+        if(account instanceof PlayerAccount) {
+          try(ResultSet result = ((SQLConnector)connector).executeQuery(((SQLConnector)connector).dialect().loadPlayer(),
+                                                                        new Object[] {
+                                                                            identifier
+                                                                        })) {
+            if(result.next()) {
+              ((PlayerAccount)account).setLastOnline(result.getLong("last_online"));
+            }
+          } catch(SQLException e) {
+            e.printStackTrace();
+          }
+        }
+
+        //load our shared account info
+        if(account instanceof SharedAccount) {
+          try(ResultSet result = ((SQLConnector)connector).executeQuery(((SQLConnector)connector).dialect().loadNonPlayer(),
+                                                                        new Object[] {
+                                                                            identifier
+                                                                        })) {
+            if(result.next()) {
+              ((SharedAccount)account).setOwner(UUID.fromString(result.getString("owner")));
+            }
+          } catch(SQLException e) {
+            e.printStackTrace();
+          }
+
+          //Load our members for shared accounts
+          try(ResultSet result = ((SQLConnector)connector).executeQuery(((SQLConnector)connector).dialect().loadMembers(),
+                                                                        new Object[] {
+                                                                            identifier
+                                                                        })) {
+            while(result.next()) {
+              ((SharedAccount)account).addPermission(UUID.fromString(result.getString("uid")),
+                                                     result.getString("perm"),
+                                                     result.getBoolean("perm_value")
+              );
+            }
+          } catch(SQLException e) {
+            e.printStackTrace();
+          }
+
+        }
+      }
+
+      return Optional.ofNullable(account);
     }
     return Optional.empty();
   }
@@ -177,6 +265,22 @@ public class SQLAccount implements Datable<Account> {
 
     if(connector instanceof SQLConnector) {
 
+      final List<String> ids = new ArrayList<>();
+      try(ResultSet result = ((SQLConnector)connector).executeQuery(((SQLConnector)connector).dialect().loadAccounts(),
+                                                          new Object[]{})) {
+        while(result.next()) {
+          ids.add(result.getString("uid"));
+        }
+
+      } catch(SQLException e) {
+        e.printStackTrace();
+      }
+
+      for(String id : ids) {
+
+        final Optional<Account> loaded = load(connector, id);
+        loaded.ifPresent(accounts::add);
+      }
     }
     return accounts;
   }

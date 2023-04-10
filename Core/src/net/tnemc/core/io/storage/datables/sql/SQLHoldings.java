@@ -19,19 +19,25 @@ package net.tnemc.core.io.storage.datables.sql;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.CurrencyHoldings;
 import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.account.holdings.RegionHoldings;
+import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.connect.SQLConnector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * SQLHoldings
@@ -76,8 +82,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
       ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveHoldings(),
                                               new Object[] {
                                                   identifier,
-                                                  //TODO: Server name config.
-                                                  "Main Server",
+                                                  MainConfig.yaml().getString("Core.Server.Name"),
                                                   object.getRegion(),
                                                   object.getCurrency().toString(),
                                                   object.getType().getIdentifier(),
@@ -116,13 +121,12 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    * @param connector  The storage connector to use for this transaction.
    * @param identifier The identifier used to identify the object to load.
    *
+   * @throws UnsupportedOperationException as this method is not valid for holdings.
    * @return The object to load.
    */
   @Override
   public Optional<HoldingsEntry> load(StorageConnector<?> connector, @NotNull String identifier) {
-    if(connector instanceof SQLConnector) {
-    }
-    return Optional.empty();
+    throw new UnsupportedOperationException("load for HoldingsEntry is not a supported operation.");
   }
 
   /**
@@ -136,8 +140,22 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
   public Collection<HoldingsEntry> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
     final Collection<HoldingsEntry> holdings = new ArrayList<>();
 
-    if(connector instanceof SQLConnector) {
-
+    if(connector instanceof SQLConnector && identifier != null) {
+      try(ResultSet result = ((SQLConnector)connector).executeQuery(((SQLConnector)connector).dialect().loadHoldings(),
+                                                                    new Object[] {
+                                                                        identifier
+                                                                    })) {
+        while(result.next()) {
+          //region, currency, amount, type
+          final HoldingsEntry entry = new HoldingsEntry(result.getString("region"),
+                                                  UUID.fromString(result.getString("currency")),
+                                                  result.getBigDecimal("holdings"),
+                                                  HoldingsType.fromIdentifier(result.getString("holdings_type")));
+          holdings.add(entry);
+        }
+      } catch(SQLException e) {
+        e.printStackTrace();
+      }
     }
     return holdings;
   }
