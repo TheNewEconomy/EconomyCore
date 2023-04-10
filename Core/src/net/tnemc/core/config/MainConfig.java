@@ -18,9 +18,6 @@ package net.tnemc.core.config;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.simpleyaml.configuration.file.YamlFile;
-import org.simpleyaml.configuration.implementation.snakeyaml.lib.Yaml;
-
 /**
  * MainConfig
  *

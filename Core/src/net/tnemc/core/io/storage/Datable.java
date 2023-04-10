@@ -50,6 +50,8 @@ public interface Datable<O> {
    * Used to store this object.
    * @param connector The storage connector to use for this transaction.
    * @param object The object to be stored.
+   * @param identifier An optional identifier for loading this object. Note: some Datables may require
+   *                   this identifier.
    */
   void store(StorageConnector<?> connector, @NotNull O object, @Nullable String identifier);
 

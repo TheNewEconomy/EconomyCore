@@ -21,11 +21,10 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.SharedAccount;
+import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.shared.Member;
-import net.tnemc.core.account.shared.Permission;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.io.storage.Datable;
-import net.tnemc.core.io.storage.Dialect;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.connect.SQLConnector;
 import org.jetbrains.annotations.NotNull;
@@ -244,6 +243,11 @@ public class SQLAccount implements Datable<Account> {
             e.printStackTrace();
           }
 
+        }
+
+        Collection<HoldingsEntry> holdings = TNECore.storage().loadAll(HoldingsEntry.class, identifier);
+        for(HoldingsEntry entry : holdings) {
+          account.getWallet().setHoldings(entry);
         }
       }
 

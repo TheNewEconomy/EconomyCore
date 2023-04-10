@@ -19,7 +19,6 @@ package net.tnemc.core.io.storage.datables.sql;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
-import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.CurrencyHoldings;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
@@ -35,7 +34,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 

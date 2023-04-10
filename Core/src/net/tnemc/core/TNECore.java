@@ -18,6 +18,7 @@ package net.tnemc.core;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.account.Account;
 import net.tnemc.core.api.BaseAPI;
 import net.tnemc.core.api.TNEAPI;
 import net.tnemc.core.compatibility.LogProvider;
@@ -134,6 +135,7 @@ public abstract class TNECore {
     this.messageConfig.load();
 
     this.storage = new StorageManager(data);
+    this.storage.loadAll(Account.class, "");
 
     new MenuManager();
     MenuManager.instance().addMenu(new MyEcoMenu());

@@ -20,8 +20,11 @@ package net.tnemc.core.io.storage;
 
 import net.tnemc.core.account.Account;
 import net.tnemc.core.config.DataConfig;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -49,6 +52,42 @@ public class StorageManager {
     return instance;
   }
 
+  /**
+   * Used to load this object.
+   * @param object The class of the object to be loaded.
+   * @param identifier The identifier used to identify the object to load.
+   * @return The object to load.
+   */
+  public <T> Optional<T> load(Class<? extends T> object, @NotNull final String identifier) {
+    final Datable<T> data = (Datable<T>)engine.datables().get(object);
+    if(data != null) {
+      return data.load(engine.connector(), identifier);
+    }
+    return Optional.empty();
+  }
+
+  /**
+   * Used to load all objects of this type.
+   * @param object The class of the object to be loaded.
+   * @param identifier The identifier used to load objects, if they relate to a specific
+   *                   identifier, otherwise this will be null.
+   * @return A collection containing the objects loaded.
+   */
+  public <T> Collection<T> loadAll(Class<? extends T> object, @Nullable final String identifier) {
+    final Datable<T> data = (Datable<T>)engine.datables().get(object);
+    if(data != null) {
+      return data.loadAll(engine.connector(), identifier);
+    }
+    return new ArrayList<>();
+  }
+
+
+  /**
+   * Used to store this object.
+   * @param object The object to be stored.
+   * @param identifier An optional identifier for loading this object. Note: some Datables may require
+   *                   this identifier.
+   */
   public <T> void store(T object, @Nullable String identifier) {
     final Datable<T> data = (Datable<T>)engine.datables().get(object.getClass());
     if(data != null) {
