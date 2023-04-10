@@ -33,7 +33,7 @@ import java.util.UUID;
  */
 public class Member {
 
-  private Map<String, Boolean> permissions = new HashMap<>();
+  private final Map<String, Boolean> permissions = new HashMap<>();
 
   /**
    * The {@link UUID identifier} associated with the player that is
@@ -63,11 +63,28 @@ public class Member {
   }
 
   /**
+   * Sets the permission specified to the specified value for this member.
+   * @param permission The permission to set.
+   * @param value The value to set for the permission.
+   */
+  public void addPermission(String permission, boolean value) {
+    permissions.put(permission, value);
+  }
+
+  /**
    * Removes the permission specified from this member.
    * @param permission The permission to set.
    */
   public void removePermission(Permission permission) {
     permissions.remove(permission.identifier());
+  }
+
+  /**
+   * Removes the permission specified from this member.
+   * @param permission The permission to set.
+   */
+  public void removePermission(String permission) {
+    permissions.remove(permission);
   }
 
   /**
@@ -77,6 +94,16 @@ public class Member {
    */
   public boolean hasPermission(Permission permission) {
     return permissions.getOrDefault(permission.identifier(), permission.defaultValue());
+  }
+
+  /**
+   * Checks if this member has the specified permission.
+   * @param permission The permission to we are checking for.
+   * @param defaultValue The default value to return if this account doesn't contain the permission.
+   * @return True if this member has the specified permission, otherwise false.
+   */
+  public boolean hasPermission(String permission, final boolean defaultValue) {
+    return permissions.getOrDefault(permission, defaultValue);
   }
 
   public Map<String, Boolean> getPermissions() {

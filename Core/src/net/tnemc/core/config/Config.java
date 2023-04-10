@@ -33,6 +33,8 @@ import java.util.List;
  */
 public abstract class Config {
 
+  private static Config instance;
+
   protected final YamlFile yaml;
 
   protected final File file;
@@ -53,6 +55,12 @@ public abstract class Config {
     }
 
     this.yaml = new YamlFile(file.getPath());
+
+    instance = this;
+  }
+
+  public YamlFile getYaml() {
+    return yaml;
   }
 
   public boolean load() {
@@ -69,6 +77,10 @@ public abstract class Config {
       e.printStackTrace();
       return false;
     }
+  }
+
+  public static YamlFile yaml() {
+    return instance.getYaml();
   }
 
   public void saveDefaults() {

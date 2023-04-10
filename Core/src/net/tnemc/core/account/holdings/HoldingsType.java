@@ -37,7 +37,7 @@ public enum HoldingsType {
     this.identifier = identifier;
   }
 
-  public HoldingsType fromIdentifier(final String identifier) {
+  public static HoldingsType fromIdentifier(final String identifier) {
     for(HoldingsType type : values()) {
       if(type.identifier.equalsIgnoreCase(identifier)) return type;
     }

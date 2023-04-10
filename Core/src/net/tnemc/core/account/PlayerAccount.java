@@ -83,6 +83,16 @@ public class PlayerAccount extends Account {
     return getPlayer().get().getLocation();
   }
 
+  /**
+   * Used to get the type of account that this is. This is for data-purposes only.
+   *
+   * @return The account type.
+   */
+  @Override
+  public String type() {
+    return "player";
+  }
+
   public boolean isOnline() {
     return getPlayer().isPresent();
   }

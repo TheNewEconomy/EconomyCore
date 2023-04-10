@@ -36,6 +36,16 @@ public class NonPlayerAccount extends SharedAccount {
     this.identifier = generateIdentifier(name);
   }
 
+  /**
+   * Used to get the type of account that this is. This is for data-purposes only.
+   *
+   * @return The account type.
+   */
+  @Override
+  public String type() {
+    return "non-player";
+  }
+
   public String generateIdentifier(final String name) {
     return UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8)).toString();
   }

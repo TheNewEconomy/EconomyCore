@@ -36,6 +36,16 @@ public class TownAccount extends NonPlayerAccount {
     this.owner = Objects.requireNonNull(TownyAPI.getInstance().getTown(name)).getMayor().getUUID();
   }
 
+  /**
+   * Used to get the type of account that this is. This is for data-purposes only.
+   *
+   * @return The account type.
+   */
+  @Override
+  public String type() {
+    return "town";
+  }
+
   @Override
   public String generateIdentifier(String name) {
     try {

@@ -31,4 +31,14 @@ public class GeyserAccount extends PlayerAccount {
   public GeyserAccount(UUID identifier, String name) {
     super(identifier, name);
   }
+
+  /**
+   * Used to get the type of account that this is. This is for data-purposes only.
+   *
+   * @return The account type.
+   */
+  @Override
+  public String type() {
+    return "bedrock";
+  }
 }

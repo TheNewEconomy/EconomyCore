@@ -36,6 +36,16 @@ public class NationAccount extends NonPlayerAccount {
     this.owner = Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getKing().getUUID();
   }
 
+  /**
+   * Used to get the type of account that this is. This is for data-purposes only.
+   *
+   * @return The account type.
+   */
+  @Override
+  public String type() {
+    return "nation";
+  }
+
   @Override
   public String generateIdentifier(String name) {
 

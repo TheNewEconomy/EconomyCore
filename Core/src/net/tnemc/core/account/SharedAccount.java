@@ -76,7 +76,28 @@ public class SharedAccount extends Account {
    * @param value The value to set for the permission.
    */
   public void addPermission(UUID identifier, Permission permission, boolean value) {
-    findMember(identifier).ifPresent(mem->mem.addPermission(permission, value));
+    Member member = members.get(identifier);
+    if(member == null) {
+      member = new Member(identifier);
+    }
+    member.addPermission(permission, value);
+    members.put(identifier, member);
+  }
+
+  /**
+   * Sets the permission specified to the specified value for the specified member.
+   *
+   * @param identifier The identifier of the member to use.
+   * @param permission The permission to set.
+   * @param value The value to set for the permission.
+   */
+  public void addPermission(UUID identifier, String permission, boolean value) {
+    Member member = members.get(identifier);
+    if(member == null) {
+      member = new Member(identifier);
+    }
+    member.addPermission(permission, value);
+    members.put(identifier, member);
   }
 
   /**
@@ -90,6 +111,16 @@ public class SharedAccount extends Account {
   }
 
   /**
+   * Removes the permission specified from the specified member.
+   *
+   * @param identifier The identifier of the member to use.
+   * @param permission The permission to set.
+   */
+  public void removePermission(UUID identifier, String permission) {
+    findMember(identifier).ifPresent(mem->mem.removePermission(permission));
+  }
+
+  /**
    * Checks if the specified member has the specified permission.
    *
    * @param identifier The identifier of the member to use.
@@ -99,6 +130,28 @@ public class SharedAccount extends Account {
   public boolean hasPermission(UUID identifier, Permission permission) {
     return findMember(identifier).map(value->value.hasPermission(permission))
         .orElseGet(permission::defaultValue);
+  }
+
+  /**
+   * Checks if the specified member has the specified permission.
+   *
+   * @param identifier The identifier of the member to use.
+   * @param permission The permission to we are checking for.
+   * @param defaultValue The default value to return if this account doesn't contain the permission.
+   * @return True if the specified member has the specified permission, otherwise false.
+   */
+  public boolean hasPermission(UUID identifier, String permission, boolean defaultValue) {
+    return findMember(identifier).map(value->value.hasPermission(permission, defaultValue)).orElse(defaultValue);
+  }
+
+  /**
+   * Used to get the type of account that this is. This is for data-purposes only.
+   *
+   * @return The account type.
+   */
+  @Override
+  public String type() {
+    return "shared";
   }
 
   public ConcurrentHashMap<UUID, Member> getMembers() {

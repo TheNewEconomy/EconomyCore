@@ -67,6 +67,14 @@ public class Account extends ReceiptBox {
   }
 
   /**
+   * Used to get the type of account that this is. This is for data-purposes only.
+   * @return The account type.
+   */
+  public String type() {
+    return "account";
+  }
+
+  /**
    * Used to determine if this {@link Account account} represents a Player.
    *
    * @return True if this {@link Account account} represents a Player, otherwise false.
