@@ -25,10 +25,6 @@ import net.tnemc.core.io.storage.connect.SQLConnector;
 
 public class PostgreSQL extends StandardSQL {
 
-  public PostgreSQL(SQLConnector connector) {
-    super(connector);
-  }
-
   /**
    * The name of this engine.
    *

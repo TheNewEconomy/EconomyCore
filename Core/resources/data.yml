@@ -34,7 +34,7 @@ Data:
         Type: "h2"
 
         #The prefix to use for TheNewEconomy MySQL and H2 Tables
-        Prefix: "TNE"
+        Prefix: "tne_"
 
         #The file to which all the data will be saved if using a file-based database
         File: "Economy"

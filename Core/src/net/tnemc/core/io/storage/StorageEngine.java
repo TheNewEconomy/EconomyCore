@@ -35,12 +35,6 @@ public interface StorageEngine {
   String name();
 
   /**
-   * The {@link StorageConnector} for this {@link StorageEngine}.
-   * @return The storage connector for this engine.
-   */
-  StorageConnector<?> connector();
-
-  /**
    * Used to reset all data for this engine.
    */
   void reset();

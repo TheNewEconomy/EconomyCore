@@ -24,10 +24,6 @@ import net.tnemc.core.io.storage.connect.SQLConnector;
 
 public class MySQL extends StandardSQL {
 
-  public MySQL(SQLConnector connector) {
-    super(connector);
-  }
-
   /**
    * The name of this engine.
    *

@@ -24,10 +24,6 @@ import net.tnemc.core.io.storage.connect.SQLConnector;
 
 public class DB2 extends StandardSQL {
 
-  public DB2(SQLConnector connector) {
-    super(connector);
-  }
-
   /**
    * The name of this engine.
    *

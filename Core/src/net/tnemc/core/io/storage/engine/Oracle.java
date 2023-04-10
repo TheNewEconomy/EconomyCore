@@ -24,10 +24,6 @@ import net.tnemc.core.io.storage.connect.SQLConnector;
 
 public class Oracle extends StandardSQL {
 
-  public Oracle(SQLConnector connector) {
-    super(connector);
-  }
-
   /**
    * The name of this engine.
    *

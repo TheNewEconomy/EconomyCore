@@ -24,10 +24,6 @@ import net.tnemc.core.io.storage.connect.SQLConnector;
 
 public class SQLServer extends StandardSQL {
 
-  public SQLServer(SQLConnector connector) {
-    super(connector);
-  }
-
   /**
    * The name of this engine.
    *

@@ -18,6 +18,8 @@ package net.tnemc.core.io.storage.engine;
  */
 
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.Dialect;
 import net.tnemc.core.io.storage.SQLEngine;
@@ -25,7 +27,10 @@ import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.StorageEngine;
 import net.tnemc.core.io.storage.connect.SQLConnector;
 import net.tnemc.core.io.storage.datables.sql.SQLAccount;
+import net.tnemc.core.io.storage.datables.sql.SQLHoldings;
+import net.tnemc.core.io.storage.datables.sql.SQLReceipt;
 import net.tnemc.core.io.storage.dialect.MySQLDialect;
+import net.tnemc.core.transaction.Receipt;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,31 +45,19 @@ public abstract class StandardSQL implements SQLEngine {
   
   private final Map<Class<?>, Datable<?>> datables = new HashMap<>();
 
-  private final SQLConnector connector;
-
   private final Dialect dialect;
 
-  public StandardSQL(SQLConnector connector) {
-    //TODO: SQL Settings.
-    this(connector, new MySQLDialect(""));
+  public StandardSQL() {
+    this(new MySQLDialect(DataConfig.yaml().getString("Data.Database.Prefix")));
   }
 
-  public StandardSQL(SQLConnector connector, Dialect dialect) {
-    this.connector = connector;
+  public StandardSQL(Dialect dialect) {
     this.dialect = dialect;
 
     //add our datables.
     datables.put(Account.class, new SQLAccount());
-  }
-
-  /**
-   * The {@link StorageConnector} for this {@link StorageEngine}.
-   *
-   * @return The storage connector for this engine.
-   */
-  @Override
-  public SQLConnector connector() {
-    return connector;
+    datables.put(HoldingsEntry.class, new SQLHoldings());
+    datables.put(Receipt.class, new SQLReceipt());
   }
 
   /**

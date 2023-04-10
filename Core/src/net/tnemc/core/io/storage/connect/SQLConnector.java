@@ -17,11 +17,13 @@ package net.tnemc.core.io.storage.connect;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import net.tnemc.core.io.storage.Dialect;
 import net.tnemc.core.io.storage.SQLEngine;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.StorageEngine;
+import net.tnemc.core.io.storage.StorageManager;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -38,18 +40,17 @@ import java.sql.SQLException;
 public class SQLConnector implements StorageConnector<Connection> {
 
   private DataSource source;
-  private SQLEngine engine;
-
-  public SQLConnector(SQLEngine engine) {
-    this.engine = engine;
-  }
+  private HikariConfig config;
 
   /**
    * Used to initialize a connection to the specified {@link StorageEngine}
    */
   @Override
   public void initialize() {
-    this.source = new HikariDataSource(engine.config());
+    this.config = new HikariConfig();
+
+
+    this.source = new HikariDataSource(((SQLEngine)StorageManager.instance().getEngine()).config());
   }
 
   /**
@@ -104,6 +105,6 @@ public class SQLConnector implements StorageConnector<Connection> {
   }
 
   public Dialect dialect() {
-    return engine.dialect();
+    return ((SQLEngine)StorageManager.instance().getEngine()).dialect();
   }
 }

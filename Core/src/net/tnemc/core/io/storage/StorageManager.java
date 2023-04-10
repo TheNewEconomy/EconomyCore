@@ -20,6 +20,10 @@ package net.tnemc.core.io.storage;
 
 import net.tnemc.core.account.Account;
 import net.tnemc.core.config.DataConfig;
+import net.tnemc.core.io.storage.connect.SQLConnector;
+import net.tnemc.core.io.storage.engine.H2;
+import net.tnemc.core.io.storage.engine.MySQL;
+import net.tnemc.core.io.storage.engine.PostgreSQL;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -42,10 +46,22 @@ public class StorageManager {
 
   private static StorageManager instance;
   private StorageEngine engine;
+  private final SQLConnector connector;
 
 
   public StorageManager(DataConfig config) {
     instance = this;
+    this.connector = new SQLConnector();
+
+    initialize(config.getYaml().getString(""));
+  }
+
+  public void initialize(final String engine) {
+    switch(engine.toLowerCase()) {
+      case "mysql" -> this.engine = new MySQL();
+      case "postgre" -> this.engine = new PostgreSQL();
+      default -> this.engine = new H2();
+    }
   }
 
   public static StorageManager instance() {
@@ -61,7 +77,7 @@ public class StorageManager {
   public <T> Optional<T> load(Class<? extends T> object, @NotNull final String identifier) {
     final Datable<T> data = (Datable<T>)engine.datables().get(object);
     if(data != null) {
-      return data.load(engine.connector(), identifier);
+      return data.load(connector, identifier);
     }
     return Optional.empty();
   }
@@ -76,7 +92,7 @@ public class StorageManager {
   public <T> Collection<T> loadAll(Class<? extends T> object, @Nullable final String identifier) {
     final Datable<T> data = (Datable<T>)engine.datables().get(object);
     if(data != null) {
-      return data.loadAll(engine.connector(), identifier);
+      return data.loadAll(connector, identifier);
     }
     return new ArrayList<>();
   }
@@ -91,7 +107,7 @@ public class StorageManager {
   public <T> void store(T object, @Nullable String identifier) {
     final Datable<T> data = (Datable<T>)engine.datables().get(object.getClass());
     if(data != null) {
-      data.store(engine.connector(), object, identifier);
+      data.store(connector, object, identifier);
     }
   }
 
@@ -102,7 +118,7 @@ public class StorageManager {
     final Optional<Datable<?>> data = Optional.ofNullable(engine.datables().get(Account.class));
 
     //Our account storeAll requires no identifier, so we set it to null
-    data.ifPresent(datable->datable.storeAll(engine.connector(), null));
+    data.ifPresent(datable->datable.storeAll(connector, null));
   }
 
   /**
@@ -110,7 +126,7 @@ public class StorageManager {
    */
   public void purge() {
     for(Datable<?> data : engine.datables().values()) {
-      data.purge(engine.connector());
+      data.purge(connector);
     }
   }
 
@@ -128,5 +144,13 @@ public class StorageManager {
   public boolean backup() {
     //TODO: Backup storage engine.
     return false;
+  }
+
+  public StorageEngine getEngine() {
+    return engine;
+  }
+
+  public SQLConnector getConnector() {
+    return connector;
   }
 }
