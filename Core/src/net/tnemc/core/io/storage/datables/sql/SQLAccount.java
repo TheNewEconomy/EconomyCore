@@ -84,7 +84,7 @@ public class SQLAccount implements Datable<Account> {
                                                   account.getIdentifier(),
                                                   account.getName(),
                                                   (account.type()),
-                                                  account.getCreationDate(),
+                                                  new java.sql.Timestamp(account.getCreationDate()),
                                                   account.getPin(),
                                                   account.getStatus().identifier(),
                                                   account.getName(),
@@ -106,8 +106,8 @@ public class SQLAccount implements Datable<Account> {
         ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().savePlayer(),
                                                 new Object[]{
                                                     account.getIdentifier(),
-                                                    ((PlayerAccount)account).getLastOnline(),
-                                                    ((PlayerAccount)account).getLastOnline()
+                                                    new java.sql.Timestamp(((PlayerAccount)account).getLastOnline()),
+                                                    new java.sql.Timestamp(((PlayerAccount)account).getLastOnline())
                                                 });
 
       }
@@ -189,7 +189,7 @@ public class SQLAccount implements Datable<Account> {
               account = acc.get();
 
               account.setStatus(TNECore.eco().account().findStatus(result.getString("status")));
-              account.setCreationDate(result.getLong("created"));
+              account.setCreationDate(result.getTimestamp("created").getTime());
               account.setPin(result.getString("pin"));
             }
           }
@@ -208,7 +208,7 @@ public class SQLAccount implements Datable<Account> {
                                                                             identifier
                                                                         })) {
             if(result.next()) {
-              ((PlayerAccount)account).setLastOnline(result.getLong("last_online"));
+              ((PlayerAccount)account).setLastOnline(result.getTimestamp("last_online").getTime());
             }
           } catch(SQLException e) {
             e.printStackTrace();

@@ -76,7 +76,7 @@ public class SQLReceipt implements Datable<Receipt> {
       ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveReceipt(),
                                               new Object[]{
                                                   object.getId().toString(),
-                                                  object.getTime(),
+                                                  new java.sql.Timestamp(object.getTime()),
                                                   object.getType(),
                                                   object.getSource().name(),
                                                   object.getSource().type(),
