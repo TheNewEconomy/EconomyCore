@@ -18,6 +18,7 @@ package net.tnemc.core.manager;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.io.maps.EnhancedHashMap;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
@@ -60,12 +61,14 @@ public class TransactionManager {
 
   private final Map<UUID, Receipt> receipts = new ConcurrentHashMap<>();
 
-  //TODO: Configuration loading.
-  private boolean track = true;
-  private BigDecimal amount = new BigDecimal("400");
+  private boolean track;
+  private BigDecimal amount;
 
 
   public TransactionManager() {
+
+    this.track = MainConfig.yaml().getBoolean("Core.Transactions.Tracking.Enabled");
+    this.amount = new BigDecimal(MainConfig.yaml().getString("Core.Transactions.Tracking.Amount"));
 
     //Add our default TransactionTypes.
     addType(new PayType());

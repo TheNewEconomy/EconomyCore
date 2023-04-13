@@ -137,7 +137,9 @@ public abstract class TNECore {
     this.storage = new StorageManager(data);
     this.storage.loadAll(Account.class, "");
 
-    //TODO: Server Account
+    if(economyManager.account().findAccount("98a37f1a-e431-4eb2-9415-5db53b566436").isEmpty()) {
+      economyManager.account().createAccount("98a37f1a-e431-4eb2-9415-5db53b566436", "Server_Account");
+    }
 
     new MenuManager();
     MenuManager.instance().addMenu(new MyEcoMenu());
