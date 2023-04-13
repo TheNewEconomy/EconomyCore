@@ -47,6 +47,7 @@ Options:
     #    - "example_flag""
 
     #Configurations relating to crafting this currency tier.
+    #TODO: Implement this configuration
     Crafting:
 
         #If custom crafting recipes for this tier are enabled.

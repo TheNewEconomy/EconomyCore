@@ -137,6 +137,7 @@ Formatting:
 
 
 #All configurations relating to currency notes.
+#TODO: Implement this configuration
 Note:
 
     #Whether or not this currency is able to be noted using the note command

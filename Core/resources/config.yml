@@ -7,12 +7,15 @@ Core:
     Version: "0.1.2.0"
     
     #Should TNE separate account balances by world?
+    #TODO: Implement this configuration
     Multiworld: false
 
     #The name of the world to use if multiworld is set to false. Setting to TNE_SYSTEM will let TNE decide the default world.
+    #TODO: Implement this configuration
     DefaultWorld: "TNE_SYSTEM"
 
     #Should TNE be placed in debug mode?
+    #TODO: Implement this configuration
     Debug: false
 
     #All configurations relating to the server in general.
@@ -20,22 +23,27 @@ Core:
 
         #Should TNE automatically group the world's realms with the main overworld world.
         #Example: Setting this to true would make world, world_nether and world_the_end share balances automatically.
+        #TODO: Implement this configuration
         GroupRealms: true
 
         #Should TNE disable mob drops that are valid item currencies?
+        #TODO: Implement this configuration
         MobDrop: true
 
         #Should experience gaining be disabled? This will help for servers that use Experience as currency.
+        #TODO: Implement this configuration
         ExperienceGain: false
 
         #Should players be allowed to use currencies in villager trading?
         #This allows blocking trading item-based currencies to villagers.
+        #TODO: Implement this configuration
         CurrencyTrading: true
 
         #The name of this server for data-related purposes. Max length is 100 characters.
         Name: "Main Server"
 
-        #All configurations relating to the server"s economy account.
+        #All configurations relating to the server's economy account.
+        #TODO: Implement this configuration
         Account:
 
             #Enable the server account?
@@ -48,6 +56,7 @@ Core:
             Balance: 500
 
         #Configurations relating to third-party support.
+        #TODO: Implement this configuration
         ThirdParty:
 
             #Enable bstats?
@@ -66,6 +75,7 @@ Core:
             McMMORewards: true
 
     #All configurations relating to TNE commands
+    #TODO: Implement this configuration
     Commands:
 
         #Configurations relating to the money top command.
@@ -93,6 +103,7 @@ Core:
           Radius: 0
     
     #All configurations relating to update checking
+    #TODO: Implement this configuration
     Update:
     
         #Should TNE check for updates?
@@ -105,9 +116,11 @@ Core:
     Transactions:
 
         #The time format to use when displaying transaction history data.
+        #TODO: Implement this configuration
         Format: "M, d y"
 
         #The timezone to use for transactions.
+        #TODO: Implement this configuration
         Timezone: "US/Eastern"
 
         #Configurations relating to tracking large transactions
@@ -120,6 +133,7 @@ Core:
             Amount: 400
 
         #Configurations relating to pay transactions.
+        #TODO: Implement this configuration
         Pay:
 
             #Tax-related configurations.
@@ -132,15 +146,17 @@ Core:
                 Receiver: 0.0
 
         #Configurations relating to conversion transactions.
+        #TODO: Implement this configuration
         Conversion:
 
             #Tax-related configurations.
             Tax:
 
-                #The tax to apply to the sender
+                #The tax to apply to a conversion transaction.
                 Rate: 0.0
 
     #All configurations relating to the data auto saver
+        #TODO: Implement this configuration
     AutoSaver:
 
         #Should TNE auto save data periodically?
@@ -150,6 +166,7 @@ Core:
         Interval: 600
 
     #All configurations relating to currency.
+    #TODO: Implement this configuration
     Currency:
 
         #Configurations relating to basic information about currencies.

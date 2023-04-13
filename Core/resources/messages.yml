@@ -217,7 +217,3 @@ Messages:
             Void:
                 Arguments: "<uuid>"
                 Description: "Undoes a previously completed transaction.<newline>- UUID ~ The id of the transaction."
-
-    World:
-        Change: "<red>You have been charged <gold> $amount<red> for changing worlds."
-        ChangeFailed: "<red>I'm sorry, but you need at least <gold>$amount<red> to change worlds."

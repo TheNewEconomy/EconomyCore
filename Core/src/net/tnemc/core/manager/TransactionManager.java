@@ -68,7 +68,15 @@ public class TransactionManager {
   public TransactionManager() {
 
     this.track = MainConfig.yaml().getBoolean("Core.Transactions.Tracking.Enabled");
-    this.amount = new BigDecimal(MainConfig.yaml().getString("Core.Transactions.Tracking.Amount"));
+
+    try {
+
+      this.amount = new BigDecimal(MainConfig.yaml().getString("Core.Transactions.Tracking.Amount"));
+    } catch(NumberFormatException ignore) {
+
+      //Invalid configuration so we set our default
+      this.amount = new BigDecimal("400");
+    }
 
     //Add our default TransactionTypes.
     addType(new PayType());
