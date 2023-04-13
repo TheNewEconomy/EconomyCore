@@ -52,14 +52,4 @@ public class Oracle extends StandardSQL {
   public String url(String file, String host, int port, String database) {
     return "jdbc:oracle:thin:@" + host + ":" + port + ":" + database;
   }
-
-  /**
-   * Used to get the {@link HikariConfig} for this {@link SQLEngine}.
-   *
-   * @return The {@link HikariConfig}.
-   */
-  @Override
-  public HikariConfig config() {
-    return null;
-  }
 }

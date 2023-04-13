@@ -19,8 +19,12 @@ package net.tnemc.core.io.storage.engine;
  */
 
 import com.zaxxer.hikari.HikariConfig;
+import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.io.storage.SQLEngine;
 import net.tnemc.core.io.storage.connect.SQLConnector;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MySQL extends StandardSQL {
 
@@ -37,30 +41,48 @@ public class MySQL extends StandardSQL {
   @Override
   public String[] driver() {
     return new String[] {
-      "com.mysql.jdbc.Driver"
+        "org.mariadb.jdbc.Driver",
+        "com.mysql.cj.jdbc.Driver",
+        "com.mysql.jdbc.Driver"
     };
   }
 
   @Override
   public String[] dataSource() {
     return new String[] {
-      "com.mysql.jdbc.jdbc2.optional.MysqlDataSource"
+        "org.mariadb.jdbc.MariaDbDataSource",
+        "com.mysql.jdbc.jdbc2.optional.MysqlDataSource",
+        "com.mysql.cj.jdbc.MysqlDataSource"
     };
   }
 
   @Override
   public String url(String file, String host, int port, String database) {
-    return "jdbc:mysql://" + host + ":" + port + "/" +
-        database;
+    return "jdbc:mysql://" + host + ":" + port + "/" + database;
   }
 
   /**
-   * Used to get the {@link HikariConfig} for this {@link SQLEngine}.
-   *
-   * @return The {@link HikariConfig}.
+   * Used to get addition hikari properties for this {@link SQLEngine}.
+   * @return A map containing the additional properties.
    */
   @Override
-  public HikariConfig config() {
-    return null;
+  public Map<String, Object> properties() {
+    Map<String, Object> properties = new HashMap<>();
+
+    properties.put("autoReconnect", true);
+    properties.put("cachePrepStmts", true);
+    properties.put("prepStmtCacheSize", 250);
+    properties.put("prepStmtCacheSqlLimit", 2048);
+    properties.put("rewriteBatchedStatements", true);
+    properties.put("useServerPrepStmts", true);
+    properties.put("cacheCallableStmts", true);
+    properties.put("cacheResultSetMetadata", true);
+    properties.put("cacheServerConfiguration", true);
+    properties.put("useLocalSessionState", true);
+    properties.put("elideSetAutoCommits", true);
+    properties.put("alwaysSendSetIsolation", false);
+    properties.put("useSSL", DataConfig.yaml().getBoolean("Data.Database.SQL.SSL"));
+
+    return properties;
   }
 }

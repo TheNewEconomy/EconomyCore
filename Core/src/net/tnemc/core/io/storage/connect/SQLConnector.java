@@ -19,17 +19,20 @@ package net.tnemc.core.io.storage.connect;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.io.storage.Dialect;
 import net.tnemc.core.io.storage.SQLEngine;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.StorageEngine;
 import net.tnemc.core.io.storage.StorageManager;
+import org.intellij.lang.annotations.Language;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 
 /**
  * SQLConnector
@@ -40,17 +43,47 @@ import java.sql.SQLException;
 public class SQLConnector implements StorageConnector<Connection> {
 
   private DataSource source;
-  private HikariConfig config;
+
+  private String sourceClass;
+  private String driverClass;
 
   /**
    * Used to initialize a connection to the specified {@link StorageEngine}
    */
   @Override
   public void initialize() {
-    this.config = new HikariConfig();
 
+    findDriverSource();
 
-    this.source = new HikariDataSource(((SQLEngine)StorageManager.instance().getEngine()).config());
+    final HikariConfig config = new HikariConfig();
+
+    if(sourceClass != null) {
+      config.setDataSourceClassName(sourceClass);
+    }
+
+    //String file, String host, int port, String database
+    config.addDataSourceProperty("url",
+                                 ((SQLEngine)StorageManager.instance().getEngine()).url(
+                                     DataConfig.yaml().getString("Data.Database.File"),
+                                     DataConfig.yaml().getString("Data.Database.SQL.Host"),
+                                     DataConfig.yaml().getInt("Data.Database.SQL.Port"),
+                                     DataConfig.yaml().getString("Data.Database.SQL.DB")
+                                 ));
+
+    config.addDataSourceProperty("user",  DataConfig.yaml().getString("Data.Database.SQL.User"));
+    config.addDataSourceProperty("password",  DataConfig.yaml().getString("Data.Database.SQL.Password"));
+
+    config.setPoolName("TNE");
+    config.setConnectionTestQuery("SELECT 1");
+    config.setMaximumPoolSize(DataConfig.yaml().getInt("Data.Pool.MaxSize"));
+    config.setMaxLifetime(DataConfig.yaml().getInt("Data.Pool.MaxLife"));
+    config.setConnectionTimeout(DataConfig.yaml().getLong("Data.Pool.Timeout"));
+
+    for(Map.Entry<String, Object> entry : ((SQLEngine)StorageManager.instance().getEngine()).properties().entrySet()) {
+      config.addDataSourceProperty(entry.getKey(), entry.getValue());
+    }
+
+    this.source = new HikariDataSource(config);
   }
 
   /**
@@ -70,7 +103,7 @@ public class SQLConnector implements StorageConnector<Connection> {
    * @param variables An array of variables for the prepared statement.
    * @return The {@link ResultSet}.
    */
-  public ResultSet executeQuery(final String query, Object[] variables) {
+  public ResultSet executeQuery(@Language("SQL") final String query, Object[] variables) {
     try(Connection connection = connection();
         PreparedStatement statement = connection.prepareStatement(query)) {
 
@@ -90,7 +123,7 @@ public class SQLConnector implements StorageConnector<Connection> {
    * @param query The query string.
    * @param variables An array of variables for the prepared statement.
    */
-  public void executeUpdate(final String query, Object[] variables) {
+  public void executeUpdate(@Language("SQL") final String query, Object[] variables) {
     try(Connection connection = connection();
         PreparedStatement statement = connection.prepareStatement(query)) {
 
@@ -106,5 +139,36 @@ public class SQLConnector implements StorageConnector<Connection> {
 
   public Dialect dialect() {
     return ((SQLEngine)StorageManager.instance().getEngine()).dialect();
+  }
+
+  private void findDriverSource() {
+
+    for(final String source : ((SQLEngine)StorageManager.instance().getEngine()).dataSource()) {
+
+      if(sourceClass != null) {
+        break;
+      }
+
+      try {
+
+        Class.forName(source);
+
+        this.sourceClass = source;
+      } catch(Exception ignore) {}
+    }
+
+    for(final String driver : ((SQLEngine)StorageManager.instance().getEngine()).driver()) {
+
+      if(driverClass != null) {
+        break;
+      }
+
+      try {
+
+        Class.forName(driver);
+
+        this.driverClass = driver;
+      } catch(Exception ignore) {}
+    }
   }
 }

@@ -52,14 +52,4 @@ public class SQLServer extends StandardSQL {
   public String url(String file, String host, int port, String database) {
     return "jdbc:sqlserver://" + host + ":" + port + ";databaseName=" + database + ";";
   }
-
-  /**
-   * Used to get the {@link HikariConfig} for this {@link SQLEngine}.
-   *
-   * @return The {@link HikariConfig}.
-   */
-  @Override
-  public HikariConfig config() {
-    return null;
-  }
 }

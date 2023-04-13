@@ -137,6 +137,8 @@ public abstract class TNECore {
     this.storage = new StorageManager(data);
     this.storage.loadAll(Account.class, "");
 
+    //TODO: Server Account
+
     new MenuManager();
     MenuManager.instance().addMenu(new MyEcoMenu());
     MenuManager.instance().addMenu(new MyCurrencyMenu());

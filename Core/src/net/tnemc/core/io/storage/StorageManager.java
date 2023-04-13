@@ -62,6 +62,9 @@ public class StorageManager {
       case "postgre" -> this.engine = new PostgreSQL();
       default -> this.engine = new H2();
     }
+
+    //Initialize our connection.
+    this.connector.initialize();
   }
 
   public static StorageManager instance() {

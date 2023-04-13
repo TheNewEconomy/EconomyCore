@@ -19,6 +19,9 @@ package net.tnemc.core.io.storage;
 
 import com.zaxxer.hikari.HikariConfig;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * SQLEngine
  *
@@ -59,8 +62,10 @@ public interface SQLEngine extends StorageEngine {
   Dialect dialect();
 
   /**
-   * Used to get the {@link HikariConfig} for this {@link StorageEngine}.
-   * @return The {@link HikariConfig}.
+   * Used to get addition hikari properties for this {@link SQLEngine}.
+   * @return A map containing the additional properties.
    */
-  HikariConfig config();
+  default Map<String, Object> properties() {
+    return new HashMap<>();
+  }
 }

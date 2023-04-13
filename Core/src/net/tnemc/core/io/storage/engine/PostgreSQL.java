@@ -53,14 +53,4 @@ public class PostgreSQL extends StandardSQL {
   public String url(String file, String host, int port, String database) {
     return "jdbc:postgresql://" + host + ":" + port + "/" + database;
   }
-
-  /**
-   * Used to get the {@link HikariConfig} for this {@link SQLEngine}.
-   *
-   * @return The {@link HikariConfig}.
-   */
-  @Override
-  public HikariConfig config() {
-    return null;
-  }
 }
