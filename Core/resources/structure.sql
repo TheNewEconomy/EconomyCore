@@ -1,9 +1,3 @@
--- username table
-CREATE TABLE IF NOT EXISTS tne_player_names (
-    uid BINARY(16) NOT NULL PRIMARY KEY,
-    username VARCHAR(60) NOT NULL UNIQUE
-    );
-
 -- accounts table
 CREATE TABLE IF NOT EXISTS tne_accounts (
     uid BINARY(16) NOT NULL PRIMARY KEY,
