@@ -60,7 +60,7 @@ public class MySQLDialect implements Dialect {
 
     this.loadAccount = "SELECT username, account_type, created, pin, status FROM " + prefix + "tne_accounts WHERE uid = UUID_TO_BIN(?)";
 
-    this.saveAccount = "INSERT INTO " + prefix + "tne_accounts (uid, username, account_type, created, pin, status)" +
+    this.saveAccount = "INSERT INTO " + prefix + "accounts (uid, username, account_type, created, pin, status)" +
                        "VALUES (UUID_TO_BIN(?), ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE username = ?, status = ?, pin = ?";
 
     this.loadNonPlayer = "SELECT BIN_TO_UUID(owner) AS owner FROM " + prefix + "non_players_accounts WHERE uid = UUID_TO_BIN(?)";
@@ -115,14 +115,25 @@ public class MySQLDialect implements Dialect {
 
   @Override
   public String accountPurge(final int days) {
-    return "DELETE FROM " + prefix + "players_accounts WHERE last_online < DATE_FORMAT(NOW() + INTERVAL -" +
-           days + " DAY, '%Y-%m-%dT00:00:00')";
+    final String acc = prefix + "accounts";
+    final String players = prefix + "players_accounts";
+
+    return "DELETE FROM " + acc +
+        "WHERE uid IN (" +
+        "  SELECT uid FROM " + players +
+        "  WHERE EXISTS (" +
+        "    SELECT *" +
+        "    FROM " + acc +
+        "    WHERE " + acc + ".uid = " + players + ".uid" +
+        "    AND DATEDIFF(DAY, " + players + ".last_online, NOW()) >= " + days +
+        "  )" +
+        ");";
   }
 
   @Override
   public String receiptPurge(final int days) {
-    return "DELETE FROM " + prefix + "receipts WHERE performed < DATE_FORMAT(NOW() + INTERVAL -" +
-           days + " DAY, '%Y-%m-%dT00:00:00')";
+    return "DELETE FROM " + prefix + "receipts WHERE archived = false" +
+           "AND DATEDIFF(CURDATE(), performed) >= " + days;
   }
 
   @Override
