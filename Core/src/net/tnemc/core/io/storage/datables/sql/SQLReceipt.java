@@ -21,6 +21,7 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
+import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageConnector;
@@ -59,6 +60,10 @@ public class SQLReceipt implements Datable<Receipt> {
   @Override
   public void purge(StorageConnector<?> connector) {
     if(connector instanceof SQLConnector) {
+      ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().accountPurge(
+                                                  DataConfig.yaml().getInt("Data.Purge.Transaction.Days")
+                                              ),
+                                              new Object[] {});
     }
   }
 

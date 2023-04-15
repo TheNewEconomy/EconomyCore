@@ -25,11 +25,9 @@ package net.tnemc.core.io.storage;
  */
 public interface Dialect {
 
-  //player names load
-  String loadNames();
+  String accountPurge(final int days);
 
-  //player name load
-  String loadName();
+  String receiptPurge(final int days);
 
   //player name save
   String saveName();

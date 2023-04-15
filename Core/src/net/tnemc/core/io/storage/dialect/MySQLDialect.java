@@ -27,8 +27,7 @@ import net.tnemc.core.io.storage.Dialect;
  */
 public class MySQLDialect implements Dialect {
 
-  private final String loadNames;
-  private final String loadName;
+  //The load and save queries
   private final String saveName;
   private final String loadAccounts;
   private final String loadAccount;
@@ -50,10 +49,10 @@ public class MySQLDialect implements Dialect {
   private final String loadModifiers;
   private final String saveModifier;
 
-  public MySQLDialect(final String prefix) {
-    this.loadNames = "SELECT BIN_TO_UUID(uid) AS uid, username FROM " + prefix + "player_names";
+  private final String prefix;
 
-    this.loadName = "SELECT username FROM " + prefix + "player_names WHERE uid = UUID_TO_BIN(?)";
+  public MySQLDialect(final String prefix) {
+    this.prefix = prefix;
 
     this.saveName = "INSERT INTO " + prefix + "player_names (uid, username) VALUES (UUID_TO_BIN(?), ?) ON DUPLICATE KEY UPDATE username = ?";
 
@@ -115,13 +114,15 @@ public class MySQLDialect implements Dialect {
   }
 
   @Override
-  public String loadNames() {
-    return loadNames;
+  public String accountPurge(final int days) {
+    return "DELETE FROM " + prefix + "players_accounts WHERE last_online < DATE_FORMAT(NOW() + INTERVAL -" +
+           days + " DAY, '%Y-%m-%dT00:00:00')";
   }
 
   @Override
-  public String loadName() {
-    return loadName;
+  public String receiptPurge(final int days) {
+    return "DELETE FROM " + prefix + "receipts WHERE performed < DATE_FORMAT(NOW() + INTERVAL -" +
+           days + " DAY, '%Y-%m-%dT00:00:00')";
   }
 
   @Override

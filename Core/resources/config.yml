@@ -156,7 +156,7 @@ Core:
                 Rate: 0.0
 
     #All configurations relating to the data auto saver
-        #TODO: Implement this configuration
+    #TODO: Implement this configuration
     AutoSaver:
 
         #Should TNE auto save data periodically?

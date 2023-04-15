@@ -24,6 +24,7 @@ import net.tnemc.core.account.SharedAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.shared.Member;
 import net.tnemc.core.actions.EconomyResponse;
+import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.connect.SQLConnector;
@@ -65,6 +66,10 @@ public class SQLAccount implements Datable<Account> {
   @Override
   public void purge(StorageConnector<?> connector) {
     if(connector instanceof SQLConnector) {
+      ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().accountPurge(
+                                                  DataConfig.yaml().getInt("Data.Purge.Accounts.Days")
+                                              ),
+                                              new Object[] {});
     }
   }
 
