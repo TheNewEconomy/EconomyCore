@@ -1,5 +1,4 @@
-package net.tnemc.core.io.storage.engine;
-
+package net.tnemc.sponge.impl.scheduler;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -18,34 +17,26 @@ package net.tnemc.core.io.storage.engine;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class PostgreSQL extends StandardSQL {
+import net.tnemc.core.compatibility.scheduler.Chore;
+import net.tnemc.core.compatibility.scheduler.ChoreExecution;
+import org.spongepowered.api.scheduler.Task;
+
+/**
+ * SpongeChore
+ *
+ * @author creatorfromhell
+ * @since 0.1.2.0
+ */
+public class SpongeChore extends Chore<Task> {
+  public SpongeChore(Task task, ChoreExecution execution) {
+    super(task, execution);
+  }
 
   /**
-   * The name of this engine.
-   *
-   * @return The engine name.
+   * Cancels this task.
    */
   @Override
-  public String name() {
-    return "postgre";
-  }
-
-  @Override
-  public String[] driver() {
-    return new String[] {
-        "org.postgresql.Driver"
-    };
-  }
-
-  @Override
-  public String[] dataSource() {
-    return new String[]{
-        "org.postgresql.ds.PGSimpleDataSource"
-    };
-  }
-
-  @Override
-  public String url(String file, String host, int port, String database) {
-    return "jdbc:postgresql://" + host + ":" + port + "/" + database;
+  public void cancel() {
+    task.cancel();
   }
 }

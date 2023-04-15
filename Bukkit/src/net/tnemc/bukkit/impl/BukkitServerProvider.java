@@ -19,8 +19,10 @@ package net.tnemc.bukkit.impl;
  */
 
 import net.tnemc.bukkit.TNE;
+import net.tnemc.bukkit.impl.scheduler.BukkitScheduler;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
+import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.bukkit.BukkitCalculationsProvider;
@@ -40,6 +42,12 @@ import java.util.UUID;
 public class BukkitServerProvider implements ServerConnector {
 
   private BukkitCalculationsProvider calc = new BukkitCalculationsProvider();
+
+  private final BukkitScheduler scheduler;
+
+  public BukkitServerProvider() {
+    this.scheduler = new BukkitScheduler();
+  }
 
   /**
    * Attempts to find a {@link PlayerProvider player} based on an {@link UUID identifier}.
@@ -124,6 +132,16 @@ public class BukkitServerProvider implements ServerConnector {
   @Override
   public void saveResource(String path, boolean replace) {
     TNE.instance().saveResource(path, replace);
+  }
+
+  /**
+   * Provides this implementation's {@link SchedulerProvider scheduler}.
+   *
+   * @return The scheduler for this implementation.
+   */
+  @Override
+  public BukkitScheduler scheduler() {
+    return scheduler;
   }
 
   @Override

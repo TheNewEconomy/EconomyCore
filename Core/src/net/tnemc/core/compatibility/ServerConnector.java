@@ -18,6 +18,7 @@ package net.tnemc.core.compatibility;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
 import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.item.AbstractItemStack;
@@ -119,6 +120,12 @@ public interface ServerConnector {
    * @param replace If the file exists in the local system's storage, should it be replaced?
    */
   void saveResource(final String path, final boolean replace);
+
+  /**
+   * Provides this implementation's {@link SchedulerProvider scheduler}.
+   * @return The scheduler for this implementation.
+   */
+  SchedulerProvider scheduler();
 
   <S, T extends AbstractItemStack<S>, INV> CalculationsProvider<T, S, INV> calculations();
 

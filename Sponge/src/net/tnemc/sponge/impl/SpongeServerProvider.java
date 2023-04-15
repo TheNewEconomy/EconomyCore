@@ -20,10 +20,12 @@ package net.tnemc.sponge.impl;
 
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
+import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.providers.CalculationsProvider;
 import net.tnemc.sponge.SpongeCore;
+import net.tnemc.sponge.impl.scheduler.SpongeScheduler;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.Player;
@@ -41,6 +43,12 @@ import java.util.UUID;
 public class SpongeServerProvider implements ServerConnector {
 
   private final SpongeItemCalculations calc = new SpongeItemCalculations();
+
+  private final SpongeScheduler scheduler;
+
+  public SpongeServerProvider() {
+    this.scheduler = new SpongeScheduler();
+  }
 
   /**
    * Attempts to find a {@link PlayerProvider player} based on an {@link UUID identifier}.
@@ -127,6 +135,16 @@ public class SpongeServerProvider implements ServerConnector {
   @Override
   public void saveResource(String path, boolean replace) {
     //TODO: This
+  }
+
+  /**
+   * Provides this implementation's {@link SchedulerProvider scheduler}.
+   *
+   * @return The scheduler for this implementation.
+   */
+  @Override
+  public SpongeScheduler scheduler() {
+    return scheduler;
   }
 
   @Override

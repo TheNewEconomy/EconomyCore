@@ -134,7 +134,7 @@ public abstract class TNECore {
     this.data.load();
     this.messageConfig.load();
 
-    this.storage = new StorageManager(data);
+    this.storage = new StorageManager();
     this.storage.loadAll(Account.class, "");
 
     if(economyManager.account().findAccount("98a37f1a-e431-4eb2-9415-5db53b566436").isEmpty()) {

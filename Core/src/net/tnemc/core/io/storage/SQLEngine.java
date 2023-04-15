@@ -17,8 +17,6 @@ package net.tnemc.core.io.storage;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.zaxxer.hikari.HikariConfig;
-
 import java.util.HashMap;
 import java.util.Map;
 

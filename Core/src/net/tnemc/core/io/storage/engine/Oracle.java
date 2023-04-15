@@ -18,10 +18,6 @@ package net.tnemc.core.io.storage.engine;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.zaxxer.hikari.HikariConfig;
-import net.tnemc.core.io.storage.SQLEngine;
-import net.tnemc.core.io.storage.connect.SQLConnector;
-
 public class Oracle extends StandardSQL {
 
   /**

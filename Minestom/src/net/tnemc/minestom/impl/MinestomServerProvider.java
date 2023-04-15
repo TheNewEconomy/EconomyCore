@@ -21,9 +21,11 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
+import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.providers.CalculationsProvider;
+import net.tnemc.minestom.impl.scheduler.MinestomScheduler;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -38,6 +40,12 @@ import java.util.UUID;
 public class MinestomServerProvider implements ServerConnector {
 
   private final MinestomItemCalculations calc = new MinestomItemCalculations();
+
+  private final MinestomScheduler scheduler;
+
+  public MinestomServerProvider() {
+    this.scheduler = new MinestomScheduler();
+  }
   /**
    * Attempts to find a {@link PlayerProvider player} based on an {@link UUID identifier}.
    *
@@ -138,6 +146,16 @@ public class MinestomServerProvider implements ServerConnector {
   @Override
   public void saveResource(String path, boolean replace) {
 
+  }
+
+  /**
+   * Provides this implementation's {@link SchedulerProvider scheduler}.
+   *
+   * @return The scheduler for this implementation.
+   */
+  @Override
+  public MinestomScheduler scheduler() {
+    return scheduler;
   }
 
   @Override

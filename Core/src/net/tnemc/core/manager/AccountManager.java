@@ -134,6 +134,9 @@ public class AccountManager {
     }
 
     accounts.put(account.getIdentifier(), account);
+
+    TNECore.storage().store(account, account.getIdentifier());
+
     try {
       uuidProvider.store(new UUIDPair(UUID.fromString(account.getIdentifier()), account.getName()));
     } catch(Exception ignore) {

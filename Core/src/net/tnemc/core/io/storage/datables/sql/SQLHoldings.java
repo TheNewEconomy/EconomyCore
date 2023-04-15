@@ -62,9 +62,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    */
   @Override
   public void purge(StorageConnector<?> connector) {
-    if(connector instanceof SQLConnector) {
-      //This isn't required, it'll be deleted with the account.
-    }
+    //This isn't required, it'll be deleted with the account.
   }
 
   /**
@@ -144,6 +142,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
                                                                         identifier
                                                                     })) {
         while(result.next()) {
+
           //region, currency, amount, type
           final HoldingsEntry entry = new HoldingsEntry(result.getString("region"),
                                                   UUID.fromString(result.getString("currency")),

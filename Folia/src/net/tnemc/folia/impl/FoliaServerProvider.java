@@ -21,8 +21,10 @@ package net.tnemc.folia.impl;
 import net.tnemc.bukkit.impl.BukkitItemCalculations;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
+import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.folia.TNE;
+import net.tnemc.folia.impl.scheduler.FoliaScheduler;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.bukkit.BukkitCalculationsProvider;
 import net.tnemc.item.bukkit.BukkitItemStack;
@@ -41,6 +43,12 @@ import java.util.UUID;
 public class FoliaServerProvider implements ServerConnector {
 
   private BukkitCalculationsProvider calc = new BukkitCalculationsProvider();
+
+  private final FoliaScheduler scheduler;
+
+  public FoliaServerProvider() {
+    this.scheduler = new FoliaScheduler();
+  }
 
   /**
    * Attempts to find a {@link PlayerProvider player} based on an {@link UUID identifier}.
@@ -125,6 +133,16 @@ public class FoliaServerProvider implements ServerConnector {
   @Override
   public void saveResource(String path, boolean replace) {
     TNE.instance().saveResource(path, replace);
+  }
+
+  /**
+   * Provides this implementation's {@link SchedulerProvider scheduler}.
+   *
+   * @return The scheduler for this implementation.
+   */
+  @Override
+  public FoliaScheduler scheduler() {
+    return scheduler;
   }
 
   @Override
