@@ -40,6 +40,11 @@ public interface StorageEngine {
   void reset();
 
   /**
+   * Used to back up all data in the database for this engine.
+   */
+  void backup();
+
+  /**
    * Used to get the {@link Datable} classes for this engine.
    * @return A map with the datables.
    */

@@ -76,6 +76,14 @@ public abstract class StandardSQL implements SQLEngine {
   }
 
   /**
+   * Used to back up all data in the database for this engine.
+   */
+  @Override
+  public void backup() {
+
+  }
+
+  /**
    * Used to get the {@link Datable} classes for this engine.
    *
    * @return A map with the datables.

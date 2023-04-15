@@ -133,8 +133,7 @@ public class StorageManager {
    */
   public void purge() {
     for(Datable<?> data : engine.datables().values()) {
-      TNECore.server().scheduler().createDelayedTask(()->data.purge(connector),
-                                                     5, ChoreExecution.SECONDARY);
+      TNECore.server().scheduler().createDelayedTask(()->data.purge(connector), 5, ChoreExecution.SECONDARY);
     }
   }
 
@@ -142,9 +141,7 @@ public class StorageManager {
    * Used to reset all data in TNE.
    */
   public void reset() {
-    TNECore.server().scheduler().createDelayedTask(()->engine.reset(),
-                                                   5, ChoreExecution.SECONDARY);
-
+    TNECore.server().scheduler().createDelayedTask(()->engine.reset(), 5, ChoreExecution.SECONDARY);
   }
 
   /**
@@ -152,8 +149,8 @@ public class StorageManager {
    * @return True if the backup was successful, otherwise false.
    */
   public boolean backup() {
-    //TODO: Backup storage engine.
-    return false;
+    TNECore.server().scheduler().createDelayedTask(()->engine.backup(), 5, ChoreExecution.SECONDARY);
+    return true;
   }
 
   public StorageEngine getEngine() {
