@@ -81,7 +81,7 @@ public class MySQLDialect implements Dialect {
     this.loadHoldings = "SELECT server, region, BIN_TO_UUID(currency) AS currency, holdings_type, holdings FROM " + prefix +
                         "tne_holdings WHERE uid = UUID_TO_BIN(?)";
 
-    this.saveHolding = "INSERT INTO " + prefix + "tne_holdings (uid, server, region, currency, holdings_type, holdings) " +
+    this.saveHolding = "INSERT INTO " + prefix + "holdings (uid, server, region, currency, holdings_type, holdings) " +
                        "VALUES (UUID_TO_BIN(?), ?, ?, UUID_TO_BIN(?), ?, ?) ON DUPLICATE KEY UPDATE holdings = ?";
 
     this.loadReceipts = "SELECT BIN_TO_UUID(uid) AS uid, performed, receipt_type, receipt_source, receipt_source_type, archive, voided FROM " +
