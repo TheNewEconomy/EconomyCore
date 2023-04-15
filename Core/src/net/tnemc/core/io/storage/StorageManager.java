@@ -18,7 +18,9 @@ package net.tnemc.core.io.storage;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.compatibility.scheduler.ChoreExecution;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.io.storage.connect.SQLConnector;
 import net.tnemc.core.io.storage.engine.H2;
@@ -110,9 +112,8 @@ public class StorageManager {
   public <T> void store(T object, @Nullable String identifier) {
     final Datable<T> data = (Datable<T>)engine.datables().get(object.getClass());
     if(data != null) {
-
-      //TODO: Scheduling system
-      data.store(connector, object, identifier);
+      TNECore.server().scheduler().createDelayedTask(()->data.store(connector, object, identifier),
+                                                     5, ChoreExecution.SECONDARY);
     }
   }
 
@@ -123,8 +124,8 @@ public class StorageManager {
     final Optional<Datable<?>> data = Optional.ofNullable(engine.datables().get(Account.class));
 
     //Our account storeAll requires no identifier, so we set it to null
-    //TODO: Scheduling System.
-    data.ifPresent(datable->datable.storeAll(connector, null));
+    data.ifPresent(datable->TNECore.server().scheduler()
+        .createDelayedTask(()->datable.storeAll(connector, null), 5, ChoreExecution.SECONDARY));
   }
 
   /**
@@ -132,8 +133,8 @@ public class StorageManager {
    */
   public void purge() {
     for(Datable<?> data : engine.datables().values()) {
-      //TODO: Scheduling System.
-      data.purge(connector);
+      TNECore.server().scheduler().createDelayedTask(()->data.purge(connector),
+                                                     5, ChoreExecution.SECONDARY);
     }
   }
 
@@ -141,8 +142,9 @@ public class StorageManager {
    * Used to reset all data in TNE.
    */
   public void reset() {
-    //TODO: Scheduling System.
-    engine.reset();
+    TNECore.server().scheduler().createDelayedTask(()->engine.reset(),
+                                                   5, ChoreExecution.SECONDARY);
+
   }
 
   /**
