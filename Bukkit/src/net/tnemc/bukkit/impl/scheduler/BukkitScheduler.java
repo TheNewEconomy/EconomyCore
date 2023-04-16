@@ -42,10 +42,10 @@ public class BukkitScheduler extends SchedulerProvider<BukkitChore> {
   @Override
   public void createDelayedTask(Runnable task, ChoreTime delay, ChoreExecution environment) {
     if(environment.equals(ChoreExecution.MAIN_THREAD)) {
-      Bukkit.getScheduler().runTaskLater(TNE.instance(), task, delay.getTime());
+      Bukkit.getScheduler().runTaskLater(TNE.instance(), task, delay.asTicks());
       return;
     }
-    Bukkit.getScheduler().runTaskLaterAsynchronously(TNE.instance(), task, delay.getTime());
+    Bukkit.getScheduler().runTaskLaterAsynchronously(TNE.instance(), task, delay.asTicks());
   }
 
   /**
@@ -61,8 +61,8 @@ public class BukkitScheduler extends SchedulerProvider<BukkitChore> {
   @Override
   public BukkitChore createRepeatingTask(Runnable task, ChoreTime delay, ChoreTime period, ChoreExecution environment) {
     if(environment.equals(ChoreExecution.MAIN_THREAD)) {
-      return new BukkitChore(Bukkit.getScheduler().runTaskTimer(TNE.instance(), task, delay.getTime(), period.getTime()), environment);
+      return new BukkitChore(Bukkit.getScheduler().runTaskTimer(TNE.instance(), task, delay.asTicks(), period.asTicks()), environment);
     }
-    return new BukkitChore(Bukkit.getScheduler().runTaskTimerAsynchronously(TNE.instance(), task, delay.getTime(), period.getTime()), environment);
+    return new BukkitChore(Bukkit.getScheduler().runTaskTimerAsynchronously(TNE.instance(), task, delay.asTicks(), period.asTicks()), environment);
   }
 }

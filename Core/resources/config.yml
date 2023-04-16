@@ -154,16 +154,6 @@ Core:
                 #The tax may also be a percentage.
                 Rate: 0.0
 
-    #All configurations relating to the data auto saver
-    #TODO: Implement this configuration
-    AutoSaver:
-
-        #Should TNE auto save data periodically?
-        Enabled: true
-
-        #The interval at which the auto saver will save data(in seconds)
-        Interval: 600
-
     #All configurations relating to currency.
     #TODO: Implement this configuration
     Currency:

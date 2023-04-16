@@ -52,6 +52,14 @@ public class ChoreTime {
     return unit.toSeconds(time);
   }
 
+  public long asTicks() {
+    if(unit == null) {
+      //this is ticks since our unit is null, so we just return it
+      return time;
+    }
+    return (unit.toSeconds(time) * 20);
+  }
+
   public int getTime() {
     return time;
   }

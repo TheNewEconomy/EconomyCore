@@ -27,6 +27,8 @@ import net.tnemc.core.api.TNEAPI;
 import net.tnemc.core.compatibility.LogProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.log.DebugLevel;
+import net.tnemc.core.compatibility.scheduler.ChoreExecution;
+import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.config.MessageConfig;
@@ -44,6 +46,7 @@ import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 /**
@@ -172,6 +175,16 @@ public abstract class TNECore {
     MenuManager.instance().addMenu(new MyEcoMenu());
     MenuManager.instance().addMenu(new MyCurrencyMenu());
     MenuManager.instance().addMenu(new MyBalMenu());
+
+    //Setup the autosaver if enabled.
+    if(DataConfig.yaml().getBoolean("Data.AutoSaver.Enabled")) {
+
+      server.scheduler().createRepeatingTask(()->{
+        storage.storeAll();
+      }, new ChoreTime(0),
+         new ChoreTime(DataConfig.yaml().getInt("Data.AutoSaver.Interval"), TimeUnit.SECONDS),
+         ChoreExecution.SECONDARY);
+    }
   }
 
   /**
