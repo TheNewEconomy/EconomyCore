@@ -18,6 +18,8 @@ package net.tnemc.core.io.storage;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import com.sun.jdi.connect.Connector;
+
 import java.util.Map;
 
 /**
@@ -36,13 +38,17 @@ public interface StorageEngine {
 
   /**
    * Used to reset all data for this engine.
+   *
+   * @param connector The storage connector to use for this transaction.
    */
-  void reset();
+  void reset(StorageConnector<?> connector);
 
   /**
    * Used to back up all data in the database for this engine.
+   *
+   * @param connector The storage connector to use for this transaction.
    */
-  void backup();
+  void backup(StorageConnector<?> connector);
 
   /**
    * Used to get the {@link Datable} classes for this engine.

@@ -18,6 +18,7 @@ package net.tnemc.core.io.storage.dialect;
  */
 
 import net.tnemc.core.io.storage.Dialect;
+import org.intellij.lang.annotations.Language;
 
 /**
  * MySQLDialect
@@ -28,25 +29,64 @@ import net.tnemc.core.io.storage.Dialect;
 public class MySQLDialect implements Dialect {
 
   //The load and save queries
+  @Language("SQL")
   private final String saveName;
+
+  @Language("SQL")
   private final String loadAccounts;
+
+  @Language("SQL")
   private final String loadAccount;
+
+  @Language("SQL")
   private final String saveAccount;
+
+  @Language("SQL")
   private final String loadNonPlayer;
+
+  @Language("SQL")
   private final String saveNonPlayer;
+
+  @Language("SQL")
   private final String loadPlayer;
+
+  @Language("SQL")
   private final String savePlayer;
+
+  @Language("SQL")
   private final String loadMembers;
+
+  @Language("SQL")
   private final String saveMember;
+
+  @Language("SQL")
   private final String loadHoldings;
+
+  @Language("SQL")
   private final String saveHolding;
+
+  @Language("SQL")
   private final String loadReceipts;
+
+  @Language("SQL")
   private final String saveReceipt;
+
+  @Language("SQL")
   private final String loadReceiptHolding;
+
+  @Language("SQL")
   private final String saveReceiptHolding;
+
+  @Language("SQL")
   private final String loadParticipants;
+
+  @Language("SQL")
   private final String saveParticipant;
+
+  @Language("SQL")
   private final String loadModifiers;
+
+  @Language("SQL")
   private final String saveModifier;
 
   private final String prefix;
@@ -114,7 +154,7 @@ public class MySQLDialect implements Dialect {
   }
 
   @Override
-  public String accountPurge(final int days) {
+  public @Language("SQL") String accountPurge(final int days) {
     final String acc = prefix + "accounts";
     final String players = prefix + "players_accounts";
 
@@ -131,108 +171,108 @@ public class MySQLDialect implements Dialect {
   }
 
   @Override
-  public String receiptPurge(final int days) {
+  public @Language("SQL") String receiptPurge(final int days) {
     return "DELETE FROM " + prefix + "receipts WHERE archived = false" +
            "AND DATEDIFF(CURDATE(), performed) >= " + days;
   }
 
   @Override
-  public String saveName() {
+  public @Language("SQL") String saveName() {
     return saveName;
   }
 
   @Override
-  public String loadAccounts() {
+  public @Language("SQL") String loadAccounts() {
     return loadAccounts;
   }
 
   @Override
-  public String loadAccount() {
+  public @Language("SQL") String loadAccount() {
     return loadAccount;
   }
 
   @Override
-  public String saveAccount() {
+  public @Language("SQL") String saveAccount() {
     return saveAccount;
   }
 
   @Override
-  public String loadNonPlayer() {
+  public @Language("SQL") String loadNonPlayer() {
     return loadNonPlayer;
   }
 
   @Override
-  public String saveNonPlayer() {
+  public @Language("SQL") String saveNonPlayer() {
     return saveNonPlayer;
   }
 
   @Override
-  public String loadPlayer() {
+  public @Language("SQL") String loadPlayer() {
     return loadPlayer;
   }
 
   @Override
-  public String savePlayer() {
+  public @Language("SQL") String savePlayer() {
     return savePlayer;
   }
 
   @Override
-  public String loadMembers() {
+  public @Language("SQL") String loadMembers() {
     return loadMembers;
   }
 
   @Override
-  public String saveMembers() {
+  public @Language("SQL") String saveMembers() {
     return saveMember;
   }
 
   @Override
-  public String loadHoldings() {
+  public @Language("SQL") String loadHoldings() {
     return loadHoldings;
   }
 
   @Override
-  public String saveHoldings() {
+  public @Language("SQL") String saveHoldings() {
     return saveHolding;
   }
 
   @Override
-  public String loadReceipts() {
+  public @Language("SQL") String loadReceipts() {
     return loadReceipts;
   }
 
   @Override
-  public String saveReceipt() {
+  public @Language("SQL") String saveReceipt() {
     return saveReceipt;
   }
 
   @Override
-  public String loadReceiptHolding() {
+  public @Language("SQL") String loadReceiptHolding() {
     return loadReceiptHolding;
   }
 
   @Override
-  public String saveReceiptHolding() {
+  public @Language("SQL") String saveReceiptHolding() {
     return saveReceiptHolding;
   }
 
   @Override
-  public String loadParticipants() {
+  public @Language("SQL") String loadParticipants() {
     return loadParticipants;
   }
 
   @Override
-  public String saveParticipant() {
+  public @Language("SQL") String saveParticipant() {
     return saveParticipant;
   }
 
   @Override
-  public String loadModifiers() {
+  public @Language("SQL") String loadModifiers() {
     return loadModifiers;
   }
 
   @Override
-  public String saveModifier() {
+  public @Language("SQL") String saveModifier() {
     return saveModifier;
   }
 }

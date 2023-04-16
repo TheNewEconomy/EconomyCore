@@ -139,13 +139,11 @@ public class Transaction {
     }
 
     this.modifierFrom = modifier;
-
     return this;
   }
 
   /**
    * Used to set the {@link TransactionParticipant to} participant.
-   *
    *
    * @param id The identifier of this participant.
    * @param modifier The {@link HoldingsModifier modifier} associated with this participant.

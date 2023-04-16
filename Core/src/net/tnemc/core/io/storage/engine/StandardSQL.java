@@ -17,18 +17,25 @@ package net.tnemc.core.io.storage.engine;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import com.sun.jdi.connect.Connector;
+import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.Dialect;
 import net.tnemc.core.io.storage.SQLEngine;
+import net.tnemc.core.io.storage.StorageConnector;
+import net.tnemc.core.io.storage.connect.SQLConnector;
 import net.tnemc.core.io.storage.datables.sql.SQLAccount;
 import net.tnemc.core.io.storage.datables.sql.SQLHoldings;
 import net.tnemc.core.io.storage.datables.sql.SQLReceipt;
 import net.tnemc.core.io.storage.dialect.MySQLDialect;
 import net.tnemc.core.transaction.Receipt;
+import org.intellij.lang.annotations.Language;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,13 +50,16 @@ public abstract class StandardSQL implements SQLEngine {
   private final Map<Class<?>, Datable<?>> datables = new HashMap<>();
 
   private final Dialect dialect;
+  private final String prefix;
 
   public StandardSQL() {
-    this(new MySQLDialect(DataConfig.yaml().getString("Data.Database.Prefix")));
+    this(DataConfig.yaml().getString("Data.Database.Prefix"),
+         new MySQLDialect(DataConfig.yaml().getString("Data.Database.Prefix")));
   }
 
-  public StandardSQL(Dialect dialect) {
+  public StandardSQL(final String prefix, Dialect dialect) {
     this.dialect = dialect;
+    this.prefix = prefix;
 
     //add our datables.
     datables.put(Account.class, new SQLAccount());
@@ -69,18 +79,40 @@ public abstract class StandardSQL implements SQLEngine {
 
   /**
    * Used to reset all data for this engine.
+   *
+   * @param connector The storage connector to use for this transaction.
    */
   @Override
-  public void reset() {
-    //TODO: Reset all data.
+  public void reset(StorageConnector<?> connector) {
+
+    @Language("SQL")
+    final String truncateAll = "SELECT concat('TRUNCATE TABLE ',table_catalog,'.',table_schema,'.',table_name)" +
+        "FROM information_schema.tables " +
+        "WHERE table_name LIKE '" + prefix + "%';";
+
+    if(connector instanceof SQLConnector) {
+      try(ResultSet result = ((SQLConnector)connector).executeQuery(truncateAll, new Object[]{})) {
+
+        while(result.next()) {
+          ((SQLConnector)connector).executeUpdate(result.getString(0), new Object[]{});
+        }
+      } catch(SQLException e) {
+        e.printStackTrace();
+      }
+    }
   }
 
   /**
    * Used to back up all data in the database for this engine.
+   *
+   * @param connector The storage connector to use for this transaction.
    */
   @Override
-  public void backup() {
+  public void backup(StorageConnector<?> connector) {
 
+    if(connector instanceof SQLConnector) {
+
+    }
   }
 
   /**

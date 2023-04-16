@@ -17,6 +17,8 @@ package net.tnemc.core.io.storage;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.intellij.lang.annotations.Language;
+
 /**
  * Dialect
  *
@@ -25,67 +27,67 @@ package net.tnemc.core.io.storage;
  */
 public interface Dialect {
 
-  String accountPurge(final int days);
+  @Language("SQL") String accountPurge(final int days);
 
-  String receiptPurge(final int days);
+  @Language("SQL") String receiptPurge(final int days);
 
   //player name save
-  String saveName();
+  @Language("SQL") String saveName();
 
   //load accounts
-  String loadAccounts();
+  @Language("SQL") String loadAccounts();
 
   //account load
-  String loadAccount();
+  @Language("SQL") String loadAccount();
 
   //account save
-  String saveAccount();
+  @Language("SQL") String saveAccount();
 
   //non player load
-  String loadNonPlayer();
+  @Language("SQL") String loadNonPlayer();
 
   //non player save
-  String saveNonPlayer();
+  @Language("SQL") String saveNonPlayer();
 
   //player load
-  String loadPlayer();
+  @Language("SQL") String loadPlayer();
 
   //player save
-  String savePlayer();
+  @Language("SQL") String savePlayer();
 
   //members load
-  String loadMembers();
+  @Language("SQL") String loadMembers();
 
   //members save
-  String saveMembers();
+  @Language("SQL") String saveMembers();
 
   //holdings load
-  String loadHoldings();
+  @Language("SQL") String loadHoldings();
 
   //holdings save
-  String saveHoldings();
+  @Language("SQL") String saveHoldings();
 
   //receipts load
-  String loadReceipts();
+  @Language("SQL") String loadReceipts();
 
   //receipt save
-  String saveReceipt();
+  @Language("SQL") String saveReceipt();
 
   //receipts load
-  String loadReceiptHolding();
+  @Language("SQL") String loadReceiptHolding();
 
   //receipt holding save
-  String saveReceiptHolding();
+  @Language("SQL") String saveReceiptHolding();
 
   //receipt participants load
-  String loadParticipants();
+  @Language("SQL") String loadParticipants();
 
   //receipt participant save
-  String saveParticipant();
+  @Language("SQL") String saveParticipant();
 
   //receipt modifiers load
-  String loadModifiers();
+  @Language("SQL") String loadModifiers();
 
   //receipt modifier save
-  String saveModifier();
+  @Language("SQL") String saveModifier();
 }

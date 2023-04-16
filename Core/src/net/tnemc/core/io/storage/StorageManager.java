@@ -48,7 +48,7 @@ public class StorageManager {
 
   private static StorageManager instance;
   private StorageEngine engine;
-  private final SQLConnector connector;
+  private final StorageConnector<?> connector;
 
 
   public StorageManager() {
@@ -141,7 +141,7 @@ public class StorageManager {
    * Used to reset all data in TNE.
    */
   public void reset() {
-    TNECore.server().scheduler().createDelayedTask(()->engine.reset(), 5, ChoreExecution.SECONDARY);
+    TNECore.server().scheduler().createDelayedTask(()->engine.reset(connector), 5, ChoreExecution.SECONDARY);
   }
 
   /**
@@ -149,7 +149,7 @@ public class StorageManager {
    * @return True if the backup was successful, otherwise false.
    */
   public boolean backup() {
-    TNECore.server().scheduler().createDelayedTask(()->engine.backup(), 5, ChoreExecution.SECONDARY);
+    TNECore.server().scheduler().createDelayedTask(()->engine.backup(connector), 5, ChoreExecution.SECONDARY);
     return true;
   }
 
@@ -157,7 +157,7 @@ public class StorageManager {
     return engine;
   }
 
-  public SQLConnector getConnector() {
+  public StorageConnector<?> getConnector() {
     return connector;
   }
 }
