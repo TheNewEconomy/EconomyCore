@@ -22,6 +22,7 @@ import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.TaskSchedule;
 import net.tnemc.core.compatibility.scheduler.Chore;
 import net.tnemc.core.compatibility.scheduler.ChoreExecution;
+import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
 
 /**
@@ -39,10 +40,10 @@ public class MinestomScheduler extends SchedulerProvider<MinestomChore> {
    * @param environment The execution environment for the task.
    */
   @Override
-  public void createDelayedTask(Runnable task, long delay, ChoreExecution environment) {
+  public void createDelayedTask(Runnable task, ChoreTime delay, ChoreExecution environment) {
     final ExecutionType type = (environment.equals(ChoreExecution.MAIN_THREAD))? ExecutionType.SYNC
                                : ExecutionType.ASYNC;
-    MinecraftServer.getSchedulerManager().scheduleTask(task, TaskSchedule.tick((int)delay),
+    MinecraftServer.getSchedulerManager().scheduleTask(task, TaskSchedule.tick(delay.getTime()),
                                                        TaskSchedule.immediate(), type);
   }
 
@@ -57,12 +58,12 @@ public class MinestomScheduler extends SchedulerProvider<MinestomChore> {
    * @return The associated {@link Chore} with this task.
    */
   @Override
-  public MinestomChore createRepeatingTask(Runnable task, long delay, long period, ChoreExecution environment) {
+  public MinestomChore createRepeatingTask(Runnable task, ChoreTime delay, ChoreTime period, ChoreExecution environment) {
     final ExecutionType type = (environment.equals(ChoreExecution.MAIN_THREAD))? ExecutionType.SYNC
                                                                                : ExecutionType.ASYNC;
 
     return new MinestomChore(MinecraftServer.getSchedulerManager()
-                                 .scheduleTask(task, TaskSchedule.tick((int)delay),
-                                               TaskSchedule.tick((int)period), type), environment);
+                                 .scheduleTask(task, TaskSchedule.tick(delay.getTime()),
+                                               TaskSchedule.tick(period.getTime()), type), environment);
   }
 }

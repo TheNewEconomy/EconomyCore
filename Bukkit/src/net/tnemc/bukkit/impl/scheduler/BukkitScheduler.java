@@ -20,6 +20,7 @@ package net.tnemc.bukkit.impl.scheduler;
 import net.tnemc.bukkit.TNE;
 import net.tnemc.core.compatibility.scheduler.Chore;
 import net.tnemc.core.compatibility.scheduler.ChoreExecution;
+import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
 import org.bukkit.Bukkit;
 
@@ -39,12 +40,12 @@ public class BukkitScheduler extends SchedulerProvider<BukkitChore> {
    * @param environment The execution environment for the task.
    */
   @Override
-  public void createDelayedTask(Runnable task, long delay, ChoreExecution environment) {
+  public void createDelayedTask(Runnable task, ChoreTime delay, ChoreExecution environment) {
     if(environment.equals(ChoreExecution.MAIN_THREAD)) {
-      Bukkit.getScheduler().runTaskLater(TNE.instance(), task, delay);
+      Bukkit.getScheduler().runTaskLater(TNE.instance(), task, delay.getTime());
       return;
     }
-    Bukkit.getScheduler().runTaskLaterAsynchronously(TNE.instance(), task, delay);
+    Bukkit.getScheduler().runTaskLaterAsynchronously(TNE.instance(), task, delay.getTime());
   }
 
   /**
@@ -58,10 +59,10 @@ public class BukkitScheduler extends SchedulerProvider<BukkitChore> {
    * @return The associated {@link Chore} with this task.
    */
   @Override
-  public BukkitChore createRepeatingTask(Runnable task, long delay, long period, ChoreExecution environment) {
+  public BukkitChore createRepeatingTask(Runnable task, ChoreTime delay, ChoreTime period, ChoreExecution environment) {
     if(environment.equals(ChoreExecution.MAIN_THREAD)) {
-      return new BukkitChore(Bukkit.getScheduler().runTaskTimer(TNE.instance(), task, delay, period), environment);
+      return new BukkitChore(Bukkit.getScheduler().runTaskTimer(TNE.instance(), task, delay.getTime(), period.getTime()), environment);
     }
-    return new BukkitChore(Bukkit.getScheduler().runTaskTimerAsynchronously(TNE.instance(), task, delay, period), environment);
+    return new BukkitChore(Bukkit.getScheduler().runTaskTimerAsynchronously(TNE.instance(), task, delay.getTime(), period.getTime()), environment);
   }
 }

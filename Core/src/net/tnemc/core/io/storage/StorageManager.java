@@ -21,6 +21,7 @@ package net.tnemc.core.io.storage;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.compatibility.scheduler.ChoreExecution;
+import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.io.storage.connect.SQLConnector;
 import net.tnemc.core.io.storage.engine.H2;
@@ -32,6 +33,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The manager, which manages everything related to storage.
@@ -113,7 +115,7 @@ public class StorageManager {
     final Datable<T> data = (Datable<T>)engine.datables().get(object.getClass());
     if(data != null) {
       TNECore.server().scheduler().createDelayedTask(()->data.store(connector, object, identifier),
-                                                     5, ChoreExecution.SECONDARY);
+                                                     new ChoreTime(0), ChoreExecution.SECONDARY);
     }
   }
 
@@ -125,7 +127,7 @@ public class StorageManager {
 
     //Our account storeAll requires no identifier, so we set it to null
     data.ifPresent(datable->TNECore.server().scheduler()
-        .createDelayedTask(()->datable.storeAll(connector, null), 5, ChoreExecution.SECONDARY));
+        .createDelayedTask(()->datable.storeAll(connector, null), new ChoreTime(0), ChoreExecution.SECONDARY));
   }
 
   /**
@@ -133,7 +135,7 @@ public class StorageManager {
    */
   public void purge() {
     for(Datable<?> data : engine.datables().values()) {
-      TNECore.server().scheduler().createDelayedTask(()->data.purge(connector), 5, ChoreExecution.SECONDARY);
+      TNECore.server().scheduler().createDelayedTask(()->data.purge(connector), new ChoreTime(0), ChoreExecution.SECONDARY);
     }
   }
 
@@ -141,7 +143,7 @@ public class StorageManager {
    * Used to reset all data in TNE.
    */
   public void reset() {
-    TNECore.server().scheduler().createDelayedTask(()->engine.reset(connector), 5, ChoreExecution.SECONDARY);
+    TNECore.server().scheduler().createDelayedTask(()->engine.reset(connector), new ChoreTime(0), ChoreExecution.SECONDARY);
   }
 
   /**
@@ -149,7 +151,7 @@ public class StorageManager {
    * @return True if the backup was successful, otherwise false.
    */
   public boolean backup() {
-    TNECore.server().scheduler().createDelayedTask(()->engine.backup(connector), 5, ChoreExecution.SECONDARY);
+    TNECore.server().scheduler().createDelayedTask(()->engine.backup(connector), new ChoreTime(0), ChoreExecution.SECONDARY);
     return true;
   }
 

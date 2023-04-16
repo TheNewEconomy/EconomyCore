@@ -20,6 +20,7 @@ package net.tnemc.folia.impl.scheduler;
 import net.tnemc.bukkit.TNE;
 import net.tnemc.core.compatibility.scheduler.Chore;
 import net.tnemc.core.compatibility.scheduler.ChoreExecution;
+import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
 import org.bukkit.Bukkit;
 
@@ -40,9 +41,9 @@ public class FoliaScheduler extends SchedulerProvider<FoliaChore> {
    * @param environment The execution environment for the task.
    */
   @Override
-  public void createDelayedTask(Runnable task, long delay, ChoreExecution environment) {
+  public void createDelayedTask(Runnable task, ChoreTime delay, ChoreExecution environment) {
     //we divide the delay by 20 because Folia uses seconds, and the delay is sent in ticks.
-    Bukkit.getAsyncScheduler().runDelayed(TNE.instance(), (scheduledTask) -> task.run(), (delay / 20), TimeUnit.SECONDS);
+    Bukkit.getAsyncScheduler().runDelayed(TNE.instance(), (scheduledTask) -> task.run(), delay.asSeconds(), TimeUnit.SECONDS);
   }
 
   /**
@@ -56,10 +57,10 @@ public class FoliaScheduler extends SchedulerProvider<FoliaChore> {
    * @return The associated {@link Chore} with this task.
    */
   @Override
-  public FoliaChore createRepeatingTask(Runnable task, long delay, long period, ChoreExecution environment) {
+  public FoliaChore createRepeatingTask(Runnable task, ChoreTime delay, ChoreTime period, ChoreExecution environment) {
     return new FoliaChore(Bukkit.getAsyncScheduler()
                                 .runAtFixedRate(TNE.instance(), (scheduledTask)->task.run(),
-                                                (delay / 20), (period / 20), TimeUnit.SECONDS),
+                                                delay.asSeconds(), period.asSeconds(), TimeUnit.SECONDS),
                                                 environment);
   }
 }

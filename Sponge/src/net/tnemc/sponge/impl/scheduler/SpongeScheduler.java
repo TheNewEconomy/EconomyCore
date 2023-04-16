@@ -19,6 +19,7 @@ package net.tnemc.sponge.impl.scheduler;
 
 import net.tnemc.core.compatibility.scheduler.Chore;
 import net.tnemc.core.compatibility.scheduler.ChoreExecution;
+import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
 import net.tnemc.sponge.SpongeCore;
 import org.spongepowered.api.Sponge;
@@ -41,14 +42,14 @@ public class SpongeScheduler extends SchedulerProvider<SpongeChore> {
    * @param environment The execution environment for the task.
    */
   @Override
-  public void createDelayedTask(Runnable task, long delay, ChoreExecution environment) {
+  public void createDelayedTask(Runnable task, ChoreTime delay, ChoreExecution environment) {
     if(environment.equals(ChoreExecution.MAIN_THREAD)) {
       //divide by 20 because the delay will be coming in tick for.
-      Sponge.getScheduler().createSyncExecutor(SpongeCore.instance().getPlugin()).schedule(task, (delay / 20), TimeUnit.SECONDS);
+      Sponge.getScheduler().createSyncExecutor(SpongeCore.instance().getPlugin()).schedule(task, delay.asSeconds(), TimeUnit.SECONDS);
       return;
     }
     //divide by 20 because the delay will be coming in tick for.
-    Sponge.getScheduler().createAsyncExecutor(SpongeCore.instance().getPlugin()).schedule(task, (delay / 20), TimeUnit.SECONDS);
+    Sponge.getScheduler().createAsyncExecutor(SpongeCore.instance().getPlugin()).schedule(task, delay.asSeconds(), TimeUnit.SECONDS);
   }
 
   /**
@@ -62,7 +63,7 @@ public class SpongeScheduler extends SchedulerProvider<SpongeChore> {
    * @return The associated {@link Chore} with this task.
    */
   @Override
-  public SpongeChore createRepeatingTask(Runnable task, long delay, long period, ChoreExecution environment) {
+  public SpongeChore createRepeatingTask(Runnable task, ChoreTime delay, ChoreTime period, ChoreExecution environment) {
 
     final SpongeExecutorService service = (environment.equals(ChoreExecution.MAIN_THREAD))?
         Sponge.getScheduler().createSyncExecutor(SpongeCore.instance().getPlugin()) :
@@ -70,8 +71,8 @@ public class SpongeScheduler extends SchedulerProvider<SpongeChore> {
 
     //divide by 20 because the delay will be coming in tick for.
     return new SpongeChore(service.scheduleAtFixedRate(task,
-                                                       (delay / 20),
-                                                       (period / 20),
+                                                       delay.asSeconds(),
+                                                       period.asSeconds(),
                                                        TimeUnit.SECONDS).getTask(), environment);
   }
 }

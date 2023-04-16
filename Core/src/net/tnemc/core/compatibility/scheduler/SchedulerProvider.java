@@ -38,7 +38,7 @@ public abstract class SchedulerProvider<C extends Chore<?>> {
    * @param delay The delay, in ticks.
    * @param environment The execution environment for the task.
    */
-  public abstract void createDelayedTask(Runnable task, long delay, ChoreExecution environment);
+  public abstract void createDelayedTask(Runnable task, ChoreTime delay, ChoreExecution environment);
 
   /**
    * Used to create a task, which repeats after a specified period.
@@ -50,7 +50,7 @@ public abstract class SchedulerProvider<C extends Chore<?>> {
    *
    * @return The associated {@link Chore} with this task.
    */
-  public abstract C createRepeatingTask(Runnable task, long delay, long period, ChoreExecution environment);
+  public abstract C createRepeatingTask(Runnable task, ChoreTime delay, ChoreTime period, ChoreExecution environment);
 
   /**
    * Used to create a task, which repeats after a specified period.
@@ -60,7 +60,7 @@ public abstract class SchedulerProvider<C extends Chore<?>> {
    *
    * @return The id, or -1 if no id can be returned.
    */
-  public int createRepeatingTaskID(Runnable task, long delay, long period, ChoreExecution environment) {
+  public int createRepeatingTaskID(Runnable task, ChoreTime delay, ChoreTime period, ChoreExecution environment) {
     return createRepeatingTask(task, delay, period, environment).id();
   }
 
