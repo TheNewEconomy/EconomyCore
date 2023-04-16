@@ -43,7 +43,6 @@ Core:
         Name: "Main Server"
 
         #All configurations relating to the server's economy account.
-        #TODO: Implement this configuration
         Account:
 
             #Enable the server account?
@@ -54,25 +53,6 @@ Core:
 
             #The starting balance for the server account.
             Balance: 500
-
-        #Configurations relating to third-party support.
-        #TODO: Implement this configuration
-        ThirdParty:
-
-            #Enable bstats?
-            Stats: true
-
-            #The prefix used by the Towny plugin to denote town UUIDs
-            Town: "town-"
-
-            #The prefix used by the Towny plugin to denote nation UUIDs
-            Nation: "nation-"
-
-            #The prefix used by the Factions plugin to denote faction UUIDs
-            Faction: "faction-"
-
-            #Should McMMO rewards that are item currencies be disabled?
-            McMMORewards: true
 
     #All configurations relating to TNE commands
     #TODO: Implement this configuration
