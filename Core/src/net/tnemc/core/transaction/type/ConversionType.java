@@ -1,5 +1,4 @@
 package net.tnemc.core.transaction.type;
-
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -26,12 +25,12 @@ import net.tnemc.core.transaction.tax.TaxEntry;
 import java.util.Optional;
 
 /**
- * PayType
+ * ConversionType
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class PayType implements TransactionType {
+public class ConversionType implements TransactionType {
   /**
    * The identifier of this transaction type.
    *
@@ -40,7 +39,7 @@ public class PayType implements TransactionType {
   @Override
   @MapKey
   public String identifier() {
-    return "pay";
+    return "conversion";
   }
 
   /**
@@ -52,16 +51,6 @@ public class PayType implements TransactionType {
    */
   @Override
   public Optional<TaxEntry> toTax() {
-    if(MainConfig.yaml().getBoolean("Core.Transactions.Pay.Tax.Enabled")) {
-      final String tax = MainConfig.yaml().getString("Core.Transactions.Pay.Tax.Receiver");
-      TaxEntry entry;
-      if(tax.contains("\\%")) {
-        entry = new TaxEntry("percent", Double.parseDouble(tax.replace("%", "")));
-      } else {
-        entry = new TaxEntry("flat", Double.parseDouble(tax));
-      }
-      return Optional.of(entry);
-    }
     return Optional.empty();
   }
 
@@ -74,8 +63,8 @@ public class PayType implements TransactionType {
    */
   @Override
   public Optional<TaxEntry> fromTax() {
-    if(MainConfig.yaml().getBoolean("Core.Transactions.Pay.Tax.Enabled")) {
-      final String tax = MainConfig.yaml().getString("Core.Transactions.Pay.Tax.Sender");
+    if(MainConfig.yaml().getBoolean("Core.Transactions.Conversion.Tax.Enabled")) {
+      final String tax = MainConfig.yaml().getString("Core.Transactions.Conversion.Tax.Rate");
       TaxEntry entry;
       if(tax.contains("\\%")) {
         entry = new TaxEntry("percent", Double.parseDouble(tax.replace("%", "")));
