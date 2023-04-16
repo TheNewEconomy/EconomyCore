@@ -24,7 +24,6 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
-import net.tnemc.core.region.RegionProvider;
 import net.tnemc.menu.minestom.MinestomPlayer;
 
 import java.util.Optional;

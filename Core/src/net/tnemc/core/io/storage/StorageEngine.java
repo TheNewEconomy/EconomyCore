@@ -18,8 +18,6 @@ package net.tnemc.core.io.storage;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.sun.jdi.connect.Connector;
-
 import java.util.Map;
 
 /**

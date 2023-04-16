@@ -8,15 +8,19 @@ Core:
     
     #Should TNE separate account balances by world?
     #TODO: Implement this configuration
-    Multiworld: false
+    MultiWorld: false
 
-    #The name of the world to use if multiworld is set to false. Setting to TNE_SYSTEM will let TNE decide the default world.
+    #The name of the world to use if multiworld is set to false.
+    #Setting to TNE_SYSTEM will let TNE decide the default world.
     #TODO: Implement this configuration
     DefaultWorld: "TNE_SYSTEM"
 
-    #Should TNE be placed in debug mode?
-    #TODO: Implement this configuration
-    Debug: false
+    #Configurations relating to debugging
+    Debugging:
+
+        #The mode that debug should be in.
+        #Modes: Standard, Detailed, Developer
+        Mode: "Standard"
 
     #All configurations relating to the server in general.
     Server:

@@ -21,17 +21,17 @@ public enum DebugLevel {
   /**
    * Standard debug level. This should include any inform calls and any error calls containing exceptions.
    */
-  STANDARD((byte)1, "S"),
+  STANDARD((byte)1, "Standard"),
 
   /**
    * Detailed debug level. This should contain more detailed error calls and debug calls.
    */
-  DETAILED((byte)2, "DE"),
+  DETAILED((byte)2, "Detailed"),
 
   /**
    * Developer debug level. This should contain all calls.
    */
-  DEVELOPER((byte)3, "DV");
+  DEVELOPER((byte)3, "Developer");
 
   private byte priority;
   private String identifier;
@@ -55,6 +55,13 @@ public enum DebugLevel {
 
   public String getIdentifier() {
     return identifier;
+  }
+
+  public static DebugLevel fromID(final String identifier) {
+    for(DebugLevel level : values()) {
+      if(level.identifier.equalsIgnoreCase(identifier)) return level;
+    }
+    return STANDARD;
   }
 
   public void setIdentifier(String identifier) {

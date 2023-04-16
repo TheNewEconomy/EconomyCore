@@ -141,6 +141,9 @@ public abstract class TNECore {
     this.data.load();
     this.messageConfig.load();
 
+    //set our debug options.
+    this.level = DebugLevel.fromID(MainConfig.yaml().getString("Core.Debugging.Mode"));
+
     this.storage = new StorageManager();
     this.storage.loadAll(Account.class, "");
 
