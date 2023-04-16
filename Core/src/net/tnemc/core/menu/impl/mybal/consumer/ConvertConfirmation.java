@@ -64,12 +64,12 @@ public class ConvertConfirmation extends AmountConfirmation {
       if(currencyFromOBJ.isPresent()) {
         final BigDecimal parsedTo = amount.multiply(BigDecimal.valueOf(currencyFromOBJ.get().getConversion().get(currencyFromOBJ.get().getIdentifier())));
 
-        final HoldingsModifier modifier = new HoldingsModifier(provider.get().region(true),
+        final HoldingsModifier modifier = new HoldingsModifier(provider.get().region(),
                                                                currency,
                                                                parsedTo
         );
 
-        final HoldingsModifier modifierFrom = new HoldingsModifier(provider.get().region(true),
+        final HoldingsModifier modifierFrom = new HoldingsModifier(provider.get().region(),
                                                                    currencyFromOBJ.get().getUid(),
                                                                    amount.negate()
         );

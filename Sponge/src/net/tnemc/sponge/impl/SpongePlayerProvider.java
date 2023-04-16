@@ -74,7 +74,7 @@ public class SpongePlayerProvider extends SpongePlayer implements PlayerProvider
   }
 
   @Override
-  public String region(boolean resolve) {
+  public String region() {
 
     String world = TNECore.server().defaultWorld();
 
@@ -84,10 +84,6 @@ public class SpongePlayerProvider extends SpongePlayer implements PlayerProvider
       if(player.isPresent()) {
         world = player.get().getLocation().getExtent().getName();
       }
-    }
-
-    if(resolve) {
-      return TNECore.eco().region().resolveRegion(world);
     }
     return world;
   }

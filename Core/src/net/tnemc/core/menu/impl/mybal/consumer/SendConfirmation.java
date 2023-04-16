@@ -60,7 +60,7 @@ public class SendConfirmation extends AmountConfirmation {
     if(account.isPresent() && senderAccount.isPresent()
     && provider.isPresent() && targetProvider.isPresent()) {
 
-      final HoldingsModifier modifier = new HoldingsModifier(provider.get().region(true),
+      final HoldingsModifier modifier = new HoldingsModifier(provider.get().region(),
                                                              currency,
                                                              amount
       );

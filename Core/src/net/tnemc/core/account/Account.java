@@ -146,7 +146,8 @@ public class Account extends ReceiptBox {
     final Optional<Currency> currencyObject = TNECore.eco().currency().findCurrency(currency);
 
     if(currencyObject.isPresent()) {
-      return currencyObject.get().type().getHoldings(this, region, currencyObject.get(), type);
+      final String resolve = TNECore.eco().region().resolveRegion(region);
+      return currencyObject.get().type().getHoldings(this, resolve, currencyObject.get(), type);
     }
     return new ArrayList<>();
   }
@@ -164,15 +165,15 @@ public class Account extends ReceiptBox {
   public List<HoldingsEntry> getAllHoldings(final @NotNull String region,
                                             final @NotNull HoldingsType type) {
 
-    List<HoldingsEntry> holdings = new ArrayList<>();
+    final List<HoldingsEntry> holdings = new ArrayList<>();
+    final String resolve = TNECore.eco().region().resolveRegion(region);
 
     TNECore.eco().currency().currencies().forEach((currency)->{
       BigDecimal amount = BigDecimal.ZERO;
-      for(HoldingsEntry entry : currency.type().getHoldings(this, region, currency, type)) {
+      for(HoldingsEntry entry : currency.type().getHoldings(this, resolve, currency, type)) {
         amount = amount.add(entry.getAmount());
       }
-      //TODO: World handler.
-      holdings.add(new HoldingsEntry(region, currency.getUid(), amount, type));
+      holdings.add(new HoldingsEntry(resolve, currency.getUid(), amount, type));
     });
     return holdings;
   }
@@ -194,8 +195,10 @@ public class Account extends ReceiptBox {
 
     final Optional<Currency> currencyObject = TNECore.eco().currency().findCurrency(entry.getCurrency());
 
+    final String region = TNECore.eco().region().resolveRegion(entry.getRegion());
+
     return currencyObject.map(currency->currency.type().setHoldings(this,
-                                                                    entry.getRegion(),
+                                                                    region,
                                                                     currency,
                                                                     type,
                                                                     entry.getAmount()

@@ -90,22 +90,15 @@ public class BukkitPlayerProvider extends BukkitPlayer implements PlayerProvider
    * Used to get the name of the region this player is in. This could be the world itself, or maybe
    * a third-party related region such as world guard.
    *
-   * @param resolve Whether the returned region should be resolved to using the {@link net.tnemc.core.region.RegionProvider}.
-   *
    * @return The name of the region.
    */
   @Override
-  public String region(final boolean resolve) {
+  public String region() {
     String world = TNECore.server().defaultWorld();
 
     if(player.getPlayer() != null) {
       world = player.getPlayer().getWorld().getName();
     }
-
-    if(resolve) {
-      return TNECore.eco().region().resolveRegion(world);
-    }
-
     return world;
   }
 

@@ -124,7 +124,7 @@ public class AmountSelectionPage extends PlayerPage {
 
                 confirmation.confirm(player.identifier(), (UUID)target.get(),
                                      currency.get().getUid(),
-                                     provider.get().region(true), amt);
+                                     provider.get().region(), amt);
                 player.inventory().close();
               }
             })
