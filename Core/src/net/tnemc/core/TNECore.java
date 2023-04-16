@@ -19,6 +19,9 @@ package net.tnemc.core;
  */
 
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.account.holdings.HoldingsType;
+import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.api.BaseAPI;
 import net.tnemc.core.api.TNEAPI;
 import net.tnemc.core.compatibility.LogProvider;
@@ -37,6 +40,10 @@ import net.tnemc.core.menu.impl.myeco.MyEcoMenu;
 import net.tnemc.menu.core.MenuManager;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 /**
@@ -137,8 +144,25 @@ public abstract class TNECore {
     this.storage = new StorageManager();
     this.storage.loadAll(Account.class, "");
 
-    if(economyManager.account().findAccount("98a37f1a-e431-4eb2-9415-5db53b566436").isEmpty()) {
-      economyManager.account().createAccount("98a37f1a-e431-4eb2-9415-5db53b566436", "Server_Account");
+    if(MainConfig.yaml().getBoolean("Core.Server.Account.Enabled")) {
+
+      final String name = MainConfig.yaml().getString("Core.Server.Account.Name");
+      final UUID id = UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8));
+      if(economyManager.account().findAccount(id.toString()).isEmpty()) {
+        final EconomyResponse response = economyManager.account().createAccount(id.toString(), name, true);
+        if(response.success()) {
+
+          final BigDecimal defaultBalance = new BigDecimal(MainConfig.yaml().getString("Core.Server.Account.Balance"));
+          if(defaultBalance.compareTo(BigDecimal.ZERO) > 0) {
+            Optional<Account> account = economyManager.account().findAccount(id);
+            account.ifPresent(value->value.setHoldings(new HoldingsEntry(server.defaultWorld(),
+                                                                         economyManager.currency().getDefaultCurrency().getUid(),
+                                                                         defaultBalance,
+                                                                         HoldingsType.NORMAL_HOLDINGS
+            )));
+          }
+        }
+      }
     }
 
     new MenuManager();

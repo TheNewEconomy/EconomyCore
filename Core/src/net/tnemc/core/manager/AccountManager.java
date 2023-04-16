@@ -110,12 +110,13 @@ public class AccountManager {
       } catch(Exception ignore) {
 
         //Our identifier is an invalid UUID, let's search for it.
-        //TODO:
+        //TODO: UUID lookup
 
         return AccountResponse.CREATION_FAILED;
       }
     } else if(!nonPlayer && TNECore.server().online(name)) {
-      //This is most definitely a geyser player, they're only but not of valid names
+
+      //This is most definitely a geyser player, they're online but not of valid names
       try {
         final UUID id = UUID.fromString(identifier);
         account = new GeyserAccount(id, name);
