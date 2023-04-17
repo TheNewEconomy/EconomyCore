@@ -24,10 +24,12 @@ import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
 import net.tnemc.core.currency.item.ItemDenomination;
+import net.tnemc.core.region.RegionMode;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.bukkit.BukkitCalculationsProvider;
 import net.tnemc.item.bukkit.BukkitItemStack;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -102,12 +104,21 @@ public class BukkitServerProvider implements ServerConnector {
   }
 
   /**
-   * Returns the name of the default world.
+   * Returns the name of the default region.
    *
-   * @return The name of the default world.
+   * @param mode The {@link RegionMode} to use for this.
+   *
+   * @return The name of the default region. This could be different based on the current
+   * {@link RegionMode}.
    */
   @Override
-  public String defaultWorld() {
+  public String defaultRegion(final RegionMode mode) {
+
+    if(mode.name().equalsIgnoreCase("biome")) {
+      final World world = Bukkit.getServer().getWorlds().get(0);
+
+      return world.getSpawnLocation().getBlock().getBiome().getKey().getKey();
+    }
     return Bukkit.getServer().getWorlds().get(0).getName();
   }
 

@@ -18,17 +18,15 @@ Core:
 
         #The region mode that TNE should be using for separating balances.
         #Valid modes: world, biome
-        #TODO: Implement this configuration.
         Mode: "world"
 
-        #Should TNE separate account balances by world?
-        #TODO: Implement this configuration
-        MultiWorld: false
+        #Should TNE separate account balances by region?
+        #This will separate them based on the Mode configuration.
+        MultiRegion: false
 
-        #The name of the world to use if multiworld is set to false.
-        #Setting to TNE_SYSTEM will let TNE decide the default world.
-        #TODO: Implement this configuration
-        DefaultWorld: "TNE_SYSTEM"
+        #The name of the region to use if MultiRegion is set to false.
+        #Setting to TNE_SYSTEM will let TNE decide the default region.
+        DefaultRegion: "TNE_SYSTEM"
 
         #Should TNE automatically group the world's realms with the main overworld world.
         #Example: Setting this to true would make world, world_nether and world_the_end share balances automatically.

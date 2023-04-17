@@ -146,7 +146,7 @@ public class Account extends ReceiptBox {
     final Optional<Currency> currencyObject = TNECore.eco().currency().findCurrency(currency);
 
     if(currencyObject.isPresent()) {
-      final String resolve = TNECore.eco().region().resolveRegion(region);
+      final String resolve = TNECore.eco().region().resolve(region);
       return currencyObject.get().type().getHoldings(this, resolve, currencyObject.get(), type);
     }
     return new ArrayList<>();
@@ -166,7 +166,7 @@ public class Account extends ReceiptBox {
                                             final @NotNull HoldingsType type) {
 
     final List<HoldingsEntry> holdings = new ArrayList<>();
-    final String resolve = TNECore.eco().region().resolveRegion(region);
+    final String resolve = TNECore.eco().region().resolve(region);
 
     TNECore.eco().currency().currencies().forEach((currency)->{
       BigDecimal amount = BigDecimal.ZERO;
@@ -195,7 +195,7 @@ public class Account extends ReceiptBox {
 
     final Optional<Currency> currencyObject = TNECore.eco().currency().findCurrency(entry.getCurrency());
 
-    final String region = TNECore.eco().region().resolveRegion(entry.getRegion());
+    final String region = TNECore.eco().region().resolve(entry.getRegion());
 
     return currencyObject.map(currency->currency.type().setHoldings(this,
                                                                     region,

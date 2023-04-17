@@ -87,19 +87,33 @@ public class BukkitPlayerProvider extends BukkitPlayer implements PlayerProvider
   }
 
   /**
-   * Used to get the name of the region this player is in. This could be the world itself, or maybe
-   * a third-party related region such as world guard.
+   * Used to get the name of the world this player is currently in.
    *
-   * @return The name of the region.
+   * @return The name of the world.
    */
   @Override
-  public String region() {
-    String world = TNECore.server().defaultWorld();
+  public String world() {
+    String world = TNECore.eco().region().defaultRegion();
 
     if(player.getPlayer() != null) {
       world = player.getPlayer().getWorld().getName();
     }
     return world;
+  }
+
+  /**
+   * Used to get the name of the biome this player is currently in.
+   *
+   * @return The name of the biome.
+   */
+  @Override
+  public String biome() {
+    String biome = TNECore.eco().region().defaultRegion();
+
+    if(player.getPlayer() != null) {
+      biome = player.getPlayer().getLocation().getBlock().getBiome().getKey().getKey();
+    }
+    return biome;
   }
 
   /**

@@ -156,7 +156,7 @@ public class TNEVault implements Economy {
    */
   @Deprecated
   public double getBalance(String name) {
-    return getBalance(name, TNECore.server().defaultWorld());
+    return getBalance(name, TNECore.eco().region().defaultRegion());
   }
 
   /**
@@ -166,7 +166,7 @@ public class TNEVault implements Economy {
    * @return Amount currently held in players account
    */
   public double getBalance(OfflinePlayer player) {
-    return getBalance(player.getUniqueId().toString(), TNECore.server().defaultWorld());
+    return getBalance(player.getUniqueId().toString(), TNECore.eco().region().defaultRegion());
   }
 
   /**
@@ -197,7 +197,7 @@ public class TNEVault implements Economy {
    */
   @Deprecated
   public boolean has(String name, double amount) {
-    return has(name, TNECore.server().defaultWorld(), amount);
+    return has(name, TNECore.eco().region().defaultRegion(), amount);
   }
 
   /**
@@ -208,7 +208,7 @@ public class TNEVault implements Economy {
    * @return True if <b>player</b> has <b>amount</b>, False else wise
    */
   public boolean has(OfflinePlayer player, double amount) {
-    return has(player.getUniqueId().toString(), TNECore.server().defaultWorld(), amount);
+    return has(player.getUniqueId().toString(), TNECore.eco().region().defaultRegion(), amount);
   }
 
   /**
@@ -239,7 +239,7 @@ public class TNEVault implements Economy {
    */
   @Deprecated
   public EconomyResponse withdrawPlayer(String name, double amount) {
-    return withdrawPlayer(name, TNECore.server().defaultWorld(), amount);
+    return withdrawPlayer(name, TNECore.eco().region().defaultRegion(), amount);
   }
 
   /**
@@ -250,7 +250,7 @@ public class TNEVault implements Economy {
    * @return Detailed response of transaction
    */
   public EconomyResponse withdrawPlayer(OfflinePlayer player, double amount) {
-    return withdrawPlayer(player.getUniqueId().toString(), TNECore.server().defaultWorld(), amount);
+    return withdrawPlayer(player.getUniqueId().toString(), TNECore.eco().region().defaultRegion(), amount);
   }
 
   /**
@@ -299,7 +299,7 @@ public class TNEVault implements Economy {
    */
   @Deprecated
   public EconomyResponse depositPlayer(String name, double amount) {
-    return depositPlayer(name, TNECore.server().defaultWorld(), amount);
+    return depositPlayer(name, TNECore.eco().region().defaultRegion(), amount);
   }
 
   /**
@@ -310,7 +310,7 @@ public class TNEVault implements Economy {
    * @return Detailed response of transaction
    */
   public EconomyResponse depositPlayer(OfflinePlayer player, double amount) {
-    return depositPlayer(player.getUniqueId().toString(), TNECore.server().defaultWorld(), amount);
+    return depositPlayer(player.getUniqueId().toString(), TNECore.eco().region().defaultRegion(), amount);
   }
 
   /**

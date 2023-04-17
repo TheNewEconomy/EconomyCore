@@ -101,7 +101,7 @@ public class ArgumentsParser {
   }
 
   public Currency parseCurrency(final int index) {
-    return parseCurrency(index, TNECore.server().defaultWorld());
+    return parseCurrency(index, TNECore.eco().region().defaultRegion());
   }
 
   public Currency parseCurrency(final int index, final String region) {

@@ -48,7 +48,7 @@ public class EconomyManager {
     this.currencyManager = new CurrencyManager();
     this.transactionManager = new TransactionManager();
     this.dataManager = new DataManager();
-    this.regionProvider = new RegionProvider(true);
+    this.regionProvider = new RegionProvider(true, "world");
   }
 
   public AccountManager account() {

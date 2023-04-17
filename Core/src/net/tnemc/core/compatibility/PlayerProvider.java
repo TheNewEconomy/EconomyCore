@@ -44,12 +44,18 @@ public interface PlayerProvider extends MenuPlayer {
   Optional<Location> getLocation();
 
   /**
-   * Used to get the name of the region this player is in. This could be the world itself, or maybe
-   * a third-party related region such as world guard.
+   * Used to get the name of the world this player is currently in.
    *
-   * @return The name of the region.
+   * @return The name of the world.
    */
-  String region();
+  String world();
+
+  /**
+   * Used to get the name of the biome this player is currently in.
+   *
+   * @return The name of the biome.
+   */
+  String biome();
 
   /**
    * Used to get the amount of experience this player has.

@@ -21,6 +21,7 @@ package net.tnemc.core.compatibility;
 import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
 import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
+import net.tnemc.core.region.RegionMode;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.SerialItem;
 import net.tnemc.item.providers.CalculationsProvider;
@@ -85,10 +86,14 @@ public interface ServerConnector {
   }
 
   /**
-   * Returns the name of the default world.
-   * @return The name of the default world.
+   * Returns the name of the default region.
+   *
+   * @param mode The {@link RegionMode} to use for this.
+   *
+   * @return The name of the default region. This could be different based on the current
+   * {@link RegionMode}.
    */
-  String defaultWorld();
+  String defaultRegion(final RegionMode mode);
 
   /**
    * Determines if a plugin with the correlating name is currently installed.

@@ -67,18 +67,30 @@ public class MinestomPlayerProvider extends MinestomPlayer implements PlayerProv
   }
 
   /**
-   * Used to get the name of the region this player is in. This could be the world itself, or maybe
-   * a third-party related region such as world guard.
+   * Used to get the name of the world this player is currently in.
    *
-   * @return The name of the region.
+   * @return The name of the world.
    */
-  public String region() {
-    String world = TNECore.server().defaultWorld();
+  @Override
+  public String world() {
+    String world = TNECore.eco().region().defaultRegion();
 
     if(player!= null) {
       world = player.getDimensionType().getName().namespace();
     }
     return world;
+  }
+
+  /**
+   * Used to get the name of the biome this player is currently in.
+   *
+   * @return The name of the biome.
+   */
+  @Override
+  public String biome() {
+
+    //It appears Minestom doesn't provide a way to get biomes.
+    return world();
   }
 
   /**

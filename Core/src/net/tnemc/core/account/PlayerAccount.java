@@ -50,11 +50,11 @@ public class PlayerAccount extends Account {
   }
 
   public String region() {
-    String region = TNECore.server().defaultWorld();
+    String region = TNECore.eco().region().defaultRegion();
     final Optional<PlayerProvider> player = getPlayer();
 
     if(player.isPresent()) {
-      region = player.get().region();
+      region = TNECore.eco().region().getMode().region(player.get());
     }
     return region;
   }

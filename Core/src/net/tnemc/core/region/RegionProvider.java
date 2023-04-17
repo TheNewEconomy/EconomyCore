@@ -18,6 +18,10 @@ package net.tnemc.core.region;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.config.MainConfig;
+import net.tnemc.core.region.mode.BiomeMode;
+import net.tnemc.core.region.mode.WorldMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -32,13 +36,24 @@ import java.util.Optional;
  */
 public class RegionProvider {
 
-  public final Map<String, String> sharing = new HashMap<>();
-  public final Map<String, RegionGroup> regions = new HashMap<>();
+  private final Map<String, String> sharing = new HashMap<>();
+  private final Map<String, RegionGroup> regions = new HashMap<>();
+
+  private final Map<String, RegionMode> modes = new HashMap<>();
 
   private boolean realmSharing;
 
-  public RegionProvider(boolean realmSharing) {
+  private RegionMode mode;
+
+  public RegionProvider(boolean realmSharing, final String mode) {
     this.realmSharing = realmSharing;
+
+    //add modes
+    modes.put("biome", new BiomeMode());
+    modes.put("world", new WorldMode());
+
+    //set mode
+    this.mode = modes.getOrDefault(mode, modes.get("world"));
   }
 
   public void initializeRegion(final String name, final RegionType type) {
@@ -71,8 +86,16 @@ public class RegionProvider {
    * @return The region name if no connection, otherwise the name of the connection.
    */
   @NotNull
-  public String resolveRegion(final String region) {
+  public String resolve(final String region) {
     return sharing.getOrDefault(region, region);
+  }
+
+  public String defaultRegion() {
+    final String configDefault = MainConfig.yaml().getString("");
+    if(configDefault.equalsIgnoreCase("TNE_SYSTEM")) {
+      return TNECore.server().defaultRegion(mode);
+    }
+    return configDefault;
   }
 
   public boolean isSharing() {
@@ -81,5 +104,13 @@ public class RegionProvider {
 
   public void setRealmSharing(boolean realmSharing) {
     this.realmSharing = realmSharing;
+  }
+
+  public RegionMode getMode() {
+    return mode;
+  }
+
+  public void setMode(final String mode) {
+    this.mode = modes.getOrDefault(mode, modes.get("world"));
   }
 }

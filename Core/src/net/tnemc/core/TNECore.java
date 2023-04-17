@@ -144,6 +144,8 @@ public abstract class TNECore {
     this.data.load();
     this.messageConfig.load();
 
+    this.economyManager.region().setMode(MainConfig.yaml().getString("Core.Region.Mode"));
+
     //set our debug options.
     this.level = DebugLevel.fromID(MainConfig.yaml().getString("Core.Debugging.Mode"));
 
@@ -161,7 +163,7 @@ public abstract class TNECore {
           final BigDecimal defaultBalance = new BigDecimal(MainConfig.yaml().getString("Core.Server.Account.Balance"));
           if(defaultBalance.compareTo(BigDecimal.ZERO) > 0) {
             Optional<Account> account = economyManager.account().findAccount(id);
-            account.ifPresent(value->value.setHoldings(new HoldingsEntry(server.defaultWorld(),
+            account.ifPresent(value->value.setHoldings(new HoldingsEntry(economyManager.region().defaultRegion(),
                                                                          economyManager.currency().getDefaultCurrency().getUid(),
                                                                          defaultBalance,
                                                                          HoldingsType.NORMAL_HOLDINGS

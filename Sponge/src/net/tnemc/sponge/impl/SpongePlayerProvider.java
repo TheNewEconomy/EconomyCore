@@ -74,9 +74,9 @@ public class SpongePlayerProvider extends SpongePlayer implements PlayerProvider
   }
 
   @Override
-  public String region() {
+  public String world() {
 
-    String world = TNECore.server().defaultWorld();
+    String world = TNECore.eco().region().defaultRegion();
 
     if(user.isOnline()) {
 
@@ -86,6 +86,21 @@ public class SpongePlayerProvider extends SpongePlayer implements PlayerProvider
       }
     }
     return world;
+  }
+
+  @Override
+  public String biome() {
+
+    String biome = TNECore.eco().region().defaultRegion();
+
+    if(user.isOnline()) {
+
+      final Optional<Player> player = user.getPlayer();
+      if(player.isPresent()) {
+        biome = player.get().getLocation().getBiome().getName();
+      }
+    }
+    return biome;
   }
 
   /**

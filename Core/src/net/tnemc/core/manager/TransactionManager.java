@@ -32,6 +32,7 @@ import net.tnemc.core.transaction.check.TrackingCheck;
 import net.tnemc.core.transaction.tax.TaxType;
 import net.tnemc.core.transaction.tax.type.FlatType;
 import net.tnemc.core.transaction.tax.type.PercentileType;
+import net.tnemc.core.transaction.type.ConversionType;
 import net.tnemc.core.transaction.type.PayType;
 
 import java.math.BigDecimal;
@@ -79,6 +80,7 @@ public class TransactionManager {
     }
 
     //Add our default TransactionTypes.
+    addType(new ConversionType());
     addType(new PayType());
 
     //Add our default transaction checks.
