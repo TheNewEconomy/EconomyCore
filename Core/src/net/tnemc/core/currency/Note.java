@@ -34,8 +34,8 @@ import java.util.List;
  */
 public class Note {
 
-  private List<String> flags = new ArrayList<>();
-  private List<String> enchantments = new ArrayList<>();
+  private final List<String> flags = new ArrayList<>();
+  private final List<String> enchantments = new ArrayList<>();
 
   private String material;
   private BigDecimal minimum;
@@ -71,7 +71,8 @@ public class Note {
   }
 
   public void setFlags(List<String> flags) {
-    this.flags = flags;
+    this.flags.clear();
+    this.flags.addAll(flags);
   }
 
   public List<String> getEnchantments() {
@@ -79,7 +80,8 @@ public class Note {
   }
 
   public void setEnchantments(List<String> enchantments) {
-    this.enchantments = enchantments;
+    this.enchantments.clear();
+    this.enchantments.addAll(enchantments);
   }
 
   public String getMaterial() {
