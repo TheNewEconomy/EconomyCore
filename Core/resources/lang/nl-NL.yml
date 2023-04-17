@@ -78,12 +78,8 @@ Messages:
     Paid: "<white>Successfully paid $player <gold>$amount<white>."
     Took: "<white>Successfully took <gold>$amount<white> from $player."
     Negative: "<red>Amount cannot be a negative value!"
-    SelfPay: "<red>You can't pay yourself!"
     NoCurrency: "<red>The currency '$currency' could not be found in '$world'."
-    Noted: "<white>A note has been given to you in the amount of <gold>$amount<white> for currency <green>$currency<white>."
-    NoteClaimed: "<white>Successfully claimed note for currency <green>$currency<white> in the amount of <gold>$amount<white>.<newline>Your new balance is <gold>$balance<white>."
-    NoteFailed: "<red>I'm sorry, but your attempt to claim that currency note failed!."
-    NoteMinimum: "<red>The minimum note amount of $amount was not met."
+    SelfPay: "<red>You can't pay yourself!"
     Converted: "<white>Successfully exchanged '<gold>$from_amount<white>' to '<gold>$amount<white>'."
     ConvertSame: "<red>You can't convert a currency into itself."
     Top: "<white>=====[<gold>Economy Top<white>]===== $page/$page_top"
@@ -94,6 +90,16 @@ Messages:
     ExceedsOtherPlayerMaximum: "<red>I'm sorry, but performing this transaction will place $player's balance over the maximum allowed."
     RequestSender: "<green>You have sent a request to <white>$player <green> for $amount."
     Request: "<white>You have received a money request from <green>$player<white> for <gold>$amount<white>! <click:run_command:/money pay $player $amount $currency><green><underlined>Click to send them the funds!</click>"
+  Note:
+    Given: "<white>A note has been given to you in the amount of <gold>$amount<white> for currency <green>$currency<white>."
+    Claimed: "<white>Successfully claimed note for currency <green>$currency<white> in the amount of <gold>$amount<white>.<newline>Your new balance is <gold>$balance<white>."
+    Failed: "<red>I'm sorry, but your attempt to claim that currency note failed!."
+    Minimum: "<red>The minimum note amount of $amount was not met."
+    Lore:
+      - "<white>Currency: $currency"
+      - "<white>Region: $region"
+      - "<white>Amount: $amount"
+      - "<white>Right click to claim note."
   Setup:
     General:
       Failed: "Setup failed during step '$step'!"
@@ -115,48 +121,63 @@ Messages:
   Commands:
     Admin:
       Backup:
+        Arguments: ""
         Description: "Creates a backup of all server data."
       Create:
         Arguments: "<name> [balance]"
         Description: "Creates a new non-player economy account.<newline>- name - The name of the account.<newline>- Balance ~ The starting balance of the account."
       Debug:
+        Arguments: ""
         Description: "Toggles console debug mode."
       Delete:
         Arguments: "<player>"
         Description: "Deletes a player account.<newline>- Player ~ The account owner."
       Extract:
+        Arguments: ""
         Description: "Extracts all player balances with their username attached for database-related debugging."
       Purge:
+        Arguments: ""
         Description: "Deletes all player accounts that have the default balance"
       Reload:
         Arguments: "[configuration]"
         Description: "Saves modifications made via command, and reloads a configuration file.<newline>- Configuration ~ The identifier of the configuration to reload. Default is all."
       Reset:
+        Arguments: ""
         Description: "Deletes all economy-related data from the database."
       Restore:
+        Arguments: ""
         Description: "Restores all balances that are located in extracted.yml after /tne extract."
       Save:
+        Arguments: ""
         Description: "Force saves all TNE data."
       Status:
         Arguments: "<player> [status]"
         Description: "Displays, or sets, the current account status of an account.<newline>- Player ~ The account owner."
       Version:
+        Arguments: ""
         Description: "Displays the version of TNE currently running."
     Module:
       Available:
-        Description: "/tnem available [url] - Displays available modules at the specified url, or defaults to TNE's core modules.<newline>- url ~ The url to use for the check, only use if you know what you're doing."
+        Arguments: "[url]"
+        Description: "Displays available modules at the specified url, or defaults to TNE's core modules.<newline>- url ~ The url to use for the check, only use if you know what you're doing."
       Download:
-        Description: "/tnem download <name> [url] - Attempts to download the specified module.<newline>- url ~ The url to use, only use if you know what you're doing, defaults to TNE's core modules url."
+        Arguments: "<name> [url]"
+        Description: "Attempts to download the specified module.<newline>- url ~ The url to use, only use if you know what you're doing, defaults to TNE's core modules url."
       Info:
-        Description: "/tnem info <module> - Displays some information about a module.<newline>- Module ~ The module to look up."
+        Arguments: "<module>"
+        Description: "Displays some information about a module.<newline>- Module ~ The module to look up."
       List:
-        Description: "/tnem list - Lists all loaded TNE modules."
+        Arguments: ""
+        Description: "Lists all loaded TNE modules."
       Load:
-        Description: "/tnem load <module> - Load a module from the modules directory.<newline>- Module ~ The module to load."
+        Arguments: "<module>"
+        Description: "Load a module from the modules directory.<newline>- Module ~ The module to load."
       Reload:
-        Description: "/tnem reload <module> - Reloads a module from the modules directory.<newline>- Module ~ The module to reload."
+        Arguments: "<module>"
+        Description: "Reloads a module from the modules directory.<newline>- Module ~ The module to reload."
       Unload:
-        Description: "/tnem unload <module> - Unload a module from the server.<newline>- Module ~ The module to unload."
+        Arguments: "<module>"
+        Description: "Unload a module from the server.<newline>- Module ~ The module to unload."
     Money:
       Balance:
         Arguments: "[player] [world] [currency]"
