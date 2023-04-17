@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS tne_non_players_accounts (
     FOREIGN KEY(owner) REFERENCES tne_accounts(uid) ON DELETE CASCADE
     );
 
-CREATE TABLE IF NOT EXISTS tne_player_accounts (
+CREATE TABLE IF NOT EXISTS tne_players_accounts (
     uid BINARY(16) NOT NULL,
     last_online DATETIME NOT NULL,
     FOREIGN KEY(uid) REFERENCES tne_accounts(uid) ON DELETE CASCADE

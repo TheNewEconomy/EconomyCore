@@ -178,12 +178,12 @@ public class SQLAccount implements Datable<Account> {
           final String type = result.getString("account_type");
 
           //create our account from the type
-          final EconomyResponse response = TNECore.eco().account().createAccount(result.getString("uid"),
+          final EconomyResponse response = TNECore.eco().account().createAccount(identifier,
                                                                         result.getString("username"),
-                                                                        (type.equalsIgnoreCase("player") ||
+                                                                        !(type.equalsIgnoreCase("player") ||
                                                                                      type.equalsIgnoreCase("bedrock")));
           if(response.success()) {
-            final Optional<Account> acc = TNECore.eco().account().findAccount(result.getString("uid"));
+            final Optional<Account> acc = TNECore.eco().account().findAccount(identifier);
 
             //load our basic account information
             if(acc.isPresent()) {
