@@ -45,14 +45,14 @@ public class TNE extends JavaPlugin {
 
     //Initialize our TNE Core Class
     this.core = new BukkitCore(instance);
-
-    BukkitCore.eco().currency().load(getDataFolder(), false);
-    BukkitCore.eco().currency().saveCurrenciesUUID(getDataFolder());
   }
 
   public void onEnable() {
 
     this.core.enable();
+
+    BukkitCore.eco().currency().load(getDataFolder(), false);
+    BukkitCore.eco().currency().saveCurrenciesUUID(getDataFolder());
 
     //Register our event listeners
 

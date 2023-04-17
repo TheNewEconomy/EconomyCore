@@ -33,8 +33,6 @@ import java.util.List;
  */
 public abstract class Config {
 
-  private static Config instance;
-
   protected final YamlFile yaml;
 
   protected final File file;
@@ -46,17 +44,15 @@ public abstract class Config {
   public Config(final String fileName, String defaults, String... nodes) {
     this.defaults = defaults;
     this.nodes = List.of(nodes);
-
     file = new File(TNECore.directory(), fileName);
 
 
     if(!file.exists()) {
+      TNECore.log().error("Configuration doesn't exist! File Name:" + fileName);
       create = true;
     }
 
     this.yaml = new YamlFile(file.getPath());
-
-    instance = this;
   }
 
   public YamlFile getYaml() {
@@ -70,17 +66,12 @@ public abstract class Config {
     }
 
     try {
-      yaml.loadWithComments();
+      this.yaml.loadWithComments();
       return true;
     } catch(Exception e) {
-      TNECore.log().error("Error while loading config \"" + nodes.get(0) + "\".");
       e.printStackTrace();
       return false;
     }
-  }
-
-  public static YamlFile yaml() {
-    return instance.getYaml();
   }
 
   public void saveDefaults() {

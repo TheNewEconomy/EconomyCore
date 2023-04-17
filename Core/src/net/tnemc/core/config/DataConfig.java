@@ -18,6 +18,8 @@ package net.tnemc.core.config;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.simpleyaml.configuration.file.YamlFile;
+
 /**
  * DataConfig
  *
@@ -26,7 +28,15 @@ package net.tnemc.core.config;
  */
 public class DataConfig extends Config {
 
+  private static DataConfig instance;
+
   public DataConfig() {
     super("data.yml", "data.yml", "Data");
+
+    instance = this;
+  }
+
+  public static YamlFile yaml() {
+    return instance.getYaml();
   }
 }

@@ -18,6 +18,8 @@ package net.tnemc.core.config;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.simpleyaml.configuration.file.YamlFile;
+
 /**
  * MainConfig
  *
@@ -25,7 +27,15 @@ package net.tnemc.core.config;
  * @since 0.1.2.0
  */
 public class MainConfig extends Config {
+
+  private static MainConfig instance;
   public MainConfig() {
     super("config.yml", "config.yml", "Core");
+
+    instance = this;
+  }
+
+  public static YamlFile yaml() {
+    return instance.getYaml();
   }
 }

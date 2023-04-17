@@ -120,7 +120,7 @@ Core:
             Enabled: true
 
             #The threshold to mark a transaction for tracking.
-            Amount: 400
+            Amount: "400"
 
         #Configurations relating to pay transactions.
         Pay:

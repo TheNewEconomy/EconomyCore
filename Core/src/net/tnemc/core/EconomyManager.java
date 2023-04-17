@@ -18,6 +18,7 @@ package net.tnemc.core;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.manager.AccountManager;
 import net.tnemc.core.manager.CurrencyManager;
 import net.tnemc.core.manager.DataManager;
@@ -48,7 +49,8 @@ public class EconomyManager {
     this.currencyManager = new CurrencyManager();
     this.transactionManager = new TransactionManager();
     this.dataManager = new DataManager();
-    this.regionProvider = new RegionProvider(true, "world");
+    this.regionProvider = new RegionProvider(MainConfig.yaml().getBoolean("Core.Region.GroupRealms"),
+                                             MainConfig.yaml().getString("Core.Region.Mode"));
   }
 
   public AccountManager account() {

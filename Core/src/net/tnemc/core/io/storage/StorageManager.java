@@ -56,7 +56,7 @@ public class StorageManager {
     instance = this;
     this.connector = new SQLConnector();
 
-    initialize(DataConfig.yaml().getString(""));
+    initialize(DataConfig.yaml().getString("Data.Database.Type"));
   }
 
   public void initialize(final String engine) {

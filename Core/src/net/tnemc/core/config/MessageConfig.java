@@ -38,10 +38,18 @@ import java.util.UUID;
  */
 public class MessageConfig extends Config {
 
+  private static MessageConfig instance;
+
   private final Map<String, Language> languages = new HashMap<>();
 
   public MessageConfig() {
     super("messages.yml", "messages.yml", "Messages");
+
+    instance = this;
+  }
+
+  public static YamlFile yaml() {
+    return instance.getYaml();
   }
 
   public String getString(final String node, final UUID player) {

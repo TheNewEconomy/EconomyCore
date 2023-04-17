@@ -71,8 +71,7 @@ public class TransactionManager {
     this.track = MainConfig.yaml().getBoolean("Core.Transactions.Tracking.Enabled");
 
     try {
-
-      this.amount = new BigDecimal(MainConfig.yaml().getString("Core.Transactions.Tracking.Amount"));
+      this.amount = new BigDecimal(MainConfig.yaml().getString("Core.Transactions.Tracking.Amount", "400"));
     } catch(NumberFormatException ignore) {
 
       //Invalid configuration so we set our default

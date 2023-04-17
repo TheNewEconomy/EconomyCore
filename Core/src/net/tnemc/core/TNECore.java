@@ -79,7 +79,7 @@ public abstract class TNECore {
   //Manager Instances
   protected ServerConnector server;
   protected StorageManager storage;
-  protected final EconomyManager economyManager = new EconomyManager();
+  protected EconomyManager economyManager;
 
   private MainConfig config;
   private DataConfig data;
@@ -140,11 +140,20 @@ public abstract class TNECore {
     this.data = new DataConfig();
     this.messageConfig = new MessageConfig();
 
-    this.config.load();
-    this.data.load();
-    this.messageConfig.load();
+    TNECore.log().inform("Loading configurations!");
+    if(!this.config.load()) {
+      TNECore.log().error("Failed to load main configuration!");
+    }
 
-    this.economyManager.region().setMode(MainConfig.yaml().getString("Core.Region.Mode"));
+    if(!this.data.load()) {
+      TNECore.log().error("Failed to load data configuration!");
+    }
+
+    if(!this.messageConfig.load()) {
+      TNECore.log().error("Failed to load message configuration!");
+    }
+
+    this.economyManager = new EconomyManager();
 
     //set our debug options.
     this.level = DebugLevel.fromID(MainConfig.yaml().getString("Core.Debugging.Mode"));
@@ -157,11 +166,13 @@ public abstract class TNECore {
       final String name = MainConfig.yaml().getString("Core.Server.Account.Name");
       final UUID id = UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8));
       if(economyManager.account().findAccount(id.toString()).isEmpty()) {
+
         final EconomyResponse response = economyManager.account().createAccount(id.toString(), name, true);
         if(response.success()) {
 
           final BigDecimal defaultBalance = new BigDecimal(MainConfig.yaml().getString("Core.Server.Account.Balance"));
           if(defaultBalance.compareTo(BigDecimal.ZERO) > 0) {
+
             Optional<Account> account = economyManager.account().findAccount(id);
             account.ifPresent(value->value.setHoldings(new HoldingsEntry(economyManager.region().defaultRegion(),
                                                                          economyManager.currency().getDefaultCurrency().getUid(),

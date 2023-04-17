@@ -9,8 +9,9 @@
     <modules>
         <module>Core</module>
         <module>Bukkit</module>
-        <module>Sponge</module>
         <module>Folia</module>
+        <module>Minestom</module>
+        <module>Sponge</module>
     </modules>
 
     <properties>
