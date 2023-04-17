@@ -96,9 +96,9 @@ public class MySQLDialect implements Dialect {
 
     this.saveName = "INSERT INTO " + prefix + "player_names (uid, username) VALUES (UUID_TO_BIN(?), ?) ON DUPLICATE KEY UPDATE username = ?";
 
-    this.loadAccounts = "SELECT BIN_TO_UUID(uid) AS uid, username, account_type, created, pin, status FROM " + prefix + "tne_accounts";
+    this.loadAccounts = "SELECT BIN_TO_UUID(uid) AS uid, username, account_type, created, pin, status FROM " + prefix + "accounts";
 
-    this.loadAccount = "SELECT username, account_type, created, pin, status FROM " + prefix + "tne_accounts WHERE uid = UUID_TO_BIN(?)";
+    this.loadAccount = "SELECT username, account_type, created, pin, status FROM " + prefix + "accounts WHERE uid = UUID_TO_BIN(?)";
 
     this.saveAccount = "INSERT INTO " + prefix + "accounts (uid, username, account_type, created, pin, status)" +
                        "VALUES (UUID_TO_BIN(?), ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE username = ?, status = ?, pin = ?";
@@ -119,7 +119,7 @@ public class MySQLDialect implements Dialect {
                       "ON DUPLICATE KEY UPDATE perm_value = ?";
 
     this.loadHoldings = "SELECT server, region, BIN_TO_UUID(currency) AS currency, holdings_type, holdings FROM " + prefix +
-                        "tne_holdings WHERE uid = UUID_TO_BIN(?)";
+                        "holdings WHERE uid = UUID_TO_BIN(?)";
 
     this.saveHolding = "INSERT INTO " + prefix + "holdings (uid, server, region, currency, holdings_type, holdings) " +
                        "VALUES (UUID_TO_BIN(?), ?, ?, UUID_TO_BIN(?), ?, ?) ON DUPLICATE KEY UPDATE holdings = ?";

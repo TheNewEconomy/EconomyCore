@@ -56,7 +56,17 @@ public class MySQL extends StandardSQL {
 
   @Override
   public String url(String file, String host, int port, String database) {
-    return "jdbc:mysql://" + host + ":" + port + "/" + database;
+    final StringBuilder builder = new StringBuilder("jdbc:mysql://");
+    builder.append(host);
+    builder.append(":");
+    builder.append(port);
+    builder.append("/");
+    builder.append(database);
+    builder.append("?allowPublicKeyRetrieval=");
+    builder.append(DataConfig.yaml().getBoolean("Data.Database.SQL.PublicKey"));
+    builder.append("&useSSL=");
+    builder.append(DataConfig.yaml().getBoolean("Data.Database.SQL.SSL"));
+    return builder.toString();
   }
 
   /**
@@ -79,8 +89,6 @@ public class MySQL extends StandardSQL {
     properties.put("useLocalSessionState", true);
     properties.put("elideSetAutoCommits", true);
     properties.put("alwaysSendSetIsolation", false);
-    properties.put("useSSL", DataConfig.yaml().getBoolean("Data.Database.SQL.SSL"));
-
     return properties;
   }
 }
