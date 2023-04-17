@@ -18,6 +18,10 @@ package net.tnemc.core.io.storage.engine;
  */
 
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.GeyserAccount;
+import net.tnemc.core.account.NonPlayerAccount;
+import net.tnemc.core.account.PlayerAccount;
+import net.tnemc.core.account.SharedAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.io.storage.Datable;
@@ -60,7 +64,13 @@ public abstract class StandardSQL implements SQLEngine {
     this.prefix = prefix;
 
     //add our datables.
-    datables.put(Account.class, new SQLAccount());
+    final SQLAccount account = new SQLAccount();
+    datables.put(Account.class, account);
+    datables.put(NonPlayerAccount.class, account);
+    datables.put(SharedAccount.class, account);
+    datables.put(GeyserAccount.class, account);
+    datables.put(PlayerAccount.class, account);
+
     datables.put(HoldingsEntry.class, new SQLHoldings());
     datables.put(Receipt.class, new SQLReceipt());
   }

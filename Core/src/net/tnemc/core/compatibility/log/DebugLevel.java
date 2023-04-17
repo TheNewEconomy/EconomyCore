@@ -42,7 +42,7 @@ public enum DebugLevel {
   }
 
   public boolean compare(DebugLevel compare) {
-    return priority >= compare.priority;
+    return priority <= compare.priority;
   }
 
   public byte getPriority() {

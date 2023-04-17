@@ -91,7 +91,7 @@ public class RegionProvider {
   }
 
   public String defaultRegion() {
-    final String configDefault = MainConfig.yaml().getString("");
+    final String configDefault = MainConfig.yaml().getString("Core.Region.DefaultRegion");
     if(configDefault.equalsIgnoreCase("TNE_SYSTEM")) {
       return TNECore.server().defaultRegion(mode);
     }

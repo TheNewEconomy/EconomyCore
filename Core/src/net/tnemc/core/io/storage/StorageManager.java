@@ -20,6 +20,8 @@ package net.tnemc.core.io.storage;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.compatibility.scheduler.ChoreExecution;
 import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.config.DataConfig;
@@ -111,11 +113,24 @@ public class StorageManager {
    *                   this identifier.
    */
   public <T> void store(T object, @Nullable String identifier) {
+
+    TNECore.log().inform("Storing Datable of type: " + object.getClass().getName(), DebugLevel.DEVELOPER);
     final Datable<T> data = (Datable<T>)engine.datables().get(object.getClass());
     if(data != null) {
       TNECore.server().scheduler().createDelayedTask(()->data.store(connector, object, identifier),
                                                      new ChoreTime(0), ChoreExecution.SECONDARY);
     }
+  }
+
+  /**
+   * Used to store all data for an identifier in TNE.
+   */
+  public void storeAll(@NotNull final String identifier) {
+    final Optional<Datable<?>> data = Optional.ofNullable(engine.datables().get(HoldingsEntry.class));
+
+    //Our account storeAll requires no identifier, so we set it to null
+    data.ifPresent(datable->TNECore.server().scheduler()
+        .createDelayedTask(()->datable.storeAll(connector, identifier), new ChoreTime(0), ChoreExecution.SECONDARY));
   }
 
   /**

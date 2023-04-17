@@ -277,7 +277,7 @@ public class AccountManager {
 
     //TODO: Add third-party before this.
 
-    addAccountType(NonPlayerAccount.class, (value)->!UUIDProvider.validate(value));
+    addAccountType(NonPlayerAccount.class, (value)->true);
   }
 
   /**

@@ -101,7 +101,7 @@ public class MySQLDialect implements Dialect {
     this.loadAccount = "SELECT username, account_type, created, pin, status FROM " + prefix + "accounts WHERE uid = UUID_TO_BIN(?)";
 
     this.saveAccount = "INSERT INTO " + prefix + "accounts (uid, username, account_type, created, pin, status)" +
-                       "VALUES (UUID_TO_BIN(?), ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE username = ?, status = ?, pin = ?";
+                       "VALUES (UUID_TO_BIN(?), ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE username = ?, pin = ?, status = ?";
 
     this.loadNonPlayer = "SELECT BIN_TO_UUID(owner) AS owner FROM " + prefix + "non_players_accounts WHERE uid = UUID_TO_BIN(?)";
 

@@ -155,20 +155,31 @@ public abstract class TNECore {
 
     this.economyManager = new EconomyManager();
 
+    this.economyManager.currency().load(directory, false);
+    this.economyManager.currency().saveCurrenciesUUID(directory);
+
     //set our debug options.
     this.level = DebugLevel.fromID(MainConfig.yaml().getString("Core.Debugging.Mode"));
 
     this.storage = new StorageManager();
     this.storage.loadAll(Account.class, "");
 
+    System.out.println("Server Account: " + MainConfig.yaml().getBoolean("Core.Server.Account.Enabled"));
     if(MainConfig.yaml().getBoolean("Core.Server.Account.Enabled")) {
+
+      logger.inform("Checking Server Account.");
 
       final String name = MainConfig.yaml().getString("Core.Server.Account.Name");
       final UUID id = UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8));
+
+      System.out.println("UID: " + id);
       if(economyManager.account().findAccount(id.toString()).isEmpty()) {
 
+        logger.inform("Creating Server Account.");
         final EconomyResponse response = economyManager.account().createAccount(id.toString(), name, true);
         if(response.success()) {
+
+          logger.inform("Server Account has been created.");
 
           final BigDecimal defaultBalance = new BigDecimal(MainConfig.yaml().getString("Core.Server.Account.Balance"));
           if(defaultBalance.compareTo(BigDecimal.ZERO) > 0) {
@@ -180,6 +191,8 @@ public abstract class TNECore {
                                                                          HoldingsType.NORMAL_HOLDINGS
             )));
           }
+        } else {
+          logger.inform("Unable to create Server Account. Reason: " + response.response());
         }
       }
     }

@@ -51,9 +51,6 @@ public class TNE extends JavaPlugin {
 
     this.core.enable();
 
-    BukkitCore.eco().currency().load(getDataFolder(), false);
-    BukkitCore.eco().currency().saveCurrenciesUUID(getDataFolder());
-
     //Register our event listeners
 
     //Player Listeners

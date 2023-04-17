@@ -99,14 +99,6 @@ public class SQLAccount implements Datable<Account> {
 
       if(account instanceof PlayerAccount) {
 
-        //store our uuid and username(player_names table)
-        ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveName(),
-                                                new Object[]{
-                                                    account.getIdentifier(),
-                                                    account.getName(),
-                                                    account.getName()
-                                                });
-
         //Player account storage.(players_accounts table)
         ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().savePlayer(),
                                                 new Object[]{
@@ -120,11 +112,13 @@ public class SQLAccount implements Datable<Account> {
       if(account instanceof SharedAccount) {
 
         //Non-player accounts.(non_players_accounts table)
+        final String owner = (((SharedAccount)account).getOwner() == null)? account.getIdentifier() :
+                                                       ((SharedAccount)account).getOwner().toString();
         ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveNonPlayer(),
                                                 new Object[]{
                                                     account.getIdentifier(),
-                                                    ((SharedAccount)account).getOwner().toString(),
-                                                    ((SharedAccount)account).getOwner().toString()
+                                                    owner,
+                                                    owner
                                                 });
 
         //Account members(account_members table)
@@ -142,6 +136,8 @@ public class SQLAccount implements Datable<Account> {
           }
         }
       }
+
+      TNECore.storage().storeAll(account.getIdentifier());
     }
   }
 

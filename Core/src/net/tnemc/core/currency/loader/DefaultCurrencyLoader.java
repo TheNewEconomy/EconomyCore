@@ -57,14 +57,17 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
     if(directory.exists()) {
       final File[] currencies = IOUtil.getYAMLs(directory);
+      if(currencies.length > 0) {
 
-      for(File curFile : currencies) {
+        for(File curFile : currencies) {
 
-        final boolean loaded = loadCurrency(directory, curFile);
+          final boolean loaded = loadCurrency(directory, curFile);
 
-        if(!loaded) {
-          TNECore.log().error("Failed to load currency: " + curFile);
+          if(!loaded) {
+            TNECore.log().error("Failed to load currency: " + curFile);
+          }
         }
+        return;
       }
     }
     TNECore.log().error("There are no currencies to load.");
@@ -102,11 +105,11 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     }
 
     if(cur.getBoolean("Options.Disabled", false)) {
-      TNECore.log().error("Currency wasn't loaded as it's disabled: " + cur.getName());
+      TNECore.log().inform("Currency wasn't loaded as it's disabled: " + cur.getName());
       return false;
     }
 
-    TNECore.log().error("Attempting to load currency: " + curDirectory.getName());
+    TNECore.log().inform("Attempting to load currency: " + curDirectory.getName());
 
     //Currency Info configs.
     final String identifier = cur.getString("Info.Identifier", "Dollar");
