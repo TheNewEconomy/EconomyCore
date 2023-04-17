@@ -126,6 +126,7 @@ public class ItemDenomination extends Denomination {
     //TODO: Finish
     return null;
   }
+
   public SerialItem<?> toSerial() {
     //TODO: Finish
     return null;

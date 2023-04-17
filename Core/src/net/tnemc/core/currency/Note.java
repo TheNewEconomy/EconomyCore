@@ -18,6 +18,9 @@ package net.tnemc.core.currency;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.item.AbstractItemStack;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +106,10 @@ public class Note {
     this.texture = texture;
   }
 
-
-  //TODO: Build item stack(must be platform independent.. maybe an ItemProvider class?)
+  public AbstractItemStack<?> stack() {
+    return TNECore.server().stackBuilder().of(material, 1)
+        .enchant(enchantments)
+        .flags(flags)
+        .modelData(customModelData);
+  }
 }
