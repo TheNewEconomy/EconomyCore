@@ -94,7 +94,7 @@ public abstract class StandardSQL implements SQLEngine {
   public void reset(StorageConnector<?> connector) {
 
     @Language("SQL")
-    final String truncateAll = "SELECT concat('TRUNCATE TABLE ',table_catalog,'.',table_schema,'.',table_name)" +
+    final String truncateAll = "SELECT concat('TRUNCATE TABLE ',table_catalog,'.',table_schema,'.',table_name) AS query" +
         "FROM information_schema.tables " +
         "WHERE table_name LIKE '" + prefix + "%';";
 
@@ -102,7 +102,7 @@ public abstract class StandardSQL implements SQLEngine {
       try(ResultSet result = ((SQLConnector)connector).executeQuery(truncateAll, new Object[]{})) {
 
         while(result.next()) {
-          ((SQLConnector)connector).executeUpdate(result.getString(0), new Object[]{});
+          ((SQLConnector)connector).executeUpdate(result.getString("query"), new Object[]{});
         }
       } catch(SQLException e) {
         e.printStackTrace();

@@ -208,6 +208,34 @@ public abstract class TNECore {
          new ChoreTime(DataConfig.yaml().getInt("Data.AutoSaver.Interval"), TimeUnit.SECONDS),
          ChoreExecution.SECONDARY);
     }
+
+    //Test our stuff
+    /*server.scheduler().createDelayedTask(()->{
+      final long startTime = System.currentTimeMillis();
+      final String baseName = "test_account";
+      final BigDecimal amt = new BigDecimal(500);
+      for(int i = 0; i < 10000; i++) {
+        final String name = baseName + "_" + i;
+        final UUID id = UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8));
+        if(economyManager.account().findAccount(id.toString()).isEmpty()) {
+
+          logger.inform("Creating Account: " + name);
+          final EconomyResponse response = economyManager.account().createAccount(id.toString(), name, true);
+          if(response.success()) {
+
+            Optional<Account> account = economyManager.account().findAccount(id);
+            account.ifPresent(value->value.setHoldings(new HoldingsEntry(economyManager.region().defaultRegion(),
+                                                                         economyManager.currency().getDefaultCurrency().getUid(),
+                                                                         amt,
+                                                                         HoldingsType.NORMAL_HOLDINGS
+            )));
+          }
+        }
+      }
+      final long endTime = System.currentTimeMillis();
+
+      System.out.println("Total execution time: " + (endTime - startTime));
+    }, new ChoreTime(0), ChoreExecution.SECONDARY);*/
   }
 
   /**

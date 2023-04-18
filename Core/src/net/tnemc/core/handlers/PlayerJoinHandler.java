@@ -25,10 +25,8 @@ import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.utils.HandlerResponse;
 
-import java.util.Date;
 import java.util.Optional;
 
 /**
