@@ -232,6 +232,19 @@ public abstract class TNECore {
           }
         }
       }
+
+      //now set balances to something else.
+      final BigDecimal amt2 = new BigDecimal(1500);
+      for(int i = 0; i < 10000; i++) {
+        final String name = baseName + "_" + i;
+        final UUID id = UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8));
+        Optional<Account> account = economyManager.account().findAccount(id);
+        account.ifPresent(value->value.setHoldings(new HoldingsEntry(economyManager.region().defaultRegion(),
+                                                                     economyManager.currency().getDefaultCurrency().getUid(),
+                                                                     amt2,
+                                                                     HoldingsType.NORMAL_HOLDINGS
+        )));
+      }
       final long endTime = System.currentTimeMillis();
 
       System.out.println("Total execution time: " + (endTime - startTime));
