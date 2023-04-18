@@ -25,12 +25,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
- * PlayerLeaveListener
+ * PlayerQuitListener
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class PlayerLeaveListener implements Listener {
+public class PlayerQuitListener implements Listener {
 
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onJoin(final PlayerQuitEvent event) {

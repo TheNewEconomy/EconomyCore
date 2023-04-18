@@ -25,6 +25,7 @@ import net.tnemc.menu.sponge7.listeners.Sponge7InventoryClickListener;
 import net.tnemc.sponge.impl.SpongeLogProvider;
 import net.tnemc.sponge.impl.SpongeServerProvider;
 import net.tnemc.sponge.listeners.PlayerJoinListener;
+import net.tnemc.sponge.listeners.PlayerLeaveEvent;
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Listener;
@@ -66,6 +67,7 @@ public class SpongeCore extends TNECore {
 
     //Register our event listeners
     Sponge.getEventManager().registerListeners(container, new PlayerJoinListener());
+    Sponge.getEventManager().registerListeners(container, new PlayerLeaveEvent());
     Sponge.getEventManager().registerListeners(container, new Sponge7InventoryClickListener(plugin));
   }
 

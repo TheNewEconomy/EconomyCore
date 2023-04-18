@@ -19,6 +19,7 @@ package net.tnemc.folia;
  */
 import net.tnemc.bukkit.hook.economy.VaultHook;
 import net.tnemc.bukkit.listeners.PlayerJoinListener;
+import net.tnemc.bukkit.listeners.PlayerQuitListener;
 import net.tnemc.bukkit.listeners.WorldLoadListener;
 import net.tnemc.menu.folia.listener.FoliaChatListener;
 import net.tnemc.menu.folia.listener.FoliaInventoryClickListener;
@@ -57,6 +58,7 @@ public class TNE extends JavaPlugin {
 
     //Player Listeners
     Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
+    Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), this);
 
     //Menu-related Listeners from TNML
     Bukkit.getPluginManager().registerEvents(new FoliaChatListener(this), this);
