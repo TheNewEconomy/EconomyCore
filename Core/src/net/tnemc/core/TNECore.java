@@ -21,9 +21,9 @@ package net.tnemc.core;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
-import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.api.BaseAPI;
 import net.tnemc.core.api.TNEAPI;
+import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.compatibility.LogProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.log.DebugLevel;
@@ -44,7 +44,6 @@ import net.tnemc.menu.core.MenuManager;
 import java.io.File;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -173,23 +172,22 @@ public abstract class TNECore {
       if(economyManager.account().findAccount(id.toString()).isEmpty()) {
 
         logger.inform("Creating Server Account.");
-        final EconomyResponse response = economyManager.account().createAccount(id.toString(), name, true);
-        if(response.success()) {
+
+        final AccountAPIResponse response = economyManager.account().createAccount(id.toString(), name, true);
+        if(response.getResponse().success()) {
 
           logger.inform("Server Account has been created.");
 
           final BigDecimal defaultBalance = new BigDecimal(MainConfig.yaml().getString("Core.Server.Account.Balance"));
           if(defaultBalance.compareTo(BigDecimal.ZERO) > 0) {
-
-            Optional<Account> account = economyManager.account().findAccount(id);
-            account.ifPresent(value->value.setHoldings(new HoldingsEntry(economyManager.region().defaultRegion(),
+            response.getAccount().ifPresent(value->value.setHoldings(new HoldingsEntry(economyManager.region().defaultRegion(),
                                                                          economyManager.currency().getDefaultCurrency().getUid(),
                                                                          defaultBalance,
                                                                          HoldingsType.NORMAL_HOLDINGS
             )));
           }
         } else {
-          logger.inform("Unable to create Server Account. Reason: " + response.response());
+          logger.error("Unable to create Server Account. Reason: " + response.getResponse().response());
         }
       }
     }

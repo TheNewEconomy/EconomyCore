@@ -31,6 +31,7 @@ import net.tnemc.core.account.status.AccountNormalStatus;
 import net.tnemc.core.account.status.AccountRestrictedStatus;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.actions.response.AccountResponse;
+import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.io.maps.EnhancedHashMap;
 import net.tnemc.core.manager.id.UUIDPair;
@@ -69,9 +70,9 @@ public class AccountManager {
   /**
    * Used to create a new non-player account based on the provided name.
    * @param name The name to use for this account.
-   * @return A correlating {@link EconomyResponse response} containing the results.
+   * @return A correlating {@link AccountAPIResponse response} containing the results.
    */
-  public EconomyResponse createAccount(final String name) {
+  public AccountAPIResponse createAccount(final String name) {
     return createAccount(name, name, true);
   }
 
@@ -80,9 +81,9 @@ public class AccountManager {
    * @param identifier The identifier to use for the creation, if this is a player then this should
    *                   be the String value of the UUID for that player.
    * @param name The name to use for this account.
-   * @return A correlating {@link EconomyResponse response} containing the results.
+   * @return A correlating {@link AccountAPIResponse response} containing the results.
    */
-  public EconomyResponse createAccount(final String identifier, final String name) {
+  public AccountAPIResponse createAccount(final String identifier, final String name) {
     return createAccount(identifier, name, false);
   }
 
@@ -92,11 +93,11 @@ public class AccountManager {
    *                   be the String value of the UUID for that player.
    * @param name The name to use for this account.
    * @param nonPlayer True if the new account should be a non-player account.
-   * @return A correlating {@link EconomyResponse response} containing the results.
+   * @return A correlating {@link AccountAPIResponse response} containing the results.
    */
-  public EconomyResponse createAccount(final String identifier, final String name, boolean nonPlayer) {
+  public AccountAPIResponse createAccount(final String identifier, final String name, boolean nonPlayer) {
     if(accounts.containsKey(identifier)) {
-      return AccountResponse.ALREADY_EXISTS;
+      return new AccountAPIResponse(accounts.get(identifier), AccountResponse.ALREADY_EXISTS);
     }
 
     Account account;
@@ -111,8 +112,7 @@ public class AccountManager {
 
         //Our identifier is an invalid UUID, let's search for it.
         //TODO: UUID lookup
-
-        return AccountResponse.CREATION_FAILED;
+        return new AccountAPIResponse(null, AccountResponse.CREATION_FAILED);
       }
     } else if(!nonPlayer && TNECore.server().online(name)) {
 
@@ -123,13 +123,13 @@ public class AccountManager {
 
         uuidProvider.store(new UUIDPair(id, name));
       } catch(Exception ignore) {
-        return AccountResponse.CREATION_FAILED;
+        return new AccountAPIResponse(null, AccountResponse.CREATION_FAILED);
       }
     } else {
       final Optional<SharedAccount> nonPlayerAccount = createNonPlayerAccount(name);
 
       if(nonPlayerAccount.isEmpty()) {
-        return AccountResponse.CREATION_FAILED;
+        return new AccountAPIResponse(null, AccountResponse.CREATION_FAILED);
       }
       account = nonPlayerAccount.get();
     }
@@ -143,7 +143,7 @@ public class AccountManager {
     } catch(Exception ignore) {
       //identifier isn't an uuid, so it'll be a string, most likely a non-player.
     }
-    return AccountResponse.CREATED;
+    return new AccountAPIResponse(account, AccountResponse.CREATED);
   }
 
   /**

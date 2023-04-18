@@ -23,7 +23,7 @@ import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.SharedAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.shared.Member;
-import net.tnemc.core.actions.EconomyResponse;
+import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageConnector;
@@ -178,16 +178,15 @@ public class SQLAccount implements Datable<Account> {
           final String type = result.getString("account_type");
 
           //create our account from the type
-          final EconomyResponse response = TNECore.eco().account().createAccount(identifier,
-                                                                        result.getString("username"),
-                                                                        !(type.equalsIgnoreCase("player") ||
+          final AccountAPIResponse response = TNECore.eco().account().createAccount(identifier,
+                                                                                    result.getString("username"),
+                                                                                    !(type.equalsIgnoreCase("player") ||
                                                                                      type.equalsIgnoreCase("bedrock")));
-          if(response.success()) {
-            final Optional<Account> acc = TNECore.eco().account().findAccount(identifier);
+          if(response.getResponse().success()) {
 
             //load our basic account information
-            if(acc.isPresent()) {
-              account = acc.get();
+            if(response.getAccount().isPresent()) {
+              account = response.getAccount().get();
 
               account.setStatus(TNECore.eco().account().findStatus(result.getString("status")));
               account.setCreationDate(result.getTimestamp("created").getTime());

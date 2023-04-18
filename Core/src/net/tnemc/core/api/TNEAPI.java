@@ -115,17 +115,17 @@ public interface TNEAPI {
   /**
    * Attempts to create an account with the given identifier. This method returns true if the account
    * was created, otherwise false.
-   *
+   * <p>
    * This method is not intended for non-player accounts.
    *
    * @param identifier The {@link UUID} identifier for the account that is being created.
-   * @param name The String representation of the name for the account being created, usually the username
-   *             of the player.
+   * @param name       The String representation of the name for the account being created, usually the username
+   *                   of the player.
    *
    * @return The correlating {@link EconomyResponse response}.
    * @since 0.1.2.0
    */
-  EconomyResponse createPlayerAccount(@NotNull UUID identifier, @NotNull String name);
+  AccountAPIResponse createPlayerAccount(@NotNull UUID identifier, @NotNull String name);
 
   /**
    * Looks for an account based on the provided identifier.

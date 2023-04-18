@@ -23,6 +23,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
+import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.utils.HandlerResponse;
@@ -48,48 +49,56 @@ public class PlayerJoinHandler {
     final Optional<Account> account = TNECore.eco().account().findAccount(provider.identifier());
 
     boolean firstJoin = false;
+    AccountAPIResponse apiResponse = null;
 
     //Our account doesn't exist, so now we need to continue from here
     if(account.isEmpty()) {
       firstJoin = true;
-      if(!TNECore.eco().account().createAccount(provider.identifier().toString(), provider.getName()).success()) {
+
+      apiResponse = TNECore.eco().account().createAccount(provider.identifier().toString(),
+                                                          provider.getName());
+
+      if(!apiResponse.getResponse().success()) {
         response.setResponse(response.getResponse());
         response.setCancelled(true);
         return response;
       }
     }
 
-    final Optional<Account> acc = TNECore.eco().account().findAccount(provider.identifier());
+    final Optional<Account> acc = (apiResponse == null)? TNECore.eco().account().findAccount(provider.identifier()) :
+                                                   apiResponse.getAccount();
 
-    if(firstJoin) {
-      for(Currency currency : TNECore.eco().currency().currencies()) {
-        acc.get().setHoldings(new HoldingsEntry(TNECore.eco().region().getMode().region(provider),
-                                              currency.getUid(),
-                                              currency.getStartingHoldings(),
-                                              HoldingsType.NORMAL_HOLDINGS
-        ));
+    if(acc.isPresent()) {
+
+      if(firstJoin) {
+        for(Currency currency : TNECore.eco().currency().currencies()) {
+          acc.get().setHoldings(new HoldingsEntry(TNECore.eco().region().getMode().region(provider),
+                                                  currency.getUid(),
+                                                  currency.getStartingHoldings(),
+                                                  HoldingsType.NORMAL_HOLDINGS
+          ));
+        }
+      } else {
+
+        for(Currency currency : TNECore.eco().currency().currencies()) {
+          if(currency.type().supportsItems()) {
+
+            //TODO: Update item updates to match database in event of offline payments.
+          }
+        }
       }
-    } else {
 
-      for(Currency currency : TNECore.eco().currency().currencies()) {
-        if(currency.type().supportsItems()) {
+      final long last_online = ((PlayerAccount)acc.get()).getLastOnline();
+      //TODO: Check for transactions that happened while away if player has notify settings active.
 
-          //TODO: Update item updates to match database in event of offline payments.
+      if(provider.hasPermission("tne.admin.update")) {
+        //TODO: Update check.
+
+        if(TNECore.eco().transaction().isTrack()) {
+          //TODO: Any warnings? Balance jumps?
         }
       }
     }
-
-    final long last_online = ((PlayerAccount)acc.get()).getLastOnline();
-    //TODO: Check for transactions that happened while away if player has notify settings active.
-
-    if(provider.hasPermission("tne.admin.update")) {
-      //TODO: Update check.
-
-      if(TNECore.eco().transaction().isTrack()) {
-        //TODO: Any warnings? Balance jumps?
-      }
-    }
-
     return response;
   }
 }

@@ -23,6 +23,7 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.actions.EconomyResponse;
+import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.command.args.ArgumentsParser;
 import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.io.message.MessageData;
@@ -70,8 +71,8 @@ public class AdminCommand extends BaseCommand {
       return;
     }
 
-    final EconomyResponse response = TNECore.eco().account().createAccount(parser.args()[0]);
-    if(response.success()) {
+    final AccountAPIResponse response = TNECore.eco().account().createAccount(parser.args()[0]);
+    if(response.getResponse().success()) {
       final MessageData data = new MessageData("Messages.Admin.Created");
       data.addReplacement("$name", parser.args()[0]);
       parser.sender().message(data);

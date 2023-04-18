@@ -25,7 +25,6 @@ import net.tnemc.core.account.SharedAccount;
 import net.tnemc.core.actions.ActionSource;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.actions.response.AccountResponse;
-import net.tnemc.core.actions.response.GeneralResponse;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.currency.Currency;
 import org.jetbrains.annotations.NotNull;
@@ -89,20 +88,13 @@ public class BaseAPI implements TNEAPI {
    */
   @Override
   public AccountAPIResponse getOrCreateAccount(@NotNull String identifier, @NotNull String name) {
-    EconomyResponse response = TNECore.eco().account().createAccount(identifier, name);
+    AccountAPIResponse response = TNECore.eco().account().createAccount(identifier, name);
 
-    if(response.equals(AccountResponse.ALREADY_EXISTS)) {
-      response = GeneralResponse.SUCCESS;
+    if(response.getResponse().equals(AccountResponse.ALREADY_EXISTS)) {
+      return response;
     }
 
-    final Optional<Account> acc = TNECore.eco().account().findAccount(identifier);
-    Account account = null;
-
-    if(acc.isPresent()) {
-      account = acc.get();
-    }
-
-    return new AccountAPIResponse(account, response);
+    return response;
   }
 
   /**
@@ -150,11 +142,11 @@ public class BaseAPI implements TNEAPI {
    * @param name       The String representation of the name for the account being created, usually the username
    *                   of the player.
    *
-   * @return The correlating {@link EconomyResponse response}.
+   * @return The correlating {@link AccountAPIResponse response}.
    * @since 0.1.2.0
    */
   @Override
-  public EconomyResponse createPlayerAccount(@NotNull UUID identifier, @NotNull String name) {
+  public AccountAPIResponse createPlayerAccount(@NotNull UUID identifier, @NotNull String name) {
     return TNECore.eco().account().createAccount(identifier.toString(), name);
   }
 

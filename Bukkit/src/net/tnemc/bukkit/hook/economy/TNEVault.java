@@ -493,7 +493,7 @@ public class TNEVault implements Economy {
    */
   @Deprecated
   public boolean createPlayerAccount(String name, String world) {
-    return TNECore.eco().account().createAccount(name, name).success();
+    return TNECore.eco().account().createAccount(name, name).getResponse().success();
   }
 
   /**
@@ -504,7 +504,7 @@ public class TNEVault implements Economy {
    * @return if the account creation was successful
    */
   public boolean createPlayerAccount(OfflinePlayer player, String world) {
-    return TNECore.eco().account().createAccount(player.getUniqueId().toString(), player.getName()).success();
+    return TNECore.eco().account().createAccount(player.getUniqueId().toString(), player.getName()).getResponse().success();
   }
 
   private EconomyResponse.ResponseType fromResult(@Nullable TransactionResult result) {

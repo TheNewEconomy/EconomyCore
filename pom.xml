@@ -10,7 +10,6 @@
         <module>Core</module>
         <module>Bukkit</module>
         <module>Folia</module>
-        <module>Minestom</module>
         <module>Sponge</module>
     </modules>
 
