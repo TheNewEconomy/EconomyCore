@@ -20,6 +20,8 @@ package net.tnemc.core.handlers;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.item.ItemCurrency;
@@ -45,19 +47,35 @@ public class PlayerJoinHandler {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(provider.identifier());
 
-    //Our account doesn't exist, so now we need to continue from here
-    if(account.isEmpty() &&
-        !TNECore.eco().account().createAccount(provider.identifier().toString(), provider.getName()).success()) {
+    boolean firstJoin = false;
 
-      response.setResponse(response.getResponse());
-      response.setCancelled(true);
-      return response;
+    //Our account doesn't exist, so now we need to continue from here
+    if(account.isEmpty()) {
+      firstJoin = true;
+      if(!TNECore.eco().account().createAccount(provider.identifier().toString(), provider.getName()).success()) {
+        response.setResponse(response.getResponse());
+        response.setCancelled(true);
+        return response;
+      }
     }
 
-    for(Currency currency : TNECore.eco().currency().currencies()) {
-      if(currency instanceof ItemCurrency) {
+    final Optional<Account> acc = TNECore.eco().account().findAccount(provider.identifier());
 
-        //TODO: Check item currency balances.
+    if(firstJoin) {
+      for(Currency currency : TNECore.eco().currency().currencies()) {
+        acc.get().setHoldings(new HoldingsEntry(TNECore.eco().region().getMode().region(provider),
+                                              currency.getUid(),
+                                              currency.getStartingHoldings(),
+                                              HoldingsType.NORMAL_HOLDINGS
+        ));
+      }
+    } else {
+
+      for(Currency currency : TNECore.eco().currency().currencies()) {
+        if(currency.type().supportsItems()) {
+
+          //TODO: Update item updates to match database in event of offline payments.
+        }
       }
     }
 
