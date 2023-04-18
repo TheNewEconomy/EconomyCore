@@ -164,15 +164,12 @@ public abstract class TNECore {
     this.storage = new StorageManager();
     this.storage.loadAll(Account.class, "");
 
-    System.out.println("Server Account: " + MainConfig.yaml().getBoolean("Core.Server.Account.Enabled"));
     if(MainConfig.yaml().getBoolean("Core.Server.Account.Enabled")) {
 
       logger.inform("Checking Server Account.");
 
       final String name = MainConfig.yaml().getString("Core.Server.Account.Name");
       final UUID id = UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8));
-
-      System.out.println("UID: " + id);
       if(economyManager.account().findAccount(id.toString()).isEmpty()) {
 
         logger.inform("Creating Server Account.");
