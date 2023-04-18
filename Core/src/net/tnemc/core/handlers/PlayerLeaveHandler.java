@@ -17,6 +17,16 @@ package net.tnemc.core.handlers;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
+import net.tnemc.core.account.PlayerAccount;
+import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.io.storage.StorageManager;
+import net.tnemc.core.utils.HandlerResponse;
+
+import java.util.Date;
+import java.util.Optional;
+
 /**
  * PlayerLeaveHandler
  *
@@ -24,4 +34,20 @@ package net.tnemc.core.handlers;
  * @since 0.1.2.0
  */
 public class PlayerLeaveHandler {
+  /**
+   * Used to handle a PlayerLeaveEvent using the specified {@link PlayerProvider} class.
+   * @param provider The {@link PlayerProvider} associated with the platform event.
+   * @return True if the event should be cancelled, otherwise false.
+   */
+  public HandlerResponse handle(PlayerProvider provider) {
+    final HandlerResponse response = new HandlerResponse("", false);
+
+    final Optional<Account> account = TNECore.eco().account().findAccount(provider.identifier());
+    if(account.isPresent() && (account.get() instanceof PlayerAccount)) {
+
+      ((PlayerAccount)account.get()).setLastOnline(new Date().getTime());
+      StorageManager.instance().store(account.get(), account.get().getIdentifier());
+    }
+    return response;
+  }
 }

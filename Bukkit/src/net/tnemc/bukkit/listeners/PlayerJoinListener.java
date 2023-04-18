@@ -40,7 +40,7 @@ public class PlayerJoinListener implements Listener {
 
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onJoin(final PlayerJoinEvent event) {
-    BukkitPlayerProvider provider = new BukkitPlayerProvider(event.getPlayer());
+    final BukkitPlayerProvider provider = new BukkitPlayerProvider(event.getPlayer());
     final HandlerResponse handle = new PlayerJoinHandler()
         .handle(provider);
 
