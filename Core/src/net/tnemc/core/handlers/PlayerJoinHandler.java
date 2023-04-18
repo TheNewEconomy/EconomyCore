@@ -20,6 +20,7 @@ package net.tnemc.core.handlers;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.compatibility.PlayerProvider;
@@ -27,6 +28,7 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.utils.HandlerResponse;
 
+import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -79,12 +81,15 @@ public class PlayerJoinHandler {
       }
     }
 
+    final long last_online = ((PlayerAccount)acc.get()).getLastOnline();
     //TODO: Check for transactions that happened while away if player has notify settings active.
 
     if(provider.hasPermission("tne.admin.update")) {
       //TODO: Update check.
 
-      //TODO: Any warnings? Balance jumps?
+      if(TNECore.eco().transaction().isTrack()) {
+        //TODO: Any warnings? Balance jumps?
+      }
     }
 
     return response;
