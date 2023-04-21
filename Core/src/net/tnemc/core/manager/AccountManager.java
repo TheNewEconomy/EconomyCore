@@ -39,7 +39,9 @@ import net.tnemc.core.manager.id.UUIDProvider;
 import net.tnemc.core.manager.id.impl.provider.BaseUUIDProvider;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -61,6 +63,12 @@ public class AccountManager {
   private final LinkedHashMap<Class<? extends SharedAccount>, Function<String, Boolean>> types = new LinkedHashMap<>();
 
   protected UUIDProvider uuidProvider = new BaseUUIDProvider();
+
+  /*
+   * list for if player accounts are loading in this will mean that players in this list
+   * will have balances loaded from the database for item-based currencies.
+   */
+  protected final List<UUID> loading = new ArrayList<>();
 
   public AccountManager() {
     addDefaultStatuses();
@@ -296,5 +304,9 @@ public class AccountManager {
 
   public UUIDProvider uuidProvider() {
     return uuidProvider;
+  }
+
+  public List<UUID> getLoading() {
+    return loading;
   }
 }

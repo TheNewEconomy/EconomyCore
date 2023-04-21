@@ -79,11 +79,15 @@ public class PlayerJoinHandler {
           ));
         }
       } else {
+        TNECore.eco().account().getLoading().add(provider.identifier());
 
-        for(Currency currency : TNECore.eco().currency().currencies()) {
+        final String region = TNECore.eco().region().getMode().region(provider);
+        for(Currency currency : TNECore.eco().currency().getCurrencies(region)) {
           if(currency.type().supportsItems()) {
 
-            //TODO: Update item updates to match database in event of offline payments.
+            for(HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
+              acc.get().setHoldings(entry, entry.getType());
+            }
           }
         }
       }

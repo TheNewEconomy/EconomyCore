@@ -108,7 +108,9 @@ public class ItemType extends VirtualType {
 
   protected HoldingsEntry getEChest(Account account, String region, Currency currency) {
     if(account.isPlayer()) {
-      if(!((PlayerAccount)account).isOnline()) {
+      if(!((PlayerAccount)account).isOnline() ||
+          TNECore.eco().account().getLoading().contains(((PlayerAccount)account).getUUID())) {
+
         //Offline players have their balances saved to their wallet so check it.
         final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
                                                                                  currency.getUid(),
@@ -139,7 +141,9 @@ public class ItemType extends VirtualType {
   }
 
   protected HoldingsEntry getInventory(Account account, String region, Currency currency) {
-    if(!(currency instanceof ItemCurrency) || !account.isPlayer() || !((PlayerAccount)account).isOnline()) {
+    if(!(currency instanceof ItemCurrency) ||
+        !account.isPlayer() || !((PlayerAccount)account).isOnline() ||
+        TNECore.eco().account().getLoading().contains(((PlayerAccount)account).getUUID())) {
       //Offline players/non-players have their balances saved to their wallet so check it.
       final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
                                                                                currency.getUid(),
