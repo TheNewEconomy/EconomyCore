@@ -21,6 +21,7 @@ package net.tnemc.folia;
 import co.aikar.commands.PaperCommandManager;
 import net.tnemc.bukkit.impl.BukkitLogProvider;
 import net.tnemc.core.TNECore;
+import net.tnemc.core.config.MessageConfig;
 import net.tnemc.folia.command.AdminCommand;
 import net.tnemc.folia.command.MoneyCommand;
 import net.tnemc.folia.command.TransactionCommand;
@@ -34,8 +35,6 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @since 0.1.2.0
  */
 public class FoliaCore extends TNECore {
-
-  protected PaperCommandManager command;
   private JavaPlugin plugin;
 
   public FoliaCore(JavaPlugin plugin) {
@@ -51,6 +50,23 @@ public class FoliaCore extends TNECore {
     super.onEnable();
 
     command = new PaperCommandManager(plugin);
+
+    //Enable help api in ACF
+    command.enableUnstableAPI("help");
+
+    for(String cmd : MessageConfig.yaml().getConfigurationSection("Message.Commands").getKeys(false)) {
+      for(String sub : MessageConfig.yaml().getConfigurationSection("Message.Commands." + cmd).getKeys(false)) {
+
+        final String path = cmd + "." + sub;
+        command.getCommandReplacements().addReplacements(
+            path + ".Description",
+            MessageConfig.yaml().getString("Message.Commands." + path + ".Description"),
+            path + ".Arguments",
+            MessageConfig.yaml().getString("Message.Commands." + path + ".Arguments")
+        );
+      }
+    }
+
     command.registerCommand(new AdminCommand());
     command.registerCommand(new MoneyCommand());
     command.registerCommand(new TransactionCommand());
