@@ -18,6 +18,7 @@ package net.tnemc.core;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import co.aikar.commands.CommandManager;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
@@ -79,6 +80,7 @@ public abstract class TNECore {
   protected ServerConnector server;
   protected StorageManager storage;
   protected EconomyManager economyManager;
+  protected CommandManager<?, ?, ?, ?, ?, ?> command;
 
   private MainConfig config;
   private DataConfig data;
@@ -318,5 +320,9 @@ public abstract class TNECore {
 
   public void setLevel(DebugLevel level) {
     this.level = level;
+  }
+
+  public CommandManager<?, ?, ?, ?, ?, ?> command() {
+    return command;
   }
 }

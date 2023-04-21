@@ -18,7 +18,6 @@ package net.tnemc.core.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import co.aikar.commands.BaseCommand;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
@@ -77,7 +76,7 @@ public class MoneyCommand extends BaseCommand {
   public static void onConvert(ArgumentsParser parser) {
 
     if(parser.args().length < 2) {
-      //TODO: Help
+      help(parser.sender(), "money convert", "Money.Convert");
       return;
     }
 
@@ -138,7 +137,7 @@ public class MoneyCommand extends BaseCommand {
   public static void onGive(ArgumentsParser parser) {
 
     if(parser.args().length < 2) {
-      //TODO: Help
+      help(parser.sender(), "money give", "Money.Give");
       return;
     }
 
@@ -184,7 +183,7 @@ public class MoneyCommand extends BaseCommand {
   public static void onNote(ArgumentsParser parser) {
 
     if(parser.args().length < 1) {
-      //TODO: Help
+      help(parser.sender(), "money note", "Money.Note");
       return;
     }
 
@@ -215,7 +214,7 @@ public class MoneyCommand extends BaseCommand {
 
   public static void onOther(ArgumentsParser parser) {
     if(parser.args().length < 1) {
-      //TODO: help
+      help(parser.sender(), "money other", "Money.Other");
       return;
     }
 
@@ -277,7 +276,7 @@ public class MoneyCommand extends BaseCommand {
   public static void onPay(ArgumentsParser parser) {
 
     if(parser.args().length < 2) {
-      //TODO: Help
+      help(parser.sender(), "money pay", "Money.Pay");
       return;
     }
 
@@ -341,7 +340,7 @@ public class MoneyCommand extends BaseCommand {
   public static void onRequest(ArgumentsParser parser) {
 
     if(parser.args().length < 2) {
-      //TODO: Help
+      help(parser.sender(), "money request", "Money.Request");
       return;
     }
 
@@ -376,7 +375,7 @@ public class MoneyCommand extends BaseCommand {
   public static void onSet(ArgumentsParser parser) {
 
     if(parser.args().length < 2) {
-      //TODO: Help
+      help(parser.sender(), "money set", "Money.Set");
       return;
     }
 
@@ -421,7 +420,7 @@ public class MoneyCommand extends BaseCommand {
   public static void onTake(ArgumentsParser parser) {
 
     if(parser.args().length < 2) {
-      //TODO: Help
+      help(parser.sender(), "money take", "Money.Take");
       return;
     }
 

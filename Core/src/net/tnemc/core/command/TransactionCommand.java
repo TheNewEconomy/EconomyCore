@@ -18,7 +18,6 @@ package net.tnemc.core.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import co.aikar.commands.BaseCommand;
 import net.tnemc.core.command.args.ArgumentsParser;
 
 /**
@@ -27,7 +26,7 @@ import net.tnemc.core.command.args.ArgumentsParser;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class TransactionCommand extends BaseCommand {
+public class TransactionCommand {
 
   public static void away(ArgumentsParser parser) {
     //TODO: This

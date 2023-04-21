@@ -18,7 +18,6 @@ package net.tnemc.core.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import co.aikar.commands.BaseCommand;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.AccountStatus;
@@ -57,8 +56,7 @@ public class AdminCommand extends BaseCommand {
   //<player> [balance]
   public static void onCreate(ArgumentsParser parser) {
     if(parser.args().length < 1) {
-      //TODO: Help
-
+      help(parser.sender(), "tne create", "Admin.Create");
       return;
     }
 
@@ -86,8 +84,7 @@ public class AdminCommand extends BaseCommand {
   //<standard/detailed/developer>
   public static void onDebug(ArgumentsParser parser) {
     if(parser.args().length < 1) {
-      //TODO: Help
-
+      help(parser.sender(), "tne debug", "Admin.Debug");
       return;
     }
 
@@ -105,8 +102,7 @@ public class AdminCommand extends BaseCommand {
 
   public static void onDelete(ArgumentsParser parser) {
     if(parser.args().length < 1) {
-      //TODO: Help
-
+      help(parser.sender(), "tne delete", "Admin.Delete");
       return;
     }
 
@@ -183,8 +179,7 @@ public class AdminCommand extends BaseCommand {
   //<account> [status]
   public static void onStatus(ArgumentsParser parser) {
     if(parser.args().length < 1) {
-      //TODO: Help
-
+      help(parser.sender(), "tne status", "Admin.Status");
       return;
     }
 

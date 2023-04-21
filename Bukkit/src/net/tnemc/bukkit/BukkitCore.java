@@ -25,6 +25,7 @@ import net.tnemc.bukkit.command.TransactionCommand;
 import net.tnemc.bukkit.impl.BukkitLogProvider;
 import net.tnemc.bukkit.impl.BukkitServerProvider;
 import net.tnemc.core.TNECore;
+import net.tnemc.core.config.MessageConfig;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -35,7 +36,6 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class BukkitCore extends TNECore {
 
-  protected PaperCommandManager command;
   private JavaPlugin plugin;
 
   public BukkitCore(JavaPlugin plugin) {
@@ -51,6 +51,24 @@ public class BukkitCore extends TNECore {
     super.onEnable();
 
     command = new PaperCommandManager(plugin);
+
+    //Enable help api in ACF
+    command.enableUnstableAPI("help");
+
+    for(String cmd : MessageConfig.yaml().getConfigurationSection("Message.Commands").getKeys(false)) {
+      for(String sub : MessageConfig.yaml().getConfigurationSection("Message.Commands." + cmd).getKeys(false)) {
+
+        final String path = cmd + "." + sub;
+        command.getCommandReplacements().addReplacements(
+            path + ".Description",
+            MessageConfig.yaml().getString("Message.Commands." + path + ".Description"),
+            path + ".Arguments",
+            MessageConfig.yaml().getString("Message.Commands." + path + ".Arguments")
+        );
+      }
+    }
+
+    //Register our commands
     command.registerCommand(new AdminCommand());
     command.registerCommand(new MoneyCommand());
     command.registerCommand(new TransactionCommand());

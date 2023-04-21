@@ -19,6 +19,7 @@ package net.tnemc.bukkit.command;
  */
 
 import co.aikar.commands.BaseCommand;
+import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
@@ -41,7 +42,7 @@ public class AdminCommand extends BaseCommand {
   @Default
   @Subcommand("ecomenu|menu")
   @CommandAlias("myeco|ecomenu")
-  @Syntax("%Money.MyEco.ArgumentsParser")
+  @Syntax("%Money.MyEco.Arguments")
   @Description("%Money.MyEco.Description")
   @CommandPermission("tne.money.myeco")
   public void onMyEco(CommandSender sender, String[] args) {
@@ -49,7 +50,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   @Subcommand("backup|archive")
-  @Syntax("%Admin.Backup.ArgumentsParser")
+  @Syntax("%Admin.Backup.Arguments")
   @Description("%Admin.Backup.Description")
   @CommandPermission("tne.admin.backup")
   public void backup(CommandSender sender, String[] args) {
@@ -57,7 +58,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   @Subcommand("create|add|new|make|+")
-  @Syntax("%Admin.Create.ArgumentsParser")
+  @Syntax("%Admin.Create.Arguments")
   @Description("%Admin.Create.Description")
   @CommandPermission("tne.admin.create")
   public void create(CommandSender sender, String[] args) {
@@ -65,7 +66,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   @Subcommand("debug")
-  @Syntax("%Admin.Debug.ArgumentsParser")
+  @Syntax("%Admin.Debug.Arguments")
   @Description("%Admin.Debug.Description")
   @CommandPermission("tne.admin.debug")
   public void debug(CommandSender sender, String[] args) {
@@ -73,7 +74,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   @Subcommand("delete|destroy|del|remove|-")
-  @Syntax("%Admin.Delete.ArgumentsParser")
+  @Syntax("%Admin.Delete.Arguments")
   @Description("%Admin.Delete.Description")
   @CommandPermission("tne.admin.delete")
   public void delete(CommandSender sender, String[] args) {
@@ -81,7 +82,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   @Subcommand("extract")
-  @Syntax("%Admin.Extract.ArgumentsParser")
+  @Syntax("%Admin.Extract.Arguments")
   @Description("%Admin.Extract.Description")
   @CommandPermission("tne.admin.extract")
   public void extract(CommandSender sender, String[] args) {
@@ -89,7 +90,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   @Subcommand("purge")
-  @Syntax("%Admin.Purge.ArgumentsParser")
+  @Syntax("%Admin.Purge.Arguments")
   @Description("%Admin.Purge.Description")
   @CommandPermission("tne.admin.purge")
   public void purge(CommandSender sender, String[] args) {
@@ -97,7 +98,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   @Subcommand("reload")
-  @Syntax("%Admin.Reload.ArgumentsParser")
+  @Syntax("%Admin.Reload.Arguments")
   @Description("%Admin.Reload.Description")
   @CommandPermission("tne.admin.reload")
   public void reload(CommandSender sender, String[] args) {
@@ -105,7 +106,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   @Subcommand("reset|nuke")
-  @Syntax("%Admin.Reset.ArgumentsParser")
+  @Syntax("%Admin.Reset.Arguments")
   @Description("%Admin.Reset.Description")
   @CommandPermission("tne.admin.reset")
   public void reset(CommandSender sender, String[] args) {
@@ -113,7 +114,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   @Subcommand("restore")
-  @Syntax("%Admin.Restore.ArgumentsParser")
+  @Syntax("%Admin.Restore.Arguments")
   @Description("%Admin.Restore.Description")
   @CommandPermission("tne.admin.restore")
   public void restore(CommandSender sender, String[] args) {
@@ -121,7 +122,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   @Subcommand("save")
-  @Syntax("%Admin.Save.ArgumentsParser")
+  @Syntax("%Admin.Save.Arguments")
   @Description("%Admin.Save.Description")
   @CommandPermission("tne.admin.save")
   public void save(CommandSender sender, String[] args) {
@@ -129,7 +130,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   @Subcommand("status")
-  @Syntax("%Admin.Status.ArgumentsParser")
+  @Syntax("%Admin.Status.Arguments")
   @Description("%Admin.Status.Description")
   @CommandPermission("tne.admin.status")
   public void status(CommandSender sender, String[] args) {
@@ -137,10 +138,15 @@ public class AdminCommand extends BaseCommand {
   }
 
   @Subcommand("version|ver|build")
-  @Syntax("%Admin.Version.ArgumentsParser")
+  @Syntax("%Admin.Version.Arguments")
   @Description("%Admin.Version.Description")
   @CommandPermission("tne.admin.version")
   public void version(CommandSender sender, String[] args) {
     net.tnemc.core.command.AdminCommand.onVersion(new ArgumentsParser(new BukkitCMDSource(sender), args));
+  }
+
+  @Subcommand("help")
+  public void doHelp(CommandSender sender, CommandHelp help) {
+    help.showHelp();
   }
 }

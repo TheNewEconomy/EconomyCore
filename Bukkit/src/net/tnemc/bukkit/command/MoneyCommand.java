@@ -19,6 +19,7 @@ package net.tnemc.bukkit.command;
  */
 
 import co.aikar.commands.BaseCommand;
+import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
@@ -41,7 +42,7 @@ public class MoneyCommand extends BaseCommand {
   @Default
   @Subcommand("balmenu|menu")
   @CommandAlias("mybal|balmenu")
-  @Syntax("%Money.MyBal.ArgumentsParser")
+  @Syntax("%Money.MyBal.Arguments")
   @Description("%Money.MyBal.Description")
   @CommandPermission("tne.money.mybal")
   public void onMyBal(CommandSender sender, String[] args) {
@@ -51,7 +52,7 @@ public class MoneyCommand extends BaseCommand {
   @Default
   @Subcommand("balance|bal|val")
   @CommandAlias("balance|bal|val")
-  @Syntax("%Money.Balance.ArgumentsParser")
+  @Syntax("%Money.Balance.Arguments")
   @Description("%Money.Balance.Description")
   @CommandPermission("tne.money.balance")
   public void onBalance(CommandSender sender, String[] args) {
@@ -59,7 +60,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   @Subcommand("convert")
-  @Syntax("%Money.Convert.ArgumentsParser")
+  @Syntax("%Money.Convert.Arguments")
   @Description("%Money.Convert.Description")
   @CommandPermission("tne.money.convert")
   public void onConvert(CommandSender sender, String[] args) {
@@ -67,7 +68,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   @Subcommand("give|+|add")
-  @Syntax("%Money.Give.ArgumentsParser")
+  @Syntax("%Money.Give.Arguments")
   @Description("%Money.Give.Description")
   @CommandPermission("tne.money.give")
   public void onGive(CommandSender sender, String[] args) {
@@ -75,7 +76,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   @Subcommand("note|n")
-  @Syntax("%Money.Note.ArgumentsParser")
+  @Syntax("%Money.Note.Arguments")
   @Description("%Money.Note.Description")
   @CommandPermission("tne.money.note")
   public void onNote(CommandSender sender, String[] args) {
@@ -84,7 +85,7 @@ public class MoneyCommand extends BaseCommand {
 
   @Subcommand("other|check")
   @CommandAlias("balo|check")
-  @Syntax("%Money.Other.ArgumentsParser")
+  @Syntax("%Money.Other.Arguments")
   @Description("%Money.Other.Description")
   @CommandPermission("tne.money.other")
   public void onOther(CommandSender sender, String[] args) {
@@ -93,7 +94,7 @@ public class MoneyCommand extends BaseCommand {
 
   @Subcommand("pay|send|transfer")
   @CommandAlias("pay|send|transfer")
-  @Syntax("%Money.Pay.ArgumentsParser")
+  @Syntax("%Money.Pay.Arguments")
   @Description("%Money.Pay.Description")
   @CommandPermission("tne.money.pay")
   public void onPay(CommandSender sender, String[] args) {
@@ -101,7 +102,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   @Subcommand("request")
-  @Syntax("%Money.Request.ArgumentsParser")
+  @Syntax("%Money.Request.Arguments")
   @Description("%Money.Request.Description")
   @CommandPermission("tne.money.Request")
   public void onRequest(CommandSender sender, String[] args) {
@@ -109,7 +110,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   @Subcommand("set|eq|=")
-  @Syntax("%Money.Set.ArgumentsParser")
+  @Syntax("%Money.Set.Arguments")
   @Description("%Money.Set.Description")
   @CommandPermission("tne.money.set")
   public void onSet(CommandSender sender, String[] args) {
@@ -117,7 +118,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   @Subcommand("setall")
-  @Syntax("%Money.SetAll.ArgumentsParser")
+  @Syntax("%Money.SetAll.Arguments")
   @Description("%Money.SetAll.Description")
   @CommandPermission("tne.money.setall")
   public void onSetAll(CommandSender sender, String[] args) {
@@ -125,7 +126,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   @Subcommand("take|minus|remove|-")
-  @Syntax("%Money.Take.ArgumentsParser")
+  @Syntax("%Money.Take.Arguments")
   @Description("%Money.Take.Description")
   @CommandPermission("tne.money.take")
   public void onTake(CommandSender sender, String[] args) {
@@ -134,10 +135,15 @@ public class MoneyCommand extends BaseCommand {
 
   @Subcommand("top")
   @CommandAlias("baltop")
-  @Syntax("%Money.Top.ArgumentsParser")
+  @Syntax("%Money.Top.Arguments")
   @Description("%Money.Top.Description")
   @CommandPermission("tne.money.top")
   public void onTop(CommandSender sender, String[] args) {
     net.tnemc.core.command.MoneyCommand.onTop(new ArgumentsParser(new BukkitCMDSource(sender), args));
+  }
+
+  @Subcommand("help")
+  public void doHelp(CommandSender sender, CommandHelp help) {
+    help.showHelp();
   }
 }
