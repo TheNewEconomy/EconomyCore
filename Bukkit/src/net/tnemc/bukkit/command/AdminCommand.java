@@ -37,13 +37,14 @@ import org.bukkit.command.CommandSender;
  * @since 0.1.2.0
  */
 @CommandAlias("tne|ecomin|ecoadmin|ecomanage|theneweconomy")
+@Description("%Admin.Main.Description")
 public class AdminCommand extends BaseCommand {
 
   @Default
   @Subcommand("ecomenu|menu")
   @CommandAlias("myeco|ecomenu")
-  @Syntax("%Money.MyEco.Arguments")
-  @Description("%Money.MyEco.Description")
+  @Syntax("%Admin.MyEco.Arguments")
+  @Description("%Admin.MyEco.Description")
   @CommandPermission("tne.money.myeco")
   public void onMyEco(CommandSender sender, String[] args) {
     net.tnemc.core.command.AdminCommand.onMyEco(new ArgumentsParser(new BukkitCMDSource(sender), args));

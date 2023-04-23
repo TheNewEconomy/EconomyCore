@@ -55,15 +55,15 @@ public class BukkitCore extends TNECore {
     //Enable help api in ACF
     command.enableUnstableAPI("help");
 
-    for(String cmd : MessageConfig.yaml().getConfigurationSection("Message.Commands").getKeys(false)) {
-      for(String sub : MessageConfig.yaml().getConfigurationSection("Message.Commands." + cmd).getKeys(false)) {
+    for(String cmd : MessageConfig.yaml().getConfigurationSection("Messages.Commands").getKeys(false)) {
+      for(String sub : MessageConfig.yaml().getConfigurationSection("Messages.Commands." + cmd).getKeys(false)) {
 
         final String path = cmd + "." + sub;
         command.getCommandReplacements().addReplacements(
             path + ".Description",
-            MessageConfig.yaml().getString("Message.Commands." + path + ".Description"),
+            MessageConfig.yaml().getString("Messages.Commands." + path + ".Description"),
             path + ".Arguments",
-            MessageConfig.yaml().getString("Message.Commands." + path + ".Arguments")
+            MessageConfig.yaml().getString("Messages.Commands." + path + ".Arguments")
         );
       }
     }
