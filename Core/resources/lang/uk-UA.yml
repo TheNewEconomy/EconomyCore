@@ -135,6 +135,12 @@ Messages:
       Extract:
         Arguments: ""
         Description: "Extracts all player balances with their username attached for database-related debugging."
+      Main:
+        Arguments: ""
+        Description: "The main admin command for TNE."
+      MyEco:
+        Arguments: ""
+        Description: "Opens the MyEco menu"
       Purge:
         Arguments: ""
         Description: "Deletes all player accounts that have the default balance"
