@@ -100,7 +100,13 @@ public class BukkitServerProvider implements ServerConnector {
    */
   @Override
   public boolean online(String name) {
-    return Bukkit.getPlayer(name) != null;
+    try {
+
+      final UUID id = UUID.fromString(name);
+      return Bukkit.getPlayer(id) != null;
+    } catch(Exception ignore) {
+      return Bukkit.getPlayer(name) != null;
+    }
   }
 
   /**

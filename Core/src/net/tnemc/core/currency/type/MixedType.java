@@ -103,6 +103,7 @@ public class MixedType extends ItemType {
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount) {
 
+    if(type.equals(HoldingsType.NORMAL_HOLDINGS)) type = VIRTUAL_HOLDINGS;
     if(type.equals(E_CHEST) || type.equals(INVENTORY_ONLY)) {
       return super.setHoldings(account, region, currency, type, amount);
     }

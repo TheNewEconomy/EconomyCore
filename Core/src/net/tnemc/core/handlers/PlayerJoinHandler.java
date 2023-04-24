@@ -65,7 +65,7 @@ public class PlayerJoinHandler {
       }
     }
 
-    final Optional<Account> acc = (apiResponse == null)? TNECore.eco().account().findAccount(provider.identifier()) :
+    final Optional<Account> acc = (apiResponse == null)? account :
                                                    apiResponse.getAccount();
 
     if(acc.isPresent()) {
@@ -83,14 +83,17 @@ public class PlayerJoinHandler {
 
         final String region = TNECore.eco().region().getMode().region(provider);
         for(Currency currency : TNECore.eco().currency().getCurrencies(region)) {
+
           if(currency.type().supportsItems()) {
 
             for(HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
+
               acc.get().setHoldings(entry, entry.getType());
             }
           }
         }
       }
+      TNECore.eco().account().getLoading().remove(provider.identifier());
 
       final long last_online = ((PlayerAccount)acc.get()).getLastOnline();
       //TODO: Check for transactions that happened while away if player has notify settings active.

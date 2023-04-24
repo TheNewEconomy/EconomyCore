@@ -293,11 +293,11 @@ public class Currency {
   }
 
   public boolean regionEnabled(final String region) {
-    return (regions.containsKey(region) && regions.get(region).isEnabled());
+    return  isGlobal() || (regions.containsKey(region) && regions.get(region).isEnabled());
   }
 
   public boolean isRegionDefault(final String region) {
-    if(regionEnabled(region)) {
+    if(regions.containsKey(region)) {
       return regions.get(region).isDefault();
     }
     return false;

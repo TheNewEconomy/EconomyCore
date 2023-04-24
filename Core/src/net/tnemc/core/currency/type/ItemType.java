@@ -93,9 +93,11 @@ public class ItemType extends VirtualType {
    */
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount) {
+
+    if(type.equals(HoldingsType.NORMAL_HOLDINGS)) type = INVENTORY_ONLY;
     account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, type));
 
-    if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
+    if(account.isPlayer() && TNECore.server().online(account.getIdentifier())) {
       final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
                                                                  ((PlayerAccount)account).getPlayer()
                                                                      .get().inventory().getInventory(type.equals(E_CHEST)),
@@ -107,8 +109,8 @@ public class ItemType extends VirtualType {
   }
 
   protected HoldingsEntry getEChest(Account account, String region, Currency currency) {
-    if(account.isPlayer()) {
-      if(!((PlayerAccount)account).isOnline() ||
+    if((currency instanceof ItemCurrency) && account.isPlayer()) {
+      if(!TNECore.server().online(account.getIdentifier()) ||
           TNECore.eco().account().getLoading().contains(((PlayerAccount)account).getUUID())) {
 
         //Offline players have their balances saved to their wallet so check it.
@@ -142,7 +144,7 @@ public class ItemType extends VirtualType {
 
   protected HoldingsEntry getInventory(Account account, String region, Currency currency) {
     if(!(currency instanceof ItemCurrency) ||
-        !account.isPlayer() || !((PlayerAccount)account).isOnline() ||
+        !account.isPlayer() || !TNECore.server().online(account.getIdentifier()) ||
         TNECore.eco().account().getLoading().contains(((PlayerAccount)account).getUUID())) {
       //Offline players/non-players have their balances saved to their wallet so check it.
       final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,

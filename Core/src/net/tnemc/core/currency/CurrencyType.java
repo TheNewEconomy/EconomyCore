@@ -21,6 +21,7 @@ package net.tnemc.core.currency;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
+import net.tnemc.core.currency.type.ItemType;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -66,7 +67,7 @@ public interface CurrencyType {
    * @return True if this currency type is based on physical items.
    */
   default boolean supportsItems() {
-    return false;
+    return (this instanceof ItemType);
   }
 
   /**
