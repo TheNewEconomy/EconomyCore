@@ -17,6 +17,12 @@ package net.tnemc.bukkit.listeners;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.bukkit.impl.BukkitPlayerProvider;
+import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.account.holdings.HoldingsType;
+import net.tnemc.core.currency.Currency;
 import net.tnemc.menu.bukkit.BukkitPlayer;
 import net.tnemc.menu.core.MenuManager;
 import net.tnemc.menu.core.utils.CloseType;
@@ -25,7 +31,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Optional;
 
 /**
  * PlayerCloseInventoryEvent
@@ -44,17 +53,26 @@ public class PlayerCloseInventoryEvent implements Listener {
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onClose(final InventoryCloseEvent event) {
 
-    final BukkitPlayer player = new BukkitPlayer((OfflinePlayer)event.getPlayer(), plugin);
+    if(event.getInventory().getType().equals(InventoryType.ENDER_CHEST)) {
 
-    if(MenuManager.instance().inMenu(player.identifier())) {
+      final Optional<Account> account = TNECore.eco().account().findAccount(event.getPlayer().getUniqueId());
+      if(account.isPresent()) {
 
-      final CloseType type = ((MenuManager.instance().getViewer(player.identifier()).get().isPaused() ||
-          MenuManager.instance().getViewer(player.identifier()).get().isSwitching())? CloseType.TEMPORARY : CloseType.CLOSE);
+        final BukkitPlayerProvider provider = new BukkitPlayerProvider((OfflinePlayer)event.getPlayer());
 
-      MenuManager.instance().onClose(player, type);
+        final String region = TNECore.eco().region().getMode().region(provider);
 
-      MenuManager.instance().switchViewer(player.identifier(), false);
+        for(Currency currency : TNECore.eco().currency().getCurrencies(region)) {
 
+          if(currency.type().supportsItems()) {
+
+            for(HoldingsEntry entry : account.get().getHoldings(region, currency.getUid(), HoldingsType.E_CHEST)) {
+
+              account.get().getWallet().setHoldings(entry);
+            }
+          }
+        }
+      }
     }
   }
 }
