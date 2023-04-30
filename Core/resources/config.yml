@@ -37,11 +37,9 @@ Core:
     Server:
 
         #Should TNE disable mob drops that are valid item currencies?
-        #TODO: Implement this configuration
         MobDrop: true
 
         #Should experience gaining be disabled? This will help for servers that use Experience as currency.
-        #TODO: Implement this configuration
         ExperienceGain: false
 
         #Should players be allowed to use currencies in villager trading?

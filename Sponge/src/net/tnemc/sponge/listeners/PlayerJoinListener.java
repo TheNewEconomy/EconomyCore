@@ -18,7 +18,7 @@ package net.tnemc.sponge.listeners;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.handlers.PlayerJoinHandler;
+import net.tnemc.core.handlers.player.PlayerJoinHandler;
 import net.tnemc.core.utils.HandlerResponse;
 import net.tnemc.sponge.impl.SpongePlayerProvider;
 import org.spongepowered.api.event.Listener;

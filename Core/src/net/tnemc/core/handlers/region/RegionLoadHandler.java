@@ -1,4 +1,5 @@
-package net.tnemc.bukkit.listeners;
+package net.tnemc.core.handlers.region;
+
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,24 +18,22 @@ package net.tnemc.bukkit.listeners;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.impl.BukkitPlayerProvider;
-import net.tnemc.core.handlers.PlayerLeaveHandler;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
+import net.tnemc.core.TNECore;
+import net.tnemc.core.region.RegionType;
+import net.tnemc.core.utils.HandlerResponse;
 
 /**
- * PlayerQuitListener
+ * This class is utilized to handle regions being loaded. In TNE, a region could be anything from a
+ * world guard region to a world.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class PlayerQuitListener implements Listener {
+public class RegionLoadHandler {
 
-  @EventHandler(priority = EventPriority.HIGHEST)
-  public void onJoin(final PlayerQuitEvent event) {
-    final BukkitPlayerProvider provider = new BukkitPlayerProvider(event.getPlayer());
-    new PlayerLeaveHandler().handle(provider);
+  public HandlerResponse handle(final String region, final RegionType type) {
+    TNECore.eco().region().initializeRegion(region, type);
+
+    return new HandlerResponse("", false);
   }
 }

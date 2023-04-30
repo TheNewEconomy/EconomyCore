@@ -1,5 +1,4 @@
-package net.tnemc.core.handlers;
-
+package net.tnemc.core.handlers.entity;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -19,21 +18,25 @@ package net.tnemc.core.handlers;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.region.RegionType;
+import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.utils.HandlerResponse;
 
 /**
- * This class is utilized to handle regions being loaded. In TNE, a region could be anything from a
- * world guard region to a world.
+ * EntityDropItemHandler
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class RegionLoadHandler {
+public class EntityDropItemHandler {
 
-  public HandlerResponse handle(final String region, final RegionType type) {
-    TNECore.eco().region().initializeRegion(region, type);
+  public HandlerResponse handle(final String material) {
 
-    return new HandlerResponse("", false);
+    //This only matters if the config is enabled.
+    if(MainConfig.yaml().getBoolean("Core.Server.MobDrop")) {
+      if(TNECore.eco().currency().findCurrencyByMaterial(material).isPresent()) {
+        return new HandlerResponse("Can't do that starfox.", true);
+      }
+    }
+    return new HandlerResponse("Sure.", false);
   }
 }

@@ -17,12 +17,8 @@ package net.tnemc.sponge.listeners;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.handlers.PlayerJoinHandler;
+import net.tnemc.core.handlers.player.PlayerJoinHandler;
 import net.tnemc.core.utils.HandlerResponse;
-import net.tnemc.menu.core.MenuManager;
-import net.tnemc.menu.core.utils.CloseType;
-import net.tnemc.menu.core.viewer.ViewerData;
-import net.tnemc.menu.sponge7.SpongePlayer;
 import net.tnemc.sponge.impl.SpongePlayerProvider;
 import org.spongepowered.api.block.BlockTypes;
 import org.spongepowered.api.block.tileentity.carrier.TileEntityCarrier;
@@ -34,8 +30,6 @@ import org.spongepowered.api.item.inventory.Container;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
-
-import java.util.Optional;
 
 /**
  * PlayerCloseInventoryListener

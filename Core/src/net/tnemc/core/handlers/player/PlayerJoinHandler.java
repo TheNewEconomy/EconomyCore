@@ -1,4 +1,4 @@
-package net.tnemc.core.handlers;
+package net.tnemc.core.handlers.player;
 
 /*
  * The New Economy

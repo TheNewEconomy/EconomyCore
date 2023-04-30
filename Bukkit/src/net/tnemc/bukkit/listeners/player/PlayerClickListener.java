@@ -1,4 +1,4 @@
-package net.tnemc.bukkit.listeners;
+package net.tnemc.bukkit.listeners.player;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar

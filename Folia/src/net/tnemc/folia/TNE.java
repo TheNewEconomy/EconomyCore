@@ -18,10 +18,10 @@ package net.tnemc.folia;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import net.tnemc.bukkit.hook.economy.VaultHook;
-import net.tnemc.bukkit.listeners.PlayerCloseInventoryEvent;
-import net.tnemc.bukkit.listeners.PlayerJoinListener;
-import net.tnemc.bukkit.listeners.PlayerQuitListener;
-import net.tnemc.bukkit.listeners.WorldLoadListener;
+import net.tnemc.bukkit.listeners.player.PlayerCloseInventoryEvent;
+import net.tnemc.bukkit.listeners.player.PlayerJoinListener;
+import net.tnemc.bukkit.listeners.player.PlayerQuitListener;
+import net.tnemc.bukkit.listeners.world.WorldLoadListener;
 import net.tnemc.menu.folia.listener.FoliaChatListener;
 import net.tnemc.menu.folia.listener.FoliaInventoryClickListener;
 import net.tnemc.menu.folia.listener.FoliaInventoryCloseListener;

@@ -1,4 +1,5 @@
-package net.tnemc.sponge.listeners;
+package net.tnemc.bukkit.listeners.world;
+
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,23 +18,23 @@ package net.tnemc.sponge.listeners;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.handlers.player.PlayerLeaveHandler;
-import net.tnemc.sponge.impl.SpongePlayerProvider;
-import org.spongepowered.api.event.Listener;
-import org.spongepowered.api.event.filter.cause.Root;
-import org.spongepowered.api.event.network.ClientConnectionEvent;
-import org.spongepowered.api.plugin.Plugin;
+import net.tnemc.core.handlers.region.RegionLoadHandler;
+import net.tnemc.core.region.RegionType;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.world.WorldLoadEvent;
 
 /**
- * PlayerLeaveListener
+ * WorldLoadListener
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class PlayerLeaveListener {
+public class WorldLoadListener implements Listener {
 
-  @Listener
-  public void listen(ClientConnectionEvent.Disconnect event, @Root Plugin plugin) {
-    new PlayerLeaveHandler().handle(new SpongePlayerProvider(event.getTargetEntity(), plugin));
+  @EventHandler(priority = EventPriority.HIGHEST)
+  public void onLoad(final WorldLoadEvent event) {
+    new RegionLoadHandler().handle(event.getWorld().getName(), RegionType.WORLD);
   }
 }

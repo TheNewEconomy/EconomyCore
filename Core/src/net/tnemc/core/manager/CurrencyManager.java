@@ -22,12 +22,15 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyLoader;
 import net.tnemc.core.currency.CurrencySaver;
 import net.tnemc.core.currency.CurrencyType;
+import net.tnemc.core.currency.item.ItemCurrency;
+import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.currency.loader.DefaultCurrencyLoader;
 import net.tnemc.core.currency.saver.DefaultCurrencySaver;
 import net.tnemc.core.currency.type.ExperienceType;
 import net.tnemc.core.currency.type.ItemType;
 import net.tnemc.core.currency.type.MixedType;
 import net.tnemc.core.currency.type.VirtualType;
+import net.tnemc.item.AbstractItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -172,7 +175,7 @@ public class CurrencyManager {
   }
 
   /**
-   * Used to find a currency based on its unique identifier.
+   * Used to find a {@link Currency currency} based on its unique identifier.
    * @param identifier The identifier to look for.
    * @return An Optional containing the currency if it exists, otherwise an empty Optional.
    */
@@ -181,7 +184,47 @@ public class CurrencyManager {
   }
 
   /**
-   * Used to find a currency based on its user-friendly identifier.
+   * Used to find a {@link Currency currency} based on an item.
+   * @param item The item to use for this search.
+   * @return An Optional containing the currency if this item is a valid currency item, otherwise an
+   * empty Optional.
+   */
+  public Optional<Currency> findCurrencyByItem(final AbstractItemStack<?> item) {
+    for(Currency currency : currencies.values()) {
+
+      if(currency instanceof ItemCurrency) {
+
+        Optional<ItemDenomination> denom = ((ItemCurrency)currency).getDenominationByMaterial(item.material());
+        if(denom.isPresent()) {
+          return Optional.of(currency);
+        }
+      }
+    }
+    return Optional.empty();
+  }
+
+  /**
+   * Used to find a {@link Currency currency} based on a material.
+   * @param material The material to use for this search.
+   * @return An Optional containing the currency if this item is a valid currency item, otherwise an
+   * empty Optional.
+   */
+  public Optional<Currency> findCurrencyByMaterial(final String material) {
+    for(Currency currency : currencies.values()) {
+
+      if(currency instanceof ItemCurrency) {
+
+        Optional<ItemDenomination> denom = ((ItemCurrency)currency).getDenominationByMaterial(material);
+        if(denom.isPresent()) {
+          return Optional.of(currency);
+        }
+      }
+    }
+    return Optional.empty();
+  }
+
+  /**
+   * Used to find a {@link Currency currency} based on its user-friendly identifier.
    * @param identifier The identifier to look for.
    * @return An Optional containing the currency if it exists, otherwise an empty Optional.
    */

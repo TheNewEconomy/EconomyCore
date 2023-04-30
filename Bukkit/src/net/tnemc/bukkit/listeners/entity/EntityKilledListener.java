@@ -1,4 +1,4 @@
-package net.tnemc.bukkit.listeners;
+package net.tnemc.bukkit.listeners.entity;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,38 +17,41 @@ package net.tnemc.bukkit.listeners;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.impl.BukkitPlayerProvider;
-import net.tnemc.core.handlers.PlayerCloseEChestHandler;
-import net.tnemc.core.utils.HandlerResponse;
-import org.bukkit.OfflinePlayer;
+import net.tnemc.core.handlers.entity.EntityDropExpHandler;
+import net.tnemc.core.handlers.entity.EntityDropItemHandler;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * PlayerCloseInventoryEvent
+ * EntityKilledListener
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class PlayerCloseInventoryEvent implements Listener {
+public class EntityKilledListener implements Listener {
 
   private final JavaPlugin plugin;
 
-  public PlayerCloseInventoryEvent(JavaPlugin plugin) {
+  public EntityKilledListener(JavaPlugin plugin) {
     this.plugin = plugin;
   }
 
   @EventHandler(priority = EventPriority.HIGHEST)
-  public void onClose(final InventoryCloseEvent event) {
+  public void onDeath(final EntityDeathEvent event) {
 
-    if(event.getInventory().getType().equals(InventoryType.ENDER_CHEST)) {
+    //We don't care about players
+    if(!(event.getEntity() instanceof Player)) {
 
-      final BukkitPlayerProvider provider = new BukkitPlayerProvider((OfflinePlayer)event.getPlayer());
-      final HandlerResponse handle = new PlayerCloseEChestHandler().handle(provider);
+      event.getDrops().removeIf(stack->new EntityDropItemHandler().handle(stack.getType().getKey().getKey()).isCancelled());
+
+      //Remove exp from entity drop if handler is false.
+      if(new EntityDropExpHandler().handle().isCancelled()) {
+        event.setDroppedExp(0);
+      }
     }
   }
 }

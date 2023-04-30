@@ -1,5 +1,4 @@
-package net.tnemc.bukkit.listeners;
-
+package net.tnemc.core.handlers.entity;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -18,23 +17,22 @@ package net.tnemc.bukkit.listeners;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.handlers.RegionLoadHandler;
-import net.tnemc.core.region.RegionType;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.world.WorldLoadEvent;
+import net.tnemc.core.config.MainConfig;
+import net.tnemc.core.utils.HandlerResponse;
 
 /**
- * WorldLoadListener
+ * EntityDropExpHandler
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class WorldLoadListener implements Listener {
+public class EntityDropExpHandler {
 
-  @EventHandler(priority = EventPriority.HIGHEST)
-  public void onLoad(final WorldLoadEvent event) {
-    new RegionLoadHandler().handle(event.getWorld().getName(), RegionType.WORLD);
+  public HandlerResponse handle() {
+
+    if(MainConfig.yaml().getBoolean("Core.Server.ExperienceGain")) {
+      return new HandlerResponse("Can't do that starfox.", true);
+    }
+    return new HandlerResponse("Sure.", false);
   }
 }
