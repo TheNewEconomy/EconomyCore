@@ -25,12 +25,12 @@ import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.plugin.Plugin;
 
 /**
- * PlayerLeaveEvent
+ * PlayerLeaveListener
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class PlayerLeaveEvent {
+public class PlayerLeaveListener {
 
   @Listener
   public void listen(ClientConnectionEvent.Disconnect event, @Root Plugin plugin) {

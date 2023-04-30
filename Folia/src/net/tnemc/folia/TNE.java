@@ -18,6 +18,7 @@ package net.tnemc.folia;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import net.tnemc.bukkit.hook.economy.VaultHook;
+import net.tnemc.bukkit.listeners.PlayerCloseInventoryEvent;
 import net.tnemc.bukkit.listeners.PlayerJoinListener;
 import net.tnemc.bukkit.listeners.PlayerQuitListener;
 import net.tnemc.bukkit.listeners.WorldLoadListener;
@@ -64,6 +65,7 @@ public class TNE extends JavaPlugin {
     Bukkit.getPluginManager().registerEvents(new FoliaChatListener(this), this);
     Bukkit.getPluginManager().registerEvents(new FoliaInventoryClickListener(this), this);
     Bukkit.getPluginManager().registerEvents(new FoliaInventoryCloseListener(this), this);
+    Bukkit.getPluginManager().registerEvents(new PlayerCloseInventoryEvent(this), this);
 
     //World Listeners
     Bukkit.getPluginManager().registerEvents(new WorldLoadListener(), this);

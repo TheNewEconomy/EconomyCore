@@ -18,14 +18,8 @@ package net.tnemc.bukkit.listeners;
  */
 
 import net.tnemc.bukkit.impl.BukkitPlayerProvider;
-import net.tnemc.core.TNECore;
-import net.tnemc.core.account.Account;
-import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.account.holdings.HoldingsType;
-import net.tnemc.core.currency.Currency;
-import net.tnemc.menu.bukkit.BukkitPlayer;
-import net.tnemc.menu.core.MenuManager;
-import net.tnemc.menu.core.utils.CloseType;
+import net.tnemc.core.handlers.PlayerCloseEChestHandler;
+import net.tnemc.core.utils.HandlerResponse;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -33,8 +27,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.Optional;
 
 /**
  * PlayerCloseInventoryEvent
@@ -55,24 +47,8 @@ public class PlayerCloseInventoryEvent implements Listener {
 
     if(event.getInventory().getType().equals(InventoryType.ENDER_CHEST)) {
 
-      final Optional<Account> account = TNECore.eco().account().findAccount(event.getPlayer().getUniqueId());
-      if(account.isPresent()) {
-
-        final BukkitPlayerProvider provider = new BukkitPlayerProvider((OfflinePlayer)event.getPlayer());
-
-        final String region = TNECore.eco().region().getMode().region(provider);
-
-        for(Currency currency : TNECore.eco().currency().getCurrencies(region)) {
-
-          if(currency.type().supportsItems()) {
-
-            for(HoldingsEntry entry : account.get().getHoldings(region, currency.getUid(), HoldingsType.E_CHEST)) {
-
-              account.get().getWallet().setHoldings(entry);
-            }
-          }
-        }
-      }
+      final BukkitPlayerProvider provider = new BukkitPlayerProvider((OfflinePlayer)event.getPlayer());
+      final HandlerResponse handle = new PlayerCloseEChestHandler().handle(provider);
     }
   }
 }
