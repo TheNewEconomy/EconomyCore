@@ -38,6 +38,8 @@ public class BukkitCore extends TNECore {
 
   private JavaPlugin plugin;
 
+  private BukkitConfig bukkitConfig;
+
   public BukkitCore(JavaPlugin plugin) {
     super(new BukkitServerProvider(), new BukkitLogProvider(plugin.getLogger()));
     setInstance(this);
@@ -49,6 +51,11 @@ public class BukkitCore extends TNECore {
     this.directory = plugin.getDataFolder();
 
     super.onEnable();
+
+    this.bukkitConfig = new BukkitConfig();
+    if(!this.bukkitConfig.load()) {
+      TNECore.log().error("Failed to load bukkit configuration!");
+    }
 
     command = new PaperCommandManager(plugin);
 

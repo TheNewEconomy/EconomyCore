@@ -73,7 +73,7 @@ public class PlayerClickListener implements Listener {
       case DOUBLE_CLICK -> ActionType.DOUBLE_CLICK;
       case DROP -> ActionType.DROP;
       case CONTROL_DROP -> ActionType.DROP_CTRL;
-      case SWAP_OFFHAND -> ActionType.OFFHAND_SWAP;
+      //case ClickType. -> ActionType.OFFHAND_SWAP;
       case NUMBER_KEY -> ActionType.NUMBER;
       default -> ActionType.LEFT_CLICK;
     };
