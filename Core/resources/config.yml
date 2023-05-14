@@ -42,11 +42,6 @@ Core:
         #Should experience gaining be disabled? This will help for servers that use Experience as currency.
         ExperienceGain: false
 
-        #Should players be allowed to use currencies in villager trading?
-        #This allows blocking trading item-based currencies to villagers.
-        #TODO: Implement this configuration
-        CurrencyTrading: true
-
         #The name of this server for data-related purposes. Max length is 100 characters.
         Name: "Main Server"
 
