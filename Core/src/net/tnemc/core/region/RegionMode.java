@@ -21,6 +21,7 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.PlayerProvider;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,6 +34,8 @@ import java.util.UUID;
 public interface RegionMode {
 
   String name();
+
+  List<RegionType> accepted();
 
   default String defaultRegion() {
     return TNECore.eco().region().defaultRegion();

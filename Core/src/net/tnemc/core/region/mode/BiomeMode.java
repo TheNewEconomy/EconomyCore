@@ -21,7 +21,11 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.region.RegionMode;
+import net.tnemc.core.region.RegionType;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * BiomeMode represents a {@link RegionMode} based on biomes.
@@ -35,6 +39,11 @@ public class BiomeMode implements RegionMode {
   @Override
   public String name() {
     return "biome";
+  }
+
+  @Override
+  public List<RegionType> accepted() {
+    return Collections.singletonList(RegionType.BIOME);
   }
 
   @Override

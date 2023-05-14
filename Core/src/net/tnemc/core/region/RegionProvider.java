@@ -24,6 +24,7 @@ import net.tnemc.core.region.mode.BiomeMode;
 import net.tnemc.core.region.mode.WorldMode;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -57,7 +58,26 @@ public class RegionProvider {
   }
 
   public void initializeRegion(final String name, final RegionType type) {
-    //TODO: This
+    if(this.mode.accepted().contains(type)) {
+
+      if(type.equals(RegionType.WORLD) && MainConfig.yaml().getBoolean("Core.Region.GroupRealms", true)) {
+
+        //Group the realms with this world.
+        if(!name.contains("_nether") && !name.contains("_the_end")) {
+          sharing.put(name + "_nether", name);
+          sharing.put(name + "_the_end", name);
+        } else {
+
+          //This is the nether or end, so we don't need to go through the sharing fiasco below.
+          sharing.put(name, name.split("_")[0]);
+          return;
+        }
+      }
+
+      if(MainConfig.yaml().contains("Core.Region.Sharing." + name)) {
+        sharing.put(name, MainConfig.yaml().getString("Core.Region.Sharing." + name));
+      }
+    }
   }
 
   /**
