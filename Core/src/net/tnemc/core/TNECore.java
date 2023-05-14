@@ -94,6 +94,8 @@ public abstract class TNECore {
 
   private boolean enabled = false;
 
+  protected UUID serverAccount;
+
   public TNECore(ServerConnector server, LogProvider logger) {
     this.server = server;
     this.logger = logger;
@@ -170,12 +172,12 @@ public abstract class TNECore {
       logger.inform("Checking Server Account.");
 
       final String name = MainConfig.yaml().getString("Core.Server.Account.Name");
-      final UUID id = UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8));
-      if(economyManager.account().findAccount(id.toString()).isEmpty()) {
+      serverAccount = UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8));
+      if(economyManager.account().findAccount(serverAccount.toString()).isEmpty()) {
 
         logger.inform("Creating Server Account.");
 
-        final AccountAPIResponse response = economyManager.account().createAccount(id.toString(), name, true);
+        final AccountAPIResponse response = economyManager.account().createAccount(serverAccount.toString(), name, true);
         if(response.getResponse().success()) {
 
           logger.inform("Server Account has been created.");
@@ -324,5 +326,9 @@ public abstract class TNECore {
 
   public CommandManager<?, ?, ?, ?, ?, ?> command() {
     return command;
+  }
+
+  public UUID getServerAccount() {
+    return serverAccount;
   }
 }

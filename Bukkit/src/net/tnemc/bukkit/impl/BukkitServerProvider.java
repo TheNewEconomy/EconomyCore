@@ -31,6 +31,7 @@ import net.tnemc.item.SerialItem;
 import net.tnemc.item.bukkit.BukkitCalculationsProvider;
 import net.tnemc.item.bukkit.BukkitItemStack;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
@@ -144,8 +145,7 @@ public class BukkitServerProvider implements ServerConnector {
    */
   @Override
   public String replaceColours(String string) {
-    //TODO: This
-    return null;
+    return ChatColor.translateAlternateColorCodes('&', string);
   }
 
   @Override

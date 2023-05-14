@@ -235,8 +235,6 @@ public class DefaultCurrencySaver implements CurrencySaver {
       if(((ItemDenomination)denomination).getFlags().size() > 0) {
         denom.set("Options.Flags", ((ItemDenomination)denomination).getFlags());
       }
-
-      //TODO: Crafting.
     }
 
     try {

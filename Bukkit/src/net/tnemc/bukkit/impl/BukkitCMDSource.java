@@ -20,6 +20,7 @@ package net.tnemc.bukkit.impl;
 
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.tnemc.bukkit.TNE;
+import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
@@ -50,8 +51,7 @@ public class BukkitCMDSource implements CmdSource {
       identifier = provider.identifier();
     } else {
       provider = null;
-      //TODO: Server account.
-      identifier = UUID.randomUUID();
+      identifier = TNECore.instance().getServerAccount();
     }
   }
 
