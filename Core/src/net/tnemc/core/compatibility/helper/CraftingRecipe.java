@@ -18,8 +18,6 @@ package net.tnemc.core.compatibility.helper;
  */
 
 import net.tnemc.core.currency.item.ItemDenomination;
-import net.tnemc.item.AbstractItemStack;
-import net.tnemc.item.SerialItem;
 
 import java.util.HashMap;
 import java.util.Map;

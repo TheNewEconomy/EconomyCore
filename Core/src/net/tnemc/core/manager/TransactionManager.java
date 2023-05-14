@@ -36,8 +36,10 @@ import net.tnemc.core.transaction.type.ConversionType;
 import net.tnemc.core.transaction.type.PayType;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TimeZone;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -51,6 +53,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 0.1.2.0
  */
 public class TransactionManager {
+
+  private final SimpleDateFormat format;
 
   private final EnhancedHashMap<String, TransactionCheck> checks = new EnhancedHashMap<>();
 
@@ -67,6 +71,9 @@ public class TransactionManager {
 
 
   public TransactionManager() {
+
+    this.format = new SimpleDateFormat(MainConfig.yaml().getString("Core.Transactions.Format"));
+    this.format.setTimeZone(TimeZone.getTimeZone(MainConfig.yaml().getString("Core.Transactions.Timezone")));
 
     this.track = MainConfig.yaml().getBoolean("Core.Transactions.Tracking.Enabled");
 

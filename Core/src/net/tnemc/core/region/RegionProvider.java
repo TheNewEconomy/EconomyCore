@@ -24,7 +24,6 @@ import net.tnemc.core.region.mode.BiomeMode;
 import net.tnemc.core.region.mode.WorldMode;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;

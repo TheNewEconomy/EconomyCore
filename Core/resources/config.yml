@@ -101,11 +101,9 @@ Core:
     Transactions:
 
         #The time format to use when displaying transaction history data.
-        #TODO: Implement this configuration
         Format: "M, d y"
 
         #The timezone to use for transactions.
-        #TODO: Implement this configuration
         Timezone: "US/Eastern"
 
         #Configurations relating to tracking large transactions
