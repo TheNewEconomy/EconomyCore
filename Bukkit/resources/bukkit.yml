@@ -1,14 +1,7 @@
 # The New Economy v0.1.2.0
 # Author: creatorfromhell
 # License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
-#TODO: Implement this configuration
 Bukkit:
-
-  #The prefix used by the Towny plugin to denote town UUIDs
-  Town: "town-"
-
-  #The prefix used by the Towny plugin to denote nation UUIDs
-  Nation: "nation-"
 
   #The prefix used by the Factions plugin to denote faction UUIDs
   Faction: "faction-"

@@ -18,6 +18,7 @@ package net.tnemc.bukkit.depend.faction;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.bukkit.BukkitConfig;
 import net.tnemc.core.account.AccountTypeCheck;
 
 import java.util.function.Function;
@@ -39,6 +40,6 @@ public class FactionCheck implements AccountTypeCheck {
    */
   @Override
   public Function<String, Boolean> check() {
-    return value -> value.toLowerCase().contains("faction-");
+    return value -> value.toLowerCase().contains(BukkitConfig.yaml().getString("Bukkit.Faction"));
   }
 }

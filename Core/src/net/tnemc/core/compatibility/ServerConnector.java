@@ -18,6 +18,7 @@ package net.tnemc.core.compatibility;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
 import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
@@ -130,7 +131,14 @@ public interface ServerConnector {
    * Provides this implementation's {@link SchedulerProvider scheduler}.
    * @return The scheduler for this implementation.
    */
-  SchedulerProvider scheduler();
+  SchedulerProvider<?> scheduler();
+
+  /**
+   * Used to register a crafting recipe to the server.
+   * @param recipe The crafting recipe to register.
+   * @see CraftingRecipe
+   */
+  void registerCrafting(@NotNull final CraftingRecipe recipe);
 
   <S, T extends AbstractItemStack<S>, INV> CalculationsProvider<T, S, INV> calculations();
 
@@ -141,4 +149,6 @@ public interface ServerConnector {
   <S> AbstractItemStack<S> denominationToStack(final ItemDenomination denomination);
 
   <INV> ItemCalculations<INV> itemCalculations();
+
+
 }

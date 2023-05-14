@@ -21,6 +21,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
+import net.tnemc.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.region.RegionMode;
@@ -162,6 +163,18 @@ public class MinestomServerProvider implements ServerConnector {
   @Override
   public MinestomScheduler scheduler() {
     return scheduler;
+  }
+
+  /**
+   * Used to register a crafting recipe to the server.
+   *
+   * @param recipe The crafting recipe to register.
+   *
+   * @see CraftingRecipe
+   */
+  @Override
+  public void registerCrafting(@NotNull CraftingRecipe recipe) {
+    //TODO: Minestom Register crafting
   }
 
   @Override

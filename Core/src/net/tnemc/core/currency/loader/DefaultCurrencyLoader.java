@@ -19,6 +19,7 @@ package net.tnemc.core.currency.loader;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyLoader;
 import net.tnemc.core.currency.CurrencyRegion;
@@ -311,7 +312,30 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
         ((ItemDenomination)denomination).setFlags(denom.getStringList("Options.Flags"));
       }
 
-      //TODO: Crafting.
+      //Crafting
+      if(denom.getBoolean("Options.Crafting.Enabled", false)) {
+        final boolean shapeless = denom.getBoolean("Options.Crafting.Shapeless", false);
+        final int amount = denom.getInt("Options.Crafting.Amount", 1);
+
+        CraftingRecipe recipe = new CraftingRecipe(!shapeless, amount, (ItemDenomination)denomination);
+
+        for(String materials : denom.getStringList("Options.Crafting.Materials")) {
+
+          String[] split = materials.split(":");
+          if(split.length >= 2) {
+            recipe.getIngredients().put(split[0].charAt(0), split[1]);
+          }
+        }
+
+        int i = 0;
+        for(String row : denom.getStringList("Options.Crafting.Recipe")) {
+          if(i > 2) break;
+
+          recipe.getRows()[i] = row;
+
+          i++;
+        }
+      }
     }
 
     //TODO: load denomination event

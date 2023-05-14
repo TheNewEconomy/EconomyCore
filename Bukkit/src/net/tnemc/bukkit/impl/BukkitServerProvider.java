@@ -22,16 +22,23 @@ import net.tnemc.bukkit.TNE;
 import net.tnemc.bukkit.impl.scheduler.BukkitScheduler;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
+import net.tnemc.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.region.RegionMode;
 import net.tnemc.item.AbstractItemStack;
+import net.tnemc.item.SerialItem;
 import net.tnemc.item.bukkit.BukkitCalculationsProvider;
 import net.tnemc.item.bukkit.BukkitItemStack;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -159,6 +166,32 @@ public class BukkitServerProvider implements ServerConnector {
   @Override
   public BukkitScheduler scheduler() {
     return scheduler;
+  }
+
+  /**
+   * Used to register a crafting recipe to the server.
+   *
+   * @param recipe The crafting recipe to register.
+   *
+   * @see CraftingRecipe
+   */
+  @Override
+  public void registerCrafting(@NotNull CraftingRecipe recipe) {
+    if(recipe.isShaped()) {
+      final ShapedRecipe shaped = new ShapedRecipe(denominationToStack(recipe.getResult()).locale());
+      shaped.shape(recipe.getRows());
+
+      for(Map.Entry<Character, String> ingredient : recipe.getIngredients().entrySet()) {
+        shaped.setIngredient(ingredient.getKey(), Material.valueOf(ingredient.getValue()));
+      }
+      Bukkit.getServer().addRecipe(shaped);
+    } else {
+      final ShapelessRecipe shapeless = new ShapelessRecipe(denominationToStack(recipe.getResult()).locale());
+      for(Map.Entry<Character, String> ingredient : recipe.getIngredients().entrySet()) {
+        shapeless.addIngredient(1, Material.valueOf(ingredient.getValue()));
+      }
+      Bukkit.getServer().addRecipe(shapeless);
+    }
   }
 
   @Override
