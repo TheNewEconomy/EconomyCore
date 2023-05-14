@@ -405,15 +405,48 @@ public class MoneyCommand extends BaseCommand {
                                                                modifier.asEntry())
         );
         parser.sender().message(msg);
-        return;
       }
-      //TODO: Failure handling
     }
   }
 
-  //ArgumentsParser: <amount> [world]
+  //ArgumentsParser: <amount> [world] [currency]
   public static void onSetAll(ArgumentsParser parser) {
-    //TODO: This
+
+    if(parser.args().length < 1) {
+      help(parser.sender(), "money setall", "Money.SetAll");
+      return;
+    }
+
+    final Optional<BigDecimal> amount = parser.parseAmount(0);
+    final String region = parser.parseRegion(1);
+    final Currency currency = parser.parseCurrency(2, region);
+
+    if(amount.isPresent()) {
+
+      final HoldingsModifier modifier = new HoldingsModifier(region,
+                                                             currency.getUid(),
+                                                             amount.get(),
+                                                             HoldingsOperation.SET);
+
+      for(Account account : TNECore.eco().account().getAccounts().values()) {
+        final Transaction transaction = new Transaction("set")
+            .to(account, modifier)
+            .processor(new BaseTransactionProcessor())
+            .source(new PlayerSource(parser.sender().identifier()));
+
+        Optional<Receipt> receipt = processTransaction(parser.sender(), transaction);
+
+        if(receipt.isPresent()) {
+          final MessageData msg = new MessageData("Messages.Money.Set");
+          msg.addReplacement("$player", parser.args()[0]);
+          msg.addReplacement("$amount", CurrencyFormatter.format(account,
+                                                                 modifier.asEntry())
+          );
+          parser.sender().message(msg);
+          return;
+        }
+      }
+    }
   }
 
   //ArgumentsParser: <player> <amount> [world] [currency]
