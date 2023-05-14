@@ -25,8 +25,11 @@ import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.command.args.ArgumentsParser;
 import net.tnemc.core.compatibility.log.DebugLevel;
+import net.tnemc.core.compatibility.scheduler.ChoreExecution;
+import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.io.storage.StorageManager;
+import net.tnemc.core.utils.Extractor;
 
 import java.util.Optional;
 
@@ -132,7 +135,10 @@ public class AdminCommand extends BaseCommand {
   }
 
   public static void onExtract(ArgumentsParser parser) {
-    //TODO: Storage Manager
+
+
+    TNECore.server().scheduler().createDelayedTask(()->Extractor.extract(), new ChoreTime(0), ChoreExecution.SECONDARY);
+    parser.sender().message(new MessageData("Messages.Admin.Extraction"));
   }
 
   public static void onPurge(ArgumentsParser parser) {
@@ -156,7 +162,7 @@ public class AdminCommand extends BaseCommand {
           TNECore.instance().config().load();
           TNECore.eco().currency().load(TNECore.directory());
           TNECore.instance().data().load();
-          //TODO: Reload data manager.
+          TNECore.storage().loadAll(Account.class, "");
           TNECore.instance().message().load();
         }
       }
@@ -168,7 +174,10 @@ public class AdminCommand extends BaseCommand {
   }
 
   public static void onRestore(ArgumentsParser parser) {
-    //TODO: StorageManager
+
+
+    TNECore.server().scheduler().createDelayedTask(()->Extractor.restore(parser.parseInt(0, 0)), new ChoreTime(0), ChoreExecution.SECONDARY);
+    parser.sender().message(new MessageData("Messages.Admin.Restoration"));
   }
 
   public static void onSave(ArgumentsParser parser) {

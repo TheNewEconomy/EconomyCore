@@ -57,6 +57,13 @@ public class ArgumentsParser {
     return arguments;
   }
 
+  public int parseInt(final int index, final int def) {
+    if(index >= arguments.length) {
+      return def;
+    }
+    return Integer.parseInt(arguments[index]);
+  }
+
   public String parseRegion(final int index) {
     if(index >= arguments.length) {
       return sender.region();

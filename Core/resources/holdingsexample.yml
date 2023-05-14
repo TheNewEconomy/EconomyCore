@@ -1,0 +1,13 @@
+Accounts:
+
+  account_name:
+
+    id: account_identifier
+
+    Balances:
+
+      region:
+
+        currency:
+
+          type: balance

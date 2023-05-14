@@ -21,6 +21,8 @@ package net.tnemc.core.account.holdings;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -190,6 +192,21 @@ public class Wallet {
     }
 
     wallet.deleteAllHoldings();
+  }
+
+  public List<HoldingsEntry> entryList() {
+
+    final List<HoldingsEntry> holdingsEntries = new ArrayList<>();
+
+    for(RegionHoldings region : holdings.values()) {
+      for(CurrencyHoldings currency : region.getHoldings().values()) {
+        for(Map.Entry<String, HoldingsEntry> entry : currency.getHoldings().entrySet()) {
+
+          holdingsEntries.add(entry.getValue());
+        }
+      }
+    }
+    return holdingsEntries;
   }
 
   public Map<String, RegionHoldings> getHoldings() {

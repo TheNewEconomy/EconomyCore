@@ -36,6 +36,8 @@ Messages:
         StatusChange: "<white>Status for $name has been changed to <green>$status<white>."
         Status: "<white>Status for $name is <green>$status<white>."
         Reset: "<white>Performed an economy reset using these parameters - world = $world, currency = $currency, and player = $player."
+        Extraction: "<white>Extraction has started. Please watch console for completion confirmation."
+        Restoration: "<white>Restoration has started. Please watch console for completion confirmation."
 
     Account:
         NoSuch: "<red>Unable to locate your account!"
