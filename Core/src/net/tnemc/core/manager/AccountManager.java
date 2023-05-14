@@ -119,7 +119,6 @@ public class AccountManager {
       } catch(Exception ignore) {
 
         //Our identifier is an invalid UUID, let's search for it.
-        //TODO: UUID lookup
         return new AccountAPIResponse(null, AccountResponse.CREATION_FAILED);
       }
     } else if(!nonPlayer && TNECore.server().online(name)) {

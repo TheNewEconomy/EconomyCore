@@ -35,7 +35,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class BaseUUIDProvider implements UUIDProvider {
 
-  //TODO: implement database system
   private final ConcurrentHashMap<UUID, UUIDPair> pairs = new ConcurrentHashMap<>();
 
   /**

@@ -207,7 +207,7 @@ public class MoneyCommand extends BaseCommand {
 
       Optional<Receipt> receipt = processTransaction(parser.sender(), transaction);
       if(receipt.isPresent()) {
-        //TODO: Success checking.
+        //TODO: Give player money note.
       }
     }
   }

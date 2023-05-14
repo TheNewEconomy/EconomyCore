@@ -28,6 +28,7 @@ import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.connect.SQLConnector;
+import net.tnemc.core.manager.id.UUIDPair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -283,7 +284,10 @@ public class SQLAccount implements Datable<Account> {
       for(String id : ids) {
 
         final Optional<Account> loaded = load(connector, id);
-        loaded.ifPresent(accounts::add);
+        if(loaded.isPresent()) {
+          accounts.add(loaded.get());
+          TNECore.eco().account().uuidProvider().store(new UUIDPair(UUID.fromString(loaded.get().getIdentifier()), loaded.get().getName()));
+        }
       }
     }
     return accounts;
