@@ -213,7 +213,7 @@ Messages:
         Arguments: "<player> <amount> [world] [currency]"
         Description: "Set the holdings of a player."
       SetAll:
-        Arguments: "<amount> [world]"
+        Arguments: "<amount> [world] [currency]"
         Description: "Set the holdings of all players."
       Take:
         Arguments: "<player> <amount> [world] [currency]"
