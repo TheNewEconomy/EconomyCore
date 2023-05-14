@@ -142,7 +142,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   public static void onPurge(ArgumentsParser parser) {
-    //TODO: Storage Manager
+    TNECore.storage().purge();
   }
 
   public static void onReload(ArgumentsParser parser) {
