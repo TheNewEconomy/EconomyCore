@@ -19,12 +19,14 @@ package net.tnemc.fabric.impl;
 
 import net.minecraft.Bootstrap;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.region.RegionMode;
+import net.tnemc.fabric.FabricCore;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.providers.CalculationsProvider;
 import org.jetbrains.annotations.NotNull;
@@ -52,7 +54,12 @@ public class FabricServerProvider implements ServerConnector {
    */
   @Override
   public Optional<PlayerProvider> findPlayer(@NotNull UUID identifier) {
-    return Optional.of(null);
+    final Optional<ServerPlayerEntity> player = Optional.ofNullable(FabricCore.mcSERVER().getPlayerManager().getPlayer(identifier));
+
+    if(player.isPresent()) {
+      return Optional.of(new FabricPlayerProvider(player.get()));
+    }
+    return Optional.empty();
   }
 
   /**

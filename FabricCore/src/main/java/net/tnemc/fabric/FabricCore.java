@@ -17,8 +17,11 @@ public class FabricCore extends TNECore implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("fabric-tne");
 	private MinecraftServer server;
 
+	private static FabricCore instance;
+
 	public FabricCore(LogProvider logger) {
 		super(new FabricServerProvider(), logger);
+		instance = this;
 	}
 
 	@Override
@@ -32,5 +35,13 @@ public class FabricCore extends TNECore implements ModInitializer {
 		});
 
 		LOGGER.info("Hello Fabric world!");
+	}
+
+	public static MinecraftServer mcSERVER() {
+		return instance.server;
+	}
+
+	public static FabricCore instance() {
+		return instance;
 	}
 }
