@@ -228,7 +228,7 @@ Messages:
         Arguments: "[page #]"
         Description: "Displays transactions that you missed since the last time you were on."
       History:
-        Arguments: "[player:name] [page:#] [world:name/all]"
+        Arguments: "[page:#] [world:name/all] [player:name]"
         Description: "See a detailed break down of your transaction history.<newline>- Page ~ The page number you wish to view.<newline>- World ~ The world name you wish to filter, or all for every world. Defaults to current world."
       Info:
         Arguments: "<uuid>"
