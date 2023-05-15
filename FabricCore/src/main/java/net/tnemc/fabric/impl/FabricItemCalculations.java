@@ -1,5 +1,4 @@
-package net.tnemc.core.command;
-
+package net.tnemc.fabric.impl;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -18,33 +17,14 @@ package net.tnemc.core.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.command.args.ArgumentsParser;
+import net.minecraft.inventory.Inventory;
+import net.tnemc.core.currency.calculations.ItemCalculations;
 
 /**
- * TransactionCommand
+ * FabricItemCalculations
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class TransactionCommand {
-
-  //[page #]
-  public static void away(ArgumentsParser parser) {
-    //TODO: This
-  }
-
-  //[page:#] [world:name/all] [player:name]
-  public static void history(ArgumentsParser parser) {
-    //TODO: This
-  }
-
-  //<uuid>
-  public static void info(ArgumentsParser parser) {
-    //TODO: This
-  }
-
-  //<uuid>
-  public static void voidT(ArgumentsParser parser) {
-    //TODO: This
-  }
+public class FabricItemCalculations extends ItemCalculations<Inventory> {
 }

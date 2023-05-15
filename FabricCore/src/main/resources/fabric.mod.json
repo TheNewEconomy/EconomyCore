@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "fabric-tne",
+  "version": "${version}",
+
+  "name": "The New Economy",
+  "description": "This is an example description! Tell everyone what your mod is about!",
+  "authors": [
+    "Me!"
+  ],
+  "contact": {
+    "homepage": "https://tnemc.net/",
+    "sources": "https://github.com/TheNewEconomy/EconomyCore"
+  },
+
+  "license": "AGPLv3",
+  "icon": "assets/fabric-tne/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.tnemc.fabric.FabricCore"
+    ]
+  },
+  "mixins": [
+    "fabric-tne.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.19",
+    "fabric-api": "*",
+    "minecraft": "~1.19.4",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
