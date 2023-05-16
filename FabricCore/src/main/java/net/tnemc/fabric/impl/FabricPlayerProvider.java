@@ -17,12 +17,17 @@ package net.tnemc.fabric.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.fabricmc.fabric.mixin.message.MinecraftServerMixin;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.biome.Biome;
 import net.tnemc.core.compatibility.InventoryProvider;
 import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
+import net.tnemc.fabric.FabricCore;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -35,7 +40,7 @@ import java.util.UUID;
  */
 public class FabricPlayerProvider implements PlayerProvider {
 
-  private ServerPlayerEntity player;
+  private final ServerPlayerEntity player;
 
   public FabricPlayerProvider(ServerPlayerEntity player) {
     this.player = player;
@@ -60,7 +65,7 @@ public class FabricPlayerProvider implements PlayerProvider {
   public Optional<Location> getLocation() {
     final BlockPos pos = player.getBlockPos();
 
-    return Optional.of(new Location("", pos.getX(), pos.getY(), pos.getZ()));
+    return Optional.of(new Location(world(), pos.getX(), pos.getY(), pos.getZ()));
   }
 
   /**
@@ -70,7 +75,7 @@ public class FabricPlayerProvider implements PlayerProvider {
    */
   @Override
   public String world() {
-    return player.world.getServer();
+    return player.world.getRegistryKey().getValue().toString();
   }
 
   /**
@@ -80,7 +85,12 @@ public class FabricPlayerProvider implements PlayerProvider {
    */
   @Override
   public String biome() {
-    return player.world.getBiome(player.getBlockPos()).toString();
+    final RegistryEntry<Biome> biome = player.world.getBiome(player.getBlockPos());
+
+    if(biome.getKey().isPresent()) {
+      return biome.getKey().get().getValue().toString();
+    }
+    return "generic";
   }
 
   /**
@@ -90,7 +100,7 @@ public class FabricPlayerProvider implements PlayerProvider {
    */
   @Override
   public int getExp() {
-    return 0;
+    return player.totalExperience;
   }
 
   /**
@@ -100,7 +110,7 @@ public class FabricPlayerProvider implements PlayerProvider {
    */
   @Override
   public void setExp(int exp) {
-
+    player.setExperiencePoints(exp);
   }
 
   /**
@@ -110,7 +120,7 @@ public class FabricPlayerProvider implements PlayerProvider {
    */
   @Override
   public int getExpLevel() {
-    return 0;
+    return player.experienceLevel;
   }
 
   /**
@@ -120,17 +130,17 @@ public class FabricPlayerProvider implements PlayerProvider {
    */
   @Override
   public void setExpLevel(int level) {
-
+    player.setExperienceLevel(level);
   }
 
   @Override
   public UUID identifier() {
-    return null;
+    return player.getUuid();
   }
 
   @Override
   public InventoryProvider<?> inventory() {
-    return null;
+    return new FabricInventoryProvider(player.getUuid());
   }
 
   /**
