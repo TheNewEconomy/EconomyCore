@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS tne_accounts (
     );
 
 CREATE TABLE IF NOT EXISTS tne_non_players_accounts (
-    uid BINARY(16) NOT NULL,
+    uid BINARY(16) NOT NULL UNIQUE,
     owner BINARY(16) NOT NULL,
 
     FOREIGN KEY(uid) REFERENCES tne_accounts(uid) ON DELETE CASCADE,
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS tne_non_players_accounts (
     );
 
 CREATE TABLE IF NOT EXISTS tne_players_accounts (
-    uid BINARY(16) NOT NULL,
+    uid BINARY(16) NOT NULL UNIQUE,
     last_online DATETIME NOT NULL,
     FOREIGN KEY(uid) REFERENCES tne_accounts(uid) ON DELETE CASCADE
     );
@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS tne_holdings (
     holdings_type VARCHAR(30) NOT NULL,
     holdings DECIMAL(49, 4) NOT NULL,
 
+    UNIQUE(`uid`, `server`, `region`, `currency`, `holdings_type`),
     FOREIGN KEY(uid) REFERENCES tne_accounts(uid) ON DELETE CASCADE
     );
 
@@ -57,7 +58,7 @@ CREATE TABLE IF NOT EXISTS tne_receipts (
 
 -- receipt table
 CREATE TABLE IF NOT EXISTS tne_receipts_holdings (
-    uid BINARY(16) NOT NULL,
+    uid BINARY(16) NOT NULL UNIQUE,
     participant BINARY(16) NOT NULL,
     ending TINYINT(1) NOT NULL,
     server VARCHAR(40) NOT NULL,

@@ -34,6 +34,7 @@ import java.util.Optional;
  * @since 0.1.2.0
  */
 public class PlayerLeaveHandler {
+
   /**
    * Used to handle a PlayerLeaveEvent using the specified {@link PlayerProvider} class.
    * @param provider The {@link PlayerProvider} associated with the platform event.
