@@ -125,13 +125,13 @@ public class Transaction {
     final Optional<TransactionType> type = TNECore.eco().transaction().findType(this.type);
 
     if(type.isPresent() && type.get().fromTax().isPresent()) {
-      final BigDecimal amount = type.get().fromTax().get()
+      final BigDecimal tax = type.get().fromTax().get()
           .calculateTax(modifier.getModifier());
 
       for(HoldingsEntry entry : balances) {
-        this.from.getEndingBalances().add(entry.modifyGrab(modifier).modifyGrab(amount.negate()));
+        this.from.getEndingBalances().add(entry.modifyGrab(modifier).modifyGrab(tax.negate()));
       }
-      this.from.setTax(amount);
+      this.from.setTax(tax);
     } else {
       for(HoldingsEntry entry : balances) {
         this.from.getEndingBalances().add(entry.modifyGrab(modifier));
@@ -179,20 +179,57 @@ public class Transaction {
 
     final Optional<TransactionType> type = TNECore.eco().transaction().findType(this.type);
 
-    if(type.isPresent() && type.get().toTax().isPresent()) {
-      final BigDecimal amount = type.get().toTax().get()
-          .calculateTax(modifier.getModifier());
+    final BigDecimal tax = (type.isPresent() && type.get().toTax().isPresent())? type.get().toTax().get()
+                           .calculateTax(modifier.getModifier()) : BigDecimal.ZERO;
 
-      for(HoldingsEntry entry : balances) {
-        this.to.getEndingBalances().add(entry.modifyGrab(modifier).modifyGrab(amount.negate()));
-      }
-      this.to.setTax(amount);
-    } else {
+    //System.out.println("Balances: " + balances.size());
+    BigDecimal working = modifier.getModifier();
+    final boolean take = (working.compareTo(BigDecimal.ZERO) < 0);
 
-      for(HoldingsEntry entry : balances) {
-        this.to.getEndingBalances().add(entry.modifyGrab(modifier));
+    working = working.multiply(new BigDecimal(-1));
+
+    boolean done = false;
+
+    for(HoldingsEntry entry : balances) {
+      HoldingsEntry ending;
+      //System.out.println("Working: " + working.toPlainString());
+
+      //System.out.println("entry bal: " + entry.getAmount().toPlainString());
+      //System.out.println("entry bal: " + entry.getType().getIdentifier());
+      //System.out.println("entry bal: " + entry.getRegion());
+
+      if(!done) {
+        if(!take) {
+
+          ending = entry.modifyGrab(modifier).modifyGrab(tax.negate());
+          this.to.getEndingBalances().add(ending);
+
+          //System.out.println("End: " + ending.getAmount().toPlainString());
+          //System.out.println("End: " + ending.getType().getIdentifier());
+          //System.out.println("End: " + ending.getRegion());
+          done = true;
+        } else {
+          if(entry.getAmount().compareTo(working) >= 0) {
+            ending = entry.modifyGrab(modifier).modifyGrab(tax.negate());
+            this.to.getEndingBalances().add(ending);
+            //System.out.println("break out since we are good to go with this entry");
+            done = true;
+          } else {
+
+            ending = entry.modifyGrab(entry.getAmount().multiply(new BigDecimal(-1)));
+            working = working.subtract(entry.getAmount());
+          }
+        }
+      } else {
+        ending = entry;
       }
+      this.to.getEndingBalances().add(ending);
     }
+
+    working = null;
+
+    this.to.setTax(tax);
+
     this.modifierTo = modifier;
     return this;
   }

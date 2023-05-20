@@ -70,6 +70,8 @@ public class MonetaryCalculation {
   public void calculateDenominationCounts(BigDecimal amount) {
     Map<BigDecimal, Integer> result = new HashMap<>();
 
+    //System.out.println("AMT1: " + amount);
+
     BigDecimal workingAmount = amount;
 
     // Make a copy of the available denominations counts
@@ -88,6 +90,10 @@ public class MonetaryCalculation {
       if (count > maxCount) {
         count = maxCount;
       }
+
+      //System.out.println("Denom: " + denomination.toPlainString());
+      //System.out.println("maxCount: " + maxCount);
+      //System.out.println("count: " + count);
 
       // Subtract the value of these denominations from the total amount
       workingAmount = workingAmount.subtract(denomination.multiply(BigDecimal.valueOf(count)));
@@ -124,8 +130,14 @@ public class MonetaryCalculation {
 
   public Map<BigDecimal, Integer> calculateBreakdowns(BigDecimal amount) {
 
+    //System.out.println("AMT: " + amount);
+
     // Get the entry with the smallest key greater than the given amount
     final Map.Entry<BigDecimal, Integer> higherEntry = inventoryMaterials.higherEntry(amount);
+
+    /*if(higherEntry == null) {
+      higherEntry = inventoryMaterials.ceilingEntry(amount);
+    }*/
 
     // Reduce the value associated with the higherEntry key by 1
     toRemove.put(higherEntry.getKey(), 1);

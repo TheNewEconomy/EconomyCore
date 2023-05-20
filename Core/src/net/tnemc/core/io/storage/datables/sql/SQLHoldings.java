@@ -75,11 +75,6 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
   public void store(StorageConnector<?> connector, @NotNull HoldingsEntry object, @Nullable String identifier) {
     if(connector instanceof SQLConnector && identifier != null) {
 
-      System.out.println("Region: " + object.getRegion());
-      System.out.println("Currency: " + object.getCurrency().toString());
-      System.out.println("ID: " + object.getType().getIdentifier());
-      System.out.println("Amount: " + object.getAmount().toPlainString());
-
       ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveHoldings(),
                                               new Object[] {
                                                   identifier,

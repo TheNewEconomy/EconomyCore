@@ -75,7 +75,7 @@ public class ItemType extends VirtualType {
     return switch(type) {
       case E_CHEST -> Collections.singletonList(getEChest(account, region, currency));
       case INVENTORY_ONLY -> Collections.singletonList(getInventory(account, region, currency));
-      default -> Arrays.asList(getEChest(account, region, currency), getInventory(account, region, currency));
+      default -> Arrays.asList(getInventory(account, region, currency), getEChest(account, region, currency));
     };
   }
 
@@ -94,6 +94,8 @@ public class ItemType extends VirtualType {
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount) {
 
+    System.out.println("Set: " + amount.toPlainString());
+
     if(type.equals(HoldingsType.NORMAL_HOLDINGS)) type = INVENTORY_ONLY;
     account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, type));
 
@@ -111,13 +113,14 @@ public class ItemType extends VirtualType {
   protected HoldingsEntry getEChest(Account account, String region, Currency currency) {
     if((currency instanceof ItemCurrency) && account.isPlayer()) {
       if(!TNECore.server().online(account.getIdentifier()) ||
-          TNECore.eco().account().getLoading().contains(((PlayerAccount)account).getUUID())) {
+          TNECore.eco().account().getLoading().contains(((PlayerAccount)account).getUUID().toString())) {
 
         //Offline players have their balances saved to their wallet so check it.
         final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
                                                                                  currency.getUid(),
                                                                                  E_CHEST
         );
+        System.out.println("Getting holdings from DB");
 
         if(holdings.isPresent()) {
           return holdings.get();
@@ -145,12 +148,13 @@ public class ItemType extends VirtualType {
   protected HoldingsEntry getInventory(Account account, String region, Currency currency) {
     if(!(currency instanceof ItemCurrency) ||
         !account.isPlayer() || !TNECore.server().online(account.getIdentifier()) ||
-        TNECore.eco().account().getLoading().contains(((PlayerAccount)account).getUUID())) {
+        TNECore.eco().account().getLoading().contains(((PlayerAccount)account).getUUID().toString())) {
       //Offline players/non-players have their balances saved to their wallet so check it.
       final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
                                                                                currency.getUid(),
                                                                                INVENTORY_ONLY
       );
+      System.out.println("Getting holdings from DB");
 
       if(holdings.isPresent()) {
         return holdings.get();

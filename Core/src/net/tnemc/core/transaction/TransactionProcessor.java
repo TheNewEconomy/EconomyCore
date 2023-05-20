@@ -53,7 +53,7 @@ public interface TransactionProcessor {
       Optional<Account> from = TNECore.eco().account().findAccount(transaction.getFrom().getId());
       if(from.isPresent()) {
         for(HoldingsEntry entry : transaction.getFrom().getEndingBalances()) {
-          from.get().setHoldings(entry);
+          from.get().setHoldings(entry, entry.getType());
         }
       }
     }
@@ -63,7 +63,9 @@ public interface TransactionProcessor {
       Optional<Account> to = TNECore.eco().account().findAccount(transaction.getTo().getId());
       if(to.isPresent()) {
         for(HoldingsEntry entry : transaction.getTo().getEndingBalances()) {
-          to.get().setHoldings(entry);
+          //System.out.println("Process: " + entry.getType().getIdentifier());
+          //System.out.println("Process: " + entry.getAmount().toPlainString());
+          to.get().setHoldings(entry, entry.getType());
         }
       }
     }
