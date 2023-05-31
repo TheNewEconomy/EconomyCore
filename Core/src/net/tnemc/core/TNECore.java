@@ -23,6 +23,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.api.BaseAPI;
+import net.tnemc.core.api.CallbackManager;
 import net.tnemc.core.api.TNEAPI;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.compatibility.LogProvider;
@@ -91,6 +92,7 @@ public abstract class TNECore {
   private static TNECore instance;
 
   private TNEAPI api;
+  private CallbackManager callbackManager;
 
   private boolean enabled = false;
 
@@ -155,6 +157,8 @@ public abstract class TNECore {
     if(!this.messageConfig.load()) {
       TNECore.log().error("Failed to load message configuration!");
     }
+
+    this.callbackManager = new CallbackManager();
 
     this.economyManager = new EconomyManager();
 
@@ -310,6 +314,10 @@ public abstract class TNECore {
 
   public static TNECore instance() {
     return instance;
+  }
+
+  public static CallbackManager callbacks() {
+    return instance.callbackManager;
   }
 
   public static TNEAPI api() {

@@ -42,6 +42,14 @@ public interface TNEAPI {
   //Our Core API methods. Mainly account-related methods
 
   /**
+   * The callback manager for the TNE API. This adds an event-style system that is supported across
+   * every platform.
+   *
+   * @return The callback manager that is being used.
+   */
+  CallbackManager callbacks();
+
+  /**
    * Used to determine if an {@link Account} exists with the specified identifier.
    *
    * This method is safe to search for non-player accounts.

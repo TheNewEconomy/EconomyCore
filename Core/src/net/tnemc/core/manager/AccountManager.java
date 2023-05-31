@@ -282,7 +282,7 @@ public class AccountManager {
    */
   public void addDefaultTypes() {
 
-    //TODO: Add third-party before this.
+    //TODO: API Add third-party before this.
 
     addAccountType(NonPlayerAccount.class, (value)->true);
   }

@@ -41,6 +41,18 @@ import java.util.UUID;
  */
 public class BaseAPI implements TNEAPI {
 
+
+  /**
+   * The callback manager for the TNE API. This adds an event-style system that is supported across
+   * every platform.
+   *
+   * @return The callback manager that is being used.
+   */
+  @Override
+  public CallbackManager callbacks() {
+    return TNECore.callbacks();
+  }
+
   /**
    * Used to determine if an {@link Account} exists with the specified identifier.
    * <p>

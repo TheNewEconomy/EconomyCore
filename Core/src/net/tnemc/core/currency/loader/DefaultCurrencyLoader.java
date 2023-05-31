@@ -19,6 +19,8 @@ package net.tnemc.core.currency.loader;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.api.callback.currency.CurrencyLoadCallback;
+import net.tnemc.core.api.callback.currency.DenominationLoadCallback;
 import net.tnemc.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyLoader;
@@ -217,7 +219,11 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       currency.setNote(note);
     }
 
-    //TODO: Currency load event
+    CurrencyLoadCallback currencyLoad = new CurrencyLoadCallback(currency);
+    if(!TNECore.callbacks().call(currencyLoad)) {
+      return false;
+    }
+
     if(!loadDenominations(new File(directory, identifier), currency)) {
       TNECore.log().error("Failed to load currency. Unable to load denominations: " + currency.getIdentifier());
       return false;
@@ -338,7 +344,11 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       }
     }
 
-    //TODO: load denomination event
+    DenominationLoadCallback denomCallback = new DenominationLoadCallback(currency, denomination);
+    if(!TNECore.callbacks().call(denomCallback)) {
+      return false;
+    }
+
     currency.getDenominations().put(weight, denomination);
     return true;
   }
