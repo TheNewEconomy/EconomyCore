@@ -17,8 +17,6 @@ package net.tnemc.fabric.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.fabricmc.fabric.mixin.message.MinecraftServerMixin;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -27,7 +25,6 @@ import net.tnemc.core.compatibility.InventoryProvider;
 import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
-import net.tnemc.fabric.FabricCore;
 
 import java.util.Optional;
 import java.util.UUID;

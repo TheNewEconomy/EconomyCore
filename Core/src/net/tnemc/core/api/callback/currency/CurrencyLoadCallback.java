@@ -19,7 +19,6 @@ package net.tnemc.core.api.callback.currency;
 
 import net.tnemc.core.api.callback.TNECallback;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.core.currency.Denomination;
 
 /**
  * DenominationLoadCallback

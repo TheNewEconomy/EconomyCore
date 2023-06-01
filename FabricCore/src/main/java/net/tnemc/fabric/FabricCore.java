@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.server.MinecraftServer;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.LogProvider;
-import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.fabric.impl.FabricServerProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

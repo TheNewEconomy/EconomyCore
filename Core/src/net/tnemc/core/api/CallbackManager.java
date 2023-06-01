@@ -17,10 +17,10 @@ package net.tnemc.core.api;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.api.callback.TNECallback;
 import net.tnemc.core.api.callback.TNECallbacks;
 import net.tnemc.core.api.callback.currency.CurrencyLoadCallback;
 import net.tnemc.core.api.callback.currency.DenominationLoadCallback;
-import net.tnemc.core.api.callback.TNECallback;
 
 import java.util.HashMap;
 import java.util.Map;

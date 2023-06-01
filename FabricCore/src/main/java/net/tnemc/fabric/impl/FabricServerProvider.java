@@ -17,8 +17,6 @@ package net.tnemc.fabric.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.minecraft.Bootstrap;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
