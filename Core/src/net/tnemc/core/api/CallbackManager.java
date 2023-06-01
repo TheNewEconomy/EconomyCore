@@ -51,10 +51,20 @@ public class CallbackManager {
     callbacks.put(TNECallbacks.DENOMINATION_LOAD.id(), new CallbackEntry(DenominationLoadCallback.class));
   }
 
-  public void addCallback(final TNECallbacks callback, CallbackEntry entry) {
+  /**
+   * Used to add a new callback into the system.
+   * @param callback The callback to add.
+   * @param entry The {@link CallbackEntry}, which manages the consumers.
+   */
+  protected void addCallback(final TNECallbacks callback, CallbackEntry entry) {
     this.callbacks.put(callback.id(), entry);
   }
 
+  /**
+   * Used to add a new callback into the system.
+   * @param identifier The identifier of the callback to add.
+   * @param entry The {@link CallbackEntry}, which manages the consumers.
+   */
   public void addCallback(final String identifier, CallbackEntry entry) {
     this.callbacks.put(identifier, entry);
   }

@@ -24,7 +24,6 @@ import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.region.RegionMode;
 import net.tnemc.item.AbstractItemStack;
-import net.tnemc.item.SerialItem;
 import net.tnemc.item.providers.CalculationsProvider;
 import org.jetbrains.annotations.NotNull;
 
@@ -141,10 +140,6 @@ public interface ServerConnector {
   void registerCrafting(@NotNull final CraftingRecipe recipe);
 
   <S, T extends AbstractItemStack<S>, INV> CalculationsProvider<T, S, INV> calculations();
-
-  default SerialItem<?> denominationToSerial(final ItemDenomination denomination) {
-    return denomination.toSerial();
-  }
 
   <S> AbstractItemStack<S> denominationToStack(final ItemDenomination denomination);
 

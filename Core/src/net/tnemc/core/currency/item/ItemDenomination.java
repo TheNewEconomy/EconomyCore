@@ -19,7 +19,6 @@ package net.tnemc.core.currency.item;
  */
 
 import net.tnemc.core.currency.Denomination;
-import net.tnemc.item.SerialItem;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -120,15 +119,5 @@ public class ItemDenomination extends Denomination {
 
   public void setTexture(String texture) {
     this.texture = texture;
-  }
-
-  public static ItemDenomination fromSerial(SerialItem<?> serial) {
-    //TODO: Finish
-    return null;
-  }
-
-  public SerialItem<?> toSerial() {
-    //TODO: Finish
-    return null;
   }
 }
