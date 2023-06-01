@@ -41,6 +41,6 @@ public class ModuleClassLoader extends URLClassLoader {
   protected void finalize() throws Throwable {
     super.finalize();
 
-    TNECore.log().debug("Module Class Loader has been GC'd");
+    TNECore.log().debug("ModuleOld Class Loader has been GC'd");
   }
 }

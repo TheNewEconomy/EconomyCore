@@ -63,7 +63,7 @@ public class ModuleUpdateChecker {
         }
         TNECore.loader().load(module);
       } else {
-        TNECore.log().inform("Module " + module + " is up to date.");
+        TNECore.log().inform("ModuleOld " + module + " is up to date.");
       }
     }
   }

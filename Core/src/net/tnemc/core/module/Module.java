@@ -1,17 +1,4 @@
 package net.tnemc.core.module;
-
-import net.tnemc.core.TNECore;
-import net.tnemc.core.manager.DataManager;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -29,64 +16,72 @@ import java.util.Map;
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+import co.aikar.commands.CommandManager;
+import net.tnemc.core.TNECore;
+import net.tnemc.core.api.callback.TNECallback;
+import net.tnemc.core.api.callback.TNECallbacks;
+import net.tnemc.core.manager.DataManager;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+
+/**
+ * Module represents an add-on module for TNE.
+ *
+ * @author creatorfromhell
+ * @since 0.1.2.0
+ */
 public interface Module {
 
-  default void load(TNECore plugin) {}
-
-  default void postLoad(TNECore plugin) {}
-
-  default void unload(TNECore plugin) {}
-
-  default void backup(DataManager manager) {}
-
-  default void enableSave(DataManager manager) {}
-
-  default void disableSave(DataManager manager) {}
-
-  default void initializeConfigurations() {}
-
-  default void loadConfigurations() {}
-
-  default void saveConfigurations() {}
+  /**
+   * Called when the {@link TNECore#enable()} method is called.
+   */
+  void enable(TNECore core);
 
   /**
-   * @return A TNDBU(https://github.com/TheNewEconomy/TheNewDBUpdater) compliant YAML file containing the SQL tables required
-   * for the module.
+   * Called when the {@link TNECore#onDisable()} method is called.
    */
-  default String tablesFile() {
-    return "";
-  }
+  void disable(TNECore core);
 
   /**
-   * @return A map of messages that should be added to message.yml in the format of YamlNode, Value
+   * Called when the configurations are initialized and loaded.
    */
-  default Map<String, String> messages() {
+  void initConfigurations();
+
+  /**
+   * Called when the datamanager runs its backup method.
+   * @param manager The datamanager instance.
+   */
+  void backup(DataManager manager);
+
+  /**
+   * Called when the datamanager is enabled, and a connection is established.
+   * @param manager The datamanager instance.
+   */
+  void enableSave(DataManager manager);
+
+  /**
+   * Called when the datamanager is enabled, and a connection is established.
+   * @param manager The datamanager instance.
+   */
+  void disableSave(DataManager manager);
+
+  /**
+   * Called after the default TNE Commands are registered.
+   * @param manager The {@link CommandManager} that the commands are registered to.
+   */
+  void registerCommands(CommandManager<?, ?, ?, ?, ?, ?> manager);
+
+  /**
+   * Called after the {@link net.tnemc.core.api.CallbackManager} is initialized. This method will
+   * register the callbacks with the manager automatically.
+   *
+   * @return A map containing the callbacks to register where the key is the callback name and the
+   * value is the callback function.
+   */
+  default Map<String, Function<TNECallback, Boolean>> registerCallbacks() {
     return new HashMap<>();
-  }
-
-
-  default List<String> events() {
-    return new ArrayList<>();
-  }
-
-
-  /**
-   * Load a file from the classpath and return the InputStream.
-   * @param filename The name of the file.
-   * @return The input stream for the file.
-   */
-  default InputStream getResource(String filename) {
-    try {
-      URL url = getClass().getClassLoader().getResource(filename);
-      if (url == null) {
-        return null;
-      } else {
-        URLConnection connection = url.openConnection();
-        connection.setUseCaches(false);
-        return connection.getInputStream();
-      }
-    } catch (IOException var4) {
-      return null;
-    }
   }
 }

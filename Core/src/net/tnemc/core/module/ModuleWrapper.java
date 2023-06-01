@@ -25,10 +25,10 @@ import java.net.URLClassLoader;
 public class ModuleWrapper {
 
   ModuleInfo info;
-  Module module;
+  ModuleOld module;
   URLClassLoader loader;
 
-  public ModuleWrapper(Module module) {
+  public ModuleWrapper(ModuleOld module) {
     this.module = module;
   }
 
@@ -38,7 +38,7 @@ public class ModuleWrapper {
       loader = null;
       System.gc();
     } catch (IOException ignore) {
-      TNECore.log().inform("Module " + info.name() + " unloaded incorrectly.");
+      TNECore.log().inform("ModuleOld " + info.name() + " unloaded incorrectly.");
     }
     info = null;
   }
@@ -66,11 +66,11 @@ public class ModuleWrapper {
     this.info = info;
   }
 
-  public Module getModule() {
+  public ModuleOld getModule() {
     return module;
   }
 
-  public void setModule(Module module) {
+  public void setModule(ModuleOld module) {
     this.module = module;
   }
 

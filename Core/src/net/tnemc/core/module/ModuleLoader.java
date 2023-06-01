@@ -83,7 +83,7 @@ public class ModuleLoader {
             if (jar.getName().contains("old-")) continue;
 
             if (!wrapper.getModule().getClass().isAnnotationPresent(ModuleInfo.class)) {
-              TNECore.log().inform("Invalid module format! Module File: " + jar.getName());
+              TNECore.log().inform("Invalid module format! ModuleOld File: " + jar.getName());
               continue;
             }
 
@@ -112,7 +112,7 @@ public class ModuleLoader {
       try {
         ModuleWrapper wrapper = loadModuleWrapper(path);
         if (!wrapper.getModule().getClass().isAnnotationPresent(ModuleInfo.class)) {
-          TNECore.log().inform("Invalid module format! Module File: " + moduleName);
+          TNECore.log().inform("Invalid module format! ModuleOld File: " + moduleName);
           return false;
         }
 
@@ -180,15 +180,15 @@ public class ModuleLoader {
   private ModuleWrapper loadModuleWrapper(String modulePath) {
     ModuleWrapper wrapper;
 
-    Module module = null;
+    ModuleOld module = null;
 
     final File file = new File(modulePath);
-    Class<? extends Module> moduleClass;
+    Class<? extends ModuleOld> moduleClass;
 
     URLClassLoader classLoader = null;
     try {
       classLoader = new URLClassLoader(new URL[]{ file.toURI().toURL() }, TNECore.instance().getClass().getClassLoader());
-      moduleClass = classLoader.loadClass(getModuleMain(new File(modulePath))).asSubclass(Module.class);
+      moduleClass = classLoader.loadClass(getModuleMain(new File(modulePath))).asSubclass(ModuleOld.class);
       module = moduleClass.newInstance();
       supportedEvents.addAll(module.events());
     } catch (Exception ignore) {
