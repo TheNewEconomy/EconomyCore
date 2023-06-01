@@ -41,6 +41,7 @@ import net.tnemc.core.io.storage.StorageManager;
 import net.tnemc.core.menu.impl.mybal.MyBalMenu;
 import net.tnemc.core.menu.impl.mycurrency.MyCurrencyMenu;
 import net.tnemc.core.menu.impl.myeco.MyEcoMenu;
+import net.tnemc.core.module.ModuleLoader;
 import net.tnemc.menu.core.MenuManager;
 
 import java.io.File;
@@ -92,7 +93,9 @@ public abstract class TNECore {
   private static TNECore instance;
 
   private TNEAPI api;
-  private CallbackManager callbackManager;
+  protected CallbackManager callbackManager;
+
+  protected ModuleLoader loader;
 
   private boolean enabled = false;
 
@@ -322,6 +325,10 @@ public abstract class TNECore {
 
   public static TNEAPI api() {
     return instance.api;
+  }
+
+  public static ModuleLoader loader() {
+    return instance.loader;
   }
 
   public DebugLevel getLevel() {
