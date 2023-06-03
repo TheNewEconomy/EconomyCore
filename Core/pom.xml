@@ -59,10 +59,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>co.aikar</groupId>
-            <artifactId>acf-core</artifactId>
-            <version>0.5.1-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>com.github.Revxrsal.Lamp</groupId>
+            <artifactId>common</artifactId>
+            <version>3.1.5</version>
         </dependency>
         <dependency>
             <groupId>me.carleslc.Simple-YAML</groupId>

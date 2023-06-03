@@ -21,6 +21,7 @@ package net.tnemc.core.compatibility;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.io.message.MessageData;
+import revxrsal.commands.command.CommandActor;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -32,32 +33,45 @@ import java.util.UUID;
  * @since 0.1.2.0
  * @see PlayerProvider
  */
-public interface CmdSource {
+public class CmdSource {
+
+  private final CommandActor actor;
+
+  public CmdSource(CommandActor actor) {
+    this.actor = actor;
+  }
 
   /**
    * The UUID of this command source.
    * @return The UUID of this command source.
    */
-  UUID identifier();
+  public UUID identifier() {
+    return actor.getUniqueId();
+  }
 
   /**
    * The name of this command source.
    * @return The name of this command source.
    */
-  String name();
+  public String name() {
+    return actor.getName();
+  }
 
   /**
    * Used to get the related {@link PlayerProvider} for this command source.
    * @return An optional containing the related {@link PlayerProvider} if this command source is a
    * player, otherwise an empty {@link Optional}.
    */
-  Optional<PlayerProvider> player();
+  public Optional<PlayerProvider> player() {
+    //TODO: Check if player.
+    return Optional.empty();
+  }
 
   /**
    * Used to get the account associated with this specific {@link CmdSource}.
    * @return An Optional containing the {@link Account account} class, or an empty Optional.
    */
-  default Optional<Account> account() {
+  public Optional<Account> account() {
     return TNECore.eco().account().findAccount(identifier());
   }
 
@@ -65,13 +79,15 @@ public interface CmdSource {
    * Used to send a message to this command source.
    * @param messageData The message data to utilize for this translation.
    */
-  void message(final MessageData messageData);
+  public void message(final MessageData messageData) {
+    //TODO: Dispatch message string to actor.
+  }
 
   /**
    * Used to get the world for this command source.
    * @return The name of the world that this command source is in.
    */
-  default String region() {
+  public String region() {
     if(player().isPresent()) {
       return TNECore.eco().region().getMode().region(player().get());
     }

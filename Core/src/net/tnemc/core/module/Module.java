@@ -17,13 +17,14 @@ package net.tnemc.core.module;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import co.aikar.commands.CommandManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.TNECallback;
-import net.tnemc.core.api.callback.TNECallbacks;
 import net.tnemc.core.manager.DataManager;
+import revxrsal.commands.CommandHandler;
+import revxrsal.commands.orphan.OrphanCommand;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -70,9 +71,27 @@ public interface Module {
 
   /**
    * Called after the default TNE Commands are registered.
-   * @param manager The {@link CommandManager} that the commands are registered to.
+   * @param handler The {@link CommandHandler} that the commands are registered to.
    */
-  void registerCommands(CommandManager<?, ?, ?, ?, ?, ?> manager);
+  void registerCommands(CommandHandler handler);
+
+  /**
+   * Used to register sub commands onto the exist /money command set.
+   * @param commands The list of commands to register as sub commands.
+   */
+  void registerMoneySub(List<OrphanCommand> commands);
+
+  /**
+   * Used to register sub commands onto the exist /transaction command set.
+   * @param commands The list of commands to register as sub commands.
+   */
+  void registerTransactionSub(List<OrphanCommand> commands);
+
+  /**
+   * Used to register sub commands onto the exist /tne command set.
+   * @param commands The list of commands to register as sub commands.
+   */
+  void registerAdminSub(List<OrphanCommand> commands);
 
   /**
    * Called after the {@link net.tnemc.core.api.CallbackManager} is initialized. This method will

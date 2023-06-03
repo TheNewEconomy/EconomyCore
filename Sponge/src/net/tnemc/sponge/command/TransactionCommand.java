@@ -39,8 +39,8 @@ import org.spongepowered.api.command.CommandSource;
 public class TransactionCommand extends BaseCommand {
 
   @Subcommand("away|gone|afk|afg")
-  @Syntax("%Transaction.Away.ArgumentsParser")
-  @Description("%Transaction.Away.Description")
+  @Syntax("#{Transaction.Away.ArgumentsParser}")
+  @Description("#{Transaction.Away.Description}")
   @CommandPermission("tne.transaction.away")
   public void away(CommandSource sender, String[] args) {
     net.tnemc.core.command.TransactionCommand.away(new ArgumentsParser(new SpongeCMDSource(sender), args));
@@ -48,24 +48,24 @@ public class TransactionCommand extends BaseCommand {
 
   @Default
   @Subcommand("history|list|hist|archive")
-  @Syntax("%Transaction.History.ArgumentsParser")
-  @Description("%Transaction.History.Description")
+  @Syntax("#{Transaction.History.ArgumentsParser}")
+  @Description("#{Transaction.History.Description}")
   @CommandPermission("tne.transaction.history")
   public void history(CommandSource sender, String[] args) {
     net.tnemc.core.command.TransactionCommand.history(new ArgumentsParser(new SpongeCMDSource(sender), args));
   }
 
   @Subcommand("info|i|about|brief")
-  @Syntax("%Transaction.Info.ArgumentsParser")
-  @Description("%Transaction.Info.Description")
+  @Syntax("#{Transaction.Info.ArgumentsParser}")
+  @Description("#{Transaction.Info.Description}")
   @CommandPermission("tne.info.history")
   public void info(CommandSource sender, String[] args) {
     net.tnemc.core.command.TransactionCommand.info(new ArgumentsParser(new SpongeCMDSource(sender), args));
   }
 
   @Subcommand("void|retract|undo")
-  @Syntax("%Transaction.Void.ArgumentsParser")
-  @Description("%Transaction.Void.Description")
+  @Syntax("#{Transaction.Void.ArgumentsParser}")
+  @Description("#{Transaction.Void.Description}")
   @CommandPermission("tne.void.history")
   public void voidT(CommandSource sender, String[] args) {
     net.tnemc.core.command.TransactionCommand.voidT(new ArgumentsParser(new SpongeCMDSource(sender), args));

@@ -18,7 +18,6 @@ package net.tnemc.bukkit;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import co.aikar.commands.PaperCommandManager;
 import net.tnemc.bukkit.command.AdminCommand;
 import net.tnemc.bukkit.command.MoneyCommand;
 import net.tnemc.bukkit.command.TransactionCommand;
@@ -27,6 +26,7 @@ import net.tnemc.bukkit.impl.BukkitServerProvider;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.config.MessageConfig;
 import org.bukkit.plugin.java.JavaPlugin;
+import revxrsal.commands.bukkit.BukkitCommandHandler;
 
 /**
  * BukkitCore
@@ -57,10 +57,7 @@ public class BukkitCore extends TNECore {
       TNECore.log().error("Failed to load bukkit configuration!");
     }
 
-    command = new PaperCommandManager(plugin);
-
-    //Enable help api in ACF
-    command.enableUnstableAPI("help");
+    command = BukkitCommandHandler.create(plugin);
 
     for(String cmd : MessageConfig.yaml().getConfigurationSection("Messages.Commands").getKeys(false)) {
       for(String sub : MessageConfig.yaml().getConfigurationSection("Messages.Commands." + cmd).getKeys(false)) {

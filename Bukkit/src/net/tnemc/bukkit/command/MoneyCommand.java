@@ -18,17 +18,15 @@ package net.tnemc.bukkit.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.CommandHelp;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Default;
-import co.aikar.commands.annotation.Description;
-import co.aikar.commands.annotation.Subcommand;
-import co.aikar.commands.annotation.Syntax;
 import net.tnemc.bukkit.impl.BukkitCMDSource;
 import net.tnemc.core.command.args.ArgumentsParser;
-import org.bukkit.command.CommandSender;
+import revxrsal.commands.annotation.Command;
+import revxrsal.commands.annotation.DefaultFor;
+import revxrsal.commands.annotation.Description;
+import revxrsal.commands.annotation.Subcommand;
+import revxrsal.commands.annotation.Usage;
+import revxrsal.commands.bukkit.BukkitCommandActor;
+import revxrsal.commands.bukkit.annotation.CommandPermission;
 
 /**
  * MoneyCommands
@@ -36,114 +34,108 @@ import org.bukkit.command.CommandSender;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-@CommandAlias("money|eco")
-public class MoneyCommand extends BaseCommand {
+@Command({"money", "eco"})
+public class MoneyCommand {
 
-  @Default
-  @Subcommand("balmenu|menu")
-  @CommandAlias("mybal|balmenu")
-  @Syntax("%Money.MyBal.Arguments")
-  @Description("%Money.MyBal.Description")
+  @Subcommand({"balmenu", "menu", "mybal", "balmenu"})
+  @Usage("#{Money.MyBal.Arguments}")
+  @Description("#{Money.MyBal.Description}")
   @CommandPermission("tne.money.mybal")
-  public void onMyBal(CommandSender sender, String[] args) {
+  public void onMyBal(BukkitCommandActor sender, String[] args) {
     net.tnemc.core.command.MoneyCommand.onMyBal(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
-  @Default
-  @Subcommand("balance|bal|val")
-  @CommandAlias("balance|bal|val")
-  @Syntax("%Money.Balance.Arguments")
-  @Description("%Money.Balance.Description")
+  @DefaultFor({"money", "eco"})
+  @Subcommand({"balance", "bal", "val"})
+  @Usage("#{Money.Balance.Arguments}")
+  @Description("#{Money.Balance.Description}")
   @CommandPermission("tne.money.balance")
-  public void onBalance(CommandSender sender, String[] args) {
+  public void onBalance(BukkitCommandActor sender, String[] args) {
     net.tnemc.core.command.MoneyCommand.onBalance(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
-  @Subcommand("convert")
-  @Syntax("%Money.Convert.Arguments")
-  @Description("%Money.Convert.Description")
+  @Subcommand({"convert"})
+  @Usage("#{Money.Convert.Arguments}")
+  @Description("#{Money.Convert.Description}")
   @CommandPermission("tne.money.convert")
-  public void onConvert(CommandSender sender, String[] args) {
+  public void onConvert(BukkitCommandActor sender, String[] args) {
     net.tnemc.core.command.MoneyCommand.onConvert(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
-  @Subcommand("give|+|add")
-  @Syntax("%Money.Give.Arguments")
-  @Description("%Money.Give.Description")
+  @Subcommand({"give", "+", "add"})
+  @Usage("#{Money.Give.Arguments}")
+  @Description("#{Money.Give.Description}")
   @CommandPermission("tne.money.give")
-  public void onGive(CommandSender sender, String[] args) {
+  public void onGive(BukkitCommandActor sender, String[] args) {
     net.tnemc.core.command.MoneyCommand.onGive(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
-  @Subcommand("note|n")
-  @Syntax("%Money.Note.Arguments")
-  @Description("%Money.Note.Description")
+  @Subcommand({"note", "n"})
+  @Usage("#{Money.Note.Arguments}")
+  @Description("#{Money.Note.Description}")
   @CommandPermission("tne.money.note")
-  public void onNote(CommandSender sender, String[] args) {
+  public void onNote(BukkitCommandActor sender, String[] args) {
     net.tnemc.core.command.MoneyCommand.onNote(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
-  @Subcommand("other|check")
-  @CommandAlias("balo|check")
-  @Syntax("%Money.Other.Arguments")
-  @Description("%Money.Other.Description")
+  @Subcommand({"other", "check", "balo", "check"})
+  @Usage("#{Money.Other.Arguments}")
+  @Description("#{Money.Other.Description}")
   @CommandPermission("tne.money.other")
-  public void onOther(CommandSender sender, String[] args) {
+  public void onOther(BukkitCommandActor sender, String[] args) {
     net.tnemc.core.command.MoneyCommand.onOther(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
-  @Subcommand("pay|send|transfer")
-  @CommandAlias("pay|send|transfer")
-  @Syntax("%Money.Pay.Arguments")
-  @Description("%Money.Pay.Description")
+  @Subcommand({"pay", "send", "transfer"})
+  @Usage("#{Money.Pay.Arguments}")
+  @Description("#{Money.Pay.Description}")
   @CommandPermission("tne.money.pay")
-  public void onPay(CommandSender sender, String[] args) {
+  public void onPay(BukkitCommandActor sender, String[] args) {
     net.tnemc.core.command.MoneyCommand.onPay(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
-  @Subcommand("request")
-  @Syntax("%Money.Request.Arguments")
-  @Description("%Money.Request.Description")
+  @Subcommand({"request"})
+  @Usage("#{Money.Request.Arguments}")
+  @Description("#{Money.Request.Description}")
   @CommandPermission("tne.money.Request")
-  public void onRequest(CommandSender sender, String[] args) {
+  public void onRequest(BukkitCommandActor sender, String[] args) {
     net.tnemc.core.command.MoneyCommand.onRequest(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
-  @Subcommand("set|eq|=")
-  @Syntax("%Money.Set.Arguments")
-  @Description("%Money.Set.Description")
+  @Subcommand({"set", "eq", "="})
+  @Usage("#{Money.Set.Arguments}")
+  @Description("#{Money.Set.Description}")
   @CommandPermission("tne.money.set")
-  public void onSet(CommandSender sender, String[] args) {
+  public void onSet(BukkitCommandActor sender, String[] args) {
     net.tnemc.core.command.MoneyCommand.onSet(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
-  @Subcommand("setall")
-  @Syntax("%Money.SetAll.Arguments")
-  @Description("%Money.SetAll.Description")
+  @Subcommand({"setall"})
+  @Usage("#{Money.SetAll.Arguments}")
+  @Description("#{Money.SetAll.Description}")
   @CommandPermission("tne.money.setall")
-  public void onSetAll(CommandSender sender, String[] args) {
+  public void onSetAll(BukkitCommandActor sender, String[] args) {
     net.tnemc.core.command.MoneyCommand.onSetAll(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
-  @Subcommand("take|minus|remove|-")
-  @Syntax("%Money.Take.Arguments")
-  @Description("%Money.Take.Description")
+  @Subcommand({"take", "minus", "remove", "-"})
+  @Usage("#{Money.Take.Arguments}")
+  @Description("#{Money.Take.Description}")
   @CommandPermission("tne.money.take")
-  public void onTake(CommandSender sender, String[] args) {
+  public void onTake(BukkitCommandActor sender, String[] args) {
     net.tnemc.core.command.MoneyCommand.onTake(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
-  @Subcommand("top")
-  @CommandAlias("baltop")
-  @Syntax("%Money.Top.Arguments")
-  @Description("%Money.Top.Description")
+  @Subcommand({"top", "baltop"})
+  @Usage("#{Money.Top.Arguments}")
+  @Description("#{Money.Top.Description}")
   @CommandPermission("tne.money.top")
-  public void onTop(CommandSender sender, String[] args) {
+  public void onTop(BukkitCommandActor sender, String[] args) {
     net.tnemc.core.command.MoneyCommand.onTop(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
-  @Subcommand("help")
-  public void doHelp(CommandSender sender, CommandHelp help) {
+  @Subcommand({"help"})
+  public void doHelp(BukkitCommandActor sender, CommandHelp help) {
     help.showHelp();
   }
 }

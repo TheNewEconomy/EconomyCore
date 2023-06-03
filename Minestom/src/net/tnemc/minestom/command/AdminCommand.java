@@ -41,104 +41,104 @@ public class AdminCommand extends BaseCommand {
   @Default
   @Subcommand("ecomenu|menu")
   @CommandAlias("myeco|ecomenu")
-  @Syntax("%Money.MyEco.ArgumentsParser")
-  @Description("%Money.MyEco.Description")
+  @Syntax("#{Money.MyEco.ArgumentsParser}")
+  @Description("#{Money.MyEco.Description}")
   @CommandPermission("tne.money.myeco")
   public void onMyEco(CommandSender sender, String[] args) {
     net.tnemc.core.command.AdminCommand.onMyEco(new ArgumentsParser(new MinestomCMDSource(sender), args));
   }
 
   @Subcommand("backup|archive")
-  @Syntax("%Admin.Backup.ArgumentsParser")
-  @Description("%Admin.Backup.Description")
+  @Syntax("#{Admin.Backup.ArgumentsParser}")
+  @Description("#{Admin.Backup.Description}")
   @CommandPermission("tne.admin.backup")
   public void backup(CommandSender sender, String[] args) {
     net.tnemc.core.command.AdminCommand.onBackup(new ArgumentsParser(new MinestomCMDSource(sender), args));
   }
 
   @Subcommand("create|add|new|make|+")
-  @Syntax("%Admin.Create.ArgumentsParser")
-  @Description("%Admin.Create.Description")
+  @Syntax("#{Admin.Create.ArgumentsParser}")
+  @Description("#{Admin.Create.Description}")
   @CommandPermission("tne.admin.create")
   public void create(CommandSender sender, String[] args) {
     net.tnemc.core.command.AdminCommand.onCreate(new ArgumentsParser(new MinestomCMDSource(sender), args));
   }
 
   @Subcommand("debug")
-  @Syntax("%Admin.Debug.ArgumentsParser")
-  @Description("%Admin.Debug.Description")
+  @Syntax("#{Admin.Debug.ArgumentsParser}")
+  @Description("#{Admin.Debug.Description}")
   @CommandPermission("tne.admin.debug")
   public void debug(CommandSender sender, String[] args) {
     net.tnemc.core.command.AdminCommand.onDebug(new ArgumentsParser(new MinestomCMDSource(sender), args));
   }
 
   @Subcommand("delete|destroy|del|remove|-")
-  @Syntax("%Admin.Delete.ArgumentsParser")
-  @Description("%Admin.Delete.Description")
+  @Syntax("#{Admin.Delete.ArgumentsParser}")
+  @Description("#{Admin.Delete.Description}")
   @CommandPermission("tne.admin.delete")
   public void delete(CommandSender sender, String[] args) {
     net.tnemc.core.command.AdminCommand.onDelete(new ArgumentsParser(new MinestomCMDSource(sender), args));
   }
 
   @Subcommand("extract")
-  @Syntax("%Admin.Extract.ArgumentsParser")
-  @Description("%Admin.Extract.Description")
+  @Syntax("#{Admin.Extract.ArgumentsParser}")
+  @Description("#{Admin.Extract.Description}")
   @CommandPermission("tne.admin.extract")
   public void extract(CommandSender sender, String[] args) {
     net.tnemc.core.command.AdminCommand.onExtract(new ArgumentsParser(new MinestomCMDSource(sender), args));
   }
 
   @Subcommand("purge")
-  @Syntax("%Admin.Purge.ArgumentsParser")
-  @Description("%Admin.Purge.Description")
+  @Syntax("#{Admin.Purge.ArgumentsParser}")
+  @Description("#{Admin.Purge.Description}")
   @CommandPermission("tne.admin.purge")
   public void purge(CommandSender sender, String[] args) {
     net.tnemc.core.command.AdminCommand.onPurge(new ArgumentsParser(new MinestomCMDSource(sender), args));
   }
 
   @Subcommand("reload")
-  @Syntax("%Admin.Reload.ArgumentsParser")
-  @Description("%Admin.Reload.Description")
+  @Syntax("#{Admin.Reload.ArgumentsParser}")
+  @Description("#{Admin.Reload.Description}")
   @CommandPermission("tne.admin.reload")
   public void reload(CommandSender sender, String[] args) {
     net.tnemc.core.command.AdminCommand.onReload(new ArgumentsParser(new MinestomCMDSource(sender), args));
   }
 
   @Subcommand("reset|nuke")
-  @Syntax("%Admin.Reset.ArgumentsParser")
-  @Description("%Admin.Reset.Description")
+  @Syntax("#{Admin.Reset.ArgumentsParser}")
+  @Description("#{Admin.Reset.Description}")
   @CommandPermission("tne.admin.reset")
   public void reset(CommandSender sender, String[] args) {
     net.tnemc.core.command.AdminCommand.onReset(new ArgumentsParser(new MinestomCMDSource(sender), args));
   }
 
   @Subcommand("restore")
-  @Syntax("%Admin.Restore.ArgumentsParser")
-  @Description("%Admin.Restore.Description")
+  @Syntax("#{Admin.Restore.ArgumentsParser}")
+  @Description("#{Admin.Restore.Description}")
   @CommandPermission("tne.admin.restore")
   public void restore(CommandSender sender, String[] args) {
     net.tnemc.core.command.AdminCommand.onRestore(new ArgumentsParser(new MinestomCMDSource(sender), args));
   }
 
   @Subcommand("save")
-  @Syntax("%Admin.Save.ArgumentsParser")
-  @Description("%Admin.Save.Description")
+  @Syntax("#{Admin.Save.ArgumentsParser}")
+  @Description("#{Admin.Save.Description}")
   @CommandPermission("tne.admin.save")
   public void save(CommandSender sender, String[] args) {
     net.tnemc.core.command.AdminCommand.onSave(new ArgumentsParser(new MinestomCMDSource(sender), args));
   }
 
   @Subcommand("status")
-  @Syntax("%Admin.Status.ArgumentsParser")
-  @Description("%Admin.Status.Description")
+  @Syntax("#{Admin.Status.ArgumentsParser}")
+  @Description("#{Admin.Status.Description}")
   @CommandPermission("tne.admin.status")
   public void status(CommandSender sender, String[] args) {
     net.tnemc.core.command.AdminCommand.onStatus(new ArgumentsParser(new MinestomCMDSource(sender), args));
   }
 
   @Subcommand("version|ver|build")
-  @Syntax("%Admin.Version.ArgumentsParser")
-  @Description("%Admin.Version.Description")
+  @Syntax("#{Admin.Version.ArgumentsParser}")
+  @Description("#{Admin.Version.Description}")
   @CommandPermission("tne.admin.version")
   public void version(CommandSender sender, String[] args) {
     net.tnemc.core.command.AdminCommand.onVersion(new ArgumentsParser(new MinestomCMDSource(sender), args));

@@ -18,7 +18,6 @@ package net.tnemc.core;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import co.aikar.commands.CommandManager;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsType;
@@ -43,6 +42,7 @@ import net.tnemc.core.menu.impl.mycurrency.MyCurrencyMenu;
 import net.tnemc.core.menu.impl.myeco.MyEcoMenu;
 import net.tnemc.core.module.ModuleLoader;
 import net.tnemc.menu.core.MenuManager;
+import revxrsal.commands.CommandHandler;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -82,7 +82,7 @@ public abstract class TNECore {
   protected ServerConnector server;
   protected StorageManager storage;
   protected EconomyManager economyManager;
-  protected CommandManager<?, ?, ?, ?, ?, ?> command;
+  protected CommandHandler command;
 
   private MainConfig config;
   private DataConfig data;
@@ -302,7 +302,7 @@ public abstract class TNECore {
     this.level = level;
   }
 
-  public CommandManager<?, ?, ?, ?, ?, ?> command() {
+  public CommandHandler command() {
     return command;
   }
 
