@@ -17,12 +17,17 @@ package net.tnemc.sponge.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.platform.spongeapi.SpongeAudiences;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
+import net.tnemc.core.io.message.MessageHandler;
 import net.tnemc.sponge.SpongeCore;
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.entity.living.player.Player;
+import revxrsal.commands.sponge.SpongeCommandActor;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -33,44 +38,29 @@ import java.util.UUID;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class SpongeCMDSource implements CmdSource {
+public class SpongeCMDSource extends CmdSource<SpongeCommandActor> {
 
   private final SpongePlayerProvider provider;
-  private final CommandSource source;
-  private final UUID identifier;
 
-  public SpongeCMDSource(CommandSource source) {
-    this.source = source;
+  public SpongeCMDSource(SpongeCommandActor actor) {
+    super(actor);
 
-    if(source instanceof Player) {
-      provider = new SpongePlayerProvider(((Player)source).getPlayer().get(),
+    if(actor.isPlayer()) {
+      provider = new SpongePlayerProvider(actor.getAsPlayer(),
                                           SpongeCore.instance().getPlugin());
-      identifier = provider.identifier();
     } else {
       provider = null;
-      //TODO: Server account.
-      identifier = UUID.randomUUID();
     }
   }
 
   /**
-   * The UUID of this command source.
+   * Determines if this {@link CmdSource} is an instance of a player.
    *
-   * @return The UUID of this command source.
+   * @return True if this represents a player, otherwise false if it's a non-player such as the console.
    */
   @Override
-  public UUID identifier() {
-    return identifier;
-  }
-
-  /**
-   * The name of this command source.
-   *
-   * @return The name of this command source.
-   */
-  @Override
-  public String name() {
-    return source.getName();
+  public boolean isPlayer() {
+    return actor.isPlayer();
   }
 
   /**
@@ -90,7 +80,11 @@ public class SpongeCMDSource implements CmdSource {
    * @param messageData The message data to utilize for this translation.
    */
   @Override
-  public void message(MessageData messageData) {
+  public void message(final MessageData messageData) {
 
+    try(SpongeAudiences provider = SpongeAudiences.create(SpongeCore.instance().getContainer(), Sponge.getGame())) {
+      final Audience audience = (actor.isPlayer())? provider.player(actor.getAsPlayer()) : provider.console();
+      MessageHandler.translate(messageData, identifier(), audience);
+    }
   }
 }

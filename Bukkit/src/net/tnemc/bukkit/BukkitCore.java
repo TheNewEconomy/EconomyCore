@@ -59,23 +59,10 @@ public class BukkitCore extends TNECore {
 
     command = BukkitCommandHandler.create(plugin);
 
-    for(String cmd : MessageConfig.yaml().getConfigurationSection("Messages.Commands").getKeys(false)) {
-      for(String sub : MessageConfig.yaml().getConfigurationSection("Messages.Commands." + cmd).getKeys(false)) {
-
-        final String path = cmd + "." + sub;
-        command.getCommandReplacements().addReplacements(
-            path + ".Description",
-            MessageConfig.yaml().getString("Messages.Commands." + path + ".Description"),
-            path + ".Arguments",
-            MessageConfig.yaml().getString("Messages.Commands." + path + ".Arguments")
-        );
-      }
-    }
-
     //Register our commands
-    command.registerCommand(new AdminCommand());
-    command.registerCommand(new MoneyCommand());
-    command.registerCommand(new TransactionCommand());
+    command.register(new AdminCommand());
+    command.register(new MoneyCommand());
+    command.register(new TransactionCommand());
   }
 
   public static BukkitCore instance() {

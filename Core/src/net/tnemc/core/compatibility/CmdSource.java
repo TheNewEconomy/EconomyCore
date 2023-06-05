@@ -33,11 +33,11 @@ import java.util.UUID;
  * @since 0.1.2.0
  * @see PlayerProvider
  */
-public class CmdSource {
+public abstract class CmdSource<T extends CommandActor> {
 
-  private final CommandActor actor;
+  protected final T actor;
 
-  public CmdSource(CommandActor actor) {
+  public CmdSource(T actor) {
     this.actor = actor;
   }
 
@@ -46,6 +46,9 @@ public class CmdSource {
    * @return The UUID of this command source.
    */
   public UUID identifier() {
+    if(!isPlayer()) {
+      return TNECore.instance().getServerAccount();
+    }
     return actor.getUniqueId();
   }
 
@@ -58,14 +61,17 @@ public class CmdSource {
   }
 
   /**
+   * Determines if this {@link CmdSource} is an instance of a player.
+   * @return True if this represents a player, otherwise false if it's a non-player such as the console.
+   */
+  public abstract boolean isPlayer();
+
+  /**
    * Used to get the related {@link PlayerProvider} for this command source.
    * @return An optional containing the related {@link PlayerProvider} if this command source is a
    * player, otherwise an empty {@link Optional}.
    */
-  public Optional<PlayerProvider> player() {
-    //TODO: Check if player.
-    return Optional.empty();
-  }
+  public abstract Optional<PlayerProvider> player();
 
   /**
    * Used to get the account associated with this specific {@link CmdSource}.
@@ -79,9 +85,7 @@ public class CmdSource {
    * Used to send a message to this command source.
    * @param messageData The message data to utilize for this translation.
    */
-  public void message(final MessageData messageData) {
-    //TODO: Dispatch message string to actor.
-  }
+  public abstract void message(final MessageData messageData);
 
   /**
    * Used to get the world for this command source.

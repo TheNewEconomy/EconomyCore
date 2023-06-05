@@ -18,15 +18,14 @@ package net.tnemc.folia;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import co.aikar.commands.PaperCommandManager;
+import net.tnemc.bukkit.command.AdminCommand;
+import net.tnemc.bukkit.command.MoneyCommand;
+import net.tnemc.bukkit.command.TransactionCommand;
 import net.tnemc.bukkit.impl.BukkitLogProvider;
 import net.tnemc.core.TNECore;
-import net.tnemc.core.config.MessageConfig;
-import net.tnemc.folia.command.AdminCommand;
-import net.tnemc.folia.command.MoneyCommand;
-import net.tnemc.folia.command.TransactionCommand;
 import net.tnemc.folia.impl.FoliaServerProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import revxrsal.commands.bukkit.BukkitCommandHandler;
 
 /**
  * FoliaCore
@@ -49,27 +48,12 @@ public class FoliaCore extends TNECore {
 
     super.onEnable();
 
-    command = new PaperCommandManager(plugin);
+    command = BukkitCommandHandler.create(plugin);
 
-    //Enable help api in ACF
-    command.enableUnstableAPI("help");
-
-    for(String cmd : MessageConfig.yaml().getConfigurationSection("Messages.Commands").getKeys(false)) {
-      for(String sub : MessageConfig.yaml().getConfigurationSection("Messages.Commands." + cmd).getKeys(false)) {
-
-        final String path = cmd + "." + sub;
-        command.getCommandReplacements().addReplacements(
-            path + ".Description",
-            MessageConfig.yaml().getString("Messages.Commands." + path + ".Description"),
-            path + ".Arguments",
-            MessageConfig.yaml().getString("Messages.Commands." + path + ".Arguments")
-        );
-      }
-    }
-
-    command.registerCommand(new AdminCommand());
-    command.registerCommand(new MoneyCommand());
-    command.registerCommand(new TransactionCommand());
+    //Register our commands
+    command.register(new AdminCommand());
+    command.register(new MoneyCommand());
+    command.register(new TransactionCommand());
   }
 
   public static FoliaCore instance() {

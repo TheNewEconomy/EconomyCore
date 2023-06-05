@@ -133,9 +133,4 @@ public class MoneyCommand {
   public void onTop(BukkitCommandActor sender, String[] args) {
     net.tnemc.core.command.MoneyCommand.onTop(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
-
-  @Subcommand({"help"})
-  public void doHelp(BukkitCommandActor sender, CommandHelp help) {
-    help.showHelp();
-  }
 }

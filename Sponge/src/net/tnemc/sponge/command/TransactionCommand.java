@@ -18,16 +18,15 @@ package net.tnemc.sponge.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Default;
-import co.aikar.commands.annotation.Description;
-import co.aikar.commands.annotation.Subcommand;
-import co.aikar.commands.annotation.Syntax;
 import net.tnemc.core.command.args.ArgumentsParser;
 import net.tnemc.sponge.impl.SpongeCMDSource;
-import org.spongepowered.api.command.CommandSource;
+import revxrsal.commands.annotation.Command;
+import revxrsal.commands.annotation.DefaultFor;
+import revxrsal.commands.annotation.Description;
+import revxrsal.commands.annotation.Subcommand;
+import revxrsal.commands.annotation.Usage;
+import revxrsal.commands.sponge.SpongeCommandActor;
+import revxrsal.commands.sponge.annotation.CommandPermission;
 
 /**
  * TransactionCommand
@@ -35,39 +34,39 @@ import org.spongepowered.api.command.CommandSource;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-@CommandAlias("transaction|trans|receipt")
-public class TransactionCommand extends BaseCommand {
+@Command({"transaction", "trans", "receipt"})
+public class TransactionCommand {
 
-  @Subcommand("away|gone|afk|afg")
-  @Syntax("#{Transaction.Away.ArgumentsParser}")
+  @Subcommand({"away", "gone", "afk", "afg"})
+  @Usage("#{Transaction.Away.Arguments}")
   @Description("#{Transaction.Away.Description}")
   @CommandPermission("tne.transaction.away")
-  public void away(CommandSource sender, String[] args) {
+  public void away(SpongeCommandActor sender, String[] args) {
     net.tnemc.core.command.TransactionCommand.away(new ArgumentsParser(new SpongeCMDSource(sender), args));
   }
 
-  @Default
-  @Subcommand("history|list|hist|archive")
-  @Syntax("#{Transaction.History.ArgumentsParser}")
+  @DefaultFor({"transaction", "trans", "receipt"})
+  @Subcommand({"history", "list", "hist", "archive"})
+  @Usage("#{Transaction.History.Arguments}")
   @Description("#{Transaction.History.Description}")
   @CommandPermission("tne.transaction.history")
-  public void history(CommandSource sender, String[] args) {
+  public void history(SpongeCommandActor sender, String[] args) {
     net.tnemc.core.command.TransactionCommand.history(new ArgumentsParser(new SpongeCMDSource(sender), args));
   }
 
-  @Subcommand("info|i|about|brief")
-  @Syntax("#{Transaction.Info.ArgumentsParser}")
+  @Subcommand({"info", "i", "about", "brief"})
+  @Usage("#{Transaction.Info.Arguments}")
   @Description("#{Transaction.Info.Description}")
   @CommandPermission("tne.info.history")
-  public void info(CommandSource sender, String[] args) {
+  public void info(SpongeCommandActor sender, String[] args) {
     net.tnemc.core.command.TransactionCommand.info(new ArgumentsParser(new SpongeCMDSource(sender), args));
   }
 
-  @Subcommand("void|retract|undo")
-  @Syntax("#{Transaction.Void.ArgumentsParser}")
+  @Subcommand({"void", "retract", "undo"})
+  @Usage("#{Transaction.Void.Arguments}")
   @Description("#{Transaction.Void.Description}")
   @CommandPermission("tne.void.history")
-  public void voidT(CommandSource sender, String[] args) {
+  public void voidT(SpongeCommandActor sender, String[] args) {
     net.tnemc.core.command.TransactionCommand.voidT(new ArgumentsParser(new SpongeCMDSource(sender), args));
   }
 }

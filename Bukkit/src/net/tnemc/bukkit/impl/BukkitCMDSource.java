@@ -27,6 +27,8 @@ import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.io.message.MessageHandler;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import revxrsal.commands.bukkit.BukkitCommandActor;
+import revxrsal.commands.command.CommandActor;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -37,42 +39,28 @@ import java.util.UUID;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class BukkitCMDSource implements CmdSource {
+public class BukkitCMDSource extends CmdSource<BukkitCommandActor> {
 
-  private final CommandSender sender;
   private final BukkitPlayerProvider provider;
-  private final UUID identifier;
 
-  public BukkitCMDSource(CommandSender sender) {
-    this.sender = sender;
+  public BukkitCMDSource(BukkitCommandActor actor) {
+    super(actor);
 
-    if(sender instanceof Player) {
-      provider = new BukkitPlayerProvider(((Player)sender).getPlayer());
-      identifier = provider.identifier();
+    if(actor.isPlayer()) {
+      provider = new BukkitPlayerProvider(actor.getAsPlayer());
     } else {
       provider = null;
-      identifier = TNECore.instance().getServerAccount();
     }
   }
 
   /**
-   * The UUID of this command source.
+   * Determines if this {@link CmdSource} is an instance of a player.
    *
-   * @return The UUID of this command source.
+   * @return True if this represents a player, otherwise false if it's a non-player such as the console.
    */
   @Override
-  public UUID identifier() {
-    return identifier;
-  }
-
-  /**
-   * The name of this command source.
-   *
-   * @return The name of this command source.
-   */
-  @Override
-  public String name() {
-    return sender.getName();
+  public boolean isPlayer() {
+    return actor.isPlayer();
   }
 
   /**
@@ -95,7 +83,7 @@ public class BukkitCMDSource implements CmdSource {
   public void message(final MessageData messageData) {
 
     try(BukkitAudiences provider = BukkitAudiences.create(TNE.instance())) {
-      MessageHandler.translate(messageData, identifier, provider.sender(sender));
+      MessageHandler.translate(messageData, identifier(), provider.sender(actor.getSender()));
     }
   }
 }

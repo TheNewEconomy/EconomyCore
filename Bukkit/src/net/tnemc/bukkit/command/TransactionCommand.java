@@ -20,12 +20,12 @@ package net.tnemc.bukkit.command;
 
 import net.tnemc.bukkit.impl.BukkitCMDSource;
 import net.tnemc.core.command.args.ArgumentsParser;
-import org.bukkit.command.CommandSender;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.DefaultFor;
 import revxrsal.commands.annotation.Description;
 import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
+import revxrsal.commands.bukkit.BukkitCommandActor;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
 
 /**
@@ -41,7 +41,7 @@ public class TransactionCommand {
   @Usage("#{Transaction.Away.Arguments}")
   @Description("#{Transaction.Away.Description}")
   @CommandPermission("tne.transaction.away")
-  public void away(CommandSender sender, String[] args) {
+  public void away(BukkitCommandActor sender, String[] args) {
     net.tnemc.core.command.TransactionCommand.away(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
@@ -50,7 +50,7 @@ public class TransactionCommand {
   @Usage("#{Transaction.History.Arguments}")
   @Description("#{Transaction.History.Description}")
   @CommandPermission("tne.transaction.history")
-  public void history(CommandSender sender, String[] args) {
+  public void history(BukkitCommandActor sender, String[] args) {
     net.tnemc.core.command.TransactionCommand.history(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
@@ -58,7 +58,7 @@ public class TransactionCommand {
   @Usage("#{Transaction.Info.Arguments}")
   @Description("#{Transaction.Info.Description}")
   @CommandPermission("tne.info.history")
-  public void info(CommandSender sender, String[] args) {
+  public void info(BukkitCommandActor sender, String[] args) {
     net.tnemc.core.command.TransactionCommand.info(new ArgumentsParser(new BukkitCMDSource(sender), args));
   }
 
@@ -66,12 +66,7 @@ public class TransactionCommand {
   @Usage("#{Transaction.Void.Arguments}")
   @Description("#{Transaction.Void.Description}")
   @CommandPermission("tne.void.history")
-  public void voidT(CommandSender sender, String[] args) {
+  public void voidT(BukkitCommandActor sender, String[] args) {
     net.tnemc.core.command.TransactionCommand.voidT(new ArgumentsParser(new BukkitCMDSource(sender), args));
-  }
-
-  @Subcommand({"help"})
-  public void doHelp(CommandSender sender, CommandHelp help) {
-    help.showHelp();
   }
 }

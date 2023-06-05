@@ -35,10 +35,10 @@ import java.util.Optional;
  */
 public class ArgumentsParser {
 
-  private final CmdSource sender;
+  private final CmdSource<?> sender;
   private final String[] arguments;
 
-  public ArgumentsParser(CmdSource sender, String[] arguments) {
+  public ArgumentsParser(CmdSource<?> sender, String[] arguments) {
     this.sender = sender;
     this.arguments = arguments;
   }
@@ -49,7 +49,7 @@ public class ArgumentsParser {
                                    Arrays.copyOfRange(arguments, index, arguments.length) : new String[0]));
   }
 
-  public CmdSource sender() {
+  public CmdSource<?> sender() {
     return sender;
   }
 

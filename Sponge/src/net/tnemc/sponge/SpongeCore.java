@@ -18,10 +18,12 @@ package net.tnemc.sponge;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import co.aikar.commands.SpongeCommandManager;
 import com.google.inject.Inject;
 import net.tnemc.core.TNECore;
 import net.tnemc.menu.sponge7.listeners.Sponge7InventoryClickListener;
+import net.tnemc.sponge.command.AdminCommand;
+import net.tnemc.sponge.command.MoneyCommand;
+import net.tnemc.sponge.command.TransactionCommand;
 import net.tnemc.sponge.impl.SpongeLogProvider;
 import net.tnemc.sponge.impl.SpongeServerProvider;
 import net.tnemc.sponge.listeners.PlayerCloseInventoryListener;
@@ -35,6 +37,7 @@ import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
+import revxrsal.commands.sponge.SpongeCommandHandler;
 
 /**
  * The Sponge main plugin class.
@@ -50,14 +53,12 @@ public class SpongeCore extends TNECore {
 
   private final PluginContainer container;
   private Plugin plugin;
-  protected final SpongeCommandManager command;
 
   @Inject
   SpongeCore(final PluginContainer container, final Logger log) {
     super(new SpongeServerProvider(), new SpongeLogProvider(log));
     this.container = container;
     this.logger = new SpongeLogProvider(log);
-    this.command = new SpongeCommandManager(container);
   }
 
   @Listener
@@ -65,6 +66,14 @@ public class SpongeCore extends TNECore {
     setInstance(this);
 
     this.plugin = plugin;
+
+
+    command = SpongeCommandHandler.create(plugin);
+
+    //Register our commands
+    command.register(new AdminCommand());
+    command.register(new MoneyCommand());
+    command.register(new TransactionCommand());
 
     //Register our event listeners
     Sponge.getEventManager().registerListeners(container, new PlayerJoinListener());
