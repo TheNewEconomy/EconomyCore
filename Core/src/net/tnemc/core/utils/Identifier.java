@@ -27,23 +27,7 @@ import java.util.Optional;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class Identifier {
-
-  private final String plugin;
-  private final String id;
-
-  public Identifier(String plugin, String id) {
-    this.plugin = plugin;
-    this.id = id;
-  }
-
-  public String getPlugin() {
-    return plugin;
-  }
-
-  public String getId() {
-    return id;
-  }
+public record Identifier(String plugin, String id) {
 
   public String asID() {
     return plugin + ":" + id;
@@ -68,6 +52,7 @@ public class Identifier {
    * Checks to see if two identifiers are equal. This uses the asID to check.
    *
    * @param obj The object to check.
+   *
    * @return True if the ids match.
    */
   @Override
