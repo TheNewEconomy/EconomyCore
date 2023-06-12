@@ -18,12 +18,25 @@ package net.tnemc.core;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.HoldingsHandler;
+import net.tnemc.core.account.holdings.handlers.EnderChestHandler;
+import net.tnemc.core.account.holdings.handlers.ExperienceHandler;
+import net.tnemc.core.account.holdings.handlers.InventoryHandler;
+import net.tnemc.core.account.holdings.handlers.VirtualHandler;
 import net.tnemc.core.config.MainConfig;
+import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.manager.AccountManager;
 import net.tnemc.core.manager.CurrencyManager;
 import net.tnemc.core.manager.DataManager;
 import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.region.RegionProvider;
+import net.tnemc.core.utils.Identifier;
+
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * This class manages everything for the economy plugin, from language storage to holding instances
@@ -33,6 +46,20 @@ import net.tnemc.core.region.RegionProvider;
  * @since 0.1.2.0
  */
 public class EconomyManager {
+
+  //Our core identifiers, leave these as static final, because they shouldn't be changed.
+
+  //Normal and database are used internally only and don't have an associated holdings handler.
+  public static final Identifier NORMAL = new Identifier("tne", "NORMAL_HOLDINGS");
+  public static final Identifier DATABASE = new Identifier("tne", "DATABASE");
+
+
+  public static final Identifier VIRTUAL = new Identifier("tne", "VIRTUAL_HOLDINGS");
+  public static final Identifier EXPERIENCE = new Identifier("tne", "EXPERIENCE_HOLDINGS");
+  public static final Identifier INVENTORY_ONLY = new Identifier("tne", "INVENTORY_HOLDINGS");
+  public static final Identifier E_CHEST = new Identifier("tne", "ENDER_HOLDINGS");
+
+  private final LinkedHashMap<String, HoldingsHandler> handlers = new LinkedHashMap<>();
 
   private final AccountManager accountManager;
   private final CurrencyManager currencyManager;
@@ -51,6 +78,36 @@ public class EconomyManager {
     this.dataManager = new DataManager();
     this.regionProvider = new RegionProvider(MainConfig.yaml().getBoolean("Core.Region.GroupRealms"),
                                              MainConfig.yaml().getString("Core.Region.Mode"));
+
+    //Add our core handlers
+    addHandler(new VirtualHandler());
+    addHandler(new ExperienceHandler());
+    addHandler(new InventoryHandler());
+    addHandler(new EnderChestHandler());
+  }
+
+  public Optional<HoldingsHandler> findHandler(final Identifier identifier) {
+    return Optional.ofNullable(handlers.get(identifier.asID()));
+  }
+
+  public void addHandler(final HoldingsHandler handler) {
+    handlers.put(handler.identifier().asID(), handler);
+  }
+
+  public LinkedList<HoldingsHandler> getFor(final Account account) {
+    return handlers.values().stream()
+        .filter(handler->handler.appliesTo(account)).collect(Collectors.toCollection(LinkedList::new));
+  }
+
+  public LinkedList<HoldingsHandler> getFor(final CurrencyType type) {
+    return handlers.values().stream()
+        .filter(handler->handler.supports(type)).collect(Collectors.toCollection(LinkedList::new));
+  }
+
+  public LinkedList<HoldingsHandler> getFor(final Account account, final CurrencyType type) {
+    return handlers.values().stream()
+        .filter(handler->handler.appliesTo(account) && handler.supports(type))
+        .collect(Collectors.toCollection(LinkedList::new));
   }
 
   public AccountManager account() {

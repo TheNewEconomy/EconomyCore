@@ -17,10 +17,10 @@ package net.tnemc.core.menu.impl.mybal.pages;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.menu.impl.shared.icons.PreviousPageIcon;
@@ -80,16 +80,16 @@ public class BalancePage extends PlayerPage {
                                                               currency.get().getUid())) {
 
             String item = "PAPER";
-            if(entry.getType().equals(HoldingsType.E_CHEST)) {
+            if(entry.getHandler().equals(EconomyManager.E_CHEST)) {
               item = "ENDER_CHEST";
-            } else if(entry.getType().equals(HoldingsType.INVENTORY_ONLY)) {
+            } else if(entry.getHandler().equals(EconomyManager.INVENTORY_ONLY)) {
               item = currency.get().getIconMaterial();
             }
 
             icons.put(i, IconBuilder.of(TNECore.server()
                                             .stackBuilder()
                                             .of(item, 1)
-                                            .display(entry.getType().getIdentifier())
+                                            .display(entry.getHandler().asID())
                                             .lore(List.of("Balance: " + entry.getAmount().toString())))
                 .create());
 

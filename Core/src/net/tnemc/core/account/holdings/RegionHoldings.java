@@ -18,6 +18,9 @@ package net.tnemc.core.account.holdings;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
+import net.tnemc.core.utils.Identifier;
+
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,7 +36,7 @@ public class RegionHoldings {
 
   private final Map<UUID, CurrencyHoldings> holdings = new ConcurrentHashMap<>();
 
-  public void setHoldingsEntry(final HoldingsEntry entry, final HoldingsType type) {
+  public void setHoldingsEntry(final HoldingsEntry entry, final Identifier type) {
     final CurrencyHoldings currencyHoldings =
         holdings.getOrDefault(entry.getCurrency(), new CurrencyHoldings());
 
@@ -43,10 +46,10 @@ public class RegionHoldings {
   }
 
   public Optional<HoldingsEntry> getHoldingsEntry(final UUID currency) {
-    return getHoldingsEntry(currency, HoldingsType.NORMAL_HOLDINGS);
+    return getHoldingsEntry(currency, EconomyManager.NORMAL);
   }
 
-  public Optional<HoldingsEntry> getHoldingsEntry(final UUID currency, final HoldingsType type) {
+  public Optional<HoldingsEntry> getHoldingsEntry(final UUID currency, final Identifier type) {
     if(holdings.containsKey(currency)) {
       return holdings.get(currency).getHoldingsEntry(type);
     }

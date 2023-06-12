@@ -18,13 +18,18 @@ package net.tnemc.core.currency;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.account.holdings.HoldingsType;
+import net.tnemc.core.account.holdings.HoldingsHandler;
 import net.tnemc.core.currency.type.ItemType;
+import net.tnemc.core.utils.Identifier;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Represents a type of currency.
@@ -63,6 +68,10 @@ public interface CurrencyType {
     return true;
   }
 
+  default boolean supportsVirtual() {
+    return true;
+  }
+
   /**
    * @return True if this currency type is based on physical items.
    */
@@ -85,19 +94,58 @@ public interface CurrencyType {
    * @param region The name of the region involved. This is usually a world, but could be something
    *               else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
+   * @param type The {@link Identifier} of the holdings handler to use.
    * @return The holdings for the specific account.
    */
-  List<HoldingsEntry> getHoldings(Account account, String region, Currency currency, HoldingsType type);
+  default List<HoldingsEntry> getHoldings(Account account, String region, Currency currency, Identifier type) {
+
+    final LinkedList<HoldingsEntry> holdings = new LinkedList<>();
+    final List<HoldingsHandler> handlers = new ArrayList<>();
+
+    if(type.equals(EconomyManager.NORMAL)) {
+
+      handlers.addAll(EconomyManager.instance().getFor(account, this));
+    } else {
+
+      final Optional<HoldingsHandler> handler = EconomyManager.instance().findHandler(type);
+      handler.ifPresent(handlers::add);
+    }
+
+    for(HoldingsHandler handler : handlers) {
+      holdings.add(handler.getHoldings(account, region, currency, this));
+    }
+    return holdings;
+  }
 
   /**
    * Used to set the holdings for a specific account.
    *
+   * @param account The uuid of the account.
    * @param region The name of the region involved. This is usually a world, but could be something
    *               else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
+   * @param type The {@link Identifier} of the holdings handler to use.
    * @param amount The amount to set the player's holdings to.
    *
    * @return True if the holdings have been set, otherwise false.
    */
-  boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount);
+  default boolean setHoldings(Account account, String region, Currency currency, Identifier type, BigDecimal amount) {
+
+    System.out.println("Set: " + amount.toPlainString());
+
+    final Optional<HoldingsHandler> handler = EconomyManager.instance().findHandler(type);
+    if(handler.isPresent()) {
+
+      if(handler.get().database()) {
+        addDatabase(account, region, currency, type, amount);
+      }
+
+      return handler.get().setHoldings(account, region, currency, this, amount);
+    }
+    return false;
+  }
+
+  default void addDatabase(Account account, String region, Currency currency, Identifier type, BigDecimal amount) {
+    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, type));
+  }
 }

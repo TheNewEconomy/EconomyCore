@@ -17,11 +17,13 @@ package net.tnemc.core.api;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.NonPlayerAccount;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.SharedAccount;
+import net.tnemc.core.account.holdings.HoldingsHandler;
 import net.tnemc.core.actions.ActionSource;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.actions.response.AccountResponse;
@@ -51,6 +53,19 @@ public class BaseAPI implements TNEAPI {
   @Override
   public CallbackManager callbacks() {
     return TNECore.callbacks();
+  }
+
+  /**
+   * Used to add a new {@link HoldingsHandler} to the {@link net.tnemc.core.EconomyManager}. These
+   * handlers are able to add additional holdings sources for accounts.
+   *
+   * @see <a href="https://github.com/TheNewEconomy/EconomyCore/wiki/API#holdings-handlers">Handlers Wiki</a>
+   *
+   * @param handler The handler to add.
+   */
+  @Override
+  public void addHandler(HoldingsHandler handler) {
+    EconomyManager.instance().addHandler(handler);
   }
 
   /**

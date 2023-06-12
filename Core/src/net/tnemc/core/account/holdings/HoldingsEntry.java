@@ -21,6 +21,7 @@ package net.tnemc.core.account.holdings;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.utils.Identifier;
 import net.tnemc.core.utils.Monetary;
 import org.jetbrains.annotations.NotNull;
 
@@ -54,9 +55,9 @@ public class HoldingsEntry {
   private BigDecimal amount;
 
   /**
-   * The {@link HoldingsType type} that this should be used for this.
+   * The {@link Identifier type} that this should be used for this.
    */
-  private HoldingsType type = HoldingsType.VIRTUAL_HOLDINGS;
+  private Identifier handler = new Identifier("TNE", "VIRTUAL_HOLDINGS");
 
   /**
    * Constructs an object that represents a holding's entry.
@@ -67,11 +68,11 @@ public class HoldingsEntry {
    * @param amount The {@link BigDecimal amount} that this charge is for.
    */
   public HoldingsEntry(final @NotNull String region, final @NotNull UUID currency,
-                       final @NotNull BigDecimal amount, final @NotNull HoldingsType type) {
+                       final @NotNull BigDecimal amount, final @NotNull Identifier handler) {
     this.region = region;
     this.currency = currency;
     this.amount = amount;
-    this.type = type;
+    this.handler = handler;
   }
 
   /**
@@ -90,13 +91,13 @@ public class HoldingsEntry {
   }
 
   public HoldingsEntry modifyGrab(final BigDecimal modifier) {
-    HoldingsEntry entry = new HoldingsEntry(region, currency, amount, type);
+    HoldingsEntry entry = new HoldingsEntry(region, currency, amount, handler);
     entry.modify(new HoldingsModifier(region, currency, modifier));
     return entry;
   }
 
   public HoldingsEntry modifyGrab(final HoldingsModifier modifier) {
-    HoldingsEntry entry = new HoldingsEntry(region, currency, amount, type);
+    HoldingsEntry entry = new HoldingsEntry(region, currency, amount, handler);
     entry.modify(modifier);
     return entry;
   }
@@ -134,11 +135,11 @@ public class HoldingsEntry {
     this.amount = amount;
   }
 
-  public HoldingsType getType() {
-    return type;
+  public Identifier getHandler() {
+    return handler;
   }
 
-  public void setType(HoldingsType type) {
-    this.type = type;
+  public void setHandler(Identifier handler) {
+    this.handler = handler;
   }
 }

@@ -25,12 +25,9 @@ import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.io.message.MessageHandler;
 import net.tnemc.sponge.SpongeCore;
 import org.spongepowered.api.Sponge;
-import org.spongepowered.api.command.CommandSource;
-import org.spongepowered.api.entity.living.player.Player;
 import revxrsal.commands.sponge.SpongeCommandActor;
 
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * SpongeCMDSource

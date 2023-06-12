@@ -19,10 +19,10 @@ package net.tnemc.core.transaction;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.ActionSource;
 import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
@@ -117,7 +117,8 @@ public class Transaction {
 
     if(balances.isEmpty()) {
       balances.add(new HoldingsEntry(modifier.getRegion(), modifier.getCurrency(),
-                                     BigDecimal.ZERO, HoldingsType.NORMAL_HOLDINGS));
+                                     BigDecimal.ZERO, EconomyManager.NORMAL
+      ));
     }
 
     this.from = new TransactionParticipant(account.getIdentifier(), balances);
@@ -172,7 +173,7 @@ public class Transaction {
 
     if(balances.isEmpty()) {
       balances.add(new HoldingsEntry(modifier.getRegion(), modifier.getCurrency(),
-                                     BigDecimal.ZERO, HoldingsType.NORMAL_HOLDINGS));
+                                     BigDecimal.ZERO, EconomyManager.NORMAL));
     }
 
     this.to = new TransactionParticipant(account.getIdentifier(), balances);

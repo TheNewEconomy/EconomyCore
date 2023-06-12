@@ -24,7 +24,6 @@ import net.tnemc.bukkit.command.TransactionCommand;
 import net.tnemc.bukkit.impl.BukkitLogProvider;
 import net.tnemc.bukkit.impl.BukkitServerProvider;
 import net.tnemc.core.TNECore;
-import net.tnemc.core.config.MessageConfig;
 import org.bukkit.plugin.java.JavaPlugin;
 import revxrsal.commands.bukkit.BukkitCommandHandler;
 

@@ -18,19 +18,12 @@ package net.tnemc.core.currency.type;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.account.Account;
-import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.utils.Identifier;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import static net.tnemc.core.account.holdings.HoldingsType.E_CHEST;
-import static net.tnemc.core.account.holdings.HoldingsType.INVENTORY_ONLY;
-import static net.tnemc.core.account.holdings.HoldingsType.VIRTUAL_HOLDINGS;
 
 /**
  * Represents a currency type that is a mixture of items and virtual.
@@ -47,11 +40,8 @@ public class MixedType extends ItemType {
     return "mixed";
   }
 
-  /**
-   * @return True if this currency type is based on physical items.
-   */
   @Override
-  public boolean supportsItems() {
+  public boolean supportsVirtual() {
     return true;
   }
 
@@ -65,50 +55,21 @@ public class MixedType extends ItemType {
   }
 
   /**
-   * Used to get the holdings for a specific account from this currency type.
-   *
-   * @param account  The uuid of the account.
-   * @param region   The name of the region involved. This is usually a world, but could be something
-   *                 else such as a world guard region name/identifier.
-   * @param currency The instance of the currency to use.
-   * @param type     The holdings type
-   *
-   * @return The holdings for the specific account.
-   */
-  @Override
-  public List<HoldingsEntry> getHoldings(Account account, String region, Currency currency, HoldingsType type) {
-    return switch(type) {
-      case E_CHEST -> Collections.singletonList(getEChest(account, region, currency));
-      case INVENTORY_ONLY -> Collections.singletonList(getInventory(account, region, currency));
-      case VIRTUAL_HOLDINGS -> Collections.singletonList(virtual(account, region, currency));
-
-      default -> Arrays.asList(getEChest(account, region, currency),
-                               getInventory(account, region, currency),
-                               virtual(account, region, currency));
-    };
-  }
-
-  /**
    * Used to set the holdings for a specific account.
    *
-   * @param account  The account
+   * @param account  The Account to set the holdings for.
    * @param region   The name of the region involved. This is usually a world, but could be something
    *                 else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
-   * @param type     The holdings type
+   * @param type The {@link Identifier} of the holdings handler to use.
    * @param amount   The amount to set the player's holdings to.
    *
    * @return True if the holdings have been set, otherwise false.
    */
-  @Override
-  public boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount) {
+  public boolean setHoldings(Account account, String region, Currency currency, Identifier type, BigDecimal amount) {
 
-    if(type.equals(HoldingsType.NORMAL_HOLDINGS)) type = VIRTUAL_HOLDINGS;
-    if(type.equals(E_CHEST) || type.equals(INVENTORY_ONLY)) {
-      return super.setHoldings(account, region, currency, type, amount);
-    }
+    if(type.equals(EconomyManager.NORMAL)) type = EconomyManager.VIRTUAL;
 
-    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, VIRTUAL_HOLDINGS));
-    return true;
+    return super.setHoldings(account, region, currency, type, amount);
   }
 }

@@ -18,13 +18,14 @@ package net.tnemc.core.account;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.account.holdings.Wallet;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.maps.MapKey;
 import net.tnemc.core.transaction.receipt.ReceiptBox;
+import net.tnemc.core.utils.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
@@ -125,7 +126,7 @@ public class Account extends ReceiptBox {
    */
   public List<HoldingsEntry> getHoldings(final @NotNull String region,
                                              final @NotNull UUID currency) {
-    return getHoldings(region, currency, HoldingsType.NORMAL_HOLDINGS);
+    return getHoldings(region, currency, EconomyManager.NORMAL);
   }
 
   /**
@@ -134,14 +135,14 @@ public class Account extends ReceiptBox {
    *
    * @param region The region to use
    * @param currency The currency to use.
-   * @param type The {@link HoldingsType type} to use.
+   * @param type The {@link Identifier identifier} of the holdings handler to use.
    *
    * @return The holdings based on specific specifications, or an empty optional if no
    * holdings for the specifications exists.
    */
   public List<HoldingsEntry> getHoldings(final @NotNull String region,
                                              final @NotNull UUID currency,
-                                             final @NotNull HoldingsType type) {
+                                             final @NotNull Identifier type) {
 
     final Optional<Currency> currencyObject = TNECore.eco().currency().findCurrency(currency);
 
@@ -157,13 +158,13 @@ public class Account extends ReceiptBox {
    * if no holdings for the specifications exists.
    *
    * @param region The region to use
-   * @param type The {@link HoldingsType type} to use.
+   * @param type The {@link Identifier identifier} of the holdings handler to use.
    *
    * @return The holdings based on specific specifications, or an empty optional if no
    * holdings for the specifications exists.
    */
   public List<HoldingsEntry> getAllHoldings(final @NotNull String region,
-                                            final @NotNull HoldingsType type) {
+                                            final @NotNull Identifier type) {
 
     final List<HoldingsEntry> holdings = new ArrayList<>();
     final String resolve = TNECore.eco().region().resolve(region);
@@ -183,15 +184,15 @@ public class Account extends ReceiptBox {
    * @param entry The entry to set in this wallet.
    */
   public boolean setHoldings(final @NotNull HoldingsEntry entry) {
-    return setHoldings(entry, HoldingsType.NORMAL_HOLDINGS);
+    return setHoldings(entry, EconomyManager.NORMAL);
   }
 
   /**
    * Sets the holdings for the specified entry and in this wallet.
    * @param entry The entry to set in this wallet.
-   * @param type The type to use for this set operation.
+   * @param type The {@link Identifier identifier} of the holdings handler to use.
    */
-  public boolean setHoldings(final @NotNull HoldingsEntry entry, final @NotNull HoldingsType type) {
+  public boolean setHoldings(final @NotNull HoldingsEntry entry, final @NotNull Identifier type) {
 
     final Optional<Currency> currencyObject = TNECore.eco().currency().findCurrency(entry.getCurrency());
 

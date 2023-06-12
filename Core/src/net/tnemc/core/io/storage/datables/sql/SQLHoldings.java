@@ -21,12 +21,12 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.CurrencyHoldings;
 import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.account.holdings.RegionHoldings;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.connect.SQLConnector;
+import net.tnemc.core.utils.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -81,7 +81,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
                                                   MainConfig.yaml().getString("Core.Server.Name"),
                                                   object.getRegion(),
                                                   object.getCurrency().toString(),
-                                                  object.getType().getIdentifier(),
+                                                  object.getHandler().asID(),
                                                   object.getAmount(),
                                                   object.getAmount()
                                               });
@@ -145,9 +145,9 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
 
           //region, currency, amount, type
           final HoldingsEntry entry = new HoldingsEntry(result.getString("region"),
-                                                  UUID.fromString(result.getString("currency")),
-                                                  result.getBigDecimal("holdings"),
-                                                  HoldingsType.fromIdentifier(result.getString("holdings_type")));
+                                                        UUID.fromString(result.getString("currency")),
+                                                        result.getBigDecimal("holdings"),
+                                                        Identifier.fromID(result.getString("holdings_type")));
           holdings.add(entry);
         }
       } catch(SQLException e) {

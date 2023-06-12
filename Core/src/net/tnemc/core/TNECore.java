@@ -20,7 +20,6 @@ package net.tnemc.core;
 
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.api.BaseAPI;
 import net.tnemc.core.api.CallbackManager;
 import net.tnemc.core.api.TNEAPI;
@@ -194,7 +193,7 @@ public abstract class TNECore {
             response.getAccount().ifPresent(value->value.setHoldings(new HoldingsEntry(economyManager.region().defaultRegion(),
                                                                          economyManager.currency().getDefaultCurrency().getUid(),
                                                                          defaultBalance,
-                                                                         HoldingsType.NORMAL_HOLDINGS
+                                                                         EconomyManager.NORMAL
             )));
           }
         } else {

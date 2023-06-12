@@ -18,9 +18,9 @@ package net.tnemc.core.account.holdings.modify;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.account.holdings.HoldingsType;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -143,6 +143,6 @@ public class HoldingsModifier {
   }
 
   public HoldingsEntry asEntry() {
-    return new HoldingsEntry(region, currency, modifier, HoldingsType.NORMAL_HOLDINGS);
+    return new HoldingsEntry(region, currency, modifier, EconomyManager.NORMAL);
   }
 }

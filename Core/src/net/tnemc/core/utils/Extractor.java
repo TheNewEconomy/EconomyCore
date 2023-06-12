@@ -17,10 +17,10 @@ package net.tnemc.core.utils;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
@@ -84,7 +84,7 @@ public class Extractor {
                            .replaceAll("\\_", "%");
 
         yaml.set("Accounts." + username + ".Balances." + entry.getRegion() + "."
-                     + entry.getCurrency() + "." + entry.getType().getIdentifier(), entry.getAmount().toPlainString());
+                     + entry.getCurrency() + "." + entry.getHandler().asID(), entry.getAmount().toPlainString());
 
         yaml.set("Accounts." + username + ".id", account.getIdentifier());
       }
@@ -154,7 +154,7 @@ public class Extractor {
                 final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name + ".Balances." + region + "." + currency));
 
                 response.getAccount().get().setHoldings(new HoldingsEntry(region, cur.get().getUid(),
-                                                                          amount, HoldingsType.NORMAL_HOLDINGS));
+                                                                          amount, EconomyManager.NORMAL));
               }
             } else {
 
@@ -167,7 +167,7 @@ public class Extractor {
                                                                                  + type));
 
                 response.getAccount().get().setHoldings(new HoldingsEntry(region, UUID.fromString(currency),
-                                                                          amount, HoldingsType.fromIdentifier(type)));
+                                                                          amount, Identifier.fromID(type)));
               }
             }
             number++;

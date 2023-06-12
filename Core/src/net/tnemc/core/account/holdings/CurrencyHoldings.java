@@ -18,6 +18,7 @@ package net.tnemc.core.account.holdings;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.utils.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -35,16 +36,21 @@ public class CurrencyHoldings {
   private final Map<String, HoldingsEntry> holdings = new ConcurrentHashMap<>();
 
   /**
-   * Used to add {@link HoldingsEntry holdings} for a specific {@link HoldingsType}.
+   * Used to add {@link HoldingsEntry holdings} for a specific {@link Identifier}.
    * @param type The type to add the holdings to.
    * @param entry The holdings to add to the type.
    */
-  public void setHoldingsEntry(final @NotNull HoldingsEntry entry, final @NotNull HoldingsType type) {
-    holdings.put(type.getIdentifier(), entry);
+  public void setHoldingsEntry(final @NotNull HoldingsEntry entry, final @NotNull Identifier type) {
+    holdings.put(type.asID(), entry);
   }
 
-  public Optional<HoldingsEntry> getHoldingsEntry(final @NotNull HoldingsType type) {
-    return Optional.ofNullable(holdings.get(type.getIdentifier()));
+  /**
+   * Used to get the {@link HoldingsEntry holdings} for a specific {@link Identifier}.
+   * @param type The type to add the holdings to.
+   * @return The {@link HoldingsEntry} if it belongs, or an empty optional if it doesn't.
+   */
+  public Optional<HoldingsEntry> getHoldingsEntry(final @NotNull Identifier type) {
+    return Optional.ofNullable(holdings.get(type.asID()));
   }
 
   public Map<String, HoldingsEntry> getHoldings() {

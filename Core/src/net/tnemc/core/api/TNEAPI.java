@@ -21,6 +21,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.NonPlayerAccount;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.SharedAccount;
+import net.tnemc.core.account.holdings.HoldingsHandler;
 import net.tnemc.core.actions.ActionSource;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.api.response.AccountAPIResponse;
@@ -48,6 +49,16 @@ public interface TNEAPI {
    * @return The callback manager that is being used.
    */
   CallbackManager callbacks();
+
+  /**
+   * Used to add a new {@link HoldingsHandler} to the {@link net.tnemc.core.EconomyManager}. These
+   * handlers are able to add additional holdings sources for accounts.
+   *
+   * @see <a href="https://github.com/TheNewEconomy/EconomyCore/wiki/API#holdings-handlers">Handlers Wiki</a>
+   *
+   * @param handler The handler to add.
+   */
+  void addHandler(final HoldingsHandler handler);
 
   /**
    * Used to determine if an {@link Account} exists with the specified identifier.

@@ -18,11 +18,11 @@ package net.tnemc.core.handlers.player;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
@@ -76,7 +76,7 @@ public class PlayerJoinHandler {
           acc.get().setHoldings(new HoldingsEntry(TNECore.eco().region().getMode().region(provider),
                                                   currency.getUid(),
                                                   currency.getStartingHoldings(),
-                                                  HoldingsType.NORMAL_HOLDINGS
+                                                  EconomyManager.NORMAL
           ));
         }
       } else {
@@ -89,7 +89,7 @@ public class PlayerJoinHandler {
 
             for(HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
 
-              acc.get().setHoldings(entry, entry.getType());
+              acc.get().setHoldings(entry, entry.getHandler());
             }
           }
         }

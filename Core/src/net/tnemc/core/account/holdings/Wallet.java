@@ -18,7 +18,9 @@ package net.tnemc.core.account.holdings;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
+import net.tnemc.core.utils.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -50,7 +52,7 @@ public class Wallet {
    */
   public Optional<HoldingsEntry> getHoldings(final @NotNull String region,
                                              final @NotNull UUID currency) {
-    return getHoldings(region, currency, HoldingsType.NORMAL_HOLDINGS);
+    return getHoldings(region, currency, EconomyManager.NORMAL);
   }
 
   /**
@@ -59,14 +61,14 @@ public class Wallet {
    *
    * @param region The region to use
    * @param currency The currency to use.
-   * @param type The {@link HoldingsType type} to use.
+   * @param type The {@link Identifier type} to use.
    *
    * @return The holdings based on specific specifications, or an empty optional if no
    * holdings for the specifications exists.
    */
   public Optional<HoldingsEntry> getHoldings(final @NotNull String region,
                                              final @NotNull UUID currency,
-                                             final @NotNull HoldingsType type) {
+                                             final @NotNull Identifier type) {
     if(holdings.containsKey(region)) {
       return holdings.get(region).getHoldingsEntry(currency, type);
     }
@@ -79,7 +81,7 @@ public class Wallet {
    *
    * @param region The region to use
    * @param currency The currency to use.
-   * @param type The {@link HoldingsType type} to use.
+   * @param type The {@link Identifier type} to use.
    * @param defaultValue The default value to return if nothing exists.
    *
    * @return The holdings based on specific specifications, or the specified default value if no
@@ -87,7 +89,7 @@ public class Wallet {
    */
   public HoldingsEntry getHoldings(final @NotNull String region,
                                              final @NotNull UUID currency,
-                                             final @NotNull HoldingsType type,
+                                             final @NotNull Identifier type,
                                              final @NotNull HoldingsEntry defaultValue) {
     if(holdings.containsKey(region)) {
       return holdings.get(region).getHoldingsEntry(currency, type).orElse(defaultValue);
@@ -104,7 +106,7 @@ public class Wallet {
     final RegionHoldings regionHoldings =
         holdings.getOrDefault(entry.getRegion(), new RegionHoldings());
 
-    regionHoldings.setHoldingsEntry(entry, entry.getType());
+    regionHoldings.setHoldingsEntry(entry, entry.getHandler());
 
     holdings.put(entry.getRegion(), regionHoldings);
   }
@@ -116,7 +118,7 @@ public class Wallet {
    * @param modifier The modifier to use
    */
   public void modifyHoldings(final @NotNull HoldingsModifier modifier) {
-    modifyHoldings(modifier, HoldingsType.NORMAL_HOLDINGS);
+    modifyHoldings(modifier, EconomyManager.NORMAL);
   }
 
   /**
@@ -126,7 +128,7 @@ public class Wallet {
    * @param modifier The modifier to use
    * @param type The type to use.
    */
-  public void modifyHoldings(final @NotNull HoldingsModifier modifier, HoldingsType type) {
+  public void modifyHoldings(final @NotNull HoldingsModifier modifier, Identifier type) {
 
     Optional<HoldingsEntry> entry = getHoldings(modifier.getRegion(), modifier.getCurrency(), type);
 
@@ -161,14 +163,14 @@ public class Wallet {
    * Used to delete specific holdings from this wallet holder.
    * @param region The region from which to delete the holdings
    * @param currency The currency from which to delete the holdings
-   * @param type The {@link HoldingsType type} from which to delete the holdings.
+   * @param type The {@link Identifier type} from which to delete the holdings.
    */
   public void deleteHoldings(final @NotNull String region,
                              final @NotNull UUID currency,
-                             final @NotNull HoldingsType type) {
+                             final @NotNull Identifier type) {
 
     if(holdings.containsKey(region) && holdings.get(region).getHoldings().containsKey(currency)) {
-      holdings.get(region).getHoldings().get(currency).getHoldings().remove(type.getIdentifier());
+      holdings.get(region).getHoldings().get(currency).getHoldings().remove(type.asID());
     }
   }
 

@@ -18,11 +18,11 @@ package net.tnemc.core.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.account.holdings.modify.HoldingsOperation;
 import net.tnemc.core.actions.source.PlayerSource;
@@ -237,9 +237,9 @@ public class MoneyCommand extends BaseCommand {
         for(HoldingsEntry entry : account.get().getHoldings(region, currency.getUid())) {
           amount = amount.add(entry.getAmount());
         }
-        holdings.add(new HoldingsEntry(region, currency.getUid(), amount, HoldingsType.NORMAL_HOLDINGS));
+        holdings.add(new HoldingsEntry(region, currency.getUid(), amount, EconomyManager.NORMAL));
       } else {
-        holdings.addAll(account.get().getAllHoldings(region, HoldingsType.NORMAL_HOLDINGS));
+        holdings.addAll(account.get().getAllHoldings(region, EconomyManager.NORMAL));
       }
 
       if(holdings.isEmpty()) {

@@ -20,18 +20,13 @@ package net.tnemc.bukkit.impl;
 
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.tnemc.bukkit.TNE;
-import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.io.message.MessageHandler;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import revxrsal.commands.bukkit.BukkitCommandActor;
-import revxrsal.commands.command.CommandActor;
 
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * BukkitCMDSource

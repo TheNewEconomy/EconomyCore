@@ -18,18 +18,14 @@ package net.tnemc.core.currency.type;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.account.holdings.HoldingsType;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
 
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
-
-import static net.tnemc.core.account.holdings.HoldingsType.VIRTUAL_HOLDINGS;
 
 /**
  * Represents our currency type that is based on nothing.
@@ -46,44 +42,11 @@ public class VirtualType implements CurrencyType {
     return "virtual";
   }
 
-  /**
-   * Used to get the holdings for a specific account from this currency type.
-   *
-   * @param account  The uuid of the account.
-   * @param region   The name of the region involved. This is usually a world, but could be something
-   *                 else such as a world guard region name/identifier.
-   * @param currency The instance of the currency to use.
-   * @param type     The holdings type
-   *
-   * @return The holdings for the specific account.
-   */
-  @Override
-  public List<HoldingsEntry> getHoldings(Account account, String region, Currency currency, HoldingsType type) {
-    return Collections.singletonList(virtual(account, region, currency));
-  }
-
-  /**
-   * Used to set the holdings for a specific account.
-   *
-   * @param account  The account
-   * @param region   The name of the region involved. This is usually a world, but could be something
-   *                 else such as a world guard region name/identifier.
-   * @param currency The instance of the currency to use.
-   * @param type     The holdings type
-   * @param amount   The amount to set the player's holdings to.
-   *
-   * @return True if the holdings have been set, otherwise false.
-   */
-  @Override
-  public boolean setHoldings(Account account, String region, Currency currency, HoldingsType type, BigDecimal amount) {
-    account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, VIRTUAL_HOLDINGS));
-    return true;
-  }
-
   protected HoldingsEntry virtual(Account account, String region, Currency currency) {
     final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
                                                                              currency.getUid(),
-                                                                             VIRTUAL_HOLDINGS);
+                                                                             EconomyManager.VIRTUAL
+    );
 
 
     if(holdings.isPresent()) {
@@ -92,6 +55,6 @@ public class VirtualType implements CurrencyType {
     return new HoldingsEntry(region,
                              currency.getUid(),
                              BigDecimal.ZERO,
-                             VIRTUAL_HOLDINGS);
+                             EconomyManager.VIRTUAL);
   }
 }

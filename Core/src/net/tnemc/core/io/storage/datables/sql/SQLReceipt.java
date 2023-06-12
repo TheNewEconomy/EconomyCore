@@ -144,7 +144,7 @@ public class SQLReceipt implements Datable<Receipt> {
                                                 MainConfig.yaml().getString("Core.Server.Name"),
                                                 entry.getRegion(),
                                                 entry.getCurrency().toString(),
-                                                entry.getType().getIdentifier(),
+                                                entry.getHandler().asID(),
                                                 entry.getAmount()
                                             });
   }
