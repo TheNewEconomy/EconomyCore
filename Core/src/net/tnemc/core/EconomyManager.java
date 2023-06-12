@@ -59,7 +59,7 @@ public class EconomyManager {
   public static final Identifier INVENTORY_ONLY = new Identifier("tne", "INVENTORY_HOLDINGS");
   public static final Identifier E_CHEST = new Identifier("tne", "ENDER_HOLDINGS");
 
-  private final LinkedHashMap<String, HoldingsHandler> handlers = new LinkedHashMap<>();
+  private final LinkedHashMap<Identifier, HoldingsHandler> handlers = new LinkedHashMap<>();
 
   private final AccountManager accountManager;
   private final CurrencyManager currencyManager;
@@ -86,12 +86,19 @@ public class EconomyManager {
     addHandler(new EnderChestHandler());
   }
 
+  public Optional<Identifier> findID(final String identifier) {
+    for(Identifier id : handlers.keySet()) {
+      if(id.asID().equalsIgnoreCase(identifier)) return Optional.of(id);
+    }
+    return Optional.empty();
+  }
+
   public Optional<HoldingsHandler> findHandler(final Identifier identifier) {
-    return Optional.ofNullable(handlers.get(identifier.asID()));
+    return Optional.ofNullable(handlers.get(identifier));
   }
 
   public void addHandler(final HoldingsHandler handler) {
-    handlers.put(handler.identifier().asID(), handler);
+    handlers.put(handler.identifier(), handler);
   }
 
   public LinkedList<HoldingsHandler> getFor(final Account account) {

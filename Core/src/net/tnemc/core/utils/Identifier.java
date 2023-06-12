@@ -17,6 +17,10 @@ package net.tnemc.core.utils;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
+
+import java.util.Optional;
+
 /**
  * Identifier
  *
@@ -46,14 +50,18 @@ public class Identifier {
   }
 
   public static Identifier fromID(final String id) {
-    final String[] split = id.split(":");
 
-    if(split.length > 1) {
-
-    } else {
+    Optional<Identifier> idObj = EconomyManager.instance().findID(id);
+    if(idObj.isPresent()) {
+      return idObj.get();
     }
-    //TODO: best way to do this? make holdings entry only hold string instead of object instance?
-    return null;
+
+    final String[] split = id.split(":");
+    if(split.length > 1) {
+      return new Identifier(split[0], split[1]);
+    } else {
+      return new Identifier("generic", split[0]);
+    }
   }
 
   /**
