@@ -180,12 +180,6 @@ Messages:
       Load:
         Arguments: "<module>"
         Description: "Load a module from the modules directory.<newline>- Module ~ The module to load."
-      Reload:
-        Arguments: "<module>"
-        Description: "Reloads a module from the modules directory.<newline>- Module ~ The module to reload."
-      Unload:
-        Arguments: "<module>"
-        Description: "Unload a module from the server.<newline>- Module ~ The module to unload."
     Money:
       Balance:
         Arguments: "[player] [world] [currency]"
