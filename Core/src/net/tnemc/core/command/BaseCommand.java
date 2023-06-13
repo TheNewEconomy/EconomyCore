@@ -29,7 +29,7 @@ import net.tnemc.core.io.message.MessageData;
  */
 public class BaseCommand {
 
-  public static void help(CmdSource source, final String usage, final String node) {
+  public static void help(CmdSource<?> source, final String usage, final String node) {
     final String path = "Messages.Commands." + node;
 
     final MessageData descriptionData = new MessageData(path + ".Description");

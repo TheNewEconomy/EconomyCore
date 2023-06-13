@@ -22,6 +22,7 @@ import com.google.inject.Inject;
 import net.tnemc.core.TNECore;
 import net.tnemc.menu.sponge7.listeners.Sponge7InventoryClickListener;
 import net.tnemc.sponge.command.AdminCommand;
+import net.tnemc.sponge.command.ModuleCommand;
 import net.tnemc.sponge.command.MoneyCommand;
 import net.tnemc.sponge.command.TransactionCommand;
 import net.tnemc.sponge.impl.SpongeLogProvider;
@@ -95,6 +96,7 @@ public class SpongeCore extends TNECore {
 
     //Register our commands
     command.register(new AdminCommand());
+    command.register(new ModuleCommand());
     command.register(new MoneyCommand());
     command.register(new TransactionCommand());
   }

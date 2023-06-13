@@ -40,6 +40,7 @@ import net.tnemc.core.menu.impl.mybal.MyBalMenu;
 import net.tnemc.core.menu.impl.mycurrency.MyCurrencyMenu;
 import net.tnemc.core.menu.impl.myeco.MyEcoMenu;
 import net.tnemc.core.module.ModuleLoader;
+import net.tnemc.core.module.cache.ModuleFileCache;
 import net.tnemc.menu.core.MenuManager;
 import revxrsal.commands.CommandHandler;
 import revxrsal.commands.orphan.Orphans;
@@ -96,6 +97,7 @@ public abstract class TNECore {
   protected CallbackManager callbackManager;
 
   protected ModuleLoader loader;
+  protected ModuleFileCache moduleCache;
 
   private boolean enabled = false;
 
@@ -254,6 +256,8 @@ public abstract class TNECore {
          new ChoreTime(DataConfig.yaml().getInt("Data.AutoSaver.Interval"), TimeUnit.SECONDS),
          ChoreExecution.SECONDARY);
     }
+
+    this.moduleCache = new ModuleFileCache();
   }
 
   public void onDisable() {
@@ -335,6 +339,10 @@ public abstract class TNECore {
     return instance.loader;
   }
 
+  public ModuleFileCache moduleCache() {
+    return moduleCache;
+  }
+
   public DebugLevel getLevel() {
     return level;
   }
@@ -350,4 +358,6 @@ public abstract class TNECore {
   public UUID getServerAccount() {
     return serverAccount;
   }
+
+
 }
