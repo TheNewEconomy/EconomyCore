@@ -157,6 +157,9 @@ public class StorageManager {
    * Used to reset all data in TNE.
    */
   public void reset() {
+    //call the reset method for all modules.
+    TNECore.loader().getModules().values().forEach((moduleWrapper -> moduleWrapper.getModule().enableSave(this)));
+
     TNECore.server().scheduler().createDelayedTask(()->engine.reset(connector), new ChoreTime(0), ChoreExecution.SECONDARY);
   }
 
@@ -165,6 +168,9 @@ public class StorageManager {
    * @return True if the backup was successful, otherwise false.
    */
   public boolean backup() {
+    //call the backup method for all modules.
+    TNECore.loader().getModules().values().forEach((moduleWrapper -> moduleWrapper.getModule().enableSave(this)));
+
     TNECore.server().scheduler().createDelayedTask(()->engine.backup(connector), new ChoreTime(0), ChoreExecution.SECONDARY);
     return true;
   }

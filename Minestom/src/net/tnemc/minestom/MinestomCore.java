@@ -48,4 +48,9 @@ public class MinestomCore extends TNECore {
 
     super.onEnable();
   }
+
+  @Override
+  public void registerCommands() {
+
+  }
 }

@@ -67,14 +67,6 @@ public class SpongeCore extends TNECore {
 
     this.plugin = plugin;
 
-
-    command = SpongeCommandHandler.create(plugin);
-
-    //Register our commands
-    command.register(new AdminCommand());
-    command.register(new MoneyCommand());
-    command.register(new TransactionCommand());
-
     //Register our event listeners
     Sponge.getEventManager().registerListeners(container, new PlayerJoinListener());
     Sponge.getEventManager().registerListeners(container, new PlayerLeaveListener());
@@ -93,6 +85,18 @@ public class SpongeCore extends TNECore {
 
   public Plugin getPlugin() {
     return plugin;
+  }
+
+  @Override
+  public void registerCommands() {
+
+
+    command = SpongeCommandHandler.create(plugin);
+
+    //Register our commands
+    command.register(new AdminCommand());
+    command.register(new MoneyCommand());
+    command.register(new TransactionCommand());
   }
 
   public static SpongeCore instance() {

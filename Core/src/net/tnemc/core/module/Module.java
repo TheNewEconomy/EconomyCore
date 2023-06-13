@@ -18,11 +18,14 @@ package net.tnemc.core.module;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.api.CallbackEntry;
+import net.tnemc.core.api.CallbackManager;
 import net.tnemc.core.api.callback.TNECallback;
-import net.tnemc.core.manager.DataManager;
+import net.tnemc.core.io.storage.StorageManager;
 import revxrsal.commands.CommandHandler;
 import revxrsal.commands.orphan.OrphanCommand;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +40,7 @@ import java.util.function.Function;
 public interface Module {
 
   /**
-   * Called when the {@link TNECore#enable()} method is called.
+   * Called after the {@link TNECore#enable()} method is called.
    */
   void enable(TNECore core);
 
@@ -48,26 +51,28 @@ public interface Module {
 
   /**
    * Called when the configurations are initialized and loaded.
+   *
+   * @param directory The plugin's configuration directory.
    */
-  void initConfigurations();
+  void initConfigurations(File directory);
 
   /**
-   * Called when the datamanager runs its backup method.
-   * @param manager The datamanager instance.
+   * Called when the {@link StorageManager storage manager} runs its backup method.
+   * @param manager The {@link StorageManager storage manager} instance.
    */
-  void backup(DataManager manager);
+  void backup(StorageManager manager);
 
   /**
-   * Called when the datamanager is enabled, and a connection is established.
-   * @param manager The datamanager instance.
+   * Called when the {@link StorageManager storage manager} runs its reset method.
+   * @param manager The {@link StorageManager storage manager} instance.
    */
-  void enableSave(DataManager manager);
+  void reset(StorageManager manager);
 
   /**
-   * Called when the datamanager is enabled, and a connection is established.
-   * @param manager The datamanager instance.
+   * Called when the {@link StorageManager storage manager} is enabled, and a connection is established.
+   * @param manager The {@link StorageManager storage manager} instance.
    */
-  void disableSave(DataManager manager);
+  void enableSave(StorageManager manager);
 
   /**
    * Called after the default TNE Commands are registered.
@@ -77,30 +82,38 @@ public interface Module {
 
   /**
    * Used to register sub commands onto the exist /money command set.
-   * @param commands The list of commands to register as sub commands.
    */
-  void registerMoneySub(List<OrphanCommand> commands);
+  List<OrphanCommand> registerMoneySub();
 
   /**
    * Used to register sub commands onto the exist /transaction command set.
-   * @param commands The list of commands to register as sub commands.
    */
-  void registerTransactionSub(List<OrphanCommand> commands);
+  List<OrphanCommand> registerTransactionSub();
 
   /**
    * Used to register sub commands onto the exist /tne command set.
-   * @param commands The list of commands to register as sub commands.
    */
-  void registerAdminSub(List<OrphanCommand> commands);
+  List<OrphanCommand> registerAdminSub();
+
+  /**
+   * Called after the {@link CallbackManager} is initialized. This method will
+   * register new callbacks with the manager automatically.
+   *
+   * @return A map containing the callbacks to register where the key is the callback name and the
+   * value is the {@link CallbackEntry} function.
+   */
+  default Map<String, CallbackEntry> registerCallbacks() {
+    return new HashMap<>();
+  }
 
   /**
    * Called after the {@link net.tnemc.core.api.CallbackManager} is initialized. This method will
-   * register the callbacks with the manager automatically.
+   * register the callback listeners with the manager automatically.
    *
-   * @return A map containing the callbacks to register where the key is the callback name and the
-   * value is the callback function.
+   * @return A map containing the listeners to register where the key is the callback name and the
+   * value is the listener function.
    */
-  default Map<String, Function<TNECallback, Boolean>> registerCallbacks() {
+  default Map<String, Function<TNECallback, Boolean>> registerListeners() {
     return new HashMap<>();
   }
 }

@@ -12,9 +12,7 @@ import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import java.util.jar.JarEntry;
@@ -40,8 +38,6 @@ import java.util.jar.JarFile;
 public class ModuleLoader {
 
   private final Map<String, ModuleWrapper> modules = new HashMap<>();
-
-  private List<String> supportedEvents = new ArrayList<>();
 
   public boolean hasModule(String moduleName) {
     return modules.containsKey(moduleName);
@@ -137,9 +133,7 @@ public class ModuleLoader {
     if(hasModule(moduleName)) {
       ModuleWrapper wrapper = getModule(moduleName);
       //TODO: Command and configuration loading.
-      //wrapper.getModule().commands().forEach(TNECommand::unregister);
-      //wrapper.getModule().configurations().values().forEach(config->TNECore.configurations().configurations.remove(config));
-      wrapper.getModule().unload(TNECore.instance());
+      wrapper.getModule().disable(TNECore.instance());
 
       try {
         Field f = ClassLoader.class.getDeclaredField("classes");
@@ -180,17 +174,16 @@ public class ModuleLoader {
   private ModuleWrapper loadModuleWrapper(String modulePath) {
     ModuleWrapper wrapper;
 
-    ModuleOld module = null;
+    Module module = null;
 
     final File file = new File(modulePath);
-    Class<? extends ModuleOld> moduleClass;
+    Class<? extends Module> moduleClass;
 
     URLClassLoader classLoader = null;
     try {
       classLoader = new URLClassLoader(new URL[]{ file.toURI().toURL() }, TNECore.instance().getClass().getClassLoader());
-      moduleClass = classLoader.loadClass(getModuleMain(new File(modulePath))).asSubclass(ModuleOld.class);
+      moduleClass = classLoader.loadClass(getModuleMain(new File(modulePath))).asSubclass(Module.class);
       module = moduleClass.newInstance();
-      supportedEvents.addAll(module.events());
     } catch (Exception ignore) {
       TNECore.log().inform("Unable to locate module main class for file " + file.getName());
     }
@@ -284,9 +277,5 @@ public class ModuleLoader {
       }
     }
     return main;
-  }
-
-  public boolean hasModuleEvent(String name) {
-    return supportedEvents.contains(name);
   }
 }

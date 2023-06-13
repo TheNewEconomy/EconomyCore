@@ -47,6 +47,10 @@ public class FoliaCore extends TNECore {
     this.directory = plugin.getDataFolder();
 
     super.onEnable();
+  }
+
+  @Override
+  public void registerCommands() {
 
     command = BukkitCommandHandler.create(plugin);
 

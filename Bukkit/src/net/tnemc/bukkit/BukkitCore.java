@@ -55,6 +55,10 @@ public class BukkitCore extends TNECore {
     if(!this.bukkitConfig.load()) {
       TNECore.log().error("Failed to load bukkit configuration!");
     }
+  }
+
+  @Override
+  public void registerCommands() {
 
     command = BukkitCommandHandler.create(plugin);
 

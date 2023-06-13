@@ -25,10 +25,10 @@ import java.net.URLClassLoader;
 public class ModuleWrapper {
 
   ModuleInfo info;
-  ModuleOld module;
+  Module module;
   URLClassLoader loader;
 
-  public ModuleWrapper(ModuleOld module) {
+  public ModuleWrapper(Module module) {
     this.module = module;
   }
 
@@ -66,11 +66,11 @@ public class ModuleWrapper {
     this.info = info;
   }
 
-  public ModuleOld getModule() {
+  public Module getModule() {
     return module;
   }
 
-  public void setModule(ModuleOld module) {
+  public void setModule(Module module) {
     this.module = module;
   }
 

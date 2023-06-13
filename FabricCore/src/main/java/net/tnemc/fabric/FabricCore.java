@@ -40,6 +40,11 @@ public class FabricCore extends TNECore implements ModInitializer {
 		return instance.server;
 	}
 
+	@Override
+	public void registerCommands() {
+
+	}
+
 	public static FabricCore instance() {
 		return instance;
 	}

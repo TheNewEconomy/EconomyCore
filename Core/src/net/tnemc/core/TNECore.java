@@ -42,6 +42,7 @@ import net.tnemc.core.menu.impl.myeco.MyEcoMenu;
 import net.tnemc.core.module.ModuleLoader;
 import net.tnemc.menu.core.MenuManager;
 import revxrsal.commands.CommandHandler;
+import revxrsal.commands.orphan.Orphans;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -126,6 +127,7 @@ public abstract class TNECore {
 
       this.enabled = true;
       this.api = new BaseAPI();
+      this.loader = new ModuleLoader();
       onEnable();
 
     } else {
@@ -142,6 +144,12 @@ public abstract class TNECore {
     if(!directory.exists()) {
       directory.mkdir();
     }
+
+    //Load our modules
+    loader.load();
+
+    //Call onEnable for all modules loaded.
+    loader.getModules().values().forEach((moduleWrapper -> moduleWrapper.getModule().enable(this)));
 
     this.config = new MainConfig();
     this.data = new DataConfig();
@@ -160,7 +168,21 @@ public abstract class TNECore {
       TNECore.log().error("Failed to load message configuration!");
     }
 
+    //Call initConfigurations for all modules loaded.
+    loader.getModules().values().forEach((moduleWrapper -> moduleWrapper.getModule().initConfigurations(directory)));
+
     this.callbackManager = new CallbackManager();
+
+    //Register the callback listeners and callbacks for the modules
+    loader.getModules().values().forEach((moduleWrapper ->{
+      moduleWrapper.getModule().registerCallbacks().forEach((key, entry)->{
+        callbackManager.addCallback(key, entry);
+      });
+
+      moduleWrapper.getModule().registerListeners().forEach((key, function)->{
+        callbackManager.addConsumer(key, function);
+      });
+    }));
 
     this.economyManager = new EconomyManager();
 
@@ -172,6 +194,9 @@ public abstract class TNECore {
 
     this.storage = new StorageManager();
     this.storage.loadAll(Account.class, "");
+
+    //Call the enableSave method for all modules loaded.
+    loader.getModules().values().forEach((moduleWrapper -> moduleWrapper.getModule().enableSave(this.storage)));
 
     if(MainConfig.yaml().getBoolean("Core.Server.Account.Enabled")) {
 
@@ -202,6 +227,19 @@ public abstract class TNECore {
       }
     }
 
+    //register our commands
+    registerCommands();
+
+    //Call our command methods for the modules.
+    loader.getModules().values().forEach((moduleWrapper ->{
+      moduleWrapper.getModule().registerCommands(command);
+
+      moduleWrapper.getModule().registerMoneySub().forEach((orphan)->command.register(Orphans.path("money"), orphan));
+      moduleWrapper.getModule().registerTransactionSub().forEach((orphan)->command.register(Orphans.path("transaction"), orphan));
+      moduleWrapper.getModule().registerAdminSub().forEach((orphan)->command.register(Orphans.path("tne"), orphan));
+    }));
+
+
     new MenuManager();
     MenuManager.instance().addMenu(new MyEcoMenu());
     MenuManager.instance().addMenu(new MyCurrencyMenu());
@@ -219,8 +257,12 @@ public abstract class TNECore {
   }
 
   public void onDisable() {
-    //TODO: disable modules.
+
+    //Call onEnable for all modules loaded.
+    loader.getModules().values().forEach((moduleWrapper -> moduleWrapper.getModule().disable(this)));
   }
+
+  public abstract void registerCommands();
 
   /**
    * The implementation's {@link LogProvider}.
