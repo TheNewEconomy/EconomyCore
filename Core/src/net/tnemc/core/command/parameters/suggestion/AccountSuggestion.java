@@ -19,7 +19,6 @@ package net.tnemc.core.command.parameters.suggestion;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
-import net.tnemc.core.currency.Currency;
 import org.jetbrains.annotations.NotNull;
 import revxrsal.commands.autocomplete.SuggestionProvider;
 import revxrsal.commands.command.CommandActor;

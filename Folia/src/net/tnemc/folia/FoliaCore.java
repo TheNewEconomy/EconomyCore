@@ -18,10 +18,7 @@ package net.tnemc.folia;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.command.AdminCommand;
-import net.tnemc.bukkit.command.ModuleCommand;
 import net.tnemc.bukkit.command.MoneyCommand;
-import net.tnemc.bukkit.command.TransactionCommand;
 import net.tnemc.bukkit.impl.BukkitLogProvider;
 import net.tnemc.core.TNECore;
 import net.tnemc.folia.impl.FoliaServerProvider;

@@ -19,7 +19,6 @@ package net.tnemc.core.menu.impl.mycurrency.pages;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.menu.impl.shared.icons.PreviousMenuIcon;
@@ -35,7 +34,6 @@ import net.tnemc.menu.core.page.Page;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * CurrencyMainPage

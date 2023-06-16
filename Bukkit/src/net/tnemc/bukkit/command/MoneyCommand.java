@@ -21,7 +21,6 @@ package net.tnemc.bukkit.command;
 import net.tnemc.bukkit.impl.BukkitCMDSource;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.core.region.RegionGroup;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.DefaultFor;
