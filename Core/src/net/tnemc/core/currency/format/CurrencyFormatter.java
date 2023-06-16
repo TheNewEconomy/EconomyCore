@@ -21,14 +21,12 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.core.currency.format.impl.ColourRule;
 import net.tnemc.core.currency.format.impl.DecimalRule;
 import net.tnemc.core.currency.format.impl.MajorAmountRule;
 import net.tnemc.core.currency.format.impl.MajorNameRule;
 import net.tnemc.core.currency.format.impl.MajorRule;
 import net.tnemc.core.currency.format.impl.MaterialRule;
 import net.tnemc.core.currency.format.impl.MinorAmountRule;
-import net.tnemc.core.currency.format.impl.MinorNameRule;
 import net.tnemc.core.currency.format.impl.MinorRule;
 import net.tnemc.core.currency.format.impl.ShortenRule;
 import net.tnemc.core.currency.format.impl.SymbolRule;
@@ -57,7 +55,6 @@ public class CurrencyFormatter {
     //addRule(new MinorNameRule());
     addRule(new MinorRule());
     addRule(new SymbolRule());
-    addRule(new ColourRule());
     addRule(new MaterialRule());
   }
 

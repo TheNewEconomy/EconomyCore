@@ -106,6 +106,8 @@ Formatting:
   #<shorten> - Added to make the outputted value shortened
   # If shortened, it will ignore the value of Format.
   #It's also possible to include all colour variables from messages.yml
+  # Materials: You can add <(material name)> to include counts of a material from a player's
+  #inventory.
   #Example: <major> and <minor>
   Format: '<symbol><major.amount><decimal><minor.amount>'
 

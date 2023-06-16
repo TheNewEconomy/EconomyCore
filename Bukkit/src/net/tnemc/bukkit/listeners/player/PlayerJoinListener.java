@@ -52,8 +52,6 @@ public class PlayerJoinListener implements Listener {
     //Is john joining?
     //easter egg
     if(event.getPlayer().getUniqueId().toString().equalsIgnoreCase("e8e32707-8120-4c48-ad16-81d3fce9346d")) {
-      event.getPlayer().setDisplayName(ChatColor.MAGIC + "JustJohns");
-      event.getPlayer().sendTitle("Hi John", "Enjoy your anime?", 0, 100, 0);
       event.getPlayer().chat("Hi my name is JustJohns. I like anime and furry conventions!");
     }
   }
