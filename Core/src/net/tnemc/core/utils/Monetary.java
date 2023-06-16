@@ -49,6 +49,7 @@ public class Monetary {
 
     major = new BigInteger(split[0]);
     minor = (split.length > 1)? new BigInteger(split[1]) : BigInteger.ZERO;
+    System.out.println("Minor Null: " + (minor == null));
   }
 
   public BigInteger major() {

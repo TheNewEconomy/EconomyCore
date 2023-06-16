@@ -17,8 +17,11 @@ package net.tnemc.sponge.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.sponge.impl.SpongeCMDSource;
 import revxrsal.commands.annotation.Command;
+import revxrsal.commands.annotation.Default;
+import revxrsal.commands.annotation.DefaultFor;
 import revxrsal.commands.annotation.Description;
 import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
@@ -38,7 +41,7 @@ public class ModuleCommand {
   @Usage("#{Module.Available.Arguments}")
   @Description("#{Module.Available.Description}")
   @CommandPermission("tne.module.available")
-  public void onAvailable(SpongeCommandActor sender, String url) {
+  public void onAvailable(SpongeCommandActor sender, @Default(TNECore.coreURL) String url) {
     net.tnemc.core.command.ModuleCommand.onAvailable(new SpongeCMDSource(sender), url);
   }
 
@@ -46,7 +49,7 @@ public class ModuleCommand {
   @Usage("#{Module.Download.Arguments}")
   @Description("#{Module.Download.Description}")
   @CommandPermission("tne.module.download")
-  public void onDownload(SpongeCommandActor sender, String moduleName, String url) {
+  public void onDownload(SpongeCommandActor sender, String moduleName, @Default(TNECore.coreURL) String url) {
     net.tnemc.core.command.ModuleCommand.onDownload(new SpongeCMDSource(sender), moduleName, url);
   }
 
@@ -60,6 +63,7 @@ public class ModuleCommand {
 
   @Subcommand({"list", "l"})
   @Usage("#{Module.List.Arguments}")
+  @DefaultFor({"module", "mod"})
   @Description("#{Module.List.Description}")
   @CommandPermission("tne.list.available")
   public void onList(SpongeCommandActor sender) {

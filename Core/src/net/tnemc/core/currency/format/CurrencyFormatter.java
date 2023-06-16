@@ -54,7 +54,7 @@ public class CurrencyFormatter {
     addRule(new MajorNameRule());
     addRule(new MajorRule());
     addRule(new MinorAmountRule());
-    addRule(new MinorNameRule());
+    //addRule(new MinorNameRule());
     addRule(new MinorRule());
     addRule(new SymbolRule());
     addRule(new ColourRule());

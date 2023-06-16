@@ -18,13 +18,17 @@ package net.tnemc.core.currency.format.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.format.FormatRule;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
+import net.tnemc.item.AbstractItemStack;
 
 import java.util.Optional;
 
@@ -41,11 +45,17 @@ public class MaterialRule implements FormatRule {
 
     final Optional<Currency> currency = entry.currency();
     if(account.isPlayer() && currency.isPresent() && currency.get() instanceof ItemCurrency) {
-      for(Denomination denomination : currency.get().getDenominations().values()) {
+      final Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)account).getUUID());
+      if(provider.isPresent()) {
+        for(Denomination denomination : currency.get().getDenominations().values()) {
 
-        final ItemDenomination denom = (ItemDenomination)denomination;
-        if(formatted.contains(denom.getName())) {
-          formatted = formatted.replace("<" + denom.getName() + ">", "");
+          final ItemDenomination denom = (ItemDenomination)denomination;
+          if(formatted.contains(denom.getMaterial())) {
+
+            final AbstractItemStack<Object> stack = TNECore.server().denominationToStack(denom);
+            final int count = TNECore.server().calculations().count(stack,provider.get().inventory().getInventory(false));
+            formatted = formatted.replace("<" + denom.getMaterial() + ">", String.valueOf(count));
+          }
         }
       }
     }

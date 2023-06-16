@@ -109,7 +109,8 @@ public class MoneyCommand extends BaseCommand {
     if(receipt.isPresent()){
       final MessageData data = new MessageData("Messages.Money.Converted");
       data.addReplacement("$from_amount", amount.toPlainString());
-      data.addReplacement("$amount", converted.get().toPlainString());
+      data.addReplacement("$amount", CurrencyFormatter.format(account.get(),
+                                                              modifierFrom.asEntry()));
       sender.message(data);
     }
   }
@@ -130,7 +131,8 @@ public class MoneyCommand extends BaseCommand {
     if(receipt.isPresent()) {
       final MessageData data = new MessageData("Messages.Money.Gave");
       data.addReplacement("$player", player.getName());
-      data.addReplacement("$amount", amount.toPlainString());
+      data.addReplacement("$amount", CurrencyFormatter.format(player,
+                                                              modifier.asEntry()));
       sender.message(data);
 
       if(player.isPlayer() && ((PlayerAccount)player).isOnline()) {
@@ -139,7 +141,8 @@ public class MoneyCommand extends BaseCommand {
 
         if(provider.isPresent()) {
           final MessageData msgData = new MessageData("Messages.Money.Given");
-          msgData.addReplacement("$amount", amount.toPlainString());
+          msgData.addReplacement("$amount", CurrencyFormatter.format(player,
+                                                                     modifier.asEntry()));
           provider.get().message(msgData);
         }
       }
@@ -206,7 +209,7 @@ public class MoneyCommand extends BaseCommand {
 
         final MessageData entryMSG = new MessageData("Messages.Money.HoldingsMultiSingle");
         entryMSG.addReplacement("$currency", entryCur.get().getIdentifier());
-        entryMSG.addReplacement("$amount", entry.getAmount().toPlainString());
+        entryMSG.addReplacement("$amount", CurrencyFormatter.format(player, entry));
         sender.message(entryMSG);
         System.out.println("send balances");
       }
@@ -240,7 +243,8 @@ public class MoneyCommand extends BaseCommand {
     if(receipt.isPresent()) {
       final MessageData data = new MessageData("Messages.Money.Paid");
       data.addReplacement("$player", player.getName());
-      data.addReplacement("$amount", amount.toPlainString());
+      data.addReplacement("$amount", CurrencyFormatter.format(player,
+                                                              modifier.asEntry()));
       sender.message(data);
 
       if(player.isPlayer() && ((PlayerAccount)player).isOnline()) {
@@ -249,7 +253,8 @@ public class MoneyCommand extends BaseCommand {
         if(provider.isPresent()) {
           final MessageData msgData = new MessageData("Messages.Money.Received");
           data.addReplacement("$player", sender.name());
-          msgData.addReplacement("$amount", amount.toPlainString());
+          msgData.addReplacement("$amount", CurrencyFormatter.format(player,
+                                                                     modifier.asEntry()));
           provider.get().message(msgData);
         }
       }
@@ -348,7 +353,8 @@ public class MoneyCommand extends BaseCommand {
     if(receipt.isPresent()) {
       final MessageData data = new MessageData("Messages.Money.Took");
       data.addReplacement("$player", player.getName());
-      data.addReplacement("$amount", amount.toPlainString());
+      data.addReplacement("$amount", CurrencyFormatter.format(player,
+                                                              modifier.asEntry()));
       sender.message(data);
 
       if(player.isPlayer() && ((PlayerAccount)player).isOnline()) {
@@ -358,7 +364,8 @@ public class MoneyCommand extends BaseCommand {
         if(provider.isPresent()) {
           final MessageData msgData = new MessageData("Messages.Money.Taken");
           data.addReplacement("$player", sender.name());
-          msgData.addReplacement("$amount", amount.toPlainString());
+          msgData.addReplacement("$amount", CurrencyFormatter.format(player,
+                                                                     modifier.asEntry()));
           provider.get().message(msgData);
         }
       }
