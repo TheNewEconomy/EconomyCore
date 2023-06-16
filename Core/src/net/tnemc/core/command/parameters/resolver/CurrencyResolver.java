@@ -1,5 +1,4 @@
-package net.tnemc.core.manager.setup.impl;
-
+package net.tnemc.core.command.parameters.resolver;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -18,11 +17,27 @@ package net.tnemc.core.manager.setup.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
+import net.tnemc.core.currency.Currency;
+import org.jetbrains.annotations.NotNull;
+import revxrsal.commands.process.ValueResolver;
+
+import java.util.Optional;
+
 /**
- * LoadPlayers - Loads all offline uuids and name pairs.
+ * CurrencyResolver
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class ReadOfflineStep {
+public class CurrencyResolver implements ValueResolver<Currency> {
+
+  @Override
+  public Currency resolve(@NotNull ValueResolverContext context) {
+    final String value = context.arguments().pop();
+
+    final Optional<Currency> currency = TNECore.eco().currency().findCurrency(value);
+    return currency.orElseGet(()->TNECore.eco().currency().getDefaultCurrency());
+  }
 }

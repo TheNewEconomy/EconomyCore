@@ -62,6 +62,7 @@
             <groupId>com.github.Revxrsal.Lamp</groupId>
             <artifactId>common</artifactId>
             <version>3.1.5</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>me.carleslc.Simple-YAML</groupId>
@@ -144,6 +145,7 @@
                             <include>me.carleslc.Simple-YAML:*</include>
                             <include>co.aikar:*</include>
                             <include>cloud.commandframework:*</include>
+                            <include>com.github.Revxrsal.Lamp:*</include>
                             <include>net.kyori:*</include>
                         </includes>
                     </artifactSet>

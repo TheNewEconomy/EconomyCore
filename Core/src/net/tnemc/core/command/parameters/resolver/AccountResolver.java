@@ -1,5 +1,4 @@
-package net.tnemc.core.manager;
-
+package net.tnemc.core.command.parameters.resolver;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -18,15 +17,30 @@ package net.tnemc.core.manager;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
+import net.tnemc.core.utils.exceptions.InvalidAccountException;
+import org.jetbrains.annotations.NotNull;
+import revxrsal.commands.process.ValueResolver;
+
+import java.util.Optional;
+
 /**
- * A class that manages the TNE setup process. This is utilized
- * to set up basic features, and read offline player data to have the plugin install
- * seamlessly into the server without missing a beat.
+ * AccountResolver
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class SetupManager {
+public class AccountResolver implements ValueResolver<Account> {
 
+  @Override
+  public Account resolve(@NotNull ValueResolverContext context) throws Throwable {
+    final String value = context.arguments().pop();
 
+    final Optional<Account> account = TNECore.eco().account().findAccount(value);
+    if(account.isPresent()) {
+      return account.get();
+    }
+    throw new InvalidAccountException(value);
+  }
 }

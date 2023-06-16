@@ -51,15 +51,18 @@ public class FoliaCore extends TNECore {
   }
 
   @Override
+  public void registerCommandHandler() {
+    command = BukkitCommandHandler.create(plugin);
+  }
+
+  @Override
   public void registerCommands() {
 
-    command = BukkitCommandHandler.create(plugin);
-
     //Register our commands
-    command.register(new AdminCommand());
-    command.register(new ModuleCommand());
+    //command.register(new AdminCommand());
+    //command.register(new ModuleCommand());
     command.register(new MoneyCommand());
-    command.register(new TransactionCommand());
+    //command.register(new TransactionCommand());
   }
 
   public static FoliaCore instance() {

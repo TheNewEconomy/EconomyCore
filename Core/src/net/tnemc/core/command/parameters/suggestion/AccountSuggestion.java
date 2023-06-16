@@ -1,5 +1,4 @@
-package net.tnemc.core.command;
-
+package net.tnemc.core.command.parameters.suggestion;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -18,37 +17,28 @@ package net.tnemc.core.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
-import net.tnemc.core.command.args.ArgumentsParser;
-import net.tnemc.core.compatibility.CmdSource;
+import net.tnemc.core.currency.Currency;
+import org.jetbrains.annotations.NotNull;
+import revxrsal.commands.autocomplete.SuggestionProvider;
+import revxrsal.commands.command.CommandActor;
+import revxrsal.commands.command.ExecutableCommand;
 
-import java.util.UUID;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * TransactionCommand
+ * AccountSuggestion
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class TransactionCommand {
+public class AccountSuggestion implements SuggestionProvider {
 
-  //[page #]
-  public static void away(CmdSource<?> sender, int page) {
-    //TODO: This
-  }
-
-  //[page:#] [world:name/all] [player:name]
-  public static void history(CmdSource<?> sender, int page, String region, Account account) {
-    //TODO: This
-  }
-
-  //<uuid>
-  public static void info(CmdSource<?> sender, UUID uuid) {
-    //TODO: This
-  }
-
-  //<uuid>
-  public static void voidT(CmdSource<?> sender, UUID uuid) {
-    //TODO: This
+  @Override
+  public @NotNull Collection<String> getSuggestions(@NotNull List<String> list, @NotNull CommandActor commandActor, @NotNull ExecutableCommand executableCommand) throws Throwable {
+    return TNECore.eco().account().getAccounts().values().stream().map(Account::getName).collect(Collectors.toList());
   }
 }

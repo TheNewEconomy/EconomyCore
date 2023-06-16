@@ -78,7 +78,9 @@ public class InventoryHandler implements HoldingsHandler {
   public boolean setHoldings(Account account, String region, Currency currency, CurrencyType type, BigDecimal amount) {
     account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, identifier()));
 
+    System.out.println("Set Inventory");
     if(account.isPlayer() && TNECore.server().online(account.getIdentifier())) {
+      System.out.println("Set Inventory 2");
       final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
                                                                  ((PlayerAccount)account).getPlayer()
                                                                      .get().inventory().getInventory(false),
@@ -111,7 +113,7 @@ public class InventoryHandler implements HoldingsHandler {
                                                                                  currency.getUid(),
                                                                                  identifier()
         );
-        System.out.println("Getting holdings from DB");
+        System.out.println("Getting holdings from Inventory DB");
 
         if(holdings.isPresent()) {
           return holdings.get();
@@ -121,9 +123,10 @@ public class InventoryHandler implements HoldingsHandler {
                                  BigDecimal.ZERO,
                                  identifier());
       }
+      System.out.println("Getting holdings from Inventory");
       final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
                                                                  ((PlayerAccount)account).getPlayer()
-                                                                     .get().inventory().getInventory(true),
+                                                                     .get().inventory().getInventory(false),
                                                                  ((PlayerAccount)account).getUUID());
 
       return new HoldingsEntry(region, currency.getUid(),

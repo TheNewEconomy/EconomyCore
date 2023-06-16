@@ -39,6 +39,9 @@ public class MyCurrencyMenu extends Menu {
   public MyCurrencyMenu() {
     super("my_cur", "MyCurrencies Menu", 36);
 
+    //2 = view
+    //3 = edit
+    //4 = add
     //Add our pages.
     pages.put(1, new CurrencyMainPage());
     pages.put(2, new CurrencyEditorPage());

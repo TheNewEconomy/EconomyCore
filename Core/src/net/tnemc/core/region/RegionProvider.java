@@ -132,4 +132,8 @@ public class RegionProvider {
   public void setMode(final String mode) {
     this.mode = modes.getOrDefault(mode, modes.get("world"));
   }
+
+  public Map<String, RegionGroup> getRegions() {
+    return regions;
+  }
 }

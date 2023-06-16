@@ -1,5 +1,4 @@
-package net.tnemc.core.manager;
-
+package net.tnemc.core.command.parameters.suggestion;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -18,15 +17,25 @@ package net.tnemc.core.manager;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import org.jetbrains.annotations.NotNull;
+import revxrsal.commands.autocomplete.SuggestionProvider;
+import revxrsal.commands.command.CommandActor;
+import revxrsal.commands.command.ExecutableCommand;
+
+import java.util.Collection;
+import java.util.List;
+
 /**
- * A class that manages the TNE setup process. This is utilized
- * to set up basic features, and read offline player data to have the plugin install
- * seamlessly into the server without missing a beat.
+ * RegionSuggestion
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class SetupManager {
+public class RegionSuggestion implements SuggestionProvider {
 
-
+  @Override
+  public @NotNull Collection<String> getSuggestions(@NotNull List<String> list, @NotNull CommandActor commandActor, @NotNull ExecutableCommand executableCommand) throws Throwable {
+    return TNECore.eco().region().getRegions().keySet().stream().toList();
+  }
 }

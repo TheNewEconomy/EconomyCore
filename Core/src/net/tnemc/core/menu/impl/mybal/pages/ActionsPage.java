@@ -21,6 +21,7 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.menu.impl.mybal.consumer.ConvertConfirmation;
 import net.tnemc.core.menu.impl.mybal.consumer.RequestConfirmation;
 import net.tnemc.core.menu.impl.mybal.consumer.SendConfirmation;
@@ -105,7 +106,9 @@ public class ActionsPage extends PlayerPage {
                 callback.getPlayer().inventory().openMenu(player, "my_bal", 4);
                 return true;
               } else {
-                //TODO: Account doesn't exist.
+                final MessageData data = new MessageData("Messages.General.NoPlayer");
+                data.addReplacement("$player", callback.getMessage());
+                provider.get().message(data);
               }
 
               return false;
@@ -149,7 +152,9 @@ public class ActionsPage extends PlayerPage {
                 callback.getPlayer().inventory().openMenu(player, "my_bal", 4);
                 return true;
               } else {
-                //TODO: Account doesn't exist.
+                final MessageData data = new MessageData("Messages.General.NoPlayer");
+                data.addReplacement("$player", callback.getMessage());
+                provider.get().message(data);
               }
 
               return false;

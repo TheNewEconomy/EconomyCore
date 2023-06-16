@@ -121,6 +121,7 @@ public class EnderChestHandler implements HoldingsHandler {
                                  BigDecimal.ZERO,
                                  identifier());
       }
+      System.out.println("Getting holdings from Ender Chest");
       final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
                                                                  ((PlayerAccount)account).getPlayer()
                                                                      .get().inventory().getInventory(true),

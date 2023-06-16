@@ -37,6 +37,7 @@ import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
 import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
+import revxrsal.commands.annotation.Default;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -52,445 +53,314 @@ import java.util.Optional;
 public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: [currency]
-  public static void onMyBal(ArgumentsParser parser) {
-    if(parser.sender().player().isPresent()) {
-      parser.sender().player().get().inventory().openMenu(parser.sender().player().get(), "my_bal");
+  public static void onMyBal(CmdSource<?> sender, Currency currency) {
+    if(sender.player().isPresent()) {
+      sender.player().get().inventory().openMenu(sender.player().get(), "my_bal");
     }
   }
 
   //ArgumentsParser: [currency] [world]
-  public static void onBalance(ArgumentsParser parser) {
-    final String currency = (parser.args().length >= 1)? parser.args()[0] : "USD";
+  public static void onBalance(CmdSource<?> sender, Currency currency, String region) {
 
     //If our currency doesn't exist this is probably a username, so check for their balance instead.
-    Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency(currency);
-    if(currencyOptional.isEmpty()) {
-      final String identifier = (parser.args().length > 0)? parser.args()[0] : parser.sender().identifier().toString();
-      onOther(parser.splitArgsAt(1), identifier);
-      return;
-    }
-    onOther(parser, parser.sender().identifier().toString());
+    final Optional<Account> account = sender.account();
+    account.ifPresent(value->onOther(sender, value, region, currency));
   }
 
   //ArgumentsParser: <amount> <to currency> [from currency]
-  public static void onConvert(ArgumentsParser parser) {
-
-    if(parser.args().length < 2) {
-      help(parser.sender(), "money convert", "Money.Convert");
+  public static void onConvert(CmdSource<?> sender, BigDecimal amount, Currency currency, Currency fromCurrency) {
+    if(currency.getUid().equals(fromCurrency.getUid())) {
+      sender.message(new MessageData("Messages.Money.ConvertSame"));
       return;
     }
 
-    final Currency currency = parser.parseCurrency(1);
-    final Currency fromCurrency = parser.parseCurrency(2);
+    Optional<Account> account = sender.account();
+    if(account.isEmpty()) {
+      final MessageData data = new MessageData("Messages.General.NoPlayer");
+      data.addReplacement("$player", sender.name());
+      sender.message(data);
+      return;
+    }
 
-    final Optional<BigDecimal> amount = parser.parseAmount(0);
-    if(amount.isPresent()) {
+    final Optional<BigDecimal> converted = fromCurrency.convertValue(currency.getIdentifier(), amount);
+    if(converted.isEmpty()) {
+      final MessageData data = new MessageData("Messages.Money.NoConversion");
+      data.addReplacement("$converted", currency.getIdentifier());
+      sender.message(data);
+      return;
+    }
 
-      if(currency.getUid().equals(fromCurrency.getUid())) {
-        parser.sender().message(new MessageData("Messages.Money.ConvertSame"));
-        return;
-      }
+    final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
+                                                           currency.getUid(),
+                                                           converted.get()
+    );
 
-      Optional<Account> account = parser.sender().account();
-      if(account.isEmpty()) {
-        final MessageData data = new MessageData("Messages.General.NoPlayer");
-        data.addReplacement("$player", parser.sender().name());
-        parser.sender().message(data);
-        return;
-      }
+    final HoldingsModifier modifierFrom = new HoldingsModifier(sender.region(),
+                                                               fromCurrency.getUid(),
+                                                               amount.negate()
+    );
 
-      final Optional<BigDecimal> converted = fromCurrency.convertValue(currency.getIdentifier(), amount.get());
-      if(converted.isEmpty()) {
-        final MessageData data = new MessageData("Messages.Money.NoConversion");
-        data.addReplacement("$converted", currency.getIdentifier());
-        parser.sender().message(data);
-        return;
-      }
+    final Transaction transaction = new Transaction("convert")
+        .from(account.get(), modifierFrom)
+        .to(account.get(), modifier)
+        .processor(new BaseTransactionProcessor())
+        .source(new PlayerSource(sender.identifier()));
 
-      final HoldingsModifier modifier = new HoldingsModifier(parser.sender().region(),
-                                                             currency.getUid(),
-                                                             converted.get()
-      );
-
-      final HoldingsModifier modifierFrom = new HoldingsModifier(parser.sender().region(),
-                                                                 fromCurrency.getUid(),
-                                                                 amount.get().negate()
-      );
-
-      final Transaction transaction = new Transaction("convert")
-          .from(account.get(), modifierFrom)
-          .to(account.get(), modifier)
-          .processor(new BaseTransactionProcessor())
-          .source(new PlayerSource(parser.sender().identifier()));
-
-      Optional<Receipt> receipt = processTransaction(parser.sender(), transaction);
-      if(receipt.isPresent()){
-        final MessageData data = new MessageData("Messages.Money.Converted");
-        data.addReplacement("$from_amount", amount.get().toPlainString());
-        data.addReplacement("$amount", converted.get().toPlainString());
-        parser.sender().message(data);
-      }
+    Optional<Receipt> receipt = processTransaction(sender, transaction);
+    if(receipt.isPresent()){
+      final MessageData data = new MessageData("Messages.Money.Converted");
+      data.addReplacement("$from_amount", amount.toPlainString());
+      data.addReplacement("$amount", converted.get().toPlainString());
+      sender.message(data);
     }
   }
 
   //ArgumentsParser: <player> <amount> [world] [currency]
-  public static void onGive(ArgumentsParser parser) {
+  public static void onGive(CmdSource<?> sender, Account player, BigDecimal amount, String region, Currency currency) {
 
-    if(parser.args().length < 2) {
-      help(parser.sender(), "money give", "Money.Give");
-      return;
-    }
+    final HoldingsModifier modifier = new HoldingsModifier(region,
+                                                           currency.getUid(),
+                                                           amount);
 
-    final String region = parser.parseRegion(2);
-    final Currency currency = parser.parseCurrency(3, region);
+    final Transaction transaction = new Transaction("give")
+        .to(player, modifier)
+        .processor(new BaseTransactionProcessor())
+        .source(new PlayerSource(sender.identifier()));
 
-    final Optional<Account> account = parser.parseAccount(0);
-    final Optional<BigDecimal> amount = parser.parseAmount(1);
-    if(account.isPresent() && amount.isPresent()) {
+    Optional<Receipt> receipt = processTransaction(sender, transaction);
+    if(receipt.isPresent()) {
+      final MessageData data = new MessageData("Messages.Money.Gave");
+      data.addReplacement("$player", player.getName());
+      data.addReplacement("$amount", amount.toPlainString());
+      sender.message(data);
 
-      final HoldingsModifier modifier = new HoldingsModifier(region,
-                                                             currency.getUid(),
-                                                             amount.get()
-      );
+      if(player.isPlayer() && ((PlayerAccount)player).isOnline()) {
 
-      final Transaction transaction = new Transaction("give")
-          .to(account.get(), modifier)
-          .processor(new BaseTransactionProcessor())
-          .source(new PlayerSource(parser.sender().identifier()));
+        final Optional<PlayerProvider> provider = ((PlayerAccount)player).getPlayer();
 
-      Optional<Receipt> receipt = processTransaction(parser.sender(), transaction);
-      if(receipt.isPresent()) {
-        final MessageData data = new MessageData("Messages.Money.Gave");
-        data.addReplacement("$player", account.get().getName());
-        data.addReplacement("$amount", amount.get().toPlainString());
-        parser.sender().message(data);
-
-        if(account.get().isPlayer() && ((PlayerAccount)account.get()).isOnline()) {
-
-          final Optional<PlayerProvider> player = ((PlayerAccount)account.get()).getPlayer();
-
-          if(player.isPresent()) {
-            final MessageData msgData = new MessageData("Messages.Money.Given");
-            msgData.addReplacement("$amount", amount.get().toPlainString());
-            player.get().message(msgData);
-          }
+        if(provider.isPresent()) {
+          final MessageData msgData = new MessageData("Messages.Money.Given");
+          msgData.addReplacement("$amount", amount.toPlainString());
+          provider.get().message(msgData);
         }
       }
     }
   }
 
   //ArgumentsParser: <amount> [currency]
-  public static void onNote(ArgumentsParser parser) {
+  public static void onNote(CmdSource<?> sender, BigDecimal amount, Currency currency) {
 
-    if(parser.args().length < 1) {
-      help(parser.sender(), "money note", "Money.Note");
-      return;
-    }
-
-    final Currency currency = parser.parseCurrency(3);
-
-    final Optional<Account> account = parser.parseAccount(0);
-    final Optional<BigDecimal> amount = parser.parseAmount(1);
-    if(account.isPresent() && amount.isPresent()) {
+    final Optional<Account> account = sender.account();
+    if(account.isPresent()) {
 
 
-      final HoldingsModifier modifier = new HoldingsModifier(parser.sender().region(),
+      final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
                                                              currency.getUid(),
-                                                             amount.get()
+                                                             amount
       );
 
       final Transaction transaction = new Transaction("note")
           .from(account.get(), modifier.counter())
           .processor(new BaseTransactionProcessor())
-          .source(new PlayerSource(parser.sender().identifier()));
+          .source(new PlayerSource(sender.identifier()));
 
 
-      Optional<Receipt> receipt = processTransaction(parser.sender(), transaction);
+      Optional<Receipt> receipt = processTransaction(sender, transaction);
       if(receipt.isPresent()) {
         //TODO: Give player money note.
       }
     }
   }
 
-  public static void onOther(ArgumentsParser parser) {
-    if(parser.args().length < 1) {
-      help(parser.sender(), "money other", "Money.Other");
+  //ArgumentsParser: <player> [world] [currency]
+  public static void onOther(CmdSource<?> sender, Account player, String region, Currency currency) {
+    final List<HoldingsEntry> holdings = new ArrayList<>();
+
+    if(!currency.isGlobalDefault()) {
+      BigDecimal amount = BigDecimal.ZERO;
+      for(HoldingsEntry entry : player.getHoldings(region, currency.getUid())) {
+        amount = amount.add(entry.getAmount());
+      }
+      holdings.add(new HoldingsEntry(region, currency.getUid(), amount, EconomyManager.NORMAL));
+    } else {
+      holdings.addAll(player.getAllHoldings(region, EconomyManager.NORMAL));
+    }
+
+    if(holdings.isEmpty()) {
+
+      //Shouldn't happen, but if it does handle it.
+      final MessageData msg = new MessageData("Messages.Account.NoHoldings");
+      msg.addReplacement("$currency", currency.getIdentifier());
+      sender.message(msg);
       return;
     }
 
-    onOther(parser.splitArgsAt(1), parser.args()[0]);
-  }
+    final MessageData msg = new MessageData("Messages.Money.HoldingsMulti");
+    msg.addReplacement("$world", region);
+    sender.message(msg);
 
-  //ArgumentsParser: <player> [world] [currency]
-  public static void onOther(ArgumentsParser parser, String identifier) {
+    for(HoldingsEntry entry : holdings) {
 
-    final String region = parser.parseRegion(1);
-    final Currency currency = parser.parseCurrency(0, region);
+      Optional<Currency> entryCur = TNECore.eco().currency().findCurrency(entry.getCurrency());
 
-    final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
-    if(account.isPresent()) {
+      if(entryCur.isPresent()) {
 
-      final List<HoldingsEntry> holdings = new ArrayList<>();
-
-      if(parser.args().length >= 2) {
-        BigDecimal amount = BigDecimal.ZERO;
-        for(HoldingsEntry entry : account.get().getHoldings(region, currency.getUid())) {
-          amount = amount.add(entry.getAmount());
-        }
-        holdings.add(new HoldingsEntry(region, currency.getUid(), amount, EconomyManager.NORMAL));
-      } else {
-        holdings.addAll(account.get().getAllHoldings(region, EconomyManager.NORMAL));
+        final MessageData entryMSG = new MessageData("Messages.Money.HoldingsMultiSingle");
+        entryMSG.addReplacement("$currency", entryCur.get().getIdentifier());
+        entryMSG.addReplacement("$amount", entry.getAmount().toPlainString());
+        sender.message(entryMSG);
+        System.out.println("send balances");
       }
-
-      if(holdings.isEmpty()) {
-
-        //Shouldn't happen, but if it does handle it.
-        final MessageData msg = new MessageData("Messages.Account.NoHoldings");
-        msg.addReplacement("$currency", currency.getIdentifier());
-        parser.sender().message(msg);
-        return;
-      }
-
-      final MessageData msg = new MessageData("Messages.Money.HoldingsMulti");
-      msg.addReplacement("$world", region);
-      parser.sender().message(msg);
-
-      for(HoldingsEntry entry : holdings) {
-
-        Optional<Currency> entryCur = TNECore.eco().currency().findCurrency(entry.getCurrency());
-
-        if(entryCur.isPresent()) {
-
-          final MessageData entryMSG = new MessageData("Messages.Money.HoldingsMultiSingle");
-          entryMSG.addReplacement("$currency", entryCur.get().getIdentifier());
-          entryMSG.addReplacement("$amount", entry.getAmount().toPlainString());
-          parser.sender().message(entryMSG);
-          System.out.println("send balances");
-        }
-      }
-      return;
     }
   }
 
   //ArgumentsParser: <player> <amount> [currency] [from:account]
-  public static void onPay(ArgumentsParser parser) {
+  public static void onPay(CmdSource<?> sender, Account player, BigDecimal amount, Currency currency, String from) {
 
-    if(parser.args().length < 2) {
-      help(parser.sender(), "money pay", "Money.Pay");
+    Optional<Account> senderAccount = sender.account();
+
+    if(senderAccount.isEmpty()) {
+      final MessageData data = new MessageData("Messages.General.NoPlayer");
+      data.addReplacement("$player", sender.name());
+      sender.message(data);
       return;
     }
 
-    Optional<Account> senderAccount = parser.sender().account();
+    final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
+                                                           currency.getUid(),
+                                                           amount
+    );
 
-    final Currency currency = parser.parseCurrency(2);
+    final Transaction transaction = new Transaction("pay")
+        .to(player, modifier)
+        .from(senderAccount.get(), modifier.counter())
+        .processor(new BaseTransactionProcessor())
+        .source(new PlayerSource(sender.identifier()));
 
-    final Optional<Account> account = parser.parseAccount(0, true);
-    final Optional<BigDecimal> amount = parser.parseAmount(1);
-    if(account.isPresent() && amount.isPresent()) {
+    final Optional<Receipt> receipt = processTransaction(sender, transaction);
+    if(receipt.isPresent()) {
+      final MessageData data = new MessageData("Messages.Money.Paid");
+      data.addReplacement("$player", player.getName());
+      data.addReplacement("$amount", amount.toPlainString());
+      sender.message(data);
 
-      if(senderAccount.isEmpty()) {
-        final MessageData data = new MessageData("Messages.General.NoPlayer");
-        data.addReplacement("$player", parser.args()[0]);
-        parser.sender().message(data);
-        return;
-      }
+      if(player.isPlayer() && ((PlayerAccount)player).isOnline()) {
 
-      final Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)account.get()).getUUID());
-      if(provider.isEmpty()) {
-        final MessageData data = new MessageData("Messages.General.NoPlayer");
-        data.addReplacement("$player", parser.args()[0]);
-        parser.sender().message(data);
-        return;
-      }
-
-      final HoldingsModifier modifier = new HoldingsModifier(parser.sender().region(),
-                                                             currency.getUid(),
-                                                             amount.get()
-      );
-
-      final Transaction transaction = new Transaction("pay")
-          .to(account.get(), modifier)
-          .from(senderAccount.get(), modifier.counter())
-          .processor(new BaseTransactionProcessor())
-          .source(new PlayerSource(parser.sender().identifier()));
-
-      final Optional<Receipt> receipt = processTransaction(parser.sender(), transaction);
-      if(receipt.isPresent()) {
-        final MessageData data = new MessageData("Messages.Money.Paid");
-        data.addReplacement("$player", account.get().getName());
-        data.addReplacement("$amount", amount.get().toPlainString());
-        parser.sender().message(data);
-
-        if(account.get().isPlayer() && ((PlayerAccount)account.get()).isOnline()) {
-
-          final Optional<PlayerProvider> player = ((PlayerAccount)account.get()).getPlayer();
-
-          if(player.isPresent()) {
-            final MessageData msgData = new MessageData("Messages.Money.Received");
-            data.addReplacement("$player", parser.sender().name());
-            msgData.addReplacement("$amount", amount.get().toPlainString());
-            player.get().message(msgData);
-          }
+        final Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)player).getUUID());
+        if(provider.isPresent()) {
+          final MessageData msgData = new MessageData("Messages.Money.Received");
+          data.addReplacement("$player", sender.name());
+          msgData.addReplacement("$amount", amount.toPlainString());
+          provider.get().message(msgData);
         }
       }
     }
   }
 
   //ArgumentsParser: <player> <amount> [currency]
-  public static void onRequest(ArgumentsParser parser) {
-
-    if(parser.args().length < 2) {
-      help(parser.sender(), "money request", "Money.Request");
+  public static void onRequest(CmdSource<?> sender, Account player, BigDecimal amount, Currency currency) {
+    Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)player).getUUID());
+    if(provider.isEmpty()) {
+      final MessageData data = new MessageData("Messages.General.NoPlayer");
+      data.addReplacement("$player", player.getName());
+      sender.message(data);
       return;
     }
 
-    final Currency currency = parser.parseCurrency(2);
+    final MessageData msg = new MessageData("Messages.Money.RequestSender");
+    msg.addReplacement("$player", player.getName());
+    msg.addReplacement("$amount", amount.toPlainString());
+    sender.message(msg);
 
-    final Optional<Account> account = parser.parseAccount(0, true);
-    final Optional<BigDecimal> amount = parser.parseAmount(1);
-    if(account.isPresent() && amount.isPresent()) {
-
-      Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)account.get()).getUUID());
-      if(provider.isEmpty()) {
-        final MessageData data = new MessageData("Messages.General.NoPlayer");
-        data.addReplacement("$player", parser.args()[0]);
-        parser.sender().message(data);
-        return;
-      }
-
-      final MessageData msg = new MessageData("Messages.Money.RequestSender");
-      msg.addReplacement("$player", parser.args()[0]);
-      msg.addReplacement("$amount", parser.args()[1]);
-      parser.sender().message(msg);
-
-      final MessageData request = new MessageData("Messages.Money.Request");
-      request.addReplacement("$player", parser.sender().name());
-      request.addReplacement("$amount", parser.args()[1]);
-      request.addReplacement("$currency", currency.getIdentifier());
-      provider.get().message(request);
-    }
+    final MessageData request = new MessageData("Messages.Money.Request");
+    request.addReplacement("$player", sender.name());
+    msg.addReplacement("$amount", amount.toPlainString());
+    request.addReplacement("$currency", currency.getIdentifier());
+    provider.get().message(request);
   }
 
   //ArgumentsParser: <player> <amount> [world] [currency]
-  public static void onSet(ArgumentsParser parser) {
+  public static void onSet(CmdSource<?> sender, Account player, BigDecimal amount, String region, Currency currency) {
 
-    if(parser.args().length < 2) {
-      help(parser.sender(), "money set", "Money.Set");
-      return;
-    }
+    final HoldingsModifier modifier = new HoldingsModifier(region,
+                                                           currency.getUid(),
+                                                           amount,
+                                                           HoldingsOperation.SET);
 
-    final String region = parser.parseRegion(2);
-    final Currency currency = parser.parseCurrency(3, region);
+    final Transaction transaction = new Transaction("set")
+        .to(player, modifier)
+        .processor(new BaseTransactionProcessor())
+        .source(new PlayerSource(sender.identifier()));
 
-    final Optional<Account> account = parser.parseAccount(0);
-    final Optional<BigDecimal> amount = parser.parseAmount(1);
-    if(account.isPresent() && amount.isPresent()) {
+    Optional<Receipt> receipt = processTransaction(sender, transaction);
 
-      final HoldingsModifier modifier = new HoldingsModifier(region,
-                                                             currency.getUid(),
-                                                             amount.get(),
-                                                             HoldingsOperation.SET);
-
-      final Transaction transaction = new Transaction("set")
-          .to(account.get(), modifier)
-          .processor(new BaseTransactionProcessor())
-          .source(new PlayerSource(parser.sender().identifier()));
-
-      Optional<Receipt> receipt = processTransaction(parser.sender(), transaction);
-
-      if(receipt.isPresent()) {
-        final MessageData msg = new MessageData("Messages.Money.Set");
-        msg.addReplacement("$player", parser.args()[0]);
-        msg.addReplacement("$amount", CurrencyFormatter.format(account.get(),
-                                                               modifier.asEntry())
-        );
-        parser.sender().message(msg);
-      }
+    if(receipt.isPresent()) {
+      final MessageData msg = new MessageData("Messages.Money.Set");
+      msg.addReplacement("$player", player.getName());
+      msg.addReplacement("$amount", CurrencyFormatter.format(player,
+                                                             modifier.asEntry())
+      );
+      sender.message(msg);
     }
   }
 
   //ArgumentsParser: <amount> [world] [currency]
-  public static void onSetAll(ArgumentsParser parser) {
+  public static void onSetAll(CmdSource<?> sender, BigDecimal amount, String region, Currency currency) {
 
-    if(parser.args().length < 1) {
-      help(parser.sender(), "money setall", "Money.SetAll");
-      return;
-    }
+    final HoldingsModifier modifier = new HoldingsModifier(region,
+                                                           currency.getUid(),
+                                                           amount,
+                                                           HoldingsOperation.SET);
 
-    final Optional<BigDecimal> amount = parser.parseAmount(0);
-    final String region = parser.parseRegion(1);
-    final Currency currency = parser.parseCurrency(2, region);
+    for(Account account : TNECore.eco().account().getAccounts().values()) {
+      final Transaction transaction = new Transaction("set")
+          .to(account, modifier)
+          .processor(new BaseTransactionProcessor())
+          .source(new PlayerSource(sender.identifier()));
 
-    if(amount.isPresent()) {
+      Optional<Receipt> receipt = processTransaction(sender, transaction);
 
-      final HoldingsModifier modifier = new HoldingsModifier(region,
-                                                             currency.getUid(),
-                                                             amount.get(),
-                                                             HoldingsOperation.SET);
-
-      for(Account account : TNECore.eco().account().getAccounts().values()) {
-        final Transaction transaction = new Transaction("set")
-            .to(account, modifier)
-            .processor(new BaseTransactionProcessor())
-            .source(new PlayerSource(parser.sender().identifier()));
-
-        Optional<Receipt> receipt = processTransaction(parser.sender(), transaction);
-
-        if(receipt.isPresent()) {
-          final MessageData msg = new MessageData("Messages.Money.Set");
-          msg.addReplacement("$player", parser.args()[0]);
-          msg.addReplacement("$amount", CurrencyFormatter.format(account,
-                                                                 modifier.asEntry())
-          );
-          parser.sender().message(msg);
-          return;
-        }
+      if(receipt.isPresent()) {
+        final MessageData msg = new MessageData("Messages.Money.Set");
+        msg.addReplacement("$player", account.getName());
+        msg.addReplacement("$amount", CurrencyFormatter.format(account,
+                                                               modifier.asEntry())
+        );
+        sender.message(msg);
+        return;
       }
     }
   }
 
   //ArgumentsParser: <player> <amount> [world] [currency]
-  public static void onTake(ArgumentsParser parser) {
+  public static void onTake(CmdSource<?> sender, Account player, BigDecimal amount, String region, Currency currency) {
 
-    if(parser.args().length < 2) {
-      help(parser.sender(), "money take", "Money.Take");
-      return;
-    }
+    final HoldingsModifier modifier = new HoldingsModifier(region,
+                                                           currency.getUid(),
+                                                           amount
+    );
 
-    final String region = parser.parseRegion(2);
-    final Currency currency = parser.parseCurrency(3, region);
+    final Transaction transaction = new Transaction("take")
+        .to(player, modifier.counter())
+        .processor(new BaseTransactionProcessor())
+        .source(new PlayerSource(sender.identifier()));
 
-    final Optional<Account> account = parser.parseAccount(0);
-    final Optional<BigDecimal> amount = parser.parseAmount(1);
-    if(account.isPresent() && amount.isPresent()) {
+    Optional<Receipt> receipt = processTransaction(sender, transaction);
+    if(receipt.isPresent()) {
+      final MessageData data = new MessageData("Messages.Money.Took");
+      data.addReplacement("$player", player.getName());
+      data.addReplacement("$amount", amount.toPlainString());
+      sender.message(data);
 
-      final HoldingsModifier modifier = new HoldingsModifier(region,
-                                                             currency.getUid(),
-                                                             amount.get()
-      );
+      if(player.isPlayer() && ((PlayerAccount)player).isOnline()) {
 
-      final Transaction transaction = new Transaction("take")
-          .to(account.get(), modifier.counter())
-          .processor(new BaseTransactionProcessor())
-          .source(new PlayerSource(parser.sender().identifier()));
+        final Optional<PlayerProvider> provider = ((PlayerAccount)player).getPlayer();
 
-      Optional<Receipt> receipt = processTransaction(parser.sender(), transaction);
-      if(receipt.isPresent()) {
-        final MessageData data = new MessageData("Messages.Money.Took");
-        data.addReplacement("$player", account.get().getName());
-        data.addReplacement("$amount", amount.get().toPlainString());
-        parser.sender().message(data);
-
-        if(account.get().isPlayer() && ((PlayerAccount)account.get()).isOnline()) {
-
-          final Optional<PlayerProvider> player = ((PlayerAccount)account.get()).getPlayer();
-
-          if(player.isPresent()) {
-            final MessageData msgData = new MessageData("Messages.Money.Taken");
-            data.addReplacement("$player", parser.sender().name());
-            msgData.addReplacement("$amount", amount.get().toPlainString());
-            player.get().message(msgData);
-          }
+        if(provider.isPresent()) {
+          final MessageData msgData = new MessageData("Messages.Money.Taken");
+          data.addReplacement("$player", sender.name());
+          msgData.addReplacement("$amount", amount.toPlainString());
+          provider.get().message(msgData);
         }
       }
     }
@@ -501,7 +371,7 @@ public class MoneyCommand extends BaseCommand {
     //TODO: This
   }
 
-  private static Optional<Receipt> processTransaction(CmdSource sender, Transaction transaction) {
+  private static Optional<Receipt> processTransaction(CmdSource<?> sender, Transaction transaction) {
     try {
       final TransactionResult result = transaction.process();
 

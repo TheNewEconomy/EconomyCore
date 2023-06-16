@@ -59,9 +59,12 @@ public class BukkitCore extends TNECore {
   }
 
   @Override
-  public void registerCommands() {
-
+  public void registerCommandHandler() {
     command = BukkitCommandHandler.create(plugin);
+  }
+
+  @Override
+  public void registerCommands() {
 
     //Register our commands
     command.register(new AdminCommand());

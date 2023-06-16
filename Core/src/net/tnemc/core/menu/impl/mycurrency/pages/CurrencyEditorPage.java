@@ -17,13 +17,18 @@ package net.tnemc.core.menu.impl.mycurrency.pages;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.currency.Currency;
 import net.tnemc.core.menu.impl.shared.icons.PreviousPageIcon;
+import net.tnemc.menu.core.MenuManager;
 import net.tnemc.menu.core.compatibility.MenuPlayer;
 import net.tnemc.menu.core.icon.Icon;
 import net.tnemc.menu.core.page.impl.PlayerPage;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * CurrencyEditorPage
@@ -37,11 +42,20 @@ public class CurrencyEditorPage extends PlayerPage {
   }
 
   @Override
-  public Map<Integer, Icon> defaultIcons(MenuPlayer menuPlayer) {
+  public Map<Integer, Icon> defaultIcons(MenuPlayer player) {
+
+    final Optional<Object> curID = MenuManager.instance().getViewerData(player.identifier(), "cur_uid");
+    final Optional<Object> item = MenuManager.instance().getViewerData(player.identifier(), "cur_uid");
+
+    final boolean isItem = item.filter(o->(boolean)o).isPresent();
+    final UUID id = (UUID)curID.orElse(null);
+
+    final Currency currency = TNECore.eco().currency().findOrDefault(id, isItem);
 
     Map<Integer, Icon> icons = new HashMap<>();
 
     icons.put(0, new PreviousPageIcon(0, 1));
+
 
 
     return icons;

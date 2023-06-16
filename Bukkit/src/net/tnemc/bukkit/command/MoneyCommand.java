@@ -19,14 +19,19 @@ package net.tnemc.bukkit.command;
  */
 
 import net.tnemc.bukkit.impl.BukkitCMDSource;
-import net.tnemc.core.command.args.ArgumentsParser;
+import net.tnemc.core.account.Account;
+import net.tnemc.core.currency.Currency;
+import net.tnemc.core.region.RegionGroup;
 import revxrsal.commands.annotation.Command;
+import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.DefaultFor;
 import revxrsal.commands.annotation.Description;
 import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
 import revxrsal.commands.bukkit.BukkitCommandActor;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
+
+import java.math.BigDecimal;
 
 /**
  * MoneyCommands
@@ -37,12 +42,12 @@ import revxrsal.commands.bukkit.annotation.CommandPermission;
 @Command({"money", "eco"})
 public class MoneyCommand {
 
-  @Subcommand({"balmenu", "menu", "mybal", "balmenu"})
+  @Subcommand({"balmenu", "menu", "mybal"})
   @Usage("#{Money.MyBal.Arguments}")
   @Description("#{Money.MyBal.Description}")
   @CommandPermission("tne.money.mybal")
-  public void onMyBal(BukkitCommandActor sender, String[] args) {
-    net.tnemc.core.command.MoneyCommand.onMyBal(new ArgumentsParser(new BukkitCMDSource(sender), args));
+  public void onMyBal(BukkitCommandActor sender, Currency currency) {
+    net.tnemc.core.command.MoneyCommand.onMyBal(new BukkitCMDSource(sender), currency);
   }
 
   @DefaultFor({"money", "eco"})
@@ -50,87 +55,87 @@ public class MoneyCommand {
   @Usage("#{Money.Balance.Arguments}")
   @Description("#{Money.Balance.Description}")
   @CommandPermission("tne.money.balance")
-  public void onBalance(BukkitCommandActor sender, String[] args) {
-    net.tnemc.core.command.MoneyCommand.onBalance(new ArgumentsParser(new BukkitCMDSource(sender), args));
+  public void onBalance(BukkitCommandActor sender, @Default("") Currency currency, @Default("world-113") String region) {
+    net.tnemc.core.command.MoneyCommand.onBalance(new BukkitCMDSource(sender), currency, region);
   }
 
   @Subcommand({"convert"})
   @Usage("#{Money.Convert.Arguments}")
   @Description("#{Money.Convert.Description}")
   @CommandPermission("tne.money.convert")
-  public void onConvert(BukkitCommandActor sender, String[] args) {
-    net.tnemc.core.command.MoneyCommand.onConvert(new ArgumentsParser(new BukkitCMDSource(sender), args));
+  public void onConvert(BukkitCommandActor sender, BigDecimal amount, Currency currency, Currency fromCurrency) {
+    net.tnemc.core.command.MoneyCommand.onConvert(new BukkitCMDSource(sender), amount, currency, fromCurrency);
   }
 
   @Subcommand({"give", "+", "add"})
   @Usage("#{Money.Give.Arguments}")
   @Description("#{Money.Give.Description}")
   @CommandPermission("tne.money.give")
-  public void onGive(BukkitCommandActor sender, String[] args) {
-    net.tnemc.core.command.MoneyCommand.onGive(new ArgumentsParser(new BukkitCMDSource(sender), args));
+  public void onGive(BukkitCommandActor sender, Account player, BigDecimal amount, @Default("world-113") String region, @Default("") Currency currency) {
+    net.tnemc.core.command.MoneyCommand.onGive(new BukkitCMDSource(sender), player, amount, region, currency);
   }
 
   @Subcommand({"note", "n"})
   @Usage("#{Money.Note.Arguments}")
   @Description("#{Money.Note.Description}")
   @CommandPermission("tne.money.note")
-  public void onNote(BukkitCommandActor sender, String[] args) {
-    net.tnemc.core.command.MoneyCommand.onNote(new ArgumentsParser(new BukkitCMDSource(sender), args));
+  public void onNote(BukkitCommandActor sender, BigDecimal amount, @Default("") Currency currency) {
+    net.tnemc.core.command.MoneyCommand.onNote(new BukkitCMDSource(sender), amount, currency);
   }
 
-  @Subcommand({"other", "check", "balo", "check"})
+  @Subcommand({"other", "check", "balo"})
   @Usage("#{Money.Other.Arguments}")
   @Description("#{Money.Other.Description}")
   @CommandPermission("tne.money.other")
-  public void onOther(BukkitCommandActor sender, String[] args) {
-    net.tnemc.core.command.MoneyCommand.onOther(new ArgumentsParser(new BukkitCMDSource(sender), args));
+  public void onOther(BukkitCommandActor sender, Account player, @Default("world-113") String region, @Default("") Currency currency) {
+    net.tnemc.core.command.MoneyCommand.onOther(new BukkitCMDSource(sender), player, region, currency);
   }
 
   @Subcommand({"pay", "send", "transfer"})
   @Usage("#{Money.Pay.Arguments}")
   @Description("#{Money.Pay.Description}")
   @CommandPermission("tne.money.pay")
-  public void onPay(BukkitCommandActor sender, String[] args) {
-    net.tnemc.core.command.MoneyCommand.onPay(new ArgumentsParser(new BukkitCMDSource(sender), args));
+  public void onPay(BukkitCommandActor sender, Account player, BigDecimal amount, @Default("") Currency currency, @Default("") String from) {
+    net.tnemc.core.command.MoneyCommand.onPay(new BukkitCMDSource(sender), player, amount, currency, from);
   }
 
   @Subcommand({"request"})
   @Usage("#{Money.Request.Arguments}")
   @Description("#{Money.Request.Description}")
   @CommandPermission("tne.money.Request")
-  public void onRequest(BukkitCommandActor sender, String[] args) {
-    net.tnemc.core.command.MoneyCommand.onRequest(new ArgumentsParser(new BukkitCMDSource(sender), args));
+  public void onRequest(BukkitCommandActor sender, Account player, BigDecimal amount, @Default("") Currency currency) {
+    net.tnemc.core.command.MoneyCommand.onRequest(new BukkitCMDSource(sender), player, amount, currency);
   }
 
   @Subcommand({"set", "eq", "="})
   @Usage("#{Money.Set.Arguments}")
   @Description("#{Money.Set.Description}")
   @CommandPermission("tne.money.set")
-  public void onSet(BukkitCommandActor sender, String[] args) {
-    net.tnemc.core.command.MoneyCommand.onSet(new ArgumentsParser(new BukkitCMDSource(sender), args));
+  public void onSet(BukkitCommandActor sender, Account player, BigDecimal amount, @Default("world-113") String region, @Default("") Currency currency) {
+    net.tnemc.core.command.MoneyCommand.onSet(new BukkitCMDSource(sender), player, amount, region, currency);
   }
 
   @Subcommand({"setall"})
   @Usage("#{Money.SetAll.Arguments}")
   @Description("#{Money.SetAll.Description}")
   @CommandPermission("tne.money.setall")
-  public void onSetAll(BukkitCommandActor sender, String[] args) {
-    net.tnemc.core.command.MoneyCommand.onSetAll(new ArgumentsParser(new BukkitCMDSource(sender), args));
+  public void onSetAll(BukkitCommandActor sender, BigDecimal amount, @Default("world-113") String region, @Default("") Currency currency) {
+    net.tnemc.core.command.MoneyCommand.onSetAll(new BukkitCMDSource(sender), amount, region, currency);
   }
 
   @Subcommand({"take", "minus", "remove", "-"})
   @Usage("#{Money.Take.Arguments}")
   @Description("#{Money.Take.Description}")
   @CommandPermission("tne.money.take")
-  public void onTake(BukkitCommandActor sender, String[] args) {
-    net.tnemc.core.command.MoneyCommand.onTake(new ArgumentsParser(new BukkitCMDSource(sender), args));
+  public void onTake(BukkitCommandActor sender, Account player, BigDecimal amount, @Default("world-113") String region, @Default("") Currency currency) {
+    net.tnemc.core.command.MoneyCommand.onTake(new BukkitCMDSource(sender), player, amount, region, currency);
   }
 
-  @Subcommand({"top", "baltop"})
+  /*@Subcommand({"top", "baltop"})
   @Usage("#{Money.Top.Arguments}")
   @Description("#{Money.Top.Description}")
   @CommandPermission("tne.money.top")
   public void onTop(BukkitCommandActor sender, String[] args) {
-    net.tnemc.core.command.MoneyCommand.onTop(new ArgumentsParser(new BukkitCMDSource(sender), args));
-  }
+    net.tnemc.core.command.MoneyCommand.onTop(new BukkitCMDSource(sender));
+  }*/
 }

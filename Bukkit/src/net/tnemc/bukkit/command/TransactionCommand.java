@@ -19,14 +19,18 @@ package net.tnemc.bukkit.command;
  */
 
 import net.tnemc.bukkit.impl.BukkitCMDSource;
+import net.tnemc.core.account.Account;
 import net.tnemc.core.command.args.ArgumentsParser;
 import revxrsal.commands.annotation.Command;
+import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.DefaultFor;
 import revxrsal.commands.annotation.Description;
 import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
 import revxrsal.commands.bukkit.BukkitCommandActor;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
+
+import java.util.UUID;
 
 /**
  * TransactionCommand
@@ -41,8 +45,8 @@ public class TransactionCommand {
   @Usage("#{Transaction.Away.Arguments}")
   @Description("#{Transaction.Away.Description}")
   @CommandPermission("tne.transaction.away")
-  public void away(BukkitCommandActor sender, String[] args) {
-    net.tnemc.core.command.TransactionCommand.away(new ArgumentsParser(new BukkitCMDSource(sender), args));
+  public void away(BukkitCommandActor sender, @Default("1") int page) {
+    net.tnemc.core.command.TransactionCommand.away(new BukkitCMDSource(sender), page);
   }
 
   @DefaultFor({"transaction", "trans", "receipt"})
@@ -50,23 +54,23 @@ public class TransactionCommand {
   @Usage("#{Transaction.History.Arguments}")
   @Description("#{Transaction.History.Description}")
   @CommandPermission("tne.transaction.history")
-  public void history(BukkitCommandActor sender, String[] args) {
-    net.tnemc.core.command.TransactionCommand.history(new ArgumentsParser(new BukkitCMDSource(sender), args));
+  public void history(BukkitCommandActor sender, @Default("1") int page, String region, Account account) {
+    net.tnemc.core.command.TransactionCommand.history(new BukkitCMDSource(sender), page, region, account);
   }
 
   @Subcommand({"info", "i", "about", "brief"})
   @Usage("#{Transaction.Info.Arguments}")
   @Description("#{Transaction.Info.Description}")
   @CommandPermission("tne.info.history")
-  public void info(BukkitCommandActor sender, String[] args) {
-    net.tnemc.core.command.TransactionCommand.info(new ArgumentsParser(new BukkitCMDSource(sender), args));
+  public void info(BukkitCommandActor sender, UUID uuid) {
+    net.tnemc.core.command.TransactionCommand.info(new BukkitCMDSource(sender), uuid);
   }
 
   @Subcommand({"void", "retract", "undo"})
   @Usage("#{Transaction.Void.Arguments}")
   @Description("#{Transaction.Void.Description}")
   @CommandPermission("tne.void.history")
-  public void voidT(BukkitCommandActor sender, String[] args) {
-    net.tnemc.core.command.TransactionCommand.voidT(new ArgumentsParser(new BukkitCMDSource(sender), args));
+  public void voidT(BukkitCommandActor sender, UUID uuid) {
+    net.tnemc.core.command.TransactionCommand.voidT(new BukkitCMDSource(sender), uuid);
   }
 }

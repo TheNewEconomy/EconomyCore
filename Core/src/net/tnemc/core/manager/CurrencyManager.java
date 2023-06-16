@@ -232,6 +232,33 @@ public class CurrencyManager {
     return Optional.ofNullable(currencies.get(curIDMap.get(identifier)));
   }
 
+  /**
+   * Used to find a {@link Currency currency} based on its {@link UUID identifier}, or a new Currency
+   * object if the specified identifier doesn't exist.
+   * @param identifier The identifier to look for.
+   * @return The currency object if found; Otherwise a new currency object.
+   */
+  public Currency findOrDefault(final UUID identifier) {
+    return findOrDefault(identifier, false);
+  }
+
+  /**
+   * Used to find a {@link Currency currency} based on its {@link UUID identifier}, or a new Currency
+   * object if the specified identifier doesn't exist.
+   * @param identifier The identifier to look for.
+   * @param item True if this should return an {@link ItemCurrency} object if the specified identifier
+   *             doesn't exist.
+   * @return The currency object if found; Otherwise a new currency object.
+   */
+  public Currency findOrDefault(final UUID identifier, final boolean item) {
+    if(identifier != null && currencies.containsKey(identifier)) {
+      return currencies.get(identifier);
+    }
+
+    if(item) return new ItemCurrency();
+    return new Currency();
+  }
+
   public Collection<Currency> currencies() {
     return currencies.values();
   }
@@ -251,5 +278,13 @@ public class CurrencyManager {
    */
   public Optional<CurrencyType> findType(final String identifier) {
     return Optional.ofNullable(types.get(identifier));
+  }
+
+  public void delete(final UUID uid) {
+
+    if(currencies.containsKey(uid)) {
+      //TODO: Delete files.
+    }
+    currencies.remove(uid);
   }
 }

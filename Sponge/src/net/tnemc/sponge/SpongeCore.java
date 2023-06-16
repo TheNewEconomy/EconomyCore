@@ -89,10 +89,12 @@ public class SpongeCore extends TNECore {
   }
 
   @Override
-  public void registerCommands() {
-
-
+  public void registerCommandHandler() {
     command = SpongeCommandHandler.create(plugin);
+  }
+
+  @Override
+  public void registerCommands() {
 
     //Register our commands
     command.register(new AdminCommand());

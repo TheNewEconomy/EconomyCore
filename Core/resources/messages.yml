@@ -101,6 +101,11 @@ Messages:
         RequestSender: "<green>You have sent a request to <white>$player <green> for $amount."
         Request: "<white>You have received a money request from <green>$player<white> for <gold>$amount<white>! <click:run_command:/money pay $player $amount $currency><green><underlined>Click to send them the funds!</click>"
 
+    Currency:
+        Sure: "<red>Are you sure that you want to delete currency $currency? Type \"confirm\" to delete, or anything else to not delete."
+        Only: "<red>You're not able to delete the only currency that is loaded."
+        Deleted: "<yellow>You have successfully deleted the currency $currency."
+
     Note:
 
         Given: "<white>A note has been given to you in the amount of <gold>$amount<white> for currency <green>$currency<white>."

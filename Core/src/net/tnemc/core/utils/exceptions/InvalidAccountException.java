@@ -1,5 +1,4 @@
-package net.tnemc.core.manager.setup;
-
+package net.tnemc.core.utils.exceptions;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -19,22 +18,19 @@ package net.tnemc.core.manager.setup;
  */
 
 /**
- * Represents a step in the setup process.
+ * InvalidAccountException
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public interface Step {
+public class InvalidAccountException extends Exception {
 
   /**
-   * The human-friendly identifier for this step.
-   * @return the human-friendly identifier for this step.
+   * Constructs a new exception with {@code null} as its detail message.
+   * The cause is not initialized, and may subsequently be initialized by a
+   * call to {@link #initCause}.
    */
-  String identifier();
-
-  /**
-   * Runs this step.
-   * @return True if this step ran successfully, otherwise false.
-   */
-  boolean run();
+  public InvalidAccountException(String missing) {
+    super("The account specified does not exist. Name: " + missing);
+  }
 }

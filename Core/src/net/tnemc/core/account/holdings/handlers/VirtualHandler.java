@@ -93,6 +93,7 @@ public class VirtualHandler implements HoldingsHandler {
                                                                              EconomyManager.VIRTUAL
     );
 
+    System.out.println("Getting virtual holdings");
 
     if(holdings.isPresent()) {
       return holdings.get();

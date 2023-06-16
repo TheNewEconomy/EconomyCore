@@ -220,7 +220,8 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     }
 
     CurrencyLoadCallback currencyLoad = new CurrencyLoadCallback(currency);
-    if(!TNECore.callbacks().call(currencyLoad)) {
+    if(TNECore.callbacks().call(currencyLoad)) {
+      TNECore.log().error("Cancelled currency load through callback.");
       return false;
     }
 
@@ -345,7 +346,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     }
 
     DenominationLoadCallback denomCallback = new DenominationLoadCallback(currency, denomination);
-    if(!TNECore.callbacks().call(denomCallback)) {
+    if(TNECore.callbacks().call(denomCallback)) {
       return false;
     }
 

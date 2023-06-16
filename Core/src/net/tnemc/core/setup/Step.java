@@ -1,4 +1,4 @@
-package net.tnemc.core.manager;
+package net.tnemc.core.setup;
 
 /*
  * The New Economy
@@ -18,15 +18,30 @@ package net.tnemc.core.manager;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * A class that manages the TNE setup process. This is utilized
- * to set up basic features, and read offline player data to have the plugin install
- * seamlessly into the server without missing a beat.
+ * Represents a step in the setup process.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class SetupManager {
+public interface Step {
 
+  /**
+   * The human-friendly identifier for this step.
+   * @return the human-friendly identifier for this step.
+   */
+  String identifier();
 
+  default List<String> after() {
+    return new ArrayList<>();
+  }
+
+  /**
+   * Runs this step.
+   * @return True if this step ran successfully, otherwise false.
+   */
+  boolean run();
 }

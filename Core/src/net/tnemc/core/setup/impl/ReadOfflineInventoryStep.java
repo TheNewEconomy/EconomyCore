@@ -1,4 +1,4 @@
-package net.tnemc.core.manager;
+package net.tnemc.core.setup.impl;
 
 /*
  * The New Economy
@@ -18,15 +18,41 @@ package net.tnemc.core.manager;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.setup.Step;
+
+import java.util.Arrays;
+import java.util.List;
+
 /**
- * A class that manages the TNE setup process. This is utilized
- * to set up basic features, and read offline player data to have the plugin install
- * seamlessly into the server without missing a beat.
+ * ReadOfflineInventoryStep - Reads offline inventories to convert existing items to item currencies.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class SetupManager {
+public class ReadOfflineInventoryStep implements Step {
 
+  /**
+   * The human-friendly identifier for this step.
+   *
+   * @return the human-friendly identifier for this step.
+   */
+  @Override
+  public String identifier() {
+    return "offline-inventory";
+  }
 
+  @Override
+  public List<String> after() {
+    return Arrays.asList("conversion", "offline");
+  }
+
+  /**
+   * Runs this step.
+   *
+   * @return True if this step ran successfully, otherwise false.
+   */
+  @Override
+  public boolean run() {
+    return false;
+  }
 }

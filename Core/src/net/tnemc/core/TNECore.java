@@ -24,6 +24,12 @@ import net.tnemc.core.api.BaseAPI;
 import net.tnemc.core.api.CallbackManager;
 import net.tnemc.core.api.TNEAPI;
 import net.tnemc.core.api.response.AccountAPIResponse;
+import net.tnemc.core.command.parameters.resolver.AccountResolver;
+import net.tnemc.core.command.parameters.resolver.BigDecimalResolver;
+import net.tnemc.core.command.parameters.resolver.CurrencyResolver;
+import net.tnemc.core.command.parameters.suggestion.AccountSuggestion;
+import net.tnemc.core.command.parameters.suggestion.CurrencySuggestion;
+import net.tnemc.core.command.parameters.suggestion.RegionSuggestion;
 import net.tnemc.core.compatibility.LogProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.log.DebugLevel;
@@ -32,6 +38,7 @@ import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.config.MessageConfig;
+import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.message.MessageHandler;
 import net.tnemc.core.io.message.TranslationProvider;
 import net.tnemc.core.io.message.translation.BaseTranslationProvider;
@@ -41,6 +48,7 @@ import net.tnemc.core.menu.impl.mycurrency.MyCurrencyMenu;
 import net.tnemc.core.menu.impl.myeco.MyEcoMenu;
 import net.tnemc.core.module.ModuleLoader;
 import net.tnemc.core.module.cache.ModuleFileCache;
+import net.tnemc.core.region.RegionGroup;
 import net.tnemc.menu.core.MenuManager;
 import revxrsal.commands.CommandHandler;
 import revxrsal.commands.orphan.Orphans;
@@ -230,6 +238,21 @@ public abstract class TNECore {
     }
 
     //register our commands
+    registerCommandHandler();
+
+    //Custom Parameters: Account, Currency, BigDecimal(?)
+    //TODO: Register custom validators
+
+    //Value Resolvers
+    command.registerValueResolver(Account.class, new AccountResolver());
+    command.registerValueResolver(Currency.class, new CurrencyResolver());
+    command.registerValueResolver(BigDecimal.class, new BigDecimalResolver());
+
+    //Annotation
+    command.getAutoCompleter().registerParameterSuggestions(RegionGroup.class, new RegionSuggestion());
+    command.getAutoCompleter().registerParameterSuggestions(Account.class, new AccountSuggestion());
+    command.getAutoCompleter().registerParameterSuggestions(Currency.class, new CurrencySuggestion());
+
     registerCommands();
 
     //Call our command methods for the modules.
@@ -265,6 +288,8 @@ public abstract class TNECore {
     //Call onEnable for all modules loaded.
     loader.getModules().values().forEach((moduleWrapper -> moduleWrapper.getModule().disable(this)));
   }
+
+  public abstract void registerCommandHandler();
 
   public abstract void registerCommands();
 

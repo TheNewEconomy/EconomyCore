@@ -1,6 +1,4 @@
-package net.tnemc.core.manager.setup.impl;
-
-
+package net.tnemc.core.command.parameters.suggestion;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -19,33 +17,27 @@ package net.tnemc.core.manager.setup.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.manager.setup.Step;
+import net.tnemc.core.TNECore;
+import net.tnemc.core.currency.Currency;
+import org.jetbrains.annotations.NotNull;
+import revxrsal.commands.autocomplete.SuggestionProvider;
+import revxrsal.commands.command.CommandActor;
+import revxrsal.commands.command.ExecutableCommand;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * ConversionStep - Converts old economy data.
+ * CurrencySuggestion
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class ConversionStep implements Step {
+public class CurrencySuggestion implements SuggestionProvider {
 
-  /**
-   * The human-friendly identifier for this step.
-   *
-   * @return the human-friendly identifier for this step.
-   */
   @Override
-  public String identifier() {
-    return "Conversion";
-  }
-
-  /**
-   * Runs this step.
-   *
-   * @return True if this step ran successfully, otherwise false.
-   */
-  @Override
-  public boolean run() {
-    return false;
+  public @NotNull Collection<String> getSuggestions(@NotNull List<String> list, @NotNull CommandActor commandActor, @NotNull ExecutableCommand executableCommand) throws Throwable {
+    return TNECore.eco().currency().currencies().stream().map(Currency::getIdentifier).collect(Collectors.toList());
   }
 }

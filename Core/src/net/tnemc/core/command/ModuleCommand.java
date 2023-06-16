@@ -19,6 +19,7 @@ package net.tnemc.core.command;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.command.args.ArgumentsParser;
+import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.scheduler.ChoreExecution;
 import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.io.message.MessageData;
@@ -38,8 +39,7 @@ import java.util.Optional;
  */
 public class ModuleCommand extends BaseCommand {
 
-  public static void onAvailable(ArgumentsParser parser) {
-    final String url = (parser.args().length > 0)? parser.args()[0] : TNECore.coreURL;
+  public static void onAvailable(CmdSource<?> sender, String url) {
 
     TNECore.server().scheduler().createDelayedTask(()->{
 
@@ -47,22 +47,20 @@ public class ModuleCommand extends BaseCommand {
 
       final MessageData msg = new MessageData("Messages.Module.AvailableHeader");
       msg.addReplacement("$url", url);
-      parser.sender().message(msg);
+      sender.message(msg);
 
       for(ModuleFile file : available) {
 
         final MessageData entry = new MessageData("Messages.Module.AvailableEntry");
         entry.addReplacement("$module", file.getName());
         entry.addReplacement("$version", file.getVersion());
-        parser.sender().message(entry);
+        sender.message(entry);
       }
 
     }, new ChoreTime(0), ChoreExecution.SECONDARY);
   }
 
-  public static void onDownload(ArgumentsParser parser) {
-    final String url = (parser.args().length > 1)? parser.args()[1] : TNECore.coreURL;
-    final String moduleName = parser.args()[0].toLowerCase().trim();
+  public static void onDownload(CmdSource<?> sender, String moduleName, String url) {
 
     TNECore.server().scheduler().createDelayedTask(()->{
       TNECore.instance().moduleCache().getModules(url);
@@ -71,38 +69,32 @@ public class ModuleCommand extends BaseCommand {
       if(module.isEmpty()) {
         final MessageData entry = new MessageData("Messages.Module.Invalid");
         entry.addReplacement("$module", moduleName);
-        parser.sender().message(entry);
+        sender.message(entry);
         return;
       }
 
       if(!ModuleUpdateChecker.download(module.get().getName(), module.get().getUrl())) {
         final MessageData entry = new MessageData("Messages.Module.FailedDownload");
         entry.addReplacement("$module", moduleName);
-        parser.sender().message(entry);
+        sender.message(entry);
         return;
       }
 
       final MessageData entry = new MessageData("Messages.Module.Downloaded");
       entry.addReplacement("$module", moduleName);
-      parser.sender().message(entry);
+      sender.message(entry);
 
     }, new ChoreTime(0), ChoreExecution.SECONDARY);
   }
 
-  public static void onInfo(ArgumentsParser parser) {
-    if(parser.args().length < 1) {
-      help(parser.sender(), "module info", "Module.Info");
-      return;
-    }
-
-    final String moduleName = parser.args()[0];
+  public static void onInfo(CmdSource<?> sender, String moduleName) {
 
     final ModuleWrapper module = TNECore.loader().getModule(moduleName);
     if(module == null) {
 
       final MessageData entry = new MessageData("Messages.Module.Invalid");
       entry.addReplacement("$module", moduleName);
-      parser.sender().message(entry);
+      sender.message(entry);
       return;
     }
 
@@ -110,10 +102,10 @@ public class ModuleCommand extends BaseCommand {
     entry.addReplacement("$module", moduleName);
     entry.addReplacement("$author", module.author());
     entry.addReplacement("$version", module.version());
-    parser.sender().message(entry);
+    sender.message(entry);
   }
 
-  public static void onList(ArgumentsParser parser) {
+  public static void onList(CmdSource<?> sender) {
     final StringBuilder modules = new StringBuilder();
     TNECore.loader().getModules().forEach((key, value)->{
       if(modules.length() > 0) modules.append(", ");
@@ -122,23 +114,17 @@ public class ModuleCommand extends BaseCommand {
 
     final MessageData entry = new MessageData("Messages.Module.List");
     entry.addReplacement("$modules", modules.toString());
-    parser.sender().message(entry);
+    sender.message(entry);
   }
 
-  public static void onLoad(ArgumentsParser parser) {
-    if(parser.args().length < 1) {
-      help(parser.sender(), "module load", "Module.Load");
-      return;
-    }
-
-    final String moduleName = parser.args()[0];
+  public static void onLoad(CmdSource<?> sender, String moduleName) {
     final boolean loaded = TNECore.loader().load(moduleName);
 
     if(!loaded) {
 
       final MessageData entry = new MessageData("Messages.Module.Invalid");
       entry.addReplacement("$module", moduleName);
-      parser.sender().message(entry);
+      sender.message(entry);
       return;
     }
 
@@ -171,6 +157,6 @@ public class ModuleCommand extends BaseCommand {
     entry.addReplacement("$module", moduleName);
     entry.addReplacement("$author", author);
     entry.addReplacement("$version", version);
-    parser.sender().message(entry);
+    sender.message(entry);
   }
 }

@@ -18,6 +18,12 @@ package net.tnemc.core.utils;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.io.message.MessageData;
+import net.tnemc.menu.core.compatibility.MenuPlayer;
+
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 /**
@@ -39,5 +45,11 @@ public class PlayerHelper {
    */
   public static Pattern playerMatcher() {
     return Pattern.compile("^\\w*$");
+  }
+
+  public static void message(MenuPlayer player, final MessageData data) {
+
+    final Optional<PlayerProvider> provider = TNECore.server().findPlayer(player.identifier());
+    provider.ifPresent(playerProvider->playerProvider.message(data));
   }
 }

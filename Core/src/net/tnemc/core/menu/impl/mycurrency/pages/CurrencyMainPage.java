@@ -19,16 +19,23 @@ package net.tnemc.core.menu.impl.mycurrency.pages;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.menu.impl.shared.icons.PreviousMenuIcon;
+import net.tnemc.core.utils.PlayerHelper;
 import net.tnemc.menu.core.builder.IconBuilder;
+import net.tnemc.menu.core.compatibility.MenuPlayer;
 import net.tnemc.menu.core.icon.ActionType;
+import net.tnemc.menu.core.icon.Icon;
 import net.tnemc.menu.core.icon.action.ChatAction;
 import net.tnemc.menu.core.icon.action.DataAction;
 import net.tnemc.menu.core.icon.action.SwitchPageAction;
 import net.tnemc.menu.core.page.Page;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * CurrencyMainPage
@@ -40,45 +47,63 @@ public class CurrencyMainPage extends Page {
 
   public CurrencyMainPage() {
     super(1);
+  }
+
+  @Override
+  public Map<Integer, Icon> getIcons(MenuPlayer player) {
+    icons.clear();
+
+    icons.put(0, new PreviousMenuIcon(0, "my_eco"));
+
+    icons.put(4, IconBuilder.of(TNECore.server().stackBuilder()
+        .of("GOLD_INGOT", 1).display("Add Currency"))
+        .withAction(new SwitchPageAction(4, ActionType.ANY)).create());
 
     int i = 10;
 
     for(Currency currency : TNECore.eco().currency().currencies()) {
 
-      icons.put(0, new PreviousMenuIcon(0, "my_eco"));
-
       icons.put(i, IconBuilder.of(TNECore.server()
-                                       .stackBuilder()
-                                       .of(currency.getIconMaterial(), 1)
-                                       .display(currency.getIdentifier())
-                                       .lore(Arrays.asList("Left Click to View",
-                                                           "Middle Click to Delete",
-                                                           "Right Click to Edit"
-                                       )))
+                                      .stackBuilder()
+                                      .of(currency.getIconMaterial(), 1)
+                                      .display(currency.getIdentifier())
+                                      .lore(Arrays.asList("Left Click to View",
+                                                          "Middle Click to Delete",
+                                                          "Right Click to Edit"
+                                      )))
           .click((click)->{
-                if(click.getType().equals(ActionType.SCROLL_CLICK)) {
-                  click.getPlayer().message("Attempting to delete currency: "
-                                                + currency.getIdentifier() + ". Type \"confirm\" to "
-                                                + "delete, or anything else to not delete.");
-                }
-              })
+            if(click.getType().equals(ActionType.SCROLL_CLICK)) {
+
+              final MessageData data = new MessageData("Messages.Currency.Deleted");
+              data.addReplacement("$currency", currency.getDisplay());
+              PlayerHelper.message(click.getPlayer(), data);
+            }
+          })
           .withAction(new DataAction("cur_uid", currency.getUid()))
           .withAction(new SwitchPageAction(2, ActionType.LEFT_CLICK)) //view menu
           .withAction(new SwitchPageAction(3, ActionType.RIGHT_CLICK)) //edit menu
           .withAction(new ChatAction((callback)->{
-                if(callback.getMessage().equalsIgnoreCase("confirm")) {
-                  System.out.println("Delete currency.");
-                  if(TNECore.eco().currency().currencies().size() > 1) {
-                    //TODO: remove from currency manager and delete files.
-                  } else {
-                    //TODO: Cannot delete only currency.
-                  }
-                }
-                return true;
-              }, ActionType.SCROLL_CLICK))
+            if(callback.getMessage().equalsIgnoreCase("confirm")) {
+              if(TNECore.eco().currency().currencies().size() > 1) {
+
+                TNECore.eco().currency().delete(currency.getUid());
+
+                final MessageData data = new MessageData("Messages.Currency.Deleted");
+                data.addReplacement("$currency", currency.getDisplay());
+                PlayerHelper.message(callback.getPlayer(), data);
+              } else {
+
+                final MessageData data = new MessageData("Messages.Currency.Only");
+                data.addReplacement("$currency", currency.getDisplay());
+                PlayerHelper.message(callback.getPlayer(), data);
+              }
+            }
+            return true;
+          }, ActionType.SCROLL_CLICK))
           .create());
 
       i += 2;
     }
+    return icons;
   }
 }
