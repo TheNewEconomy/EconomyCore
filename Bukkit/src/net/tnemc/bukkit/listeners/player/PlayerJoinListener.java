@@ -56,10 +56,5 @@ public class PlayerJoinListener implements Listener {
       event.getPlayer().sendTitle("Hi John", "Enjoy your anime?", 0, 100, 0);
       event.getPlayer().chat("Hi my name is JustJohns. I like anime and furry conventions!");
     }
-
-    MessageHandler.translate(new MessageData("Locale: " + event.getPlayer().getLocale()), event.getPlayer().getUniqueId(), BukkitAudiences.create(TNE.instance()).player(event.getPlayer()));
-
-    MessageHandler.translate(new MessageData("Hello <rainbow>world</rainbow>, TNE messages just got <hover:show_text:'<red>EXTREMELY</red>'>a lot</hover> better!"), event.getPlayer().getUniqueId(), BukkitAudiences.create(TNE.instance()).player(event.getPlayer()));
-    MessageHandler.translate(new MessageData("<gradient:green:blue>Gradients are the best!</gradient>"), event.getPlayer().getUniqueId(), BukkitAudiences.create(TNE.instance()).player(event.getPlayer()));
   }
 }
