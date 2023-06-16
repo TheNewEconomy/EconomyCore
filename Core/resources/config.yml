@@ -3,157 +3,157 @@
 # License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 Core:
 
-    #DO NOT MODIFY
-    Version: "0.1.2.0"
+  #DO NOT MODIFY
+  Version: "0.1.2.0"
 
-    #Configurations relating to debugging
-    Debugging:
+  #Configurations relating to debugging
+  Debugging:
 
-        #The mode that debug should be in.
-        #Modes: Standard, Detailed, Developer
-        Mode: "Standard"
+    #The mode that debug should be in.
+    #Modes: Standard, Detailed, Developer
+    Mode: "Standard"
 
-    #All configurations relating to regions/worlds.
-    Region:
+  #All configurations relating to regions/worlds.
+  Region:
 
-        #The region mode that TNE should be using for separating balances.
-        #Valid modes: world, biome
-        Mode: "world"
+    #The region mode that TNE should be using for separating balances.
+    #Valid modes: world, biome
+    Mode: "world"
 
-        #Should TNE separate account balances by region?
-        #This will separate them based on the Mode configuration.
-        MultiRegion: false
+    #Should TNE separate account balances by region?
+    #This will separate them based on the Mode configuration.
+    MultiRegion: false
 
-        #The name of the region to use if MultiRegion is set to false.
-        #Setting to TNE_SYSTEM will let TNE decide the default region.
-        DefaultRegion: "TNE_SYSTEM"
+    #The name of the region to use if MultiRegion is set to false.
+    #Setting to TNE_SYSTEM will let TNE decide the default region.
+    DefaultRegion: "TNE_SYSTEM"
 
-        #Should TNE automatically group the world's realms with the main overworld world.
-        #Example: Setting this to true would make world, world_nether and world_the_end share balances automatically.
-        GroupRealms: true
+    #Should TNE automatically group the world's realms with the main overworld world.
+    #Example: Setting this to true would make world, world_nether and world_the_end share balances automatically.
+    GroupRealms: true
 
-        Sharing:
-            #worldname: share_balances_with_this_world_name
+    Sharing:
+      #worldname: share_balances_with_this_world_name
 
-    #All configurations relating to the server in general.
-    Server:
+  #All configurations relating to the server in general.
+  Server:
 
-        #Should TNE disable mob drops that are valid item currencies?
-        MobDrop: true
+    #Should TNE disable mob drops that are valid item currencies?
+    MobDrop: true
 
-        #Should experience gaining be disabled? This will help for servers that use Experience as currency.
-        ExperienceGain: false
+    #Should experience gaining be disabled? This will help for servers that use Experience as currency.
+    ExperienceGain: false
 
-        #The name of this server for data-related purposes. Max length is 100 characters.
-        Name: "Main Server"
+    #The name of this server for data-related purposes. Max length is 100 characters.
+    Name: "Main Server"
 
-        #All configurations relating to the server's economy account.
-        Account:
+    #All configurations relating to the server's economy account.
+    Account:
 
-            #Enable the server account?
-            Enabled: true
+      #Enable the server account?
+      Enabled: true
 
-            #The name of the server account. Max length is 100 characters.
-            Name: "Server_Account"
+      #The name of the server account. Max length is 100 characters.
+      Name: "Server_Account"
 
-            #The starting balance for the server account.
-            Balance: 500
+      #The starting balance for the server account.
+      Balance: 500
 
-    #All configurations relating to TNE commands
-    #TODO: Implement this configuration
-    Commands:
+  #All configurations relating to TNE commands
+  #TODO: Implement this configuration
+  Commands:
 
-        #Configurations relating to the money top command.
-        Top:
+    #Configurations relating to the money top command.
+    Top:
 
-          #How often should the data used for /baltop be refreshed?
-          #This is in seconds.
-          Refresh: 1200
+      #How often should the data used for /baltop be refreshed?
+      #This is in seconds.
+      Refresh: 1200
 
-          #A list of values to use to exclude certain users from baltop if the username contains these values.
-          Exclusions:
-            - "town-%"
-            - "nation-%"
-            - "faction-%"
-            - "towny-%"
+      #A list of values to use to exclude certain users from baltop if the username contains these values.
+      Exclusions:
+      - "town-%"
+      - "nation-%"
+      - "faction-%"
+      - "towny-%"
 
-        #Extra configurations regarding the pay command
-        Pay:
+    #Extra configurations regarding the pay command
+    Pay:
 
-          #Can players use /pay on offline players? May result in additional polling requests to Mojang"s API, which
-          #could result in slower response times.
-          Offline: false
+      #Can players use /pay on offline players? May result in additional polling requests to Mojang"s API, which
+      #could result in slower response times.
+      Offline: false
 
-          #How close to another player someone must be, in blocks, in order to use /pay on them. Set to 0 to disable.
-          Radius: 0
+      #How close to another player someone must be, in blocks, in order to use /pay on them. Set to 0 to disable.
+      Radius: 0
+  
+  #All configurations relating to update checking
+  #TODO: Implement this configuration
+  Update:
+  
+    #Should TNE check for updates?
+    Check: true
     
-    #All configurations relating to update checking
-    #TODO: Implement this configuration
-    Update:
-    
-        #Should TNE check for updates?
-        Check: true
-        
-        #Should TNE notify any users with the tne.admin node of TNE updates on join?
-        Notify: true
+    #Should TNE notify any users with the tne.admin node of TNE updates on join?
+    Notify: true
 
-    #All configurations relating to the transaction system.
-    Transactions:
+  #All configurations relating to the transaction system.
+  Transactions:
 
-        #The time format to use when displaying transaction history data.
-        Format: "M, d y"
+    #The time format to use when displaying transaction history data.
+    Format: "M, d y"
 
-        #The timezone to use for transactions.
-        Timezone: "US/Eastern"
+    #The timezone to use for transactions.
+    Timezone: "US/Eastern"
 
-        #Configurations relating to tracking large transactions
-        Tracking:
+    #Configurations relating to tracking large transactions
+    Tracking:
 
-            #If large transaction tracking is enabled or not.
-            Enabled: true
+      #If large transaction tracking is enabled or not.
+      Enabled: true
 
-            #The threshold to mark a transaction for tracking.
-            Amount: "400"
+      #The threshold to mark a transaction for tracking.
+      Amount: "400"
 
-        #Configurations relating to pay transactions.
-        Pay:
+    #Configurations relating to pay transactions.
+    Pay:
 
-            #Tax-related configurations.
-            Tax:
+      #Tax-related configurations.
+      Tax:
 
-                #If this tax is enabled.
-                Enabled: false
+        #If this tax is enabled.
+        Enabled: false
 
-                #The tax to apply to the sender
-                #The tax may also be a percentage.
-                Sender: 0.0
+        #The tax to apply to the sender
+        #The tax may also be a percentage.
+        Sender: 0.0
 
-                #The tax to apply to the receiver
-                #The tax may also be a percentage.
-                Receiver: 0.0
+        #The tax to apply to the receiver
+        #The tax may also be a percentage.
+        Receiver: 0.0
 
-        #Configurations relating to conversion transactions.
-        Conversion:
+    #Configurations relating to conversion transactions.
+    Conversion:
 
-            #Tax-related configurations.
-            Tax:
+      #Tax-related configurations.
+      Tax:
 
-                #If this tax is enabled.
-                Enabled: false
+        #If this tax is enabled.
+        Enabled: false
 
-                #The tax to apply to a conversion transaction.
-                #The tax may also be a percentage.
-                Rate: 0.0
+        #The tax to apply to a conversion transaction.
+        #The tax may also be a percentage.
+        Rate: 0.0
 
-    #All configurations relating to currency.
-    #TODO: Implement this configuration
-    Currency:
+  #All configurations relating to currency.
+  #TODO: Implement this configuration
+  Currency:
 
-        #Configurations relating to basic information about currencies.
-        Info:
+    #Configurations relating to basic information about currencies.
+    Info:
 
-            #Should balances in /bal and /tne money be formatted?
-            FormatMoney: true
+      #Should balances in /bal and /tne money be formatted?
+      FormatMoney: true
 
-            #Should balance in /baltop be formatted?
-            FormatTop: true
+      #Should balance in /baltop be formatted?
+      FormatTop: true

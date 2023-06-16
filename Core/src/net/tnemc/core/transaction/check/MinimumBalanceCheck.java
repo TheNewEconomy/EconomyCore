@@ -74,6 +74,11 @@ public class MinimumBalanceCheck implements TransactionCheck {
 
       final Optional<Currency> currency = TNECore.eco().currency().findCurrency(modifier.getCurrency());
 
+      System.out.println("Currency: " + currency.isPresent());
+      System.out.println("combined: " + participant.getCombinedEnding().toPlainString());
+      System.out.println("min: " + currency.get().getMinBalance().toPlainString());
+      System.out.println("combined compare: " + participant.getCombinedEnding().compareTo(currency.get().getMinBalance()));
+
       if(currency.isPresent() &&
           participant.getCombinedEnding().compareTo(currency.get().getMinBalance()) < 0) {
         return HoldingsResponse.MIN_HOLDINGS;

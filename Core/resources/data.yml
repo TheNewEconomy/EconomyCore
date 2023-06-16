@@ -3,86 +3,86 @@
 # License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 Data:
 
-    #DO NOT MODIFY
-    Version: "0.1.2.0"
+  #DO NOT MODIFY
+  Version: "0.1.2.0"
 
-    #Configurations relating to purging old data.
-    Purge:
+  #Configurations relating to purging old data.
+  Purge:
 
-        #Should old data be purged?
-        Enabled: true
+    #Should old data be purged?
+    Enabled: true
 
-        #Purge configurations relating to transactions.
-        Transaction:
+    #Purge configurations relating to transactions.
+    Transaction:
 
-            #Should archived transactions be skipped during a data purge
-            Archive: true
+      #Should archived transactions be skipped during a data purge
+      Archive: true
 
-            #The amount of days before a transaction log is purged.
-            Days: 20
+      #The amount of days before a transaction log is purged.
+      Days: 20
 
-        #Purge configurations relating to accounts
-        Accounts:
+    #Purge configurations relating to accounts
+    Accounts:
 
-            #The amount of days for a user to be logged off before purging their data?
-            Days: 90
+      #The amount of days for a user to be logged off before purging their data?
+      Days: 90
 
-    #All configurations relating to the database
-    Database:
+  #All configurations relating to the database
+  Database:
 
-        #The database type to use. Current options: MySQL, H2.
-        Type: "h2"
+    #The database type to use. Current options: MySQL, H2.
+    Type: "h2"
 
-        #The prefix to use for TheNewEconomy MySQL and H2 Tables
-        Prefix: "tne_"
+    #The prefix to use for TheNewEconomy MySQL and H2 Tables
+    Prefix: "tne_"
 
-        #The file to which all the data will be saved if using a file-based database
-        File: "Economy"
+    #The file to which all the data will be saved if using a file-based database
+    File: "Economy"
 
-        #All configurations relating to the SQL Database
-        SQL:
+    #All configurations relating to the SQL Database
+    SQL:
 
-            #The SQL host
-            Host: "localhost"
+      #The SQL host
+      Host: "localhost"
 
-            #Whether to use SSL.
-            SSL: false
+      #Whether to use SSL.
+      SSL: false
 
-            #Should public key retrieval be enabled for SQL?
-            PublicKey: false
+      #Should public key retrieval be enabled for SQL?
+      PublicKey: false
 
-            #The SQL port
-            Port: 3306
+      #The SQL port
+      Port: 3306
 
-            #The SQL database
-            DB: "TheNewEconomy"
+      #The SQL database
+      DB: "TheNewEconomy"
 
-            #Your SQL user's name
-            User: "user"
+      #Your SQL user's name
+      User: "user"
 
-            #Your SQL user's password
-            Password: "password"
+      #Your SQL user's password
+      Password: "password"
 
-    #All configurations relating to the data auto saver
-    AutoSaver:
+  #All configurations relating to the data auto saver
+  AutoSaver:
 
-        #Should TNE auto save data periodically?
-        Enabled: true
+    #Should TNE auto save data periodically?
+    Enabled: true
 
-        #The interval at which the auto saver will save data(in seconds)
-        Interval: 600
+    #The interval at which the auto saver will save data(in seconds)
+    Interval: 600
 
-    #Settings related to connection pool
-    Pool:
+  #Settings related to connection pool
+  Pool:
 
-        #The max size of our pool.
-        MaxSize: 10
+    #The max size of our pool.
+    MaxSize: 10
 
-        #The max idle amount.
-        MaxIdle: 10
+    #The max idle amount.
+    MaxIdle: 10
 
-        #The max idle lifetime.
-        MaxLife: 180000
+    #The max idle lifetime.
+    MaxLife: 180000
 
-        #The timeout time for each connection.
-        Timeout: 60000
+    #The timeout time for each connection.
+    Timeout: 60000

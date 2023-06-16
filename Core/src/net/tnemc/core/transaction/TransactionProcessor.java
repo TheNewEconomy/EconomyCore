@@ -86,6 +86,8 @@ public interface TransactionProcessor {
       if(check.isPresent()) {
         response = check.get().process(transaction);
 
+        System.out.println("Check: " + check.get().identifier() + " Result: " + response.success());
+
         if(!response.success())
           break;
       }
