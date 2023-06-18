@@ -80,7 +80,7 @@ public abstract class TNECore {
   protected File directory;
 
   //The DebugLevel that the server is currently running in.
-  private DebugLevel level = DebugLevel.STANDARD;
+  private DebugLevel level = DebugLevel.DEVELOPER;
 
   /* Key Managers and Object instances utilized with TNE */
 

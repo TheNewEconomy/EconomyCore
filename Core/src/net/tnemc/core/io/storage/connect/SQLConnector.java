@@ -19,6 +19,7 @@ package net.tnemc.core.io.storage.connect;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import net.tnemc.core.TNECore;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.io.storage.Dialect;
 import net.tnemc.core.io.storage.SQLEngine;
@@ -28,6 +29,7 @@ import net.tnemc.core.io.storage.StorageManager;
 import org.intellij.lang.annotations.Language;
 
 import javax.sql.DataSource;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -64,7 +66,7 @@ public class SQLConnector implements StorageConnector<Connection> {
     //String file, String host, int port, String database
     config.addDataSourceProperty("url",
                                  ((SQLEngine)StorageManager.instance().getEngine()).url(
-                                     DataConfig.yaml().getString("Data.Database.File"),
+                                     new File(TNECore.directory(), DataConfig.yaml().getString("Data.Database.File")).getAbsolutePath(),
                                      DataConfig.yaml().getString("Data.Database.SQL.Host"),
                                      DataConfig.yaml().getInt("Data.Database.SQL.Port"),
                                      DataConfig.yaml().getString("Data.Database.SQL.DB")

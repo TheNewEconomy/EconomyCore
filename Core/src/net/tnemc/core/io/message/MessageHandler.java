@@ -39,7 +39,6 @@ public class MessageHandler {
 
   private static MessageHandler instance;
 
-
   public MessageHandler(final TranslationProvider translator) {
     this.translator = translator;
     this.mini = MiniMessage.builder()

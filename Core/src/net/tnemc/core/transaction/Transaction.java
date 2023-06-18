@@ -25,6 +25,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.ActionSource;
+import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 
@@ -191,13 +192,14 @@ public class Transaction {
 
     boolean done = false;
 
-    for(HoldingsEntry entry : balances) {
+    for(int i = 0; i < balances.size(); i++) {
+      final HoldingsEntry entry = balances.get(i);
       HoldingsEntry ending;
-      //System.out.println("Working: " + working.toPlainString());
 
-      //System.out.println("entry bal: " + entry.getAmount().toPlainString());
-      //System.out.println("entry bal: " + entry.getType().getIdentifier());
-      //System.out.println("entry bal: " + entry.getRegion());
+      TNECore.log().debug("Working: " + working.toPlainString(), DebugLevel.DEVELOPER);
+
+      TNECore.log().debug("entry bal: " + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
+      TNECore.log().debug("entry bal: " + entry.getRegion(), DebugLevel.DEVELOPER);
 
       if(!done) {
         if(!take) {
@@ -205,18 +207,20 @@ public class Transaction {
           ending = entry.modifyGrab(modifier).modifyGrab(tax.negate());
           this.to.getEndingBalances().add(ending);
 
-          //System.out.println("End: " + ending.getAmount().toPlainString());
-          //System.out.println("End: " + ending.getType().getIdentifier());
-          //System.out.println("End: " + ending.getRegion());
+          TNECore.log().debug("End: " + ending.getAmount().toPlainString(), DebugLevel.DEVELOPER);
+          TNECore.log().debug("End: " + ending.getRegion(), DebugLevel.DEVELOPER);
           done = true;
         } else {
+
           if(entry.getAmount().compareTo(working) >= 0) {
+
             ending = entry.modifyGrab(modifier).modifyGrab(tax.negate());
             this.to.getEndingBalances().add(ending);
-            //System.out.println("break out since we are good to go with this entry");
+            TNECore.log().debug("break out since we are good to go with this entry", DebugLevel.DEVELOPER);
             done = true;
           } else {
 
+            TNECore.log().debug("Keep Working", DebugLevel.DEVELOPER);
             ending = entry.modifyGrab(entry.getAmount().multiply(new BigDecimal(-1)));
             working = working.subtract(entry.getAmount());
           }

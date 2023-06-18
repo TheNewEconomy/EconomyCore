@@ -18,7 +18,22 @@ package net.tnemc.core.io.storage.engine;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.config.DataConfig;
+import net.tnemc.core.io.storage.Dialect;
+import net.tnemc.core.io.storage.dialect.H2Dialect;
+import net.tnemc.core.io.storage.dialect.MySQLDialect;
+
 public class H2 extends StandardSQL {
+
+  public H2() {
+    super(DataConfig.yaml().getString("Data.Database.Prefix"),
+         new H2Dialect(DataConfig.yaml().getString("Data.Database.Prefix")));
+  }
+
+  @Override
+  protected void initSQLDatabales() {
+
+  }
 
   /**
    * The name of this engine.

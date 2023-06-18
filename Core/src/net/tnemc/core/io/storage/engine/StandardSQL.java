@@ -29,9 +29,9 @@ import net.tnemc.core.io.storage.Dialect;
 import net.tnemc.core.io.storage.SQLEngine;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.connect.SQLConnector;
-import net.tnemc.core.io.storage.datables.sql.SQLAccount;
-import net.tnemc.core.io.storage.datables.sql.SQLHoldings;
-import net.tnemc.core.io.storage.datables.sql.SQLReceipt;
+import net.tnemc.core.io.storage.datables.sql.standard.SQLAccount;
+import net.tnemc.core.io.storage.datables.sql.standard.SQLHoldings;
+import net.tnemc.core.io.storage.datables.sql.standard.SQLReceipt;
 import net.tnemc.core.io.storage.dialect.MySQLDialect;
 import net.tnemc.core.transaction.Receipt;
 import org.intellij.lang.annotations.Language;
@@ -48,11 +48,11 @@ import java.util.Map;
  * @since 0.1.2.0
  */
 public abstract class StandardSQL implements SQLEngine {
-  
-  private final Map<Class<?>, Datable<?>> datables = new HashMap<>();
 
-  private final Dialect dialect;
-  private final String prefix;
+  protected final Map<Class<?>, Datable<?>> datables = new HashMap<>();
+
+  protected final Dialect dialect;
+  protected final String prefix;
 
   public StandardSQL() {
     this(DataConfig.yaml().getString("Data.Database.Prefix"),
@@ -62,6 +62,11 @@ public abstract class StandardSQL implements SQLEngine {
   public StandardSQL(final String prefix, Dialect dialect) {
     this.dialect = dialect;
     this.prefix = prefix;
+
+    initSQLDatabales();
+  }
+
+  protected void initSQLDatabales() {
 
     //add our datables.
     final SQLAccount account = new SQLAccount();

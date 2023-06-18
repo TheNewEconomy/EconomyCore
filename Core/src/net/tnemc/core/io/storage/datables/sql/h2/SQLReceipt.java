@@ -1,4 +1,4 @@
-package net.tnemc.core.io.storage.datables.sql;
+package net.tnemc.core.io.storage.datables.sql.h2;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar

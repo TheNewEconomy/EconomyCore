@@ -31,7 +31,7 @@ Data:
   Database:
 
     #The database type to use. Current options: MySQL, H2.
-    Type: "h2"
+    Type: "mysql"
 
     #The prefix to use for TheNewEconomy MySQL and H2 Tables
     Prefix: "tne_"

@@ -30,66 +30,66 @@ public class MySQLDialect implements Dialect {
 
   //The load and save queries
   @Language("SQL")
-  private final String saveName;
+  protected String saveName;
 
   @Language("SQL")
-  private final String loadAccounts;
+  protected String loadAccounts;
 
   @Language("SQL")
-  private final String loadAccount;
+  protected String loadAccount;
 
   @Language("SQL")
-  private final String saveAccount;
+  protected String saveAccount;
 
   @Language("SQL")
-  private final String loadNonPlayer;
+  protected String loadNonPlayer;
 
   @Language("SQL")
-  private final String saveNonPlayer;
+  protected String saveNonPlayer;
 
   @Language("SQL")
-  private final String loadPlayer;
+  protected String loadPlayer;
 
   @Language("SQL")
-  private final String savePlayer;
+  protected String savePlayer;
 
   @Language("SQL")
-  private final String loadMembers;
+  protected String loadMembers;
 
   @Language("SQL")
-  private final String saveMember;
+  protected String saveMember;
 
   @Language("SQL")
-  private final String loadHoldings;
+  protected String loadHoldings;
 
   @Language("SQL")
-  private final String saveHolding;
+  protected String saveHolding;
 
   @Language("SQL")
-  private final String loadReceipts;
+  protected String loadReceipts;
 
   @Language("SQL")
-  private final String saveReceipt;
+  protected String saveReceipt;
 
   @Language("SQL")
-  private final String loadReceiptHolding;
+  protected String loadReceiptHolding;
 
   @Language("SQL")
-  private final String saveReceiptHolding;
+  protected String saveReceiptHolding;
 
   @Language("SQL")
-  private final String loadParticipants;
+  protected String loadParticipants;
 
   @Language("SQL")
-  private final String saveParticipant;
+  protected String saveParticipant;
 
   @Language("SQL")
-  private final String loadModifiers;
+  protected String loadModifiers;
 
   @Language("SQL")
-  private final String saveModifier;
+  protected String saveModifier;
 
-  private final String prefix;
+  protected String prefix;
 
   public MySQLDialect(final String prefix) {
     this.prefix = prefix;
