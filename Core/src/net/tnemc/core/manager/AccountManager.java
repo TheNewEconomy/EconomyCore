@@ -297,6 +297,10 @@ public class AccountManager {
     addAccountStatus(new AccountRestrictedStatus());
   }
 
+  public EnhancedHashMap<String, AccountStatus> getStatuses() {
+    return statuses;
+  }
+
   public EnhancedHashMap<String, Account> getAccounts() {
     return accounts;
   }

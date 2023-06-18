@@ -17,9 +17,6 @@ package net.tnemc.core.io.storage.dialect;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.io.storage.Dialect;
-import org.intellij.lang.annotations.Language;
-
 /**
  * H2Dialect
  *

@@ -19,9 +19,7 @@ package net.tnemc.core.io.storage.engine;
  */
 
 import net.tnemc.core.config.DataConfig;
-import net.tnemc.core.io.storage.Dialect;
 import net.tnemc.core.io.storage.dialect.H2Dialect;
-import net.tnemc.core.io.storage.dialect.MySQLDialect;
 
 public class H2 extends StandardSQL {
 

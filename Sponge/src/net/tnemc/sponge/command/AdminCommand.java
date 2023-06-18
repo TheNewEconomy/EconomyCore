@@ -19,6 +19,8 @@ package net.tnemc.sponge.command;
  */
 
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.AccountStatus;
+import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.sponge.impl.SpongeCMDSource;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
@@ -68,7 +70,7 @@ public class AdminCommand {
   @Usage("#{Admin.Debug.Arguments}")
   @Description("#{Admin.Debug.Description}")
   @CommandPermission("tne.admin.debug")
-  public void debug(SpongeCommandActor sender, String level) {
+  public void debug(SpongeCommandActor sender, DebugLevel level) {
     net.tnemc.core.command.AdminCommand.onDebug(new SpongeCMDSource(sender), level);
   }
 
@@ -132,7 +134,7 @@ public class AdminCommand {
   @Usage("#{Admin.Status.Arguments}")
   @Description("#{Admin.Status.Description}")
   @CommandPermission("tne.admin.status")
-  public void status(SpongeCommandActor sender, Account account, @Default("") String status) {
+  public void status(SpongeCommandActor sender, Account account, @Default("normal") AccountStatus status) {
     net.tnemc.core.command.AdminCommand.onStatus(new SpongeCMDSource(sender), account, status);
   }
 

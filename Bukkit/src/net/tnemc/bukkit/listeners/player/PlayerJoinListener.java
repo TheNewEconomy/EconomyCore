@@ -18,14 +18,9 @@ package net.tnemc.bukkit.listeners.player;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import net.tnemc.bukkit.TNE;
 import net.tnemc.bukkit.impl.BukkitPlayerProvider;
 import net.tnemc.core.handlers.player.PlayerJoinHandler;
-import net.tnemc.core.io.message.MessageData;
-import net.tnemc.core.io.message.MessageHandler;
 import net.tnemc.core.utils.HandlerResponse;
-import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

@@ -79,17 +79,11 @@ public class AdminCommand extends BaseCommand {
   }
 
   //<standard/detailed/developer>
-  public static void onDebug(CmdSource<?> sender, String level) {
+  public static void onDebug(CmdSource<?> sender, DebugLevel level) {
 
-    final DebugLevel debug = switch(level.toLowerCase()) {
-      case "detailed" -> DebugLevel.DETAILED;
-      case "developer" -> DebugLevel.DEVELOPER;
-      default -> DebugLevel.STANDARD;
-    };
-
-    TNECore.instance().setLevel(debug);
+    TNECore.instance().setLevel(level);
     final MessageData data = new MessageData("Messages.Data.Debug");
-    data.addReplacement("$level", debug.name());
+    data.addReplacement("$level", level.name());
     sender.message(data);
   }
 
@@ -170,26 +164,14 @@ public class AdminCommand extends BaseCommand {
   }
 
   //<account> [status]
-  public static void onStatus(CmdSource<?> sender, Account account, String status) {
-
-    if(status.trim().equalsIgnoreCase("")) {
-
-      //We are just checking for the account's status now.
-      final MessageData data = new MessageData("Messages.Admin.Status");
-      data.addReplacement("$name", account.getName());
-      data.addReplacement("$status", account.getStatus().identifier());
-      sender.message(data);
-      return;
-    }
-
-    final AccountStatus accStatus = TNECore.eco().account().findStatus(status);
+  public static void onStatus(CmdSource<?> sender, Account account, AccountStatus status) {
 
     //Set the account's status to the new one.
-    account.setStatus(accStatus);
+    account.setStatus(status);
 
     final MessageData data = new MessageData("Messages.Admin.StatusChange");
     data.addReplacement("$name", account.getName());
-    data.addReplacement("$status", accStatus.identifier());
+    data.addReplacement("$status", status.identifier());
     sender.message(data);
   }
 

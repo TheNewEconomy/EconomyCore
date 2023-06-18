@@ -20,6 +20,8 @@ package net.tnemc.bukkit.command;
 
 import net.tnemc.bukkit.impl.BukkitCMDSource;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.AccountStatus;
+import net.tnemc.core.compatibility.log.DebugLevel;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.DefaultFor;
@@ -68,7 +70,7 @@ public class AdminCommand {
   @Usage("#{Admin.Debug.Arguments}")
   @Description("#{Admin.Debug.Description}")
   @CommandPermission("tne.admin.debug")
-  public void debug(BukkitCommandActor sender, String level) {
+  public void debug(BukkitCommandActor sender, DebugLevel level) {
     net.tnemc.core.command.AdminCommand.onDebug(new BukkitCMDSource(sender), level);
   }
 
@@ -132,7 +134,7 @@ public class AdminCommand {
   @Usage("#{Admin.Status.Arguments}")
   @Description("#{Admin.Status.Description}")
   @CommandPermission("tne.admin.status")
-  public void status(BukkitCommandActor sender, Account account, @Default("") String status) {
+  public void status(BukkitCommandActor sender, Account account, @Default("normal") AccountStatus status) {
     net.tnemc.core.command.AdminCommand.onStatus(new BukkitCMDSource(sender), account, status);
   }
 

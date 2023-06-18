@@ -19,6 +19,7 @@ package net.tnemc.core;
  */
 
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.api.BaseAPI;
 import net.tnemc.core.api.CallbackManager;
@@ -27,9 +28,13 @@ import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.command.parameters.resolver.AccountResolver;
 import net.tnemc.core.command.parameters.resolver.BigDecimalResolver;
 import net.tnemc.core.command.parameters.resolver.CurrencyResolver;
+import net.tnemc.core.command.parameters.resolver.DebugResolver;
+import net.tnemc.core.command.parameters.resolver.StatusResolver;
 import net.tnemc.core.command.parameters.suggestion.AccountSuggestion;
 import net.tnemc.core.command.parameters.suggestion.CurrencySuggestion;
+import net.tnemc.core.command.parameters.suggestion.DebugSuggestion;
 import net.tnemc.core.command.parameters.suggestion.RegionSuggestion;
+import net.tnemc.core.command.parameters.suggestion.StatusSuggestion;
 import net.tnemc.core.compatibility.LogProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.log.DebugLevel;
@@ -245,10 +250,14 @@ public abstract class TNECore {
 
     //Value Resolvers
     command.registerValueResolver(Account.class, new AccountResolver());
+    command.registerValueResolver(AccountStatus.class, new StatusResolver());
+    command.registerValueResolver(DebugLevel.class, new DebugResolver());
     command.registerValueResolver(Currency.class, new CurrencyResolver());
     command.registerValueResolver(BigDecimal.class, new BigDecimalResolver());
 
     //Annotation
+    command.getAutoCompleter().registerParameterSuggestions(AccountStatus.class, new StatusSuggestion());
+    command.getAutoCompleter().registerParameterSuggestions(DebugLevel.class, new DebugSuggestion());
     command.getAutoCompleter().registerParameterSuggestions(RegionGroup.class, new RegionSuggestion());
     command.getAutoCompleter().registerParameterSuggestions(Account.class, new AccountSuggestion());
     command.getAutoCompleter().registerParameterSuggestions(Currency.class, new CurrencySuggestion());
