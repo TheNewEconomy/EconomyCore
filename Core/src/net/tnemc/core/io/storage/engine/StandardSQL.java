@@ -17,7 +17,6 @@ package net.tnemc.core.io.storage.engine;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.GeyserAccount;
 import net.tnemc.core.account.NonPlayerAccount;

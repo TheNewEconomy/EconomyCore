@@ -19,11 +19,14 @@ package net.tnemc.bukkit.hook.economy;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.source.PluginSource;
 import net.tnemc.core.compatibility.log.DebugLevel;
+import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
 import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
@@ -86,7 +89,11 @@ public class TNEVault implements Economy {
    * @return Human-readable string describing amount
    */
   public String format(double amount) {
-    return "";
+    return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
+                                                            TNECore.eco().currency().getDefaultCurrency().getUid(),
+                                                            BigDecimal.valueOf(amount),
+                                                            EconomyManager.NORMAL
+    ));
   }
 
   /**

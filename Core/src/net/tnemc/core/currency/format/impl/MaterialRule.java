@@ -44,7 +44,7 @@ public class MaterialRule implements FormatRule {
 
 
     final Optional<Currency> currency = entry.currency();
-    if(account.isPlayer() && currency.isPresent() && currency.get() instanceof ItemCurrency) {
+    if(account != null && account.isPlayer() && currency.isPresent() && currency.get() instanceof ItemCurrency) {
       final Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)account).getUUID());
       if(provider.isPresent()) {
         for(Denomination denomination : currency.get().getDenominations().values()) {
