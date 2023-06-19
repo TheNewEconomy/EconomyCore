@@ -1,7 +1,6 @@
 package net.tnemc.core.utils;
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.log.DebugLevel;
 
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
