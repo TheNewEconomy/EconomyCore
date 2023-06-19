@@ -23,6 +23,7 @@ import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.format.FormatRule;
 import net.tnemc.core.utils.Monetary;
+import org.jetbrains.annotations.Nullable;
 
 import java.math.BigInteger;
 import java.util.Optional;
@@ -34,7 +35,7 @@ public class MinorNameRule implements FormatRule {
   }
 
   @Override
-  public String format(Account account, HoldingsEntry entry, String format) {
+  public String format(@Nullable Account account, HoldingsEntry entry, String format) {
 
     final Monetary monetary = entry.asMonetary();
 

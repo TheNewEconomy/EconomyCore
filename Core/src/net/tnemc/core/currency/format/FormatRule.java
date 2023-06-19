@@ -20,6 +20,7 @@ package net.tnemc.core.currency.format;
 
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a single formatting rule, which is used to add to a currency's formatting.
@@ -42,5 +43,5 @@ public interface FormatRule {
    * @param format The format string that these should be provided for.
    * @return The formatted string.
    */
-  String format(Account account, HoldingsEntry entry, String format);
+  String format(@Nullable Account account, HoldingsEntry entry, String format);
 }

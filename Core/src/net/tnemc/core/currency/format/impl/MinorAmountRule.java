@@ -21,6 +21,7 @@ package net.tnemc.core.currency.format.impl;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.currency.format.FormatRule;
+import org.jetbrains.annotations.Nullable;
 
 public class MinorAmountRule implements FormatRule {
   @Override
@@ -29,7 +30,7 @@ public class MinorAmountRule implements FormatRule {
   }
 
   @Override
-  public String format(Account account, HoldingsEntry entry, String format) {
+  public String format(@Nullable Account account, HoldingsEntry entry, String format) {
     return format.replace("<minor.amount>", entry.asMonetary().minor().toString());
   }
 }

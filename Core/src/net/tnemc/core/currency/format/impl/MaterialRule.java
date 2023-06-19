@@ -29,6 +29,7 @@ import net.tnemc.core.currency.format.FormatRule;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.item.AbstractItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -39,7 +40,7 @@ public class MaterialRule implements FormatRule {
   }
 
   @Override
-  public String format(Account account, HoldingsEntry entry, String format) {
+  public String format(@Nullable Account account, HoldingsEntry entry, String format) {
     String formatted = format;
 
 
