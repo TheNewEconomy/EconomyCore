@@ -26,7 +26,6 @@ import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.account.holdings.modify.HoldingsOperation;
 import net.tnemc.core.actions.source.PlayerSource;
-import net.tnemc.core.command.args.ArgumentsParser;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
@@ -372,7 +371,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: [page] [currency:name] [world:world] [limit:#]
-  public static void onTop(ArgumentsParser parser) {
+  public static void onTop() {
     //TODO: This
   }
 

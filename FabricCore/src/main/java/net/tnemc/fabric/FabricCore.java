@@ -41,7 +41,17 @@ public class FabricCore extends TNECore implements ModInitializer {
 	}
 
 	@Override
+	public void registerCommandHandler() {
+
+	}
+
+	@Override
 	public void registerCommands() {
+
+	}
+
+	@Override
+	public void registerCallbacks() {
 
 	}
 

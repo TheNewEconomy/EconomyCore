@@ -31,6 +31,7 @@ import net.tnemc.core.account.status.AccountNormalStatus;
 import net.tnemc.core.account.status.AccountRestrictedStatus;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.actions.response.AccountResponse;
+import net.tnemc.core.api.callback.account.AccountTypesCallback;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.io.maps.EnhancedHashMap;
@@ -69,11 +70,6 @@ public class AccountManager {
    * will have balances loaded from the database for item-based currencies.
    */
   protected final List<String> loading = new ArrayList<>();
-
-  public AccountManager() {
-    addDefaultStatuses();
-    addDefaultTypes();
-  }
 
   /**
    * Used to create a new non-player account based on the provided name.
@@ -283,6 +279,7 @@ public class AccountManager {
   public void addDefaultTypes() {
 
     //TODO: API Add third-party before this.
+    TNECore.callbacks().call(new AccountTypesCallback());
 
     addAccountType(NonPlayerAccount.class, (value)->true);
   }

@@ -33,7 +33,7 @@ public class TownAccount extends NonPlayerAccount {
 
   public TownAccount(String identifier, String name) {
     super(identifier, name);
-    this.owner = Objects.requireNonNull(TownyAPI.getInstance().getTown(name)).getMayor().getUUID();
+    //this.owner = Objects.requireNonNull(TownyAPI.getInstance().getTown(name)).getMayor().getUUID();
   }
 
   /**

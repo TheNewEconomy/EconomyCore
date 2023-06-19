@@ -58,4 +58,9 @@ public class MinestomCore extends TNECore {
   public void registerCommands() {
     //TODO: Upgrade command set to lamp
   }
+
+  @Override
+  public void registerCallbacks() {
+
+  }
 }

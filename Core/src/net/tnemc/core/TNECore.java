@@ -202,6 +202,8 @@ public abstract class TNECore {
 
     this.callbackManager = new CallbackManager();
 
+    registerCallbacks();
+
     //Register the callback listeners and callbacks for the modules
     loader.getModules().values().forEach((moduleWrapper ->{
       moduleWrapper.getModule().registerCallbacks().forEach((key, entry)->{
@@ -214,6 +216,8 @@ public abstract class TNECore {
     }));
 
     this.economyManager = new EconomyManager();
+
+    this.economyManager.init();
 
     this.economyManager.currency().load(directory, false);
     this.economyManager.currency().saveCurrenciesUUID(directory);
@@ -315,6 +319,8 @@ public abstract class TNECore {
   public abstract void registerCommandHandler();
 
   public abstract void registerCommands();
+
+  public abstract void registerCallbacks();
 
   /**
    * The implementation's {@link LogProvider}.

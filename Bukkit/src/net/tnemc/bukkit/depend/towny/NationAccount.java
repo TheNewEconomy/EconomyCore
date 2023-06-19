@@ -33,7 +33,7 @@ public class NationAccount extends NonPlayerAccount {
 
   public NationAccount(String identifier, String name) {
     super(identifier, name);
-    this.owner = Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getKing().getUUID();
+    //this.owner = Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getKing().getUUID();
   }
 
   /**

@@ -103,6 +103,11 @@ public class SpongeCore extends TNECore {
     command.register(new TransactionCommand());
   }
 
+  @Override
+  public void registerCallbacks() {
+
+  }
+
   public static SpongeCore instance() {
     return (SpongeCore)TNECore.instance();
   }

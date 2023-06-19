@@ -22,11 +22,16 @@ import net.tnemc.bukkit.command.AdminCommand;
 import net.tnemc.bukkit.command.ModuleCommand;
 import net.tnemc.bukkit.command.MoneyCommand;
 import net.tnemc.bukkit.command.TransactionCommand;
+import net.tnemc.bukkit.depend.towny.TownyHandler;
 import net.tnemc.bukkit.impl.BukkitLogProvider;
 import net.tnemc.bukkit.impl.BukkitServerProvider;
 import net.tnemc.core.TNECore;
+import net.tnemc.core.api.callback.TNECallbacks;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import revxrsal.commands.bukkit.BukkitCommandHandler;
+
+import java.util.Arrays;
 
 /**
  * BukkitCore
@@ -71,6 +76,22 @@ public class BukkitCore extends TNECore {
     command.register(new ModuleCommand());
     command.register(new MoneyCommand());
     command.register(new TransactionCommand());
+  }
+
+  @Override
+  public void registerCallbacks() {
+    this.callbackManager.addConsumer(TNECallbacks.ACCOUNT_TYPES, (callback->{
+
+      if(Bukkit.getPluginManager().getPlugin("Towny") != null) {
+        log().debug("Adding Towny Account Types");
+        TownyHandler.addTypes();
+      }
+
+      if(Bukkit.getPluginManager().getPlugin("Factions") != null) {
+        log().debug("Adding Factions Account Types");
+      }
+      return false;
+    }));
   }
 
   public static BukkitCore instance() {

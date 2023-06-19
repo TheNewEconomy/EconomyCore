@@ -40,6 +40,13 @@ public class TownCheck implements AccountTypeCheck {
    */
   @Override
   public Function<String, Boolean> check() {
-    return value -> value.contains(TownySettings.getTownAccountPrefix());
+    return value -> {
+      try {
+        return value.contains(TownySettings.getTownAccountPrefix());
+      } catch(Exception e) {
+        //towny probably isn't enabled yet, or something went wrong enabling it.
+        return false;
+      }
+    };
   }
 }

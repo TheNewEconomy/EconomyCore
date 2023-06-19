@@ -20,12 +20,12 @@ package net.tnemc.core.api.callback.account;
 import net.tnemc.core.api.callback.TNECallback;
 
 /**
- * AccountTypesLoad - This callback has no methods, or parameters
+ * AccountTypesCallback - This callback has no methods, or parameters
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class AccountTypesLoad implements TNECallback {
+public class AccountTypesCallback implements TNECallback {
 
   
   /**

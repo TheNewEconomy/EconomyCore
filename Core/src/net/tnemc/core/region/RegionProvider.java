@@ -106,7 +106,7 @@ public class RegionProvider {
    */
   @NotNull
   public String resolve(final String region) {
-    return sharing.getOrDefault(region, region);
+    return sharing.getOrDefault(region, defaultRegion());
   }
 
   public String defaultRegion() {

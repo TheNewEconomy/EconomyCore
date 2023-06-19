@@ -75,6 +75,13 @@ public class EconomyManager {
     this.transactionManager = new TransactionManager();
     this.regionProvider = new RegionProvider(MainConfig.yaml().getBoolean("Core.Region.GroupRealms"),
                                              MainConfig.yaml().getString("Core.Region.Mode"));
+  }
+
+  public void init() {
+
+    //Init our default account manager stuff.
+    this.accountManager.addDefaultStatuses();
+    this.accountManager.addDefaultTypes();
 
     //Add our core handlers
     addHandler(new VirtualHandler());

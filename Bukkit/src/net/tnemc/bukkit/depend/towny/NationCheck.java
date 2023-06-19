@@ -39,6 +39,13 @@ public class NationCheck implements AccountTypeCheck {
    */
   @Override
   public Function<String, Boolean> check() {
-    return value -> value.contains(TownySettings.getNationAccountPrefix());
+    return value -> {
+      try {
+        return value.contains(TownySettings.getNationAccountPrefix());
+      } catch(Exception e) {
+        //towny probably isn't enabled yet, or something went wrong enabling it.
+        return false;
+      }
+    };
   }
 }

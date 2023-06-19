@@ -19,9 +19,12 @@ package net.tnemc.folia;
  */
 
 import net.tnemc.bukkit.command.MoneyCommand;
+import net.tnemc.bukkit.depend.towny.TownyHandler;
 import net.tnemc.bukkit.impl.BukkitLogProvider;
 import net.tnemc.core.TNECore;
+import net.tnemc.core.api.callback.TNECallbacks;
 import net.tnemc.folia.impl.FoliaServerProvider;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import revxrsal.commands.bukkit.BukkitCommandHandler;
 
@@ -60,6 +63,21 @@ public class FoliaCore extends TNECore {
     //command.register(new ModuleCommand());
     command.register(new MoneyCommand());
     //command.register(new TransactionCommand());
+  }
+
+  @Override
+  public void registerCallbacks() {
+    this.callbackManager.addConsumer(TNECallbacks.ACCOUNT_TYPES, (callback->{
+      if(Bukkit.getPluginManager().isPluginEnabled("Towny")) {
+        log().debug("Adding Towny Account Types");
+        TownyHandler.addTypes();
+      }
+
+      if(Bukkit.getPluginManager().isPluginEnabled("Factions")) {
+        log().debug("Adding Factions Account Types");
+      }
+      return false;
+    }));
   }
 
   public static FoliaCore instance() {

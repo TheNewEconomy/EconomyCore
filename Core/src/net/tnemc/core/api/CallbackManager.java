@@ -19,6 +19,7 @@ package net.tnemc.core.api;
 
 import net.tnemc.core.api.callback.TNECallback;
 import net.tnemc.core.api.callback.TNECallbacks;
+import net.tnemc.core.api.callback.account.AccountTypesCallback;
 import net.tnemc.core.api.callback.currency.CurrencyLoadCallback;
 import net.tnemc.core.api.callback.currency.DenominationLoadCallback;
 
@@ -43,6 +44,7 @@ public class CallbackManager {
   protected void initDefaultCallbacks() {
 
     //Account Callbacks
+    callbacks.put(TNECallbacks.ACCOUNT_TYPES.id(), new CallbackEntry(AccountTypesCallback.class));
 
     //Transaction Callbacks
 
