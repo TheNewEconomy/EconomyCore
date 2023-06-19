@@ -35,6 +35,13 @@ public interface StorageEngine {
   String name();
 
   /**
+   * Called after the connection is initialized, so we can do any actions that need done immediately
+   * after connecting.
+   * @param connector The {@link StorageConnector connector} used for initialization.
+   */
+  void initialize(StorageConnector<?> connector);
+
+  /**
    * Used to reset all data for this engine.
    *
    * @param connector The storage connector to use for this transaction.

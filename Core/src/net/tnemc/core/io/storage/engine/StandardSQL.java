@@ -17,6 +17,7 @@ package net.tnemc.core.io.storage.engine;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.GeyserAccount;
 import net.tnemc.core.account.NonPlayerAccount;
@@ -78,6 +79,25 @@ public abstract class StandardSQL implements SQLEngine {
 
     datables.put(HoldingsEntry.class, new SQLHoldings());
     datables.put(Receipt.class, new SQLReceipt());
+  }
+
+  /**
+   * Called after the connection is initialized, so we can do any actions that need done immediately
+   * after connecting.
+   */
+  @Override
+  public void initialize(StorageConnector<?> connector) {
+    if(connector instanceof SQLConnector) {
+      ((SQLConnector)connector).executeUpdate(dialect().accountsTable(), new Object[]{});
+      ((SQLConnector)connector).executeUpdate(dialect().accountsNonPlayerTable(), new Object[]{});
+      ((SQLConnector)connector).executeUpdate(dialect().accountsPlayerTable(), new Object[]{});
+      ((SQLConnector)connector).executeUpdate(dialect().accountMembersTable(), new Object[]{});
+      ((SQLConnector)connector).executeUpdate(dialect().holdingsTable(), new Object[]{});
+      ((SQLConnector)connector).executeUpdate(dialect().receiptsTable(), new Object[]{});
+      ((SQLConnector)connector).executeUpdate(dialect().receiptsHoldingsTable(), new Object[]{});
+      ((SQLConnector)connector).executeUpdate(dialect().receiptsParticipantsTable(), new Object[]{});
+      ((SQLConnector)connector).executeUpdate(dialect().receiptsModifiersTable(), new Object[]{});
+    }
   }
 
   /**

@@ -70,6 +70,7 @@ public class StorageManager {
 
     //Initialize our connection.
     this.connector.initialize();
+    this.engine.initialize(this.connector);
   }
 
   public static StorageManager instance() {

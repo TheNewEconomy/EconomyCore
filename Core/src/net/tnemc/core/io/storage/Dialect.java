@@ -27,6 +27,24 @@ import org.intellij.lang.annotations.Language;
  */
 public interface Dialect {
 
+  @Language("SQL") String accountsTable();
+
+  @Language("SQL") String accountsNonPlayerTable();
+
+  @Language("SQL") String accountsPlayerTable();
+
+  @Language("SQL") String accountMembersTable();
+
+  @Language("SQL") String holdingsTable();
+
+  @Language("SQL") String receiptsTable();
+
+  @Language("SQL") String receiptsHoldingsTable();
+
+  @Language("SQL") String receiptsParticipantsTable();
+
+  @Language("SQL") String receiptsModifiersTable();
+
   @Language("SQL") String accountPurge(final int days);
 
   @Language("SQL") String receiptPurge(final int days);
