@@ -10,8 +10,8 @@ Core:
   Debugging:
 
     #The mode that debug should be in.
-    #Modes: Standard, Detailed, Developer
-    Mode: "Standard"
+    #Modes: Off, Standard, Detailed, Developer
+    Mode: "Off"
 
   #All configurations relating to regions/worlds.
   Region:

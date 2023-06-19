@@ -19,6 +19,10 @@ package net.tnemc.core.compatibility.log;
  */
 public enum DebugLevel {
   /**
+   * Off debug level. This disables debug mode.
+   */
+  OFF((byte)0, "Off"),
+  /**
    * Standard debug level. This should include any inform calls and any error calls containing exceptions.
    */
   STANDARD((byte)1, "Standard"),
