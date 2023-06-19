@@ -22,6 +22,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.CurrencyHoldings;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.RegionHoldings;
+import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageConnector;
@@ -137,6 +138,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
     final Collection<HoldingsEntry> holdings = new ArrayList<>();
 
     if(connector instanceof SQLConnector && identifier != null) {
+      TNECore.log().debug("SQLHoldings-loadAll-Account ID:" + identifier, DebugLevel.DEVELOPER);
       try(ResultSet result = ((SQLConnector)connector).executeQuery(((SQLConnector)connector).dialect().loadHoldings(),
                                                                     new Object[] {
                                                                         identifier
@@ -148,6 +150,9 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
                                                         UUID.fromString(result.getString("currency")),
                                                         result.getBigDecimal("holdings"),
                                                         Identifier.fromID(result.getString("holdings_type")));
+
+          TNECore.log().debug("SQLHoldings-loadAll-Entry ID:" + entry.getHandler(), DebugLevel.DEVELOPER);
+          TNECore.log().debug("SQLHoldings-loadAll-Entry AMT:" + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
           holdings.add(entry);
         }
       } catch(SQLException e) {

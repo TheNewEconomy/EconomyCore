@@ -103,8 +103,8 @@ public class InventoryHandler implements HoldingsHandler {
    */
   @Override
   public HoldingsEntry getHoldings(Account account, String region, Currency currency, CurrencyType type) {
-    if((currency instanceof ItemCurrency) && account.isPlayer()) {
-      if(!TNECore.server().online(account.getIdentifier()) ||
+    if((currency instanceof ItemCurrency)) {
+      if(!account.isPlayer() || !TNECore.server().online(account.getIdentifier()) ||
           TNECore.eco().account().getLoading().contains(((PlayerAccount)account).getUUID().toString())) {
 
         //Offline players have their balances saved to their wallet so check it.
@@ -131,7 +131,7 @@ public class InventoryHandler implements HoldingsHandler {
       return new HoldingsEntry(region, currency.getUid(),
                                TNECore.server().itemCalculations().calculateHoldings(data), identifier());
     }
-    //Non-players can't have e-chest holdings so this is always zero.
+    //not item currency? then return zero... should never happen.
     return new HoldingsEntry(region,
                              currency.getUid(),
                              BigDecimal.ZERO,

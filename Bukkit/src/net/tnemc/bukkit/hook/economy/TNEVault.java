@@ -23,6 +23,7 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.source.PluginSource;
+import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
 import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
@@ -174,10 +175,14 @@ public class TNEVault implements Economy {
    */
   @Deprecated
   public double getBalance(String name, String world) {
+    TNECore.log().debug("Vault Balance call. Name: " + name + " World: " + world, DebugLevel.STANDARD);
     final Optional<Account> account = TNECore.eco().account().findAccount(name);
     if(account.isPresent()) {
+      TNECore.log().debug("Vault Balance call. Account exists. Name:" + name, DebugLevel.STANDARD);
+      TNECore.log().debug("Vault Balance call. Balance:" + account.get().getHoldingsTotal(world, TNECore.eco().currency().getDefaultCurrency(world).getUid()).doubleValue(), DebugLevel.STANDARD);
       return account.get().getHoldingsTotal(world, TNECore.eco().currency().getDefaultCurrency(world).getUid()).doubleValue();
     }
+    TNECore.log().debug("Vault Balance call. Account doesn't exist. Name:" + name, DebugLevel.STANDARD);
     return 0;
   }
 
