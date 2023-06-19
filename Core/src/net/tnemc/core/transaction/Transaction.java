@@ -197,8 +197,6 @@ public class Transaction {
       final HoldingsEntry entry = balances.get(i);
       HoldingsEntry ending;
 
-      TNECore.log().debug("Working: " + working.toPlainString(), DebugLevel.DEVELOPER);
-
       TNECore.log().debug("entry bal: " + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
       TNECore.log().debug("entry bal: " + entry.getRegion(), DebugLevel.DEVELOPER);
 
@@ -212,6 +210,8 @@ public class Transaction {
           TNECore.log().debug("End: " + ending.getRegion(), DebugLevel.DEVELOPER);
           done = true;
         } else {
+
+          TNECore.log().debug("Working: " + working.toPlainString(), DebugLevel.DEVELOPER);
 
           if(entry.getAmount().compareTo(working) >= 0) {
             TNECore.log().debug("Value: " + working.toPlainString(), DebugLevel.DEVELOPER);
