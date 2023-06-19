@@ -19,6 +19,7 @@ package net.tnemc.core.currency.calculations;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
@@ -96,11 +97,13 @@ public class CalculationData<I> {
 
     if(contains == amount) {
       inventoryMaterials.remove(denomination.weight());
+      TNECore.log().debug("CalculationData - removeMaterials - equals: Everything equals, remove all materials.", DebugLevel.DEVELOPER);
       TNECore.server().calculations().removeAll(stack, inventory);
       return;
     }
 
     final int left = contains - amount;
+    TNECore.log().debug("CalculationData - removeMaterials - left: " + left, DebugLevel.DEVELOPER);
     inventoryMaterials.put(denomination.weight(), left);
     final AbstractItemStack<Object> stackClone = stack.amount(amount);
     TNECore.server().calculations().removeItem(stackClone, inventory);

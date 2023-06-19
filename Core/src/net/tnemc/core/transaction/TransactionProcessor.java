@@ -22,6 +22,7 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.actions.EconomyResponse;
+import net.tnemc.core.compatibility.log.DebugLevel;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -63,8 +64,6 @@ public interface TransactionProcessor {
       Optional<Account> to = TNECore.eco().account().findAccount(transaction.getTo().getId());
       if(to.isPresent()) {
         for(HoldingsEntry entry : transaction.getTo().getEndingBalances()) {
-          //System.out.println("Process: " + entry.getType().getIdentifier());
-          //System.out.println("Process: " + entry.getAmount().toPlainString());
           to.get().setHoldings(entry, entry.getHandler());
         }
       }
@@ -86,7 +85,7 @@ public interface TransactionProcessor {
       if(check.isPresent()) {
         response = check.get().process(transaction);
 
-        System.out.println("Check: " + check.get().identifier() + " Result: " + response.success());
+        TNECore.log().debug("Check: " + check.get().identifier() + " Result: " + response.success(), DebugLevel.DEVELOPER);
 
         if(!response.success())
           break;
