@@ -215,9 +215,9 @@ public class Transaction {
         } else {
 
           if(entry.getAmount().compareTo(working) >= 0) {
-            TNECore.log().debug("Value: " + modifier.getModifier().toPlainString(), DebugLevel.DEVELOPER);
+            TNECore.log().debug("Value: " + working.toPlainString(), DebugLevel.DEVELOPER);
 
-            ending = entry.modifyGrab(modifier).modifyGrab(tax.negate());
+            ending = entry.modifyGrab(working.multiply(new BigDecimal(-1))).modifyGrab(tax.negate());
             this.to.getEndingBalances().add(ending);
             TNECore.log().debug("break out since we are good to go with this entry", DebugLevel.DEVELOPER);
             done = true;
