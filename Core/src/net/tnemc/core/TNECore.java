@@ -166,6 +166,20 @@ public abstract class TNECore {
     //Call onEnable for all modules loaded.
     loader.getModules().values().forEach((moduleWrapper -> moduleWrapper.getModule().enable(this)));
 
+    //Save our default currency file
+    final File cur = new File(directory, "currency");
+    if(!cur.exists()) {
+      cur.mkdir();
+      TNECore.server().saveResource("currency/USD.yml", false);
+    }
+
+    final File usd = new File(cur, "USD");
+    if(!usd.exists()) {
+      usd.mkdirs();
+      TNECore.server().saveResource("currency/USD/one.yml", false);
+      TNECore.server().saveResource("currency/USD/penny.yml", false);
+    }
+
     this.config = new MainConfig();
     this.data = new DataConfig();
     this.messageConfig = new MessageConfig();
