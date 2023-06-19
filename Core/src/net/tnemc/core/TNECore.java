@@ -245,7 +245,7 @@ public abstract class TNECore {
     //register our commands
     registerCommandHandler();
 
-    //Custom Parameters: Account, Currency, BigDecimal(?)
+    //Custom Parameters:
     //TODO: Register custom validators
 
     //Value Resolvers

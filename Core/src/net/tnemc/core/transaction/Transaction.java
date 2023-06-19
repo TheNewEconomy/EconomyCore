@@ -185,10 +185,12 @@ public class Transaction {
                            .calculateTax(modifier.getModifier()) : BigDecimal.ZERO;
 
     //System.out.println("Balances: " + balances.size());
-    BigDecimal working = modifier.getModifier();
-    final boolean take = (working.compareTo(BigDecimal.ZERO) < 0);
+    BigDecimal working = null;
+    final boolean take = (modifier.getModifier().compareTo(BigDecimal.ZERO) < 0);
 
-    working = working.multiply(new BigDecimal(-1));
+    if(take) {
+      working = modifier.getModifier().multiply(new BigDecimal(-1));
+    }
 
     boolean done = false;
 
@@ -213,6 +215,7 @@ public class Transaction {
         } else {
 
           if(entry.getAmount().compareTo(working) >= 0) {
+            TNECore.log().debug("Value: " + modifier.getModifier().toPlainString(), DebugLevel.DEVELOPER);
 
             ending = entry.modifyGrab(modifier).modifyGrab(tax.negate());
             this.to.getEndingBalances().add(ending);
@@ -220,9 +223,14 @@ public class Transaction {
             done = true;
           } else {
 
-            TNECore.log().debug("Keep Working", DebugLevel.DEVELOPER);
-            ending = entry.modifyGrab(entry.getAmount().multiply(new BigDecimal(-1)));
-            working = working.subtract(entry.getAmount());
+            if(i == (balances.size() - 1)) {
+              ending = entry.modifyGrab(working.multiply(new BigDecimal(-1)));
+
+            } else {
+              TNECore.log().debug("Keep Working", DebugLevel.DEVELOPER);
+              ending = entry.modifyGrab(entry.getAmount().multiply(new BigDecimal(-1)));
+              working = working.subtract(entry.getAmount());
+            }
           }
         }
       } else {
