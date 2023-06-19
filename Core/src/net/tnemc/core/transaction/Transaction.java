@@ -184,7 +184,6 @@ public class Transaction {
     final BigDecimal tax = (type.isPresent() && type.get().toTax().isPresent())? type.get().toTax().get()
                            .calculateTax(modifier.getModifier()) : BigDecimal.ZERO;
 
-    //System.out.println("Balances: " + balances.size());
     BigDecimal working = null;
     final boolean take = (modifier.getModifier().compareTo(BigDecimal.ZERO) < 0);
 

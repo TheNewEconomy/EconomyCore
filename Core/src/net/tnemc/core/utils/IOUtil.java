@@ -1,5 +1,8 @@
 package net.tnemc.core.utils;
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.compatibility.log.DebugLevel;
+
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import java.io.BufferedReader;
@@ -80,7 +83,7 @@ public class IOUtil {
       JarEntry infoFile = jar.getJarEntry(file);
 
       if(infoFile == null) {
-        System.out.println("Error encountered while loading module: " + path + ". No module.info file found.");
+        TNECore.log().error("Error encountered while loading module: " + path + ". No module.info file found.");
         return;
       }
 
@@ -90,14 +93,14 @@ public class IOUtil {
       callback.accept(Optional.ofNullable(reader));
 
     } catch(IOException ignore) {
-      System.out.println("Something went wrong during loading.");
+      TNECore.log().error("Something went wrong during loading.");
       callback.accept(Optional.empty());
     } finally {
       if(jar != null) {
         try {
           jar.close();
         } catch(IOException ignore) {
-          System.out.println("Something went wrong while closing the jar IO.");
+          TNECore.log().error("Something went wrong while closing the jar IO.");
         }
       }
 
@@ -105,7 +108,7 @@ public class IOUtil {
         try {
           in.close();
         } catch(IOException ignore) {
-          System.out.println("Something went wrong while closing the InputStream IO.");
+          TNECore.log().error("Something went wrong while closing the InputStream IO.");
         }
       }
 
@@ -113,7 +116,7 @@ public class IOUtil {
         try {
           reader.close();
         } catch(IOException ignore) {
-          System.out.println("Something went wrong while closing the BufferedReader IO.");
+          TNECore.log().error("Something went wrong while closing the BufferedReader IO.");
         }
       }
     }

@@ -23,6 +23,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsHandler;
+import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.currency.calculations.CalculationData;
@@ -111,7 +112,7 @@ public class EnderChestHandler implements HoldingsHandler {
                                                                                  currency.getUid(),
                                                                                  identifier()
         );
-        System.out.println("Getting holdings from DB");
+        TNECore.log().debug("Getting holdings from DB", DebugLevel.DEVELOPER);
 
         if(holdings.isPresent()) {
           return holdings.get();
@@ -121,7 +122,7 @@ public class EnderChestHandler implements HoldingsHandler {
                                  BigDecimal.ZERO,
                                  identifier());
       }
-      System.out.println("Getting holdings from Ender Chest");
+      TNECore.log().debug("Getting holdings from Ender Chest", DebugLevel.DEVELOPER);
       final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
                                                                  ((PlayerAccount)account).getPlayer()
                                                                      .get().inventory().getInventory(true),

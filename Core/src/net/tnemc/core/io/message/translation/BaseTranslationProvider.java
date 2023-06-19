@@ -21,6 +21,7 @@ package net.tnemc.core.io.message.translation;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
+import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.io.message.TranslationProvider;
 
@@ -68,7 +69,7 @@ public class BaseTranslationProvider implements TranslationProvider {
     String string = TNECore.instance().message().getString(messageData.getNode(), language);
 
     for(Map.Entry<String, String> replacement : messageData.getReplacements().entrySet()) {
-      System.out.println("Replace: " + replacement.getKey() + ":" + replacement.getValue());
+      TNECore.log().debug("Replace: " + replacement.getKey() + ":" + replacement.getValue(), DebugLevel.DEVELOPER);
       string = string.replace(replacement.getKey(), replacement.getValue());
     }
     return string;

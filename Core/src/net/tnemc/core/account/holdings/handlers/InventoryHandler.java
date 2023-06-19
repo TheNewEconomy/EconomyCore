@@ -23,6 +23,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsHandler;
+import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.currency.calculations.CalculationData;
@@ -78,9 +79,7 @@ public class InventoryHandler implements HoldingsHandler {
   public boolean setHoldings(Account account, String region, Currency currency, CurrencyType type, BigDecimal amount) {
     account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, identifier()));
 
-    System.out.println("Set Inventory");
     if(account.isPlayer() && TNECore.server().online(account.getIdentifier())) {
-      System.out.println("Set Inventory 2");
       final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
                                                                  ((PlayerAccount)account).getPlayer()
                                                                      .get().inventory().getInventory(false),
@@ -113,7 +112,7 @@ public class InventoryHandler implements HoldingsHandler {
                                                                                  currency.getUid(),
                                                                                  identifier()
         );
-        System.out.println("Getting holdings from Inventory DB");
+        TNECore.log().debug("Getting holdings from Inventory DB", DebugLevel.DEVELOPER);
 
         if(holdings.isPresent()) {
           return holdings.get();
@@ -123,7 +122,7 @@ public class InventoryHandler implements HoldingsHandler {
                                  BigDecimal.ZERO,
                                  identifier());
       }
-      System.out.println("Getting holdings from Inventory");
+      TNECore.log().debug("Getting holdings from Inventory", DebugLevel.DEVELOPER);
       final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
                                                                  ((PlayerAccount)account).getPlayer()
                                                                      .get().inventory().getInventory(false),

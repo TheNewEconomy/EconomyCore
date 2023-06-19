@@ -50,17 +50,13 @@ public class ItemCalculations<I> {
 
   public void setItems(CalculationData<I> data, BigDecimal amount) {
     final BigDecimal holdings = calculateHoldings(data);
-    System.out.println("Set Items");
 
     if(holdings.compareTo(amount) == 0) return;
-    System.out.println("Set Items 1");
 
     if(holdings.compareTo(amount) > 0) {
-      System.out.println("Set Items 2");
       calculation(data, holdings.subtract(amount));
       return;
     }
-    System.out.println("Set Items 3");
     provideMaterials(data, amount.subtract(holdings));
   }
 

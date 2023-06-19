@@ -17,6 +17,8 @@ package net.tnemc.core.currency.calculations;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
 
 import java.math.BigDecimal;
@@ -70,8 +72,6 @@ public class MonetaryCalculation {
   public void calculateDenominationCounts(BigDecimal amount) {
     Map<BigDecimal, Integer> result = new HashMap<>();
 
-    //System.out.println("AMT1: " + amount);
-
     BigDecimal workingAmount = amount;
 
     // Make a copy of the available denominations counts
@@ -91,9 +91,9 @@ public class MonetaryCalculation {
         count = maxCount;
       }
 
-      //System.out.println("Denom: " + denomination.toPlainString());
-      //System.out.println("maxCount: " + maxCount);
-      //System.out.println("count: " + count);
+      TNECore.log().debug("Denom: " + denomination.toPlainString(), DebugLevel.DEVELOPER);
+      TNECore.log().debug("maxCount: " + maxCount, DebugLevel.DEVELOPER);
+      TNECore.log().debug("count: " + count, DebugLevel.DEVELOPER);
 
       // Subtract the value of these denominations from the total amount
       workingAmount = workingAmount.subtract(denomination.multiply(BigDecimal.valueOf(count)));
@@ -130,7 +130,6 @@ public class MonetaryCalculation {
 
   public Map<BigDecimal, Integer> calculateBreakdowns(BigDecimal amount) {
 
-    //System.out.println("AMT: " + amount);
 
     // Get the entry with the smallest key greater than the given amount
     final Map.Entry<BigDecimal, Integer> higherEntry = inventoryMaterials.higherEntry(amount);

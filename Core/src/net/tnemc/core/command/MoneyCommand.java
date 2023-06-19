@@ -211,7 +211,6 @@ public class MoneyCommand extends BaseCommand {
         entryMSG.addReplacement("$currency", entryCur.get().getIdentifier());
         entryMSG.addReplacement("$amount", CurrencyFormatter.format(player, entry));
         sender.message(entryMSG);
-        System.out.println("send balances");
       }
     }
   }
@@ -396,7 +395,6 @@ public class MoneyCommand extends BaseCommand {
         }
       }
 
-      System.out.println(result.getMessage());
       return result.getReceipt();
     } catch(InvalidTransactionException e) {
       e.printStackTrace();
