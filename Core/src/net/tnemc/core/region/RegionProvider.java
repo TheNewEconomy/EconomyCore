@@ -106,6 +106,10 @@ public class RegionProvider {
    */
   @NotNull
   public String resolve(final String region) {
+    if(!MainConfig.yaml().getBoolean("Core.Region.MultiRegion")) {
+      return defaultRegion();
+    }
+
     return sharing.getOrDefault(region, defaultRegion());
   }
 

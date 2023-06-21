@@ -18,6 +18,7 @@ package net.tnemc.core.compatibility;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
 import net.tnemc.core.currency.calculations.ItemCalculations;
@@ -94,6 +95,16 @@ public interface ServerConnector {
    * {@link RegionMode}.
    */
   String defaultRegion(final RegionMode mode);
+
+  /**
+   * Returns the name of the default region.
+   *
+   * @return The name of the default region. This could be different based on the current
+   * {@link RegionMode}.
+   */
+  default String defaultRegion() {
+    return defaultRegion(TNECore.eco().region().getMode());
+  }
 
   /**
    * Determines if a plugin with the correlating name is currently installed.

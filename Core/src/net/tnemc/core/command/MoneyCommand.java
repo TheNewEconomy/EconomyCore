@@ -60,6 +60,16 @@ public class MoneyCommand extends BaseCommand {
   //ArgumentsParser: [currency] [world]
   public static void onBalance(CmdSource<?> sender, Currency currency, String region) {
 
+    for(String str : TNECore.eco().region().getRegions().keySet()) {
+      System.out.println("Region: " + str);
+    }
+
+    System.out.println("Regions: " + TNECore.eco().region().getRegions().keySet().size());
+
+    System.out.println("Resolver check");
+    System.out.println("Resolved Nether:" + TNECore.eco().region().resolve("world_the_nether"));
+    System.out.println("Resolved invalid:" + TNECore.eco().region().resolve("world113"));
+
     //If our currency doesn't exist this is probably a username, so check for their balance instead.
     final Optional<Account> account = sender.account();
     account.ifPresent(value->onOther(sender, value, region, currency));
@@ -116,6 +126,8 @@ public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: <player> <amount> [world] [currency]
   public static void onGive(CmdSource<?> sender, Account player, BigDecimal amount, String region, Currency currency) {
+
+    region = TNECore.eco().region().resolve(region);
 
     final HoldingsModifier modifier = new HoldingsModifier(region,
                                                            currency.getUid(),
@@ -176,6 +188,8 @@ public class MoneyCommand extends BaseCommand {
   //ArgumentsParser: <player> [world] [currency]
   public static void onOther(CmdSource<?> sender, Account player, String region, Currency currency) {
     final List<HoldingsEntry> holdings = new ArrayList<>();
+
+    region = TNECore.eco().region().resolve(region);
 
     if(!currency.isGlobalDefault()) {
       BigDecimal amount = BigDecimal.ZERO;
@@ -284,6 +298,8 @@ public class MoneyCommand extends BaseCommand {
   //ArgumentsParser: <player> <amount> [world] [currency]
   public static void onSet(CmdSource<?> sender, Account player, BigDecimal amount, String region, Currency currency) {
 
+    region = TNECore.eco().region().resolve(region);
+
     final HoldingsModifier modifier = new HoldingsModifier(region,
                                                            currency.getUid(),
                                                            amount,
@@ -308,6 +324,8 @@ public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: <amount> [world] [currency]
   public static void onSetAll(CmdSource<?> sender, BigDecimal amount, String region, Currency currency) {
+
+    region = TNECore.eco().region().resolve(region);
 
     final HoldingsModifier modifier = new HoldingsModifier(region,
                                                            currency.getUid(),
@@ -336,6 +354,8 @@ public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: <player> <amount> [world] [currency]
   public static void onTake(CmdSource<?> sender, Account player, BigDecimal amount, String region, Currency currency) {
+
+    region = TNECore.eco().region().resolve(region);
 
     final HoldingsModifier modifier = new HoldingsModifier(region,
                                                            currency.getUid(),

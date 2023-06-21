@@ -278,7 +278,6 @@ public class AccountManager {
    */
   public void addDefaultTypes() {
 
-    //TODO: API Add third-party before this.
     TNECore.callbacks().call(new AccountTypesCallback());
 
     addAccountType(NonPlayerAccount.class, (value)->true);

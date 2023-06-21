@@ -50,8 +50,8 @@ public class WorldMode implements RegionMode {
   public String region(@NotNull PlayerProvider player) {
 
     if(!MainConfig.yaml().getBoolean("Core.Region.MultiRegion")) {
-      return TNECore.eco().region().defaultRegion();
+      return TNECore.eco().region().resolve(TNECore.eco().region().defaultRegion());
     }
-    return player.world();
+    return TNECore.eco().region().resolve(player.world());
   }
 }
