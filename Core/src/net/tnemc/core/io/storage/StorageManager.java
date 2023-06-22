@@ -26,7 +26,8 @@ import net.tnemc.core.compatibility.scheduler.ChoreExecution;
 import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.io.storage.connect.SQLConnector;
-import net.tnemc.core.io.storage.engine.sql.H2;
+import net.tnemc.core.io.storage.connect.YAMLConnector;
+import net.tnemc.core.io.storage.engine.flat.YAML;
 import net.tnemc.core.io.storage.engine.sql.MySQL;
 import net.tnemc.core.io.storage.engine.sql.PostgreSQL;
 import org.jetbrains.annotations.NotNull;
@@ -56,17 +57,28 @@ public class StorageManager {
 
   public StorageManager() {
     instance = this;
-    this.connector = new SQLConnector();
 
-    initialize(DataConfig.yaml().getString("Data.Database.Type"));
+    final String engine = DataConfig.yaml().getString("Data.Database.Type");
+
+    switch(engine.toLowerCase()) {
+      case "mysql" -> {
+        this.engine = new MySQL();
+        this.connector = new SQLConnector();
+      }
+      case "postgre" -> {
+        this.engine = new PostgreSQL();
+        this.connector = new SQLConnector();
+      }
+      default -> {
+        this.engine = new YAML();
+        this.connector = new YAMLConnector();
+      }
+    }
+
+    initialize();
   }
 
-  public void initialize(final String engine) {
-    switch(engine.toLowerCase()) {
-      case "mysql" -> this.engine = new MySQL();
-      case "postgre" -> this.engine = new PostgreSQL();
-      default -> this.engine = new H2();
-    }
+  public void initialize() {
 
     //Initialize our connection.
     this.connector.initialize();

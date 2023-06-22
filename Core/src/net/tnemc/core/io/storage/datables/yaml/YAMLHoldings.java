@@ -1,4 +1,4 @@
-package net.tnemc.core.io.storage.datables.sql.h2;
+package net.tnemc.core.io.storage.datables.yaml;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -22,28 +22,31 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.CurrencyHoldings;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.RegionHoldings;
+import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageConnector;
-import net.tnemc.core.io.storage.connect.SQLConnector;
 import net.tnemc.core.utils.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.simpleyaml.configuration.ConfigurationSection;
+import org.simpleyaml.configuration.file.YamlFile;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.File;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
 /**
- * SQLHoldings
+ * YAMLHoldings
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class SQLHoldings implements Datable<HoldingsEntry> {
+public class YAMLHoldings implements Datable<HoldingsEntry> {
 
   /**
    * The class that is represented by the O parameter.
@@ -73,18 +76,25 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    */
   @Override
   public void store(StorageConnector<?> connector, @NotNull HoldingsEntry object, @Nullable String identifier) {
-    if(connector instanceof SQLConnector && identifier != null) {
 
-      ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveHoldings(),
-                                              new Object[] {
-                                                  identifier,
-                                                  MainConfig.yaml().getString("Core.Server.Name"),
-                                                  object.getRegion(),
-                                                  object.getCurrency().toString(),
-                                                  object.getHandler().asID(),
-                                                  object.getAmount(),
-                                                  object.getAmount()
-                                              });
+    final File accFile = new File(TNECore.directory(), "accounts/" + identifier + ".yml");
+    if(!accFile.exists()) {
+      accFile.mkdirs();
+    }
+
+
+    YamlFile yaml = null;
+    try {
+      yaml = YamlFile.loadConfiguration(accFile);
+    } catch(IOException ignore) {
+
+      TNECore.log().error("Issue loading account file. Account: " + identifier);
+    }
+
+    if(yaml != null) {
+      yaml.set("Holdings." + identifier + "." + MainConfig.yaml().getString("Core.Server.Name")
+                   + "." + object.getRegion() + "." + object.getCurrency().toString() + "."
+                   + object.getHandler().asID(), object.getAmount().toPlainString());
     }
   }
 
@@ -95,19 +105,16 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    */
   @Override
   public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
-    if(connector instanceof SQLConnector && identifier != null) {
 
-      final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
-      if(account.isPresent()) {
-        for(RegionHoldings region : account.get().getWallet().getHoldings().values()) {
-          for(CurrencyHoldings currency : region.getHoldings().values()) {
-            for(HoldingsEntry entry : currency.getHoldings().values()) {
-              store(connector, entry, identifier);
-            }
+    final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
+    if(account.isPresent()) {
+      for(RegionHoldings region : account.get().getWallet().getHoldings().values()) {
+        for(CurrencyHoldings currency : region.getHoldings().values()) {
+          for(HoldingsEntry entry : currency.getHoldings().values()) {
+            store(connector, entry, identifier);
           }
         }
       }
-
     }
   }
 
@@ -117,8 +124,8 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    * @param connector  The storage connector to use for this transaction.
    * @param identifier The identifier used to identify the object to load.
    *
-   * @throws UnsupportedOperationException as this method is not valid for holdings.
    * @return The object to load.
+   * @throws UnsupportedOperationException as this method is not valid for holdings.
    */
   @Override
   public Optional<HoldingsEntry> load(StorageConnector<?> connector, @NotNull String identifier) {
@@ -136,22 +143,49 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
   public Collection<HoldingsEntry> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
     final Collection<HoldingsEntry> holdings = new ArrayList<>();
 
-    if(connector instanceof SQLConnector && identifier != null) {
-      try(ResultSet result = ((SQLConnector)connector).executeQuery(((SQLConnector)connector).dialect().loadHoldings(),
-                                                                    new Object[] {
-                                                                        identifier
-                                                                    })) {
-        while(result.next()) {
+    if(identifier != null) {
+      final File accFile = new File(TNECore.directory(), "accounts/" + identifier + ".yml");
+      if(!accFile.exists()) {
+        accFile.mkdirs();
+      }
 
-          //region, currency, amount, type
-          final HoldingsEntry entry = new HoldingsEntry(result.getString("region"),
-                                                        UUID.fromString(result.getString("currency")),
-                                                        result.getBigDecimal("holdings"),
-                                                        Identifier.fromID(result.getString("holdings_type")));
-          holdings.add(entry);
+
+      YamlFile yaml = null;
+      try {
+        yaml = YamlFile.loadConfiguration(accFile);
+      } catch(IOException ignore) {
+
+        TNECore.log().error("Issue loading account file. Account: " + identifier);
+      }
+
+
+      //region, currency, amount, type
+      if(yaml != null) {
+
+        //Holdings.Server.Region.Currency.Handler: Balance
+        final ConfigurationSection main = yaml.getConfigurationSection("Holdings");
+        for(final String server : main.getKeys(false)) {
+          for(final String region : main.getConfigurationSection(server).getKeys(false)) {
+            for(final String currency : main.getConfigurationSection(server + "." + region).getKeys(false)) {
+              for(final String handler : main.getConfigurationSection(server + "." + region + "." + currency).getKeys(false)) {
+
+
+                final String amount = yaml.getString("Holdings." + server + "." + region + "." + currency + "." + handler);
+
+                //region, currency, amount, type
+                final HoldingsEntry entry = new HoldingsEntry(region,
+                                                              UUID.fromString(currency),
+                                                              new BigDecimal(amount),
+                                                              Identifier.fromID(handler)
+                );
+
+                TNECore.log().debug("YAMLHoldings-loadAll-Entry ID:" + entry.getHandler(), DebugLevel.DEVELOPER);
+                TNECore.log().debug("YAMLHoldings-loadAll-Entry AMT:" + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
+                holdings.add(entry);
+              }
+            }
+          }
         }
-      } catch(SQLException e) {
-        e.printStackTrace();
       }
     }
     return holdings;
