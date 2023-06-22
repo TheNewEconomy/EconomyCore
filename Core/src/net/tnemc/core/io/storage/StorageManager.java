@@ -26,9 +26,9 @@ import net.tnemc.core.compatibility.scheduler.ChoreExecution;
 import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.io.storage.connect.SQLConnector;
-import net.tnemc.core.io.storage.engine.H2;
-import net.tnemc.core.io.storage.engine.MySQL;
-import net.tnemc.core.io.storage.engine.PostgreSQL;
+import net.tnemc.core.io.storage.engine.sql.H2;
+import net.tnemc.core.io.storage.engine.sql.MySQL;
+import net.tnemc.core.io.storage.engine.sql.PostgreSQL;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -117,7 +117,7 @@ public class AccountManager {
         //Our identifier is an invalid UUID, let's search for it.
         return new AccountAPIResponse(null, AccountResponse.CREATION_FAILED);
       }
-    } else if(!nonPlayer && TNECore.server().online(name)) {
+    } else if(!nonPlayer && name.startsWith("*") || !nonPlayer && TNECore.server().online(name)) {
 
       //This is most definitely a geyser player, they're online but not of valid names
       try {

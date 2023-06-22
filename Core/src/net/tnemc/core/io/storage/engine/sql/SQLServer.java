@@ -1,4 +1,4 @@
-package net.tnemc.core.io.storage.engine;
+package net.tnemc.core.io.storage.engine.sql;
 
 /*
  * The New Economy
@@ -18,20 +18,9 @@ package net.tnemc.core.io.storage.engine;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.config.DataConfig;
-import net.tnemc.core.io.storage.dialect.H2Dialect;
+import net.tnemc.core.io.storage.engine.StandardSQL;
 
-public class H2 extends StandardSQL {
-
-  public H2() {
-    super(DataConfig.yaml().getString("Data.Database.Prefix"),
-         new H2Dialect(DataConfig.yaml().getString("Data.Database.Prefix")));
-  }
-
-  @Override
-  protected void initSQLDatabales() {
-
-  }
+public class SQLServer extends StandardSQL {
 
   /**
    * The name of this engine.
@@ -40,26 +29,25 @@ public class H2 extends StandardSQL {
    */
   @Override
   public String name() {
-    return "h2";
+    return "sqlserver";
   }
 
   @Override
   public String[] driver() {
     return new String[] {
-      "org.h2.Driver"
+      "com.microsoft.sqlserver.jdbc.SQLServerDriver"
     };
   }
 
   @Override
   public String[] dataSource() {
-
-    return new String[]{
-      "org.h2.jdbcx.JdbcDataSource"
+    return new String[] {
+      "com.microsoft.sqlserver.jdbc.SQLServerDataSource"
     };
   }
 
   @Override
   public String url(String file, String host, int port, String database) {
-    return "jdbc:h2:file:" + file + ";mode=MySQL;DB_CLOSE_ON_EXIT=TRUE;FILE_LOCK=NO";
+    return "jdbc:sqlserver://" + host + ":" + port + ";databaseName=" + database + ";";
   }
 }

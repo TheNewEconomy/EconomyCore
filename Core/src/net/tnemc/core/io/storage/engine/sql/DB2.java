@@ -1,4 +1,4 @@
-package net.tnemc.core.io.storage.engine;
+package net.tnemc.core.io.storage.engine.sql;
 
 /*
  * The New Economy
@@ -17,6 +17,8 @@ package net.tnemc.core.io.storage.engine;
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+import net.tnemc.core.io.storage.engine.StandardSQL;
 
 public class DB2 extends StandardSQL {
 

@@ -1,4 +1,4 @@
-package net.tnemc.core.io.storage.engine;
+package net.tnemc.core.io.storage.engine.sql;
 
 /*
  * The New Economy
@@ -18,7 +18,9 @@ package net.tnemc.core.io.storage.engine;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class SQLServer extends StandardSQL {
+import net.tnemc.core.io.storage.engine.StandardSQL;
+
+public class Oracle extends StandardSQL {
 
   /**
    * The name of this engine.
@@ -27,25 +29,25 @@ public class SQLServer extends StandardSQL {
    */
   @Override
   public String name() {
-    return "sqlserver";
+    return "oracle";
   }
 
   @Override
   public String[] driver() {
     return new String[] {
-      "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+      "oracle.jdbc.driver.OracleDriver"
     };
   }
 
   @Override
   public String[] dataSource() {
     return new String[] {
-      "com.microsoft.sqlserver.jdbc.SQLServerDataSource"
+      "oracle.jdbc.pool.OracleDataSource"
     };
   }
 
   @Override
   public String url(String file, String host, int port, String database) {
-    return "jdbc:sqlserver://" + host + ":" + port + ";databaseName=" + database + ";";
+    return "jdbc:oracle:thin:@" + host + ":" + port + ":" + database;
   }
 }

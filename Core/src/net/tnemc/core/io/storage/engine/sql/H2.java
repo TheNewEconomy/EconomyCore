@@ -1,4 +1,4 @@
-package net.tnemc.core.io.storage.engine;
+package net.tnemc.core.io.storage.engine.sql;
 
 /*
  * The New Economy
@@ -18,7 +18,21 @@ package net.tnemc.core.io.storage.engine;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class PostgreSQL extends StandardSQL {
+import net.tnemc.core.config.DataConfig;
+import net.tnemc.core.io.storage.dialect.H2Dialect;
+import net.tnemc.core.io.storage.engine.StandardSQL;
+
+public class H2 extends StandardSQL {
+
+  public H2() {
+    super(DataConfig.yaml().getString("Data.Database.Prefix"),
+         new H2Dialect(DataConfig.yaml().getString("Data.Database.Prefix")));
+  }
+
+  @Override
+  protected void initSQLDatabales() {
+
+  }
 
   /**
    * The name of this engine.
@@ -27,25 +41,26 @@ public class PostgreSQL extends StandardSQL {
    */
   @Override
   public String name() {
-    return "postgre";
+    return "h2";
   }
 
   @Override
   public String[] driver() {
     return new String[] {
-        "org.postgresql.Driver"
+      "org.h2.Driver"
     };
   }
 
   @Override
   public String[] dataSource() {
+
     return new String[]{
-        "org.postgresql.ds.PGSimpleDataSource"
+      "org.h2.jdbcx.JdbcDataSource"
     };
   }
 
   @Override
   public String url(String file, String host, int port, String database) {
-    return "jdbc:postgresql://" + host + ":" + port + "/" + database;
+    return "jdbc:h2:file:" + file + ";mode=MySQL;DB_CLOSE_ON_EXIT=TRUE;FILE_LOCK=NO";
   }
 }
