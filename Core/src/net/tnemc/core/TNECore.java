@@ -54,7 +54,9 @@ import net.tnemc.core.menu.impl.myeco.MyEcoMenu;
 import net.tnemc.core.module.ModuleLoader;
 import net.tnemc.core.module.cache.ModuleFileCache;
 import net.tnemc.core.region.RegionGroup;
+import net.tnemc.core.utils.UpdateChecker;
 import net.tnemc.menu.core.MenuManager;
+import org.jetbrains.annotations.Nullable;
 import revxrsal.commands.CommandHandler;
 import revxrsal.commands.orphan.Orphans;
 
@@ -78,7 +80,7 @@ public abstract class TNECore {
    */
   public static final String coreURL = "https://tnemc.net/files/module-version.xml";
   public static final Pattern UUID_MATCHER_PATTERN = Pattern.compile("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})");
-  public static final String version = "1.2.0.0";
+  public static final String version = "0.1.2.0";
   public static final String build = "SNAPSHOT-1";
 
   /* Core non-final variables utilized within TNE as settings */
@@ -115,6 +117,7 @@ public abstract class TNECore {
   private boolean enabled = false;
 
   protected UUID serverAccount;
+  protected UpdateChecker updateChecker = null;
 
   public TNECore(ServerConnector server, LogProvider logger) {
     this.server = server;
@@ -308,6 +311,16 @@ public abstract class TNECore {
     }
 
     this.moduleCache = new ModuleFileCache();
+
+    if(MainConfig.yaml().getBoolean("Core.Update.Check")) {
+      this.updateChecker = new UpdateChecker();
+
+      TNECore.log().inform("Build Stability: " + this.updateChecker.stable());
+
+      if(this.updateChecker.needsUpdate()) {
+        TNECore.log().inform("Update Available! Latest: " + this.updateChecker.getBuild());
+      }
+    }
   }
 
   public void onDisable() {
@@ -391,6 +404,11 @@ public abstract class TNECore {
 
   public static ModuleLoader loader() {
     return instance.loader;
+  }
+
+  @Nullable
+  public static UpdateChecker update() {
+    return instance.updateChecker;
   }
 
   public ModuleFileCache moduleCache() {

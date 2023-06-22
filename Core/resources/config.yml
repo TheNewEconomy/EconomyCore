@@ -60,7 +60,6 @@ Core:
       Balance: 500
 
   #All configurations relating to TNE commands
-  #TODO: Implement this configuration
   Commands:
 
     #Configurations relating to the money top command.
@@ -80,7 +79,7 @@ Core:
     #Extra configurations regarding the pay command
     Pay:
 
-      #Can players use /pay on offline players? May result in additional polling requests to Mojang"s API, which
+      #Can players use /pay on offline players? May result in additional polling requests to Mojang's API, which
       #could result in slower response times.
       Offline: false
 
@@ -88,7 +87,6 @@ Core:
       Radius: 0
   
   #All configurations relating to update checking
-  #TODO: Implement this configuration
   Update:
   
     #Should TNE check for updates?

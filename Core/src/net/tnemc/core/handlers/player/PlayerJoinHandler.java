@@ -25,7 +25,9 @@ import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.utils.HandlerResponse;
 
 import java.util.Optional;
@@ -100,7 +102,17 @@ public class PlayerJoinHandler {
       //TODO: Check for transactions that happened while away if player has notify settings active.
 
       if(provider.hasPermission("tne.admin.update")) {
-        //TODO: Update check.
+        if(MainConfig.yaml().getBoolean("Core.Update.Notify") && TNECore.update() != null) {
+
+          if(TNECore.update().needsUpdate()) {
+            provider.message(new MessageData("<red>[TNE] Update Available! Latest: <white>" + TNECore.update().getBuild()));
+          }
+
+          if(TNECore.update().isEarlyBuild()) {
+            provider.message(new MessageData("<gold>[TNE] Thank You for testing this pre-release version!"));
+          }
+        }
+
 
         if(TNECore.eco().transaction().isTrack()) {
           //TODO: Any warnings? Balance jumps?

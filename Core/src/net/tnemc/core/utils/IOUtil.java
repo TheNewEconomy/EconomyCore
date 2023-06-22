@@ -2,6 +2,8 @@ package net.tnemc.core.utils;
 
 import net.tnemc.core.TNECore;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import java.io.BufferedReader;
@@ -9,6 +11,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
+import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -41,7 +45,32 @@ public class IOUtil {
   }
 
   /**
-   * Used to find the absolute path based on a case insensitive file name, in a directory.
+   * Used to read the current TNE release from tnemc.net.
+   * @return The version read, or an empty Optional if the call timed out.
+   */
+  public static Optional<String> readVersion() {
+    String build = null;
+    try {
+      SSLContext sc = SSLContext.getInstance("TLS");
+      sc.init(null, selfCertificates(), new SecureRandom());
+      HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+      URL url = new URL("https://tnemc.net/files/tnebuild.txt");
+      HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+      connection.setReadTimeout(3000);
+
+      BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+      build = in.readLine();
+      in.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+      TNECore.log().warning("Unable to contact update server!");
+    }
+    return Optional.ofNullable(build);
+  };
+
+  /**
+   * Used to find the absolute path based on a case-insensitive file name, in a directory.
    * @param file The file name to use for the search.
    * @param directory The directory to search in.
    * @return An optional containing the path, or an empty optional if unable to locate the file in
