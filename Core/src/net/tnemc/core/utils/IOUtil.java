@@ -90,6 +90,11 @@ public class IOUtil {
   }
 
   public static File[] getYAMLs(final File directory) {
+    if(!directory.exists()) {
+      directory.mkdirs();
+      return new File[0];
+    }
+
     return directory.listFiles((dir, name) -> name.endsWith(".yml"));
   }
 

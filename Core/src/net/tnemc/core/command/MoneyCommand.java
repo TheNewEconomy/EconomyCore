@@ -28,6 +28,7 @@ import net.tnemc.core.account.holdings.modify.HoldingsOperation;
 import net.tnemc.core.actions.source.PlayerSource;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.io.message.MessageData;
@@ -61,14 +62,14 @@ public class MoneyCommand extends BaseCommand {
   public static void onBalance(CmdSource<?> sender, Currency currency, String region) {
 
     for(String str : TNECore.eco().region().getRegions().keySet()) {
-      System.out.println("Region: " + str);
+      TNECore.log().debug("Region: " + str, DebugLevel.DEVELOPER);
     }
 
-    System.out.println("Regions: " + TNECore.eco().region().getRegions().keySet().size());
+    TNECore.log().debug("Regions: " + TNECore.eco().region().getRegions().keySet().size(), DebugLevel.DEVELOPER);
 
-    System.out.println("Resolver check");
-    System.out.println("Resolved Nether:" + TNECore.eco().region().resolve("world_the_nether"));
-    System.out.println("Resolved invalid:" + TNECore.eco().region().resolve("world113"));
+    TNECore.log().debug("Resolver check", DebugLevel.DEVELOPER);
+    TNECore.log().debug("Resolved Nether:" + TNECore.eco().region().resolve("world_the_nether"), DebugLevel.DEVELOPER);
+    TNECore.log().debug("Resolved invalid:" + TNECore.eco().region().resolve("world113"), DebugLevel.DEVELOPER);
 
     //If our currency doesn't exist this is probably a username, so check for their balance instead.
     final Optional<Account> account = sender.account();

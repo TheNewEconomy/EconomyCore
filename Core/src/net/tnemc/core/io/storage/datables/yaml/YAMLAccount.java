@@ -80,7 +80,13 @@ public class YAMLAccount implements Datable<Account> {
 
     final File accFile = new File(TNECore.directory(), "accounts/" + account.getIdentifier() + ".yml");
     if(!accFile.exists()) {
-      accFile.mkdirs();
+      try {
+        accFile.createNewFile();
+      } catch(IOException e) {
+
+        TNECore.log().error("Issue loading account file. Account: " + account.getName());
+        return;
+      }
     }
 
 
@@ -90,6 +96,7 @@ public class YAMLAccount implements Datable<Account> {
     } catch(IOException ignore) {
 
       TNECore.log().error("Issue loading account file. Account: " + account.getName());
+      return;
     }
 
     if(yaml != null) {
@@ -116,6 +123,13 @@ public class YAMLAccount implements Datable<Account> {
             yaml.set("Members." + member.getId().toString() + "." + entry.getKey(), entry.getValue());
           }
         }
+      }
+      try {
+        yaml.save();
+        yaml = null;
+      } catch(IOException e) {
+        TNECore.log().error("Issue saving account file. Account: " + account.getName());
+        return;
       }
       TNECore.storage().storeAll(account.getIdentifier());
     }
@@ -146,7 +160,8 @@ public class YAMLAccount implements Datable<Account> {
 
     final File accFile = new File(TNECore.directory(), "accounts/" + identifier + ".yml");
     if(!accFile.exists()) {
-      accFile.mkdirs();
+      TNECore.log().error("Null account file passed to YAMLAccount.load. Account: " + identifier);
+      return Optional.empty();
     }
     return load(connector, accFile, identifier);
   }
@@ -215,6 +230,7 @@ public class YAMLAccount implements Datable<Account> {
           account.getWallet().setHoldings(entry);
         }
       }
+      yaml = null;
       return Optional.ofNullable(account);
     }
     return Optional.empty();
@@ -233,7 +249,7 @@ public class YAMLAccount implements Datable<Account> {
 
     for(File file : IOUtil.getYAMLs(new File(TNECore.directory(), "accounts"))) {
 
-      final Optional<Account> loaded = load(connector, file, file.getName());
+      final Optional<Account> loaded = load(connector, file, file.getName().replace(".yml", ""));
       if(loaded.isPresent()) {
         accounts.add(loaded.get());
         TNECore.eco().account().uuidProvider().store(new UUIDPair(UUID.fromString(loaded.get().getIdentifier()), loaded.get().getName()));

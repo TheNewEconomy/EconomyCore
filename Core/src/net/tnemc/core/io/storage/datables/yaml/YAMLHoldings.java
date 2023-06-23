@@ -92,9 +92,15 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
     }
 
     if(yaml != null) {
-      yaml.set("Holdings." + identifier + "." + MainConfig.yaml().getString("Core.Server.Name")
+      yaml.set("Holdings." + MainConfig.yaml().getString("Core.Server.Name")
                    + "." + object.getRegion() + "." + object.getCurrency().toString() + "."
                    + object.getHandler().asID(), object.getAmount().toPlainString());
+      try {
+        yaml.save();
+        yaml = null;
+      } catch(IOException e) {
+        TNECore.log().error("Issue saving account holdings to file. Account: " + identifier);
+      }
     }
   }
 
@@ -146,7 +152,9 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
     if(identifier != null) {
       final File accFile = new File(TNECore.directory(), "accounts/" + identifier + ".yml");
       if(!accFile.exists()) {
-        accFile.mkdirs();
+
+        TNECore.log().error("Null account file passed to YAMLAccount.load. Account: " + identifier);
+        return holdings;
       }
 
 
@@ -163,30 +171,44 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
       if(yaml != null) {
 
         //Holdings.Server.Region.Currency.Handler: Balance
-        final ConfigurationSection main = yaml.getConfigurationSection("Holdings");
-        for(final String server : main.getKeys(false)) {
-          for(final String region : main.getConfigurationSection(server).getKeys(false)) {
-            for(final String currency : main.getConfigurationSection(server + "." + region).getKeys(false)) {
-              for(final String handler : main.getConfigurationSection(server + "." + region + "." + currency).getKeys(false)) {
+        if(yaml.contains("Holdings")) {
+          final ConfigurationSection main = yaml.getConfigurationSection("Holdings");
+          for(final String server : main.getKeys(false)) {
 
+            if(!main.contains(server)) {
+              continue;
+            }
+            for(final String region : main.getConfigurationSection(server).getKeys(false)) {
 
-                final String amount = yaml.getString("Holdings." + server + "." + region + "." + currency + "." + handler);
+              if(!main.contains(server + "." + region)) {
+                continue;
+              }
+              for(final String currency : main.getConfigurationSection(server + "." + region).getKeys(false)) {
 
-                //region, currency, amount, type
-                final HoldingsEntry entry = new HoldingsEntry(region,
-                                                              UUID.fromString(currency),
-                                                              new BigDecimal(amount),
-                                                              Identifier.fromID(handler)
-                );
+                if(!main.contains(server + "." + region + "." + currency)) {
+                  continue;
+                }
+                for(final String handler : main.getConfigurationSection(server + "." + region + "." + currency).getKeys(false)) {
 
-                TNECore.log().debug("YAMLHoldings-loadAll-Entry ID:" + entry.getHandler(), DebugLevel.DEVELOPER);
-                TNECore.log().debug("YAMLHoldings-loadAll-Entry AMT:" + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
-                holdings.add(entry);
+                  final String amount = yaml.getString("Holdings." + server + "." + region + "." + currency + "." + handler, "0.0");
+
+                  //region, currency, amount, type
+                  final HoldingsEntry entry = new HoldingsEntry(region,
+                                                                UUID.fromString(currency),
+                                                                new BigDecimal(amount),
+                                                                Identifier.fromID(handler)
+                  );
+
+                  TNECore.log().debug("YAMLHoldings-loadAll-Entry ID:" + entry.getHandler(), DebugLevel.DEVELOPER);
+                  TNECore.log().debug("YAMLHoldings-loadAll-Entry AMT:" + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
+                  holdings.add(entry);
+                }
               }
             }
           }
         }
       }
+      yaml = null;
     }
     return holdings;
   }

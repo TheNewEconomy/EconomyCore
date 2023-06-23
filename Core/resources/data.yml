@@ -30,8 +30,8 @@ Data:
   #All configurations relating to the database
   Database:
 
-    #The database type to use. Current options: MySQL, H2.
-    Type: "mysql"
+    #The database type to use. Current options: MySQL, YAML.
+    Type: "yaml"
 
     #The prefix to use for TheNewEconomy MySQL and H2 Tables
     Prefix: "tne_"
