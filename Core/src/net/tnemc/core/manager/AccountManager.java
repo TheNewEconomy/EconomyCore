@@ -100,7 +100,7 @@ public class AccountManager {
    * @return A correlating {@link AccountAPIResponse response} containing the results.
    */
   public AccountAPIResponse createAccount(final String identifier, final String name, boolean nonPlayer) {
-    if(accounts.containsKey(identifier)) {
+    if(identifier != null && accounts.containsKey(identifier)) {
       return new AccountAPIResponse(accounts.get(identifier), AccountResponse.ALREADY_EXISTS);
     }
 

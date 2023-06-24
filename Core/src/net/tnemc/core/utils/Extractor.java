@@ -134,6 +134,7 @@ public class Extractor {
       for(String name : accounts) {
 
         final String username = name.replaceAll("\\!", ".").replaceAll("\\@", "-").replaceAll("\\%", "_");
+
         final String id = extracted.getString("Accounts." + name + ".id");
 
         final AccountAPIResponse response = TNECore.eco().account().createAccount(id, username);
