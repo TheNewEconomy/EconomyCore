@@ -17,9 +17,9 @@ package net.tnemc.core.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.io.message.MessageData;
+import revxrsal.commands.help.CommandHelp;
 
 /**
  * BaseCommand is a class that contains various utility methods for our command classes.
@@ -29,19 +29,10 @@ import net.tnemc.core.io.message.MessageData;
  */
 public class BaseCommand {
 
-  public static void help(CmdSource<?> source, final String usage, final String node) {
-    final String path = "Messages.Commands." + node;
+  public static void help(CmdSource<?> source, CommandHelp<String> helpEntries, final int page) {
 
-    final MessageData descriptionData = new MessageData(path + ".Description");
-    final String description = TNECore.messenger().getTranslator().translate(source.identifier(), descriptionData);
-
-    final MessageData argData = new MessageData(path + ".Arguments");
-    final String arguments = TNECore.messenger().getTranslator().translate(source.identifier(), argData);
-
-    String helpBuilder = "Correct Usage: /" + usage + " " +
-                         arguments + " - " + description;
-
-    final MessageData helpData = new MessageData(helpBuilder);
-    source.message(helpData);
+    for(final String entry : helpEntries.paginate(page, 5)) {
+      source.message(new MessageData(entry));
+    }
   }
 }

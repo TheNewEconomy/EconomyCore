@@ -27,6 +27,7 @@ import net.tnemc.core.region.RegionMode;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.providers.CalculationsProvider;
 import org.jetbrains.annotations.NotNull;
+import revxrsal.commands.command.CommandActor;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -40,6 +41,12 @@ import java.util.regex.Pattern;
  * @author creatorfromhell
  */
 public interface ServerConnector {
+
+  /**
+   * Used to convert an {@link CommandActor} to a {@link CmdSource}.
+   * @return The {@link CmdSource} for this actor.
+   */
+  CmdSource<?> source(@NotNull CommandActor actor);
 
   /**
    * Attempts to find a {@link PlayerProvider player} based on an {@link UUID identifier}.

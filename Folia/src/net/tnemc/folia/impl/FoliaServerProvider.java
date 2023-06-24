@@ -18,7 +18,9 @@ package net.tnemc.folia.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.bukkit.impl.BukkitCMDSource;
 import net.tnemc.bukkit.impl.BukkitItemCalculations;
+import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.helper.CraftingRecipe;
@@ -37,6 +39,8 @@ import org.bukkit.World;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.jetbrains.annotations.NotNull;
+import revxrsal.commands.bukkit.BukkitCommandActor;
+import revxrsal.commands.command.CommandActor;
 
 import java.util.Map;
 import java.util.Optional;
@@ -56,6 +60,18 @@ public class FoliaServerProvider implements ServerConnector {
 
   public FoliaServerProvider() {
     this.scheduler = new FoliaScheduler();
+  }
+
+  /**
+   * Used to convert an {@link CommandActor} to a {@link CmdSource}.
+   *
+   * @param actor The command actor.
+   *
+   * @return The {@link CmdSource} for this actor.
+   */
+  @Override
+  public CmdSource<?> source(@NotNull CommandActor actor) {
+    return null;
   }
 
   /**

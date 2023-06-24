@@ -25,6 +25,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.api.response.AccountAPIResponse;
+import net.tnemc.core.command.BaseCommand;
 import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.compatibility.scheduler.ChoreExecution;
 import net.tnemc.core.compatibility.scheduler.ChoreTime;
@@ -43,6 +44,7 @@ import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
 import revxrsal.commands.bukkit.BukkitCommandActor;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
+import revxrsal.commands.help.CommandHelp;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,93 +60,100 @@ import java.util.UUID;
  * @since 0.1.2.0
  */
 @Command({"tne", "ecomin", "ecoadmin", "ecomanage", "theneweconomy"})
-@Description("#{Admin.Main.Description}")
+@Description("Admin.Main.Description")
 public class AdminCommand {
 
-  @DefaultFor({"tne", "ecomin", "ecoadmin", "ecomanage", "theneweconomy"})
-  @Subcommand({"ecomenu", "menu", "myeco", "ecomenu"})
-  @Usage("#{Admin.MyEco.Arguments}")
-  @Description("#{Admin.MyEco.Description}")
+  /*@Subcommand({"ecomenu", "menu", "myeco", "ecomenu"})
+  @Usage("Admin.MyEco.Arguments")
+  @Description("Admin.MyEco.Description")
   @CommandPermission("tne.money.myeco")
   public void onMyEco(BukkitCommandActor sender) {
     net.tnemc.core.command.AdminCommand.onMyEco(new BukkitCMDSource(sender));
+  }*/
+
+  @Subcommand({"help", "?"})
+  @DefaultFor({"tne", "ecomin", "ecoadmin", "ecomanage", "theneweconomy"})
+  @Usage("Help.Arguments")
+  @Description("Help.Description")
+  public void help(BukkitCommandActor actor, CommandHelp<String> helpEntries, @Default("1") int page) {
+    BaseCommand.help(new BukkitCMDSource(actor), helpEntries, page);
   }
 
   @Subcommand({"backup", "archive"})
-  @Usage("#{Admin.Backup.Arguments}")
-  @Description("#{Admin.Backup.Description}")
+  @Usage("Admin.Backup.Arguments")
+  @Description("Admin.Backup.Description")
   @CommandPermission("tne.admin.backup")
   public void backup(BukkitCommandActor sender) {
     net.tnemc.core.command.AdminCommand.onBackup(new BukkitCMDSource(sender));
   }
 
   @Subcommand({"create", "add", "new", "make", "+"})
-  @Usage("#{Admin.Create.Arguments}")
-  @Description("#{Admin.Create.Description}")
+  @Usage("Admin.Create.Arguments")
+  @Description("Admin.Create.Description")
   @CommandPermission("tne.admin.create")
   public void create(BukkitCommandActor sender, String name) {
     net.tnemc.core.command.AdminCommand.onCreate(new BukkitCMDSource(sender), name);
   }
 
   @Subcommand({"debug"})
-  @Usage("#{Admin.Debug.Arguments}")
-  @Description("#{Admin.Debug.Description}")
+  @Usage("Admin.Debug.Arguments")
+  @Description("Admin.Debug.Description")
   @CommandPermission("tne.admin.debug")
   public void debug(BukkitCommandActor sender, DebugLevel level) {
     net.tnemc.core.command.AdminCommand.onDebug(new BukkitCMDSource(sender), level);
   }
 
   @Subcommand({"delete", "destroy", "del", "remove", "-"})
-  @Usage("#{Admin.Delete.Arguments}")
-  @Description("#{Admin.Delete.Description}")
+  @Usage("Admin.Delete.Arguments")
+  @Description("Admin.Delete.Description")
   @CommandPermission("tne.admin.delete")
   public void delete(BukkitCommandActor sender, String name) {
     net.tnemc.core.command.AdminCommand.onDelete(new BukkitCMDSource(sender), name);
   }
 
   @Subcommand({"extract"})
-  @Usage("#{Admin.Extract.Arguments}")
-  @Description("#{Admin.Extract.Description}")
+  @Usage("Admin.Extract.Arguments")
+  @Description("Admin.Extract.Description")
   @CommandPermission("tne.admin.extract")
   public void extract(BukkitCommandActor sender) {
     net.tnemc.core.command.AdminCommand.onExtract(new BukkitCMDSource(sender));
   }
 
   @Subcommand({"purge"})
-  @Usage("#{Admin.Purge.Arguments}")
-  @Description("#{Admin.Purge.Description}")
+  @Usage("Admin.Purge.Arguments")
+  @Description("Admin.Purge.Description")
   @CommandPermission("tne.admin.purge")
   public void purge(BukkitCommandActor sender) {
     net.tnemc.core.command.AdminCommand.onPurge(new BukkitCMDSource(sender));
   }
 
   @Subcommand({"reload"})
-  @Usage("#{Admin.Reload.Arguments}")
-  @Description("#{Admin.Reload.Description}")
+  @Usage("Admin.Reload.Arguments")
+  @Description("Admin.Reload.Description")
   @CommandPermission("tne.admin.reload")
   public void reload(BukkitCommandActor sender, @Default("all") String type) {
     net.tnemc.core.command.AdminCommand.onReload(new BukkitCMDSource(sender), type);
   }
 
   @Subcommand({"reset", "nuke"})
-  @Usage("#{Admin.Reset.Arguments}")
-  @Description("#{Admin.Reset.Description}")
+  @Usage("Admin.Reset.Arguments")
+  @Description("Admin.Reset.Description")
   @CommandPermission("tne.admin.reset")
   public void reset(BukkitCommandActor sender) {
     net.tnemc.core.command.AdminCommand.onReset(new BukkitCMDSource(sender));
   }
 
   @Subcommand({"restore"})
-  @Usage("#{Admin.Restore.Arguments}")
-  @Description("#{Admin.Restore.Description}")
+  @Usage("Admin.Restore.Arguments")
+  @Description("Admin.Restore.Description")
   @CommandPermission("tne.admin.restore")
   public void restore(BukkitCommandActor sender, @Default("0") int extraction) {
     net.tnemc.core.command.AdminCommand.onRestore(new BukkitCMDSource(sender), extraction);
   }
 
   @Subcommand({"old"})
-  @Usage("#{Admin.Restore.Arguments}")
-  @Description("#{Admin.Restore.Description}")
+  @Usage("Admin.Restore.Arguments")
+  @Description("Admin.Restore.Description")
   @CommandPermission("tne.admin.old")
   public void old(BukkitCommandActor sender, @Default("0") int extraction) {
     TNECore.server().scheduler().createDelayedTask(()->restoreOld(extraction), new ChoreTime(0), ChoreExecution.SECONDARY);
@@ -152,24 +161,24 @@ public class AdminCommand {
   }
 
   @Subcommand({"save"})
-  @Usage("#{Admin.Save.Arguments}")
-  @Description("#{Admin.Save.Description}")
+  @Usage("Admin.Save.Arguments")
+  @Description("Admin.Save.Description")
   @CommandPermission("tne.admin.save")
   public void save(BukkitCommandActor sender) {
     net.tnemc.core.command.AdminCommand.onSave(new BukkitCMDSource(sender));
   }
 
   @Subcommand({"status"})
-  @Usage("#{Admin.Status.Arguments}")
-  @Description("#{Admin.Status.Description}")
+  @Usage("Admin.Status.Arguments")
+  @Description("Admin.Status.Description")
   @CommandPermission("tne.admin.status")
   public void status(BukkitCommandActor sender, Account account, @Default("normal") AccountStatus status) {
     net.tnemc.core.command.AdminCommand.onStatus(new BukkitCMDSource(sender), account, status);
   }
 
   @Subcommand({"version", "ver", "build"})
-  @Usage("#{Admin.Version.Arguments}")
-  @Description("#{Admin.Version.Description}")
+  @Usage("Admin.Version.Arguments")
+  @Description("Admin.Version.Description")
   @CommandPermission("tne.admin.version")
   public void version(BukkitCommandActor sender) {
     net.tnemc.core.command.AdminCommand.onVersion(new BukkitCMDSource(sender));

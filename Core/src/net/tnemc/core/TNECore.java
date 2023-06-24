@@ -44,6 +44,7 @@ import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.config.MessageConfig;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.io.message.MessageHandler;
 import net.tnemc.core.io.message.TranslationProvider;
 import net.tnemc.core.io.message.translation.BaseTranslationProvider;
@@ -61,6 +62,7 @@ import revxrsal.commands.CommandHandler;
 import revxrsal.commands.orphan.Orphans;
 
 import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
@@ -81,7 +83,7 @@ public abstract class TNECore {
   public static final String coreURL = "https://tnemc.net/files/module-version.xml";
   public static final Pattern UUID_MATCHER_PATTERN = Pattern.compile("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})");
   public static final String version = "0.1.2.0";
-  public static final String build = "SNAPSHOT-1";
+  public static final String build = "PRE-5";
 
   /* Core non-final variables utilized within TNE as settings */
   protected File directory;
@@ -263,8 +265,25 @@ public abstract class TNECore {
       }
     }
 
+    if(!MessageConfig.yaml().contains("Messages.Commands.Help.Entry")) {
+      MessageConfig.yaml().set("Messages.Commands.Help.Entry", "<gold>$command $arguments - <white>$description</white>");
+      try {
+        MessageConfig.yaml().save();
+      } catch(IOException ignore) {
+        TNECore.log().error("Unable to update MessageConfig to add Help Lines, please do this manually.", DebugLevel.OFF);
+      }
+    }
+
     //register our commands
     registerCommandHandler();
+    command.setHelpWriter((command, actor) -> {
+      final MessageData data = new MessageData("Messages.Commands.Help.Entry");
+      data.addReplacement("$command", command.getPath().toRealString());
+      data.addReplacement("$arguments", MessageHandler.getInstance().getTranslator().translateNode(new MessageData("Messages.Commands." + command.getUsage()), "default"));
+      data.addReplacement("$description", MessageHandler.getInstance().getTranslator().translateNode(new MessageData("Messages.Commands." + command.getDescription()), "default"));
+
+      return MessageHandler.getInstance().getTranslator().translateNode(data, "default");
+    });
 
     //Custom Parameters:
     //TODO: Register custom validators

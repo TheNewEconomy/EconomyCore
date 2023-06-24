@@ -18,6 +18,7 @@ package net.tnemc.sponge.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.helper.CraftingRecipe;
@@ -33,6 +34,8 @@ import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.living.player.User;
 import org.spongepowered.api.world.World;
+import revxrsal.commands.command.CommandActor;
+import revxrsal.commands.sponge.SpongeCommandActor;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -51,6 +54,18 @@ public class SpongeServerProvider implements ServerConnector {
 
   public SpongeServerProvider() {
     this.scheduler = new SpongeScheduler();
+  }
+
+  /**
+   * Used to convert an {@link CommandActor} to a {@link CmdSource}.
+   *
+   * @param actor The command actor.
+   *
+   * @return The {@link CmdSource} for this actor.
+   */
+  @Override
+  public CmdSource<?> source(@NotNull CommandActor actor) {
+    return new SpongeCMDSource((SpongeCommandActor)actor);
   }
 
   /**

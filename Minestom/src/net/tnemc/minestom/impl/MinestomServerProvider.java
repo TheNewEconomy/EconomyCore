@@ -19,6 +19,7 @@ package net.tnemc.minestom.impl;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
+import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.helper.CraftingRecipe;
@@ -29,6 +30,7 @@ import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.providers.CalculationsProvider;
 import net.tnemc.minestom.impl.scheduler.MinestomScheduler;
 import org.jetbrains.annotations.NotNull;
+import revxrsal.commands.command.CommandActor;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -48,6 +50,19 @@ public class MinestomServerProvider implements ServerConnector {
   public MinestomServerProvider() {
     this.scheduler = new MinestomScheduler();
   }
+
+  /**
+   * Used to convert an {@link CommandActor} to a {@link CmdSource}.
+   *
+   * @param actor The command actor.
+   *
+   * @return The {@link CmdSource} for this actor.
+   */
+  @Override
+  public CmdSource<?> source(@NotNull CommandActor actor) {
+    return null;
+  }
+
   /**
    * Attempts to find a {@link PlayerProvider player} based on an {@link UUID identifier}.
    *

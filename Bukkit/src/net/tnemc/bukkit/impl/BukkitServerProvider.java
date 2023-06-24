@@ -20,6 +20,7 @@ package net.tnemc.bukkit.impl;
 
 import net.tnemc.bukkit.TNE;
 import net.tnemc.bukkit.impl.scheduler.BukkitScheduler;
+import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.helper.CraftingRecipe;
@@ -36,6 +37,8 @@ import org.bukkit.World;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.jetbrains.annotations.NotNull;
+import revxrsal.commands.bukkit.BukkitCommandActor;
+import revxrsal.commands.command.CommandActor;
 
 import java.util.Map;
 import java.util.Optional;
@@ -55,6 +58,18 @@ public class BukkitServerProvider implements ServerConnector {
 
   public BukkitServerProvider() {
     this.scheduler = new BukkitScheduler();
+  }
+
+  /**
+   * Used to convert an {@link CommandActor} to a {@link CmdSource}.
+   *
+   * @param actor The command actor.
+   *
+   * @return The {@link CmdSource} for this actor.
+   */
+  @Override
+  public CmdSource<?> source(@NotNull CommandActor actor) {
+    return new BukkitCMDSource((BukkitCommandActor)actor);
   }
 
   /**
