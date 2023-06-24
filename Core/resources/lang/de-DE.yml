@@ -125,6 +125,11 @@ Messages:
     Unable: "<red>Unable to void that transaction at this time."
     Voided: "<white>Successfully voided the transaction with the ID of <green>$transaction<white>."
   Commands:
+    Help:
+      Title: "=====<white> Help for <green>$command</green> Page: <green>$page</green> ====="
+      Entry: "<gold>$command $arguments - <white>$description</white>"
+      Arguments: "[page]"
+      Description: "Command help pages."
     Admin:
       Backup:
         Arguments: ""
