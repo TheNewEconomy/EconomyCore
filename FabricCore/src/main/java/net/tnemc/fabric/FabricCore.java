@@ -42,17 +42,17 @@ public class FabricCore extends TNECore implements ModInitializer {
 
 	@Override
 	public void registerCommandHandler() {
-
+		//TODO: Upgrade command set to lamp
 	}
 
 	@Override
 	public void registerCommands() {
-
+		//TODO: Upgrade command set to lamp
 	}
 
 	@Override
 	public void registerCallbacks() {
-
+		//TODO: Upgrade command set to lamp
 	}
 
 	public static FabricCore instance() {

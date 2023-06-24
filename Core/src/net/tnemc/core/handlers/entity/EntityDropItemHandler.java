@@ -32,10 +32,10 @@ public class EntityDropItemHandler {
   public HandlerResponse handle(final String material) {
 
     //This only matters if the config is enabled.
-    if(MainConfig.yaml().getBoolean("Core.Server.MobDrop")) {
-      if(TNECore.eco().currency().findCurrencyByMaterial(material).isPresent()) {
-        return new HandlerResponse("Can't do that starfox.", true);
-      }
+    if(MainConfig.yaml().getBoolean("Core.Server.MobDrop") &&
+        TNECore.eco().currency().findCurrencyByMaterial(material).isPresent()) {
+
+      return new HandlerResponse("Can't do that starfox.", true);
     }
     return new HandlerResponse("Sure.", false);
   }

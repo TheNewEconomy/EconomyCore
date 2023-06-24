@@ -24,7 +24,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * EntityKilledListener
@@ -33,12 +32,6 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @since 0.1.2.0
  */
 public class EntityKilledListener implements Listener {
-
-  private final JavaPlugin plugin;
-
-  public EntityKilledListener(JavaPlugin plugin) {
-    this.plugin = plugin;
-  }
 
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onDeath(final EntityDeathEvent event) {

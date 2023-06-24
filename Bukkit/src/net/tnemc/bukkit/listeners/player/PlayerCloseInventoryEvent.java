@@ -19,14 +19,12 @@ package net.tnemc.bukkit.listeners.player;
 
 import net.tnemc.bukkit.impl.BukkitPlayerProvider;
 import net.tnemc.core.handlers.player.PlayerCloseEChestHandler;
-import net.tnemc.core.utils.HandlerResponse;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * PlayerCloseInventoryEvent
@@ -36,19 +34,13 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class PlayerCloseInventoryEvent implements Listener {
 
-  private final JavaPlugin plugin;
-
-  public PlayerCloseInventoryEvent(JavaPlugin plugin) {
-    this.plugin = plugin;
-  }
-
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onClose(final InventoryCloseEvent event) {
 
     if(event.getInventory().getType().equals(InventoryType.ENDER_CHEST)) {
 
       final BukkitPlayerProvider provider = new BukkitPlayerProvider((OfflinePlayer)event.getPlayer());
-      final HandlerResponse handle = new PlayerCloseEChestHandler().handle(provider);
+      new PlayerCloseEChestHandler().handle(provider);
     }
   }
 }

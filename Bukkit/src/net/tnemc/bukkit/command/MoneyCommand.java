@@ -30,7 +30,6 @@ import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
 import revxrsal.commands.bukkit.BukkitCommandActor;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
-import revxrsal.commands.command.CommandActor;
 import revxrsal.commands.help.CommandHelp;
 
 import java.math.BigDecimal;

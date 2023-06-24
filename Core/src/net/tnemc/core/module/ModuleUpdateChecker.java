@@ -1,6 +1,7 @@
 package net.tnemc.core.module;
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.utils.IOUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -8,8 +9,6 @@ import org.w3c.dom.NodeList;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
@@ -18,7 +17,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.SecureRandom;
-import java.security.cert.X509Certificate;
 import java.util.Optional;
 
 /*
@@ -81,7 +79,7 @@ public class ModuleUpdateChecker {
       if(i >= oldSplit.length && !currentSplit[i].equalsIgnoreCase("0")) return false;
       if(i >= oldSplit.length && currentSplit[i].equalsIgnoreCase("0")) continue;
 
-      if(Integer.valueOf(currentSplit[i]) > Integer.valueOf(oldSplit[i])) return false;
+      if(Integer.parseInt(currentSplit[i]) > Integer.parseInt(oldSplit[i])) return false;
     }
     return true;
   }
@@ -97,20 +95,8 @@ public class ModuleUpdateChecker {
 
     try {
 
-      TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
-        public X509Certificate[] getAcceptedIssuers() {
-          return null;
-        }
-
-        public void checkClientTrusted(X509Certificate[] certs, String authType) {
-        }
-
-        public void checkServerTrusted(X509Certificate[] certs, String authType) {
-        }
-      }};
-
       SSLContext sc = SSLContext.getInstance("TLS");
-      sc.init(null, trustAllCerts, new SecureRandom());
+      sc.init(null, IOUtil.selfCertificates(), new SecureRandom());
       HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
       URL url = new URL(jarURL);
@@ -119,90 +105,92 @@ public class ModuleUpdateChecker {
       if (responseCode == HttpURLConnection.HTTP_OK) {
         String fileName = jarURL.substring(jarURL.lastIndexOf("/") + 1);
 
-        InputStream in = connection.getInputStream();
-        File file = new File(TNECore.directory() + File.separator + "modules", fileName);
+        try(InputStream in = connection.getInputStream()) {
+          File file = new File(TNECore.directory() + File.separator + "modules", fileName);
 
-        if(file.exists()) {
-          if(!file.renameTo(new File(TNECore.directory() + File.separator + "modules", "outdated-" + fileName))) {
-            return false;
+          if(file.exists()) {
+            if(!file.renameTo(new File(TNECore.directory() + File.separator + "modules", "outdated-" + fileName))) {
+              return false;
+            }
+          }
+
+          try(FileOutputStream out = new FileOutputStream(file)) {
+
+            int bytesRead = -1;
+            byte[] buffer = new byte[4096];
+            while((bytesRead = in.read(buffer)) != -1) {
+              out.write(buffer, 0, bytesRead);
+            }
+
+            out.close();
+            in.close();
+            return true;
           }
         }
-
-        FileOutputStream out = new FileOutputStream(file);
-
-        int bytesRead = -1;
-        byte[] buffer = new byte[4096];
-        while ((bytesRead = in.read(buffer)) != -1) {
-          out.write(buffer, 0, bytesRead);
-        }
-
-        out.close();
-        in.close();
-        return true;
       }
-    } catch (Exception e) {
+    } catch (Exception ignore) {
       return false;
     }
     return false;
   }
 
   public boolean readInformation() {
-    Optional<Document> document = readUpdateURL(updateURL);
+    final Optional<Document> document = readUpdateURL(updateURL);
     if(document.isPresent()) {
-      Document doc = document.get();
+      final Document doc = document.get();
 
-      NodeList mainNodes = doc.getElementsByTagName("modules");
+      final NodeList mainNodes = doc.getElementsByTagName("modules");
       if(mainNodes != null && mainNodes.getLength() > 0) {
-        Node modulesNode = mainNodes.item(0);
-        Element element = (Element)modulesNode;
+        final Node modulesNode = mainNodes.item(0);
+        final Element element = (Element)modulesNode;
 
-        NodeList modules = element.getElementsByTagName("module");
+        final NodeList modules = element.getElementsByTagName("module");
 
         for(int i = 0; i < modules.getLength(); i++) {
-          Node moduleNode = modules.item(i);
+          final Node moduleNode = modules.item(i);
 
           if(moduleNode.hasAttributes()) {
 
-            Node nameNode = moduleNode.getAttributes().getNamedItem("name");
+            final Node nameNode = moduleNode.getAttributes().getNamedItem("name");
             if (nameNode != null) {
 
               if (nameNode.getTextContent().equalsIgnoreCase(module)) {
 
-                Node releasedNode = moduleNode.getAttributes().getNamedItem("released");
+                final Node releasedNode = moduleNode.getAttributes().getNamedItem("released");
                 if (releasedNode != null) {
                   if(releasedNode.getTextContent().equalsIgnoreCase("yes")) {
 
                     //We have the correct name, and this module is released.
-                    Element moduleElement = (Element)moduleNode;
+                    final Element moduleElement = (Element)moduleNode;
 
-                    NodeList versions = moduleElement.getElementsByTagName("versions");
+                    final NodeList versions = moduleElement.getElementsByTagName("versions");
 
-                    if(versions != null && versions.getLength() > 0) {
+                    if(versions.getLength() > 0) {
 
-                      NodeList versionsNodes = moduleElement.getElementsByTagName("version");
+                      final NodeList versionsNodes = moduleElement.getElementsByTagName("version");
 
                       for(int v = 0; v < versionsNodes.getLength(); v++) {
 
-                        Node versionNode = versionsNodes.item(v);
+                        final Node versionNode = versionsNodes.item(v);
                         if(versionNode != null && versionNode.hasAttributes()) {
 
-                          Element versionElement = (Element)versionNode;
+                          final Element versionElement = (Element)versionNode;
 
-                          Node latest = versionNode.getAttributes().getNamedItem("latest");
-                          Node versionReleased = versionNode.getAttributes().getNamedItem("released");
+                          final Node latest = versionNode.getAttributes().getNamedItem("latest");
+                          final Node versionReleased = versionNode.getAttributes().getNamedItem("released");
 
                           if(latest != null && latest.getTextContent().equalsIgnoreCase("yes") &&
                           versionReleased != null && versionReleased.getTextContent().equalsIgnoreCase("yes")) {
 
                             //We have the latest module version
-                            NodeList name = versionElement.getElementsByTagName("name");
-                            NodeList jar = versionElement.getElementsByTagName("jar");
+                            final NodeList name = versionElement.getElementsByTagName("name");
+                            final NodeList jar = versionElement.getElementsByTagName("jar");
 
-                            if(name != null && name.getLength() > 0) {
+                            if(name.getLength() > 0) {
                               this.current = name.item(0).getTextContent();
                             }
 
-                            if(jar != null && jar.getLength() > 0) {
+                            if(jar.getLength() > 0) {
                               this.jarURL = jar.item(0).getTextContent();
                             }
                             return true;
@@ -227,28 +215,16 @@ public class ModuleUpdateChecker {
   public static Optional<Document> readUpdateURL(String updateURL) {
     try {
 
-      TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
-        public X509Certificate[] getAcceptedIssuers() {
-          return null;
-        }
-
-        public void checkClientTrusted(X509Certificate[] certs, String authType) {
-        }
-
-        public void checkServerTrusted(X509Certificate[] certs, String authType) {
-        }
-      }};
-
       SSLContext sc = SSLContext.getInstance("TLS");
-      sc.init(null, trustAllCerts, new SecureRandom());
+      sc.init(null, IOUtil.selfCertificates(), new SecureRandom());
       HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
-      URL url = new URL(updateURL);
-      HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+      final URL url = new URL(updateURL);
+      final HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
-      DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-      DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
-      Document document = documentBuilder.parse(connection.getInputStream());
+      final DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
+      final DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
+      final Document document = documentBuilder.parse(connection.getInputStream());
 
       return Optional.of(document);
 

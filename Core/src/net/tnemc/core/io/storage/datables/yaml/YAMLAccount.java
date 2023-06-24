@@ -192,16 +192,14 @@ public class YAMLAccount implements Datable<Account> {
                                                                                 yaml.getString("Info.Name"),
                                                                                 !(type.equalsIgnoreCase("player") ||
                                                                                     type.equalsIgnoreCase("bedrock")));
-      if(response.getResponse().success()) {
+      if(response.getResponse().success() && response.getAccount().isPresent()) {
 
         //load our basic account information
-        if(response.getAccount().isPresent()) {
-          account = response.getAccount().get();
+        account = response.getAccount().get();
 
-          account.setStatus(TNECore.eco().account().findStatus(yaml.getString("Info.Status")));
-          account.setCreationDate(yaml.getLong("Info.CreationDate"));
-          account.setPin(yaml.getString("Info.Pin"));
-        }
+        account.setStatus(TNECore.eco().account().findStatus(yaml.getString("Info.Status")));
+        account.setCreationDate(yaml.getLong("Info.CreationDate"));
+        account.setPin(yaml.getString("Info.Pin"));
       }
 
       if(account != null) {
@@ -210,17 +208,15 @@ public class YAMLAccount implements Datable<Account> {
           ((PlayerAccount)account).setLastOnline(yaml.getLong("Info.LastOnline"));
         }
 
-        if(account instanceof SharedAccount) {
-          if(yaml.contains("Members")) {
-            final ConfigurationSection section = yaml.getConfigurationSection("Members");
-            for(String member : section.getKeys(false)) {
+        if(account instanceof SharedAccount && yaml.contains("Members")) {
+          final ConfigurationSection section = yaml.getConfigurationSection("Members");
+          for(String member : section.getKeys(false)) {
 
-              for(String permission : section.getConfigurationSection(member).getKeys(false)) {
+            for(String permission : section.getConfigurationSection(member).getKeys(false)) {
 
-                ((SharedAccount)account).addPermission(UUID.fromString(member), permission,
-                                                       yaml.getBoolean("Members." + member +
-                                                                           "." + permission));
-              }
+              ((SharedAccount)account).addPermission(UUID.fromString(member), permission,
+                                                     yaml.getBoolean("Members." + member +
+                                                                         "." + permission));
             }
           }
         }

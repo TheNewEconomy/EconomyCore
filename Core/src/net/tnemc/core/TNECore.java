@@ -162,7 +162,11 @@ public abstract class TNECore {
   protected void onEnable() {
 
     if(!directory.exists()) {
-      directory.mkdir();
+      final boolean created = directory.mkdir();
+      if(!created) {
+        TNECore.log().error("Failed to create plugin directory. Disabling plugin.");
+        return;
+      }
     }
 
     //Load our modules
@@ -174,13 +178,21 @@ public abstract class TNECore {
     //Save our default currency file
     final File cur = new File(directory, "currency");
     if(!cur.exists()) {
-      cur.mkdir();
+      final boolean created = cur.mkdir();
+      if(!created) {
+        TNECore.log().error("Failed to create plugin currency directory. Disabling plugin.");
+        return;
+      }
       TNECore.server().saveResource("currency/USD.yml", false);
     }
 
     final File usd = new File(cur, "USD");
     if(!usd.exists()) {
-      usd.mkdirs();
+      final boolean created = usd.mkdir();
+      if(!created) {
+        TNECore.log().error("Failed to create plugin USD currency directory. Disabling plugin.");
+        return;
+      }
       TNECore.server().saveResource("currency/USD/one.yml", false);
       TNECore.server().saveResource("currency/USD/penny.yml", false);
     }
@@ -319,7 +331,7 @@ public abstract class TNECore {
     MenuManager.instance().addMenu(new MyCurrencyMenu());
     MenuManager.instance().addMenu(new MyBalMenu());
 
-    //Setup the autosaver if enabled.
+    //Set up the auto saver if enabled.
     if(DataConfig.yaml().getBoolean("Data.AutoSaver.Enabled")) {
 
       server.scheduler().createRepeatingTask(()->{

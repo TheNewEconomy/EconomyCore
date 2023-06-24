@@ -18,7 +18,6 @@ package net.tnemc.folia.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.impl.BukkitCMDSource;
 import net.tnemc.bukkit.impl.BukkitItemCalculations;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
@@ -39,7 +38,6 @@ import org.bukkit.World;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.jetbrains.annotations.NotNull;
-import revxrsal.commands.bukkit.BukkitCommandActor;
 import revxrsal.commands.command.CommandActor;
 
 import java.util.Map;
