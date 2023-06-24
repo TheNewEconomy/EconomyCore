@@ -65,6 +65,9 @@ Core:
     #Configurations relating to the money top command.
     Top:
 
+      #Should balances in /baltop be formatted?
+      Format: true
+
       #How often should the data used for /baltop be refreshed?
       #This is in seconds.
       Refresh: 1200
@@ -142,16 +145,3 @@ Core:
         #The tax to apply to a conversion transaction.
         #The tax may also be a percentage.
         Rate: 0.0
-
-  #All configurations relating to currency.
-  #TODO: Implement this configuration
-  Currency:
-
-    #Configurations relating to basic information about currencies.
-    Info:
-
-      #Should balances in /bal and /tne money be formatted?
-      FormatMoney: true
-
-      #Should balance in /baltop be formatted?
-      FormatTop: true
