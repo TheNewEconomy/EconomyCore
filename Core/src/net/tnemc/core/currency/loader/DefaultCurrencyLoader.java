@@ -343,6 +343,8 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
           i++;
         }
+
+        TNECore.server().registerCrafting(recipe);
       }
     }
 
