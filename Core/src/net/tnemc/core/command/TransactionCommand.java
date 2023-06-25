@@ -88,20 +88,28 @@ public class TransactionCommand {
     final Optional<Receipt> receipt = account.findReceipt(uuid);
 
     if(receipt.isEmpty()) {
-      sender.message(new MessageData(""));
+      final MessageData message = new MessageData("Messages.Transaction.Invalid");
+      message.addReplacement("$transaction", uuid.toString());
+      sender.message(message);
       return;
     }
 
     if(receipt.get().isVoided()) {
-      sender.message(new MessageData(""));
+      final MessageData message = new MessageData("Messages.Transaction.Already");
+      message.addReplacement("$transaction", uuid.toString());
+      sender.message(message);
       return;
     }
 
     final boolean voided = receipt.get().voidTransaction();
     if(!voided) {
-      sender.message(new MessageData(""));
+      final MessageData message = new MessageData("Messages.Transaction.Unable");
+      message.addReplacement("$transaction", uuid.toString());
+      sender.message(message);
       return;
     }
-    sender.message(new MessageData(""));
+    final MessageData message = new MessageData("Messages.Transaction.Voided");
+    message.addReplacement("$transaction", uuid.toString());
+    sender.message(message);
   }
 }

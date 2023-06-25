@@ -61,15 +61,15 @@ public class TransactionCommand {
   @Usage("#{Transaction.Info.Arguments}")
   @Description("#{Transaction.Info.Description}")
   @CommandPermission("tne.info.history")
-  public void info(SpongeCommandActor sender, UUID uuid) {
-    net.tnemc.core.command.TransactionCommand.info(new SpongeCMDSource(sender), uuid);
+  public void info(SpongeCommandActor sender, UUID uuid, Account account) {
+    net.tnemc.core.command.TransactionCommand.info(new SpongeCMDSource(sender), uuid, account);
   }
 
   @Subcommand({"void", "retract", "undo"})
   @Usage("#{Transaction.Void.Arguments}")
   @Description("#{Transaction.Void.Description}")
   @CommandPermission("tne.void.history")
-  public void voidT(SpongeCommandActor sender, UUID uuid) {
-    net.tnemc.core.command.TransactionCommand.voidT(new SpongeCMDSource(sender), uuid);
+  public void voidT(SpongeCommandActor sender, Account account, UUID uuid) {
+    net.tnemc.core.command.TransactionCommand.voidT(new SpongeCMDSource(sender), account, uuid);
   }
 }
