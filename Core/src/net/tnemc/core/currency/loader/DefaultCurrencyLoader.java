@@ -22,6 +22,7 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.currency.CurrencyLoadCallback;
 import net.tnemc.core.api.callback.currency.DenominationLoadCallback;
 import net.tnemc.core.compatibility.helper.CraftingRecipe;
+import net.tnemc.core.config.MessageConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyLoader;
 import net.tnemc.core.currency.CurrencyRegion;
@@ -135,9 +136,6 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     final boolean separate = cur.getBoolean("Formatting.Major_Separate", true);
     final String separator = cur.getString("Formatting.Major_Separator", ",");
 
-    //Note Item configs
-    final String material = cur.getString("Note.Item.Material", "PAPER");
-
     Optional<CurrencyType> type = TNECore.eco().currency().findType(currencyType);
 
     if(type.isEmpty()) {
@@ -201,6 +199,9 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     //Load our note configurations.
     if(cur.getBoolean("Note.Notable", true)) {
 
+      //Note Item configs
+      final String material = cur.getString("Note.Item.Material", "PAPER");
+
       final BigDecimal fee = new BigDecimal(cur.getString("Note.Fee", "0.00"));
       final BigDecimal minimum = new BigDecimal(cur.getString("Note.Minimum", "0.00"));
 
@@ -216,6 +217,8 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       if(cur.contains("Note.Item.Flags")) {
         note.setFlags(cur.getStringList("Note.Item.Flags"));
       }
+
+      note.setLore(MessageConfig.yaml().getStringList("Messages.Note.Lore"));
       currency.setNote(note);
     }
 

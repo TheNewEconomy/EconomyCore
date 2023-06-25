@@ -24,6 +24,7 @@ import net.tnemc.item.AbstractItemStack;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Represents a currency note object, which is a way to make virtual balances into a physical note
@@ -36,6 +37,7 @@ public class Note {
 
   private final List<String> flags = new ArrayList<>();
   private final List<String> enchantments = new ArrayList<>();
+  private final List<String> lore = new ArrayList<>();
 
   private String material;
   private BigDecimal minimum;
@@ -84,6 +86,15 @@ public class Note {
     this.enchantments.addAll(enchantments);
   }
 
+  public List<String> getLore() {
+    return lore;
+  }
+
+  public void setLore(List<String> lore) {
+    this.lore.clear();
+    this.lore.addAll(lore);
+  }
+
   public String getMaterial() {
     return material;
   }
@@ -108,10 +119,12 @@ public class Note {
     this.texture = texture;
   }
 
-  public AbstractItemStack<?> stack() {
-    return TNECore.server().stackBuilder().of(material, 1)
+  public AbstractItemStack<Object> stack(final String currency, final String region, final BigDecimal amount) {
+    return (AbstractItemStack<Object>)TNECore.server().stackBuilder().of(material, 1)
+        .display("Currency Note")
         .enchant(enchantments)
         .flags(flags)
-        .modelData(customModelData);
+        .modelData(customModelData)
+        .lore(lore);
   }
 }

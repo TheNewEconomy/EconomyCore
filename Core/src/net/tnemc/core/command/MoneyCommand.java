@@ -30,6 +30,7 @@ import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.currency.Note;
 import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.transaction.Receipt;
@@ -37,9 +38,12 @@ import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
 import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
+import net.tnemc.item.AbstractItemStack;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -165,12 +169,24 @@ public class MoneyCommand extends BaseCommand {
   public static void onNote(CmdSource<?> sender, BigDecimal amount, Currency currency) {
 
     final Optional<Account> account = sender.account();
-    if(account.isPresent()) {
+    final Optional<Note> note = currency.getNote();
+    if(account.isPresent() && note.isPresent() && account.get() instanceof PlayerAccount) {
 
+      final Optional<PlayerProvider> provider = ((PlayerAccount)account.get()).getPlayer();
+      if(provider.isEmpty()) {
+        return;
+      }
+
+      if(amount.compareTo(note.get().getMinimum()) < 0) {
+        sender.message(new MessageData("Messages.Note.Minimum"));
+        return;
+      }
+
+      final BigDecimal amt = amount.add(note.get().getFee());
 
       final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
                                                              currency.getUid(),
-                                                             amount
+                                                             amt
       );
 
       final Transaction transaction = new Transaction("note")
@@ -181,7 +197,16 @@ public class MoneyCommand extends BaseCommand {
 
       Optional<Receipt> receipt = processTransaction(sender, transaction);
       if(receipt.isPresent()) {
-        //TODO: Give player money note.
+        Collection<AbstractItemStack<Object>> left = TNECore.server().calculations().giveItems(Collections.singletonList(note.get().stack(currency.getIdentifier(), sender.region(), amt)), provider.get().inventory().getInventory(false));
+
+        if(left.size() > 0) {
+          TNECore.server().calculations().drop(left, ((PlayerAccount)account.get()).getUUID());
+        }
+
+        final MessageData entryMSG = new MessageData("Messages.Note.Given");
+        entryMSG.addReplacement("$currency",currency.getIdentifier());
+        entryMSG.addReplacement("$amount", CurrencyFormatter.format(account.get(), modifier.asEntry()));
+        sender.message(entryMSG);
       }
     }
   }

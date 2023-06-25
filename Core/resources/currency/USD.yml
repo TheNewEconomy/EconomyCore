@@ -141,7 +141,7 @@ Formatting:
 #All configurations relating to currency notes.
 Note:
 
-  #Whether or not this currency is able to be noted using the note command
+  #Whether this currency is able to be noted using the note command
   Notable: false
 
   #The fee to note this currency.
