@@ -101,11 +101,11 @@ Messages:
     Claimed: "<white>Successfully claimed note for currency <green>$currency<white> in the amount of <gold>$amount<white>.<newline>Your new balance is <gold>$balance<white>."
     Failed: "<red>I'm sorry, but your attempt to claim that currency note failed!."
     Minimum: "<red>The minimum note amount of $amount was not met."
-    Lore:
-      - "<white>Currency: $currency"
-      - "<white>Region: $region"
-      - "<white>Amount: $amount"
-      - "<white>Right click to claim note."
+    Name: "Currency Note"
+    Currency: "Currency: $currency"
+    Region: "Region: $region"
+    Amount: "Amount: $amount"
+    Action: "Right click to claim note."
   Setup:
     General:
       Failed: "Setup failed during step '$step'!"
