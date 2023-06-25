@@ -18,6 +18,8 @@ package net.tnemc.core.compatibility;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Location
  *
@@ -52,6 +54,10 @@ public class Location {
 
   public int getChunkZ() {
     return (int)(z/16);
+  }
+
+  public double distance(@NotNull final Location location) {
+    return Math.sqrt(Math.pow(x - location.x, 2) + Math.pow(y - location.y, 2) + Math.pow(z - location.z, 2));
   }
 
   public double getX() {
