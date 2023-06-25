@@ -133,7 +133,7 @@ Messages:
     AwayNone: "<red>No transactions occured while you were offline."
     AwayJoin: "<white>You missed some transactions while you were gone. <green><click:run_command:/transaction away>View Them Now</click>!"
     History: "<white>=====[<green>Transactions<white>]===== $page/$page_top<newline>ID | Type | Initiator | Recipient"
-    HistoryEntry: "<green>$id <white>| <green>$type <white>| <green>$initiator <white>| <green>$recipient"
+    HistoryEntry: "<green><click:run_command:/transaction info $id>$id</click> <white>| <green>$type <white>| <green>$initiator <white>| <green>$recipient"
     Info: "<white>Transaction Information:<newline><white>ID: <green>$id<newline><white>Type: <green>$type"
     Invalid: "<red>There is no transaction with the ID of $transaction."
     Unable: "<red>Unable to void that transaction at this time."
