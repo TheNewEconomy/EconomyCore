@@ -82,6 +82,8 @@ Messages:
     Negative: "<red>Amount cannot be a negative value!"
     NoCurrency: "<red>The currency '$currency' could not be found in '$world'."
     SelfPay: "<red>You can't pay yourself!"
+    PayFailedOnline: "<red>Players to be online to receive payments."
+    PayFailedDistance: "<red>That player is too far to pay them! You must be within $distance blocks."
     Converted: "<white>Successfully exchanged '<gold>$from_amount<white>' to '<gold>$amount<white>'."
     ConvertSame: "<red>You can't convert a currency into itself."
     Top: "<white>=====[<gold>Economy Top<white>]===== $page/$page_top"
