@@ -217,8 +217,6 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       if(cur.contains("Note.Item.Flags")) {
         note.setFlags(cur.getStringList("Note.Item.Flags"));
       }
-
-      note.setLore(MessageConfig.yaml().getStringList("Messages.Note.Lore"));
       currency.setNote(note);
     }
 

@@ -178,7 +178,9 @@ public class MoneyCommand extends BaseCommand {
       }
 
       if(amount.compareTo(note.get().getMinimum()) < 0) {
-        sender.message(new MessageData("Messages.Note.Minimum"));
+        final MessageData min = new MessageData("Messages.Note.Minimum");
+        min.addReplacement("$amount", note.get().getMinimum().toPlainString());
+        sender.message(min);
         return;
       }
 

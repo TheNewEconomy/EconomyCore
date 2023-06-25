@@ -18,29 +18,36 @@ package net.tnemc.bukkit.listeners.player;
  */
 
 import net.tnemc.bukkit.impl.BukkitPlayerProvider;
-import net.tnemc.core.handlers.player.PlayerCloseEChestHandler;
-import org.bukkit.OfflinePlayer;
+import net.tnemc.core.TNECore;
+import net.tnemc.core.handlers.player.PlayerInteractHandler;
+import net.tnemc.item.AbstractItemStack;
+import net.tnemc.item.SerialItem;
+import net.tnemc.item.bukkit.BukkitItemStack;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 /**
- * PlayerCloseInventoryEvent
+ * PlayerInteractListener
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class PlayerCloseInventoryEvent implements Listener {
+public class PlayerInteractListener implements Listener {
 
   @EventHandler(priority = EventPriority.HIGHEST)
-  public void onClose(final InventoryCloseEvent event) {
+  public void onInteract(final PlayerInteractEvent event) {
+    final BukkitPlayerProvider provider = new BukkitPlayerProvider(event.getPlayer());
 
-    if(event.getInventory().getType().equals(InventoryType.ENDER_CHEST)) {
+    final ItemStack stack = event.getItem();
 
-      final BukkitPlayerProvider provider = new BukkitPlayerProvider((OfflinePlayer)event.getPlayer());
-      new PlayerCloseEChestHandler().handle(provider);
+    if(event.getAction().equals(Action.RIGHT_CLICK_AIR) ||
+    event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+
+      new PlayerInteractHandler().handle(provider, BukkitItemStack.locale(stack));
     }
   }
 }
