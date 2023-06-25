@@ -63,7 +63,7 @@ public class TNE extends JavaPlugin {
     Bukkit.getPluginManager().registerEvents(new BukkitChatListener(this), this);
     Bukkit.getPluginManager().registerEvents(new PlayerClickListener(this), this);
     Bukkit.getPluginManager().registerEvents(new BukkitInventoryCloseListener(this), this);
-    Bukkit.getPluginManager().registerEvents(new PlayerCloseInventoryEvent(this), this);
+    Bukkit.getPluginManager().registerEvents(new PlayerCloseInventoryEvent(), this);
 
     //World Listeners
     Bukkit.getPluginManager().registerEvents(new WorldLoadListener(), this);

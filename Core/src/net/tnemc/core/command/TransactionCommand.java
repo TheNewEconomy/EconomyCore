@@ -18,9 +18,16 @@ package net.tnemc.core.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.compatibility.CmdSource;
+import net.tnemc.core.io.message.MessageData;
+import net.tnemc.core.transaction.Receipt;
+import net.tnemc.core.transaction.history.AwayHistory;
 
+import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -33,11 +40,41 @@ public class TransactionCommand {
 
   //[page #]
   public static void away(CmdSource<?> sender, int page) {
-    //TODO: This
+    final Optional<Account> account = sender.account();
+
+    if(account.isEmpty()) {
+      sender.message(new MessageData("Messages.Transaction.AwayNone"));
+      return;
+    }
+
+    final Optional<AwayHistory> away = account.get().away(((PlayerAccount)account.get()).getUUID());
+    if(away.isEmpty()) {
+      sender.message(new MessageData("Messages.Transaction.AwayNone"));
+      return;
+    }
+
+    final MessageData heading = new MessageData("Messages.Transaction.Away");
+    heading.addReplacement("$page", String.valueOf(page));
+    heading.addReplacement("$page_top", String.valueOf(away.get().maxPages()));
+    sender.message(heading);
+
+    for(Map.Entry<Long, UUID> entry : away.get().getPage(page).entrySet()) {
+
+      final Optional<Receipt> receipt = account.get().findReceipt(entry.getValue());
+      if(receipt.isPresent()) {
+
+        final MessageData awayEntry = new MessageData("Messages.Transaction.AwayEntry");
+        awayEntry.addReplacement("$id", entry.getValue().toString());
+        awayEntry.addReplacement("$type", receipt.get().getType());
+        sender.message(awayEntry);
+      }
+    }
   }
 
   //[page:#] [world:name/all] [player:name]
   public static void history(CmdSource<?> sender, int page, String region, Account account) {
+    region = TNECore.eco().region().resolve(region);
+
     //TODO: This
   }
 

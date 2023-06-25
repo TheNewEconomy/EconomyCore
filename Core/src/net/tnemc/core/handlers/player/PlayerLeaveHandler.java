@@ -47,6 +47,7 @@ public class PlayerLeaveHandler {
     if(account.isPresent() && (account.get() instanceof PlayerAccount)) {
 
       ((PlayerAccount)account.get()).setLastOnline(new Date().getTime());
+      account.get().clearAwayReceipts();
       StorageManager.instance().store(account.get(), account.get().getIdentifier());
     }
     return response;

@@ -17,8 +17,15 @@ package net.tnemc.core.transaction.receipt;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
+import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.transaction.Receipt;
+import net.tnemc.core.transaction.history.AwayHistory;
 
+import java.sql.Time;
+import java.util.Date;
+import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.UUID;
@@ -33,14 +40,70 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ReceiptBox {
 
-  private final ConcurrentHashMap<Long, Receipt> receipts = new ConcurrentHashMap<>();
+  private final ConcurrentHashMap<UUID, Receipt> receipts = new ConcurrentHashMap<>();
+
+  private AwayHistory away = null;
+  private boolean checked = false;
+
+  /**
+   * Used to calculate transactions that happened while an account owner was away.
+   * @param account The identnfier of the account.
+   * @return An Optional containing the account history if applicable, otherwise an empty Optional.
+   */
+  public Optional<AwayHistory> away(final UUID account) {
+
+    if(checked) {
+      return Optional.ofNullable(away);
+    }
+    checked = true;
+
+    if(away != null) {
+      return Optional.of(away);
+    }
+
+    final Optional<Account> acc = TNECore.eco().account().findAccount(account);
+    if(acc.isEmpty() || !(acc.get() instanceof PlayerAccount)) {
+      return Optional.empty();
+    }
+
+    final AwayHistory history = new AwayHistory(account);
+    final long time = new Date().getTime();
+
+    int i = 0;
+
+    for(Map.Entry<Long, Receipt> entry : range(((PlayerAccount)acc.get()).getLastOnline(), time).entrySet()) {
+
+      final Receipt receipt = entry.getValue();
+
+      if(receipt.getFrom() != null && receipt.getFrom().getId().equalsIgnoreCase(account.toString())
+          || receipt.getTo() != null && receipt.getTo().getId().equalsIgnoreCase(account.toString())) {
+        history.getReceipts().put(receipt.getTime(), receipt.getId());
+        i++;
+      }
+    }
+
+    if(i <= 0) {
+      return Optional.empty();
+    }
+
+    away = history;
+    return Optional.of(history);
+  }
+
+  /**
+   * Used to clear the AwayHistory instance.
+   */
+  public void clearAwayReceipts() {
+    away = null;
+    checked = false;
+  }
 
   /**
    * Logs a receipt to this receipt box.
    * @param receipt The {@link Receipt} to log.
    */
   public void log(final Receipt receipt) {
-    receipts.put(receipt.getTime(), receipt);
+    receipts.put(receipt.getId(), receipt);
   }
 
   /**
@@ -48,7 +111,7 @@ public class ReceiptBox {
    * @param time The time to use for the destruction.
    */
   public void destroy(final long time) {
-    receipts.remove(time);
+    receipts.entrySet().removeIf(entry->entry.getValue().getTime() == time);
   }
 
   /**
@@ -56,7 +119,7 @@ public class ReceiptBox {
    * @param identifier The identifier to use for the destruction.
    */
   public void destroy(final UUID identifier) {
-    receipts.entrySet().removeIf(entry->entry.getValue().getId().equals(identifier));
+    receipts.remove(identifier);
   }
 
   /**
@@ -64,8 +127,14 @@ public class ReceiptBox {
    * @param time The time to use for the search.
    * @return An optional with the {@link Receipt} if it exists, otherwise an empty Optional.
    */
-  public Optional<Receipt> find(final long time) {
-    return Optional.ofNullable(receipts.get(time));
+  public Optional<Receipt> findReceipt(final long time) {
+
+    for(Receipt receipt : receipts.values()) {
+      if(receipt.getTime() == time) {
+        return Optional.of(receipt);
+      }
+    }
+    return Optional.empty();
   }
 
   /**
@@ -73,14 +142,8 @@ public class ReceiptBox {
    * @param identifier The {@link UUID} to use for the search.
    * @return An optional with the {@link Receipt} if it exists, otherwise an empty Optional.
    */
-  public Optional<Receipt> find(final UUID identifier) {
-
-    for(Receipt receipt : receipts.values()) {
-      if(receipt.getId().equals(identifier)) {
-        return Optional.of(receipt);
-      }
-    }
-    return Optional.empty();
+  public Optional<Receipt> findReceipt(final UUID identifier) {
+    return Optional.ofNullable(receipts.get(identifier));
   }
 
   /**
@@ -101,7 +164,7 @@ public class ReceiptBox {
     return range;
   }
 
-  public ConcurrentHashMap<Long, Receipt> getReceipts() {
+  public ConcurrentHashMap<UUID, Receipt> getReceipts() {
     return receipts;
   }
 }

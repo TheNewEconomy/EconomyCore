@@ -29,6 +29,7 @@ import net.tnemc.core.transaction.check.MaximumBalanceCheck;
 import net.tnemc.core.transaction.check.MinimumBalanceCheck;
 import net.tnemc.core.transaction.check.StatusCheck;
 import net.tnemc.core.transaction.check.TrackingCheck;
+import net.tnemc.core.transaction.history.AwayHistory;
 import net.tnemc.core.transaction.tax.TaxType;
 import net.tnemc.core.transaction.tax.type.FlatType;
 import net.tnemc.core.transaction.tax.type.PercentileType;
@@ -37,9 +38,12 @@ import net.tnemc.core.transaction.type.PayType;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Optional;
 import java.util.TimeZone;
+import java.util.TreeMap;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -64,7 +68,9 @@ public class TransactionManager {
 
   private final EnhancedHashMap<String, TaxType> tax = new EnhancedHashMap<>();
 
-  private final Map<UUID, Receipt> receipts = new ConcurrentHashMap<>();
+  private final NavigableMap<Long, UUID> sender = new TreeMap<>();
+
+  private final Map<UUID, AwayHistory> away = new HashMap<>();
 
   private boolean track;
   private BigDecimal amount;
@@ -203,6 +209,10 @@ public class TransactionManager {
    */
   public Optional<TransactionCheckGroup> findGroup(final String identifier) {
     return Optional.ofNullable(checkGroups.get(identifier));
+  }
+
+  public void clearAway(final UUID account) {
+    away.remove(account);
   }
 
   public boolean isTrack() {

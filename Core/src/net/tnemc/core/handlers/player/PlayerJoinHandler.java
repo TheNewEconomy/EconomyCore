@@ -25,9 +25,13 @@ import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.compatibility.scheduler.ChoreExecution;
+import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.message.MessageData;
+import net.tnemc.core.transaction.history.AwayHistory;
+import net.tnemc.core.utils.Extractor;
 import net.tnemc.core.utils.HandlerResponse;
 
 import java.util.Optional;
@@ -98,8 +102,14 @@ public class PlayerJoinHandler {
       }
       TNECore.eco().account().getLoading().remove(id);
 
-      final long last_online = ((PlayerAccount)acc.get()).getLastOnline();
-      //TODO: Check for transactions that happened while away if player has notify settings active.
+      TNECore.server().scheduler().createDelayedTask(()->{
+
+        final Optional<AwayHistory> away = acc.get().away(((PlayerAccount)acc.get()).getUUID());
+        if(away.isPresent()) {
+          provider.message(new MessageData("Messages.Transaction.AwayJoin"));
+        }
+
+      }, new ChoreTime(0), ChoreExecution.SECONDARY);
 
       if(provider.hasPermission("tne.admin.update")) {
         if(MainConfig.yaml().getBoolean("Core.Update.Notify") && TNECore.update() != null) {
