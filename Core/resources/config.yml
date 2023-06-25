@@ -82,9 +82,8 @@ Core:
     #Extra configurations regarding the pay command
     Pay:
 
-      #Can players use /pay on offline players? May result in additional polling requests to Mojang's API, which
-      #could result in slower response times.
-      Offline: false
+      #Can players use /pay on offline players?
+      Offline: true
 
       #How close to another player someone must be, in blocks, in order to use /pay on them. Set to 0 to disable.
       Radius: 0

@@ -49,11 +49,11 @@ public class Location {
   }
 
   public int getChunkX() {
-    return (int)(x/16);
+    return (int)(x / 16);
   }
 
   public int getChunkZ() {
-    return (int)(z/16);
+    return (int)(z / 16);
   }
 
   public double distance(@NotNull final Location location) {

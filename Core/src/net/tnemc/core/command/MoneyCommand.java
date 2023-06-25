@@ -29,6 +29,7 @@ import net.tnemc.core.actions.source.PlayerSource;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.log.DebugLevel;
+import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.Note;
 import net.tnemc.core.currency.format.CurrencyFormatter;
@@ -266,6 +267,38 @@ public class MoneyCommand extends BaseCommand {
       data.addReplacement("$player", sender.name());
       sender.message(data);
       return;
+    }
+
+    if(MainConfig.yaml().getBoolean("Core.Commands.Pay.Offline", true)) {
+      if(!(player instanceof PlayerAccount) || !((PlayerAccount)player).isOnline()) {
+
+        sender.message(new MessageData("Messages.Money.PayFailedOnline"));
+        return;
+      }
+    }
+
+    if(MainConfig.yaml().getInt("Core.Commands.Pay.Radius", 0) > 0) {
+      final MessageData data = new MessageData("Messages.Money.PayFailedDistance");
+      data.addReplacement("$distance", String.valueOf(MainConfig.yaml().getInt("Core.Commands.Pay.Radius")));
+
+      if(!(senderAccount.get() instanceof PlayerAccount) || !((PlayerAccount)senderAccount.get()).isOnline()
+          || !(player instanceof PlayerAccount) || !((PlayerAccount)player).isOnline()) {
+        sender.message(data);
+        return;
+      }
+
+      final Optional<PlayerProvider> senderPlayer = ((PlayerAccount)senderAccount.get()).getPlayer();
+      final Optional<PlayerProvider> playerPlayer = ((PlayerAccount)player).getPlayer();
+      if(senderPlayer.isEmpty() || playerPlayer.isEmpty()
+          || senderPlayer.get().getLocation().isEmpty() || playerPlayer.get().getLocation().isEmpty()) {
+        sender.message(data);
+        return;
+      }
+
+      if(senderPlayer.get().getLocation().get().distance(playerPlayer.get().getLocation().get()) > MainConfig.yaml().getInt("Core.Commands.Pay.Radius")) {
+        sender.message(data);
+        return;
+      }
     }
 
     final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
