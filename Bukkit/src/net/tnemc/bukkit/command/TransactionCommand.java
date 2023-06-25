@@ -62,7 +62,7 @@ public class TransactionCommand {
   @Usage("Transaction.History.Arguments")
   @Description("Transaction.History.Description")
   @CommandPermission("tne.transaction.history")
-  public void history(BukkitCommandActor sender, @Default("1") int page, String region, Account account) {
+  public void history(BukkitCommandActor sender, @Default("1") int page, String region, @Default("SELF_ACCOUNT") Account account) {
     net.tnemc.core.command.TransactionCommand.history(new BukkitCMDSource(sender), page, region, account);
   }
 
@@ -70,7 +70,7 @@ public class TransactionCommand {
   @Usage("Transaction.Info.Arguments")
   @Description("Transaction.Info.Description")
   @CommandPermission("tne.info.history")
-  public void info(BukkitCommandActor sender, UUID uuid, Account account) {
+  public void info(BukkitCommandActor sender, UUID uuid, @Default("SELF_ACCOUNT") Account account) {
     net.tnemc.core.command.TransactionCommand.info(new BukkitCMDSource(sender), uuid, account);
   }
 

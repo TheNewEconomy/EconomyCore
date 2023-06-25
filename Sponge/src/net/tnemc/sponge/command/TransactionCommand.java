@@ -53,7 +53,7 @@ public class TransactionCommand {
   @Usage("#{Transaction.History.Arguments}")
   @Description("#{Transaction.History.Description}")
   @CommandPermission("tne.transaction.history")
-  public void history(SpongeCommandActor sender, @Default("1") int page, String region, Account account) {
+  public void history(SpongeCommandActor sender, @Default("1") int page, String region, @Default("SELF_ACCOUNT") Account account) {
     net.tnemc.core.command.TransactionCommand.history(new SpongeCMDSource(sender), page, region, account);
   }
 
@@ -61,7 +61,7 @@ public class TransactionCommand {
   @Usage("#{Transaction.Info.Arguments}")
   @Description("#{Transaction.Info.Description}")
   @CommandPermission("tne.info.history")
-  public void info(SpongeCommandActor sender, UUID uuid, Account account) {
+  public void info(SpongeCommandActor sender, UUID uuid, @Default("SELF_ACCOUNT") Account account) {
     net.tnemc.core.command.TransactionCommand.info(new SpongeCMDSource(sender), uuid, account);
   }
 

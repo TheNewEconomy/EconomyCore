@@ -116,6 +116,13 @@ Core:
       #The threshold to mark a transaction for tracking.
       Amount: "400"
 
+    #Configurations relating to Transaction History
+    History:
+
+      #How often should the data used for /transaction list be refreshed?
+      #This is in seconds.
+      Refresh: 1200
+
     #Configurations relating to pay transactions.
     Pay:
 

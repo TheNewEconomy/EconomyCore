@@ -35,7 +35,11 @@ public class AccountResolver implements ValueResolver<Account> {
 
   @Override
   public Account resolve(@NotNull ValueResolverContext context) throws Throwable {
-    final String value = context.arguments().pop();
+    String value = context.arguments().pop();
+
+    if(value.equalsIgnoreCase("SELF_ACCOUNT")) {
+      value = context.actor().getName();
+    }
 
     final Optional<Account> account = TNECore.eco().account().findAccount(value);
     if(account.isPresent()) {

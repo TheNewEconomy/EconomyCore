@@ -25,6 +25,7 @@ import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.history.AwayHistory;
+import net.tnemc.core.transaction.history.SortedHistory;
 
 import java.util.Map;
 import java.util.Optional;
@@ -75,7 +76,43 @@ public class TransactionCommand {
   public static void history(CmdSource<?> sender, int page, String region, Account account) {
     region = TNECore.eco().region().resolve(region);
 
-    //TODO: This
+    final SortedHistory sorted = account.getSorted(account.getIdentifier());
+
+    if(sorted == null || sorted.getReceipts().size() == 0) {
+      sender.message(new MessageData("Messages.Transaction.HistoryNone"));
+      return;
+    }
+
+    final MessageData heading = new MessageData("Messages.Transaction.History");
+    heading.addReplacement("$page", String.valueOf(page));
+    heading.addReplacement("$page_top", String.valueOf(sorted.maxPages()));
+    sender.message(heading);
+
+    for(Map.Entry<Long, UUID> entry : sorted.getPage(page).entrySet()) {
+
+      final Optional<Receipt> receipt = account.findReceipt(entry.getValue());
+      if(receipt.isPresent()) {
+
+         String from = "None";
+         final Optional<Account> fromACC = receipt.get().getFrom().asAccount();
+         if(fromACC.isPresent()) {
+           from = fromACC.get().getName();
+         }
+
+         String to = "None";
+         final Optional<Account> toACC = receipt.get().getTo().asAccount();
+         if(toACC.isPresent()) {
+           to = toACC.get().getName();
+         }
+
+        final MessageData awayEntry = new MessageData("Messages.Transaction.HistoryEntry");
+        awayEntry.addReplacement("$id", entry.getValue().toString());
+        awayEntry.addReplacement("$type", receipt.get().getType());
+        awayEntry.addReplacement("$initiator", from);
+        awayEntry.addReplacement("$recipient", to);
+        sender.message(awayEntry);
+      }
+    }
   }
 
   //<uuid>

@@ -22,6 +22,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.history.AwayHistory;
+import net.tnemc.core.transaction.history.SortedHistory;
 
 import java.util.Date;
 import java.util.Map;
@@ -42,11 +43,12 @@ public class ReceiptBox {
   private final ConcurrentHashMap<UUID, Receipt> receipts = new ConcurrentHashMap<>();
 
   private AwayHistory away = null;
+  private SortedHistory sorted = null;
   private boolean checked = false;
 
   /**
    * Used to calculate transactions that happened while an account owner was away.
-   * @param account The identnfier of the account.
+   * @param account The identifier of the account.
    * @return An Optional containing the account history if applicable, otherwise an empty Optional.
    */
   public Optional<AwayHistory> away(final UUID account) {
@@ -87,6 +89,13 @@ public class ReceiptBox {
 
     away = history;
     return Optional.of(history);
+  }
+
+  public SortedHistory getSorted(final String identifier) {
+    if(sorted == null) {
+      sorted = new SortedHistory(identifier);
+    }
+    return sorted;
   }
 
   /**
