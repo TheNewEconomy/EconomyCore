@@ -121,6 +121,7 @@ Messages:
     AwayJoin: "<white>You missed some transactions while you were gone. <green><click:run_command:/transaction away>View Them Now</click>!"
     History: "<white>=====[<green>Transactions<white>]===== $page/$page_top<newline>ID | Type | Initiator | Recipient"
     HistoryEntry: "<green><click:run_command:/transaction info $id>$id</click> <white>| <green>$type <white>| <green>$initiator <white>| <green>$recipient"
+    HistoryNone: "<red>You have no transaction history to view."
     Info: "<white>Transaction Information:<newline><white>ID: <green>$id<newline><white>Type: <green>$type"
     Invalid: "<red>There is no transaction with the ID of $transaction."
     Unable: "<red>Unable to void that transaction at this time."
