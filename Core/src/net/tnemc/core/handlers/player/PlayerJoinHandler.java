@@ -31,7 +31,6 @@ import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.transaction.history.AwayHistory;
-import net.tnemc.core.utils.Extractor;
 import net.tnemc.core.utils.HandlerResponse;
 
 import java.util.Optional;

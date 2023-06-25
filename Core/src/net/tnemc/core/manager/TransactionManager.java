@@ -20,7 +20,6 @@ package net.tnemc.core.manager;
 
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.io.maps.EnhancedHashMap;
-import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionCheck;
 import net.tnemc.core.transaction.TransactionCheckGroup;
@@ -45,7 +44,6 @@ import java.util.Optional;
 import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Manages everything related to the transaction system. This is usually just keeping track of the
