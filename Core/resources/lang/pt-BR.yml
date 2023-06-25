@@ -115,9 +115,10 @@ Messages:
       Identifier: "conversion"
   Transaction:
     Already: "<red>The transaction with the ID of $transaction has already been voided."
-    Away: "<white>=====[<green>Missed Transactions<white>]===== $page/$page_top<newline>ID | Type"
-    AwayEntry: "<green>$id <white>| <green>$type"
+    Away: "<white>=====[<green>Missed Transactions</green>]===== $page/$page_top<newline>ID | Type"
+    AwayEntry: "<green><click:run_command:/transaction info $id>$id</click> <white>|</white> $type"
     AwayNone: "<red>No transactions occured while you were offline."
+    AwayJoin: "<white>You missed some transactions while you were gone. <green><click:run_command:/transaction away>View Them Now</click>!"
     History: "<white>=====[<green>Transactions<white>]===== $page/$page_top<newline>ID | Type | Initiator | Recipient"
     HistoryEntry: "<green>$id <white>| <green>$type <white>| <green>$initiator <white>| <green>$recipient"
     Info: "<white>Transaction Information:<newline><white>ID: <green>$id<newline><white>Type: <green>$type"
