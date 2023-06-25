@@ -31,6 +31,8 @@ import net.tnemc.core.account.status.AccountNormalStatus;
 import net.tnemc.core.account.status.AccountRestrictedStatus;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.actions.response.AccountResponse;
+import net.tnemc.core.api.callback.account.AccountCreateCallback;
+import net.tnemc.core.api.callback.account.AccountDeleteCallback;
 import net.tnemc.core.api.callback.account.AccountTypesCallback;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.compatibility.log.DebugLevel;
@@ -137,6 +139,11 @@ public class AccountManager {
       account = nonPlayerAccount.get();
     }
 
+    final AccountCreateCallback callback = new AccountCreateCallback(account);
+    if(TNECore.callbacks().call(callback)) {
+      return new AccountAPIResponse(account, AccountResponse.CREATION_FAILED_PLUGIN);
+    }
+
     accounts.put(account.getIdentifier(), account);
 
     TNECore.storage().store(account, account.getIdentifier());
@@ -146,6 +153,7 @@ public class AccountManager {
     } catch(Exception ignore) {
       //identifier isn't an uuid, so it'll be a string, most likely a non-player.
     }
+
     return new AccountAPIResponse(account, AccountResponse.CREATED);
   }
 
@@ -195,6 +203,10 @@ public class AccountManager {
     if(!accounts.containsKey(identifier)) {
       return AccountResponse.DOESNT_EXIST;
     }
+
+    final AccountDeleteCallback callback = new AccountDeleteCallback(identifier);
+    TNECore.callbacks().call(callback);
+
     accounts.remove(identifier);
     return AccountResponse.DELETED;
   }

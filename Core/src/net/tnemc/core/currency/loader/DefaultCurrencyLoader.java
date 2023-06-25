@@ -22,7 +22,6 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.currency.CurrencyLoadCallback;
 import net.tnemc.core.api.callback.currency.DenominationLoadCallback;
 import net.tnemc.core.compatibility.helper.CraftingRecipe;
-import net.tnemc.core.config.MessageConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyLoader;
 import net.tnemc.core.currency.CurrencyRegion;
@@ -220,7 +219,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       currency.setNote(note);
     }
 
-    CurrencyLoadCallback currencyLoad = new CurrencyLoadCallback(currency);
+    final CurrencyLoadCallback currencyLoad = new CurrencyLoadCallback(currency);
     if(TNECore.callbacks().call(currencyLoad)) {
       TNECore.log().error("Cancelled currency load through callback.");
       return false;
@@ -348,7 +347,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       }
     }
 
-    DenominationLoadCallback denomCallback = new DenominationLoadCallback(currency, denomination);
+    final DenominationLoadCallback denomCallback = new DenominationLoadCallback(currency, denomination);
     if(TNECore.callbacks().call(denomCallback)) {
       return false;
     }

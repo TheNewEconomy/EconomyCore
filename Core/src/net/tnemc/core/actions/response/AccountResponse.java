@@ -49,11 +49,29 @@ public enum AccountResponse implements EconomyResponse {
   },
 
   /**
-   * The action was successfully completed, and during it an account was created.
+   * The action failed, and during it an account was not created.
    *
    * @since 0.1.2.0
    */
   CREATION_FAILED {
+    @Override
+    public boolean success() {
+      return false;
+    }
+
+    @Override
+    public String response() {
+      return "The specified account couldn't be created.";
+    }
+  },
+
+  /**
+   * The action failed, and during it an account was not created. This is because a plugin has blocked
+   * the account creation.
+   *
+   * @since 0.1.2.0
+   */
+  CREATION_FAILED_PLUGIN {
     @Override
     public boolean success() {
       return false;

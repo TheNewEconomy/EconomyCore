@@ -19,9 +19,14 @@ package net.tnemc.core.api;
 
 import net.tnemc.core.api.callback.TNECallback;
 import net.tnemc.core.api.callback.TNECallbacks;
+import net.tnemc.core.api.callback.account.AccountCreateCallback;
+import net.tnemc.core.api.callback.account.AccountDeleteCallback;
+import net.tnemc.core.api.callback.account.AccountLoadCallback;
 import net.tnemc.core.api.callback.account.AccountTypesCallback;
 import net.tnemc.core.api.callback.currency.CurrencyLoadCallback;
 import net.tnemc.core.api.callback.currency.DenominationLoadCallback;
+import net.tnemc.core.api.callback.transaction.PostTransactionCallback;
+import net.tnemc.core.api.callback.transaction.PreTransactionCallback;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,8 +50,13 @@ public class CallbackManager {
 
     //Account Callbacks
     callbacks.put(TNECallbacks.ACCOUNT_TYPES.id(), new CallbackEntry(AccountTypesCallback.class));
+    callbacks.put(TNECallbacks.ACCOUNT_LOAD.id(), new CallbackEntry(AccountLoadCallback.class));
+    callbacks.put(TNECallbacks.ACCOUNT_CREATE.id(), new CallbackEntry(AccountCreateCallback.class));
+    callbacks.put(TNECallbacks.ACCOUNT_DELETE.id(), new CallbackEntry(AccountDeleteCallback.class));
 
     //Transaction Callbacks
+    callbacks.put(TNECallbacks.TRANSACTION_PRE.id(), new CallbackEntry(PreTransactionCallback.class));
+    callbacks.put(TNECallbacks.TRANSACTION_POST.id(), new CallbackEntry(PostTransactionCallback.class));
 
     //Currency Callbacks
     callbacks.put(TNECallbacks.CURRENCY_LOAD.id(), new CallbackEntry(CurrencyLoadCallback.class));

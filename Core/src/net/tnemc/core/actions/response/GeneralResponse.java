@@ -47,7 +47,7 @@ public enum GeneralResponse implements EconomyResponse {
   },
 
   /**
-   * The access was unsuccessful.
+   * The action was unsuccessful.
    *
    * @since 0.1.2.0
    */
@@ -60,6 +60,23 @@ public enum GeneralResponse implements EconomyResponse {
     @Override
     public String response() {
       return "The action was unsuccessful.";
+    }
+  },
+
+  /**
+   * The action was unsuccessful due to a callback cancellation.
+   *
+   * @since 0.1.2.0
+   */
+  FAILED_PLUGIN {
+    @Override
+    public boolean success() {
+      return false;
+    }
+
+    @Override
+    public String response() {
+      return "The action was unsuccessful, because it was blocked by a plugin.";
     }
   },
 

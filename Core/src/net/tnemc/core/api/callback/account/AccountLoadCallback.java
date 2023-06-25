@@ -1,4 +1,4 @@
-package net.tnemc.core.api.callback;
+package net.tnemc.core.api.callback.account;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,31 +17,27 @@ package net.tnemc.core.api.callback;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.account.Account;
+import net.tnemc.core.api.callback.TNECallbacks;
+
 /**
- * TNECallbacks represents the built-in callbacks to allow addon authors an easy way to find the
- * correct name identifier.
+ * AccountLoadCallback
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public enum TNECallbacks {
-
-  ACCOUNT_TYPES("account_types"),
-  ACCOUNT_LOAD("account_load"),
-  ACCOUNT_CREATE("account_create"),
-  ACCOUNT_DELETE("account_delete"),
-  TRANSACTION_PRE("transaction_pre"),
-  TRANSACTION_POST("transaction_post"),
-  CURRENCY_LOAD("currency_load"),
-  DENOMINATION_LOAD("denomination_load");
-
-  final String identifier;
-
-  TNECallbacks(String identifier) {
-    this.identifier = identifier;
+public class AccountLoadCallback extends AccountCallback {
+  public AccountLoadCallback(Account account) {
+    super(account);
   }
 
-  public String id() {
-    return identifier;
+  /**
+   * The name of this callback.
+   *
+   * @return The name of this callback.
+   */
+  @Override
+  public String name() {
+    return TNECallbacks.ACCOUNT_LOAD.id();
   }
 }

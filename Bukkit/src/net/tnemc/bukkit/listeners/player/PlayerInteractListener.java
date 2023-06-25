@@ -18,10 +18,7 @@ package net.tnemc.bukkit.listeners.player;
  */
 
 import net.tnemc.bukkit.impl.BukkitPlayerProvider;
-import net.tnemc.core.TNECore;
 import net.tnemc.core.handlers.player.PlayerInteractHandler;
-import net.tnemc.item.AbstractItemStack;
-import net.tnemc.item.SerialItem;
 import net.tnemc.item.bukkit.BukkitItemStack;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

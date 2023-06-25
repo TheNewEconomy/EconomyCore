@@ -23,6 +23,7 @@ import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.SharedAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.shared.Member;
+import net.tnemc.core.api.callback.account.AccountLoadCallback;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageConnector;
@@ -225,6 +226,9 @@ public class YAMLAccount implements Datable<Account> {
         for(HoldingsEntry entry : holdings) {
           account.getWallet().setHoldings(entry);
         }
+
+        final AccountLoadCallback callback = new AccountLoadCallback(account);
+        TNECore.callbacks().call(callback);
       }
       yaml = null;
       return Optional.ofNullable(account);
