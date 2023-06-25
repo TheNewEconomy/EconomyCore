@@ -19,6 +19,7 @@ package net.tnemc.bukkit;
  */
 
 import net.tnemc.bukkit.hook.economy.VaultHook;
+import net.tnemc.bukkit.hook.misc.PAPIHook;
 import net.tnemc.bukkit.listeners.player.PlayerClickListener;
 import net.tnemc.bukkit.listeners.player.PlayerCloseInventoryListener;
 import net.tnemc.bukkit.listeners.player.PlayerInteractListener;
@@ -75,6 +76,11 @@ public class TNE extends JavaPlugin {
     //Vault
     if(Bukkit.getPluginManager().isPluginEnabled("Vault")) {
       new VaultHook().register();
+    }
+
+    //PAPI
+    if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+      new PAPIHook().register();
     }
 
     getLogger().log(Level.INFO, "The New Economy has been enabled!");
