@@ -63,8 +63,8 @@ public class Receipt {
     this.modifierTo = transaction.getModifierTo();
   }
 
-  public void voidTransaction() {
-    if(voided) return;
+  public boolean voidTransaction() {
+    if(voided) return false;
 
     Transaction transaction = new Transaction("void").source(source);
 
@@ -97,6 +97,7 @@ public class Receipt {
     } catch(InvalidTransactionException e) {
       e.printStackTrace();
     }
+    return voided;
   }
 
   public UUID getId() {

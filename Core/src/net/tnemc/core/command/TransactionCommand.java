@@ -79,12 +79,29 @@ public class TransactionCommand {
   }
 
   //<uuid>
-  public static void info(CmdSource<?> sender, UUID uuid) {
+  public static void info(CmdSource<?> sender, UUID uuid, Account account) {
     //TODO: This
   }
 
   //<uuid>
-  public static void voidT(CmdSource<?> sender, UUID uuid) {
-    //TODO: This
+  public static void voidT(CmdSource<?> sender, Account account, UUID uuid) {
+    final Optional<Receipt> receipt = account.findReceipt(uuid);
+
+    if(receipt.isEmpty()) {
+      sender.message(new MessageData(""));
+      return;
+    }
+
+    if(receipt.get().isVoided()) {
+      sender.message(new MessageData(""));
+      return;
+    }
+
+    final boolean voided = receipt.get().voidTransaction();
+    if(!voided) {
+      sender.message(new MessageData(""));
+      return;
+    }
+    sender.message(new MessageData(""));
   }
 }

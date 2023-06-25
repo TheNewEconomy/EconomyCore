@@ -70,15 +70,15 @@ public class TransactionCommand {
   @Usage("Transaction.Info.Arguments")
   @Description("Transaction.Info.Description")
   @CommandPermission("tne.info.history")
-  public void info(BukkitCommandActor sender, UUID uuid) {
-    net.tnemc.core.command.TransactionCommand.info(new BukkitCMDSource(sender), uuid);
+  public void info(BukkitCommandActor sender, UUID uuid, Account account) {
+    net.tnemc.core.command.TransactionCommand.info(new BukkitCMDSource(sender), uuid, account);
   }
 
   @Subcommand({"void", "retract", "undo"})
   @Usage("Transaction.Void.Arguments")
   @Description("Transaction.Void.Description")
   @CommandPermission("tne.void.history")
-  public void voidT(BukkitCommandActor sender, UUID uuid) {
-    net.tnemc.core.command.TransactionCommand.voidT(new BukkitCMDSource(sender), uuid);
+  public void voidT(BukkitCommandActor sender, Account account, UUID uuid) {
+    net.tnemc.core.command.TransactionCommand.voidT(new BukkitCMDSource(sender), account, uuid);
   }
 }
