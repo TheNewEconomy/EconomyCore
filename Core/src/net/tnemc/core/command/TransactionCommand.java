@@ -80,7 +80,19 @@ public class TransactionCommand {
 
   //<uuid>
   public static void info(CmdSource<?> sender, UUID uuid, Account account) {
-    //TODO: This
+    final Optional<Receipt> receipt = account.findReceipt(uuid);
+
+    if(receipt.isEmpty()) {
+      final MessageData message = new MessageData("Messages.Transaction.Invalid");
+      message.addReplacement("$transaction", uuid.toString());
+      sender.message(message);
+      return;
+    }
+
+    final MessageData message = new MessageData("Messages.Transaction.Info");
+    message.addReplacement("$id", uuid.toString());
+    message.addReplacement("$type", receipt.get().getType());
+    sender.message(message);
   }
 
   //<uuid>
