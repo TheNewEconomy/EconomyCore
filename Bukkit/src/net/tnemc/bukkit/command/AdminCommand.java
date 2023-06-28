@@ -219,13 +219,18 @@ public class AdminCommand {
       for(String name : accounts) {
 
         final String username = name.replaceAll("\\!", ".").replaceAll("\\@", "-").replaceAll("\\%", "_");
+        boolean nonPlayer = false;
 
-        final UUID id = get(username);
-        if(id == null) continue;
+        UUID id = get(username);
+        if(id == null) {
+          nonPlayer = true;
+          id = UUID.randomUUID();
+        }
 
-        final AccountAPIResponse response = TNECore.eco().account().createAccount(id.toString(), username);
+        final AccountAPIResponse response = TNECore.eco().account().createAccount(id.toString(), username, nonPlayer);
         if(!response.getResponse().success() || response.getAccount().isEmpty()) {
           TNECore.log().inform("Couldn't create account for " + username + ". Skipping.");
+          continue;
         }
 
         final Set<String> regions = extracted.getConfigurationSection("Accounts." + name + ".Balances").getKeys(false);

@@ -33,7 +33,7 @@ Data:
     #The database type to use. Current options: MySQL, YAML.
     Type: "yaml"
 
-    #The prefix to use for TheNewEconomy MySQL and H2 Tables
+    #The prefix to use for TheNewEconomy SQL tables
     Prefix: "tne_"
 
     #The file to which all the data will be saved if using a file-based database

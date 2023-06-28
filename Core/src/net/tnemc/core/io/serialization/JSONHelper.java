@@ -2,6 +2,8 @@ package net.tnemc.core.io.serialization;
 
 import org.json.simple.JSONObject;
 
+import java.util.UUID;
+
 public class JSONHelper {
 
   private JSONObject object;
@@ -44,6 +46,10 @@ public class JSONHelper {
 
   public String getString(String identifier) {
     return object.get(identifier).toString();
+  }
+
+  public UUID getUUID(String identifier) {
+    return UUID.fromString(object.get(identifier).toString());
   }
 
   public JSONObject getObject() {

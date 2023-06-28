@@ -127,8 +127,8 @@ public class PlayerInteractHandler {
       } catch(InvalidTransactionException e) {
         e.printStackTrace();
       }
+      provider.message(new MessageData("Messages.Note.Failed"));
     }
-    provider.message(new MessageData("Messages.Note.Failed"));
     return response;
   }
 }

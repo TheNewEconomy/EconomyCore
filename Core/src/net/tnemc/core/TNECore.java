@@ -83,7 +83,7 @@ public abstract class TNECore {
   public static final String coreURL = "https://tnemc.net/files/module-version.xml";
   public static final Pattern UUID_MATCHER_PATTERN = Pattern.compile("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})");
   public static final String version = "0.1.2.0";
-  public static final String build = "PRE-8";
+  public static final String build = "PRE-9";
 
   /* Core non-final variables utilized within TNE as settings */
   protected File directory;
