@@ -11,6 +11,7 @@
         <module>Bukkit</module>
         <module>Folia</module>
         <module>Sponge</module>
+        <module>Bungee</module>
     </modules>
 
     <properties>

@@ -1,0 +1,4 @@
+name: TNEBungeeCore
+main: net.tnemc.bungee.BungeeCore
+version: 1.2.0
+author: creatorfromhell
