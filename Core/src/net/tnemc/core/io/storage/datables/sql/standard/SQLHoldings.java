@@ -141,7 +141,8 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
       TNECore.log().debug("SQLHoldings-loadAll-Account ID:" + identifier, DebugLevel.DEVELOPER);
       try(ResultSet result = ((SQLConnector)connector).executeQuery(((SQLConnector)connector).dialect().loadHoldings(),
                                                                     new Object[] {
-                                                                        identifier
+                                                                        identifier,
+                                                                        MainConfig.yaml().getString("Core.Server.Name")
                                                                     })) {
         while(result.next()) {
 
