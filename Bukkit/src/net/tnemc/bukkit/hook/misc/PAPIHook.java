@@ -18,7 +18,6 @@ package net.tnemc.bukkit.hook.misc;
  */
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import net.tnemc.bukkit.TNE;
 import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
