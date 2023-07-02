@@ -17,6 +17,7 @@ package net.tnemc.minestom.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.minestom.server.MinecraftServer;
 import net.tnemc.core.compatibility.ProxyProvider;
 
 /**
@@ -43,7 +44,6 @@ public class MinestormProxyProvider implements ProxyProvider {
    */
   @Override
   public void registerOutgoing(String channel) {
-
   }
 
   /**
@@ -54,6 +54,10 @@ public class MinestormProxyProvider implements ProxyProvider {
    */
   @Override
   public void send(String channel, byte[] bytes) {
+    if(MinecraftServer.getConnectionManager().getOnlinePlayers().size() == 0) {
+      return;
+    }
 
+    MinecraftServer.getConnectionManager().getOnlinePlayers().iterator().next().sendPluginMessage(channel, bytes);
   }
 }

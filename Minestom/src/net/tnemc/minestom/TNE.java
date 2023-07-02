@@ -18,7 +18,11 @@ package net.tnemc.minestom;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.minestom.server.MinecraftServer;
+import net.minestom.server.event.GlobalEventHandler;
+import net.minestom.server.event.player.PlayerPluginMessageEvent;
 import net.minestom.server.extensions.Extension;
+import net.tnemc.minestom.listener.server.PluginMessageListener;
 
 /**
  * TNE
@@ -50,13 +54,13 @@ public class TNE extends Extension {
     //Register our hooks
 
     //Register our event listeners
+    GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
+    eventHandler.addListener(PlayerPluginMessageEvent.class, PluginMessageListener::handle);
 
     //Player Listeners
 
     getLogger().info("The New Economy has been enabled!");
   }
-
-
 
   public void terminate() {
 
