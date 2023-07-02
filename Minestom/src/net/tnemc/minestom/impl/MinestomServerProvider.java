@@ -21,6 +21,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.compatibility.ProxyProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
@@ -44,11 +45,22 @@ import java.util.UUID;
 public class MinestomServerProvider implements ServerConnector {
 
   private final MinestomItemCalculations calc = new MinestomItemCalculations();
+  private final MinestormProxyProvider proxy = new MinestormProxyProvider();
 
   private final MinestomScheduler scheduler;
 
   public MinestomServerProvider() {
     this.scheduler = new MinestomScheduler();
+  }
+
+  /**
+   * The proxy provider to use for this implementation.
+   *
+   * @return The proxy provider to use for this implementation.
+   */
+  @Override
+  public ProxyProvider proxy() {
+    return proxy;
   }
 
   /**

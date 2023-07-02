@@ -22,6 +22,7 @@ import net.tnemc.bukkit.TNE;
 import net.tnemc.bukkit.impl.scheduler.BukkitScheduler;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.compatibility.ProxyProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
@@ -52,12 +53,23 @@ import java.util.UUID;
  */
 public class BukkitServerProvider implements ServerConnector {
 
-  private BukkitCalculationsProvider calc = new BukkitCalculationsProvider();
+  private final BukkitCalculationsProvider calc = new BukkitCalculationsProvider();
+  private final BukkitProxyProvider proxy = new BukkitProxyProvider();
 
   private final BukkitScheduler scheduler;
 
   public BukkitServerProvider() {
     this.scheduler = new BukkitScheduler();
+  }
+
+  /**
+   * The proxy provider to use for this implementation.
+   *
+   * @return The proxy provider to use for this implementation.
+   */
+  @Override
+  public ProxyProvider proxy() {
+    return proxy;
   }
 
   /**

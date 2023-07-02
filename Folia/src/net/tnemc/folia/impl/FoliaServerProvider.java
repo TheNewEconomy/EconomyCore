@@ -19,8 +19,10 @@ package net.tnemc.folia.impl;
  */
 
 import net.tnemc.bukkit.impl.BukkitItemCalculations;
+import net.tnemc.bukkit.impl.BukkitProxyProvider;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.compatibility.ProxyProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
@@ -52,12 +54,23 @@ import java.util.UUID;
  */
 public class FoliaServerProvider implements ServerConnector {
 
-  private BukkitCalculationsProvider calc = new BukkitCalculationsProvider();
+  private final BukkitCalculationsProvider calc = new BukkitCalculationsProvider();
+  private final BukkitProxyProvider proxy = new BukkitProxyProvider();
 
   private final FoliaScheduler scheduler;
 
   public FoliaServerProvider() {
     this.scheduler = new FoliaScheduler();
+  }
+
+  /**
+   * The proxy provider to use for this implementation.
+   *
+   * @return The proxy provider to use for this implementation.
+   */
+  @Override
+  public ProxyProvider proxy() {
+    return proxy;
   }
 
   /**

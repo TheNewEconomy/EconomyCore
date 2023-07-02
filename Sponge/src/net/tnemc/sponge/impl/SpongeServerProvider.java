@@ -20,6 +20,7 @@ package net.tnemc.sponge.impl;
 
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.compatibility.ProxyProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
@@ -49,11 +50,22 @@ import java.util.UUID;
 public class SpongeServerProvider implements ServerConnector {
 
   private final SpongeItemCalculations calc = new SpongeItemCalculations();
+  private final SpongeProxyProvider proxy = new SpongeProxyProvider();
 
   private final SpongeScheduler scheduler;
 
   public SpongeServerProvider() {
     this.scheduler = new SpongeScheduler();
+  }
+
+  /**
+   * The proxy provider to use for this implementation.
+   *
+   * @return The proxy provider to use for this implementation.
+   */
+  @Override
+  public ProxyProvider proxy() {
+    return proxy;
   }
 
   /**

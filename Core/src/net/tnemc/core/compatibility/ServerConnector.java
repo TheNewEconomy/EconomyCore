@@ -43,6 +43,12 @@ import java.util.regex.Pattern;
 public interface ServerConnector {
 
   /**
+   * The proxy provider to use for this implementation.
+   * @return The proxy provider to use for this implementation.
+   */
+  ProxyProvider proxy();
+
+  /**
    * Used to convert an {@link CommandActor} to a {@link CmdSource}.
    * @return The {@link CmdSource} for this actor.
    */

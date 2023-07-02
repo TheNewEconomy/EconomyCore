@@ -34,7 +34,7 @@ import java.util.UUID;
  */
 public abstract class MessageHandler {
 
-  private String tag;
+  private final String tag;
 
   public MessageHandler(String tag) {
     this.tag = tag;

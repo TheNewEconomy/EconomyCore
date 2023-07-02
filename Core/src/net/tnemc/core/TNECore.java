@@ -25,6 +25,7 @@ import net.tnemc.core.api.BaseAPI;
 import net.tnemc.core.api.CallbackManager;
 import net.tnemc.core.api.TNEAPI;
 import net.tnemc.core.api.response.AccountAPIResponse;
+import net.tnemc.core.channel.ChannelMessageManager;
 import net.tnemc.core.command.parameters.resolver.AccountResolver;
 import net.tnemc.core.command.parameters.resolver.BigDecimalResolver;
 import net.tnemc.core.command.parameters.resolver.CurrencyResolver;
@@ -112,6 +113,7 @@ public abstract class TNECore {
 
   private TNEAPI api;
   protected CallbackManager callbackManager;
+  protected ChannelMessageManager channelMessageManager;
 
   protected ModuleLoader loader;
   protected ModuleFileCache moduleCache;
@@ -256,6 +258,8 @@ public abstract class TNECore {
     } else {
       serverID = UUID.fromString(MainConfig.yaml().getString("Core.ServerID"));
     }
+
+    this.channelMessageManager = new ChannelMessageManager();
 
     this.storage = new StorageManager();
     this.storage.loadAll(Account.class, "");
@@ -448,6 +452,10 @@ public abstract class TNECore {
     return instance.api;
   }
 
+  public ChannelMessageManager getChannelMessageManager() {
+    return channelMessageManager;
+  }
+
   public static ModuleLoader loader() {
     return instance.loader;
   }
@@ -477,5 +485,7 @@ public abstract class TNECore {
     return serverAccount;
   }
 
-
+  public UUID getServerID() {
+    return serverID;
+  }
 }
