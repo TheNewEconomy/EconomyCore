@@ -33,22 +33,13 @@ public class BukkitProxyProvider implements ProxyProvider {
   private final MessageChannelListener listener = new MessageChannelListener();
 
   /**
-   * Used to register an incoming plugin message channel.
+   * Used to register a plugin message channel.
    *
    * @param channel The channel to register.
    */
   @Override
-  public void registerIncoming(String channel) {
+  public void registerChannel(String channel) {
     Bukkit.getMessenger().registerIncomingPluginChannel(TNE.instance(), channel, listener);
-  }
-
-  /**
-   * Used to register an outgoing plugin message channel.
-   *
-   * @param channel The channel to register.
-   */
-  @Override
-  public void registerOutgoing(String channel) {
     Bukkit.getMessenger().registerOutgoingPluginChannel(TNE.instance(), channel);
   }
 

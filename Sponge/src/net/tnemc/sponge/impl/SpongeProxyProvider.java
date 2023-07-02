@@ -17,7 +17,12 @@ package net.tnemc.sponge.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.ProxyProvider;
+import net.tnemc.sponge.SpongeCore;
+import org.spongepowered.api.Platform;
+import org.spongepowered.api.Sponge;
+import org.spongepowered.api.network.ChannelBinding;
 
 /**
  * SpongeProxyProvider
@@ -26,24 +31,20 @@ import net.tnemc.core.compatibility.ProxyProvider;
  * @since 0.1.2.0
  */
 public class SpongeProxyProvider implements ProxyProvider {
+
   /**
-   * Used to register an incoming plugin message channel.
+   * Used to register a plugin message channel.
    *
    * @param channel The channel to register.
    */
   @Override
-  public void registerIncoming(String channel) {
+  public void registerChannel(String channel) {
+    final ChannelBinding.RawDataChannel spongeChannel = Sponge.getGame().getChannelRegistrar().getOrCreateRaw(SpongeCore.instance(), channel);
 
-  }
+    spongeChannel.addListener(Platform.Type.SERVER, (data, connection, side)->{
 
-  /**
-   * Used to register an outgoing plugin message channel.
-   *
-   * @param channel The channel to register.
-   */
-  @Override
-  public void registerOutgoing(String channel) {
-
+      TNECore.instance().getChannelMessageManager().handle(channel, data.array());
+    });
   }
 
   /**
@@ -55,5 +56,8 @@ public class SpongeProxyProvider implements ProxyProvider {
   @Override
   public void send(String channel, byte[] bytes) {
 
+    final ChannelBinding.RawDataChannel spongeChannel = Sponge.getGame().getChannelRegistrar().getOrCreateRaw(SpongeCore.instance(), channel);
+
+    spongeChannel.sendToServer(out ->out.writeByteArray(bytes));
   }
 }

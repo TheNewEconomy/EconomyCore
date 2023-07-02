@@ -28,22 +28,12 @@ import net.tnemc.core.compatibility.ProxyProvider;
  */
 public class MinestormProxyProvider implements ProxyProvider {
   /**
-   * Used to register an incoming plugin message channel.
+   * Used to register a plugin message channel.
    *
    * @param channel The channel to register.
    */
   @Override
-  public void registerIncoming(String channel) {
-
-  }
-
-  /**
-   * Used to register an outgoing plugin message channel.
-   *
-   * @param channel The channel to register.
-   */
-  @Override
-  public void registerOutgoing(String channel) {
+  public void registerChannel(String channel) {
   }
 
   /**

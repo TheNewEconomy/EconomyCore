@@ -27,16 +27,10 @@ package net.tnemc.core.compatibility;
 public interface ProxyProvider {
 
   /**
-   * Used to register an incoming plugin message channel.
+   * Used to register a plugin message channel.
    * @param channel The channel to register.
    */
-  void registerIncoming(final String channel);
-
-  /**
-   * Used to register an outgoing plugin message channel.
-   * @param channel The channel to register.
-   */
-  void registerOutgoing(final String channel);
+  void registerChannel(final String channel);
 
   /**
    * Used to send a message through a specific plugin message channel.
