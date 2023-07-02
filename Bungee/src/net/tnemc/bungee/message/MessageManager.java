@@ -18,10 +18,7 @@ package net.tnemc.bungee.message;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.md_5.bungee.api.connection.Server;
-import net.md_5.bungee.api.event.PluginMessageEvent;
-import net.md_5.bungee.api.plugin.Listener;
-import net.md_5.bungee.event.EventHandler;
+import net.tnemc.bungee.ProxyProvider;
 import net.tnemc.bungee.message.handlers.BalanceMessageHandler;
 import net.tnemc.bungee.message.handlers.SyncAllMessageHandler;
 
@@ -37,34 +34,27 @@ import java.util.UUID;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class MessageListener implements Listener {
+public class MessageManager {
 
   private final Map<String, MessageHandler> handlers = new HashMap<>();
+  private final ProxyProvider proxy;
+  private static MessageManager instance;
 
-  public MessageListener() {
+  public MessageManager(final ProxyProvider proxy) {
+    instance = this;
+    this.proxy = proxy;
     handlers.put("balance", new BalanceMessageHandler());
     handlers.put("sync", new SyncAllMessageHandler());
   }
 
+  public void onMessage(final String channel, final byte[] data) {
 
-  @EventHandler
-  public void onMessage(PluginMessageEvent event) {
-    if(!event.getTag().startsWith("tne:")) {
-      return;
-    }
-
-    if(!(event.getSender() instanceof Server)) {
-      System.out.println("Event sender not server.");
-      event.setCancelled(true);
-      return;
-    }
-
-    final String tag = event.getTag().replace("tne:", "");
+    final String tag = channel.replace("tne:", "");
 
     if(handlers.containsKey(tag)) {
       try {
-        ByteArrayInputStream stream = new ByteArrayInputStream(event.getData());
-        DataInputStream in = new DataInputStream(stream);
+        final ByteArrayInputStream stream = new ByteArrayInputStream(data);
+        final DataInputStream in = new DataInputStream(stream);
 
         UUID server = UUID.fromString(in.readUTF());
         UUID player = UUID.fromString(in.readUTF());
@@ -76,5 +66,13 @@ public class MessageListener implements Listener {
         e.printStackTrace();
       }
     }
+  }
+
+  public ProxyProvider proxy() {
+    return proxy;
+  }
+
+  public static MessageManager instance() {
+    return instance;
   }
 }

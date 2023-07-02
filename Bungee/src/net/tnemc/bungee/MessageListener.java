@@ -17,47 +17,31 @@ package net.tnemc.bungee;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.api.connection.Server;
+import net.md_5.bungee.api.event.PluginMessageEvent;
+import net.md_5.bungee.api.plugin.Listener;
+import net.md_5.bungee.event.EventHandler;
 import net.tnemc.bungee.message.MessageManager;
-import net.tnemc.bungee.message.backlog.MessageData;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 /**
- * BungeeCore
+ * MessageListener
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class BungeeCore extends Plugin {
+public class MessageListener implements Listener {
 
-  private final Map<UUID, MessageData> backlog = new HashMap<>();
+  @EventHandler
+  public void onMessage(PluginMessageEvent event) {
+    if(!event.getTag().startsWith("tne:")) {
+      return;
+    }
 
-  private static BungeeCore instance;
-  private MessageManager manager;
-
-  @Override
-  public void onEnable() {
-    instance = this;
-
-    this.manager = new MessageManager(new BungeeProxy());
-
-    getProxy().registerChannel("tne:balance");
-    getProxy().registerChannel("tne:sync");
-    getProxy().getPluginManager().registerListener(this, new MessageListener());
-  }
-
-  public static BungeeCore instance() {
-    return instance;
-  }
-
-  public Map<UUID, MessageData> getBacklog() {
-    return backlog;
-  }
-
-  public void remove(final UUID server) {
-    backlog.remove(server);
+    if(!(event.getSender() instanceof Server)) {
+      System.out.println("Event sender not server.");
+      event.setCancelled(true);
+      return;
+    }
+    MessageManager.instance().onMessage(event.getTag(), event.getData());
   }
 }

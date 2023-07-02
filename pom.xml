@@ -12,6 +12,7 @@
         <module>Folia</module>
         <module>Sponge</module>
         <module>Bungee</module>
+        <module>Velocity</module>
     </modules>
 
     <properties>

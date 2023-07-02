@@ -17,47 +17,35 @@ package net.tnemc.bungee;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.md_5.bungee.api.plugin.Plugin;
-import net.tnemc.bungee.message.MessageManager;
 import net.tnemc.bungee.message.backlog.MessageData;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
 /**
- * BungeeCore
+ * ProxyProvider
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class BungeeCore extends Plugin {
+public interface ProxyProvider {
 
-  private final Map<UUID, MessageData> backlog = new HashMap<>();
+  /**
+   * Used to send data to every server that is not this server.
+   * @param channel The channel to use for sending the data.
+   * @param out The data to send.
+   */
+  void sendToAll(final String channel, byte[] out);
 
-  private static BungeeCore instance;
-  private MessageManager manager;
+  /**
+   * Used to send data to a specific server.
+   * @param serverName The server name.
+   * @param channel The channel to use for sending the data.
+   * @param out The data to send.
+   */
+  void sendTo(final String serverName, final String channel, byte[] out);
 
-  @Override
-  public void onEnable() {
-    instance = this;
-
-    this.manager = new MessageManager(new BungeeProxy());
-
-    getProxy().registerChannel("tne:balance");
-    getProxy().registerChannel("tne:sync");
-    getProxy().getPluginManager().registerListener(this, new MessageListener());
-  }
-
-  public static BungeeCore instance() {
-    return instance;
-  }
-
-  public Map<UUID, MessageData> getBacklog() {
-    return backlog;
-  }
-
-  public void remove(final UUID server) {
-    backlog.remove(server);
-  }
+  /**
+   * Used to send any backlog data to a server.
+   * @param data The {@link MessageData} to use for determining the server, and backlog to send.
+   */
+  void sendBacklog(@NotNull final MessageData data);
 }
