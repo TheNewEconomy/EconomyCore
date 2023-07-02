@@ -58,5 +58,5 @@ public abstract class MessageHandler {
     MessageManager.instance().proxy().sendBacklog(data);
   }
 
-  public abstract void handle(UUID player, UUID server, DataInputStream stream);
+  public abstract void handle(String player, UUID server, DataInputStream stream);
 }

@@ -55,6 +55,12 @@ public interface ServerConnector {
   CmdSource<?> source(@NotNull CommandActor actor);
 
   /**
+   * Used to get the amount of online players.
+   * @return The amount of online players.
+   */
+  int onlinePlayers();
+
+  /**
    * Attempts to find a {@link PlayerProvider player} based on an {@link UUID identifier}.
    * @param identifier The identifier
    * @return An Optional containing the located {@link PlayerProvider player}, or an empty

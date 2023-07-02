@@ -37,10 +37,10 @@ public class SyncHandler extends ChannelMessageHandler {
     super("sync");
   }
 
-  public static void send(UUID account) {
+  public static void send(String account) {
     ByteArrayDataOutput out = ByteStreams.newDataOutput();
     out.writeUTF(TNECore.instance().getServerID().toString());
-    out.writeUTF(account.toString());
+    out.writeUTF(account);
 
     TNECore.server().proxy().send("tne:sync", out.toByteArray());
   }

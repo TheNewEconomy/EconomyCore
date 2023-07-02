@@ -43,12 +43,12 @@ public class BalanceHandler extends ChannelMessageHandler {
     super("balance");
   }
 
-  public static void send(UUID account, String world, String currency, BigDecimal amount) {
+  public static void send(final String account, String region, UUID currency, BigDecimal amount) {
     ByteArrayDataOutput out = ByteStreams.newDataOutput();
     out.writeUTF(TNECore.instance().getServerID().toString());
-    out.writeUTF(account.toString());
-    out.writeUTF(world);
-    out.writeUTF(currency);
+    out.writeUTF(account);
+    out.writeUTF(region);
+    out.writeUTF(currency.toString());
     out.writeUTF(amount.toPlainString());
 
     TNECore.server().proxy().send("tne:balance", out.toByteArray());
@@ -59,16 +59,18 @@ public class BalanceHandler extends ChannelMessageHandler {
 
     try {
 
-      final Optional<UUID> accountOPT = wrapper.readUUID();
+      final String accountID = wrapper.readUTF();
       final String region = wrapper.readUTF();
       final Optional<UUID> currency = wrapper.readUUID();
       final Optional<BigDecimal> amountOPT = wrapper.readBigDecimal();
       final String handler = wrapper.readUTF();
 
-      if(accountOPT.isPresent() && amountOPT.isPresent() && currency.isPresent()) {
+      if(amountOPT.isPresent() && currency.isPresent()) {
 
-        Optional<Account> account = TNECore.eco().account().findAccount(accountOPT.get());
+        Optional<Account> account = TNECore.eco().account().findAccount(accountID);
         if(account.isPresent()) {
+          TNECore.instance().getChannelMessageManager().addAccount(accountID);
+
           final HoldingsEntry entry = new HoldingsEntry(region, currency.get(),
                                                         amountOPT.get(), Identifier.fromID(handler));
           account.get().setHoldings(entry);

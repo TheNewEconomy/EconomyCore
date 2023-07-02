@@ -21,7 +21,9 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.channel.handlers.BalanceHandler;
 import net.tnemc.core.channel.handlers.SyncHandler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,6 +35,8 @@ import java.util.Map;
 public class ChannelMessageManager {
 
   private final Map<String, ChannelMessageHandler> handlers = new HashMap<>();
+
+  private final List<String> accountsMessage = new ArrayList<>();
 
   public ChannelMessageManager() {
 
@@ -55,5 +59,17 @@ public class ChannelMessageManager {
     if(handlers.containsKey(channel)) {
       handlers.get(channel).handle(bytes);
     }
+  }
+
+  public boolean isAffected(final String account) {
+    return accountsMessage.contains(account);
+  }
+
+  public void removeAccount(final String account) {
+    accountsMessage.remove(account);
+  }
+
+  public void addAccount(final String account) {
+    accountsMessage.add(account);
   }
 }

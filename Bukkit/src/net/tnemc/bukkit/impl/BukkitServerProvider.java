@@ -85,6 +85,16 @@ public class BukkitServerProvider implements ServerConnector {
   }
 
   /**
+   * Used to get the amount of online players.
+   *
+   * @return The amount of online players.
+   */
+  @Override
+  public int onlinePlayers() {
+    return Bukkit.getOnlinePlayers().size();
+  }
+
+  /**
    * Attempts to find a {@link PlayerProvider player} based on an {@link UUID identifier}.
    *
    * @param identifier The identifier

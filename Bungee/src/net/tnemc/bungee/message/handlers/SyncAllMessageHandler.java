@@ -35,7 +35,7 @@ public class SyncAllMessageHandler extends MessageHandler {
   }
 
   @Override
-  public void handle(UUID player, UUID server, DataInputStream stream) {
+  public void handle(String player, UUID server, DataInputStream stream) {
     if(BungeeCore.instance().getBacklog().containsKey(server)) {
       sendBacklog(BungeeCore.instance().getBacklog().get(server));
 

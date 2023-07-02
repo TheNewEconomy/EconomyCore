@@ -56,9 +56,9 @@ public class MessageManager {
         final ByteArrayInputStream stream = new ByteArrayInputStream(data);
         final DataInputStream in = new DataInputStream(stream);
 
-        UUID server = UUID.fromString(in.readUTF());
-        UUID player = UUID.fromString(in.readUTF());
-        handlers.get(tag).handle(player, server, in);
+        final UUID server = UUID.fromString(in.readUTF());
+        final String account = in.readUTF();
+        handlers.get(tag).handle(account, server, in);
 
         in.close();
         stream.close();

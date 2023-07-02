@@ -24,6 +24,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.api.response.AccountAPIResponse;
+import net.tnemc.core.channel.handlers.SyncHandler;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.scheduler.ChoreExecution;
 import net.tnemc.core.compatibility.scheduler.ChoreTime;
@@ -126,6 +127,11 @@ public class PlayerJoinHandler {
         if(TNECore.eco().transaction().isTrack()) {
           //TODO: Any warnings? Balance jumps?
         }
+      }
+
+      //If this is the first player online, sync balances.
+      if(TNECore.server().onlinePlayers() == 1) {
+        SyncHandler.send(acc.get().getIdentifier());
       }
     }
     return response;

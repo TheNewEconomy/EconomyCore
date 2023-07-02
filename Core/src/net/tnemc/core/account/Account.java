@@ -22,6 +22,9 @@ import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.Wallet;
+import net.tnemc.core.channel.handlers.BalanceHandler;
+import net.tnemc.core.compatibility.scheduler.ChoreExecution;
+import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.maps.MapKey;
 import net.tnemc.core.transaction.receipt.ReceiptBox;
@@ -198,12 +201,25 @@ public class Account extends ReceiptBox {
 
     final String region = TNECore.eco().region().resolve(entry.getRegion());
 
-    return currencyObject.map(currency->currency.type().setHoldings(this,
+    final boolean result = currencyObject.map(currency->currency.type().setHoldings(this,
                                                                     region,
                                                                     currency,
                                                                     type,
                                                                     entry.getAmount()
     )).orElse(false);
+
+    if(result) {
+      //Send out our update to our proxies.
+      if(!TNECore.instance().getChannelMessageManager().isAffected(identifier)) {
+        TNECore.server().scheduler().createDelayedTask(()->{
+          BalanceHandler.send(identifier, region, currencyObject.get().getUid(), entry.getAmount());
+        }, new ChoreTime(1), ChoreExecution.SECONDARY);
+      } else {
+        TNECore.instance().getChannelMessageManager().removeAccount(identifier);
+      }
+    }
+
+    return result;
   }
 
   @MapKey
