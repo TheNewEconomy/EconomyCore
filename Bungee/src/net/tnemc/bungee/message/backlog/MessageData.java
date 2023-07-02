@@ -1,4 +1,4 @@
-package net.tnemc.bungee;
+package net.tnemc.bungee.message.backlog;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,44 +17,30 @@ package net.tnemc.bungee;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.md_5.bungee.api.plugin.Plugin;
-import net.tnemc.bungee.message.MessageListener;
-import net.tnemc.bungee.message.backlog.MessageData;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 /**
- * BungeeCore
+ * MessageData
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class BungeeCore extends Plugin {
+public class MessageData {
 
-  private final Map<UUID, MessageData> backlog = new HashMap<>();
+  private final Map<Long, BacklogEntry> backlog = new HashMap<>();
 
-  private static BungeeCore instance;
+  private final String serverName;
 
-  @Override
-  public void onEnable() {
-    instance = this;
-
-    getProxy().registerChannel("tne:balance");
-    getProxy().registerChannel("tne:sync");
-    getProxy().getPluginManager().registerListener(this, new MessageListener());
+  public MessageData(String serverName) {
+    this.serverName = serverName;
   }
 
-  public static BungeeCore instance() {
-    return instance;
+  public String getServerName() {
+    return serverName;
   }
 
-  public Map<UUID, MessageData> getBacklog() {
+  public Map<Long, BacklogEntry> getBacklog() {
     return backlog;
-  }
-
-  public void remove(final UUID server) {
-    backlog.remove(server);
   }
 }

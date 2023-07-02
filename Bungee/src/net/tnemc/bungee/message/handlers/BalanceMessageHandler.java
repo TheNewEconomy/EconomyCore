@@ -48,11 +48,10 @@ public class BalanceMessageHandler extends MessageHandler {
     } catch (IOException e) {
       e.printStackTrace();
     }
-
   }
 
   public static void send(UUID server, UUID player, String region, String currency, String handler, String amount) {
-    ByteArrayDataOutput out = ByteStreams.newDataOutput();
+    final ByteArrayDataOutput out = ByteStreams.newDataOutput();
     out.writeUTF(server.toString());
     out.writeUTF(player.toString());
     out.writeUTF(region);

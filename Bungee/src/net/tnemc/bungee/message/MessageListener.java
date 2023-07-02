@@ -23,6 +23,7 @@ import net.md_5.bungee.api.event.PluginMessageEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.tnemc.bungee.message.handlers.BalanceMessageHandler;
+import net.tnemc.bungee.message.handlers.SyncAllMessageHandler;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -38,10 +39,11 @@ import java.util.UUID;
  */
 public class MessageListener implements Listener {
 
-  private Map<String, MessageHandler> handlers = new HashMap<>();
+  private final Map<String, MessageHandler> handlers = new HashMap<>();
 
   public MessageListener() {
     handlers.put("balance", new BalanceMessageHandler());
+    handlers.put("sync", new SyncAllMessageHandler());
   }
 
 
