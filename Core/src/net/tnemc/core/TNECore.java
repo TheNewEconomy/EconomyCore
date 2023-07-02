@@ -118,6 +118,7 @@ public abstract class TNECore {
 
   private boolean enabled = false;
 
+  protected UUID serverID;
   protected UUID serverAccount;
   protected UpdateChecker updateChecker = null;
 
@@ -241,6 +242,20 @@ public abstract class TNECore {
 
     //set our debug options.
     this.level = DebugLevel.fromID(MainConfig.yaml().getString("Core.Debugging.Mode"));
+
+    //Set our server UUID. This is used for proxy messaging.
+    if(!MainConfig.yaml().contains("Core.ServerID")) {
+      serverID = UUID.randomUUID();
+      MainConfig.yaml().set("Core.ServerID", serverID.toString());
+      MainConfig.yaml().setComment("Core.ServerID", "#Don't modify unless you know what you're doing.");
+      try {
+        MainConfig.yaml().save();
+      } catch(IOException e) {
+        logger.error("Issue while saving Server UUID to config.yml", e, DebugLevel.STANDARD);
+      }
+    } else {
+      serverID = UUID.fromString(MainConfig.yaml().getString("Core.ServerID"));
+    }
 
     this.storage = new StorageManager();
     this.storage.loadAll(Account.class, "");
