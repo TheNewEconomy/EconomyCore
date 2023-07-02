@@ -47,8 +47,7 @@ public class ChannelMessageManager {
 
   public void register() {
     handlers.keySet().forEach(channel->{
-      TNECore.server().proxy().registerIncoming(channel);
-      TNECore.server().proxy().registerOutgoing(channel);
+      TNECore.server().proxy().registerChannel(channel);
     });
   }
 
