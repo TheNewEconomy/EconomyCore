@@ -18,7 +18,6 @@ package net.tnemc.paper.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.paper.impl.PaperCMDSource;
 import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
@@ -32,6 +31,7 @@ import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.utils.Identifier;
+import net.tnemc.paper.impl.PaperCMDSource;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.Nullable;

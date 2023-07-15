@@ -18,9 +18,9 @@ package net.tnemc.paper.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.paper.impl.PaperCMDSource;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.command.BaseCommand;
+import net.tnemc.paper.impl.PaperCMDSource;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.DefaultFor;

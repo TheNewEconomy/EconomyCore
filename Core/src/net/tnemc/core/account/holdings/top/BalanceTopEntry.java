@@ -17,12 +17,8 @@ package net.tnemc.core.account.holdings.top;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.google.common.cache.Cache;
-
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 

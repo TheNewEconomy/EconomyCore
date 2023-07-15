@@ -20,7 +20,6 @@ package net.tnemc.folia.impl;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 import net.tnemc.bukkit.impl.BukkitItemCalculations;
-import net.tnemc.bukkit.impl.BukkitProxyProvider;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ProxyProvider;

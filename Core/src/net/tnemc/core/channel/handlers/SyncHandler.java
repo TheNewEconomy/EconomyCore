@@ -23,8 +23,6 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.channel.ChannelBytesWrapper;
 import net.tnemc.core.channel.ChannelMessageHandler;
 
-import java.util.UUID;
-
 /**
  * SyncHandler
  *
