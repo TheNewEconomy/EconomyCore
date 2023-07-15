@@ -105,6 +105,12 @@ public interface CurrencyType {
     if(type.equals(EconomyManager.NORMAL)) {
 
       handlers.addAll(EconomyManager.instance().getFor(account, this));
+
+    } else if(type.equals(EconomyManager.ITEM_ONLY)) {
+
+      final Optional<CurrencyType> curType = EconomyManager.instance().currency().findType("item");
+      curType.ifPresent(currencyType -> handlers.addAll(EconomyManager.instance().getFor(account, currencyType)));
+
     } else {
 
       final Optional<HoldingsHandler> handler = EconomyManager.instance().findHandler(type);

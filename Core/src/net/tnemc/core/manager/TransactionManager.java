@@ -35,6 +35,7 @@ import net.tnemc.core.transaction.tax.type.FlatType;
 import net.tnemc.core.transaction.tax.type.PercentileType;
 import net.tnemc.core.transaction.type.ConversionType;
 import net.tnemc.core.transaction.type.PayType;
+import net.tnemc.core.transaction.type.WithdrawType;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -93,6 +94,7 @@ public class TransactionManager {
     //Add our default TransactionTypes.
     addType(new ConversionType());
     addType(new PayType());
+    addType(new WithdrawType());
 
     //Add our default transaction checks.
     addCheck(new PreCallbackCheck(), "core");

@@ -115,7 +115,7 @@ public class Transaction {
    */
   public Transaction from(final Account account, final HoldingsModifier modifier) {
 
-    final List<HoldingsEntry> balances = account.getHoldings(modifier.getRegion(), modifier.getCurrency());
+    final List<HoldingsEntry> balances = account.getHoldings(modifier.getRegion(), modifier.getCurrency(), modifier.getType());
 
     if(balances.isEmpty()) {
       balances.add(new HoldingsEntry(modifier.getRegion(), modifier.getCurrency(),
@@ -171,7 +171,7 @@ public class Transaction {
    */
   public Transaction to(final Account account, final HoldingsModifier modifier) {
 
-    final List<HoldingsEntry> balances = account.getHoldings(modifier.getRegion(), modifier.getCurrency());
+    final List<HoldingsEntry> balances = account.getHoldings(modifier.getRegion(), modifier.getCurrency(), modifier.getType());
 
     if(balances.isEmpty()) {
       balances.add(new HoldingsEntry(modifier.getRegion(), modifier.getCurrency(),

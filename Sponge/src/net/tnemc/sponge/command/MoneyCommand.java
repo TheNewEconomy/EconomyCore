@@ -137,4 +137,12 @@ public class MoneyCommand {
   public void onTop(SpongeCommandActor sender, String[] args) {
     net.tnemc.core.command.MoneyCommand.onTop(new SpongeCMDSource(sender));
   }*/
+
+  @Subcommand({"withdraw"})
+  @Usage("Money.Withdraw.Arguments")
+  @Description("Money.Withdraw.Description")
+  @CommandPermission("tne.money.withdraw")
+  public void onWithdraw(SpongeCommandActor sender, BigDecimal amount, @Default("") Currency currency, @Default("world-113") String region) {
+    net.tnemc.core.command.MoneyCommand.onWithdraw(new SpongeCMDSource(sender), amount, currency, region);
+  }
 }

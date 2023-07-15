@@ -139,6 +139,19 @@ Core:
         #The tax may also be a percentage.
         Receiver: 0.0
 
+    #Configurations relating to withdraw transactions.
+    Withdraw:
+
+      #Tax-related configurations.
+      Tax:
+
+        #If this tax is enabled.
+        Enabled: false
+
+        #The tax to apply to a withdrawal transaction.
+        #The tax may also be a percentage.
+        Rate: 0.0
+
     #Configurations relating to conversion transactions.
     Conversion:
 

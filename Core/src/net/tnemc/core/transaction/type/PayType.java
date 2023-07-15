@@ -52,7 +52,7 @@ public class PayType implements TransactionType {
    */
   @Override
   public Optional<TaxEntry> toTax() {
-    if(MainConfig.yaml().getBoolean("Core.Transactions.Pay.Tax.Enabled")) {
+    if(MainConfig.yaml().getBoolean("Core.Transactions.Pay.Tax.Enabled", false)) {
       final String tax = MainConfig.yaml().getString("Core.Transactions.Pay.Tax.Receiver");
       TaxEntry entry;
       if(tax.contains("\\%")) {
@@ -74,7 +74,7 @@ public class PayType implements TransactionType {
    */
   @Override
   public Optional<TaxEntry> fromTax() {
-    if(MainConfig.yaml().getBoolean("Core.Transactions.Pay.Tax.Enabled")) {
+    if(MainConfig.yaml().getBoolean("Core.Transactions.Pay.Tax.Enabled", false)) {
       final String tax = MainConfig.yaml().getString("Core.Transactions.Pay.Tax.Sender");
       TaxEntry entry;
       if(tax.contains("\\%")) {

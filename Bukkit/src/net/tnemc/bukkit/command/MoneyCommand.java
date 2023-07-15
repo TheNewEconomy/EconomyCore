@@ -146,4 +146,12 @@ public class MoneyCommand {
   public void onTop(BukkitCommandActor sender, String[] args) {
     net.tnemc.core.command.MoneyCommand.onTop(new BukkitCMDSource(sender));
   }*/
+
+  @Subcommand({"withdraw"})
+  @Usage("Money.Withdraw.Arguments")
+  @Description("Money.Withdraw.Description")
+  @CommandPermission("tne.money.withdraw")
+  public void onWithdraw(BukkitCommandActor sender, BigDecimal amount, @Default("") Currency currency, @Default("world-113") String region) {
+    net.tnemc.core.command.MoneyCommand.onWithdraw(new BukkitCMDSource(sender), amount, currency, region);
+  }
 }

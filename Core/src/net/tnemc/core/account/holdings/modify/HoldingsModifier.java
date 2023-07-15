@@ -21,6 +21,7 @@ package net.tnemc.core.account.holdings.modify;
 import net.tnemc.core.EconomyManager;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.utils.Identifier;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -37,6 +38,7 @@ public class HoldingsModifier {
   private final String region;
   private BigDecimal modifier;
   private final HoldingsOperation operation;
+  private final Identifier holdingsID;
 
   /**
    * Represents an object that may be utilized to modify an {@link Account account's} holdings. This
@@ -53,6 +55,26 @@ public class HoldingsModifier {
     this.currency = currency;
     this.modifier = modifier;
     this.operation = HoldingsOperation.ADD;
+    this.holdingsID = EconomyManager.NORMAL;
+  }
+
+  /**
+   * Represents an object that may be utilized to modify an {@link Account account's} holdings. This
+   * class is able to then be applied directly to the holdings of an account.
+   *
+   * @param region The name of the region involved. This is usually a world, but could be something
+   *               else such as a world guard region name/identifier.
+   * @param currency The currency to use for the modification.
+   * @param modifier The amount we are utilizing to modify the holdings. This may be negative to
+   *                 take the holdings down.
+   * @param id The {@link Identifier} for the holdings type to perform this transaction on.
+   */
+  public HoldingsModifier(final String region, final UUID currency, final BigDecimal modifier, final Identifier id) {
+    this.region = region;
+    this.currency = currency;
+    this.modifier = modifier;
+    this.operation = HoldingsOperation.ADD;
+    this.holdingsID = id;
   }
 
   /**
@@ -66,6 +88,7 @@ public class HoldingsModifier {
     this.currency = entry.getCurrency();
     this.modifier = entry.getAmount();
     this.operation = HoldingsOperation.ADD;
+    this.holdingsID = entry.getHandler();
   }
 
   /**
@@ -84,6 +107,27 @@ public class HoldingsModifier {
     this.region = region;
     this.modifier = modifier;
     this.operation = operation;
+    this.holdingsID = EconomyManager.NORMAL;
+  }
+
+  /**
+   * Represents an object that may be utilized to modify an {@link Account account's} holdings. This
+   * class is able to then be applied directly to the holdings of an account.
+   * @param currency The currency to use for the modification.
+   * @param region The name of the region involved. This is usually a world, but could be something
+   *               else such as a world guard region name/identifier.
+   * @param modifier The amount we are utilizing to modify the holdings. This may be negative to
+   *                 take the holdings down.
+   * @param operation The operation that should be performed with the modifier.
+   * @param id The {@link Identifier} for the holdings type to perform this transaction on.
+   */
+  public HoldingsModifier(final String region, final UUID currency, final BigDecimal modifier,
+                          final HoldingsOperation operation, final Identifier id) {
+    this.currency = currency;
+    this.region = region;
+    this.modifier = modifier;
+    this.operation = operation;
+    this.holdingsID = id;
   }
 
   /**
@@ -97,6 +141,7 @@ public class HoldingsModifier {
     this.currency = entry.getCurrency();
     this.modifier = entry.getAmount();
     this.operation = operation;
+    this.holdingsID = entry.getHandler();
   }
 
   /**
@@ -105,7 +150,17 @@ public class HoldingsModifier {
    * @return The new opposite holdings modifier object.
    */
   public HoldingsModifier counter() {
-    return new HoldingsModifier(region, currency, modifier.negate(), operation);
+    return new HoldingsModifier(region, currency, modifier.negate(), operation, holdingsID);
+  }
+
+  /**
+   * Returns a new {@link HoldingsModifier} object that is the opposite in terms of amount from this
+   * one.
+   * @param type The {@link Identifier} for the holdings type to perform this transaction on.
+   * @return The new opposite holdings modifier object.
+   */
+  public HoldingsModifier counter(final Identifier type) {
+    return new HoldingsModifier(region, currency, modifier.negate(), operation, type);
   }
 
   /**
@@ -140,6 +195,10 @@ public class HoldingsModifier {
 
   public HoldingsOperation getOperation() {
     return operation;
+  }
+
+  public Identifier getType() {
+    return holdingsID;
   }
 
   public HoldingsEntry asEntry() {

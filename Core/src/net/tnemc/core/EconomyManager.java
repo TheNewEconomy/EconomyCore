@@ -55,6 +55,8 @@ public class EconomyManager {
 
   public static final Identifier VIRTUAL = new Identifier("tne", "VIRTUAL_HOLDINGS");
   public static final Identifier EXPERIENCE = new Identifier("tne", "EXPERIENCE_HOLDINGS");
+  public static final Identifier ITEM_ONLY = new Identifier("tne", "ITEM_ONLY");
+
   public static final Identifier INVENTORY_ONLY = new Identifier("tne", "INVENTORY_HOLDINGS");
   public static final Identifier E_CHEST = new Identifier("tne", "ENDER_HOLDINGS");
 

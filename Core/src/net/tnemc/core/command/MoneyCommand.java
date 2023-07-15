@@ -33,6 +33,7 @@ import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.Note;
 import net.tnemc.core.currency.format.CurrencyFormatter;
+import net.tnemc.core.currency.type.MixedType;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
@@ -454,6 +455,48 @@ public class MoneyCommand extends BaseCommand {
   //ArgumentsParser: [page] [currency:name] [world:world] [limit:#]
   public static void onTop() {
     //TODO: This
+  }
+
+  //ArgumentsParser: <amount> [currency]
+  public static void onWithdraw(CmdSource<?> sender, BigDecimal amount, Currency currency, String region) {
+
+    Optional<Account> senderAccount = sender.account();
+
+    if(senderAccount.isEmpty()) {
+      final MessageData data = new MessageData("Messages.General.NoPlayer");
+      data.addReplacement("$player", sender.name());
+      sender.message(data);
+      return;
+    }
+
+    region = TNECore.eco().region().resolve(region);
+
+    if(!(currency.type() instanceof MixedType)) {
+
+      //Message not mixed currency type
+      return;
+    }
+
+    final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
+            currency.getUid(),
+            amount,
+            EconomyManager.ITEM_ONLY
+    );
+
+    final Transaction transaction = new Transaction("withdraw")
+            .to(senderAccount.get(), modifier)
+            .from(senderAccount.get(), modifier.counter(EconomyManager.VIRTUAL))
+            .processor(new BaseTransactionProcessor())
+            .source(new PlayerSource(sender.identifier()));
+
+    final Optional<Receipt> receipt = processTransaction(sender, transaction);
+    if(receipt.isPresent()) {
+      final MessageData data = new MessageData("Messages.Money.Withdrawn");
+      data.addReplacement("$amount", CurrencyFormatter.format(senderAccount.get(),
+              modifier.asEntry()));
+      sender.message(data);
+
+    }
   }
 
   private static Optional<Receipt> processTransaction(CmdSource<?> sender, Transaction transaction) {
