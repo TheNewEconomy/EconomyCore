@@ -1,5 +1,4 @@
-package net.tnemc.folia;
-
+package net.tnemc.paper;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -18,30 +17,32 @@ package net.tnemc.folia;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.command.AdminCommand;
-import net.tnemc.bukkit.command.ModuleCommand;
-import net.tnemc.bukkit.command.MoneyCommand;
-import net.tnemc.bukkit.command.TransactionCommand;
-import net.tnemc.bukkit.depend.towny.TownyHandler;
-import net.tnemc.bukkit.impl.BukkitLogProvider;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.TNECallbacks;
-import net.tnemc.folia.impl.FoliaServerProvider;
+import net.tnemc.paper.command.AdminCommand;
+import net.tnemc.paper.command.ModuleCommand;
+import net.tnemc.paper.command.MoneyCommand;
+import net.tnemc.paper.command.TransactionCommand;
+import net.tnemc.paper.depend.towny.TownyHandler;
+import net.tnemc.paper.impl.PaperLogProvider;
+import net.tnemc.paper.impl.PaperServerProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import revxrsal.commands.bukkit.BukkitCommandHandler;
 
 /**
- * FoliaCore
+ * PaperCore
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class FoliaCore extends TNECore {
-  private JavaPlugin plugin;
+public class PaperCore extends TNECore {
+  private final JavaPlugin plugin;
 
-  public FoliaCore(JavaPlugin plugin) {
-    super(new FoliaServerProvider(), new BukkitLogProvider(plugin.getLogger()));
+  private BukkitConfig bukkitConfig;
+
+  public PaperCore(JavaPlugin plugin) {
+    super(new PaperServerProvider(), new PaperLogProvider(plugin.getLogger()));
     setInstance(this);
     this.plugin = plugin;
   }
@@ -51,6 +52,11 @@ public class FoliaCore extends TNECore {
     this.directory = plugin.getDataFolder();
 
     super.onEnable();
+
+    this.bukkitConfig = new BukkitConfig();
+    if(!this.bukkitConfig.load()) {
+      TNECore.log().error("Failed to load bukkit configuration!");
+    }
   }
 
   @Override
@@ -70,7 +76,7 @@ public class FoliaCore extends TNECore {
 
   @Override
   public void registerCallbacks() {
-    this.callbackManager.addConsumer(TNECallbacks.ACCOUNT_TYPES, (callback->{
+    this.callbackManager.addConsumer(TNECallbacks.ACCOUNT_TYPES, (callback -> {
       if(Bukkit.getPluginManager().isPluginEnabled("Towny")) {
         log().debug("Adding Towny Account Types");
         TownyHandler.addTypes();
@@ -83,7 +89,7 @@ public class FoliaCore extends TNECore {
     }));
   }
 
-  public static FoliaCore instance() {
-    return (FoliaCore)TNECore.instance();
+  public static PaperCore instance() {
+    return (PaperCore)TNECore.instance();
   }
 }

@@ -1,4 +1,5 @@
-package net.tnemc.bukkit.listeners.player;
+package net.tnemc.paper.depend.faction;
+
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,24 +18,28 @@ package net.tnemc.bukkit.listeners.player;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.impl.BukkitPlayerProvider;
-import net.tnemc.core.handlers.player.PlayerLeaveHandler;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
+import net.tnemc.core.account.AccountTypeCheck;
+import net.tnemc.paper.BukkitConfig;
+
+import java.util.function.Function;
 
 /**
- * PlayerQuitListener
+ * FactionCheck
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class PlayerQuitListener implements Listener {
+public class FactionCheck implements AccountTypeCheck {
 
-  @EventHandler(priority = EventPriority.HIGHEST)
-  public void onQuit(final PlayerQuitEvent event) {
-    final BukkitPlayerProvider provider = new BukkitPlayerProvider(event.getPlayer());
-    new PlayerLeaveHandler().handle(provider);
+  /**
+   * Returns our check function that should be used to check if a given String identifier, usually name,
+   * is valid for this account type.
+   *
+   * @return Our function that should be used to check if a given String identifier, usually name,
+   * is valid for this account type.
+   */
+  @Override
+  public Function<String, Boolean> check() {
+    return value -> value.toLowerCase().contains(BukkitConfig.yaml().getString("Bukkit.Faction"));
   }
 }

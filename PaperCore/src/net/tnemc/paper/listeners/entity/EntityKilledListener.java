@@ -1,4 +1,4 @@
-package net.tnemc.bukkit.listeners.player;
+package net.tnemc.paper.listeners.entity;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,24 +17,34 @@ package net.tnemc.bukkit.listeners.player;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.impl.BukkitPlayerProvider;
-import net.tnemc.core.handlers.player.PlayerLeaveHandler;
+import net.tnemc.core.handlers.entity.EntityDropExpHandler;
+import net.tnemc.core.handlers.entity.EntityDropItemHandler;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 
 /**
- * PlayerQuitListener
+ * EntityKilledListener
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class PlayerQuitListener implements Listener {
+public class EntityKilledListener implements Listener {
 
   @EventHandler(priority = EventPriority.HIGHEST)
-  public void onQuit(final PlayerQuitEvent event) {
-    final BukkitPlayerProvider provider = new BukkitPlayerProvider(event.getPlayer());
-    new PlayerLeaveHandler().handle(provider);
+  public void onDeath(final EntityDeathEvent event) {
+
+    //We don't care about players
+    if(!(event.getEntity() instanceof Player)) {
+
+      event.getDrops().removeIf(stack->new EntityDropItemHandler().handle(stack.getType().getKey().getKey()).isCancelled());
+
+      //Remove exp from entity drop if handler is false.
+      if(new EntityDropExpHandler().handle().isCancelled()) {
+        event.setDroppedExp(0);
+      }
+    }
   }
 }

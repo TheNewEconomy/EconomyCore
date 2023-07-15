@@ -46,6 +46,8 @@ public class PlayerLeaveHandler {
     final Optional<Account> account = TNECore.eco().account().findAccount(provider.identifier());
     if(account.isPresent() && (account.get() instanceof PlayerAccount)) {
 
+
+
       ((PlayerAccount)account.get()).setLastOnline(new Date().getTime());
       account.get().clearAwayReceipts();
       StorageManager.instance().store(account.get(), account.get().getIdentifier());

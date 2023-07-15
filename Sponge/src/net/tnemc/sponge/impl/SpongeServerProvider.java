@@ -145,6 +145,11 @@ public class SpongeServerProvider implements ServerConnector {
     return player.map(User::isOnline).orElse(false);
   }
 
+  @Override
+  public Optional<UUID> fromName(String name) {
+    return Optional.empty();
+  }
+
   /**
    * Returns the name of the default region.
    *

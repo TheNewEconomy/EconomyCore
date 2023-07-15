@@ -67,7 +67,7 @@ public class IOUtil {
       TNECore.log().warning("Unable to contact update server!");
     }
     return Optional.ofNullable(build);
-  };
+  }
 
   /**
    * Used to find the absolute path based on a case-insensitive file name, in a directory.
@@ -96,62 +96,5 @@ public class IOUtil {
     }
 
     return directory.listFiles((dir, name) -> name.endsWith(".yml"));
-  }
-
-  /**
-   * Used to load a specific file from a jar at a path.
-   * @param path The path of the jar file.
-   * @param file The name of the file to load from the jar.
-   * @param callback The Consumer function that intakes the {@link BufferedReader} obtained during
-   * loading.
-   */
-  public static void loadFileFromJar(final File path, final String file, Consumer<Optional<BufferedReader>> callback) {
-    JarFile jar = null;
-    InputStream in = null;
-    BufferedReader reader = null;
-
-    try {
-      jar = new JarFile(path);
-
-      JarEntry infoFile = jar.getJarEntry(file);
-
-      if(infoFile == null) {
-        TNECore.log().error("Error encountered while loading module: " + path + ". No module.info file found.");
-        return;
-      }
-
-      in = jar.getInputStream(infoFile);
-      reader = new BufferedReader(new InputStreamReader(in));
-
-      callback.accept(Optional.ofNullable(reader));
-
-    } catch(IOException ignore) {
-      TNECore.log().error("Something went wrong during loading.");
-      callback.accept(Optional.empty());
-    } finally {
-      if(jar != null) {
-        try {
-          jar.close();
-        } catch(IOException ignore) {
-          TNECore.log().error("Something went wrong while closing the jar IO.");
-        }
-      }
-
-      if(in != null) {
-        try {
-          in.close();
-        } catch(IOException ignore) {
-          TNECore.log().error("Something went wrong while closing the InputStream IO.");
-        }
-      }
-
-      if(reader != null) {
-        try {
-          reader.close();
-        } catch(IOException ignore) {
-          TNECore.log().error("Something went wrong while closing the BufferedReader IO.");
-        }
-      }
-    }
   }
 }

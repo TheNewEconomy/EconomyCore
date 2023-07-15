@@ -1,4 +1,5 @@
-package net.tnemc.minestom.impl;
+package net.tnemc.paper.listeners.world;
+
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,14 +18,23 @@ package net.tnemc.minestom.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.minestom.server.inventory.Inventory;
-import net.tnemc.core.currency.calculations.ItemCalculations;
+import net.tnemc.core.handlers.region.RegionLoadHandler;
+import net.tnemc.core.region.RegionType;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.world.WorldLoadEvent;
 
 /**
- * MinestomItemCalculations
+ * WorldLoadListener
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class MinestomItemCalculations extends ItemCalculations<Inventory> {
+public class WorldLoadListener implements Listener {
+
+  @EventHandler(priority = EventPriority.HIGHEST)
+  public void onLoad(final WorldLoadEvent event) {
+    new RegionLoadHandler().handle(event.getWorld().getName(), RegionType.WORLD);
+  }
 }

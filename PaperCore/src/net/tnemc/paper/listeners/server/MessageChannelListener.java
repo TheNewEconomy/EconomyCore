@@ -1,4 +1,4 @@
-package net.tnemc.minestom.listener.server;
+package net.tnemc.paper.listeners.server;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,18 +17,20 @@ package net.tnemc.minestom.listener.server;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.minestom.server.event.player.PlayerPluginMessageEvent;
 import net.tnemc.core.TNECore;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.messaging.PluginMessageListener;
+import org.jetbrains.annotations.NotNull;
 
 /**
- * PluginMessageListener
+ * MessageChannelListener
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class PluginMessageListener {
-
-  public static void handle(final PlayerPluginMessageEvent event) {
-    TNECore.instance().getChannelMessageManager().handle(event.getIdentifier(), event.getMessage());
+public class MessageChannelListener implements PluginMessageListener {
+  @Override
+  public void onPluginMessageReceived(@NotNull String channel, @NotNull Player player, byte[] bytes) {
+    TNECore.instance().getChannelMessageManager().handle(channel, bytes);
   }
 }

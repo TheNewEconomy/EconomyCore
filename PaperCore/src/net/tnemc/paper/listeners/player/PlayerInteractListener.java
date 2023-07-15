@@ -1,4 +1,4 @@
-package net.tnemc.bukkit.listeners.player;
+package net.tnemc.paper.listeners.player;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,24 +17,34 @@ package net.tnemc.bukkit.listeners.player;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.impl.BukkitPlayerProvider;
-import net.tnemc.core.handlers.player.PlayerLeaveHandler;
+import net.tnemc.core.handlers.player.PlayerInteractHandler;
+import net.tnemc.item.bukkit.BukkitItemStack;
+import net.tnemc.paper.impl.PaperPlayerProvider;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 /**
- * PlayerQuitListener
+ * PlayerInteractListener
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class PlayerQuitListener implements Listener {
+public class PlayerInteractListener implements Listener {
 
   @EventHandler(priority = EventPriority.HIGHEST)
-  public void onQuit(final PlayerQuitEvent event) {
-    final BukkitPlayerProvider provider = new BukkitPlayerProvider(event.getPlayer());
-    new PlayerLeaveHandler().handle(provider);
+  public void onInteract(final PlayerInteractEvent event) {
+    final PaperPlayerProvider provider = new PaperPlayerProvider(event.getPlayer());
+
+    final ItemStack stack = event.getItem();
+
+    if(event.getAction().equals(Action.RIGHT_CLICK_AIR) ||
+    event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+
+      new PlayerInteractHandler().handle(provider, BukkitItemStack.locale(stack));
+    }
   }
 }

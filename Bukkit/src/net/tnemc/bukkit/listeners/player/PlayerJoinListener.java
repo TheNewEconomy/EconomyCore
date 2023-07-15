@@ -19,6 +19,8 @@ package net.tnemc.bukkit.listeners.player;
  */
 
 import net.tnemc.bukkit.impl.BukkitPlayerProvider;
+import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.handlers.player.PlayerJoinHandler;
 import net.tnemc.core.utils.HandlerResponse;
 import org.bukkit.event.EventHandler;
@@ -47,7 +49,7 @@ public class PlayerJoinListener implements Listener {
     //Is john joining?
     //easter egg
     if(event.getPlayer().getUniqueId().toString().equalsIgnoreCase("e8e32707-8120-4c48-ad16-81d3fce9346d")) {
-      event.getPlayer().chat("Hi my name is JustJohns. I like anime and furry conventions!");
+      event.getPlayer().chat("Hi my name is JustJohns. I like anime!");
     }
   }
 }

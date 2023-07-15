@@ -1,4 +1,5 @@
-package net.tnemc.bukkit.listeners.player;
+package net.tnemc.paper.hook.economy;
+
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,24 +18,36 @@ package net.tnemc.bukkit.listeners.player;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.impl.BukkitPlayerProvider;
-import net.tnemc.core.handlers.player.PlayerLeaveHandler;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
+
+import net.milkbowl.vault.economy.Economy;
+import net.tnemc.core.hook.Hook;
+import net.tnemc.paper.TNE;
+import org.bukkit.plugin.ServicePriority;
 
 /**
- * PlayerQuitListener
+ * VaultHook represents a hook into the Vault economy API.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class PlayerQuitListener implements Listener {
+public class VaultHook implements Hook {
 
-  @EventHandler(priority = EventPriority.HIGHEST)
-  public void onQuit(final PlayerQuitEvent event) {
-    final BukkitPlayerProvider provider = new BukkitPlayerProvider(event.getPlayer());
-    new PlayerLeaveHandler().handle(provider);
+  /**
+   * @return True if this hook is enabled, otherwise false.
+   */
+  @Override
+  public boolean enabled() {
+    return false;
+  }
+
+  /**
+   * Used to register this service.
+   */
+  @Override
+  public void register() {
+    TNEVault vaultEconomy = new TNEVault();
+    TNE.instance().getServer().getServicesManager().register(Economy.class, vaultEconomy,
+                                                             TNE.instance(), ServicePriority.Highest);
+    TNE.instance().getLogger().info("Hooked into Vault");
   }
 }

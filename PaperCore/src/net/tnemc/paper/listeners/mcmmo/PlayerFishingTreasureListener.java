@@ -1,4 +1,5 @@
-package net.tnemc.bukkit.listeners.player;
+package net.tnemc.paper.listeners.mcmmo;
+
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,24 +18,23 @@ package net.tnemc.bukkit.listeners.player;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.impl.BukkitPlayerProvider;
-import net.tnemc.core.handlers.player.PlayerLeaveHandler;
+import com.gmail.nossr50.events.skills.fishing.McMMOPlayerFishingTreasureEvent;
+import net.tnemc.core.TNECore;
+import net.tnemc.core.currency.Currency;
+import net.tnemc.paper.BukkitConfig;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
 
-/**
- * PlayerQuitListener
- *
- * @author creatorfromhell
- * @since 0.1.2.0
- */
-public class PlayerQuitListener implements Listener {
+import java.util.Optional;
+
+public class PlayerFishingTreasureListener implements Listener {
 
   @EventHandler(priority = EventPriority.HIGHEST)
-  public void onQuit(final PlayerQuitEvent event) {
-    final BukkitPlayerProvider provider = new BukkitPlayerProvider(event.getPlayer());
-    new PlayerLeaveHandler().handle(provider);
+  public void onFishReward(final McMMOPlayerFishingTreasureEvent event) {
+    if(BukkitConfig.yaml().getBoolean("Bukkit.McMMORewards")) {
+      Optional<Currency> currency = TNECore.eco().currency().findCurrencyByMaterial(event.getTreasure().getType().name());
+      if (currency.isPresent()) event.setCancelled(true);
+    }
   }
 }

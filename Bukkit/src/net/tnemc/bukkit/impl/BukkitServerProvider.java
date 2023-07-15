@@ -31,10 +31,7 @@ import net.tnemc.core.region.RegionMode;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.bukkit.BukkitCalculationsProvider;
 import net.tnemc.item.bukkit.BukkitItemStack;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.jetbrains.annotations.NotNull;
@@ -53,10 +50,10 @@ import java.util.UUID;
  */
 public class BukkitServerProvider implements ServerConnector {
 
-  private final BukkitCalculationsProvider calc = new BukkitCalculationsProvider();
-  private final BukkitProxyProvider proxy = new BukkitProxyProvider();
+  protected final BukkitCalculationsProvider calc = new BukkitCalculationsProvider();
+  protected final BukkitProxyProvider proxy = new BukkitProxyProvider();
 
-  private final BukkitScheduler scheduler;
+  protected final BukkitScheduler scheduler;
 
   public BukkitServerProvider() {
     this.scheduler = new BukkitScheduler();
@@ -150,6 +147,17 @@ public class BukkitServerProvider implements ServerConnector {
     } catch(Exception ignore) {
       return Bukkit.getPlayer(name) != null;
     }
+  }
+
+  @Override
+  public Optional<UUID> fromName(String name) {
+    for(OfflinePlayer player : Bukkit.getServer().getOfflinePlayers()) {
+      if(player.getName() == null) continue;
+      if(player.getName().equalsIgnoreCase(name)) {
+        return Optional.of(player.getUniqueId());
+      }
+    }
+    return Optional.empty();
   }
 
   /**

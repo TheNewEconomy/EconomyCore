@@ -1,4 +1,4 @@
-package net.tnemc.bukkit.listeners.player;
+package net.tnemc.paper.listeners.player;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,8 +17,8 @@ package net.tnemc.bukkit.listeners.player;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.impl.BukkitPlayerProvider;
 import net.tnemc.core.handlers.player.PlayerLeaveHandler;
+import net.tnemc.paper.impl.PaperPlayerProvider;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -33,8 +33,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class PlayerQuitListener implements Listener {
 
   @EventHandler(priority = EventPriority.HIGHEST)
-  public void onQuit(final PlayerQuitEvent event) {
-    final BukkitPlayerProvider provider = new BukkitPlayerProvider(event.getPlayer());
+  public void onJoin(final PlayerQuitEvent event) {
+    final PaperPlayerProvider provider = new PaperPlayerProvider(event.getPlayer());
     new PlayerLeaveHandler().handle(provider);
   }
 }

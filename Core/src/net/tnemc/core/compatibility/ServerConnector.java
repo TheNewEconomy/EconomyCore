@@ -93,6 +93,14 @@ public interface ServerConnector {
   boolean online(final String name);
 
   /**
+   * Used to locate a UUID for a specific name. This could be called from either a primary or secondary thread, and
+   * should not call back to the Mojang API ever.
+   * @param name The name to use for the search.
+   * @return An optional containing the UUId if exists, otherwise false.
+   */
+  Optional<UUID> fromName(final String name);
+
+  /**
    * Returns the {@link Pattern pattern} utilized to determine if a string is a valid
    * player username.
    *

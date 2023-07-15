@@ -1,5 +1,4 @@
-package net.tnemc.folia.impl;
-
+package net.tnemc.paper.impl;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -19,8 +18,6 @@ package net.tnemc.folia.impl;
  */
 
 import com.destroystokyo.paper.profile.PlayerProfile;
-import net.tnemc.bukkit.impl.BukkitItemCalculations;
-import net.tnemc.bukkit.impl.BukkitProxyProvider;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ProxyProvider;
@@ -29,11 +26,11 @@ import net.tnemc.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.region.RegionMode;
-import net.tnemc.folia.TNE;
-import net.tnemc.folia.impl.scheduler.FoliaScheduler;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.bukkit.BukkitCalculationsProvider;
 import net.tnemc.item.bukkit.BukkitItemStack;
+import net.tnemc.paper.TNE;
+import net.tnemc.paper.impl.scheduler.PaperScheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -48,20 +45,20 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * FoliaServerProvider
+ * PaperServerProvider
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class FoliaServerProvider implements ServerConnector {
+public class PaperServerProvider implements ServerConnector {
 
   private final BukkitCalculationsProvider calc = new BukkitCalculationsProvider();
-  private final FoliaProxyProvider proxy = new FoliaProxyProvider();
+  private final PaperProxyProvider proxy = new PaperProxyProvider();
 
-  private final FoliaScheduler scheduler;
+  private final PaperScheduler scheduler;
 
-  public FoliaServerProvider() {
-    this.scheduler = new FoliaScheduler();
+  public PaperServerProvider() {
+    this.scheduler = new PaperScheduler();
   }
 
   /**
@@ -107,7 +104,7 @@ public class FoliaServerProvider implements ServerConnector {
   @Override
   public Optional<PlayerProvider> findPlayer(@NotNull UUID identifier) {
 
-    return Optional.of(FoliaPlayerProvider.find(identifier.toString()));
+    return Optional.of(PaperPlayerProvider.find(identifier.toString()));
   }
 
   /**
@@ -207,7 +204,7 @@ public class FoliaServerProvider implements ServerConnector {
    * @return The scheduler for this implementation.
    */
   @Override
-  public FoliaScheduler scheduler() {
+  public PaperScheduler scheduler() {
     return scheduler;
   }
 
@@ -240,12 +237,12 @@ public class FoliaServerProvider implements ServerConnector {
   @Override
   public BukkitItemStack denominationToStack(ItemDenomination denomination) {
     return new BukkitItemStack().of(denomination.getMaterial(), 1)
-        .enchant(denomination.getEnchantments())
-        .lore(denomination.getLore())
-        .flags(denomination.getFlags())
-        .damage(denomination.getDamage())
-        .display(denomination.getName())
-        .modelData(denomination.getCustomModel());
+            .enchant(denomination.getEnchantments())
+            .lore(denomination.getLore())
+            .flags(denomination.getFlags())
+            .damage(denomination.getDamage())
+            .display(denomination.getName())
+            .modelData(denomination.getCustomModel());
   }
 
   @Override
@@ -254,7 +251,7 @@ public class FoliaServerProvider implements ServerConnector {
   }
 
   @Override
-  public BukkitItemCalculations itemCalculations() {
-    return new BukkitItemCalculations();
+  public PaperItemCalculations itemCalculations() {
+    return new PaperItemCalculations();
   }
 }

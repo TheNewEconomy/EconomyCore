@@ -110,6 +110,12 @@ public class AccountManager {
 
     if(!nonPlayer && UUIDProvider.validate(name)) {
       try {
+
+        if(identifier == null) {
+          //Throw NPE if identifier is null to push down to our catch block.
+          throw new NullPointerException("Tried to createAccount for player using null identifier.");
+        }
+
         final UUID id = UUID.fromString(identifier);
         account = new PlayerAccount(id, name);
 
@@ -117,12 +123,27 @@ public class AccountManager {
       } catch(Exception ignore) {
 
         //Our identifier is an invalid UUID, let's search for it.
-        return new AccountAPIResponse(null, AccountResponse.CREATION_FAILED);
+        final Optional<UUID> id = TNECore.server().fromName(name);
+
+        if(id.isPresent()) {
+          account = new PlayerAccount(id.get(), name);
+
+          uuidProvider.store(new UUIDPair(id.get(), name));
+        } else {
+
+          return new AccountAPIResponse(null, AccountResponse.CREATION_FAILED);
+        }
       }
     } else if(!nonPlayer && name.startsWith("*") || !nonPlayer && TNECore.server().online(name)) {
 
       //This is most definitely a geyser player, they're online but not of valid names
       try {
+
+        if(identifier == null) {
+          //Throw NPE if identifier is null to push down to our catch block.
+          throw new NullPointerException("Tried to createAccount for player using null identifier.");
+        }
+
         final UUID id = UUID.fromString(identifier);
         account = new GeyserAccount(id, name);
 

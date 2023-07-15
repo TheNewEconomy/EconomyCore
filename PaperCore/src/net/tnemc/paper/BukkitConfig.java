@@ -1,4 +1,4 @@
-package net.tnemc.bukkit.listeners.player;
+package net.tnemc.paper;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,24 +17,25 @@ package net.tnemc.bukkit.listeners.player;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.impl.BukkitPlayerProvider;
-import net.tnemc.core.handlers.player.PlayerLeaveHandler;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
+import net.tnemc.core.config.Config;
+import org.simpleyaml.configuration.file.YamlFile;
 
 /**
- * PlayerQuitListener
+ * BukkitConfig
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class PlayerQuitListener implements Listener {
+public class BukkitConfig extends Config {
 
-  @EventHandler(priority = EventPriority.HIGHEST)
-  public void onQuit(final PlayerQuitEvent event) {
-    final BukkitPlayerProvider provider = new BukkitPlayerProvider(event.getPlayer());
-    new PlayerLeaveHandler().handle(provider);
+  private static BukkitConfig instance;
+  public BukkitConfig() {
+    super("bukkit.yml", "bukkit.yml", "Bukkit");
+
+    instance = this;
+  }
+
+  public static YamlFile yaml() {
+    return instance.getYaml();
   }
 }

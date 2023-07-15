@@ -10,6 +10,7 @@
         <module>Core</module>
         <module>Bukkit</module>
         <module>Folia</module>
+        <module>PaperCore</module>
         <module>Sponge</module>
         <module>Bungee</module>
         <module>Velocity</module>
