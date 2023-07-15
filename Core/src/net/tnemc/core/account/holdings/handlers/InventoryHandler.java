@@ -105,10 +105,6 @@ public class InventoryHandler implements HoldingsHandler {
   public HoldingsEntry getHoldings(Account account, String region, Currency currency, CurrencyType type) {
     if((currency instanceof ItemCurrency)) {
 
-      TNECore.log().debug("Player?: " + account.isPlayer(), DebugLevel.DEVELOPER);
-      TNECore.log().debug("Online?: " + TNECore.server().online(account.getIdentifier()), DebugLevel.DEVELOPER);
-      TNECore.log().debug("Loading: " + TNECore.eco().account().getLoading().contains(((PlayerAccount)account).getUUID().toString()), DebugLevel.DEVELOPER);
-
       if(!account.isPlayer() || !TNECore.server().online(account.getIdentifier()) ||
           TNECore.eco().account().getLoading().contains(((PlayerAccount)account).getUUID().toString())) {
 
