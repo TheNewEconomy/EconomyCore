@@ -25,6 +25,8 @@ import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.shared.Member;
 import net.tnemc.core.api.callback.account.AccountLoadCallback;
 import net.tnemc.core.api.response.AccountAPIResponse;
+import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.manager.id.UUIDPair;
@@ -110,6 +112,23 @@ public class YAMLAccount implements Datable<Account> {
 
       if(account instanceof PlayerAccount) {
         yaml.set("Info.LastOnline", ((PlayerAccount)account).getLastOnline());
+
+        final Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)account).getUUID());
+
+        if(provider.isPresent()) {
+          final String region = TNECore.eco().region().getMode().region(provider.get());
+          for(Currency currency : TNECore.eco().currency().getCurrencies(region)) {
+
+            if(currency.type().supportsItems()) {
+
+              for(HoldingsEntry entry : account.getHoldings(region, currency.getUid())) {
+
+                //account.get().setHoldings(entry, entry.getHandler());
+                account.getWallet().setHoldings(entry);
+              }
+            }
+          }
+        }
       }
 
       if(account instanceof SharedAccount) {
