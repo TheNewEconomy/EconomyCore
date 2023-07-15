@@ -79,6 +79,7 @@ Messages:
     SetAll: "<white>Successfully set all players balances to <gold>$amount<white> for world $world."
     Paid: "<white>Successfully paid $player <gold>$amount<white>."
     Took: "<white>Successfully took <gold>$amount<white> from $player."
+    Withdrawn: "<white>Successfully withdrew <gold>$amount<white> from your virtual balance."
     Negative: "<red>Amount cannot be a negative value!"
     NoCurrency: "<red>The currency '$currency' could not be found in '$world'."
     SelfPay: "<red>You can't pay yourself!"
@@ -229,6 +230,9 @@ Messages:
       Top:
         Arguments: "[page] [currency:name] [world:world] [limit:#]"
         Description: "A list of players with the highest balances.<newline>[page] - The page number to view. Defaults to 1.<newline>[Currency] - The name of the Currency to get balances from. Defaults to world default. Use overall for all currencies.<newline>[world] - The world name you wish to filter, or all for every world. Defaults to current world. Use overall for all worlds.<newline>[limit] - Limit changes how many players are displayed. Defaults to 10."
+      Withdraw:
+        Arguments: "<amount> [currency]"
+        Description: "Withdraws money from your virtual balance into its item form."
     Transaction:
       Away:
         Arguments: "[page #]"
