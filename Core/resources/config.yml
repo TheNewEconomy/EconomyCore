@@ -122,6 +122,32 @@ Core:
       #This is in seconds.
       Refresh: 1200
 
+    #Configurations relating to conversion transactions.
+    Conversion:
+
+      #Tax-related configurations.
+      Tax:
+
+        #If this tax is enabled.
+        Enabled: false
+
+        #The tax to apply to a conversion transaction.
+        #The tax may also be a percentage.
+        Rate: 0.0
+
+    #Configurations relating to desposit transactions.
+    Deposit:
+
+      #Tax-related configurations.
+      Tax:
+
+        #If this tax is enabled.
+        Enabled: false
+
+        #The tax to apply to a deposit transaction.
+        #The tax may also be a percentage.
+        Rate: 0.0
+
     #Configurations relating to pay transactions.
     Pay:
 
@@ -149,18 +175,5 @@ Core:
         Enabled: false
 
         #The tax to apply to a withdrawal transaction.
-        #The tax may also be a percentage.
-        Rate: 0.0
-
-    #Configurations relating to conversion transactions.
-    Conversion:
-
-      #Tax-related configurations.
-      Tax:
-
-        #If this tax is enabled.
-        Enabled: false
-
-        #The tax to apply to a conversion transaction.
         #The tax may also be a percentage.
         Rate: 0.0

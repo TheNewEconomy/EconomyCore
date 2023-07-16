@@ -34,6 +34,7 @@ import net.tnemc.core.transaction.tax.TaxType;
 import net.tnemc.core.transaction.tax.type.FlatType;
 import net.tnemc.core.transaction.tax.type.PercentileType;
 import net.tnemc.core.transaction.type.ConversionType;
+import net.tnemc.core.transaction.type.DepositType;
 import net.tnemc.core.transaction.type.PayType;
 import net.tnemc.core.transaction.type.WithdrawType;
 
@@ -93,6 +94,7 @@ public class TransactionManager {
 
     //Add our default TransactionTypes.
     addType(new ConversionType());
+    addType(new DepositType());
     addType(new PayType());
     addType(new WithdrawType());
 
