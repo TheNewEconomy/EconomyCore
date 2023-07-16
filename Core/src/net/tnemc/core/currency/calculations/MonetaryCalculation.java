@@ -114,20 +114,24 @@ public class MonetaryCalculation {
       }
     }
 
+
+    TNECore.log().debug("Working 3: " + workingAmount.toPlainString(), DebugLevel.DEVELOPER);
     TNECore.log().debug("Calculate comparison:" + workingAmount.compareTo(BigDecimal.ZERO), DebugLevel.DEVELOPER);
+
     // If there is any amount left over, it was not possible to pay for the full amount
     if (workingAmount.compareTo(BigDecimal.ZERO) > 0) {
 
       if(attempt <= 1) {
 
-        final Map<BigDecimal, Integer> calculated = calculateBreakdowns(amount);
+        final Map<BigDecimal, Integer> calculated = calculateBreakdowns(workingAmount);
 
         combineMaps(inventoryMaterials, calculated);
         combineMaps(toAdd, calculated);
+        combineMaps(toRemove, result);
 
         attempt = 2;
 
-        calculateDenominationCounts(amount);
+        calculateDenominationCounts(workingAmount);
         return;
       }
       return;
@@ -138,22 +142,22 @@ public class MonetaryCalculation {
 
 
   public Map<BigDecimal, Integer> calculateBreakdowns(BigDecimal amount) {
+    TNECore.log().debug("calculateBreakdowns Amount:" + amount.toPlainString(), DebugLevel.DEVELOPER);
 
 
     // Get the entry with the smallest key greater than the given amount
-    final Map.Entry<BigDecimal, Integer> higherEntry = inventoryMaterials.higherEntry(amount);
+    final Map.Entry<BigDecimal, Integer> higherEntry = inventoryMaterials.ceilingEntry(amount);
 
     if(higherEntry == null) {
       return new HashMap<>();
     }
 
-    /*if(higherEntry == null) {
-      higherEntry = inventoryMaterials.ceilingEntry(amount);
-    }*/
-
     // Reduce the value associated with the higherEntry key by 1
-    toRemove.put(higherEntry.getKey(), 1);
-
+    if(toRemove.containsKey(higherEntry.getKey())) {
+      toRemove.put(higherEntry.getKey(), toRemove.get(higherEntry.getKey()) + 1);
+    } else {
+      toRemove.put(higherEntry.getKey(), 1);
+    }
     // Calculate the difference between the higherEntry key and the given amount
     final BigDecimal difference = higherEntry.getKey().subtract(amount);
 
