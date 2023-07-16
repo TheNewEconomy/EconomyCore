@@ -91,6 +91,8 @@ public class MonetaryCalculation {
         count = maxCount;
       }
 
+
+      TNECore.log().debug("Working 1: " + workingAmount.toPlainString(), DebugLevel.DEVELOPER);
       TNECore.log().debug("Denom: " + denomination.toPlainString(), DebugLevel.DEVELOPER);
       TNECore.log().debug("maxCount: " + maxCount, DebugLevel.DEVELOPER);
       TNECore.log().debug("count: " + count, DebugLevel.DEVELOPER);
@@ -98,14 +100,21 @@ public class MonetaryCalculation {
       // Subtract the value of these denominations from the total amount
       workingAmount = workingAmount.subtract(denomination.multiply(BigDecimal.valueOf(count)));
 
+      TNECore.log().debug("Working 2: " + workingAmount.toPlainString(), DebugLevel.DEVELOPER);
+
       // Update the result map
       if (count > 0) {
         result.put(denomination, count);
       }
 
-      if(workingAmount.compareTo(BigDecimal.ZERO) <= 0) break;
+      if(workingAmount.compareTo(BigDecimal.ZERO) <= 0) {
+
+        TNECore.log().debug("Working is zero break out", DebugLevel.DEVELOPER);
+        break;
+      }
     }
 
+    TNECore.log().debug("Calculate comparison:" + workingAmount.compareTo(BigDecimal.ZERO), DebugLevel.DEVELOPER);
     // If there is any amount left over, it was not possible to pay for the full amount
     if (workingAmount.compareTo(BigDecimal.ZERO) > 0) {
 
@@ -133,6 +142,10 @@ public class MonetaryCalculation {
 
     // Get the entry with the smallest key greater than the given amount
     final Map.Entry<BigDecimal, Integer> higherEntry = inventoryMaterials.higherEntry(amount);
+
+    if(higherEntry == null) {
+      return new HashMap<>();
+    }
 
     /*if(higherEntry == null) {
       higherEntry = inventoryMaterials.ceilingEntry(amount);

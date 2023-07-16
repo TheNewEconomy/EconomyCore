@@ -28,7 +28,6 @@ import net.tnemc.core.account.holdings.modify.HoldingsOperation;
 import net.tnemc.core.actions.source.PlayerSource;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
-import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.Note;
@@ -67,16 +66,6 @@ public class MoneyCommand extends BaseCommand {
   //ArgumentsParser: [currency] [world]
   public static void onBalance(CmdSource<?> sender, Currency currency, String region) {
 
-    for(String str : TNECore.eco().region().getRegions().keySet()) {
-      TNECore.log().debug("Region: " + str, DebugLevel.DEVELOPER);
-    }
-
-    TNECore.log().debug("Regions: " + TNECore.eco().region().getRegions().keySet().size(), DebugLevel.DEVELOPER);
-
-    TNECore.log().debug("Resolver check", DebugLevel.DEVELOPER);
-    TNECore.log().debug("Resolved Nether:" + TNECore.eco().region().resolve("world_the_nether"), DebugLevel.DEVELOPER);
-    TNECore.log().debug("Resolved invalid:" + TNECore.eco().region().resolve("world113"), DebugLevel.DEVELOPER);
-
     //If our currency doesn't exist this is probably a username, so check for their balance instead.
     final Optional<Account> account = sender.account();
     account.ifPresent(value->onOther(sender, value, region, currency));
@@ -89,7 +78,7 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    Optional<Account> account = sender.account();
+    final Optional<Account> account = sender.account();
     if(account.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
       data.addReplacement("$player", sender.name());
@@ -121,12 +110,53 @@ public class MoneyCommand extends BaseCommand {
         .processor(new BaseTransactionProcessor())
         .source(new PlayerSource(sender.identifier()));
 
-    Optional<Receipt> receipt = processTransaction(sender, transaction);
+    final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()){
       final MessageData data = new MessageData("Messages.Money.Converted");
       data.addReplacement("$from_amount", amount.toPlainString());
       data.addReplacement("$amount", CurrencyFormatter.format(account.get(),
                                                               modifierFrom.asEntry()));
+      sender.message(data);
+    }
+  }
+
+  //ArgumentsParser: <amount> [currency]
+  public static void onDeposit(CmdSource<?> sender, BigDecimal amount, Currency currency, String region) {
+
+    final Optional<Account> senderAccount = sender.account();
+
+    if(senderAccount.isEmpty()) {
+      final MessageData data = new MessageData("Messages.General.NoPlayer");
+      data.addReplacement("$player", sender.name());
+      sender.message(data);
+      return;
+    }
+
+    region = TNECore.eco().region().resolve(region);
+
+    if(!(currency.type() instanceof MixedType)) {
+
+      //Message not mixed currency type
+      return;
+    }
+
+    final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
+            currency.getUid(),
+            amount,
+            EconomyManager.VIRTUAL
+    );
+
+    final Transaction transaction = new Transaction("deposit")
+            .to(senderAccount.get(), modifier)
+            .from(senderAccount.get(), modifier.counter(EconomyManager.ITEM_ONLY))
+            .processor(new BaseTransactionProcessor())
+            .source(new PlayerSource(sender.identifier()));
+
+    final Optional<Receipt> receipt = processTransaction(sender, transaction);
+    if(receipt.isPresent()) {
+      final MessageData data = new MessageData("Messages.Money.Deposit");
+      data.addReplacement("$amount", CurrencyFormatter.format(senderAccount.get(),
+              modifier.asEntry()));
       sender.message(data);
     }
   }
@@ -145,7 +175,7 @@ public class MoneyCommand extends BaseCommand {
         .processor(new BaseTransactionProcessor())
         .source(new PlayerSource(sender.identifier()));
 
-    Optional<Receipt> receipt = processTransaction(sender, transaction);
+    final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()) {
       final MessageData data = new MessageData("Messages.Money.Gave");
       data.addReplacement("$player", player.getName());
@@ -199,9 +229,9 @@ public class MoneyCommand extends BaseCommand {
           .source(new PlayerSource(sender.identifier()));
 
 
-      Optional<Receipt> receipt = processTransaction(sender, transaction);
+      final Optional<Receipt> receipt = processTransaction(sender, transaction);
       if(receipt.isPresent()) {
-        Collection<AbstractItemStack<Object>> left = TNECore.server().calculations().giveItems(Collections.singletonList(note.get().stack(currency.getIdentifier(), sender.region(), amt)), provider.get().inventory().getInventory(false));
+        final Collection<AbstractItemStack<Object>> left = TNECore.server().calculations().giveItems(Collections.singletonList(note.get().stack(currency.getIdentifier(), sender.region(), amt)), provider.get().inventory().getInventory(false));
 
         if(left.size() > 0) {
           TNECore.server().calculations().drop(left, ((PlayerAccount)account.get()).getUUID());
@@ -246,7 +276,7 @@ public class MoneyCommand extends BaseCommand {
 
     for(HoldingsEntry entry : holdings) {
 
-      Optional<Currency> entryCur = TNECore.eco().currency().findCurrency(entry.getCurrency());
+      final Optional<Currency> entryCur = TNECore.eco().currency().findCurrency(entry.getCurrency());
 
       if(entryCur.isPresent()) {
 
@@ -261,7 +291,7 @@ public class MoneyCommand extends BaseCommand {
   //ArgumentsParser: <player> <amount> [currency] [from:account]
   public static void onPay(CmdSource<?> sender, Account player, BigDecimal amount, Currency currency, String from) {
 
-    Optional<Account> senderAccount = sender.account();
+    final Optional<Account> senderAccount = sender.account();
 
     if(senderAccount.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
@@ -325,6 +355,7 @@ public class MoneyCommand extends BaseCommand {
 
         final Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)player).getUUID());
         if(provider.isPresent()) {
+
           final MessageData msgData = new MessageData("Messages.Money.Received");
           data.addReplacement("$player", sender.name());
           msgData.addReplacement("$amount", CurrencyFormatter.format(player,
@@ -337,7 +368,7 @@ public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: <player> <amount> [currency]
   public static void onRequest(CmdSource<?> sender, Account player, BigDecimal amount, Currency currency) {
-    Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)player).getUUID());
+    final Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)player).getUUID());
     if(provider.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
       data.addReplacement("$player", player.getName());
@@ -372,7 +403,7 @@ public class MoneyCommand extends BaseCommand {
         .processor(new BaseTransactionProcessor())
         .source(new PlayerSource(sender.identifier()));
 
-    Optional<Receipt> receipt = processTransaction(sender, transaction);
+    final Optional<Receipt> receipt = processTransaction(sender, transaction);
 
     if(receipt.isPresent()) {
       final MessageData msg = new MessageData("Messages.Money.Set");
@@ -400,7 +431,7 @@ public class MoneyCommand extends BaseCommand {
           .processor(new BaseTransactionProcessor())
           .source(new PlayerSource(sender.identifier()));
 
-      Optional<Receipt> receipt = processTransaction(sender, transaction);
+      final Optional<Receipt> receipt = processTransaction(sender, transaction);
 
       if(receipt.isPresent()) {
         final MessageData msg = new MessageData("Messages.Money.Set");
@@ -429,7 +460,7 @@ public class MoneyCommand extends BaseCommand {
         .processor(new BaseTransactionProcessor())
         .source(new PlayerSource(sender.identifier()));
 
-    Optional<Receipt> receipt = processTransaction(sender, transaction);
+    final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()) {
       final MessageData data = new MessageData("Messages.Money.Took");
       data.addReplacement("$player", player.getName());
@@ -460,8 +491,7 @@ public class MoneyCommand extends BaseCommand {
   //ArgumentsParser: <amount> [currency]
   public static void onWithdraw(CmdSource<?> sender, BigDecimal amount, Currency currency, String region) {
 
-    Optional<Account> senderAccount = sender.account();
-
+    final Optional<Account> senderAccount = sender.account();
     if(senderAccount.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
       data.addReplacement("$player", sender.name());

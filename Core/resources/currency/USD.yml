@@ -30,11 +30,8 @@ Info:
 Options:
 
   #Configurations relating to multi region support.
-  #This would make it so players have a different balance per region(i.e. per world balances)
+  #This is where you can make your currency the default in various regions.
   MultiRegion:
-
-    #Should multi region support be enabled?
-    Enabled: true
 
     #Configurations relating to regions this currency is enabled in.
     Regions:
@@ -86,7 +83,7 @@ Item:
   #Would you like your item currency balances to also check the player's ender chest?
   EnderChest: true
 
-  #Would you like your item currency balances to also check the player's ender chest?
+  #Would you like your item currency to be consolidated into least amount of items after each transaction?
   Consolidate: false
 
 #All configurations related to formatting.

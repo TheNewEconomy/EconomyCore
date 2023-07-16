@@ -41,6 +41,8 @@ public class PlayerInteractListener implements Listener {
 
     final ItemStack stack = event.getItem();
 
+    if(stack == null) return;
+
     if(event.getAction().equals(Action.RIGHT_CLICK_AIR) ||
     event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 

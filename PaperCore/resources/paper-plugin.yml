@@ -4,3 +4,17 @@ description: The original feature-packed economy plugin for Minecraft.
 author: creatorfromhell
 main: net.tnemc.paper.TNE
 api-version: '1.20'
+dependencies:
+  - name: Towny
+    required: false
+    bootstrap: false
+  - name: mcMMO
+    reqiuired: false
+    bootstrap: false
+  - name: Essentials
+    reqiuired: false
+    bootstrap: false
+
+load-before:
+  - name: Towny
+    bootstrap: false

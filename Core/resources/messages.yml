@@ -87,6 +87,7 @@ Messages:
     SetAll: "<white>Successfully set all players balances to <gold>$amount<white> for world $world."
     Paid: "<white>Successfully paid $player <gold>$amount<white>."
     Took: "<white>Successfully took <gold>$amount<white> from $player."
+    Deposit: "<white>Successfully deposited <gold>$amount<white> to your virtual balance."
     Withdrawn: "<white>Successfully withdrew <gold>$amount<white> from your virtual balance."
     Negative: "<red>Amount cannot be a negative value!"
     NoCurrency: "<red>The currency '$currency' could not be found in '$world'."
@@ -215,6 +216,9 @@ Messages:
       Convert:
         Arguments: "<amount> <to currency[:world]> [from currency[:world]]"
         Description: "Convert some of your holdings to another currency."
+      Deposit:
+        Arguments: "<amount> [currency]"
+        Description: "Deposits money from an item form into a virtual bank for mixed currencies."
       Give:
         Arguments: "<player> <amount> [world] [currency]"
         Description: "Adds money into your economy, and gives it to a player."
