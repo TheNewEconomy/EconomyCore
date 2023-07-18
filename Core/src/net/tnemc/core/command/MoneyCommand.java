@@ -34,6 +34,7 @@ import net.tnemc.core.currency.Note;
 import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.currency.type.MixedType;
 import net.tnemc.core.io.message.MessageData;
+import net.tnemc.core.manager.top.TopPage;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
@@ -46,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -484,8 +486,32 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: [page] [currency:name] [world:world] [limit:#]
-  public static void onTop() {
-    //TODO: This
+  public static void onTop(CmdSource<?> sender, Integer page, Currency currency) {
+    final Optional<Account> senderAccount = sender.account();
+
+    if(senderAccount.isEmpty()) {
+      final MessageData data = new MessageData("Messages.General.NoPlayer");
+      data.addReplacement("$player", sender.name());
+      sender.message(data);
+      return;
+    }
+
+    TopPage<String> pageEntry = TNECore.eco().getTopManager().page(page, currency.getUid());
+    if(pageEntry != null) {
+      final MessageData data = new MessageData("Messages.Money.Top");
+      data.addReplacement("$page", String.valueOf(page));
+      data.addReplacement("$page_top", "wot");
+      sender.message(data);
+
+      for(Map.Entry<String, BigDecimal> entry : pageEntry.getValues().entrySet()) {
+        final MessageData en = new MessageData("Messages.Money.TopEntry");
+        en.addReplacement("$player", entry.getKey());
+        en.addReplacement("$amount", CurrencyFormatter.format(senderAccount.get(), new HoldingsEntry(TNECore.eco().region().defaultRegion(), currency.getUid(), entry.getValue(), EconomyManager.NORMAL)));
+        sender.message(en);
+      }
+      return;
+    }
+
   }
 
   //ArgumentsParser: <amount> [currency]

@@ -147,13 +147,13 @@ public class MoneyCommand {
     net.tnemc.core.command.MoneyCommand.onTake(new BukkitCMDSource(sender), player, amount, region, currency);
   }
 
-  /*@Subcommand({"top", "baltop"})
+  @Subcommand({"top", "baltop"})
   @Usage("Money.Top.Arguments")
   @Description("Money.Top.Description")
   @CommandPermission("tne.money.top")
-  public void onTop(BukkitCommandActor sender, String[] args) {
-    net.tnemc.core.command.MoneyCommand.onTop(new BukkitCMDSource(sender));
-  }*/
+  public void onTop(BukkitCommandActor sender, Integer page, @Default("") Currency currency) {
+    net.tnemc.core.command.MoneyCommand.onTop(new BukkitCMDSource(sender), page, currency);
+  }
 
   @Subcommand({"withdraw"})
   @Usage("Money.Withdraw.Arguments")

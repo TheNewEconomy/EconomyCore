@@ -28,6 +28,7 @@ import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.manager.AccountManager;
 import net.tnemc.core.manager.CurrencyManager;
+import net.tnemc.core.manager.TopManager;
 import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.region.RegionProvider;
 import net.tnemc.core.utils.Identifier;
@@ -67,6 +68,8 @@ public class EconomyManager {
   private final TransactionManager transactionManager;
   private final RegionProvider regionProvider;
 
+  private final TopManager topManager;
+
   private static EconomyManager instance;
 
   public EconomyManager() {
@@ -77,6 +80,7 @@ public class EconomyManager {
     this.transactionManager = new TransactionManager();
     this.regionProvider = new RegionProvider(MainConfig.yaml().getBoolean("Core.Region.GroupRealms"),
                                              MainConfig.yaml().getString("Core.Region.Mode"));
+    this.topManager = new TopManager();
   }
 
   public void init() {
@@ -137,6 +141,10 @@ public class EconomyManager {
 
   public RegionProvider region() {
     return regionProvider;
+  }
+
+  public TopManager getTopManager() {
+    return topManager;
   }
 
   public static EconomyManager instance() {

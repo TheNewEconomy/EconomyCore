@@ -371,6 +371,8 @@ public abstract class TNECore {
         TNECore.log().inform("Update Available! Latest: " + this.updateChecker.getBuild());
       }
     }
+
+    server.scheduler().createDelayedTask(()-> economyManager.getTopManager().load(), new ChoreTime(2), ChoreExecution.SECONDARY);
   }
 
   public void onDisable() {

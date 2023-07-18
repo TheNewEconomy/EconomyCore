@@ -20,6 +20,7 @@ package net.tnemc.core.menu.impl.mycurrency.pages;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.menu.impl.shared.icons.PreviousMenuIcon;
 import net.tnemc.core.utils.PlayerHelper;
@@ -78,6 +79,7 @@ public class CurrencyMainPage extends Page {
             }
           })
           .withAction(new DataAction("cur_uid", currency.getUid()))
+          .withAction(new DataAction("cur_item", (currency instanceof ItemCurrency)))
           .withAction(new SwitchPageAction(2, ActionType.LEFT_CLICK)) //view menu
           .withAction(new SwitchPageAction(3, ActionType.RIGHT_CLICK)) //edit menu
           .withAction(new ChatAction((callback)->{

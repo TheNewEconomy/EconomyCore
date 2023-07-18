@@ -102,6 +102,7 @@
                             <include>co.aikar:*</include>
                             <include>cloud.commandframework:*</include>
                             <include>net.kyori:*</include>
+                            <include>com.github.Revxrsal.Lamp:*</include>
                         </includes>
                     </artifactSet>
                     <relocations>

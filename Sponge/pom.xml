@@ -95,6 +95,7 @@
                             <include>co.aikar:*</include>
                             <include>cloud.commandframework:*</include>
                             <include>net.kyori:*</include>
+                            <include>com.github.Revxrsal.Lamp:*</include>
                         </includes>
                     </artifactSet>
                     <relocations>
@@ -118,6 +119,10 @@
                         <relocation>
                             <pattern>cloud.commandframework</pattern>
                             <shadedPattern>${tne.relocation}.cloud</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>revxrsal</pattern>
+                            <shadedPattern>${tne.relocation}.lamp</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>co.aikar.commands</pattern>

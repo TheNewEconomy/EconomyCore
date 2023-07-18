@@ -1,4 +1,4 @@
-package net.tnemc.core.account.holdings.top;
+package net.tnemc.core.manager;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,43 +17,39 @@ package net.tnemc.core.account.holdings.top;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.math.BigDecimal;
-import java.util.LinkedHashMap;
+import net.tnemc.core.TNECore;
+import net.tnemc.core.currency.Currency;
+import net.tnemc.core.manager.top.TopCurrency;
+import net.tnemc.core.manager.top.TopPage;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * BalanceTopEntry
+ * TopManager handles all things baltop.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class BalanceTopEntry {
+public class TopManager {
 
-  private final ConcurrentHashMap<UUID, BigDecimal> balances = new ConcurrentHashMap<>();
-  private final LinkedHashMap<UUID, BigDecimal> sorted = new LinkedHashMap<>();
+  private final Map<UUID, TopCurrency> topMap = new HashMap<>();
 
-  private final String region;
-  private final UUID currency;
-
-  public BalanceTopEntry(String region, UUID currency) {
-    this.region = region;
-    this.currency = currency;
+  public void load() {
+    for(Currency currency : TNECore.eco().currency().currencies()) {
+      topMap.put(currency.getUid(), new TopCurrency(TNECore.server().defaultRegion(), currency.getUid()));
+    }
   }
 
-  public ConcurrentHashMap<UUID, BigDecimal> getBalances() {
-    return balances;
+  public Map<UUID, TopCurrency> getTopMap() {
+    return topMap;
   }
 
-  public String getRegion() {
-    return region;
-  }
-
-  public UUID getCurrency() {
-    return currency;
-  }
-
-  public LinkedHashMap<UUID, BigDecimal> sorted() {
-    return sorted;
+  public TopPage<String> page(final int page, final UUID currency) {
+    if(topMap.containsKey(currency)) {
+      return topMap.get(currency).getBalances().getValues(page);
+    }
+    return null;
   }
 }
