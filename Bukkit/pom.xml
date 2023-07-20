@@ -233,7 +233,7 @@
         <dependency>
             <groupId>net.tnemc</groupId>
             <artifactId>TNIL-Bukkit</artifactId>
-            <version>0.1.7.1</version>
+            <version>0.1.7.4-Pre-11</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
@@ -241,7 +241,7 @@
     <parent>
         <groupId>net.tnemc</groupId>
         <artifactId>TNE</artifactId>
-        <version>0.1.2.0-Pre-13</version>
+        <version>0.1.2.0-Pre-15</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 </project>

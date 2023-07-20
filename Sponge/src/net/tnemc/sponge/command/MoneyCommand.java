@@ -138,13 +138,13 @@ public class MoneyCommand {
     net.tnemc.core.command.MoneyCommand.onTake(new SpongeCMDSource(sender), player, amount, region, currency);
   }
 
-  /*@Subcommand({"top", "baltop"})
-  @Usage("#{Money.Top.Arguments}")
-  @Description("#{Money.Top.Description}")
+  @Subcommand({"top", "baltop"})
+  @Usage("Money.Top.Arguments")
+  @Description("Money.Top.Description")
   @CommandPermission("tne.money.top")
-  public void onTop(SpongeCommandActor sender, String[] args) {
-    net.tnemc.core.command.MoneyCommand.onTop(new SpongeCMDSource(sender));
-  }*/
+  public void onTop(SpongeCommandActor sender, Integer page, @Default("") Currency currency) {
+    net.tnemc.core.command.MoneyCommand.onTop(new SpongeCMDSource(sender), page, currency);
+  }
 
   @Subcommand({"withdraw"})
   @Usage("Money.Withdraw.Arguments")
