@@ -14,6 +14,7 @@
         <module>Sponge</module>
         <module>Bungee</module>
         <module>Velocity</module>
+        <module>Sponge8</module>
     </modules>
 
     <properties>
