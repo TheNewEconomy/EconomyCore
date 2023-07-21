@@ -8,6 +8,9 @@ dependencies:
   - name: Towny
     required: false
     bootstrap: false
+  - name: Vault
+    required: false
+    bootstrap: false
   - name: mcMMO
     reqiuired: false
     bootstrap: false

@@ -31,6 +31,8 @@ import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.io.storage.StorageManager;
 import net.tnemc.core.utils.Extractor;
 
+import java.util.Optional;
+
 /**
  * AdminCommand
  *
@@ -89,7 +91,8 @@ public class AdminCommand extends BaseCommand {
 
   public static void onDelete(CmdSource<?> sender, String name) {
 
-    if(TNECore.eco().account().findAccount(name).isEmpty()) {
+    final Optional<Account> acc = TNECore.eco().account().findAccount(name);
+    if(acc.isEmpty()) {
 
       //Our account doesn't exist, so we can't delete it.
       final MessageData data = new MessageData("Messages.Admin.NoAccount");
@@ -98,7 +101,7 @@ public class AdminCommand extends BaseCommand {
       return;
     }
 
-    final EconomyResponse response = TNECore.eco().account().deleteAccount(name);
+    final EconomyResponse response = TNECore.eco().account().deleteAccount(acc.get().getIdentifier());
     if(response.success()) {
 
       //deleted

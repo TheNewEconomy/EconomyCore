@@ -201,6 +201,10 @@ public class TNEVault implements Economy {
    * @return Amount currently held in players account
    */
   public double getBalance(OfflinePlayer player, String world) {
+    final Optional<Account> account = TNECore.eco().account().findAccount(player.getUniqueId().toString());
+    if(account.isEmpty()) {
+      return getBalance(player.getName(), world);
+    }
     return getBalance(player.getUniqueId().toString(), world);
   }
 
@@ -220,6 +224,10 @@ public class TNEVault implements Economy {
    * @return True if <b>player</b> has <b>amount</b>, False else wise
    */
   public boolean has(OfflinePlayer player, double amount) {
+    final Optional<Account> account = TNECore.eco().account().findAccount(player.getUniqueId().toString());
+    if(account.isEmpty()) {
+      return has(player.getName(), TNECore.eco().region().defaultRegion(), amount);
+    }
     return has(player.getUniqueId().toString(), TNECore.eco().region().defaultRegion(), amount);
   }
 
@@ -243,6 +251,10 @@ public class TNEVault implements Economy {
    * @return True if <b>player</b> has <b>amount</b>, False else wise
    */
   public boolean has(OfflinePlayer player, String world, double amount) {
+    final Optional<Account> account = TNECore.eco().account().findAccount(player.getUniqueId().toString());
+    if(account.isEmpty()) {
+      return has(player.getName(), world, amount);
+    }
     return has(player.getUniqueId().toString(), world, amount);
   }
 
@@ -262,7 +274,11 @@ public class TNEVault implements Economy {
    * @return Detailed response of transaction
    */
   public EconomyResponse withdrawPlayer(OfflinePlayer player, double amount) {
-    return withdrawPlayer(player.getUniqueId().toString(), TNECore.eco().region().defaultRegion(), amount);
+    final EconomyResponse response = withdrawPlayer(player.getUniqueId().toString(), TNECore.eco().region().defaultRegion(), amount);
+    if(response.transactionSuccess()){
+      return response;
+    }
+    return withdrawPlayer(player.getName(), TNECore.eco().region().defaultRegion(), amount);
   }
 
   /**
@@ -272,6 +288,11 @@ public class TNEVault implements Economy {
   public EconomyResponse withdrawPlayer(String name, String world, double amount) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(name);
+
+    if(account.isEmpty()) {
+      return new EconomyResponse(0.0, 0.0,
+              EconomyResponse.ResponseType.FAILURE, "Unable to locate associated account.");
+    }
 
     final HoldingsModifier modifier = new HoldingsModifier(world,
                                                            TNECore.eco().currency().getDefaultCurrency(world).getUid(),
@@ -303,7 +324,11 @@ public class TNEVault implements Economy {
    * @return Detailed response of transaction
    */
   public EconomyResponse withdrawPlayer(OfflinePlayer player, String world, double amount) {
-    return withdrawPlayer(player.getUniqueId().toString(), world, amount);
+    final EconomyResponse response = withdrawPlayer(player.getUniqueId().toString(), world, amount);
+    if(response.transactionSuccess()){
+      return response;
+    }
+    return withdrawPlayer(player.getName(), world, amount);
   }
 
   /**
@@ -322,7 +347,11 @@ public class TNEVault implements Economy {
    * @return Detailed response of transaction
    */
   public EconomyResponse depositPlayer(OfflinePlayer player, double amount) {
-    return depositPlayer(player.getUniqueId().toString(), TNECore.eco().region().defaultRegion(), amount);
+    final EconomyResponse response = depositPlayer(player.getUniqueId().toString(), TNECore.eco().region().defaultRegion(), amount);
+    if(response.transactionSuccess()){
+      return response;
+    }
+    return depositPlayer(player.getName(), TNECore.eco().region().defaultRegion(), amount);
   }
 
   /**
@@ -332,6 +361,11 @@ public class TNEVault implements Economy {
   public EconomyResponse depositPlayer(String name, String world, double amount) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(name);
+
+    if(account.isEmpty()) {
+      return new EconomyResponse(0.0, 0.0,
+              EconomyResponse.ResponseType.FAILURE, "Unable to locate associated account.");
+    }
 
     final HoldingsModifier modifier = new HoldingsModifier(world,
                                                            TNECore.eco().currency().getDefaultCurrency(world).getUid(),
@@ -365,7 +399,11 @@ public class TNEVault implements Economy {
    * @return Detailed response of transaction
    */
   public EconomyResponse depositPlayer(OfflinePlayer player, String world, double amount) {
-    return depositPlayer(player.getUniqueId().toString(), world, amount);
+    final EconomyResponse response = depositPlayer(player.getUniqueId().toString(), world, amount);
+    if(response.transactionSuccess()){
+      return response;
+    }
+    return depositPlayer(player.getName(), world, amount);
   }
 
   /**
