@@ -132,7 +132,7 @@ Core:
         Enabled: false
 
         #The tax to apply to a conversion transaction.
-        #The tax may also be a percentage.
+        #The tax may also be a percentage. For percent follow number by the % symbol, i.e 10%
         Rate: 0.0
 
     #Configurations relating to desposit transactions.
@@ -145,7 +145,7 @@ Core:
         Enabled: false
 
         #The tax to apply to a deposit transaction.
-        #The tax may also be a percentage.
+        #The tax may also be a percentage. For percent follow number by the % symbol, i.e 10%
         Rate: 0.0
 
     #Configurations relating to pay transactions.
@@ -158,11 +158,11 @@ Core:
         Enabled: false
 
         #The tax to apply to the sender
-        #The tax may also be a percentage.
+        #The tax may also be a percentage. For percent follow number by the % symbol, i.e 10%
         Sender: 0.0
 
         #The tax to apply to the receiver
-        #The tax may also be a percentage.
+        #The tax may also be a percentage. For percent follow number by the % symbol, i.e 10%
         Receiver: 0.0
 
     #Configurations relating to withdraw transactions.
@@ -175,5 +175,5 @@ Core:
         Enabled: false
 
         #The tax to apply to a withdrawal transaction.
-        #The tax may also be a percentage.
+        #The tax may also be a percentage. For percent follow number by the % symbol, i.e 10%
         Rate: 0.0
