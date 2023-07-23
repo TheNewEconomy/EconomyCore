@@ -30,6 +30,7 @@ import net.tnemc.core.region.RegionMode;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.providers.CalculationsProvider;
 import net.tnemc.sponge.SpongeCore;
+import net.tnemc.sponge.SpongeItemStack;
 import net.tnemc.sponge.impl.scheduler.SpongeScheduler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -59,7 +60,7 @@ import java.util.logging.Level;
  */
 public class SpongeServerProvider implements ServerConnector {
 
-  private final SpongeItemCalculations calc = new SpongeItemCalculations();
+  private final net.tnemc.sponge.SpongeItemCalculations calc = new net.tnemc.sponge.SpongeItemCalculations();
   private final SpongeProxyProvider proxy = new SpongeProxyProvider();
 
   private final SpongeScheduler scheduler;
@@ -151,8 +152,15 @@ public class SpongeServerProvider implements ServerConnector {
    */
   @Override
   public boolean online(String name) {
-    final Optional<ServerPlayer> player = Sponge.server().player(name);
-    return player.map(ServerPlayer::isOnline).orElse(false);
+    try {
+
+      final Optional<ServerPlayer> player = Sponge.server().player(UUID.fromString(name));
+      return player.map(ServerPlayer::isOnline).orElse(false);
+    } catch (Exception e) {
+
+      final Optional<ServerPlayer> player = Sponge.server().player(name);
+      return player.map(ServerPlayer::isOnline).orElse(false);
+    }
   }
 
   @Override
@@ -194,7 +202,7 @@ public class SpongeServerProvider implements ServerConnector {
 
   @Override
   public AbstractItemStack<?> stackBuilder() {
-    return null;
+    return new SpongeItemStack();
   }
 
   @Override
@@ -263,18 +271,24 @@ public class SpongeServerProvider implements ServerConnector {
   }
 
   @Override
-  public <S, T extends AbstractItemStack<S>, INV> CalculationsProvider<T, S, INV> calculations() {
-    return null;
+  public net.tnemc.sponge.SpongeItemCalculations calculations() {
+    return calc;
   }
 
   @Override
-  public <S> AbstractItemStack<S> denominationToStack(ItemDenomination denomination) {
-    return null;
+  public SpongeItemStack denominationToStack(ItemDenomination denomination) {
+    return new SpongeItemStack().of(denomination.getMaterial(), 1)
+            .enchant(denomination.getEnchantments())
+            .lore(denomination.getLore())
+            .flags(denomination.getFlags())
+            .damage(denomination.getDamage())
+            .display(denomination.getName())
+            .modelData(denomination.getCustomModel());
   }
 
   @Override
   public SpongeItemCalculations itemCalculations() {
-    return calc;
+    return new SpongeItemCalculations();
   }
 
   public @Nullable InputStream getResource(@NotNull String filename) {

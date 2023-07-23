@@ -87,7 +87,7 @@
                     <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
                     <artifactSet>
                         <includes>
-                            <include>net.tnemc:EconomyCore</include>
+                            <include>net.tnemc:*</include>
                             <include>org.json.simple:*</include>
                             <include>org.yaml:*</include>
                             <include>me.carleslc.Simple-YAML:*</include>

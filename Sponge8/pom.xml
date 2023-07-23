@@ -18,6 +18,10 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>codemc-releases</id>
+            <url>https://repo.codemc.io/repository/maven-public/</url>
+        </repository>
     </repositories>
 
 
@@ -181,6 +185,13 @@
             <groupId>com.github.Revxrsal.Lamp</groupId>
             <artifactId>sponge-8</artifactId>
             <version>3.1.5</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>net.tnemc</groupId>
+            <artifactId>TNIL-Sponge</artifactId>
+            <version>0.1.7.4-Pre-14</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
