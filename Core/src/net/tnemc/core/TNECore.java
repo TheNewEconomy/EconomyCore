@@ -84,13 +84,13 @@ public abstract class TNECore {
   public static final String coreURL = "https://tnemc.net/files/module-version.xml";
   public static final Pattern UUID_MATCHER_PATTERN = Pattern.compile("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})");
   public static final String version = "0.1.2.0";
-  public static final String build = "Pre-15";
+  public static final String build = "Pre-16";
 
   /* Core non-final variables utilized within TNE as settings */
   protected File directory;
 
   //The DebugLevel that the server is currently running in.
-  private DebugLevel level = DebugLevel.OFF;
+  private DebugLevel level = DebugLevel.STANDARD;
 
   /* Key Managers and Object instances utilized with TNE */
 
@@ -164,6 +164,7 @@ public abstract class TNECore {
    */
   protected void onEnable() {
 
+    System.out.println("Directory: " + directory.getAbsolutePath());
     if(!directory.exists()) {
       final boolean created = directory.mkdir();
       if(!created) {
@@ -346,9 +347,9 @@ public abstract class TNECore {
 
 
     new MenuManager();
-    MenuManager.instance().addMenu(new MyEcoMenu());
+    /*MenuManager.instance().addMenu(new MyEcoMenu());
     MenuManager.instance().addMenu(new MyCurrencyMenu());
-    MenuManager.instance().addMenu(new MyBalMenu());
+    MenuManager.instance().addMenu(new MyBalMenu());*/
 
     //Set up the auto saver if enabled.
     if(DataConfig.yaml().getBoolean("Data.AutoSaver.Enabled")) {

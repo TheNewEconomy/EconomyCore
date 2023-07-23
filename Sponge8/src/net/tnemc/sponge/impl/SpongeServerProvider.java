@@ -19,6 +19,7 @@ package net.tnemc.sponge.impl;
  */
 
 import net.tnemc.core.compatibility.CmdSource;
+import net.tnemc.core.compatibility.LogProvider;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ProxyProvider;
 import net.tnemc.core.compatibility.ServerConnector;
@@ -31,6 +32,7 @@ import net.tnemc.item.providers.CalculationsProvider;
 import net.tnemc.sponge.SpongeCore;
 import net.tnemc.sponge.impl.scheduler.SpongeScheduler;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.server.ServerPlayer;
 import org.spongepowered.api.world.DefaultWorldKeys;
@@ -38,8 +40,16 @@ import org.spongepowered.api.world.server.ServerWorld;
 import revxrsal.commands.command.CommandActor;
 import revxrsal.commands.sponge.SpongeCommandActor;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Level;
 
 /**
  * SpongeServerProvider
@@ -188,8 +198,46 @@ public class SpongeServerProvider implements ServerConnector {
   }
 
   @Override
-  public void saveResource(String path, boolean replace) {
-    //TODO: This
+  public void saveResource(String resourcePath, boolean replace) {
+    if (resourcePath != null && !resourcePath.equals("")) {
+      resourcePath = resourcePath.replace('\\', '/');
+      LogProvider logger = SpongeCore.log();
+      InputStream in = this.getResource(resourcePath);
+      if (in == null) {
+        throw new IllegalArgumentException("The embedded resource '" + resourcePath + "' cannot be found in the jar.");
+      } else {
+        File outFile = new File(SpongeCore.directory(), resourcePath);
+        int lastIndex = resourcePath.lastIndexOf(47);
+        File outDir = new File(SpongeCore.directory(), resourcePath.substring(0, lastIndex >= 0 ? lastIndex : 0));
+        if (!outDir.exists()) {
+          outDir.mkdirs();
+        }
+
+        try {
+          if (outFile.exists() && !replace) {
+            Level var10001 = Level.WARNING;
+            String var10002 = outFile.getName();
+            //logger.log(var10001, "Could not save " + var10002 + " to " + outFile + " because " + outFile.getName() + " already exists.");
+          } else {
+            OutputStream out = new FileOutputStream(outFile);
+            byte[] buf = new byte[1024];
+
+            int len;
+            while((len = in.read(buf)) > 0) {
+              out.write(buf, 0, len);
+            }
+
+            out.close();
+            in.close();
+          }
+        } catch (IOException var10) {
+          logger.error("Could not save " + outFile.getName() + " to " + outFile);
+        }
+
+      }
+    } else {
+      throw new IllegalArgumentException("ResourcePath cannot be null or empty");
+    }
   }
 
   /**
@@ -227,5 +275,20 @@ public class SpongeServerProvider implements ServerConnector {
   @Override
   public SpongeItemCalculations itemCalculations() {
     return calc;
+  }
+
+  public @Nullable InputStream getResource(@NotNull String filename) {
+    try {
+      URL url = this.getClass().getClassLoader().getResource(filename);
+      if (url == null) {
+        return null;
+      } else {
+        URLConnection connection = url.openConnection();
+        connection.setUseCaches(false);
+        return connection.getInputStream();
+      }
+    } catch (IOException var4) {
+      return null;
+    }
   }
 }

@@ -21,7 +21,7 @@ package net.tnemc.sponge.impl;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.LogProvider;
 import net.tnemc.core.compatibility.log.DebugLevel;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 /**
  * SpongeLogProvider

@@ -20,6 +20,21 @@ package net.tnemc.sponge;
 
 import com.google.inject.Inject;
 import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
+import net.tnemc.core.account.AccountStatus;
+import net.tnemc.core.command.parameters.resolver.AccountResolver;
+import net.tnemc.core.command.parameters.resolver.BigDecimalResolver;
+import net.tnemc.core.command.parameters.resolver.CurrencyResolver;
+import net.tnemc.core.command.parameters.resolver.DebugResolver;
+import net.tnemc.core.command.parameters.resolver.StatusResolver;
+import net.tnemc.core.command.parameters.suggestion.AccountSuggestion;
+import net.tnemc.core.command.parameters.suggestion.CurrencySuggestion;
+import net.tnemc.core.command.parameters.suggestion.DebugSuggestion;
+import net.tnemc.core.command.parameters.suggestion.RegionSuggestion;
+import net.tnemc.core.command.parameters.suggestion.StatusSuggestion;
+import net.tnemc.core.compatibility.log.DebugLevel;
+import net.tnemc.core.currency.Currency;
+import net.tnemc.core.region.RegionGroup;
 import net.tnemc.menu.sponge8.listeners.Sponge8InventoryClickListener;
 import net.tnemc.sponge.command.AdminCommand;
 import net.tnemc.sponge.command.ModuleCommand;
@@ -30,16 +45,24 @@ import net.tnemc.sponge.impl.SpongeServerProvider;
 import net.tnemc.sponge.listeners.player.PlayerCloseInventoryListener;
 import net.tnemc.sponge.listeners.player.PlayerJoinListener;
 import net.tnemc.sponge.listeners.player.PlayerLeaveListener;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.spongepowered.api.ResourceKey;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.command.Command;
+import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.lifecycle.RegisterCommandEvent;
 import org.spongepowered.api.event.lifecycle.StartedEngineEvent;
 import org.spongepowered.api.event.lifecycle.StartingEngineEvent;
 import org.spongepowered.plugin.PluginContainer;
 import org.spongepowered.plugin.builtin.jvm.Plugin;
 import revxrsal.commands.sponge.SpongeCommandHandler;
+import revxrsal.commands.sponge.core.SpongeHandler;
+
+import java.io.File;
+import java.math.BigDecimal;
+import java.nio.file.Path;
 
 /**
  * The Sponge main plugin class.
@@ -53,16 +76,42 @@ public class SpongeCore extends TNECore {
 
   protected final PluginContainer container;
 
+  private SpongeCore core;
+  @Inject
+  @ConfigDir(sharedRoot = false)
+  private Path configDir;
+
   @Inject
   SpongeCore(final PluginContainer container, final Logger log) {
     super(new SpongeServerProvider(), new SpongeLogProvider(log));
     this.container = container;
     this.logger = new SpongeLogProvider(log);
+    this.core = this;
+    command = SpongeCommandHandler.create(container);
+
+    command.registerValueResolver(Account.class, new AccountResolver());
+    command.registerValueResolver(AccountStatus.class, new StatusResolver());
+    command.registerValueResolver(DebugLevel.class, new DebugResolver());
+    command.registerValueResolver(Currency.class, new CurrencyResolver());
+    command.registerValueResolver(BigDecimal.class, new BigDecimalResolver());
+
+    //Annotation
+    command.getAutoCompleter().registerParameterSuggestions(AccountStatus.class, new StatusSuggestion());
+    command.getAutoCompleter().registerParameterSuggestions(DebugLevel.class, new DebugSuggestion());
+    command.getAutoCompleter().registerParameterSuggestions(RegionGroup.class, new RegionSuggestion());
+    command.getAutoCompleter().registerParameterSuggestions(Account.class, new AccountSuggestion());
+    command.getAutoCompleter().registerParameterSuggestions(Currency.class, new CurrencySuggestion());
+
+    command.register(new AdminCommand());
+    command.register(new ModuleCommand());
+    command.register(new MoneyCommand());
+    command.register(new TransactionCommand());
   }
 
   @Listener
   public void onConstructPlugin(final StartingEngineEvent<Server> event) {
     setInstance(this);
+    logger.inform("Starting up The New Economy.");
 
     //Register our event listeners
     Sponge.eventManager().registerListeners(container, new PlayerJoinListener(container));
@@ -73,6 +122,7 @@ public class SpongeCore extends TNECore {
 
   @Listener
   public void onServerStart(final StartedEngineEvent<Server> event) {
+    this.core.enable();
     logger.inform("The New Economy has been enabled.");
   }
 
@@ -81,19 +131,33 @@ public class SpongeCore extends TNECore {
   }
 
   @Override
+  protected void onEnable() {
+    this.directory = configDir.toFile();
+
+    super.onEnable();
+  }
+
+  @Override
   public void registerCommandHandler() {
-    command = SpongeCommandHandler.create(container);
+    //command = SpongeCommandHandler.create(container);
   }
 
   @Override
   public void registerCommands() {
 
     //Register our commands
-    command.register(new AdminCommand());
-    command.register(new ModuleCommand());
-    command.register(new MoneyCommand());
-    command.register(new TransactionCommand());
   }
+  /*@Listener
+  public void handleRegistrationEvent(RegisterCommandEvent<Command> event) {
+    System.out.println("Register TNE Commands.");
+
+    if(command == null) return;
+
+    ((SpongeHandler)command).getRegistered().forEach((name, command)-> {
+      event.register(container, command, name);
+      System.out.println("Register: " + name);
+    });
+  }*/
 
   @Override
   public void registerCallbacks() {
