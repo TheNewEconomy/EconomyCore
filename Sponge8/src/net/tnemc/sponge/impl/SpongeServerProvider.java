@@ -28,8 +28,8 @@ import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.region.RegionMode;
 import net.tnemc.item.AbstractItemStack;
-import net.tnemc.item.providers.CalculationsProvider;
 import net.tnemc.sponge.SpongeCore;
+import net.tnemc.sponge.SpongeItemCalculationsProvider;
 import net.tnemc.sponge.SpongeItemStack;
 import net.tnemc.sponge.impl.scheduler.SpongeScheduler;
 import org.jetbrains.annotations.NotNull;
@@ -60,7 +60,7 @@ import java.util.logging.Level;
  */
 public class SpongeServerProvider implements ServerConnector {
 
-  private final net.tnemc.sponge.SpongeItemCalculations calc = new net.tnemc.sponge.SpongeItemCalculations();
+  private final SpongeItemCalculationsProvider calc = new SpongeItemCalculationsProvider();
   private final SpongeProxyProvider proxy = new SpongeProxyProvider();
 
   private final SpongeScheduler scheduler;
@@ -271,7 +271,7 @@ public class SpongeServerProvider implements ServerConnector {
   }
 
   @Override
-  public net.tnemc.sponge.SpongeItemCalculations calculations() {
+  public SpongeItemCalculationsProvider calculations() {
     return calc;
   }
 
