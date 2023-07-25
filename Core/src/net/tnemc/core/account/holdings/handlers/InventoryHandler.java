@@ -114,10 +114,6 @@ public class InventoryHandler implements HoldingsHandler {
                                                                                  identifier()
         );
         TNECore.log().debug("Getting holdings from Inventory DB", DebugLevel.DEVELOPER);
-        System.out.println("Getting holdings from Inventory DB");
-        System.out.println("Player: " + (account.isPlayer()));
-        System.out.println("Online: " + TNECore.server().online(account.getIdentifier()));
-        System.out.println("Loading: " + TNECore.eco().account().getLoading().contains(((PlayerAccount)account).getUUID().toString()));
 
         if(holdings.isPresent()) {
           return holdings.get();
@@ -127,7 +123,6 @@ public class InventoryHandler implements HoldingsHandler {
                                  BigDecimal.ZERO,
                                  identifier());
       }
-      System.out.println("Getting holdings from Inventory");
       TNECore.log().debug("Getting holdings from Inventory", DebugLevel.DEVELOPER);
       final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
                                                                  ((PlayerAccount)account).getPlayer()

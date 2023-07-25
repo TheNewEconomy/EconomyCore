@@ -433,8 +433,6 @@ public class MoneyCommand extends BaseCommand {
           .processor(new BaseTransactionProcessor())
           .source(new PlayerSource(sender.identifier()));
 
-      System.out.println("Acc: " + account.getIdentifier());
-
       final Optional<Receipt> receipt = processTransaction(sender, transaction);
 
       if(receipt.isPresent()) {

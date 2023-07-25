@@ -161,7 +161,6 @@ public abstract class TNECore {
    */
   protected void onEnable() {
 
-    System.out.println("Directory: " + directory.getAbsolutePath());
     if(!directory.exists()) {
       final boolean created = directory.mkdir();
       if(!created) {

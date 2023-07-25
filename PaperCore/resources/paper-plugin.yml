@@ -3,7 +3,7 @@ version: 0.1.2.0
 description: The original feature-packed economy plugin for Minecraft.
 author: creatorfromhell
 main: net.tnemc.paper.TNE
-api-version: '1.20'
+api-version: '1.13'
 dependencies:
   - name: Towny
     required: false

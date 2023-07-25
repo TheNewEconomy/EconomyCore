@@ -1,6 +1,7 @@
 package net.tnemc.core.utils;
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.compatibility.log.DebugLevel;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -57,9 +58,8 @@ public class IOUtil {
       BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
       build = in.readLine();
       in.close();
-    } catch (Exception e) {
-      e.printStackTrace();
-      TNECore.log().warning("Unable to contact update server!");
+    } catch (Exception ignore) {
+      TNECore.log().warning("Unable to contact update server!", DebugLevel.OFF);
     }
     return Optional.ofNullable(build);
   }
