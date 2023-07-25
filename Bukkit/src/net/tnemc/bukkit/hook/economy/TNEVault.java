@@ -83,16 +83,16 @@ public class TNEVault implements Economy {
 
   /**
    * Format amount into a human-readable String This provides translation into
-   * economy specific formatting to improve consistency between plugins.
+   * economy specific formatting to improve consistency between plugins.  
    *
    * @param amount to format
    * @return Human-readable string describing amount
    */
   public String format(double amount) {
     return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
-            TNECore.eco().currency().getDefaultCurrency().getUid(),
-            BigDecimal.valueOf(amount),
-            EconomyManager.NORMAL
+                                                            TNECore.eco().currency().getDefaultCurrency().getUid(),
+                                                            BigDecimal.valueOf(amount),
+                                                            EconomyManager.NORMAL
     ));
   }
 
@@ -238,7 +238,7 @@ public class TNEVault implements Economy {
   public boolean has(String name, String world, double amount) {
     final Optional<Account> account = TNECore.eco().account().findAccount(name);
     return account.filter(value->value.getHoldingsTotal(world, TNECore.eco().currency().getDefaultCurrency(world).getUid())
-            .compareTo(BigDecimal.valueOf(amount)) >= 0).isPresent();
+        .compareTo(BigDecimal.valueOf(amount)) >= 0).isPresent();
   }
 
   /**
@@ -295,23 +295,23 @@ public class TNEVault implements Economy {
     }
 
     final HoldingsModifier modifier = new HoldingsModifier(world,
-            TNECore.eco().currency().getDefaultCurrency(world).getUid(),
-            BigDecimal.valueOf(amount));
+                                                           TNECore.eco().currency().getDefaultCurrency(world).getUid(),
+                                                           BigDecimal.valueOf(amount));
 
     final Transaction transaction = new Transaction("take")
-            .to(account.get(), modifier.counter())
-            .processor(new BaseTransactionProcessor())
-            .source(new PluginSource("Vault"));
+        .to(account.get(), modifier.counter())
+        .processor(new BaseTransactionProcessor())
+        .source(new PluginSource("Vault"));
 
     try {
       TransactionResult result = transaction.process();
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding().doubleValue(),
-              fromResult(result),
-              result.getMessage());
+                                 fromResult(result),
+                                 result.getMessage());
     } catch(InvalidTransactionException e) {
 
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding().doubleValue(),
-              EconomyResponse.ResponseType.FAILURE, e.getMessage());
+                                 EconomyResponse.ResponseType.FAILURE, e.getMessage());
     }
   }
 
@@ -368,24 +368,24 @@ public class TNEVault implements Economy {
     }
 
     final HoldingsModifier modifier = new HoldingsModifier(world,
-            TNECore.eco().currency().getDefaultCurrency(world).getUid(),
-            BigDecimal.valueOf(amount));
+                                                           TNECore.eco().currency().getDefaultCurrency(world).getUid(),
+                                                           BigDecimal.valueOf(amount));
 
 
     final Transaction transaction = new Transaction("give")
-            .to(account.get(), modifier)
-            .processor(new BaseTransactionProcessor())
-            .source(new PluginSource("Vault"));
+        .to(account.get(), modifier)
+        .processor(new BaseTransactionProcessor())
+        .source(new PluginSource("Vault"));
 
     try {
       TransactionResult result = transaction.process();
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding().doubleValue(),
-              fromResult(result),
-              result.getMessage());
+                                 fromResult(result),
+                                 result.getMessage());
     } catch(InvalidTransactionException e) {
 
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding().doubleValue(),
-              EconomyResponse.ResponseType.FAILURE, e.getMessage());
+                                 EconomyResponse.ResponseType.FAILURE, e.getMessage());
     }
   }
 
