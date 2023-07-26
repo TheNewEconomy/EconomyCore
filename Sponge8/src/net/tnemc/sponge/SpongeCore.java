@@ -42,6 +42,7 @@ import net.tnemc.sponge.command.MoneyCommand;
 import net.tnemc.sponge.command.TransactionCommand;
 import net.tnemc.sponge.impl.SpongeLogProvider;
 import net.tnemc.sponge.impl.SpongeServerProvider;
+import net.tnemc.sponge.impl.eco.SpongeEconomy;
 import net.tnemc.sponge.listeners.player.PlayerCloseInventoryListener;
 import net.tnemc.sponge.listeners.player.PlayerJoinListener;
 import net.tnemc.sponge.listeners.player.PlayerLeaveListener;
@@ -51,8 +52,10 @@ import org.spongepowered.api.Server;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.lifecycle.ProvideServiceEvent;
 import org.spongepowered.api.event.lifecycle.StartedEngineEvent;
 import org.spongepowered.api.event.lifecycle.StartingEngineEvent;
+import org.spongepowered.api.service.economy.EconomyService;
 import org.spongepowered.plugin.PluginContainer;
 import org.spongepowered.plugin.builtin.jvm.Plugin;
 import revxrsal.commands.sponge.SpongeCommandHandler;
@@ -120,6 +123,11 @@ public class SpongeCore extends TNECore {
   public void onServerStart(final StartedEngineEvent<Server> event) {
     this.core.enable();
     logger.inform("The New Economy has been enabled.");
+  }
+
+  @Listener
+  public void providePermissionService(final ProvideServiceEvent.EngineScoped<EconomyService> event) {
+    event.suggest(SpongeEconomy::new);
   }
 
   public PluginContainer getContainer() {
