@@ -18,6 +18,7 @@ package net.tnemc.sponge.impl.eco;
  */
 
 import net.kyori.adventure.text.Component;
+import net.tnemc.core.currency.format.CurrencyFormatter;
 import org.spongepowered.api.service.economy.Currency;
 
 import java.math.BigDecimal;
@@ -53,7 +54,7 @@ public class SpongeCurrency implements Currency {
 
   @Override
   public Component format(BigDecimal amount, int numFractionDigits) {
-    return null;
+    return Component.text(CurrencyFormatter.format(null, amount));
   }
 
   @Override

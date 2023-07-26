@@ -17,6 +17,7 @@ package net.tnemc.core.currency.format;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
@@ -31,6 +32,8 @@ import net.tnemc.core.currency.format.impl.MinorRule;
 import net.tnemc.core.currency.format.impl.ShortenRule;
 import net.tnemc.core.currency.format.impl.SymbolRule;
 
+import javax.annotation.Nullable;
+import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Optional;
 
@@ -62,7 +65,11 @@ public class CurrencyFormatter {
     rulesMap.put(rule.name(), rule);
   }
 
-  public static String format(Account account, HoldingsEntry entry) {
+  public static String format(@Nullable Account account, final BigDecimal amount) {
+    return format(account, new HoldingsEntry(TNECore.server().defaultRegion(), TNECore.eco().currency().getDefaultCurrency().getUid(), amount, EconomyManager.NORMAL));
+  }
+
+  public static String format(@Nullable Account account, HoldingsEntry entry) {
     String format = "";
 
     final Optional<Currency> currency = TNECore.eco().currency().findCurrency(entry.getCurrency());

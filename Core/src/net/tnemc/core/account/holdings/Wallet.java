@@ -45,6 +45,19 @@ public class Wallet {
    * if no holdings for the specifications exists.
    *
    * @param region The region to use
+   *
+   * @return The holdings based on specific specifications, or an empty optional if no
+   * holdings for the specifications exists.
+   */
+  public Optional<RegionHoldings> getHoldings(final @NotNull String region) {
+    return Optional.ofNullable(holdings.get(region));
+  }
+
+  /**
+   * Used to get the holdings based on specific specifications, or returns an empty optional
+   * if no holdings for the specifications exists.
+   *
+   * @param region The region to use
    * @param currency The currency to use.
    *
    * @return The holdings based on specific specifications, or an empty optional if no

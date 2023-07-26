@@ -19,8 +19,14 @@ package net.tnemc.sponge;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.PlayerAccount;
+import net.tnemc.core.actions.EconomyResponse;
+import net.tnemc.core.api.response.AccountAPIResponse;
+import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.sponge.impl.eco.SpongeCurrency;
+import net.tnemc.sponge.impl.eco.SpongeDeletionResult;
 import net.tnemc.sponge.impl.eco.SpongeUniqueAccount;
+import org.spongepowered.api.Sponge;
+import org.spongepowered.api.entity.living.player.server.ServerPlayer;
 import org.spongepowered.api.service.economy.Currency;
 import org.spongepowered.api.service.economy.EconomyService;
 import org.spongepowered.api.service.economy.account.Account;
@@ -28,6 +34,7 @@ import org.spongepowered.api.service.economy.account.AccountDeletionResultType;
 import org.spongepowered.api.service.economy.account.UniqueAccount;
 import org.spongepowered.api.service.economy.account.VirtualAccount;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
@@ -57,9 +64,19 @@ public class SpongeEconomy implements EconomyService {
   }
 
   @Override
-  public Optional<UniqueAccount> findOrCreateAccount(UUID uuid) {
-    final Optional<PlayerAccount> account = TNECore.eco().account().findPlayerAccount(uuid);
+  public Optional<UniqueAccount> findOrCreateAccount(UUID identifier) {
+
+    final Optional<PlayerAccount> account = TNECore.eco().account().findPlayerAccount(identifier);
     if(account.isEmpty()) {
+
+      final Optional<ServerPlayer> playerProvider = Sponge.server().player(identifier);
+      if(playerProvider.isPresent()) {
+
+        final AccountAPIResponse response = TNECore.eco().account().createAccount(identifier.toString(), playerProvider.get().name());
+        if(response.getResponse().success() && response.getPlayerAccount().isPresent()) {
+          return Optional.of(new SpongeUniqueAccount(response.getPlayerAccount().get()));
+        }
+      }
       return Optional.empty();
     }
     return Optional.of(new SpongeUniqueAccount(account.get()));
@@ -77,7 +94,7 @@ public class SpongeEconomy implements EconomyService {
 
   @Override
   public Collection<UniqueAccount> uniqueAccounts() {
-    return null;
+    return new ArrayList<>();
   }
 
   @Override
@@ -87,16 +104,16 @@ public class SpongeEconomy implements EconomyService {
 
   @Override
   public Collection<VirtualAccount> virtualAccounts() {
-    return null;
+    return new ArrayList<>();
   }
 
   @Override
-  public AccountDeletionResultType deleteAccount(UUID uuid) {
-    return null;
+  public AccountDeletionResultType deleteAccount(UUID identifier) {
+    return new SpongeDeletionResult(TNECore.eco().account().deleteAccount(identifier));
   }
 
   @Override
   public AccountDeletionResultType deleteAccount(String identifier) {
-    return null;
+    return new SpongeDeletionResult(TNECore.eco().account().deleteAccount(identifier));
   }
 }
