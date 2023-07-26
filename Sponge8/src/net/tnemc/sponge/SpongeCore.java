@@ -47,15 +47,18 @@ import net.tnemc.sponge.listeners.player.PlayerCloseInventoryListener;
 import net.tnemc.sponge.listeners.player.PlayerJoinListener;
 import net.tnemc.sponge.listeners.player.PlayerLeaveListener;
 import org.apache.logging.log4j.Logger;
+import org.bstats.sponge.Metrics;
 import org.spongepowered.api.ResourceKey;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.lifecycle.ConstructPluginEvent;
 import org.spongepowered.api.event.lifecycle.ProvideServiceEvent;
 import org.spongepowered.api.event.lifecycle.StartedEngineEvent;
 import org.spongepowered.api.event.lifecycle.StartingEngineEvent;
 import org.spongepowered.api.service.economy.EconomyService;
+import org.spongepowered.api.util.metric.MetricsConfigManager;
 import org.spongepowered.plugin.PluginContainer;
 import org.spongepowered.plugin.builtin.jvm.Plugin;
 import revxrsal.commands.sponge.SpongeCommandHandler;
@@ -76,12 +79,16 @@ public class SpongeCore extends TNECore {
   protected final PluginContainer container;
 
   private SpongeCore core;
+  private final Metrics metrics;
   @Inject
   @ConfigDir(sharedRoot = false)
   private Path configDir;
 
   @Inject
-  SpongeCore(final PluginContainer container, final Logger log) {
+  private MetricsConfigManager metricsConfigManager;
+
+  @Inject
+  SpongeCore(final PluginContainer container, final Logger log, final Metrics.Factory metricsFactory) {
     super(new SpongeServerProvider(), new SpongeLogProvider(log));
     this.container = container;
     this.logger = new SpongeLogProvider(log);
@@ -105,10 +112,20 @@ public class SpongeCore extends TNECore {
     command.register(new ModuleCommand());
     command.register(new MoneyCommand());
     command.register(new TransactionCommand());
+
+    metrics = metricsFactory.make(19246);
+  }
+
+
+  @Listener
+  public void onConstruct(final ConstructPluginEvent event) {
+    if(hasConsent()) {
+      metrics.startup(event);
+    }
   }
 
   @Listener
-  public void onConstructPlugin(final StartingEngineEvent<Server> event) {
+  public void onEngineStart(final StartingEngineEvent<Server> event) {
     setInstance(this);
     logger.inform("Starting up The New Economy.");
 
@@ -166,6 +183,10 @@ public class SpongeCore extends TNECore {
   @Override
   public void registerCallbacks() {
     //nothing to see here.
+  }
+
+  public boolean hasConsent() {
+    return this.metricsConfigManager.collectionState(this.container).asBoolean();
   }
 
   public static SpongeCore instance() {

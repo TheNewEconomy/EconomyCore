@@ -25,6 +25,7 @@ import net.tnemc.bukkit.listeners.world.WorldLoadListener;
 import net.tnemc.menu.folia.listener.FoliaChatListener;
 import net.tnemc.menu.folia.listener.FoliaInventoryClickListener;
 import net.tnemc.menu.folia.listener.FoliaInventoryCloseListener;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -76,6 +77,8 @@ public class TNE extends JavaPlugin {
     if(Bukkit.getPluginManager().isPluginEnabled("Vault")) {
       new VaultHook().register();
     }
+
+    final Metrics metrics = new Metrics(this, 602);
 
     getLogger().log(Level.INFO, "The New Economy has been enabled!");
 

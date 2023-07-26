@@ -28,6 +28,7 @@ import net.tnemc.bukkit.listeners.player.PlayerQuitListener;
 import net.tnemc.bukkit.listeners.world.WorldLoadListener;
 import net.tnemc.menu.bukkit.listener.BukkitChatListener;
 import net.tnemc.menu.bukkit.listener.BukkitInventoryCloseListener;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -82,6 +83,8 @@ public class TNE extends JavaPlugin {
     if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
       new PAPIHook().register();
     }
+
+    final Metrics metrics = new Metrics(this, 602);
 
     getLogger().log(Level.INFO, "The New Economy has been enabled!");
 
