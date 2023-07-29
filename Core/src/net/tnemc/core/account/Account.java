@@ -201,12 +201,15 @@ public class Account extends ReceiptBox {
 
     final String region = TNECore.eco().region().resolve(entry.getRegion());
 
-    final boolean result = currencyObject.map(currency->currency.type().setHoldings(this,
-                                                                    region,
-                                                                    currency,
-                                                                    type,
-                                                                    entry.getAmount()
-    )).orElse(false);
+    boolean result = false;
+
+    if(currencyObject.isPresent()) {
+      result = currencyObject.get().type().setHoldings(this,
+              region,
+              currencyObject.get(),
+              type,
+              entry.getAmount());
+    }
 
     if(result) {
       //Send out our update to our proxies.

@@ -133,7 +133,7 @@
                             <shadedPattern>${tne.relocation}.cloud</shadedPattern>
                         </relocation>
                         <relocation>
-                            <pattern>ore.bstats</pattern>
+                            <pattern>org.bstats</pattern>
                             <shadedPattern>${tne.relocation}.bstats</shadedPattern>
                         </relocation>
                         <relocation>

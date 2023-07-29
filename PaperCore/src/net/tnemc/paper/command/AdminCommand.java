@@ -185,26 +185,29 @@ public class AdminCommand {
   }
 
   public static boolean restoreOld(@Nullable final Integer extraction) {
-    File file;
-
-    if(extraction != null && extraction > 0) {
-      file = new File(TNECore.directory(), "extracted/extracted-" + extraction + ".yml");
-    } else {
-      file = new File(TNECore.directory(), "extracted.yml");
-    }
+    final File file = new File(TNECore.directory(), "extracted.yml");
 
     if(!file.exists()) {
 
-      TNECore.log().inform("The extraction file doesn't exist.");
+      TNECore.log().inform("The extraction file doesn't exist.", DebugLevel.OFF);
+      return false;
+    }
+    YamlFile extracted = null;
+    try {
+      extracted = new YamlFile(file.getPath());
+    } catch(Exception e) {
+      TNECore.log().error("Failed load extraction file for writing.", e, DebugLevel.OFF);
+    }
+
+    if(extracted == null) {
+      TNECore.log().inform("The extraction file doesn't exist.", DebugLevel.OFF);
       return false;
     }
 
-    YamlFile extracted = new YamlFile(file);
-
     try {
-      extracted.load();
-    } catch(IOException e) {
-      TNECore.log().error("Failed load extraction file for writing.", e, DebugLevel.STANDARD);
+      extracted.loadWithComments();
+    } catch(Exception e) {
+      TNECore.log().error("Failed load extraction file for writing.", e, DebugLevel.OFF);
       return false;
     }
 
@@ -218,7 +221,7 @@ public class AdminCommand {
 
       for(String name : accounts) {
 
-        final String username = name.replaceAll("\\!", ".").replaceAll("\\@", "-").replaceAll("\\%", "_");
+        final String username = name.replaceAll("\\!", "\\.").replaceAll("\\@", "-").replaceAll("\\%", "_");
         boolean nonPlayer = false;
 
         UUID id = get(username);
@@ -229,7 +232,7 @@ public class AdminCommand {
 
         final AccountAPIResponse response = TNECore.eco().account().createAccount(id.toString(), username, nonPlayer);
         if(!response.getResponse().success() || response.getAccount().isEmpty()) {
-          TNECore.log().inform("Couldn't create account for " + username + ". Skipping.");
+          TNECore.log().inform("Couldn't create account for " + username + ". Skipping.", DebugLevel.OFF);
           continue;
         }
 
@@ -240,26 +243,27 @@ public class AdminCommand {
           for(String currency : currencies) {
 
             if(!recode) {
-              final String finalCurrency = (currency.equalsIgnoreCase("default")) ? TNECore.eco().currency().getDefaultCurrency(region).getIdentifier() : currency;
+              final String finalCurrency = (currency.equalsIgnoreCase("default")) ? TNECore.eco().currency().getDefaultCurrency().getIdentifier() : currency;
               final Optional<Currency> cur = TNECore.eco().currency().findCurrency(finalCurrency);
-              if(cur.isPresent()) {
-                final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name + ".Balances." + region + "." + currency));
 
-                response.getAccount().get().setHoldings(new HoldingsEntry(region, cur.get().getUid(),
-                                                                          amount, EconomyManager.NORMAL));
-              }
+              final Currency currencyObj = cur.orElseGet(() -> TNECore.eco().currency().getDefaultCurrency(TNECore.eco().region().resolve(region)));
+
+              final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name + ".Balances." + region + "." + currency));
+
+              response.getAccount().get().setHoldings(new HoldingsEntry(TNECore.eco().region().resolve(region), currencyObj.getUid(),
+                      amount, EconomyManager.NORMAL), TNECore.eco().getFor(currencyObj.type()).get(0).identifier());
             } else {
 
               final Set<String> types = extracted.getConfigurationSection("Accounts." + name + ".Balances." + region + "." + currency).getKeys(false);
               for(String type : types) {
 
                 final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name
-                                                                                 + ".Balances." + region
-                                                                                 + "." + currency + "."
-                                                                                 + type));
+                        + ".Balances." + region
+                        + "." + currency + "."
+                        + type));
 
                 response.getAccount().get().setHoldings(new HoldingsEntry(region, UUID.fromString(currency),
-                                                                          amount, Identifier.fromID(type)));
+                        amount, Identifier.fromID(type)));
               }
             }
             number++;
@@ -268,13 +272,13 @@ public class AdminCommand {
 
               if (message) {
                 final int progress = (number * 100) / accounts.size();
-                TNECore.log().inform("Restoration Progress: " + progress);
+                TNECore.log().inform("Restoration Progress: " + progress, DebugLevel.OFF);
               }
             } catch(Exception ignore) {}
           }
         }
       }
-      TNECore.log().inform("Restoration has completed!");
+      TNECore.log().inform("Restoration has completed!", DebugLevel.OFF);
     }
 
     return true;
