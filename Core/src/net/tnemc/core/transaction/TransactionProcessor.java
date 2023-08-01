@@ -44,14 +44,15 @@ public interface TransactionProcessor {
    * @return The {@link TransactionResult result} from performing the transaction.
    */
   default TransactionResult process(Transaction transaction) {
-    Optional<EconomyResponse> response = processChecks(transaction);
+    final Optional<EconomyResponse> response = processChecks(transaction);
 
     if(response.isPresent() && !response.get().success()) {
       return new TransactionResult(false, response.get().response());
     }
 
     if(transaction.getFrom() != null) {
-      Optional<Account> from = TNECore.eco().account().findAccount(transaction.getFrom().getId());
+
+      final Optional<Account> from = TNECore.eco().account().findAccount(transaction.getFrom().getId());
       if(from.isPresent()) {
         for(HoldingsEntry entry : transaction.getFrom().getEndingBalances()) {
           from.get().setHoldings(entry, entry.getHandler());
@@ -61,7 +62,7 @@ public interface TransactionProcessor {
 
     if(transaction.getTo() != null) {
 
-      Optional<Account> to = TNECore.eco().account().findAccount(transaction.getTo().getId());
+      final Optional<Account> to = TNECore.eco().account().findAccount(transaction.getTo().getId());
       if(to.isPresent()) {
         for(HoldingsEntry entry : transaction.getTo().getEndingBalances()) {
           to.get().setHoldings(entry, entry.getHandler());
@@ -81,7 +82,8 @@ public interface TransactionProcessor {
   default Optional<EconomyResponse> processChecks(Transaction transaction) {
     EconomyResponse response = null;
     for(final String str : getChecks()) {
-      Optional<TransactionCheck> check = TNECore.eco().transaction().findCheck(str);
+
+      final Optional<TransactionCheck> check = TNECore.eco().transaction().findCheck(str);
       if(check.isPresent()) {
         response = check.get().process(transaction);
 

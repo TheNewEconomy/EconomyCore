@@ -119,29 +119,73 @@ public class Transaction {
 
     if(balances.isEmpty()) {
       balances.add(new HoldingsEntry(modifier.getRegion(), modifier.getCurrency(),
-                                     BigDecimal.ZERO, EconomyManager.NORMAL
-      ));
+              BigDecimal.ZERO, EconomyManager.NORMAL));
     }
 
-    this.from = new TransactionParticipant(account.getIdentifier(), balances);
+    this.to = new TransactionParticipant(account.getIdentifier(), balances);
 
     final Optional<TransactionType> type = TNECore.eco().transaction().findType(this.type);
 
-    if(type.isPresent() && type.get().fromTax().isPresent()) {
-      final BigDecimal tax = type.get().fromTax().get()
-          .calculateTax(modifier.getModifier());
+    final BigDecimal tax = (type.isPresent() && type.get().toTax().isPresent())? type.get().toTax().get()
+            .calculateTax(modifier.getModifier()) : BigDecimal.ZERO;
 
-      for(HoldingsEntry entry : balances) {
-        this.from.getEndingBalances().add(entry.modifyGrab(modifier).modifyGrab(tax.negate()));
-      }
-      this.from.setTax(tax);
-    } else {
-      for(HoldingsEntry entry : balances) {
-        this.from.getEndingBalances().add(entry.modifyGrab(modifier));
-      }
+    BigDecimal working = null;
+    final boolean take = (modifier.getModifier().compareTo(BigDecimal.ZERO) < 0);
+
+    if(take) {
+      working = modifier.getModifier().multiply(new BigDecimal(-1));
     }
 
-    this.modifierFrom = modifier;
+    boolean done = false;
+
+    for(int i = 0; i < balances.size(); i++) {
+      final HoldingsEntry entry = balances.get(i);
+      HoldingsEntry ending;
+
+      TNECore.log().debug("entry bal: " + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
+      TNECore.log().debug("entry bal: " + entry.getRegion(), DebugLevel.DEVELOPER);
+
+      if(!done) {
+        if(!take) {
+
+          ending = entry.modifyGrab(modifier).modifyGrab(tax.negate());
+
+          TNECore.log().debug("End: " + ending.getAmount().toPlainString(), DebugLevel.DEVELOPER);
+          TNECore.log().debug("End: " + ending.getRegion(), DebugLevel.DEVELOPER);
+          done = true;
+        } else {
+
+          TNECore.log().debug("Working: " + working.toPlainString(), DebugLevel.DEVELOPER);
+
+          if(entry.getAmount().compareTo(working) >= 0) {
+            TNECore.log().debug("Value: " + working.toPlainString(), DebugLevel.DEVELOPER);
+
+            ending = entry.modifyGrab(working.multiply(new BigDecimal(-1))).modifyGrab(tax.negate());
+            TNECore.log().debug("break out since we are good to go with this entry", DebugLevel.DEVELOPER);
+            done = true;
+          } else {
+
+            if(i == (balances.size() - 1)) {
+              ending = entry.modifyGrab(working.multiply(new BigDecimal(-1)));
+
+            } else {
+              TNECore.log().debug("Keep Working", DebugLevel.DEVELOPER);
+              ending = entry.modifyGrab(entry.getAmount().multiply(new BigDecimal(-1)));
+              working = working.subtract(entry.getAmount());
+            }
+          }
+        }
+      } else {
+        ending = entry;
+      }
+      this.to.getEndingBalances().add(ending);
+    }
+
+    working = null;
+
+    this.to.setTax(tax);
+
+    this.modifierTo = modifier;
     return this;
   }
 
@@ -205,7 +249,6 @@ public class Transaction {
         if(!take) {
 
           ending = entry.modifyGrab(modifier).modifyGrab(tax.negate());
-          this.to.getEndingBalances().add(ending);
 
           TNECore.log().debug("End: " + ending.getAmount().toPlainString(), DebugLevel.DEVELOPER);
           TNECore.log().debug("End: " + ending.getRegion(), DebugLevel.DEVELOPER);
@@ -218,7 +261,6 @@ public class Transaction {
             TNECore.log().debug("Value: " + working.toPlainString(), DebugLevel.DEVELOPER);
 
             ending = entry.modifyGrab(working.multiply(new BigDecimal(-1))).modifyGrab(tax.negate());
-            this.to.getEndingBalances().add(ending);
             TNECore.log().debug("break out since we are good to go with this entry", DebugLevel.DEVELOPER);
             done = true;
           } else {

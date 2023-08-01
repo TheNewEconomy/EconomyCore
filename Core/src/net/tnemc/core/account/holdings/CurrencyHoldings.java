@@ -41,7 +41,6 @@ public class CurrencyHoldings {
    * @param entry The holdings to add to the type.
    */
   public void setHoldingsEntry(final @NotNull HoldingsEntry entry, final @NotNull Identifier type) {
-    System.out.println("Setting holdings entry");
     holdings.put(type.asID(), entry);
   }
 

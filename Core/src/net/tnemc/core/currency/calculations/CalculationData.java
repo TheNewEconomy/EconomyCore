@@ -110,10 +110,10 @@ public class CalculationData<I> {
   }
 
   public void provideMaterials(final Denomination denomination, Integer amount) {
-    int contains = (inventoryMaterials.getOrDefault(denomination.weight(), 0) + amount);
+    int contains = (inventoryMaterials.getOrDefault(denomination.weight(), amount));
 
     final AbstractItemStack<Object> stack = TNECore.server().denominationToStack((ItemDenomination)denomination).amount(amount);
-    Collection<AbstractItemStack<Object>> left = TNECore.server().calculations().giveItems(Collections.singletonList(stack), inventory);
+    final Collection<AbstractItemStack<Object>> left = TNECore.server().calculations().giveItems(Collections.singletonList(stack), inventory);
 
     if(left.size() > 0) {
       contains = contains - left.stream().findFirst().get().amount();
