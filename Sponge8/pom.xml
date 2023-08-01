@@ -188,8 +188,8 @@
         </dependency>
         <dependency>
             <groupId>com.github.Revxrsal.Lamp</groupId>
-            <artifactId>sponge-8</artifactId>
-            <version>3.1.5</version>
+            <artifactId>sponge</artifactId>
+            <version>389fa8e61d</version>
             <scope>compile</scope>
         </dependency>
 
