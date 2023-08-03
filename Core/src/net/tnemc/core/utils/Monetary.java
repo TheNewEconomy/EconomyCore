@@ -20,6 +20,7 @@ package net.tnemc.core.utils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 
 /**
  * This class is used to add useful helper methods for ease of use purposes when working with
@@ -30,11 +31,14 @@ import java.math.BigInteger;
  */
 public class Monetary {
 
+  private final int scale;
+
   BigInteger major = BigInteger.ZERO;
 
   BigInteger minor = BigInteger.ZERO;
 
   public Monetary(final BigDecimal decimal, final int scale) {
+    this.scale = scale;
     calculate(decimal, scale);
   }
 
@@ -44,7 +48,7 @@ public class Monetary {
   private void calculate(final BigDecimal decimal,
                          final int scale) {
 
-    final BigDecimal value = decimal.setScale(scale);
+    final BigDecimal value = decimal.setScale(scale, RoundingMode.DOWN);
     final String[] split = value.toPlainString().split("\\.");
 
     major = new BigInteger(split[0]);
@@ -57,5 +61,9 @@ public class Monetary {
 
   public BigInteger minor() {
     return minor;
+  }
+
+  public int scale() {
+    return scale;
   }
 }

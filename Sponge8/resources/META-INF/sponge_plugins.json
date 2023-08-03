@@ -5,12 +5,18 @@
   },
   "license": "AGPL",
   "global": {
-    "version": "0.1.2.0",
+    "version": "0.1.2.0-Pre-17",
     "links": {
       "homepage": "https://tnemc.net",
       "source": "https://github.com/TheNewEconomy/EconomyCore",
       "issues": "https://github.com/TheNewEconomy/EconomyCore/issues"
     },
+    "dependencies": [
+      {
+        "id": "spongeapi",
+        "version": "8.0.0"
+      }
+    ],
     "contributors": [
       {
         "name": "creatorfromhell",

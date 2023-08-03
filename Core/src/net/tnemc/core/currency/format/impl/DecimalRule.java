@@ -32,6 +32,9 @@ public class DecimalRule implements FormatRule {
   @Override
   public String format(@Nullable Account account, HoldingsEntry entry, String format) {
     if(entry.currency().isPresent()) {
+      if(entry.asMonetary().scale() == 0) {
+        return format.replace("<decimal>", "");
+      }
       return format.replace("<decimal>", entry.currency().get().getDecimal());
     }
     return format;

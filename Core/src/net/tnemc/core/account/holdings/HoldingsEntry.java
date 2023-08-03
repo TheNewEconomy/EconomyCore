@@ -59,6 +59,8 @@ public class HoldingsEntry {
    */
   private Identifier handler = new Identifier("TNE", "VIRTUAL_HOLDINGS");
 
+  private Monetary monetary;
+
   /**
    * Constructs an object that represents a holding's entry.
    *
@@ -127,12 +129,18 @@ public class HoldingsEntry {
   }
 
   public Monetary asMonetary() {
+    if(monetary != null) {
+      return monetary;
+    }
     final Optional<Currency> cur = currency();
-    return new Monetary(amount, cur.map(Currency::getDecimalPlaces).orElse(2));
+    monetary = new Monetary(amount, cur.map(Currency::getDecimalPlaces).orElse(2));
+    return monetary;
   }
 
   public void setAmount(BigDecimal amount) {
     this.amount = amount;
+    final Optional<Currency> cur = currency();
+    monetary = new Monetary(amount, cur.map(Currency::getDecimalPlaces).orElse(2));
   }
 
   public Identifier getHandler() {

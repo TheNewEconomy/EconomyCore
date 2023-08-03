@@ -43,6 +43,7 @@ import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 import net.tnemc.item.AbstractItemStack;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -98,12 +99,12 @@ public class MoneyCommand extends BaseCommand {
 
     final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
                                                            currency.getUid(),
-                                                           converted.get()
+                                                           converted.get().setScale(currency.getDecimalPlaces(), RoundingMode.DOWN)
     );
 
     final HoldingsModifier modifierFrom = new HoldingsModifier(sender.region(),
                                                                fromCurrency.getUid(),
-                                                               amount.negate()
+                                                               amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN).negate()
     );
 
     final Transaction transaction = new Transaction("convert")
@@ -144,7 +145,7 @@ public class MoneyCommand extends BaseCommand {
 
     final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
             currency.getUid(),
-            amount,
+            amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN),
             EconomyManager.VIRTUAL
     );
 
@@ -170,7 +171,7 @@ public class MoneyCommand extends BaseCommand {
 
     final HoldingsModifier modifier = new HoldingsModifier(region,
                                                            currency.getUid(),
-                                                           amount);
+                                                           amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN));
 
     final Transaction transaction = new Transaction("give")
         .to(player, modifier)
@@ -218,11 +219,11 @@ public class MoneyCommand extends BaseCommand {
         return;
       }
 
-      final BigDecimal amt = amount.add(note.get().getFee());
+      final BigDecimal amt = amount.add(note.get().getFee()).setScale(currency.getDecimalPlaces(), RoundingMode.DOWN);
 
       final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
                                                              currency.getUid(),
-                                                             amt
+              amt
       );
 
       final Transaction transaction = new Transaction("note")
@@ -302,7 +303,7 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    if(MainConfig.yaml().getBoolean("Core.Commands.Pay.Offline", true)) {
+    if(!MainConfig.yaml().getBoolean("Core.Commands.Pay.Offline", true)) {
       if(!(player instanceof PlayerAccount) || !((PlayerAccount)player).isOnline()) {
 
         sender.message(new MessageData("Messages.Money.PayFailedOnline"));
@@ -336,7 +337,7 @@ public class MoneyCommand extends BaseCommand {
 
     final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
                                                            currency.getUid(),
-                                                           amount
+            amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN)
     );
 
     final Transaction transaction = new Transaction("pay")
@@ -397,7 +398,7 @@ public class MoneyCommand extends BaseCommand {
 
     final HoldingsModifier modifier = new HoldingsModifier(region,
                                                            currency.getUid(),
-                                                           amount,
+            amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN),
                                                            HoldingsOperation.SET);
 
     final Transaction transaction = new Transaction("set")
@@ -424,7 +425,7 @@ public class MoneyCommand extends BaseCommand {
 
     final HoldingsModifier modifier = new HoldingsModifier(region,
                                                            currency.getUid(),
-                                                           amount,
+            amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN),
                                                            HoldingsOperation.SET);
 
     for(Account account : TNECore.eco().account().getAccounts().values()) {
@@ -454,7 +455,7 @@ public class MoneyCommand extends BaseCommand {
 
     final HoldingsModifier modifier = new HoldingsModifier(region,
                                                            currency.getUid(),
-                                                           amount
+                                                           amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN)
     );
 
     final Transaction transaction = new Transaction("take")
@@ -535,7 +536,7 @@ public class MoneyCommand extends BaseCommand {
 
     final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
             currency.getUid(),
-            amount,
+            amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN),
             EconomyManager.ITEM_ONLY
     );
 

@@ -31,6 +31,9 @@ public class MinorAmountRule implements FormatRule {
 
   @Override
   public String format(@Nullable Account account, HoldingsEntry entry, String format) {
+    if(entry.asMonetary().scale() == 0) {
+      return format.replace("<minor.amount>", "");
+    }
     return format.replace("<minor.amount>", entry.asMonetary().minor().toString());
   }
 }
