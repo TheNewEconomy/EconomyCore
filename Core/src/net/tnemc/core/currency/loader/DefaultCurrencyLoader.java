@@ -148,7 +148,11 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     final BigDecimal balance = new BigDecimal(cur.getString("Options.Balance", "200.00"));
 
     if(cur.contains("Info.UUID")) {
-      currency.setUid(UUID.fromString(cur.getString("Info.UUID")));
+      final UUID id = UUID.fromString(cur.getString("Info.UUID"));
+      final Optional<Currency> curOption = TNECore.eco().currency().findCurrency(id);
+      if(curOption.isEmpty()) {
+        currency.setUid(UUID.fromString(cur.getString("Info.UUID")));
+      }
     }
 
     currency.setIdentifier(identifier);
