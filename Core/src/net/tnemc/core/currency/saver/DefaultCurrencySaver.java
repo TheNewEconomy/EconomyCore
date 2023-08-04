@@ -137,7 +137,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     final Optional<Note> note = currency.getNote();
     if(note.isPresent()) {
 
-      cur.set("Note.Fee", note.get().getFee().toPlainString());
+      cur.set("Note.Fee", note.get().getFee().asString());
       cur.set("Note.Minimum", note.get().getMinimum().toPlainString());
       cur.set("Note.Item.Material", note.get().getMaterial());
       cur.set("Note.Item.Texture", note.get().getTexture());

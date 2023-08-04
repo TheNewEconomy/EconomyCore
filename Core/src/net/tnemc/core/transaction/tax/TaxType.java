@@ -33,5 +33,7 @@ public interface TaxType {
   @MapKey
   String name();
 
-  BigDecimal handleTaxation(BigDecimal amount, BigDecimal tax);
+  String asString(final BigDecimal tax);
+
+  BigDecimal handleTaxation(final BigDecimal amount, final BigDecimal tax);
 }

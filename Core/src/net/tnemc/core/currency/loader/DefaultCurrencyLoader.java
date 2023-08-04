@@ -205,10 +205,9 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       //Note Item configs
       final String material = cur.getString("Note.Item.Material", "PAPER");
 
-      final BigDecimal fee = new BigDecimal(cur.getString("Note.Fee", "0.00"));
       final BigDecimal minimum = new BigDecimal(cur.getString("Note.Minimum", "0.00"));
 
-      final Note note = new Note(material, minimum, fee);
+      final Note note = new Note(material, minimum, cur.getString("Note.Fee", "0.00"));
 
       note.setTexture(cur.getString("Note.Item.Texture", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDA0NzE5YjNiOTdkMTk1YTIwNTcxOGI2ZWUyMWY1Yzk1Y2FmYTE2N2U3YWJjYTg4YTIxMDNkNTJiMzdkNzIyIn19fQ=="));
       note.setCustomModelData(cur.getInt("Note.Item.ModelData", -1));

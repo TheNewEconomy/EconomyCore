@@ -67,7 +67,7 @@ public class ConversionType implements TransactionType {
       final String tax = MainConfig.yaml().getString("Core.Transactions.Conversion.Tax.Rate");
       TaxEntry entry;
       if(tax.contains("\\%")) {
-        entry = new TaxEntry("percent", Double.parseDouble(tax.replace("%", "")));
+        entry = new TaxEntry("percent", Double.parseDouble(tax.replace("%", "")) / 100);
       } else {
         entry = new TaxEntry("flat", Double.parseDouble(tax));
       }

@@ -38,7 +38,12 @@ public class FlatType implements TaxType {
   }
 
   @Override
-  public BigDecimal handleTaxation(BigDecimal amount, BigDecimal tax) {
+  public String asString(final BigDecimal tax) {
+    return "" + tax;
+  }
+
+  @Override
+  public BigDecimal handleTaxation(final BigDecimal amount, final BigDecimal tax) {
     return tax;
   }
 }

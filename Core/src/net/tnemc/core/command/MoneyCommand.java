@@ -219,7 +219,7 @@ public class MoneyCommand extends BaseCommand {
         return;
       }
 
-      final BigDecimal amt = amount.add(note.get().getFee()).setScale(currency.getDecimalPlaces(), RoundingMode.DOWN);
+      final BigDecimal amt = amount.add(note.get().getFee().calculateTax(amount)).setScale(currency.getDecimalPlaces(), RoundingMode.DOWN);
 
       final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
                                                              currency.getUid(),

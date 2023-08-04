@@ -20,6 +20,7 @@ package net.tnemc.core.currency;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.config.MessageConfig;
+import net.tnemc.core.transaction.tax.TaxEntry;
 import net.tnemc.item.AbstractItemStack;
 
 import java.math.BigDecimal;
@@ -41,15 +42,21 @@ public class Note {
 
   private String material;
   private BigDecimal minimum;
-  private BigDecimal fee;
 
   private int customModelData;
   private String texture;
 
-  public Note(String material, BigDecimal minimum, BigDecimal fee) {
+  final TaxEntry fee;
+
+  public Note(String material, BigDecimal minimum, String fee) {
     this.material = material;
     this.minimum = minimum;
-    this.fee = fee;
+
+    if(fee.contains("\\%")) {
+      this.fee = new TaxEntry("percent", Double.parseDouble(fee.replace("%", "")) / 100);
+    } else {
+      this.fee = new TaxEntry("flat", Double.parseDouble(fee));
+    }
   }
 
   public BigDecimal getMinimum() {
@@ -60,12 +67,8 @@ public class Note {
     this.minimum = minimum;
   }
 
-  public BigDecimal getFee() {
+  public TaxEntry getFee() {
     return fee;
-  }
-
-  public void setFee(BigDecimal fee) {
-    this.fee = fee;
   }
 
   public List<String> getFlags() {

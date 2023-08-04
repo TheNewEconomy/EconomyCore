@@ -57,4 +57,13 @@ public class TaxEntry {
   public Double getAmount() {
     return amount;
   }
+
+  public String asString() {
+
+    final Optional<TaxType> type = TNECore.eco().transaction().findTax(this.type);
+    if(type.isPresent()) {
+      return type.get().asString(new BigDecimal(this.amount));
+    }
+    return "0.0";
+  }
 }
