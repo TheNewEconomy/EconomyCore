@@ -4,7 +4,7 @@
 [![Build Status](https://ci.codemc.io/job/creatorfromhell/job/TNE/badge/icon)](https://ci.codemc.io/job/creatorfromhell/job/TNE/)
 
 The New Economy, TNE, is the ultimate economy plugin for your Minecraft server, no matter what platform you're on. While
-TNE is pushed as being "feature-packed," it's not feature packed in the normal sense of jamming a bunch of useless features
+TNE is pushed as being "feature-packed," but it's not feature-packed in the normal sense of jamming a bunch of useless features
 into the core plugin, but rather using modules.
 
 <p align="center">
@@ -24,9 +24,8 @@ without Minecraft by not being platform-dependent.
 ## Platform Agnostic
 Use TNE on the platform you want!
 - Sponge? If you want
-- Minestom? Sure
 - Spigot/Paper? Definitely!
-- Use both? We support cross-server balances on both. That's right, you can send money from your Spigot server to your
+- Use both? We support cross-server balances on both. That's right. You can send money from your Spigot server to your
 Sponge Server!
 
 ## Features
@@ -45,8 +44,8 @@ Key Supported Plugins:
 - Geyser
 
 ## Easy to Use
-TNE has been recoded with ease-of-use in mind. This means whether you're a power user who loves your YAML files, or a
-casual user who wants Menu-based interactions, TNE is right for you!
+TNE has been recorded with ease of use in mind. This means whether you're a power user who loves your YAML files, or a
+a casual user who wants Menu-based interactions, TNE is right for you!
 
 ## Free as in Freedom, not Free as in Beer
 [TNE is licensed under the AGPLv3](license.md), which means you're free to use it how you want. This also means that
@@ -67,7 +66,7 @@ TNE has some minimum requirements that should be followed.
 - Java 17+
 
 ## Project Support
-We have some organizations that provide open source licenses to help support this project.
+We have some organizations that provide open-source licenses to help support this project.
 
 <a href="https://jb.gg/OpenSourceSupport"><img align="left" width="200" height="200" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png"></a>
 <a href="https://www.ej-technologies.com/products/jprofiler/overview.html"><img align="left" width="200" height="200" src="https://www.ej-technologies.com/assets/content/header-product-jprofiler@2x-24bc4d84bd2a4eb641a5c8531758ff7c.png"></a>
