@@ -196,16 +196,16 @@ Messages:
         Description: "Load a module from the modules directory.<newline>- Module ~ The module to load."
     Money:
       Balance:
-        Arguments: "[player] [world] [currency]"
+        Arguments: "[player] [currency] [world]"
         Description: "Displays your current holdings."
       Convert:
-        Arguments: "<amount> <to currency[:world]> [from currency[:world]]"
+        Arguments: "<amount> <to currency> [from currency]"
         Description: "Convert some of your holdings to another currency."
       Deposit:
         Arguments: "<amount> [currency]"
         Description: "Deposits money from an item form into a virtual bank for mixed currencies."
       Give:
-        Arguments: "<player> <amount> [world] [currency]"
+        Arguments: "<player> <amount> [currency] [world]"
         Description: "Adds money into your economy, and gives it to a player."
       Note:
         Arguments: "<amount> [currency]"
@@ -214,25 +214,25 @@ Messages:
         Arguments: "[currency]"
         Description: "Opens the MyBal menu"
       Other:
-        Arguments: "<player> [world] [currency]"
+        Arguments: "<player> [currency] [world]"
         Description: "Retrieves the balance of a player.<newline>- Player ~ The account owner.<newline>- World ~ The world to retrieve the balance from.<newline>- currency ~ The currency to retrieve the balance of."
       Pay:
-        Arguments: "<player> <amount> [from:account] [currency]"
+        Arguments: "<player> <amount> [currency]"
         Description: "Use some of your holdings to pay another player."
       Request:
         Arguments: "<player> <amount> [currency]"
         Description: "Request money from a player."
       Set:
-        Arguments: "<player> <amount> [world] [currency]"
+        Arguments: "<player> <amount> [currency] [world]"
         Description: "Set the holdings of a player."
       SetAll:
-        Arguments: "<amount> [world] [currency]"
+        Arguments: "<amount> [currency] [world]"
         Description: "Set the holdings of all players."
       Take:
-        Arguments: "<player> <amount> [world] [currency]"
+        Arguments: "<player> <amount> [currency] [world]"
         Description: "Removes money from your economy, specifically from a player's balance."
       Top:
-        Arguments: "[page] [currency:name] [world:world] [limit:#]"
+        Arguments: "[page] [currency] [world] [limit]"
         Description: "A list of players with the highest balances.<newline>[page] - The page number to view. Defaults to 1.<newline>[Currency] - The name of the Currency to get balances from. Defaults to world default. Use overall for all currencies.<newline>[world] - The world name you wish to filter, or all for every world. Defaults to current world. Use overall for all worlds.<newline>[limit] - Limit changes how many players are displayed. Defaults to 10."
       Withdraw:
         Arguments: "<amount> [currency]"
@@ -242,7 +242,7 @@ Messages:
         Arguments: "[page #]"
         Description: "Displays transactions that you missed since the last time you were on."
       History:
-        Arguments: "[page:#] [world:name/all] [player:name]"
+        Arguments: "[page] [world] [player]"
         Description: "See a detailed break down of your transaction history.<newline>- Page ~ The page number you wish to view.<newline>- World ~ The world name you wish to filter, or all for every world. Defaults to current world."
       Info:
         Arguments: "<uuid>"
