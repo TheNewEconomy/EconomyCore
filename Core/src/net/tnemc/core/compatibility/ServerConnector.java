@@ -43,6 +43,12 @@ import java.util.regex.Pattern;
 public interface ServerConnector {
 
   /**
+   * The name of this implementation.
+   * @return The name of the implementation.
+   */
+  String name();
+
+  /**
    * The proxy provider to use for this implementation.
    * @return The proxy provider to use for this implementation.
    */

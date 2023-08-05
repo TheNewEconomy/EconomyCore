@@ -63,6 +63,11 @@ public class FoliaServerProvider implements ServerConnector {
     this.scheduler = new FoliaScheduler();
   }
 
+  @Override
+  public String name() {
+    return "folia";
+  }
+
   /**
    * The proxy provider to use for this implementation.
    *

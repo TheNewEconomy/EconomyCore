@@ -61,6 +61,11 @@ public class PaperServerProvider implements ServerConnector {
     this.scheduler = new PaperScheduler();
   }
 
+  @Override
+  public String name() {
+    return "paper";
+  }
+
   /**
    * The proxy provider to use for this implementation.
    *

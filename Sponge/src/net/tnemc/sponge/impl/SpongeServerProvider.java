@@ -58,6 +58,11 @@ public class SpongeServerProvider implements ServerConnector {
     this.scheduler = new SpongeScheduler();
   }
 
+  @Override
+  public String name() {
+    return "sponge";
+  }
+
   /**
    * The proxy provider to use for this implementation.
    *

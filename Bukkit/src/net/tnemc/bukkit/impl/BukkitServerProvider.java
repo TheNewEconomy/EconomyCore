@@ -63,6 +63,11 @@ public class BukkitServerProvider implements ServerConnector {
     this.scheduler = new BukkitScheduler();
   }
 
+  @Override
+  public String name() {
+    return "bukkit";
+  }
+
   /**
    * The proxy provider to use for this implementation.
    *
