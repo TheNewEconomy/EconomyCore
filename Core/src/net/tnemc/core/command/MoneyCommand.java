@@ -219,7 +219,9 @@ public class MoneyCommand extends BaseCommand {
         return;
       }
 
-      final BigDecimal amt = amount.add(note.get().getFee().calculateTax(amount)).setScale(currency.getDecimalPlaces(), RoundingMode.DOWN);
+      final BigDecimal rounded = amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN);
+
+      final BigDecimal amt = rounded.add(note.get().getFee().calculateTax(rounded)).setScale(currency.getDecimalPlaces(), RoundingMode.DOWN);
 
       final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
                                                              currency.getUid(),
@@ -234,7 +236,7 @@ public class MoneyCommand extends BaseCommand {
 
       final Optional<Receipt> receipt = processTransaction(sender, transaction);
       if(receipt.isPresent()) {
-        final Collection<AbstractItemStack<Object>> left = TNECore.server().calculations().giveItems(Collections.singletonList(note.get().stack(currency.getIdentifier(), sender.region(), amt)), provider.get().inventory().getInventory(false));
+        final Collection<AbstractItemStack<Object>> left = TNECore.server().calculations().giveItems(Collections.singletonList(note.get().stack(currency.getIdentifier(), sender.region(), rounded)), provider.get().inventory().getInventory(false));
 
         if(left.size() > 0) {
           TNECore.server().calculations().drop(left, ((PlayerAccount)account.get()).getUUID());

@@ -164,13 +164,13 @@ Note:
     #The format is - enchantment name
     #Optional.
     Enchantments:
-      - 'example_enchant'
+      - ''
 
     #All configurations relating to item flags identification for the note item
     #The format is - item flag
     #Optional.
     Flags:
-      - 'example_flag'
+      - ''
 
 Converting:
 

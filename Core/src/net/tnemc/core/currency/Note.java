@@ -52,7 +52,7 @@ public class Note {
     this.material = material;
     this.minimum = minimum;
 
-    if(fee.contains("\\%")) {
+    if(fee.contains("%")) {
       this.fee = new TaxEntry("percent", Double.parseDouble(fee.replace("%", "")) / 100);
     } else {
       this.fee = new TaxEntry("flat", Double.parseDouble(fee));

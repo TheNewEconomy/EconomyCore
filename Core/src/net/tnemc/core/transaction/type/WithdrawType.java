@@ -66,7 +66,7 @@ public class WithdrawType implements TransactionType {
         if(MainConfig.yaml().getBoolean("Core.Transactions.Withdraw.Tax.Enabled", false)) {
             final String tax = MainConfig.yaml().getString("Core.Transactions.Withdraw.Tax.Rate");
             TaxEntry entry;
-            if(tax.contains("\\%")) {
+            if(tax.contains("%")) {
                 entry = new TaxEntry("percent", Double.parseDouble(tax.replace("%", "")) / 100);
             } else {
                 entry = new TaxEntry("flat", Double.parseDouble(tax));
