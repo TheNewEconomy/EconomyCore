@@ -18,13 +18,18 @@ package net.tnemc.core.manager;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.manager.top.TopCurrency;
 import net.tnemc.core.manager.top.TopPage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * TopManager handles all things baltop.
@@ -34,9 +39,29 @@ import java.util.UUID;
  */
 public class TopManager {
 
+  private final List<Pattern> regexExclusions = new ArrayList<>();
+  private final List<String> exclusions = new ArrayList<>();
+
+  private static TopManager instance;
+
   private final Map<UUID, TopCurrency> topMap = new HashMap<>();
 
+  public TopManager() {
+
+    instance = this;
+
+    for(String str : MainConfig.yaml().getStringList("")) {
+      try {
+        regexExclusions.add(Pattern.compile(str));
+      } catch(PatternSyntaxException ignore) {
+        exclusions.add(str);
+      }
+    }
+  }
+
   public void load() {
+
+    topMap.clear();
     for(Currency currency : TNECore.eco().currency().currencies()) {
       topMap.put(currency.getUid(), new TopCurrency(TNECore.server().defaultRegion(), currency.getUid()));
     }
@@ -51,5 +76,17 @@ public class TopManager {
       return topMap.get(currency).getBalances().getValues(page);
     }
     return null;
+  }
+
+  public static TopManager instance() {
+    return instance;
+  }
+
+  public List<Pattern> getRegexExclusions() {
+    return regexExclusions;
+  }
+
+  public List<String> getExclusions() {
+    return exclusions;
   }
 }

@@ -20,8 +20,12 @@ package net.tnemc.core.manager.top;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.io.maps.MultiTreeMap;
+import net.tnemc.core.manager.TopManager;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
  * TopCurrency
@@ -51,8 +55,21 @@ public class TopCurrency {
   public void load() {
 
     for(Account account: TNECore.eco().account().getAccounts().values()) {
+      if(excluded(account.getName())) continue;
+
       balances.put(account.getHoldingsTotal(region, currency), account.getName());
     }
+  }
+
+  public boolean excluded(final String name) {
+    for(Pattern pattern : TopManager.instance().getRegexExclusions()) {
+      if(pattern.matcher(name).matches()) return true;
+    }
+
+    for(String str : TopManager.instance().getExclusions()) {
+      if(name.contains(str)) return true;
+    }
+    return false;
   }
 
   public MultiTreeMap<String> getBalances() {
