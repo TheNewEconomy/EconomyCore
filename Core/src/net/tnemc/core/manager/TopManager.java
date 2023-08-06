@@ -50,7 +50,7 @@ public class TopManager {
 
     instance = this;
 
-    for(String str : MainConfig.yaml().getStringList("")) {
+    for(String str : MainConfig.yaml().getStringList("Core.Commands.Top.Exclusions")) {
       try {
         regexExclusions.add(Pattern.compile(str));
       } catch(PatternSyntaxException ignore) {

@@ -375,6 +375,7 @@ public abstract class TNECore {
     }
 
     server.scheduler().createDelayedTask(()-> economyManager.getTopManager().load(), new ChoreTime(2), ChoreExecution.SECONDARY);
+    server.scheduler().createRepeatingTask(()-> economyManager.getTopManager().load(), new ChoreTime(2), new ChoreTime(MainConfig.yaml().getInt("Core.Commands.Top.Refresh"), TimeUnit.SECONDS), ChoreExecution.SECONDARY);
   }
 
   public void onDisable() {
