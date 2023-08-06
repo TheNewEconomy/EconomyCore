@@ -21,6 +21,7 @@ package net.tnemc.bukkit;
 import net.tnemc.bukkit.command.AdminCommand;
 import net.tnemc.bukkit.command.ModuleCommand;
 import net.tnemc.bukkit.command.MoneyCommand;
+import net.tnemc.bukkit.command.ShortCommands;
 import net.tnemc.bukkit.command.TransactionCommand;
 import net.tnemc.bukkit.depend.towny.TownyHandler;
 import net.tnemc.bukkit.impl.BukkitLogProvider;
@@ -71,6 +72,7 @@ public class BukkitCore extends TNECore {
 
     //Register our commands
     command.register(new AdminCommand());
+    command.register(new ShortCommands());
     command.register(new ModuleCommand());
     command.register(new MoneyCommand());
     command.register(new TransactionCommand());

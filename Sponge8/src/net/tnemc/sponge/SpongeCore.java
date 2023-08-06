@@ -39,6 +39,7 @@ import net.tnemc.menu.sponge8.listeners.Sponge8InventoryClickListener;
 import net.tnemc.sponge.command.AdminCommand;
 import net.tnemc.sponge.command.ModuleCommand;
 import net.tnemc.sponge.command.MoneyCommand;
+import net.tnemc.sponge.command.ShortCommands;
 import net.tnemc.sponge.command.TransactionCommand;
 import net.tnemc.sponge.impl.SpongeLogProvider;
 import net.tnemc.sponge.impl.SpongeServerProvider;
@@ -111,6 +112,7 @@ public class SpongeCore extends TNECore {
     command.register(new AdminCommand());
     command.register(new ModuleCommand());
     command.register(new MoneyCommand());
+    command.register(new ShortCommands());
     command.register(new TransactionCommand());
 
     metrics = metricsFactory.make(19246);

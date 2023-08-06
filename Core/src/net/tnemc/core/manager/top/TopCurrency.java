@@ -63,6 +63,7 @@ public class TopCurrency {
 
   public boolean excluded(final String name) {
     for(Pattern pattern : TopManager.instance().getRegexExclusions()) {
+      System.out.println("pattern: " + pattern.pattern() + " name: " + name);
       if(pattern.matcher(name).matches()) return true;
     }
 

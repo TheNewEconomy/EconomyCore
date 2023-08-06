@@ -22,6 +22,7 @@ import net.tnemc.core.api.callback.TNECallbacks;
 import net.tnemc.paper.command.AdminCommand;
 import net.tnemc.paper.command.ModuleCommand;
 import net.tnemc.paper.command.MoneyCommand;
+import net.tnemc.paper.command.ShortCommands;
 import net.tnemc.paper.command.TransactionCommand;
 import net.tnemc.paper.depend.towny.TownyHandler;
 import net.tnemc.paper.impl.PaperLogProvider;
@@ -71,6 +72,7 @@ public class PaperCore extends TNECore {
     command.register(new AdminCommand());
     command.register(new ModuleCommand());
     command.register(new MoneyCommand());
+    command.register(new ShortCommands());
     command.register(new TransactionCommand());
   }
 
