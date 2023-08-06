@@ -29,10 +29,8 @@ import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.currency.calculations.CalculationData;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.utils.Identifier;
-import org.checkerframework.checker.units.qual.A;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Optional;
 
 /**

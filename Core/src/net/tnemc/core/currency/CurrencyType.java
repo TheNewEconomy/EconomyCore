@@ -23,7 +23,6 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsHandler;
 import net.tnemc.core.currency.type.ItemType;
-import net.tnemc.core.currency.type.VirtualType;
 import net.tnemc.core.utils.Identifier;
 
 import java.math.BigDecimal;

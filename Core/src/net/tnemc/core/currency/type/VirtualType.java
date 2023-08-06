@@ -28,8 +28,6 @@ import net.tnemc.core.utils.Identifier;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-import static net.tnemc.core.EconomyManager.INVENTORY_ONLY;
-
 /**
  * Represents our currency type that is based on nothing.
  *

@@ -22,8 +22,6 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.io.maps.MultiTreeMap;
 import net.tnemc.core.manager.TopManager;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -63,7 +61,6 @@ public class TopCurrency {
 
   public boolean excluded(final String name) {
     for(Pattern pattern : TopManager.instance().getRegexExclusions()) {
-      System.out.println("pattern: " + pattern.pattern() + " name: " + name);
       if(pattern.matcher(name).matches()) return true;
     }
 
