@@ -510,7 +510,7 @@ public class MoneyCommand extends BaseCommand {
     if(pageEntry != null) {
       final MessageData data = new MessageData("Messages.Money.Top");
       data.addReplacement("$page", String.valueOf(page));
-      data.addReplacement("$page_top", "wot");
+      data.addReplacement("$page_top", String.valueOf(TNECore.eco().getTopManager().page(currency.getUid())));
       sender.message(data);
 
       for(Map.Entry<String, BigDecimal> entry : pageEntry.getValues().entrySet()) {

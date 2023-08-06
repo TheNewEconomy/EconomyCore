@@ -78,6 +78,13 @@ public class TopManager {
     return null;
   }
 
+  public int page(final UUID currency) {
+    if(topMap.containsKey(currency)) {
+      return topMap.get(currency).getBalances().pages();
+    }
+    return 0;
+  }
+
   public static TopManager instance() {
     return instance;
   }
