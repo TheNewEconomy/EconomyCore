@@ -23,9 +23,12 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
+import net.tnemc.core.utils.Identifier;
 
 import java.math.BigDecimal;
 import java.util.Optional;
+
+import static net.tnemc.core.EconomyManager.INVENTORY_ONLY;
 
 /**
  * Represents our currency type that is based on nothing.
@@ -40,6 +43,14 @@ public class VirtualType implements CurrencyType {
   @Override
   public String name() {
     return "virtual";
+  }
+
+  /**
+   * @return The {@link Identifier} of the default handler.
+   */
+  @Override
+  public Identifier defaultHandler() {
+    return EconomyManager.VIRTUAL;
   }
 
   protected HoldingsEntry virtual(Account account, String region, Currency currency) {

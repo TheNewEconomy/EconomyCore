@@ -97,4 +97,8 @@ public abstract class CmdSource<T extends CommandActor> {
     }
     return TNECore.eco().region().defaultRegion();
   }
+
+  public T getActor() {
+    return actor;
+  }
 }

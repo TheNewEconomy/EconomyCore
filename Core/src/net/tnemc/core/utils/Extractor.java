@@ -150,12 +150,22 @@ public class Extractor {
 
             if(!recode) {
               final String finalCurrency = (currency.equalsIgnoreCase("default")) ? TNECore.eco().currency().getDefaultCurrency(region).getIdentifier() : currency;
-              final Optional<Currency> cur = TNECore.eco().currency().findCurrency(finalCurrency);
+              Optional<Currency> cur = TNECore.eco().currency().findCurrency(finalCurrency);
+
+              TNECore.log().inform("Currency avail: " + cur.isPresent());
               if(cur.isPresent()) {
                 final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name + ".Balances." + region + "." + currency));
 
+                TNECore.log().inform("Set Balance to: " + amount.toPlainString());
                 response.getAccount().get().setHoldings(new HoldingsEntry(region, cur.get().getUid(),
                                                                           amount, EconomyManager.NORMAL));
+              } else {
+                final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name + ".Balances." + region + "." + currency));
+
+                TNECore.log().inform("Use default currency");
+                TNECore.log().inform("Set Balance to: " + amount.toPlainString());
+                response.getAccount().get().setHoldings(new HoldingsEntry(region, TNECore.eco().currency().getDefaultCurrency(region).getUid(),
+                        amount, EconomyManager.NORMAL));
               }
             } else {
 

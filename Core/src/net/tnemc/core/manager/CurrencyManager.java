@@ -229,7 +229,13 @@ public class CurrencyManager {
    * @return An Optional containing the currency if it exists, otherwise an empty Optional.
    */
   public Optional<Currency> findCurrency(final String identifier) {
-    return Optional.ofNullable(currencies.get(curIDMap.get(identifier)));
+    try {
+
+      return Optional.ofNullable(currencies.get(UUID.fromString(identifier)));
+    } catch(Exception ignore) {
+
+      return Optional.ofNullable(currencies.get(curIDMap.get(identifier)));
+    }
   }
 
   /**

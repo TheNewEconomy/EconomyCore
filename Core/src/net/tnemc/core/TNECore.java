@@ -53,6 +53,7 @@ import net.tnemc.core.io.storage.StorageManager;
 import net.tnemc.core.module.ModuleLoader;
 import net.tnemc.core.module.cache.ModuleFileCache;
 import net.tnemc.core.region.RegionGroup;
+import net.tnemc.core.utils.IOUtil;
 import net.tnemc.core.utils.UpdateChecker;
 import net.tnemc.menu.core.MenuManager;
 import org.jetbrains.annotations.Nullable;
@@ -177,17 +178,21 @@ public abstract class TNECore {
 
     //Save our default currency file
     final File cur = new File(directory, "currency");
+
+    final int count = (cur.exists())? IOUtil.getYAMLs(cur).length : 0;
     if(!cur.exists()) {
       final boolean created = cur.mkdir();
       if(!created) {
         TNECore.log().error("Failed to create plugin currency directory. Disabling plugin.");
         return;
       }
-      TNECore.server().saveResource("currency/USD.yml", false);
+      if(count == 0) {
+        TNECore.server().saveResource("currency/USD.yml", false);
+      }
     }
 
     final File usd = new File(cur, "USD");
-    if(!usd.exists()) {
+    if(count == 0 && !usd.exists()) {
       final boolean created = usd.mkdir();
       if(!created) {
         TNECore.log().error("Failed to create plugin USD currency directory. Disabling plugin.");

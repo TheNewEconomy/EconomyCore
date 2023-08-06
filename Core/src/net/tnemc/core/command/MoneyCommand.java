@@ -489,7 +489,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: [page] [currency:name] [world:world] [limit:#]
-  public static void onTop(CmdSource<?> sender, Integer page, Currency currency) {
+  public static void onTop(CmdSource<?> sender, Integer page, Currency currency, Boolean refresh) {
     final Optional<Account> senderAccount = sender.account();
 
     if(senderAccount.isEmpty()) {
@@ -497,6 +497,12 @@ public class MoneyCommand extends BaseCommand {
       data.addReplacement("$player", sender.name());
       sender.message(data);
       return;
+    }
+
+    if(refresh && !senderAccount.get().isPlayer() || refresh && senderAccount.get().isPlayer() && ((PlayerAccount)senderAccount.get()).getPlayer().isPresent()
+            && ((PlayerAccount)senderAccount.get()).getPlayer().get().hasPermission("tne.money.top.refresh")) {
+
+
     }
 
     TopPage<String> pageEntry = TNECore.eco().getTopManager().page(page, currency.getUid());

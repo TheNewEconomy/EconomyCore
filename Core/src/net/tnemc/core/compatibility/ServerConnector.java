@@ -75,6 +75,16 @@ public interface ServerConnector {
   Optional<PlayerProvider> findPlayer(@NotNull UUID identifier);
 
   /**
+   * Used to get a cached UUID based on a username.
+   * @param name The name to use for the check.
+   * @return The UUID from the cached player. If no data with the player name exists, this will not
+   * check the MojangAPI, it'll instead generate a random UUID.
+   */
+  default UUID getCached(final String name) {
+    return UUID.randomUUID();
+  }
+
+  /**
    * Used to determine if this player has played on this server before.
    *
    * @param uuid The {@link UUID} that is associated with the player.

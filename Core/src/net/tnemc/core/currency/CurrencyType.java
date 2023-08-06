@@ -23,6 +23,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsHandler;
 import net.tnemc.core.currency.type.ItemType;
+import net.tnemc.core.currency.type.VirtualType;
 import net.tnemc.core.utils.Identifier;
 
 import java.math.BigDecimal;
@@ -30,6 +31,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+
+import static net.tnemc.core.EconomyManager.VIRTUAL;
 
 /**
  * Represents a type of currency.
@@ -77,6 +80,13 @@ public interface CurrencyType {
    */
   default boolean supportsItems() {
     return (this instanceof ItemType);
+  }
+
+  /**
+   * @return The {@link Identifier} of the default handler.
+   */
+  default Identifier defaultHandler() {
+    return VIRTUAL;
   }
 
   /**
@@ -138,6 +148,7 @@ public interface CurrencyType {
   default boolean setHoldings(Account account, String region, Currency currency, Identifier type, BigDecimal amount) {
 
     final Optional<HoldingsHandler> handler = EconomyManager.instance().findHandler(type);
+
     if(handler.isPresent()) {
 
       if(handler.get().database()) {
@@ -145,6 +156,16 @@ public interface CurrencyType {
       }
 
       return handler.get().setHoldings(account, region, currency, this, amount);
+    } else {
+
+      final Optional<HoldingsHandler> handler1 = EconomyManager.instance().findHandler(defaultHandler());
+      if(handler1.isPresent()) {
+        if(handler1.get().database()) {
+          addDatabase(account, region, currency, defaultHandler(), amount);
+        }
+
+        return handler1.get().setHoldings(account, region, currency, this, amount);
+      }
     }
     return false;
   }

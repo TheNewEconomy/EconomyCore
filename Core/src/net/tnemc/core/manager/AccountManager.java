@@ -103,6 +103,8 @@ public class AccountManager {
    */
   public AccountAPIResponse createAccount(final String identifier, final String name, boolean nonPlayer) {
     if(identifier != null && accounts.containsKey(identifier)) {
+      TNECore.log().debug("Account Exists Already. ID: " + identifier);
+
       return new AccountAPIResponse(accounts.get(identifier), AccountResponse.ALREADY_EXISTS);
     }
 
@@ -113,6 +115,7 @@ public class AccountManager {
 
         if(identifier == null) {
           //Throw NPE if identifier is null to push down to our catch block.
+          TNECore.log().debug("Tried to createAccount for player using null identifier. Name: " + name);
           throw new NullPointerException("Tried to createAccount for player using null identifier.");
         }
 
@@ -141,6 +144,7 @@ public class AccountManager {
 
         if(identifier == null) {
           //Throw NPE if identifier is null to push down to our catch block.
+          TNECore.log().debug("Tried to createAccount for player using null identifier. Name: " + name);
           throw new NullPointerException("Tried to createAccount for player using null identifier.");
         }
 

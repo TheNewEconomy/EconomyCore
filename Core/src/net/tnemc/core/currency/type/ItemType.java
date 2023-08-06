@@ -55,6 +55,11 @@ public class ItemType extends VirtualType {
     return false;
   }
 
+  @Override
+  public Identifier defaultHandler() {
+    return INVENTORY_ONLY;
+  }
+
   /**
    * Used to set the holdings for a specific account.
    *

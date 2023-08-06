@@ -142,8 +142,8 @@ public class MoneyCommand {
   @Usage("Money.Top.Arguments")
   @Description("Money.Top.Description")
   @CommandPermission("tne.money.top")
-  public void onTop(SpongeCommandActor sender, Integer page, @Default("") Currency currency) {
-    net.tnemc.core.command.MoneyCommand.onTop(new SpongeCMDSource(sender), page, currency);
+  public void onTop(SpongeCommandActor sender, Integer page, @Default("") Currency currency, @Default("false") Boolean refresh) {
+    net.tnemc.core.command.MoneyCommand.onTop(new SpongeCMDSource(sender), page, currency, refresh);
   }
 
   @Subcommand({"withdraw"})

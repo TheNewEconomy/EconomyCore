@@ -18,7 +18,9 @@ package net.tnemc.core.currency.type;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.currency.CurrencyType;
+import net.tnemc.core.utils.Identifier;
 
 /**
  * ExperienceType
@@ -38,5 +40,10 @@ public class ExperienceType implements CurrencyType {
   @Override
   public boolean supportsVirtual() {
     return false;
+  }
+
+  @Override
+  public Identifier defaultHandler() {
+    return EconomyManager.EXPERIENCE;
   }
 }
