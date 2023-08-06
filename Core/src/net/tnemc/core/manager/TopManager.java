@@ -24,10 +24,10 @@ import net.tnemc.core.manager.top.TopCurrency;
 import net.tnemc.core.manager.top.TopPage;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -44,7 +44,7 @@ public class TopManager {
 
   private static TopManager instance;
 
-  private final Map<UUID, TopCurrency> topMap = new HashMap<>();
+  private final Map<UUID, TopCurrency> topMap = new ConcurrentHashMap<>();
 
   public TopManager() {
 

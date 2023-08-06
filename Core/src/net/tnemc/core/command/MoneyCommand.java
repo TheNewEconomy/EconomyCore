@@ -34,6 +34,7 @@ import net.tnemc.core.currency.Note;
 import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.currency.type.MixedType;
 import net.tnemc.core.io.message.MessageData;
+import net.tnemc.core.manager.TopManager;
 import net.tnemc.core.manager.top.TopPage;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
@@ -502,7 +503,7 @@ public class MoneyCommand extends BaseCommand {
     if(refresh && !senderAccount.get().isPlayer() || refresh && senderAccount.get().isPlayer() && ((PlayerAccount)senderAccount.get()).getPlayer().isPresent()
             && ((PlayerAccount)senderAccount.get()).getPlayer().get().hasPermission("tne.money.top.refresh")) {
 
-
+      TopManager.instance().load();
     }
 
     TopPage<String> pageEntry = TNECore.eco().getTopManager().page(page, currency.getUid());
@@ -518,9 +519,7 @@ public class MoneyCommand extends BaseCommand {
         en.addReplacement("$amount", CurrencyFormatter.format(senderAccount.get(), new HoldingsEntry(TNECore.eco().region().defaultRegion(), currency.getUid(), entry.getValue(), EconomyManager.NORMAL)));
         sender.message(en);
       }
-      return;
     }
-
   }
 
   //ArgumentsParser: <amount> [currency]

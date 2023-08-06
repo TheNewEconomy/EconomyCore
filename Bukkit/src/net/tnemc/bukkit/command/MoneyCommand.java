@@ -41,7 +41,7 @@ import java.math.BigDecimal;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-@Command({"money", "eco"})
+@Command({"money", "eco", "baltop", "pay"})
 public class MoneyCommand {
 
   /*@Subcommand({"balmenu", "menu", "mybal"})
@@ -108,6 +108,7 @@ public class MoneyCommand {
     net.tnemc.core.command.MoneyCommand.onOther(new BukkitCMDSource(sender), player, region, currency);
   }
 
+  @DefaultFor({"pay"})
   @Subcommand({"pay", "send", "transfer"})
   @Usage("Money.Pay.Arguments")
   @Description("Money.Pay.Description")
@@ -148,6 +149,7 @@ public class MoneyCommand {
     net.tnemc.core.command.MoneyCommand.onTake(new BukkitCMDSource(sender), player, amount, region, currency);
   }
 
+  @DefaultFor({"baltop"})
   @Subcommand({"top", "baltop"})
   @Usage("Money.Top.Arguments")
   @Description("Money.Top.Description")
