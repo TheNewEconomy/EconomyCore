@@ -7,9 +7,6 @@ api-version: 1.13
 
 #Plugin Data
 main: net.tnemc.bukkit.TNE
-loadbefore:
-  - EconomyShopGUI
-  - Towny
 
 softdepend:
   - AdvancedAchievements
@@ -19,6 +16,7 @@ softdepend:
   - FastAsyncWorldEdit
   - PlaceholderAPI
   - Essentials
+  - EssentialsX
   - Vault
   - Reserve
   - mcMMO

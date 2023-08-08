@@ -4,6 +4,7 @@ description: The original feature-packed economy plugin for Minecraft.
 author: creatorfromhell
 main: net.tnemc.paper.TNE
 api-version: '1.19'
+
 dependencies:
   - name: Towny
     required: false
@@ -17,10 +18,9 @@ dependencies:
   - name: Essentials
     reqiuired: false
     bootstrap: false
-  - name: PlaceholderAPI
+  - name: EssentialsX
     reqiuired: false
     bootstrap: false
-
-load-before:
-  - name: Towny
+  - name: PlaceholderAPI
+    reqiuired: false
     bootstrap: false

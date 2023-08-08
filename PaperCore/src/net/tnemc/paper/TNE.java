@@ -44,13 +44,23 @@ public class TNE extends JavaPlugin {
   private static TNE instance;
   private PaperCore core;
 
+  @Override
   public void onLoad() {
     instance = this;
 
     //Initialize our TNE Core Class
     this.core = new PaperCore(instance);
+
+    //Vault
+    try {
+      Class.forName("net.milkbowl.vault.economy.Economy");
+      new VaultHook().register();
+    } catch(Exception ignore) {
+
+    }
   }
 
+  @Override
   public void onEnable() {
 
     this.core.enable();
@@ -72,11 +82,6 @@ public class TNE extends JavaPlugin {
     Bukkit.getPluginManager().registerEvents(new WorldLoadListener(), this);
 
     //Register our service providers.
-
-    //Vault
-    if(Bukkit.getPluginManager().isPluginEnabled("Vault")) {
-      new VaultHook().register();
-    }
 
     //PAPI
     if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {

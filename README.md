@@ -63,6 +63,7 @@ TNE has lots of documentation for the power users that like all the documentatio
 ## Requirements
 TNE has some minimum requirements that should be followed.
 - MySQL 8.0+ (if using MySQL for storage)
+- MariaDB 10.7.0+
 - Java 17+
 
 ## Project Support
