@@ -63,6 +63,26 @@ public class StorageManager {
 
     switch(engine.toLowerCase()) {
       case "mysql" -> {
+
+        boolean maria = false;
+
+        try {
+          Class.forName("org.mariadb.jdbc.Driver");
+          maria = true;
+        } catch(Exception ignore) {}
+
+        try {
+          Class.forName("org.mariadb.jdbc.MariaDbDataSource");
+          maria = true;
+        } catch(Exception ignore) {}
+
+        if(maria) {
+
+          final String prefix = DataConfig.yaml().getString("Data.Database.Prefix");
+          this.engine = new MySQL(prefix, new MariaDialect(prefix));
+          this.connector = new SQLConnector();
+          break;
+        }
         this.engine = new MySQL();
         this.connector = new SQLConnector();
       }
