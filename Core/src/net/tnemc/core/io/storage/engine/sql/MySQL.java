@@ -19,6 +19,7 @@ package net.tnemc.core.io.storage.engine.sql;
  */
 
 import net.tnemc.core.config.DataConfig;
+import net.tnemc.core.io.storage.Dialect;
 import net.tnemc.core.io.storage.SQLEngine;
 import net.tnemc.core.io.storage.engine.StandardSQL;
 
@@ -26,6 +27,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MySQL extends StandardSQL {
+
+  public MySQL() {
+    super();
+  }
+
+  public MySQL(final String prefix, Dialect dialect) {
+    super(prefix, dialect);
+  }
 
   /**
    * The name of this engine.

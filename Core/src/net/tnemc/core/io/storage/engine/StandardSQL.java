@@ -59,6 +59,10 @@ public abstract class StandardSQL implements SQLEngine {
          new MySQLDialect(DataConfig.yaml().getString("Data.Database.Prefix")));
   }
 
+  public StandardSQL(Dialect dialect) {
+    this(DataConfig.yaml().getString("Data.Database.Prefix"), dialect);
+  }
+
   public StandardSQL(final String prefix, Dialect dialect) {
     this.dialect = dialect;
     this.prefix = prefix;

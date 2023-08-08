@@ -252,7 +252,7 @@ public class MySQLDialect implements Dialect {
   @Override
   public String receiptsModifiersTable() {
     return "CREATE TABLE IF NOT EXISTS " + prefix + "receipts_modifiers (\n" +
-        "    uid VARCHAR(36) NOT NULL PRIMARY KEY,\n" +
+        "    uid BINARY(16) NOT NULL PRIMARY KEY,\n" +
         "    participant BINARY(16) NOT NULL,\n" +
         "    participant_type VARCHAR(10) NOT NULL,\n" +
         "    operation VARCHAR(10) NOT NULL,\n" +

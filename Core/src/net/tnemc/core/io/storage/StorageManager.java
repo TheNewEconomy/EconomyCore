@@ -27,6 +27,7 @@ import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.io.storage.connect.SQLConnector;
 import net.tnemc.core.io.storage.connect.YAMLConnector;
+import net.tnemc.core.io.storage.dialect.MariaDialect;
 import net.tnemc.core.io.storage.engine.flat.YAML;
 import net.tnemc.core.io.storage.engine.sql.MySQL;
 import net.tnemc.core.io.storage.engine.sql.PostgreSQL;
@@ -63,6 +64,12 @@ public class StorageManager {
     switch(engine.toLowerCase()) {
       case "mysql" -> {
         this.engine = new MySQL();
+        this.connector = new SQLConnector();
+      }
+      case "maria" -> {
+
+        final String prefix = DataConfig.yaml().getString("Data.Database.Prefix");
+        this.engine = new MySQL(prefix, new MariaDialect(prefix));
         this.connector = new SQLConnector();
       }
       case "postgre" -> {
