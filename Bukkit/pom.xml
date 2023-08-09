@@ -41,7 +41,7 @@
         <defaultGoal>clean package</defaultGoal>
         <directory>target</directory>
         <outputDirectory>target/classes</outputDirectory>
-        <finalName>${project.artifactId}-${project.version}</finalName>
+        <finalName>TNE-${project.artifactId}-${project.version}</finalName>
         <testOutputDirectory>target/test-classes</testOutputDirectory>
         <sourceDirectory>src/</sourceDirectory>
         <resources>
