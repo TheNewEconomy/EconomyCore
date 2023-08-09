@@ -32,10 +32,17 @@ import net.tnemc.core.manager.TopManager;
 import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.region.RegionProvider;
 import net.tnemc.core.utils.Identifier;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 /**
@@ -61,7 +68,9 @@ public class EconomyManager {
   public static final Identifier INVENTORY_ONLY = new Identifier("tne", "INVENTORY_HOLDINGS");
   public static final Identifier E_CHEST = new Identifier("tne", "ENDER_HOLDINGS");
 
-  private final LinkedHashMap<Identifier, HoldingsHandler> handlers = new LinkedHashMap<>();
+  private final LinkedHashMap<String, HoldingsHandler> handlers = new LinkedHashMap<>();
+
+  private final Map<String, Identifier> ids = new ConcurrentHashMap<>();
 
   private final AccountManager accountManager;
   private final CurrencyManager currencyManager;
@@ -89,6 +98,14 @@ public class EconomyManager {
     this.accountManager.addDefaultStatuses();
     this.accountManager.addDefaultTypes();
 
+    addIdentifier(NORMAL);
+    addIdentifier(DATABASE);
+    addIdentifier(VIRTUAL);
+    addIdentifier(EXPERIENCE);
+    addIdentifier(ITEM_ONLY);
+    addIdentifier(INVENTORY_ONLY);
+    addIdentifier(E_CHEST);
+
     //Add our core handlers
     addHandler(new VirtualHandler());
     addHandler(new ExperienceHandler());
@@ -96,19 +113,20 @@ public class EconomyManager {
     addHandler(new EnderChestHandler());
   }
 
-  public Optional<Identifier> findID(final String identifier) {
-    for(Identifier id : handlers.keySet()) {
-      if(id.asID().equalsIgnoreCase(identifier)) return Optional.of(id);
-    }
-    return Optional.empty();
+  public Optional<Identifier> findID(String id) {
+    return Optional.ofNullable(ids.get(id));
   }
 
   public Optional<HoldingsHandler> findHandler(final Identifier identifier) {
-    return Optional.ofNullable(handlers.get(identifier));
+    return Optional.ofNullable(handlers.get(identifier.asID()));
   }
 
   public void addHandler(final HoldingsHandler handler) {
-    handlers.put(handler.identifier(), handler);
+    handlers.put(handler.identifier().asID(), handler);
+  }
+
+  public void addIdentifier(final Identifier id) {
+    ids.put(id.asID(), id);
   }
 
   public LinkedList<HoldingsHandler> getFor(final Account account) {

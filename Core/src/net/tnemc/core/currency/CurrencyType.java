@@ -146,6 +146,7 @@ public interface CurrencyType {
    */
   default boolean setHoldings(Account account, String region, Currency currency, Identifier type, BigDecimal amount) {
 
+
     final Optional<HoldingsHandler> handler = EconomyManager.instance().findHandler(type);
 
     if(handler.isPresent()) {

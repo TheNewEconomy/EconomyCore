@@ -18,6 +18,8 @@ package net.tnemc.bungee;
  */
 
 import net.md_5.bungee.api.plugin.Plugin;
+import net.tnemc.bungee.event.MessageListener;
+import net.tnemc.bungee.event.PlayerConnectListener;
 import net.tnemc.bungee.message.MessageManager;
 import net.tnemc.bungee.message.backlog.MessageData;
 
@@ -47,6 +49,7 @@ public class BungeeCore extends Plugin {
     getProxy().registerChannel("tne:balance");
     getProxy().registerChannel("tne:sync");
     getProxy().getPluginManager().registerListener(this, new MessageListener());
+    getProxy().getPluginManager().registerListener(this, new PlayerConnectListener());
   }
 
   public static BungeeCore instance() {

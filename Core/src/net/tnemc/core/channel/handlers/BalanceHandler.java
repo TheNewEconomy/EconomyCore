@@ -27,6 +27,7 @@ import net.tnemc.core.channel.ChannelMessageHandler;
 import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.utils.Identifier;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
@@ -43,12 +44,13 @@ public class BalanceHandler extends ChannelMessageHandler {
     super("balance");
   }
 
-  public static void send(final String account, String region, UUID currency, BigDecimal amount) {
+  public static void send(final String account, String region, UUID currency, Identifier handler, BigDecimal amount) {
     ByteArrayDataOutput out = ByteStreams.newDataOutput();
     out.writeUTF(TNECore.instance().getServerID().toString());
     out.writeUTF(account);
     out.writeUTF(region);
     out.writeUTF(currency.toString());
+    out.writeUTF(handler.asID());
     out.writeUTF(amount.toPlainString());
 
     TNECore.server().proxy().send("tne:balance", out.toByteArray());
@@ -62,18 +64,20 @@ public class BalanceHandler extends ChannelMessageHandler {
       final String accountID = wrapper.readUTF();
       final String region = wrapper.readUTF();
       final Optional<UUID> currency = wrapper.readUUID();
-      final Optional<BigDecimal> amountOPT = wrapper.readBigDecimal();
       final String handler = wrapper.readUTF();
+      final Optional<BigDecimal> amountOPT = wrapper.readBigDecimal();
 
       if(amountOPT.isPresent() && currency.isPresent()) {
 
-        Optional<Account> account = TNECore.eco().account().findAccount(accountID);
+        final Optional<Account> account = TNECore.eco().account().findAccount(accountID);
         if(account.isPresent()) {
           TNECore.instance().getChannelMessageManager().addAccount(accountID);
 
+          final Identifier type = Identifier.fromID(handler);
+
           final HoldingsEntry entry = new HoldingsEntry(region, currency.get(),
-                                                        amountOPT.get(), Identifier.fromID(handler));
-          account.get().setHoldings(entry);
+                                                        amountOPT.get(), type);
+          account.get().setHoldings(entry, type);
         }
       }
 

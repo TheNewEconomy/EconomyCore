@@ -17,7 +17,9 @@ package net.tnemc.bungee.message.backlog;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,7 +30,7 @@ import java.util.Map;
  */
 public class MessageData {
 
-  private final Map<Long, BacklogEntry> backlog = new HashMap<>();
+  private final List<BacklogEntry> backlog = new LinkedList<>();
 
   private final String serverName;
 
@@ -40,7 +42,7 @@ public class MessageData {
     return serverName;
   }
 
-  public Map<Long, BacklogEntry> getBacklog() {
+  public List<BacklogEntry> getBacklog() {
     return backlog;
   }
 }

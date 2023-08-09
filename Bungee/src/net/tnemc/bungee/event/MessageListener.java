@@ -1,4 +1,4 @@
-package net.tnemc.bungee.message.handlers;
+package net.tnemc.bungee.event;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,30 +17,30 @@ package net.tnemc.bungee.message.handlers;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bungee.BungeeCore;
-import net.tnemc.bungee.message.MessageHandler;
-
-import java.io.DataInputStream;
-import java.util.UUID;
+import net.md_5.bungee.api.connection.Server;
+import net.md_5.bungee.api.event.PluginMessageEvent;
+import net.md_5.bungee.api.plugin.Listener;
+import net.md_5.bungee.event.EventHandler;
+import net.tnemc.bungee.message.MessageManager;
 
 /**
- * SyncAllMessageHandler
+ * MessageListener
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class SyncAllMessageHandler extends MessageHandler {
-  public SyncAllMessageHandler() {
-    super("sync");
-  }
+public class MessageListener implements Listener {
 
-  @Override
-  public void handle(String player, UUID server, DataInputStream stream) {
-
-    if(BungeeCore.instance().getBacklog().containsKey(server)) {
-      sendBacklog(BungeeCore.instance().getBacklog().get(server));
-
-      BungeeCore.instance().remove(server);
+  @EventHandler
+  public void onMessage(PluginMessageEvent event) {
+    if(!event.getTag().startsWith("tne:")) {
+      return;
     }
+
+    if(!(event.getSender() instanceof Server)) {
+      event.setCancelled(true);
+      return;
+    }
+    MessageManager.instance().onMessage(event.getTag(), event.getData());
   }
 }

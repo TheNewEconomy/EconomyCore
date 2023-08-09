@@ -1,4 +1,4 @@
-package net.tnemc.bungee;
+package net.tnemc.bungee.event;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,31 +17,24 @@ package net.tnemc.bungee;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.md_5.bungee.api.connection.Server;
-import net.md_5.bungee.api.event.PluginMessageEvent;
+import net.md_5.bungee.api.event.ServerSwitchEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.tnemc.bungee.message.MessageManager;
 
 /**
- * MessageListener
+ * PlayerConnectListener
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class MessageListener implements Listener {
+public class PlayerConnectListener implements Listener {
 
   @EventHandler
-  public void onMessage(PluginMessageEvent event) {
-    if(!event.getTag().startsWith("tne:")) {
-      return;
-    }
+  public void onMessage(ServerSwitchEvent event) {
 
-    if(!(event.getSender() instanceof Server)) {
-      System.out.println("Event sender not server.");
-      event.setCancelled(true);
-      return;
+    if(event.getPlayer().getServer().getInfo().getPlayers().size() <= 1) {
+      MessageManager.instance().backlog(event.getPlayer().getServer().getInfo().getSocketAddress().toString());
     }
-    MessageManager.instance().onMessage(event.getTag(), event.getData());
   }
 }

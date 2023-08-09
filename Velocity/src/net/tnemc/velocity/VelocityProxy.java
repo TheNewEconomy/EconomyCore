@@ -20,6 +20,7 @@ package net.tnemc.velocity;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.tnemc.bungee.ProxyProvider;
+import net.tnemc.bungee.message.MessageManager;
 import net.tnemc.bungee.message.backlog.BacklogEntry;
 import net.tnemc.bungee.message.backlog.MessageData;
 import org.jetbrains.annotations.NotNull;
@@ -45,6 +46,8 @@ public class VelocityProxy implements ProxyProvider {
     VelocityCore.instance().getServer().getAllServers().forEach(server->{
       if(server.getPlayersConnected().size() > 0) {
         server.sendPluginMessage(MinecraftChannelIdentifier.from(channel), out);
+      } else {
+        MessageManager.instance().addData(String.valueOf(server.getServerInfo().getAddress().getPort()), new BacklogEntry(channel, out));
       }
     });
   }
@@ -70,11 +73,11 @@ public class VelocityProxy implements ProxyProvider {
    */
   @Override
   public void sendBacklog(@NotNull MessageData data) {
-
-    final Optional<RegisteredServer> server = VelocityCore.instance().getServer().getServer(data.getServerName());
-    if(server.isPresent()) {
-      for(BacklogEntry entry : data.getBacklog().values()) {
-        server.get().sendPluginMessage(MinecraftChannelIdentifier.from(entry.channel()), entry.out());
+    for(RegisteredServer server : VelocityCore.instance().getServer().getAllServers()) {
+      if(server.getServerInfo().getAddress().getPort() == Integer.valueOf(data.getServerName())) {
+        for(BacklogEntry entry : data.getBacklog()) {
+          server.sendPluginMessage(MinecraftChannelIdentifier.from(entry.channel()), entry.out());
+        }
       }
     }
   }

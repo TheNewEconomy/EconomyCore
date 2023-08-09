@@ -25,6 +25,7 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import net.tnemc.bungee.message.MessageManager;
 import net.tnemc.bungee.message.backlog.MessageData;
+import net.tnemc.velocity.event.ServerPostConnectListener;
 import net.tnemc.velocity.message.MessageListener;
 
 import java.util.HashMap;
@@ -67,6 +68,7 @@ public class VelocityCore {
     server.getChannelRegistrar().register(MinecraftChannelIdentifier.from("tne:balance"));
     server.getChannelRegistrar().register(MinecraftChannelIdentifier.from("tne:sync"));
     server.getEventManager().register(this, new MessageListener());
+    server.getEventManager().register(this, new ServerPostConnectListener());
   }
 
   public static VelocityCore instance() {

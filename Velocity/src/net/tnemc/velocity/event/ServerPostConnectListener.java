@@ -1,4 +1,4 @@
-package net.tnemc.bungee.message.handlers;
+package net.tnemc.velocity.event;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,30 +17,28 @@ package net.tnemc.bungee.message.handlers;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bungee.BungeeCore;
-import net.tnemc.bungee.message.MessageHandler;
+import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.connection.PluginMessageEvent;
+import com.velocitypowered.api.event.player.ServerPostConnectEvent;
+import com.velocitypowered.api.proxy.ServerConnection;
+import net.tnemc.bungee.message.MessageManager;
+import net.tnemc.bungee.message.backlog.MessageData;
 
-import java.io.DataInputStream;
-import java.util.UUID;
+import java.util.Optional;
 
 /**
- * SyncAllMessageHandler
+ * ServerPostConnectListener
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class SyncAllMessageHandler extends MessageHandler {
-  public SyncAllMessageHandler() {
-    super("sync");
-  }
+public class ServerPostConnectListener {
+  @Subscribe
+  public void handle(ServerPostConnectEvent event) {
 
-  @Override
-  public void handle(String player, UUID server, DataInputStream stream) {
-
-    if(BungeeCore.instance().getBacklog().containsKey(server)) {
-      sendBacklog(BungeeCore.instance().getBacklog().get(server));
-
-      BungeeCore.instance().remove(server);
+    final Optional<ServerConnection> server = event.getPlayer().getCurrentServer();
+    if(server.isPresent() && server.get().getServer().getPlayersConnected().size() <= 1) {
+      MessageManager.instance().backlog(String.valueOf(server.get().getServerInfo().getAddress().getPort()));
     }
   }
 }

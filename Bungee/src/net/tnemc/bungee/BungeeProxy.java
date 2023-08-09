@@ -17,6 +17,7 @@ package net.tnemc.bungee;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.bungee.message.MessageManager;
 import net.tnemc.bungee.message.backlog.BacklogEntry;
 import net.tnemc.bungee.message.backlog.MessageData;
 import org.jetbrains.annotations.NotNull;
@@ -40,6 +41,8 @@ public class BungeeProxy implements ProxyProvider {
     BungeeCore.instance().getProxy().getServers().values().forEach(server->{
       if(server.getPlayers().size() > 0) {
         server.sendData(channel, out, false);
+      } else {
+        MessageManager.instance().addData(server.getSocketAddress().toString(), new BacklogEntry(channel, out));
       }
     });
   }
@@ -68,8 +71,8 @@ public class BungeeProxy implements ProxyProvider {
   @Override
   public void sendBacklog(@NotNull MessageData data) {
     BungeeCore.instance().getProxy().getServers().values().forEach(server->{
-      if(server.getName().equalsIgnoreCase(data.getServerName())) {
-        for(BacklogEntry entry : data.getBacklog().values()) {
+      if(server.getSocketAddress().toString().equalsIgnoreCase(data.getServerName())) {
+        for(BacklogEntry entry : data.getBacklog()) {
           server.sendData(entry.channel(), entry.out(), false);
         }
       }

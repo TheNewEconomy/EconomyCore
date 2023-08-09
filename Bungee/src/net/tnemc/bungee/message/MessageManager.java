@@ -19,11 +19,14 @@ package net.tnemc.bungee.message;
  */
 
 import net.tnemc.bungee.ProxyProvider;
+import net.tnemc.bungee.message.backlog.BacklogEntry;
+import net.tnemc.bungee.message.backlog.MessageData;
 import net.tnemc.bungee.message.handlers.BalanceMessageHandler;
 import net.tnemc.bungee.message.handlers.SyncAllMessageHandler;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -37,6 +40,7 @@ import java.util.UUID;
 public class MessageManager {
 
   private final Map<String, MessageHandler> handlers = new HashMap<>();
+  private final Map<String, MessageData> data = new HashMap<>();
   private final ProxyProvider proxy;
   private static MessageManager instance;
 
@@ -74,5 +78,23 @@ public class MessageManager {
 
   public static MessageManager instance() {
     return instance;
+  }
+
+  public void backlog(final String server) {
+    if(data.containsKey(server)) {
+      proxy.sendBacklog(data.get(server));
+      data.remove(server);
+    }
+  }
+
+  public void addData(final String server, BacklogEntry entry) {
+    if(data.containsKey(server)) {
+      data.get(server).getBacklog().add(entry);
+      return;
+    }
+
+    MessageData data = new MessageData(server);
+    data.getBacklog().add(entry);
+    this.data.put(server, data);
   }
 }
