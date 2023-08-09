@@ -18,11 +18,9 @@ package net.tnemc.velocity.event;
  */
 
 import com.velocitypowered.api.event.Subscribe;
-import com.velocitypowered.api.event.connection.PluginMessageEvent;
 import com.velocitypowered.api.event.player.ServerPostConnectEvent;
 import com.velocitypowered.api.proxy.ServerConnection;
 import net.tnemc.bungee.message.MessageManager;
-import net.tnemc.bungee.message.backlog.MessageData;
 
 import java.util.Optional;
 

@@ -17,10 +17,8 @@ package net.tnemc.bungee.message.backlog;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * MessageData

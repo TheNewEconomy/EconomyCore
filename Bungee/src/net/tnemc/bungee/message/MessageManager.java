@@ -26,7 +26,6 @@ import net.tnemc.bungee.message.handlers.SyncAllMessageHandler;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;

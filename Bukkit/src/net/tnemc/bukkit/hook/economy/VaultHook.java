@@ -21,7 +21,6 @@ package net.tnemc.bukkit.hook.economy;
 
 import net.milkbowl.vault.economy.Economy;
 import net.tnemc.bukkit.TNE;
-import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.hook.Hook;
 import org.bukkit.plugin.ServicePriority;
 

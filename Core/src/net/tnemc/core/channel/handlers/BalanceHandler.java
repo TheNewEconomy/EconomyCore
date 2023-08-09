@@ -27,7 +27,6 @@ import net.tnemc.core.channel.ChannelMessageHandler;
 import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.utils.Identifier;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
