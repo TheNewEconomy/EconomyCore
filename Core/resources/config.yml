@@ -38,6 +38,10 @@ Core:
   #All configurations relating to the server in general.
   Server:
 
+    #Whether the ServerID config should be random on each startup. This could impact syncing on
+    #restarts, but will not impact anything significant.
+    RandomUUID: false
+
     #Should TNE disable mob drops that are valid item currencies?
     MobDrop: true
 

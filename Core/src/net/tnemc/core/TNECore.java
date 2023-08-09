@@ -248,17 +248,30 @@ public abstract class TNECore {
     this.level = DebugLevel.fromID(MainConfig.yaml().getString("Core.Debugging.Mode"));
 
     //Set our server UUID. This is used for proxy messaging.
-    if(!MainConfig.yaml().contains("Core.ServerID")) {
-      serverID = UUID.randomUUID();
-      MainConfig.yaml().set("Core.ServerID", serverID.toString());
-      MainConfig.yaml().setComment("Core.ServerID", "#Don't modify unless you know what you're doing.");
-      try {
-        MainConfig.yaml().save();
-      } catch(IOException e) {
-        logger.error("Issue while saving Server UUID to config.yml", e, DebugLevel.STANDARD);
+    boolean randomUUID = false;
+    if(!MainConfig.yaml().contains("Core.Server.RandomUUID")) {
+      MainConfig.yaml().set("Core.Server.RandomUUID", false);
+      MainConfig.yaml().setComment("Core.ServerID", "#Whether the ServerID config should be random on each startup. This could impact syncing on\n" +
+              "#restarts, but will not impact anything significant.");
+    } else {
+      randomUUID = MainConfig.yaml().getBoolean("Core.Server.RandomUUID", false);
+    }
+
+    if(!randomUUID) {
+      if(! MainConfig.yaml().contains("Core.ServerID")) {
+        serverID = UUID.randomUUID();
+        MainConfig.yaml().set("Core.ServerID", serverID.toString());
+        MainConfig.yaml().setComment("Core.ServerID", "#Don't modify unless you know what you're doing.");
+        try {
+          MainConfig.yaml().save();
+        } catch(IOException e) {
+          logger.error("Issue while saving Server UUID to config.yml", e, DebugLevel.STANDARD);
+        }
+      } else {
+        serverID = UUID.fromString(MainConfig.yaml().getString("Core.ServerID"));
       }
     } else {
-      serverID = UUID.fromString(MainConfig.yaml().getString("Core.ServerID"));
+      serverID = UUID.randomUUID();
     }
 
     this.channelMessageManager = new ChannelMessageManager();
