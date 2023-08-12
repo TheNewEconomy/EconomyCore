@@ -23,6 +23,7 @@ import net.tnemc.paper.impl.PaperCMDSource;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.Description;
+import revxrsal.commands.annotation.Named;
 import revxrsal.commands.annotation.Usage;
 import revxrsal.commands.bukkit.BukkitCommandActor;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
@@ -37,21 +38,43 @@ import java.math.BigDecimal;
  */
 public class ShortCommands {
 
-
-
-  @Command({"baltop"})
-  @Usage("Money.Top.Arguments")
-  @Description("Money.Top.Description")
-  @CommandPermission("tne.money.top")
-  public void onTop(BukkitCommandActor sender, @Default("1") Integer page, @Default("") Currency currency, @Default("false") Boolean refresh) {
-    net.tnemc.core.command.MoneyCommand.onTop(new PaperCMDSource(sender), page, currency, refresh);
+  @Command({"givemoney", "givebal"})
+  @Usage("Money.Give.Arguments")
+  @Description("Money.Give.Description")
+  @CommandPermission("tne.money.give")
+  public void onGive(BukkitCommandActor sender, @Named("account") Account player, @Named("amount") BigDecimal amount, @Default("") @Named("currency") Currency currency, @Default("world-113") @Named("region") String region) {
+    net.tnemc.core.command.MoneyCommand.onGive(new PaperCMDSource(sender), player, amount, region, currency);
   }
 
   @Command({"pay"})
   @Usage("Money.Pay.Arguments")
   @Description("Money.Pay.Description")
   @CommandPermission("tne.money.pay")
-  public void onPay(BukkitCommandActor sender, Account player, BigDecimal amount, @Default("") Currency currency, @Default("") String from) {
+  public void onPay(BukkitCommandActor sender, @Named("account") Account player, @Named("amount") BigDecimal amount, @Default("") @Named("currency") Currency currency, @Default("") String from) {
     net.tnemc.core.command.MoneyCommand.onPay(new PaperCMDSource(sender), player, amount, currency, from);
+  }
+
+  @Command({"setmoney", "setbal"})
+  @Usage("Money.Set.Arguments")
+  @Description("Money.Set.Description")
+  @CommandPermission("tne.money.set")
+  public void onSet(BukkitCommandActor sender, @Named("account") Account player, @Named("amount") BigDecimal amount, @Default("") @Named("currency") Currency currency, @Default("world-113") @Named("region") String region) {
+    net.tnemc.core.command.MoneyCommand.onSet(new PaperCMDSource(sender), player, amount, region, currency);
+  }
+
+  @Command({"takemoney", "takebal"})
+  @Usage("Money.Take.Arguments")
+  @Description("Money.Take.Description")
+  @CommandPermission("tne.money.take")
+  public void onTake(BukkitCommandActor sender, @Named("account") Account player, @Named("amount") BigDecimal amount, @Default("") @Named("currency") Currency currency, @Default("world-113") @Named("region") String region) {
+    net.tnemc.core.command.MoneyCommand.onTake(new PaperCMDSource(sender), player, amount, region, currency);
+  }
+
+  @Command({"baltop"})
+  @Usage("Money.Top.Arguments")
+  @Description("Money.Top.Description")
+  @CommandPermission("tne.money.top")
+  public void onTop(BukkitCommandActor sender, @Default("1") @Named("page") Integer page, @Default("") @Named("currency") Currency currency, @Default("false") Boolean refresh) {
+    net.tnemc.core.command.MoneyCommand.onTop(new PaperCMDSource(sender), page, currency, refresh);
   }
 }
