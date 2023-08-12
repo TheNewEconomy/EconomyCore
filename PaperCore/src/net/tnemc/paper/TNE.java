@@ -94,6 +94,12 @@ public class TNE extends JavaPlugin {
 
   }
 
+  @Override
+  public void onDisable() {
+
+    this.core.onDisable();
+  }
+
   public static TNE instance() {
     return instance;
   }

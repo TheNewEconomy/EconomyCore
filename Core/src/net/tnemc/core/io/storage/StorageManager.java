@@ -169,8 +169,9 @@ public class StorageManager {
     final Optional<Datable<?>> data = Optional.ofNullable(engine.datables().get(HoldingsEntry.class));
 
     //Our account storeAll requires no identifier, so we set it to null
-    data.ifPresent(datable->TNECore.server().scheduler()
-        .createDelayedTask(()->datable.storeAll(connector, identifier), new ChoreTime(0), ChoreExecution.SECONDARY));
+    if(data.isPresent()) {
+      data.get().storeAll(connector, identifier);
+    }
   }
 
   /**

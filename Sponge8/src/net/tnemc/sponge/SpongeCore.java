@@ -58,6 +58,7 @@ import org.spongepowered.api.event.lifecycle.ConstructPluginEvent;
 import org.spongepowered.api.event.lifecycle.ProvideServiceEvent;
 import org.spongepowered.api.event.lifecycle.StartedEngineEvent;
 import org.spongepowered.api.event.lifecycle.StartingEngineEvent;
+import org.spongepowered.api.event.lifecycle.StoppingEngineEvent;
 import org.spongepowered.api.service.economy.EconomyService;
 import org.spongepowered.api.util.metric.MetricsConfigManager;
 import org.spongepowered.plugin.PluginContainer;
@@ -140,24 +141,24 @@ public class SpongeCore extends TNECore {
 
   @Listener
   public void onServerStart(final StartedEngineEvent<Server> event) {
+    this.directory = configDir.toFile();
     this.core.enable();
     logger.inform("The New Economy has been enabled.");
   }
 
   @Listener
-  public void providePermissionService(final ProvideServiceEvent.EngineScoped<EconomyService> event) {
+  public void onServerStop(final StoppingEngineEvent<Server> event) {
+    super.onDisable();
+    logger.inform("The New Economy has been disabled.");
+  }
+
+  @Listener
+  public void provideEconomy(final ProvideServiceEvent.EngineScoped<EconomyService> event) {
     event.suggest(SpongeEconomy::new);
   }
 
   public PluginContainer getContainer() {
     return container;
-  }
-
-  @Override
-  protected void onEnable() {
-    this.directory = configDir.toFile();
-
-    super.onEnable();
   }
 
   @Override

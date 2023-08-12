@@ -49,6 +49,7 @@ import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.io.message.MessageHandler;
 import net.tnemc.core.io.message.TranslationProvider;
 import net.tnemc.core.io.message.translation.BaseTranslationProvider;
+import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageManager;
 import net.tnemc.core.module.ModuleLoader;
 import net.tnemc.core.module.cache.ModuleFileCache;
@@ -64,6 +65,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -394,6 +396,12 @@ public abstract class TNECore {
   public void onDisable() {
 
     //Call onEnable for all modules loaded.
+    //store our data syncly because it needs to finish
+    final Optional<Datable<?>> data = Optional.ofNullable(storage.getEngine().datables().get(Account.class));
+    if(data.isPresent()) {
+      data.get().storeAll(storage.getConnector(), null);
+    }
+
     loader.getModules().values().forEach((moduleWrapper -> moduleWrapper.getModule().disable(this)));
   }
 
