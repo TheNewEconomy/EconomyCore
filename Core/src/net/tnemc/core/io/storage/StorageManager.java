@@ -163,7 +163,8 @@ public class StorageManager {
   }
 
   /**
-   * Used to store all data for an identifier in TNE.
+   * Used to store all data for an identifier in TNE. This method is not switched over to a secondary
+   * thread automatically. Please make sure to use wisely.
    */
   public void storeAll(@NotNull final String identifier) {
     final Optional<Datable<?>> data = Optional.ofNullable(engine.datables().get(HoldingsEntry.class));
