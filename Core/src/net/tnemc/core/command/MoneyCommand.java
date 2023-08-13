@@ -77,6 +77,11 @@ public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: <amount> <to currency> [from currency]
   public static void onConvert(CmdSource<?> sender, BigDecimal amount, Currency currency, Currency fromCurrency) {
+    if(amount.compareTo(BigDecimal.ZERO) < 0) {
+      sender.message(new MessageData("Messages.Money.Negative"));
+      return;
+    }
+
     if(currency.getUid().equals(fromCurrency.getUid())) {
       sender.message(new MessageData("Messages.Money.ConvertSame"));
       return;
@@ -126,6 +131,11 @@ public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: <amount> [currency]
   public static void onDeposit(CmdSource<?> sender, BigDecimal amount, Currency currency, String region) {
+
+    if(amount.compareTo(BigDecimal.ZERO) < 0) {
+      sender.message(new MessageData("Messages.Money.Negative"));
+      return;
+    }
 
     final Optional<Account> senderAccount = sender.account();
 
@@ -297,6 +307,11 @@ public class MoneyCommand extends BaseCommand {
   //ArgumentsParser: <player> <amount> [currency] [from:account]
   public static void onPay(CmdSource<?> sender, Account player, BigDecimal amount, Currency currency, String from) {
 
+    if(amount.compareTo(BigDecimal.ZERO) < 0) {
+      sender.message(new MessageData("Messages.Money.Negative"));
+      return;
+    }
+
     final Optional<Account> senderAccount = sender.account();
 
     if(senderAccount.isEmpty()) {
@@ -374,6 +389,11 @@ public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: <player> <amount> [currency]
   public static void onRequest(CmdSource<?> sender, Account player, BigDecimal amount, Currency currency) {
+    if(amount.compareTo(BigDecimal.ZERO) < 0) {
+      sender.message(new MessageData("Messages.Money.Negative"));
+      return;
+    }
+
     final Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)player).getUUID());
     if(provider.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
@@ -524,6 +544,11 @@ public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: <amount> [currency]
   public static void onWithdraw(CmdSource<?> sender, BigDecimal amount, Currency currency, String region) {
+
+    if(amount.compareTo(BigDecimal.ZERO) < 0) {
+      sender.message(new MessageData("Messages.Money.Negative"));
+      return;
+    }
 
     final Optional<Account> senderAccount = sender.account();
     if(senderAccount.isEmpty()) {
