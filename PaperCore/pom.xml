@@ -162,7 +162,7 @@
         <dependency>
             <groupId>net.tnemc</groupId>
             <artifactId>TNML-Bukkit</artifactId>
-            <version>1.0-SNAPSHOT-21</version>
+            <version>1.0-SNAPSHOT-22</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
@@ -227,7 +227,7 @@
         <dependency>
             <groupId>net.tnemc</groupId>
             <artifactId>TNIL-Bukkit</artifactId>
-            <version>0.1.7.4-Pre-16</version>
+            <version>0.1.7.4-Pre-17</version>
             <scope>compile</scope>
         </dependency>
 
