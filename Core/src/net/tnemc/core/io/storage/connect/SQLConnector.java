@@ -104,12 +104,12 @@ public class SQLConnector implements StorageConnector<Connection> {
 
   public boolean checkVersion() {
     boolean result = true;
+
+    if(dialect().requirement().equalsIgnoreCase("none")) return true;
+
     try(Connection connection = connection()) {
       final DatabaseMetaData meta = connection.getMetaData();
-      String version = meta.getDatabaseProductVersion();
-      if(dialect() instanceof MariaDialect) {
-        version = version.split("-")[1];
-      }
+      final String version = dialect().parseVersion(meta.getDatabaseProductVersion());
 
       TNECore.log().debug("SQL Requirement: " + dialect().requirement(), DebugLevel.OFF);
       TNECore.log().debug("SQL Version: " + version, DebugLevel.OFF);

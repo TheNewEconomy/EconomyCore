@@ -110,8 +110,27 @@ public interface Dialect {
   //receipt modifier save
   @Language("SQL") String saveModifier();
 
+  /**
+   * Provides the specific requirement for this dialect.
+   * @return The version requirement for this dialect, or "none" if no requirement is required.
+   */
   String requirement();
 
+  /**
+   * Used to parse version strings. Some dialects, such as Maria need their versions parsed because they format them in
+   * a specific manner.
+   * @param version The version to parse.
+   * @return The parsed version.
+   */
+  default String parseVersion(final String version) {
+    return version;
+  }
+
+  /**
+   * Used to check if the provided version meets the requirement we need.
+   * @param version The version to check.
+   * @return True if the provided version meets our requirement.
+   */
   default boolean checkRequirement(final String version) {
     return new Semver(version).isGreaterThanOrEqualTo(requirement());
   }

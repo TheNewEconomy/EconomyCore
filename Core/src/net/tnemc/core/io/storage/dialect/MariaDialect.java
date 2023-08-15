@@ -389,6 +389,11 @@ public class MariaDialect implements Dialect {
   }
 
   @Override
+  public String parseVersion(String version) {
+    return version.split("-")[1];
+  }
+
+  @Override
   public String requirement() {
     return requirement;
   }
