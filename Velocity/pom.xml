@@ -105,7 +105,7 @@
         <dependency>
             <groupId>net.tnemc</groupId>
             <artifactId>BungeeCore</artifactId>
-            <version>0.1.2.0-Pre-25</version>
+            <version>0.1.2.0-Pre-26</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
@@ -113,6 +113,6 @@
     <parent>
         <groupId>net.tnemc</groupId>
         <artifactId>TNE</artifactId>
-        <version>0.1.2.0-Pre-25</version>
+        <version>0.1.2.0-Pre-26</version>
     </parent>
 </project>

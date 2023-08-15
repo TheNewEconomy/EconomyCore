@@ -20,17 +20,20 @@ package net.tnemc.core.io.storage.connect;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import net.tnemc.core.TNECore;
+import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.io.storage.Dialect;
 import net.tnemc.core.io.storage.SQLEngine;
 import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.io.storage.StorageEngine;
 import net.tnemc.core.io.storage.StorageManager;
+import net.tnemc.core.io.storage.dialect.MariaDialect;
 import org.intellij.lang.annotations.Language;
 
 import javax.sql.DataSource;
 import java.io.File;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -97,6 +100,25 @@ public class SQLConnector implements StorageConnector<Connection> {
   public Connection connection() throws SQLException {
     if(source == null) initialize();
     return source.getConnection();
+  }
+
+  public boolean checkVersion() {
+    boolean result = true;
+    try(Connection connection = connection()) {
+      final DatabaseMetaData meta = connection.getMetaData();
+      String version = meta.getDatabaseProductVersion();
+      if(dialect() instanceof MariaDialect) {
+        version = version.split("-")[1];
+      }
+
+      TNECore.log().debug("SQL Requirement: " + dialect().requirement(), DebugLevel.OFF);
+      TNECore.log().debug("SQL Version: " + version, DebugLevel.OFF);
+      result = dialect().checkRequirement(version);
+
+    } catch(Exception ignore) {
+      TNECore.log().error("Issue attempting to access SQL Version.");
+    }
+    return result;
   }
 
   /**

@@ -105,6 +105,13 @@ public class StorageManager {
     initialize();
   }
 
+  public boolean meetsRequirement() {
+    if(this.connector instanceof SQLConnector) {
+      return ((SQLConnector)this.connector).checkVersion();
+    }
+    return true;
+  }
+
   public void initialize() {
 
     //Initialize our connection.

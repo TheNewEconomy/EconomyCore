@@ -122,11 +122,11 @@ public class Transaction {
               BigDecimal.ZERO, EconomyManager.NORMAL));
     }
 
-    this.to = new TransactionParticipant(account.getIdentifier(), balances);
+    this.from = new TransactionParticipant(account.getIdentifier(), balances);
 
     final Optional<TransactionType> type = TNECore.eco().transaction().findType(this.type);
 
-    final BigDecimal tax = (type.isPresent() && type.get().toTax().isPresent())? type.get().toTax().get()
+    final BigDecimal tax = (type.isPresent() && type.get().fromTax().isPresent())? type.get().fromTax().get()
             .calculateTax(modifier.getModifier()) : BigDecimal.ZERO;
 
     BigDecimal working = null;
@@ -178,14 +178,14 @@ public class Transaction {
       } else {
         ending = entry;
       }
-      this.to.getEndingBalances().add(ending);
+      this.from.getEndingBalances().add(ending);
     }
 
     working = null;
 
-    this.to.setTax(tax);
+    this.from.setTax(tax);
 
-    this.modifierTo = modifier;
+    this.modifierFrom = modifier;
     return this;
   }
 

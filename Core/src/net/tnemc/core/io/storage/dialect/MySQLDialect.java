@@ -28,6 +28,8 @@ import org.intellij.lang.annotations.Language;
  */
 public class MySQLDialect implements Dialect {
 
+  private final String requirement = "8.0.0";
+
   //The load and save queries
   @Language("SQL")
   protected String saveName;
@@ -384,5 +386,10 @@ public class MySQLDialect implements Dialect {
   @Override
   public @Language("SQL") String saveModifier() {
     return saveModifier;
+  }
+
+  @Override
+  public String requirement() {
+    return requirement;
   }
 }

@@ -28,6 +28,8 @@ import org.intellij.lang.annotations.Language;
  */
 public class MariaDialect implements Dialect {
 
+  public static final String requirement = "10.7.0";
+
   //The load and save queries
   @Language("SQL")
   protected String saveName;
@@ -384,5 +386,10 @@ public class MariaDialect implements Dialect {
   @Override
   public @Language("SQL") String saveModifier() {
     return saveModifier;
+  }
+
+  @Override
+  public String requirement() {
+    return requirement;
   }
 }

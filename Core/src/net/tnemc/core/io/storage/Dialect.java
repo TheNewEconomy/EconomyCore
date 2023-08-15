@@ -17,6 +17,7 @@ package net.tnemc.core.io.storage;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import com.vdurmont.semver4j.Semver;
 import org.intellij.lang.annotations.Language;
 
 /**
@@ -108,4 +109,10 @@ public interface Dialect {
 
   //receipt modifier save
   @Language("SQL") String saveModifier();
+
+  String requirement();
+
+  default boolean checkRequirement(final String version) {
+    return new Semver(version).isGreaterThanOrEqualTo(requirement());
+  }
 }
