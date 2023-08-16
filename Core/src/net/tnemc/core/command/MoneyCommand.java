@@ -321,6 +321,13 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
+    if(senderAccount.get().getIdentifier().equalsIgnoreCase(player.getIdentifier())) {
+      final MessageData data = new MessageData("Messages.Money.SelfPay");
+      data.addReplacement("$player", sender.name());
+      sender.message(data);
+      return;
+    }
+
     if(!MainConfig.yaml().getBoolean("Core.Commands.Pay.Offline", true)) {
       if(!(player instanceof PlayerAccount) || !((PlayerAccount)player).isOnline()) {
 
