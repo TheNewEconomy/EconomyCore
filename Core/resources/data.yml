@@ -30,7 +30,7 @@ Data:
   #All configurations relating to the database
   Database:
 
-    #The database type to use. Current options: MySQL, YAML.
+    #The database type to use. Current options: MySQL, Maria, YAML.
     Type: "yaml"
 
     #The prefix to use for TheNewEconomy SQL tables
