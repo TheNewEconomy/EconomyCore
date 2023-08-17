@@ -78,6 +78,9 @@ public abstract class CmdSource<T extends CommandActor> {
    * @return An Optional containing the {@link Account account} class, or an empty Optional.
    */
   public Optional<Account> account() {
+    if(identifier() == null) {
+      return Optional.empty();
+    }
     return TNECore.eco().account().findAccount(identifier());
   }
 

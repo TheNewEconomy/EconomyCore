@@ -72,6 +72,9 @@ public class Extractor {
       TNECore.log().error("Failed load extraction file for writing.", e, DebugLevel.STANDARD);
       return false;
     }
+    final int total = TNECore.eco().account().getAccounts().values().size();
+    final int frequency = (int)(total * 0.10);
+    int number = 1;
 
     yaml.set("Version", "0.1.2.0");
 
@@ -88,10 +91,20 @@ public class Extractor {
 
         yaml.set("Accounts." + username + ".id", account.getIdentifier());
       }
+      number++;
+      try {
+        final boolean message = (number % frequency == 0);
+
+        if (message) {
+          final int progress = (number * 100) / total;
+          TNECore.log().inform("Extraction Progress: " + progress);
+        }
+      } catch(Exception ignore) {}
     }
 
     try {
       yaml.save();
+      TNECore.log().inform("Extraction has completed!");
     } catch(IOException e) {
       TNECore.log().error("Failed to save extraction file.", e, DebugLevel.STANDARD);
       return false;

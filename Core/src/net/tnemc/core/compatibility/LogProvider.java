@@ -33,7 +33,7 @@ public interface LogProvider {
    * @param message The message to send.
    */
   default void inform(String message) {
-    inform(message, DebugLevel.STANDARD);
+    inform(message, DebugLevel.OFF);
   }
 
   /**
