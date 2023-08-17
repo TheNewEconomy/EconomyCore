@@ -11,7 +11,7 @@ Messages:
     Saved: "<yellow>¡Guardado correctamente todos los datos de TNE!"
     NoPlayer: "<red>¡No se pudo localizar al jugador '$player'!"
     Disabled: "<red>¡Las características de economía están actualmente deshabilitadas en este mundo!"
-    IsConsole: "<red>¡No puedes ejecutar este comando como en consola!"
+    IsConsole: "<red>You can not run this command as the console!"
   Item:
     Invalid: "<red>Nombre de objeto y/o combinación de durabilidad inválido."
     InvalidAmount: "<red>Cantidad de objeto ingresada no válida."
