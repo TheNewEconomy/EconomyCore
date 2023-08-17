@@ -72,6 +72,12 @@ public class MoneyCommand extends BaseCommand {
 
     //If our currency doesn't exist this is probably a username, so check for their balance instead.
     final Optional<Account> account = sender.account();
+    if(account.isEmpty()) {
+      final MessageData data = new MessageData("Messages.General.NoPlayer");
+      data.addReplacement("$player", sender.name());
+      sender.message(data);
+      return;
+    }
     account.ifPresent(value->onOther(sender, value, region, currency));
   }
 
