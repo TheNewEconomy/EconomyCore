@@ -34,6 +34,6 @@ public class MinorAmountRule implements FormatRule {
     if(entry.asMonetary().scale() == 0) {
       return format.replace("<minor.amount>", "");
     }
-    return format.replace("<minor.amount>", entry.asMonetary().minor().toString());
+    return format.replace("<minor.amount>", entry.asMonetary().minor());
   }
 }

@@ -22,6 +22,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.format.FormatRule;
+import net.tnemc.core.utils.Monetary;
 import org.jetbrains.annotations.Nullable;
 
 import java.math.BigInteger;
@@ -35,11 +36,11 @@ public class MinorRule implements FormatRule {
 
   @Override
   public String format(@Nullable Account account, HoldingsEntry entry, String format) {
-    final BigInteger minor = entry.asMonetary().minor();
+    final Monetary monetary = entry.asMonetary();
 
     final Optional<Currency> currency = entry.currency();
-    return currency.map(value->format.replace("<minor>", minor.toString()
-        + " " + ((minor.compareTo(BigInteger.ONE) == 0)?
+    return currency.map(value->format.replace("<minor>", monetary.minor()
+        + " " + ((monetary.minorAsInt().compareTo(BigInteger.ONE) == 0)?
         value.getDisplayMinor() :
         value.getDisplayMinorPlural()))).orElse(format);
   }

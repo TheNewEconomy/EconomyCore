@@ -52,7 +52,7 @@ public class MinorNameRule implements FormatRule {
 
     final Optional<Currency> currency = entry.currency();
     return currency.map(value->format.replace("<minor.name>",
-                                              (monetary.minor().compareTo(BigInteger.ONE) == 0)?
+                                              (monetary.minorAsInt().compareTo(BigInteger.ONE) == 0)?
                                                   value.getDisplayMinor() :
                                                   value.getDisplayMinorPlural())).orElse(format);
   }

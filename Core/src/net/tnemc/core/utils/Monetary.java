@@ -35,7 +35,7 @@ public class Monetary {
 
   BigInteger major = BigInteger.ZERO;
 
-  BigInteger minor = BigInteger.ZERO;
+  String minor = "0";
 
   public Monetary(final BigDecimal decimal, final int scale) {
     this.scale = scale;
@@ -52,15 +52,21 @@ public class Monetary {
     final String[] split = value.toPlainString().split("\\.");
 
     major = new BigInteger(split[0]);
-    minor = (split.length > 1)? new BigInteger(split[1]) : BigInteger.ZERO;
+    if(split.length > 1) {
+      minor = split[1];
+    }
   }
 
   public BigInteger major() {
     return major;
   }
 
-  public BigInteger minor() {
+  public String minor() {
     return minor;
+  }
+
+  public BigInteger minorAsInt() {
+    return new BigInteger(minor);
   }
 
   public int scale() {
