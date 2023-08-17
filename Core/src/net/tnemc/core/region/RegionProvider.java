@@ -97,6 +97,10 @@ public class RegionProvider {
     return Optional.ofNullable(regions.get(name));
   }
 
+  public boolean multiRegion() {
+    return MainConfig.yaml().getBoolean("Core.Region.MultiRegion");
+  }
+
   /**
    * Used to resolve the region name to its connection or itself if no connection exists.
    *
