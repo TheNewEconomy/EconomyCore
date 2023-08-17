@@ -55,6 +55,11 @@ public class PAPIHook extends PlaceholderExpansion {
   }
 
   @Override
+  public boolean persist() {
+    return true;
+  }
+
+  @Override
   public String onPlaceholderRequest(Player player, @NotNull String identifier) {
 
     if(player == null) {
