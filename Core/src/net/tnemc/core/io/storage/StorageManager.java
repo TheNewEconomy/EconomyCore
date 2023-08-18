@@ -86,7 +86,7 @@ public class StorageManager {
         this.engine = new MySQL();
         this.connector = new SQLConnector();
       }
-      case "maria" -> {
+      case "maria", "mariadb" -> {
 
         final String prefix = DataConfig.yaml().getString("Data.Database.Prefix");
         this.engine = new MySQL(prefix, new MariaDialect(prefix));
