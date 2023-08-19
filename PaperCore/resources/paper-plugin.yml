@@ -12,6 +12,9 @@ dependencies:
   - name: Vault
     required: false
     bootstrap: false
+  - name: Treasury
+    required: false
+    bootstrap: false
   - name: mcMMO
     reqiuired: false
     bootstrap: false

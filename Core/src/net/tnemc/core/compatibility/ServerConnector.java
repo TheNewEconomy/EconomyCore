@@ -117,6 +117,14 @@ public interface ServerConnector {
   Optional<UUID> fromName(final String name);
 
   /**
+   * Used to locate a username for a specific name. This could be called from either a primary or secondary thread, and
+   * should not call back to the Mojang API ever.
+   * @param id The {@link UUID} to use for the search.
+   * @return An optional containing the name if exists, otherwise false.
+   */
+  Optional<String> fromID(final UUID id);
+
+  /**
    * Returns the {@link Pattern pattern} utilized to determine if a string is a valid
    * player username.
    *
@@ -156,6 +164,19 @@ public interface ServerConnector {
    * @return True if a plugin with that name exists, otherwise false.
    */
   default boolean pluginAvailable(final String name) {
+    return false;
+  }
+  /**
+   * Determines if a plugin with the correlating class is currently installed.
+   *
+   * @param classPath The class to use for our check.
+   * @return True if a plugin with that class exists, otherwise false.
+   */
+  default boolean pluginClassAvailable(final String classPath) {
+    try {
+      Class.forName("net.milkbowl.vault.economy.Economy");
+      return true;
+    } catch(Exception ignore) {}
     return false;
   }
 

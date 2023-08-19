@@ -45,6 +45,7 @@ import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.config.MessageConfig;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.hook.treasury.TreasuryHook;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.io.message.MessageHandler;
 import net.tnemc.core.io.message.TranslationProvider;
@@ -245,6 +246,10 @@ public abstract class TNECore {
 
     this.economyManager.currency().load(directory, false);
     this.economyManager.currency().saveCurrenciesUUID(directory);
+
+    if(server.pluginAvailable("Treasury")) {
+      new TreasuryHook().register();
+    }
 
     //set our debug options.
     this.level = DebugLevel.fromID(MainConfig.yaml().getString("Core.Debugging.Mode"));

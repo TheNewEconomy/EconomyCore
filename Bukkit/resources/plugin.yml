@@ -18,6 +18,7 @@ softdepend:
   - Essentials
   - EssentialsX
   - Vault
+  - Treasury
   - Reserve
   - mcMMO
   - GUIShop

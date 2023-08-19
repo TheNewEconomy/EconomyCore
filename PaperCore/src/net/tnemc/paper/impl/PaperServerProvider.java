@@ -34,6 +34,7 @@ import net.tnemc.paper.impl.scheduler.PaperScheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
@@ -169,6 +170,24 @@ public class PaperServerProvider implements ServerConnector {
   }
 
   /**
+   * Used to locate a username for a specific name. This could be called from either a primary or
+   * secondary thread, and should not call back to the Mojang API ever.
+   *
+   * @param id The {@link UUID} to use for the search.
+   *
+   * @return An optional containing the name if exists, otherwise false.
+   */
+  @Override
+  public Optional<String> fromID(UUID id) {
+    for(OfflinePlayer player : Bukkit.getServer().getOfflinePlayers()) {
+      if(player.getUniqueId().equals(id)) {
+        return Optional.ofNullable(player.getName());
+      }
+    }
+    return Optional.empty();
+  }
+
+  /**
    * Returns the name of the default region.
    *
    * @param mode The {@link RegionMode} to use for this.
@@ -185,6 +204,18 @@ public class PaperServerProvider implements ServerConnector {
       return world.getSpawnLocation().getBlock().getBiome().getKey().getKey();
     }
     return Bukkit.getServer().getWorlds().get(0).getName();
+  }
+
+  /**
+   * Determines if a plugin with the correlating name is currently installed.
+   *
+   * @param name The name to use for our check.
+   *
+   * @return True if a plugin with that name exists, otherwise false.
+   */
+  @Override
+  public boolean pluginAvailable(String name) {
+    return Bukkit.getPluginManager().isPluginEnabled(name);
   }
 
   /**

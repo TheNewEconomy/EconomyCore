@@ -174,6 +174,19 @@ public class SpongeServerProvider implements ServerConnector {
   }
 
   /**
+   * Used to locate a username for a specific name. This could be called from either a primary or
+   * secondary thread, and should not call back to the Mojang API ever.
+   *
+   * @param id The {@link UUID} to use for the search.
+   *
+   * @return An optional containing the name if exists, otherwise false.
+   */
+  @Override
+  public Optional<String> fromID(UUID id) {
+    return Optional.empty();
+  }
+
+  /**
    * Returns the name of the default region.
    *
    * @param mode The {@link RegionMode} to use for this.
