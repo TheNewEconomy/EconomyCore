@@ -19,7 +19,6 @@ package net.tnemc.core.hook.treasury.wrapper;
 
 import me.lokka30.treasury.api.economy.account.Account;
 import me.lokka30.treasury.api.economy.currency.Currency;
-import net.tnemc.core.TNECore;
 import net.tnemc.core.currency.format.CurrencyFormatter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

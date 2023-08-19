@@ -24,7 +24,6 @@ import me.lokka30.treasury.api.economy.transaction.EconomyTransactionType;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.account.holdings.modify.HoldingsOperation;
-import net.tnemc.core.actions.source.PlayerSource;
 import net.tnemc.core.actions.source.PluginSource;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
