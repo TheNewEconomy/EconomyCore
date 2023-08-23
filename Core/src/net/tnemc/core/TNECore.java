@@ -256,23 +256,44 @@ public abstract class TNECore {
 
     //Set our server UUID. This is used for proxy messaging.
     boolean randomUUID = false;
+    //Added in build 28, needs removed by build 32.
     if(!MainConfig.yaml().contains("Core.Server.RandomUUID")) {
       MainConfig.yaml().set("Core.Server.RandomUUID", false);
-      MainConfig.yaml().setComment("Core.ServerID", "#Whether the ServerID config should be random on each startup. This could impact syncing on\n" +
+      MainConfig.yaml().setComment("Core.Server.RandomUUID", "#Whether the ServerID config should be random on each startup. This could impact syncing on\n" +
               "#restarts, but will not impact anything significant.");
+
+      try {
+        MainConfig.yaml().save();
+      } catch(IOException e) {
+        logger.error("Issue while updating config.yml to config.yml", e, DebugLevel.OFF);
+      }
     } else {
       randomUUID = MainConfig.yaml().getBoolean("Core.Server.RandomUUID", false);
     }
 
+    //Added in build 28, needs removed by build 32.
+    if(!MainConfig.yaml().contains("Core.Server.ImportItems")) {
+      MainConfig.yaml().set("Core.Server.ImportItems", true);
+      MainConfig.yaml().setComment("Core.Server.ImportItems", "#Whether to import exist item currencies into a player's balance when they join for the first time.");
+
+      try {
+        MainConfig.yaml().save();
+      } catch(IOException e) {
+        logger.error("Issue while updating config.yml to config.yml", e, DebugLevel.OFF);
+      }
+    }
+
     if(!randomUUID) {
-      if(! MainConfig.yaml().contains("Core.ServerID")) {
+      if(!MainConfig.yaml().contains("Core.ServerID")) {
+
         serverID = UUID.randomUUID();
         MainConfig.yaml().set("Core.ServerID", serverID.toString());
         MainConfig.yaml().setComment("Core.ServerID", "#Don't modify unless you know what you're doing.");
+
         try {
           MainConfig.yaml().save();
         } catch(IOException e) {
-          logger.error("Issue while saving Server UUID to config.yml", e, DebugLevel.STANDARD);
+          logger.error("Issue while saving Server UUID to config.yml", e, DebugLevel.OFF);
         }
       } else {
         serverID = UUID.fromString(MainConfig.yaml().getString("Core.ServerID"));

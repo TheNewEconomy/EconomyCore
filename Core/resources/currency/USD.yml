@@ -7,6 +7,9 @@ Info:
   #The identifier of this currency used for various commands.
   Identifier: "USD"
 
+  #Whether to use the Identifier config as the currency's UUID. Not Recommended. Can lead to issues in the future
+  UUIDAsId: false
+
   #The material name to use as the icon for this currency in
   #the plugin menus.
   Icon: "PAPER"

@@ -22,6 +22,8 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.currency.CurrencyLoadCallback;
 import net.tnemc.core.api.callback.currency.DenominationLoadCallback;
 import net.tnemc.core.compatibility.helper.CraftingRecipe;
+import net.tnemc.core.compatibility.log.DebugLevel;
+import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyLoader;
 import net.tnemc.core.currency.CurrencyRegion;
@@ -147,12 +149,28 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     final BigDecimal minBalance = (type.get().supportsItems())? BigDecimal.ZERO : new BigDecimal(cur.getString("Options.MinBalance", "0.00"));
     final BigDecimal balance = new BigDecimal(cur.getString("Options.Balance", "200.00"));
 
+    //Added in build 28, needs removed by build 32.
+    boolean uuidAsId = false;
+    if(!cur.contains("Info.UUIDAsId")) {
+      cur.set("Info.UUIDAsId", false);
+      cur.setComment("Info.UUIDAsId", "#Whether to use the Identifier config as the currency's UUID. Not Recommended. Can lead to issues in the future");
+    } else {
+      uuidAsId = cur.getBoolean("Info.UUIDAsId");
+    }
+
     if(cur.contains("Info.UUID")) {
-      final UUID id = UUID.fromString(cur.getString("Info.UUID"));
+
+      final UUID check = UUID.fromString(identifier);
+
+      final UUID id = (uuidAsId && !cur.getString("Info.UUID").equalsIgnoreCase(check.toString()))? check : UUID.fromString(cur.getString("Info.UUID"));
+
+
       final Optional<Currency> curOption = TNECore.eco().currency().findCurrency(id);
       if(curOption.isEmpty()) {
         currency.setUid(UUID.fromString(cur.getString("Info.UUID")));
       }
+    } else {
+      currency.setUid(UUID.fromString(identifier));
     }
 
     currency.setIdentifier(identifier);
@@ -234,6 +252,12 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     }
 
     TNECore.eco().currency().addCurrency(currency);
+
+    try {
+      cur.save();
+    } catch(IOException e) {
+      TNECore.log().error("Failed to save currency YAML!", e, DebugLevel.OFF);
+    }
     return true;
   }
 

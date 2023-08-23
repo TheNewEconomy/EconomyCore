@@ -42,6 +42,9 @@ Core:
     #restarts, but will not impact anything significant.
     RandomUUID: false
 
+    #Whether to import exist item currencies into a player's balance when they join for the first time.
+    ImportItems: true
+
     #Should TNE disable mob drops that are valid item currencies?
     MobDrop: true
 
