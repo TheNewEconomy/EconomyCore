@@ -73,6 +73,12 @@ public class AccountManager {
    */
   protected final List<String> loading = new ArrayList<>();
 
+  /*
+   * List for players that are loading in, but need to have their item currency imported from the inventory
+   * not the DB since they are new, or the currency doesn't exist.
+   */
+  protected final List<String> importing = new ArrayList<>();
+
   /**
    * Used to create a new non-player account based on the provided name.
    * @param name The name to use for this account.
@@ -344,5 +350,9 @@ public class AccountManager {
 
   public List<String> getLoading() {
     return loading;
+  }
+
+  public List<String> getImporting() {
+    return importing;
   }
 }

@@ -79,7 +79,7 @@ public class EnderChestHandler implements HoldingsHandler {
   public boolean setHoldings(Account account, String region, Currency currency, CurrencyType type, BigDecimal amount) {
     account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, identifier()));
 
-    if(account.isPlayer() && TNECore.server().online(account.getIdentifier())) {
+    if(account.isPlayer() && TNECore.server().online(account.getIdentifier()) && !TNECore.eco().account().getImporting().contains(((PlayerAccount)account).getUUID().toString())) {
       final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
                                                                  ((PlayerAccount)account).getPlayer()
                                                                      .get().inventory().getInventory(true),
@@ -105,7 +105,8 @@ public class EnderChestHandler implements HoldingsHandler {
   public HoldingsEntry getHoldings(Account account, String region, Currency currency, CurrencyType type) {
     if((currency instanceof ItemCurrency) && account.isPlayer()) {
       if(!TNECore.server().online(account.getIdentifier()) ||
-          TNECore.eco().account().getLoading().contains(((PlayerAccount)account).getUUID().toString())) {
+          TNECore.eco().account().getLoading().contains(((PlayerAccount)account).getUUID().toString())
+                  && !TNECore.eco().account().getImporting().contains(((PlayerAccount)account).getUUID().toString())) {
 
         //Offline players have their balances saved to their wallet so check it.
         final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,

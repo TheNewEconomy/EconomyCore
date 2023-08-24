@@ -93,6 +93,22 @@ public class PlayerJoinHandler {
 
           if(currency.type().supportsItems()) {
 
+            if(MainConfig.yaml().getBoolean("Core.Server.ImportItems", true)
+                    && acc.get().getWallet().getHoldings(region).isEmpty()
+                    || MainConfig.yaml().getBoolean("Core.Server.ImportItems", true)
+                    && acc.get().getWallet().getHoldings(region).get().getHoldingsEntry(currency.getUid()).isEmpty()) {
+
+              TNECore.eco().account().getImporting().add(id);
+
+              for(HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
+
+                acc.get().setHoldings(entry, entry.getHandler());
+              }
+
+              TNECore.eco().account().getImporting().remove(id);
+              continue;
+            }
+
             for(HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
 
               acc.get().setHoldings(entry, entry.getHandler());
