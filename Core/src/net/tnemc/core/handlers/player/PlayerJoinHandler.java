@@ -78,8 +78,23 @@ public class PlayerJoinHandler {
     if(acc.isPresent()) {
 
       if(firstJoin) {
+        final String region = TNECore.eco().region().getMode().region(provider);
         for(Currency currency : TNECore.eco().currency().currencies()) {
-          acc.get().setHoldings(new HoldingsEntry(TNECore.eco().region().getMode().region(provider),
+
+          if(currency.type().supportsItems() && MainConfig.yaml().getBoolean("Core.Server.ImportItems", true)) {
+
+            TNECore.eco().account().getImporting().add(id);
+
+            for(HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
+
+              acc.get().setHoldings(entry, entry.getHandler());
+            }
+
+            TNECore.eco().account().getImporting().remove(id);
+            continue;
+          }
+
+          acc.get().setHoldings(new HoldingsEntry(region,
                                                   currency.getUid(),
                                                   currency.getStartingHoldings(),
                                                   EconomyManager.NORMAL
@@ -93,11 +108,14 @@ public class PlayerJoinHandler {
 
           if(currency.type().supportsItems()) {
 
+            /*System.out.println("Region: " + acc.get().getWallet().getHoldings(region).isEmpty());
+            System.out.println("Currency: " + !acc.get().getWallet().getHoldings(region).get().getHoldings().containsKey(currency.getUid()));
             if(MainConfig.yaml().getBoolean("Core.Server.ImportItems", true)
                     && acc.get().getWallet().getHoldings(region).isEmpty()
                     || MainConfig.yaml().getBoolean("Core.Server.ImportItems", true)
-                    && acc.get().getWallet().getHoldings(region).get().getHoldingsEntry(currency.getUid()).isEmpty()) {
+                    && !acc.get().getWallet().getHoldings(region).get().getHoldings().containsKey(currency.getUid())) {
 
+              System.out.println("Importing Item Currency.");
               TNECore.eco().account().getImporting().add(id);
 
               for(HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
@@ -107,7 +125,7 @@ public class PlayerJoinHandler {
 
               TNECore.eco().account().getImporting().remove(id);
               continue;
-            }
+            }*/
 
             for(HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
 

@@ -38,6 +38,7 @@ import org.simpleyaml.configuration.file.YamlFile;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -158,9 +159,11 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       uuidAsId = cur.getBoolean("Info.UUIDAsId");
     }
 
+
+    final UUID check = UUID.nameUUIDFromBytes(identifier.getBytes(StandardCharsets.UTF_8));
     if(cur.contains("Info.UUID")) {
 
-      final UUID check = UUID.fromString(identifier);
+      System.out.println("UUIDASID: " + uuidAsId);
 
       final UUID id = (uuidAsId && !cur.getString("Info.UUID").equalsIgnoreCase(check.toString()))? check : UUID.fromString(cur.getString("Info.UUID"));
 
@@ -170,7 +173,9 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
         currency.setUid(UUID.fromString(cur.getString("Info.UUID")));
       }
     } else {
-      currency.setUid(UUID.fromString(identifier));
+      if(uuidAsId) {
+        currency.setUid(check);
+      }
     }
 
     currency.setIdentifier(identifier);
