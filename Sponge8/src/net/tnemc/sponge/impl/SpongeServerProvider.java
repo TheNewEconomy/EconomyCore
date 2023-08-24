@@ -227,12 +227,12 @@ public class SpongeServerProvider implements ServerConnector {
   public void saveResource(String resourcePath, boolean replace) {
     if (resourcePath != null && !resourcePath.equals("")) {
       resourcePath = resourcePath.replace('\\', '/');
-      LogProvider logger = SpongeCore.log();
+      final LogProvider logger = SpongeCore.log();
       InputStream in = this.getResource(resourcePath);
       if (in == null) {
         throw new IllegalArgumentException("The embedded resource '" + resourcePath + "' cannot be found in the jar.");
       } else {
-        File outFile = new File(SpongeCore.directory(), resourcePath);
+        final File outFile = new File(SpongeCore.directory(), resourcePath);
         int lastIndex = resourcePath.lastIndexOf(47);
         File outDir = new File(SpongeCore.directory(), resourcePath.substring(0, lastIndex >= 0 ? lastIndex : 0));
         if (!outDir.exists()) {
@@ -241,8 +241,8 @@ public class SpongeServerProvider implements ServerConnector {
 
         try {
           if (outFile.exists() && !replace) {
-            Level var10001 = Level.WARNING;
-            String var10002 = outFile.getName();
+            final Level var10001 = Level.WARNING;
+            final String var10002 = outFile.getName();
             //logger.log(var10001, "Could not save " + var10002 + " to " + outFile + " because " + outFile.getName() + " already exists.");
           } else {
             OutputStream out = new FileOutputStream(outFile);

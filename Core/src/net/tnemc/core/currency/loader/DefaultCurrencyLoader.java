@@ -163,8 +163,6 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     final UUID check = UUID.nameUUIDFromBytes(identifier.getBytes(StandardCharsets.UTF_8));
     if(cur.contains("Info.UUID")) {
 
-      System.out.println("UUIDASID: " + uuidAsId);
-
       final UUID id = (uuidAsId && !cur.getString("Info.UUID").equalsIgnoreCase(check.toString()))? check : UUID.fromString(cur.getString("Info.UUID"));
 
 
