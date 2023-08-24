@@ -17,6 +17,7 @@ package net.tnemc.core.io.storage.datables.yaml;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.CurrencyHoldings;
@@ -184,6 +185,10 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
                 continue;
               }
               for(final String currency : main.getConfigurationSection(server + "." + region).getKeys(false)) {
+
+                if(TNECore.eco().currency().findCurrency(currency).isEmpty()) {
+                  EconomyManager.invalidCurrencies().add(currency);
+                }
 
                 if(!main.contains(server + "." + region + "." + currency)) {
                   continue;

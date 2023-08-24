@@ -33,8 +33,10 @@ import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.region.RegionProvider;
 import net.tnemc.core.utils.Identifier;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -64,6 +66,8 @@ public class EconomyManager {
   public static final Identifier E_CHEST = new Identifier("tne", "ENDER_HOLDINGS");
 
   private final LinkedHashMap<String, HoldingsHandler> handlers = new LinkedHashMap<>();
+
+  private final List<String> invalidCurrencies = new ArrayList<>();
 
   private final Map<String, Identifier> ids = new ConcurrentHashMap<>();
 
@@ -162,5 +166,17 @@ public class EconomyManager {
 
   public static EconomyManager instance() {
     return instance;
+  }
+
+  public static List<String> invalidCurrencies() {
+    return instance.invalidCurrencies;
+  }
+
+  public void printInvalid() {
+    if(invalidCurrencies.size() > 0) {
+      for(final String currency : invalidCurrencies) {
+        TNECore.log().inform("Account Balances found for non existent currency ID: " + currency);
+      }
+    }
   }
 }

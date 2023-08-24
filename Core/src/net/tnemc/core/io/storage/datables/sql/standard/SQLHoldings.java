@@ -18,6 +18,7 @@ package net.tnemc.core.io.storage.datables.sql.standard;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.CurrencyHoldings;
@@ -147,9 +148,15 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
                                                                     })) {
         while(result.next()) {
 
+          final String currency = result.getString("currency");
+
+          if(TNECore.eco().currency().findCurrency(currency).isEmpty()) {
+            EconomyManager.invalidCurrencies().add(currency);
+          }
+
           //region, currency, amount, type
           final HoldingsEntry entry = new HoldingsEntry(result.getString("region"),
-                                                        UUID.fromString(result.getString("currency")),
+                                                        UUID.fromString(currency),
                                                         result.getBigDecimal("holdings"),
                                                         Identifier.fromID(result.getString("holdings_type")));
 
