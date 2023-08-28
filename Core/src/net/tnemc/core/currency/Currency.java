@@ -62,6 +62,7 @@ public class Currency {
   private String symbol;
   private String prefixes;
   private String decimal;
+
   private String display;
   private String displayPlural;
   private String displayMinor;

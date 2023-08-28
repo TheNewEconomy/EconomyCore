@@ -231,8 +231,8 @@ public class AdminCommand {
         }
 
         final AccountAPIResponse response = TNECore.eco().account().createAccount(id.toString(), username, nonPlayer);
-        if(!response.getResponse().success() || response.getAccount().isEmpty()) {
-          TNECore.log().inform("Couldn't create account for " + username + ". Skipping.", DebugLevel.OFF);
+        if(response.getAccount().isEmpty()) {
+          TNECore.log().inform("Couldn't create account for " + username + ". Reason: " + response.getResponse().response(), DebugLevel.OFF);
           continue;
         }
 

@@ -77,7 +77,7 @@ public class PlayerJoinHandler {
     final String id = provider.identifier().toString();
     if(acc.isPresent()) {
 
-      if(firstJoin) {
+      if(firstJoin || acc.get().getCreationDate() == ((PlayerAccount)acc.get()).getLastOnline()) {
         final String region = TNECore.eco().region().getMode().region(provider);
         for(Currency currency : TNECore.eco().currency().currencies()) {
 

@@ -45,7 +45,7 @@ public class PlayerAccount extends Account {
     this.uuid = identifier;
 
     //Defaults
-    this.lastOnline = new Date().getTime();
+    this.lastOnline = creationDate;
     this.language = "TNE_DEFAULT";
   }
 
