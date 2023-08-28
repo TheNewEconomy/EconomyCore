@@ -23,7 +23,6 @@ import net.tnemc.core.api.callback.currency.CurrencyLoadCallback;
 import net.tnemc.core.api.callback.currency.DenominationLoadCallback;
 import net.tnemc.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.core.compatibility.log.DebugLevel;
-import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyLoader;
 import net.tnemc.core.currency.CurrencyRegion;
