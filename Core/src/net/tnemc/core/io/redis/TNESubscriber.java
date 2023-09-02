@@ -17,6 +17,7 @@ package net.tnemc.core.io.redis;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import redis.clients.jedis.BinaryJedisPubSub;
 
 /**
@@ -26,4 +27,10 @@ import redis.clients.jedis.BinaryJedisPubSub;
  * @since 0.1.2.0
  */
 public class TNESubscriber extends BinaryJedisPubSub {
+
+  @Override
+  public void onMessage(byte[] channel, byte[] message) {
+    super.onMessage(channel, message);
+    TNECore.instance().getChannelMessageManager().handle("tne:balance", message);
+  }
 }

@@ -44,7 +44,7 @@ public class BalanceHandler extends ChannelMessageHandler {
   }
 
   public static void send(final String account, String region, UUID currency, Identifier handler, BigDecimal amount) {
-    ByteArrayDataOutput out = ByteStreams.newDataOutput();
+    final ByteArrayDataOutput out = ByteStreams.newDataOutput();
     out.writeUTF(TNECore.instance().getServerID().toString());
     out.writeUTF(account);
     out.writeUTF(region);
@@ -52,7 +52,7 @@ public class BalanceHandler extends ChannelMessageHandler {
     out.writeUTF(handler.asID());
     out.writeUTF(amount.toPlainString());
 
-    TNECore.server().proxy().send("tne:balance", out.toByteArray());
+    TNECore.storage().sendMessage("tne:balance", out.toByteArray());
   }
 
   @Override

@@ -40,7 +40,7 @@ public class SyncHandler extends ChannelMessageHandler {
     out.writeUTF(TNECore.instance().getServerID().toString());
     out.writeUTF(account);
 
-    TNECore.server().proxy().send("tne:sync", out.toByteArray());
+    TNECore.storage().sendMessage("tne:sync", out.toByteArray());
   }
 
   @Override

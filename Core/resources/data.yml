@@ -30,6 +30,12 @@ Data:
       #The redis DB index
       Index: 1
 
+      #The amount of time before timeout.
+      Timeout: 2000
+
+      #Whether to use SSL.
+      SSL: false
+
       #Settings related to the redis connection pool
       Pool:
 
@@ -38,6 +44,9 @@ Data:
 
         #The max idle amount.
         MaxIdle: 10
+
+        #The min idle amount
+        MinIdle: 1
 
 
   #Configurations relating to purging old data.

@@ -25,6 +25,7 @@ import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.compatibility.scheduler.ChoreExecution;
 import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.config.DataConfig;
+import net.tnemc.core.io.redis.TNEJedisManager;
 import net.tnemc.core.io.storage.connect.SQLConnector;
 import net.tnemc.core.io.storage.connect.YAMLConnector;
 import net.tnemc.core.io.storage.dialect.MariaDialect;
@@ -54,10 +55,24 @@ public class StorageManager {
   private static StorageManager instance;
   private StorageEngine engine;
   private final StorageConnector<?> connector;
+  private final TNEJedisManager jedisManager;
 
+  final String sync;
 
   public StorageManager() {
     instance = this;
+
+    if(DataConfig.yaml().contains("Data.Sync")) {
+
+      sync = DataConfig.yaml().getString("Data.Sync.Type", "Bungee");
+      switch(sync.toLowerCase()) {
+        case "jedis" -> this.jedisManager = new TNEJedisManager();
+        default -> this.jedisManager = null;
+      }
+    } else {
+      sync = "Bungee";
+      this.jedisManager = null;
+    }
 
     final String engine = DataConfig.yaml().getString("Data.Database.Type");
 
@@ -103,6 +118,18 @@ public class StorageManager {
     }
 
     initialize();
+  }
+
+  public void sendMessage(final String channel, final byte[] data) {
+    switch(sync.toLowerCase()) {
+      case "redis":
+        if(jedisManager != null) {
+          jedisManager.publish(channel, data);
+        }
+        break;
+      default:
+        TNECore.server().proxy().send(channel, data);
+    }
   }
 
   public boolean meetsRequirement() {
