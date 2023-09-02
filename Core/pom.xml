@@ -166,6 +166,7 @@
                             <include>org.json.simple:*</include>
                             <include>net.tnemc:*</include>
                             <include>com.zaxxer:*</include>
+                            <include>redis.clients:*</include>
                             <include>org.yaml:*</include>
                             <include>me.carleslc.Simple-YAML:*</include>
                             <include>co.aikar:*</include>

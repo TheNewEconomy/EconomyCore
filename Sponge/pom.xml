@@ -92,6 +92,7 @@
                             <include>org.yaml:*</include>
                             <include>me.carleslc.Simple-YAML:*</include>
                             <include>com.zaxxer:*</include>
+                            <include>redis.clients:*</include>
                             <include>co.aikar:*</include>
                             <include>cloud.commandframework:*</include>
                             <include>net.kyori:*</include>
@@ -99,6 +100,10 @@
                         </includes>
                     </artifactSet>
                     <relocations>
+                        <relocation>
+                            <pattern>redis.clients</pattern>
+                            <shadedPattern>${tne.relocation}.jedis</shadedPattern>
+                        </relocation>
                         <relocation>
                             <pattern>org.json.simple</pattern>
                             <shadedPattern>${tne.relocation}.json</shadedPattern>
