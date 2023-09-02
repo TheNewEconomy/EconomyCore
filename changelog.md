@@ -4,3 +4,4 @@
   - This is now taken into account for ImportItems config in config.yml
 - Add TNK Account Types for alpha testing The New Kings
   - Adds Village, Kingdom, Pact, Camp types
+- Added Redis Support. This will allow data syncing without the need for bungee
