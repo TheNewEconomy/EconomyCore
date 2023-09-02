@@ -137,8 +137,6 @@ Formatting:
   #The separator to use for numeric separation.
   Major_Separator: ','
 
-
-
 #All configurations relating to currency notes.
 Note:
 

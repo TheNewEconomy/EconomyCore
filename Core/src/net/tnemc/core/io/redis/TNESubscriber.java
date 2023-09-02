@@ -1,4 +1,4 @@
-package net.tnemc.core.channel.handlers;
+package net.tnemc.core.io.redis;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,35 +17,20 @@ package net.tnemc.core.channel.handlers;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
 import net.tnemc.core.TNECore;
-import net.tnemc.core.channel.ChannelBytesWrapper;
-import net.tnemc.core.channel.ChannelMessageHandler;
+import redis.clients.jedis.BinaryJedisPubSub;
 
 /**
- * SyncHandler
+ * TNESubscriber
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class SyncHandler extends ChannelMessageHandler {
-
-  public SyncHandler() {
-    super("sync");
-  }
-
-  public static void send(String account) {
-    ByteArrayDataOutput out = ByteStreams.newDataOutput();
-    out.writeUTF(TNECore.instance().getServerID().toString());
-    out.writeUTF(account);
-
-    TNECore.storage().sendMessage("tne:sync", out.toByteArray());
-  }
+public class TNESubscriber extends BinaryJedisPubSub {
 
   @Override
-  public void handle(ChannelBytesWrapper wrapper) {
-
-    //This will never come into the server by design.
+  public void onMessage(byte[] channel, byte[] message) {
+    super.onMessage(channel, message);
+    TNECore.instance().getChannelMessageManager().handle("tne:balance", message);
   }
 }

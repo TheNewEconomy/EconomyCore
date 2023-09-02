@@ -6,6 +6,49 @@ Data:
   #DO NOT MODIFY
   Version: "0.1.2.0"
 
+  #Configurations related to syncing data across servers.
+  Sync:
+
+    #The data syncing method to utilize. Options: Bungee, Redis
+    Type: Bungee
+
+    #Configurations relating to redis.
+    Redis:
+
+      #The redis host
+      Host: "localhost"
+
+      #The redis port
+      Port: 6379
+
+      #Your redis user's name
+      User: "user"
+
+      #Your redis user's password
+      Password: "password"
+
+      #The redis DB index
+      Index: 1
+
+      #The amount of time before timeout.
+      Timeout: 2000
+
+      #Whether to use SSL.
+      SSL: false
+
+      #Settings related to the redis connection pool
+      Pool:
+
+        #The max size of our pool.
+        MaxSize: 10
+
+        #The max idle amount.
+        MaxIdle: 10
+
+        #The min idle amount
+        MinIdle: 1
+
+
   #Configurations relating to purging old data.
   Purge:
 
