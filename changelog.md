@@ -5,3 +5,5 @@
 - Add TNK Account Types for alpha testing The New Kings
   - Adds Village, Kingdom, Pact, Camp types
 - Added Redis Support. This will allow data syncing without the need for bungee
+- Added a currency template module(requested by stoffeh)
+  - This contains some example pre-configured commonly used currency setups for TNE.
