@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/Bukkit/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Bukkit/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Bungee/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Bungee/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Core/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Currency Templates/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Currency Templates/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Folia/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Folia/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/PaperCore/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/PaperCore/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Sponge/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Sponge/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Sponge8/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Sponge8/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Velocity/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Velocity/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

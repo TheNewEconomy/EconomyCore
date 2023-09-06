@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="VelocityCore" />
+        <module name="BukkitCore" />
+        <module name="Folia" />
+        <module name="EconomyCore" />
+        <module name="Sponge8Core" />
+        <module name="Paper" />
+        <module name="BungeeCore" />
+        <module name="TNETemplates" />
+        <module name="SpongeCore" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="1.8" />
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="BukkitCore" options="--enable-preview" />
+      <module name="BungeeCore" options="--enable-preview" />
+      <module name="EconomyCore" options="--enable-preview" />
+      <module name="Folia" options="--enable-preview" />
+      <module name="Paper" options="--enable-preview" />
+      <module name="Sponge8Core" options="--enable-preview" />
+      <module name="SpongeCore" options="--enable-preview" />
+      <module name="VelocityCore" options="--enable-preview" />
+    </option>
+  </component>
+</project>
