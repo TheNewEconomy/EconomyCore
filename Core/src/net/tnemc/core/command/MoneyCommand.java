@@ -199,6 +199,7 @@ public class MoneyCommand extends BaseCommand {
     if(receipt.isPresent()) {
       final MessageData data = new MessageData("Messages.Money.Gave");
       data.addReplacement("$player", player.getName());
+      data.addReplacement("$currency", currency.getIdentifier());
       data.addReplacement("$amount", CurrencyFormatter.format(player,
                                                               modifier.asEntry()));
       sender.message(data);
@@ -209,6 +210,8 @@ public class MoneyCommand extends BaseCommand {
 
         if(provider.isPresent()) {
           final MessageData msgData = new MessageData("Messages.Money.Given");
+          msgData.addReplacement("$currency", currency.getIdentifier());
+          msgData.addReplacement("$player", (sender.name() == null)? MainConfig.yaml().getString("Core.Server.Account.Name") : sender.name());
           msgData.addReplacement("$amount", CurrencyFormatter.format(player,
                                                                      modifier.asEntry()));
           provider.get().message(msgData);
@@ -381,6 +384,7 @@ public class MoneyCommand extends BaseCommand {
     if(receipt.isPresent()) {
       final MessageData data = new MessageData("Messages.Money.Paid");
       data.addReplacement("$player", player.getName());
+      data.addReplacement("$currency", currency.getIdentifier());
       data.addReplacement("$amount", CurrencyFormatter.format(player,
                                                               modifier.asEntry()));
       sender.message(data);
@@ -391,7 +395,7 @@ public class MoneyCommand extends BaseCommand {
         if(provider.isPresent()) {
 
           final MessageData msgData = new MessageData("Messages.Money.Received");
-          data.addReplacement("$player", sender.name());
+          msgData.addReplacement("$player", (sender.name() == null)? MainConfig.yaml().getString("Core.Server.Account.Name") : sender.name());
           msgData.addReplacement("$amount", CurrencyFormatter.format(player,
                                                                      modifier.asEntry()));
           provider.get().message(msgData);
@@ -422,7 +426,7 @@ public class MoneyCommand extends BaseCommand {
 
     final MessageData request = new MessageData("Messages.Money.Request");
     request.addReplacement("$player", sender.name());
-    msg.addReplacement("$amount", amount.toPlainString());
+    request.addReplacement("$amount", amount.toPlainString());
     request.addReplacement("$currency", currency.getIdentifier());
     provider.get().message(request);
   }
@@ -447,6 +451,7 @@ public class MoneyCommand extends BaseCommand {
     if(receipt.isPresent()) {
       final MessageData msg = new MessageData("Messages.Money.Set");
       msg.addReplacement("$player", player.getName());
+      msg.addReplacement("$currency", currency.getIdentifier());
       msg.addReplacement("$amount", CurrencyFormatter.format(player,
                                                              modifier.asEntry())
       );
@@ -475,9 +480,16 @@ public class MoneyCommand extends BaseCommand {
       if(receipt.isPresent()) {
         final MessageData msg = new MessageData("Messages.Money.Set");
         msg.addReplacement("$player", account.getName());
+        msg.addReplacement("$currency", currency.getIdentifier());
         msg.addReplacement("$amount", CurrencyFormatter.format(account,
                                                                modifier.asEntry())
         );
+
+        msg.addReplacements(new String[] {
+                ""
+        }, new String[] {
+
+        });
         sender.message(msg);
         return;
       }
@@ -503,6 +515,7 @@ public class MoneyCommand extends BaseCommand {
     if(receipt.isPresent()) {
       final MessageData data = new MessageData("Messages.Money.Took");
       data.addReplacement("$player", player.getName());
+      data.addReplacement("$currency", currency.getIdentifier());
       data.addReplacement("$amount", CurrencyFormatter.format(player,
                                                               modifier.asEntry()));
       sender.message(data);
@@ -513,7 +526,8 @@ public class MoneyCommand extends BaseCommand {
 
         if(provider.isPresent()) {
           final MessageData msgData = new MessageData("Messages.Money.Taken");
-          data.addReplacement("$player", sender.name());
+          msgData.addReplacement("$player", (sender.name() == null)? MainConfig.yaml().getString("Core.Server.Account.Name") : sender.name());
+          msgData.addReplacement("$currency", currency.getIdentifier());
           msgData.addReplacement("$amount", CurrencyFormatter.format(player,
                                                                      modifier.asEntry()));
           provider.get().message(msgData);
@@ -594,6 +608,7 @@ public class MoneyCommand extends BaseCommand {
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()) {
       final MessageData data = new MessageData("Messages.Money.Withdrawn");
+      data.addReplacement("$currency", currency.getIdentifier());
       data.addReplacement("$amount", CurrencyFormatter.format(senderAccount.get(),
               modifier.asEntry()));
       sender.message(data);

@@ -41,6 +41,15 @@ public class MessageData {
     this.replacements.put(search, replacement);
   }
 
+  public void addReplacements(final String[] search, final String[] replacements) {
+    if(search.length != replacements.length) return;
+
+    for(int i = 0; i < search.length; i++) {
+
+      this.replacements.put(search[i], replacements[i]);
+    }
+  }
+
   public Map<String, String> getReplacements() {
     return replacements;
   }
