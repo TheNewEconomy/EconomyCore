@@ -21,6 +21,7 @@ package net.tnemc.bukkit.command;
 import net.tnemc.bukkit.impl.BukkitCMDSource;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.command.BaseCommand;
+import net.tnemc.core.command.parameters.PercentBigDecimal;
 import net.tnemc.core.currency.Currency;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
@@ -72,7 +73,7 @@ public class MoneyCommand {
   @Usage("Money.Convert.Arguments")
   @Description("Money.Convert.Description")
   @CommandPermission("tne.money.convert")
-  public void onConvert(BukkitCommandActor sender, @Named("amount") BigDecimal amount, @Named("currency") Currency currency, @Named("currency") Currency from) {
+  public void onConvert(BukkitCommandActor sender, @Named("amount") PercentBigDecimal amount, @Named("currency") Currency currency, @Named("currency") Currency from) {
     net.tnemc.core.command.MoneyCommand.onConvert(new BukkitCMDSource(sender), amount, currency, from);
   }
 
@@ -80,7 +81,7 @@ public class MoneyCommand {
   @Usage("Money.Deposit.Arguments")
   @Description("Money.Deposit.Description")
   @CommandPermission("tne.money.deposit")
-  public void onDeposit(BukkitCommandActor sender, @Named("amount") BigDecimal amount, @Default("") @Named("currency") Currency currency, @Default("world-113") @Named("region") String region) {
+  public void onDeposit(BukkitCommandActor sender, @Named("amount") PercentBigDecimal amount, @Default("") @Named("currency") Currency currency, @Default("world-113") @Named("region") String region) {
     net.tnemc.core.command.MoneyCommand.onDeposit(new BukkitCMDSource(sender), amount, currency, region);
   }
 
@@ -88,7 +89,7 @@ public class MoneyCommand {
   @Usage("Money.Give.Arguments")
   @Description("Money.Give.Description")
   @CommandPermission("tne.money.give")
-  public void onGive(BukkitCommandActor sender, Account player, @Named("amount") BigDecimal amount, @Default("") @Named("currency") Currency currency, @Default("world-113") @Named("region") String region) {
+  public void onGive(BukkitCommandActor sender, Account player, @Named("amount") PercentBigDecimal amount, @Default("") @Named("currency") Currency currency, @Default("world-113") @Named("region") String region) {
     net.tnemc.core.command.MoneyCommand.onGive(new BukkitCMDSource(sender), player, amount, region, currency);
   }
 
@@ -96,7 +97,7 @@ public class MoneyCommand {
   @Usage("Money.Note.Arguments")
   @Description("Money.Note.Description")
   @CommandPermission("tne.money.note")
-  public void onNote(BukkitCommandActor sender, @Named("amount") BigDecimal amount, @Default("") @Named("currency") Currency currency) {
+  public void onNote(BukkitCommandActor sender, @Named("amount") PercentBigDecimal amount, @Default("") @Named("currency") Currency currency) {
     net.tnemc.core.command.MoneyCommand.onNote(new BukkitCMDSource(sender), amount, currency);
   }
 
@@ -112,7 +113,7 @@ public class MoneyCommand {
   @Usage("Money.Pay.Arguments")
   @Description("Money.Pay.Description")
   @CommandPermission("tne.money.pay")
-  public void onPay(BukkitCommandActor sender, Account player, @Named("amount") BigDecimal amount, @Default("") @Named("currency") Currency currency, @Default("") String from) {
+  public void onPay(BukkitCommandActor sender, Account player, @Named("amount") PercentBigDecimal amount, @Default("") @Named("currency") Currency currency, @Default("") String from) {
     net.tnemc.core.command.MoneyCommand.onPay(new BukkitCMDSource(sender), player, amount, currency, from);
   }
 
@@ -144,7 +145,7 @@ public class MoneyCommand {
   @Usage("Money.Take.Arguments")
   @Description("Money.Take.Description")
   @CommandPermission("tne.money.take")
-  public void onTake(BukkitCommandActor sender, Account player, @Named("amount") BigDecimal amount, @Default("") @Named("currency") Currency currency, @Default("world-113") @Named("region") String region) {
+  public void onTake(BukkitCommandActor sender, Account player, @Named("amount") PercentBigDecimal amount, @Default("") @Named("currency") Currency currency, @Default("world-113") @Named("region") String region) {
     net.tnemc.core.command.MoneyCommand.onTake(new BukkitCMDSource(sender), player, amount, region, currency);
   }
 
@@ -160,7 +161,7 @@ public class MoneyCommand {
   @Usage("Money.Withdraw.Arguments")
   @Description("Money.Withdraw.Description")
   @CommandPermission("tne.money.withdraw")
-  public void onWithdraw(BukkitCommandActor sender, @Named("amount") BigDecimal amount, @Default("") @Named("currency") Currency currency, @Default("world-113") @Named("region") String region) {
+  public void onWithdraw(BukkitCommandActor sender, @Named("amount") PercentBigDecimal amount, @Default("") @Named("currency") Currency currency, @Default("world-113") @Named("region") String region) {
     net.tnemc.core.command.MoneyCommand.onWithdraw(new BukkitCMDSource(sender), amount, currency, region);
   }
 }

@@ -21,6 +21,7 @@ package net.tnemc.core.account.holdings.modify;
 import net.tnemc.core.EconomyManager;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.command.parameters.PercentBigDecimal;
 import net.tnemc.core.utils.Identifier;
 
 import java.math.BigDecimal;
@@ -39,6 +40,7 @@ public class HoldingsModifier {
   private BigDecimal modifier;
   private final HoldingsOperation operation;
   private final Identifier holdingsID;
+  private boolean percent = false;
 
   /**
    * Represents an object that may be utilized to modify an {@link Account account's} holdings. This
@@ -67,6 +69,29 @@ public class HoldingsModifier {
    * @param currency The currency to use for the modification.
    * @param modifier The amount we are utilizing to modify the holdings. This may be negative to
    *                 take the holdings down.
+   */
+  public HoldingsModifier(final String region, final UUID currency, final PercentBigDecimal modifier) {
+    this.region = region;
+    this.currency = currency;
+    this.modifier = modifier.value();
+
+    if(modifier.isPercent()) {
+      this.operation = HoldingsOperation.PERCENT_ADD;
+    } else {
+      this.operation = HoldingsOperation.ADD;
+    }
+    this.holdingsID = EconomyManager.NORMAL;
+  }
+
+  /**
+   * Represents an object that may be utilized to modify an {@link Account account's} holdings. This
+   * class is able to then be applied directly to the holdings of an account.
+   *
+   * @param region The name of the region involved. This is usually a world, but could be something
+   *               else such as a world guard region name/identifier.
+   * @param currency The currency to use for the modification.
+   * @param modifier The amount we are utilizing to modify the holdings. This may be negative to
+   *                 take the holdings down.
    * @param id The {@link Identifier} for the holdings type to perform this transaction on.
    */
   public HoldingsModifier(final String region, final UUID currency, final BigDecimal modifier, final Identifier id) {
@@ -74,6 +99,30 @@ public class HoldingsModifier {
     this.currency = currency;
     this.modifier = modifier;
     this.operation = HoldingsOperation.ADD;
+    this.holdingsID = id;
+  }
+
+  /**
+   * Represents an object that may be utilized to modify an {@link Account account's} holdings. This
+   * class is able to then be applied directly to the holdings of an account.
+   *
+   * @param region The name of the region involved. This is usually a world, but could be something
+   *               else such as a world guard region name/identifier.
+   * @param currency The currency to use for the modification.
+   * @param modifier The amount we are utilizing to modify the holdings. This may be negative to
+   *                 take the holdings down.
+   * @param id The {@link Identifier} for the holdings type to perform this transaction on.
+   */
+  public HoldingsModifier(final String region, final UUID currency, final PercentBigDecimal modifier, final Identifier id) {
+    this.region = region;
+    this.currency = currency;
+    this.modifier = modifier.value();
+
+    if(modifier.isPercent()) {
+      this.operation = HoldingsOperation.PERCENT_ADD;
+    } else {
+      this.operation = HoldingsOperation.ADD;
+    }
     this.holdingsID = id;
   }
 
@@ -203,5 +252,13 @@ public class HoldingsModifier {
 
   public HoldingsEntry asEntry() {
     return new HoldingsEntry(region, currency, modifier, EconomyManager.NORMAL);
+  }
+
+  public boolean isPercent() {
+    return percent;
+  }
+
+  public void setPercent(boolean percent) {
+    this.percent = percent;
   }
 }

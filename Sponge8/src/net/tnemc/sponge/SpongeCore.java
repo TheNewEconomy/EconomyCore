@@ -22,10 +22,12 @@ import com.google.inject.Inject;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.AccountStatus;
+import net.tnemc.core.command.parameters.PercentBigDecimal;
 import net.tnemc.core.command.parameters.resolver.AccountResolver;
 import net.tnemc.core.command.parameters.resolver.BigDecimalResolver;
 import net.tnemc.core.command.parameters.resolver.CurrencyResolver;
 import net.tnemc.core.command.parameters.resolver.DebugResolver;
+import net.tnemc.core.command.parameters.resolver.PercentDecimalResolver;
 import net.tnemc.core.command.parameters.resolver.StatusResolver;
 import net.tnemc.core.command.parameters.suggestion.AccountSuggestion;
 import net.tnemc.core.command.parameters.suggestion.CurrencySuggestion;
@@ -101,6 +103,7 @@ public class SpongeCore extends TNECore {
     command.registerValueResolver(AccountStatus.class, new StatusResolver());
     command.registerValueResolver(DebugLevel.class, new DebugResolver());
     command.registerValueResolver(Currency.class, new CurrencyResolver());
+    command.registerValueResolver(PercentBigDecimal.class, new PercentDecimalResolver());
     command.registerValueResolver(BigDecimal.class, new BigDecimalResolver());
 
     //Annotation

@@ -26,6 +26,7 @@ import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.account.holdings.modify.HoldingsOperation;
 import net.tnemc.core.actions.source.PlayerSource;
+import net.tnemc.core.command.parameters.PercentBigDecimal;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.config.MainConfig;
@@ -82,8 +83,8 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <amount> <to currency> [from currency]
-  public static void onConvert(CmdSource<?> sender, BigDecimal amount, Currency currency, Currency fromCurrency) {
-    if(amount.compareTo(BigDecimal.ZERO) < 0) {
+  public static void onConvert(CmdSource<?> sender, PercentBigDecimal amount, Currency currency, Currency fromCurrency) {
+    if(amount.value().compareTo(BigDecimal.ZERO) < 0) {
       sender.message(new MessageData("Messages.Money.Negative"));
       return;
     }
@@ -101,7 +102,7 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    final Optional<BigDecimal> converted = fromCurrency.convertValue(currency.getIdentifier(), amount);
+    final Optional<BigDecimal> converted = fromCurrency.convertValue(currency.getIdentifier(), amount.value());
     if(converted.isEmpty()) {
       final MessageData data = new MessageData("Messages.Money.NoConversion");
       data.addReplacement("$converted", currency.getIdentifier());
@@ -116,7 +117,7 @@ public class MoneyCommand extends BaseCommand {
 
     final HoldingsModifier modifierFrom = new HoldingsModifier(sender.region(),
                                                                fromCurrency.getUid(),
-                                                               amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN).negate()
+                                                               amount.value().setScale(currency.getDecimalPlaces(), RoundingMode.DOWN).negate()
     );
 
     final Transaction transaction = new Transaction("convert")
@@ -128,7 +129,7 @@ public class MoneyCommand extends BaseCommand {
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()){
       final MessageData data = new MessageData("Messages.Money.Converted");
-      data.addReplacement("$from_amount", amount.toPlainString());
+      data.addReplacement("$from_amount", amount.value().toPlainString());
       data.addReplacement("$amount", CurrencyFormatter.format(account.get(),
                                                               modifierFrom.asEntry()));
       sender.message(data);
@@ -136,9 +137,9 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <amount> [currency]
-  public static void onDeposit(CmdSource<?> sender, BigDecimal amount, Currency currency, String region) {
+  public static void onDeposit(CmdSource<?> sender, PercentBigDecimal amount, Currency currency, String region) {
 
-    if(amount.compareTo(BigDecimal.ZERO) < 0) {
+    if(amount.value().compareTo(BigDecimal.ZERO) < 0) {
       sender.message(new MessageData("Messages.Money.Negative"));
       return;
     }
@@ -162,7 +163,7 @@ public class MoneyCommand extends BaseCommand {
 
     final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
             currency.getUid(),
-            amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN),
+            amount.value().setScale(currency.getDecimalPlaces(), RoundingMode.DOWN),
             EconomyManager.VIRTUAL
     );
 
@@ -182,13 +183,13 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> <amount> [world] [currency]
-  public static void onGive(CmdSource<?> sender, Account player, BigDecimal amount, String region, Currency currency) {
+  public static void onGive(CmdSource<?> sender, Account player, PercentBigDecimal amount, String region, Currency currency) {
 
     region = TNECore.eco().region().resolve(region);
 
     final HoldingsModifier modifier = new HoldingsModifier(region,
                                                            currency.getUid(),
-                                                           amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN));
+                                                           amount.value().setScale(currency.getDecimalPlaces(), RoundingMode.DOWN));
 
     final Transaction transaction = new Transaction("give")
         .to(player, modifier)
@@ -221,7 +222,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <amount> [currency]
-  public static void onNote(CmdSource<?> sender, BigDecimal amount, Currency currency) {
+  public static void onNote(CmdSource<?> sender, PercentBigDecimal amount, Currency currency) {
 
     final Optional<Account> account = sender.account();
     final Optional<Note> note = currency.getNote();
@@ -232,14 +233,14 @@ public class MoneyCommand extends BaseCommand {
         return;
       }
 
-      if(amount.compareTo(note.get().getMinimum()) < 0) {
+      if(amount.value().compareTo(note.get().getMinimum()) < 0) {
         final MessageData min = new MessageData("Messages.Note.Minimum");
         min.addReplacement("$amount", note.get().getMinimum().toPlainString());
         sender.message(min);
         return;
       }
 
-      final BigDecimal rounded = amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN);
+      final BigDecimal rounded = amount.value().setScale(currency.getDecimalPlaces(), RoundingMode.DOWN);
 
       final BigDecimal amt = rounded.add(note.get().getFee().calculateTax(rounded)).setScale(currency.getDecimalPlaces(), RoundingMode.DOWN);
 
@@ -314,9 +315,9 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> <amount> [currency] [from:account]
-  public static void onPay(CmdSource<?> sender, Account player, BigDecimal amount, Currency currency, String from) {
+  public static void onPay(CmdSource<?> sender, Account player, PercentBigDecimal amount, Currency currency, String from) {
 
-    if(amount.compareTo(BigDecimal.ZERO) < 0) {
+    if(amount.value().compareTo(BigDecimal.ZERO) < 0) {
       sender.message(new MessageData("Messages.Money.Negative"));
       return;
     }
@@ -371,7 +372,7 @@ public class MoneyCommand extends BaseCommand {
 
     final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
                                                            currency.getUid(),
-            amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN)
+            amount.value().setScale(currency.getDecimalPlaces(), RoundingMode.DOWN)
     );
 
     final Transaction transaction = new Transaction("pay")
@@ -497,13 +498,13 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> <amount> [world] [currency]
-  public static void onTake(CmdSource<?> sender, Account player, BigDecimal amount, String region, Currency currency) {
+  public static void onTake(CmdSource<?> sender, Account player, PercentBigDecimal amount, String region, Currency currency) {
 
     region = TNECore.eco().region().resolve(region);
 
     final HoldingsModifier modifier = new HoldingsModifier(region,
                                                            currency.getUid(),
-                                                           amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN)
+                                                           amount.value().setScale(currency.getDecimalPlaces(), RoundingMode.DOWN)
     );
 
     final Transaction transaction = new Transaction("take")
@@ -570,9 +571,9 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <amount> [currency]
-  public static void onWithdraw(CmdSource<?> sender, BigDecimal amount, Currency currency, String region) {
+  public static void onWithdraw(CmdSource<?> sender, PercentBigDecimal amount, Currency currency, String region) {
 
-    if(amount.compareTo(BigDecimal.ZERO) < 0) {
+    if(amount.value().compareTo(BigDecimal.ZERO) < 0) {
       sender.message(new MessageData("Messages.Money.Negative"));
       return;
     }
@@ -595,7 +596,7 @@ public class MoneyCommand extends BaseCommand {
 
     final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
             currency.getUid(),
-            amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN),
+            amount.value().setScale(currency.getDecimalPlaces(), RoundingMode.DOWN),
             EconomyManager.ITEM_ONLY
     );
 

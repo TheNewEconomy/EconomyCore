@@ -26,10 +26,12 @@ import net.tnemc.core.api.CallbackManager;
 import net.tnemc.core.api.TNEAPI;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.channel.ChannelMessageManager;
+import net.tnemc.core.command.parameters.PercentBigDecimal;
 import net.tnemc.core.command.parameters.resolver.AccountResolver;
 import net.tnemc.core.command.parameters.resolver.BigDecimalResolver;
 import net.tnemc.core.command.parameters.resolver.CurrencyResolver;
 import net.tnemc.core.command.parameters.resolver.DebugResolver;
+import net.tnemc.core.command.parameters.resolver.PercentDecimalResolver;
 import net.tnemc.core.command.parameters.resolver.StatusResolver;
 import net.tnemc.core.command.parameters.suggestion.AccountSuggestion;
 import net.tnemc.core.command.parameters.suggestion.CurrencySuggestion;
@@ -374,6 +376,7 @@ public abstract class TNECore {
     command.registerValueResolver(DebugLevel.class, new DebugResolver());
     command.registerValueResolver(Currency.class, new CurrencyResolver());
     command.registerValueResolver(BigDecimal.class, new BigDecimalResolver());
+    command.registerValueResolver(PercentBigDecimal.class, new PercentDecimalResolver());
 
     //Annotation
     command.getAutoCompleter().registerParameterSuggestions(AccountStatus.class, new StatusSuggestion());

@@ -18,6 +18,7 @@ package net.tnemc.sponge.command;
  */
 
 import net.tnemc.core.account.Account;
+import net.tnemc.core.command.parameters.PercentBigDecimal;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.sponge.impl.SpongeCMDSource;
 import revxrsal.commands.annotation.Command;
@@ -51,7 +52,7 @@ public class ShortCommands {
   @Usage("Money.Pay.Arguments")
   @Description("Money.Pay.Description")
   @CommandPermission("tne.money.pay")
-  public void onPay(SpongeCommandActor sender, Account player, BigDecimal amount, @Default("") Currency currency, @Default("") String from) {
+  public void onPay(SpongeCommandActor sender, Account player, PercentBigDecimal amount, @Default("") Currency currency, @Default("") String from) {
     net.tnemc.core.command.MoneyCommand.onPay(new SpongeCMDSource(sender), player, amount, currency, from);
   }
 }

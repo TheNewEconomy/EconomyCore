@@ -50,6 +50,18 @@ public enum HoldingsOperation {
       return value.multiply(modifier);
     }
   },
+  PERCENT_ADD {
+    @Override
+    public BigDecimal perform(final BigDecimal value, final BigDecimal modifier) {
+      return value.add(value.multiply(modifier));
+    }
+  },
+  PERCENT_SUBTRACT {
+    @Override
+    public BigDecimal perform(final BigDecimal value, final BigDecimal modifier) {
+      return value.subtract(value.multiply(modifier));
+    }
+  },
   SET {
     @Override
     public BigDecimal perform(final BigDecimal value, final BigDecimal modifier) {
