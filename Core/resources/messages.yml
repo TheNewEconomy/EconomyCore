@@ -71,6 +71,7 @@ Messages:
     Unloaded: "<white>Unloaded module '$module'."
 
   Money:
+    NotMixed: "<red>This action requires a mixed currency type."
     TypeOffline: "<red>This currency type does not allow offline interaction."
     NoConversion: "<red>This currency cannot be converted to $converted."
     Failed: "<red>Unable to process your transaction at this time."
