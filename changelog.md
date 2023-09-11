@@ -9,3 +9,5 @@
   - This contains some example pre-configured commonly used currency setups for TNE.
 - Added $currency, $player variables for /money give/take messages in messages.yml
 - Updated Turkish Translation(thanks to Colonel Kai)
+- Ability to do /money give/take as a %, example /money take 20% player
+- Fix issue where /money withdraw/deposit didn't throw message when not using a mixed currency type.

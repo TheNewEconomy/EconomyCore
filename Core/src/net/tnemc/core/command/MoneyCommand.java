@@ -156,8 +156,7 @@ public class MoneyCommand extends BaseCommand {
     region = TNECore.eco().region().resolve(region);
 
     if(!(currency.type() instanceof MixedType)) {
-
-      //Message not mixed currency type
+      sender.message(new MessageData("Messages.Money.NotMixed"));
       return;
     }
 
@@ -590,8 +589,7 @@ public class MoneyCommand extends BaseCommand {
     region = TNECore.eco().region().resolve(region);
 
     if(!(currency.type() instanceof MixedType)) {
-
-      //Message not mixed currency type
+      sender.message(new MessageData("Messages.Money.NotMixed"));
       return;
     }
 
