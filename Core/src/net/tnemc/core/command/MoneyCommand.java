@@ -163,7 +163,7 @@ public class MoneyCommand extends BaseCommand {
 
     final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
             currency.getUid(),
-            amount.value().setScale(currency.getDecimalPlaces(), RoundingMode.DOWN),
+            amount,
             EconomyManager.VIRTUAL
     );
 
@@ -189,7 +189,7 @@ public class MoneyCommand extends BaseCommand {
 
     final HoldingsModifier modifier = new HoldingsModifier(region,
                                                            currency.getUid(),
-                                                           amount.value().setScale(currency.getDecimalPlaces(), RoundingMode.DOWN));
+                                                           amount);
 
     final Transaction transaction = new Transaction("give")
         .to(player, modifier)
@@ -372,7 +372,7 @@ public class MoneyCommand extends BaseCommand {
 
     final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
                                                            currency.getUid(),
-            amount.value().setScale(currency.getDecimalPlaces(), RoundingMode.DOWN)
+            amount
     );
 
     final Transaction transaction = new Transaction("pay")
@@ -502,9 +502,10 @@ public class MoneyCommand extends BaseCommand {
 
     region = TNECore.eco().region().resolve(region);
 
+
     final HoldingsModifier modifier = new HoldingsModifier(region,
                                                            currency.getUid(),
-                                                           amount.value().setScale(currency.getDecimalPlaces(), RoundingMode.DOWN)
+                                                           amount
     );
 
     final Transaction transaction = new Transaction("take")
@@ -596,7 +597,7 @@ public class MoneyCommand extends BaseCommand {
 
     final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
             currency.getUid(),
-            amount.value().setScale(currency.getDecimalPlaces(), RoundingMode.DOWN),
+            amount,
             EconomyManager.ITEM_ONLY
     );
 
@@ -608,12 +609,12 @@ public class MoneyCommand extends BaseCommand {
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()) {
+
       final MessageData data = new MessageData("Messages.Money.Withdrawn");
       data.addReplacement("$currency", currency.getIdentifier());
       data.addReplacement("$amount", CurrencyFormatter.format(senderAccount.get(),
               modifier.asEntry()));
       sender.message(data);
-
     }
   }
 

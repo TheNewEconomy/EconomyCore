@@ -77,6 +77,7 @@ public class HoldingsModifier {
 
     if(modifier.isPercent()) {
       this.operation = HoldingsOperation.PERCENT_ADD;
+      this.percent = true;
     } else {
       this.operation = HoldingsOperation.ADD;
     }
@@ -120,6 +121,7 @@ public class HoldingsModifier {
 
     if(modifier.isPercent()) {
       this.operation = HoldingsOperation.PERCENT_ADD;
+      this.percent = true;
     } else {
       this.operation = HoldingsOperation.ADD;
     }
@@ -199,7 +201,10 @@ public class HoldingsModifier {
    * @return The new opposite holdings modifier object.
    */
   public HoldingsModifier counter() {
-    return new HoldingsModifier(region, currency, modifier.negate(), operation, holdingsID);
+    final HoldingsModifier mod = new HoldingsModifier(region, currency, modifier.negate(), operation, holdingsID);
+    System.out.println("Percent Counter: " + percent);
+    mod.setPercent(percent);
+    return mod;
   }
 
   /**
@@ -209,7 +214,9 @@ public class HoldingsModifier {
    * @return The new opposite holdings modifier object.
    */
   public HoldingsModifier counter(final Identifier type) {
-    return new HoldingsModifier(region, currency, modifier.negate(), operation, type);
+    final HoldingsModifier mod = new HoldingsModifier(region, currency, modifier.negate(), operation, type);
+    mod.setPercent(percent);
+    return mod;
   }
 
   /**

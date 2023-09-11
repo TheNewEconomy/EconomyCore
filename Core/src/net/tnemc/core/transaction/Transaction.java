@@ -133,7 +133,17 @@ public class Transaction {
     final boolean take = (modifier.getModifier().compareTo(BigDecimal.ZERO) < 0);
 
     if(take) {
-      working = modifier.getModifier().multiply(new BigDecimal(-1));
+      if(modifier.isPercent()) {
+
+        BigDecimal total = BigDecimal.ZERO;
+        for(HoldingsEntry entry : balances) {
+          total = total.add(entry.getAmount());
+        }
+        working = modifier.modify(total);
+        total = null;
+      } else {
+        working = modifier.getModifier().multiply(new BigDecimal(- 1));
+      }
     }
 
     boolean done = false;
@@ -233,7 +243,17 @@ public class Transaction {
     final boolean take = (modifier.getModifier().compareTo(BigDecimal.ZERO) < 0);
 
     if(take) {
-      working = modifier.getModifier().multiply(new BigDecimal(-1));
+      if(modifier.isPercent()) {
+
+        BigDecimal total = BigDecimal.ZERO;
+        for(HoldingsEntry entry : balances) {
+          total = total.add(entry.getAmount());
+        }
+        working = modifier.modify(total);
+        total = null;
+      } else {
+        working = modifier.getModifier().multiply(new BigDecimal(- 1));
+      }
     }
 
     boolean done = false;

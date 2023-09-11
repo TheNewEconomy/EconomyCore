@@ -8,3 +8,4 @@
 - Added a currency template module(requested by stoffeh)
   - This contains some example pre-configured commonly used currency setups for TNE.
 - Added $currency, $player variables for /money give/take messages in messages.yml
+- Updated Turkish Translation(thanks to Colonel Kai)

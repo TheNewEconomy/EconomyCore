@@ -21,6 +21,7 @@ package net.tnemc.core.account.holdings.modify;
 import net.tnemc.core.account.Account;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 
 /**
@@ -53,13 +54,18 @@ public enum HoldingsOperation {
   PERCENT_ADD {
     @Override
     public BigDecimal perform(final BigDecimal value, final BigDecimal modifier) {
-      return value.add(value.multiply(modifier));
+
+      final BigDecimal decimal = value.multiply(modifier.divide(new BigDecimal(100), new MathContext(2, RoundingMode.DOWN)));
+      if(modifier.compareTo(BigDecimal.ZERO) < 0) {
+        return decimal.multiply(new BigDecimal(-1));
+      }
+      return value.add(decimal);
     }
   },
   PERCENT_SUBTRACT {
     @Override
     public BigDecimal perform(final BigDecimal value, final BigDecimal modifier) {
-      return value.subtract(value.multiply(modifier));
+      return value.subtract(value.multiply(modifier.divide(new BigDecimal(100), new MathContext(2, RoundingMode.DOWN))));
     }
   },
   SET {
