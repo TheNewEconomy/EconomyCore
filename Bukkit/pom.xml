@@ -246,6 +246,12 @@
             <version>3.1.5</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>minecraft-server</artifactId>
+            <version>1.15.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>net.tnemc</groupId>

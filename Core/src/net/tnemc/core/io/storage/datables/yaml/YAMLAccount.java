@@ -24,6 +24,7 @@ import net.tnemc.core.account.SharedAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.shared.Member;
 import net.tnemc.core.api.callback.account.AccountLoadCallback;
+import net.tnemc.core.api.callback.account.AccountSaveCallback;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
@@ -146,6 +147,10 @@ public class YAMLAccount implements Datable<Account> {
       }
       try {
         yaml.save();
+
+        final AccountSaveCallback callback = new AccountSaveCallback(account);
+        TNECore.callbacks().call(callback);
+
         yaml = null;
       } catch(IOException e) {
         TNECore.log().error("Issue saving account file. Account: " + account.getName());

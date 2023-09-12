@@ -24,6 +24,7 @@ import net.tnemc.core.account.SharedAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.shared.Member;
 import net.tnemc.core.api.callback.account.AccountLoadCallback;
+import net.tnemc.core.api.callback.account.AccountSaveCallback;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.config.DataConfig;
@@ -141,6 +142,9 @@ public class SQLAccount implements Datable<Account> {
           }
         }
       }
+
+      final AccountSaveCallback callback = new AccountSaveCallback(account);
+      TNECore.callbacks().call(callback);
 
       TNECore.storage().storeAll(account.getIdentifier());
     }

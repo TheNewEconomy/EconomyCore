@@ -18,6 +18,8 @@ package net.tnemc.bukkit.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import net.tnemc.bukkit.TNE;
 import net.tnemc.bukkit.impl.scheduler.BukkitScheduler;
 import net.tnemc.core.compatibility.CmdSource;
@@ -42,6 +44,7 @@ import org.jetbrains.annotations.NotNull;
 import revxrsal.commands.bukkit.BukkitCommandActor;
 import revxrsal.commands.command.CommandActor;
 
+import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
