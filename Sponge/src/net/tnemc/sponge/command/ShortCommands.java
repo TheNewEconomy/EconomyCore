@@ -28,8 +28,6 @@ import revxrsal.commands.annotation.Usage;
 import revxrsal.commands.sponge.SpongeCommandActor;
 import revxrsal.commands.sponge.annotation.CommandPermission;
 
-import java.math.BigDecimal;
-
 /**
  * ShortCommands
  *
