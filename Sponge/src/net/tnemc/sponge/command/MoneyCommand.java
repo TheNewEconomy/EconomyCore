@@ -39,7 +39,7 @@ import java.math.BigDecimal;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-@Command({"money", "eco"})
+@Command({"money", "eco", "balo", "balance", "bal", "balanceother"})
 public class MoneyCommand {
 
   @Subcommand({"balmenu", "menu", "mybal"})
@@ -50,7 +50,7 @@ public class MoneyCommand {
     net.tnemc.core.command.MoneyCommand.onMyBal(new SpongeCMDSource(sender), currency);
   }
 
-  @DefaultFor({"money", "eco"})
+  @DefaultFor({"money", "eco", "balance", "bal"})
   @Subcommand({"balance", "bal", "val"})
   @Usage("#{Money.Balance.Arguments}")
   @Description("#{Money.Balance.Description}")
@@ -92,6 +92,7 @@ public class MoneyCommand {
   }
 
   @Subcommand({"other", "check", "balo"})
+  @DefaultFor({"balo", "balanceother"})
   @Usage("#{Money.Other.Arguments}")
   @Description("#{Money.Other.Description}")
   @CommandPermission("tne.money.other")

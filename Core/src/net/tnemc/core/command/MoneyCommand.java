@@ -71,7 +71,6 @@ public class MoneyCommand extends BaseCommand {
   //ArgumentsParser: [currency] [world]
   public static void onBalance(CmdSource<?> sender, Currency currency, String region) {
 
-    //If our currency doesn't exist this is probably a username, so check for their balance instead.
     final Optional<Account> account = sender.account();
     if(account.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
@@ -79,7 +78,7 @@ public class MoneyCommand extends BaseCommand {
       sender.message(data);
       return;
     }
-    account.ifPresent(value->onOther(sender, value, region, currency));
+    onOther(sender, account.get(), region, currency);
   }
 
   //ArgumentsParser: <amount> <to currency> [from currency]
