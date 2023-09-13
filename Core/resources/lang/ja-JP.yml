@@ -197,7 +197,7 @@ Messages:
         Description: "Load a module from the modules directory.<newline>- Module ~ The module to load."
     Money:
       Balance:
-        Arguments: "[player] [currency] [world]"
+        Arguments: "[currency] [region]"
         Description: "Displays your current holdings."
       Convert:
         Arguments: "<amount> <to currency> [from currency]"
@@ -215,7 +215,7 @@ Messages:
         Arguments: "[currency]"
         Description: "Opens the MyBal menu"
       Other:
-        Arguments: "<player> [currency] [world]"
+        Arguments: "<player> [currency] [region]"
         Description: "Retrieves the balance of a player.<newline>- Player ~ The account owner.<newline>- World ~ The world to retrieve the balance from.<newline>- currency ~ The currency to retrieve the balance of."
       Pay:
         Arguments: "<player> <amount> [currency]"
