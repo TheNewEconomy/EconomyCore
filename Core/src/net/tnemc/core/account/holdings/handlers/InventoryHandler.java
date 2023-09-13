@@ -87,7 +87,7 @@ public class InventoryHandler implements HoldingsHandler {
       TNECore.server().itemCalculations().setItems(data, amount);
       return true;
     }
-    return false;
+    return true;
   }
 
   /**

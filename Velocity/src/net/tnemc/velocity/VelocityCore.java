@@ -56,6 +56,7 @@ public class VelocityCore {
   public VelocityCore(ProxyServer server, Logger logger) {
     this.server = server;
     this.logger = logger;
+    instance = this;
 
     logger.info("The New Economy Velocity bridge has been started!");
   }

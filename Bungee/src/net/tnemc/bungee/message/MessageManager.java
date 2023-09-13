@@ -52,7 +52,7 @@ public class MessageManager {
 
   public void onMessage(final String channel, final byte[] data) {
 
-    final String tag = channel.replace("tne:", "");
+    final String tag = channel.replace("tne:", "").split(" ")[0];
 
     if(handlers.containsKey(tag)) {
       try {
