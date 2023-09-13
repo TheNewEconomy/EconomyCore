@@ -37,23 +37,24 @@ public class BalanceMessageHandler extends MessageHandler {
   }
 
   @Override
-  public void handle(String account, UUID server, DataInputStream stream) {
+  public void handle(String account, String accountName, UUID server, DataInputStream stream) {
 
     try {
       final String region = stream.readUTF();
       final String currency = stream.readUTF();
       final String handler = stream.readUTF();
       final String amount = stream.readUTF();
-      send(server, account, region, currency, handler, amount);
+      send(server, account, accountName, region, currency, handler, amount);
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
-  public static void send(UUID server, String account, String region, String currency, String handler, String amount) {
+  public static void send(UUID server, String account, String accountName, String region, String currency, String handler, String amount) {
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
     out.writeUTF(server.toString());
     out.writeUTF(account);
+    out.writeUTF(accountName);
     out.writeUTF(region);
     out.writeUTF(currency);
     out.writeUTF(handler);

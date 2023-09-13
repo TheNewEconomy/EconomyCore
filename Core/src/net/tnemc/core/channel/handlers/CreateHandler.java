@@ -33,28 +33,24 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * BalanceHandler
+ * CreateHandler
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class BalanceHandler extends ChannelMessageHandler {
+public class CreateHandler extends ChannelMessageHandler {
 
-  public BalanceHandler() {
-    super("balance");
+  public CreateHandler() {
+    super("create");
   }
 
-  public static void send(final String identifier, final String name, String region, UUID currency, Identifier handler, BigDecimal amount) {
+  public static void send(final String identifier, final String name) {
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
     out.writeUTF(TNECore.instance().getServerID().toString());
     out.writeUTF(identifier);
     out.writeUTF(name);
-    out.writeUTF(region);
-    out.writeUTF(currency.toString());
-    out.writeUTF(handler.asID());
-    out.writeUTF(amount.toPlainString());
 
-    TNECore.storage().sendMessage("tne:balance", out.toByteArray());
+    TNECore.storage().sendMessage("tne:create", out.toByteArray());
   }
 
   @Override
@@ -64,34 +60,16 @@ public class BalanceHandler extends ChannelMessageHandler {
 
       final String accountID = wrapper.readUTF();
       final String accountName = wrapper.readUTF();
-      final String region = wrapper.readUTF();
-      final Optional<UUID> currency = wrapper.readUUID();
-      final String handler = wrapper.readUTF();
-      final Optional<BigDecimal> amountOPT = wrapper.readBigDecimal();
 
-      if(amountOPT.isPresent() && currency.isPresent()) {
+      if(accountID != null && accountName != null) {
 
-        Optional<Account> account = TNECore.eco().account().findAccount(accountID);
-        if(account.isEmpty()) {
-          final AccountAPIResponse response = TNECore.eco().account().createAccount(accountID, accountName);
-          if(response.getResponse().success()) {
-            account = response.getAccount();
-          }
-        }
-
-        if(account.isPresent()) {
-          TNECore.instance().getChannelMessageManager().addAccount(accountID);
-
-          final Identifier type = Identifier.fromID(handler);
-
-          final HoldingsEntry entry = new HoldingsEntry(region, currency.get(),
-                                                        amountOPT.get(), type);
-          account.get().setHoldings(entry, type);
+        final AccountAPIResponse apiResponse = TNECore.eco().account().createAccount(accountID, accountName);
+        if(apiResponse.getResponse().success()) {
         }
       }
 
     } catch(Exception e) {
-      TNECore.log().error("Issue with balance plugin message handler.", e, DebugLevel.STANDARD);
+      TNECore.log().error("Issue with create account plugin message handler.", e, DebugLevel.STANDARD);
     }
   }
 }

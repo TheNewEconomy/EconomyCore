@@ -110,6 +110,6 @@
     <parent>
         <groupId>net.tnemc</groupId>
         <artifactId>TNE</artifactId>
-        <version>0.1.2.1</version>
+        <version>0.1.2.1-Pre-2</version>
     </parent>
 </project>

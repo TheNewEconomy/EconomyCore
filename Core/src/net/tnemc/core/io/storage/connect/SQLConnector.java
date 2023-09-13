@@ -46,10 +46,10 @@ import java.util.Map;
  */
 public class SQLConnector implements StorageConnector<Connection> {
 
-  private DataSource source;
+  protected DataSource source;
 
-  private String sourceClass;
-  private String driverClass;
+  protected String sourceClass;
+  protected String driverClass;
 
   /**
    * Used to initialize a connection to the specified {@link StorageEngine}
@@ -57,7 +57,7 @@ public class SQLConnector implements StorageConnector<Connection> {
   @Override
   public void initialize() {
 
-    findDriverSource();
+    findDriverSource(((SQLEngine)StorageManager.instance().getEngine()));
 
     final HikariConfig config = new HikariConfig();
 
@@ -84,6 +84,36 @@ public class SQLConnector implements StorageConnector<Connection> {
     config.setConnectionTimeout(DataConfig.yaml().getLong("Data.Pool.Timeout"));
 
     for(Map.Entry<String, Object> entry : ((SQLEngine)StorageManager.instance().getEngine()).properties().entrySet()) {
+      config.addDataSourceProperty(entry.getKey(), entry.getValue());
+    }
+
+    this.source = new HikariDataSource(config);
+  }
+
+  public void initialize(final SQLEngine engine, final String pool, final File dbFile, final String host, final int port, final String db, final String user, final String password) {
+
+    findDriverSource(engine);
+
+    final HikariConfig config = new HikariConfig();
+
+    if(sourceClass != null) {
+      config.setDataSourceClassName(sourceClass);
+    }
+
+    //String file, String host, int port, String database
+    config.addDataSourceProperty("url",
+            engine.url(
+                    dbFile.getAbsolutePath(),
+                    host, port, db
+            ));
+
+    config.addDataSourceProperty("user",  user);
+    config.addDataSourceProperty("password",  password);
+
+    config.setPoolName(pool);
+    config.setConnectionTestQuery("SELECT 1");
+
+    for(Map.Entry<String, Object> entry : engine.properties().entrySet()) {
       config.addDataSourceProperty(entry.getKey(), entry.getValue());
     }
 
@@ -164,9 +194,9 @@ public class SQLConnector implements StorageConnector<Connection> {
     return ((SQLEngine)StorageManager.instance().getEngine()).dialect();
   }
 
-  private void findDriverSource() {
+  protected void findDriverSource(final SQLEngine engine) {
 
-    for(final String source : ((SQLEngine)StorageManager.instance().getEngine()).dataSource()) {
+    for(final String source : engine.dataSource()) {
 
       if(sourceClass != null) {
         break;
@@ -180,7 +210,7 @@ public class SQLConnector implements StorageConnector<Connection> {
       } catch(Exception ignore) {}
     }
 
-    for(final String driver : ((SQLEngine)StorageManager.instance().getEngine()).driver()) {
+    for(final String driver : engine.driver()) {
 
       if(driverClass != null) {
         break;

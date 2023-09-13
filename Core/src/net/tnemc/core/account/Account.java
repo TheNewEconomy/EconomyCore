@@ -215,7 +215,7 @@ public class Account extends ReceiptBox {
       //Send out our update to our proxies.
       if(!TNECore.instance().getChannelMessageManager().isAffected(identifier) && !TNECore.eco().account().getLoading().contains(identifier)) {
         TNECore.server().scheduler().createDelayedTask(()->{
-          BalanceHandler.send(identifier, region, currencyObject.get().getUid(), entry.getHandler(), entry.getAmount());
+          BalanceHandler.send(identifier, name, region, currencyObject.get().getUid(), entry.getHandler(), entry.getAmount());
         }, new ChoreTime(1), ChoreExecution.SECONDARY);
       } else {
         TNECore.instance().getChannelMessageManager().removeAccount(identifier);

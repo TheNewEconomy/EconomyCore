@@ -61,7 +61,8 @@ public class MessageManager {
 
         final UUID server = UUID.fromString(in.readUTF());
         final String account = in.readUTF();
-        handlers.get(tag).handle(account, server, in);
+        final String accountName = in.readUTF();
+        handlers.get(tag).handle(account, accountName, server, in);
 
         in.close();
         stream.close();
