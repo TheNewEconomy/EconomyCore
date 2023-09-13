@@ -34,7 +34,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SharedAccount extends Account {
 
-  protected ConcurrentHashMap<UUID, Member> members = new ConcurrentHashMap<>();
+  protected final ConcurrentHashMap<UUID, Member> members = new ConcurrentHashMap<>();
 
   /**
    * The {@link UUID identifier} of the owner of this {@link Account account}.
