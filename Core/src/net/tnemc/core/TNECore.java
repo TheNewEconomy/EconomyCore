@@ -257,29 +257,25 @@ public abstract class TNECore {
     this.level = DebugLevel.fromID(MainConfig.yaml().getString("Core.Debugging.Mode"));
 
     //Set our server UUID. This is used for proxy messaging.
-    boolean randomUUID = false;
-    //Added in build 28, needs removed by build 32.
-    if(!MainConfig.yaml().contains("Core.Server.RandomUUID")) {
-      MainConfig.yaml().set("Core.Server.RandomUUID", false);
-      MainConfig.yaml().setComment("Core.Server.RandomUUID", "#Whether the ServerID config should be random on each startup. This could impact syncing on\n" +
-              "#restarts, but will not impact anything significant.");
+    final boolean randomUUID = MainConfig.yaml().getBoolean("Core.Server.RandomUUID", false);
+
+    //Added in build 0.1.2.2, removed in 0.1.2.6
+    if(!MainConfig.yaml().contains("Core.Commands.LimitCurrency")) {
+      MainConfig.yaml().set("Core.Commands.LimitCurrency", false);
+      MainConfig.yaml().setComment("Core.Commands.LimitCurrency", "#Configuration if money action commands, such as give/take/set require individual permissions.");
 
       try {
         MainConfig.yaml().save();
       } catch(IOException e) {
         logger.error("Issue while updating config.yml to config.yml", e, DebugLevel.OFF);
       }
-    } else {
-      randomUUID = MainConfig.yaml().getBoolean("Core.Server.RandomUUID", false);
     }
 
-    //Added in build 28, needs removed by build 32.
-    if(!MainConfig.yaml().contains("Core.Server.ImportItems")) {
-      MainConfig.yaml().set("Core.Server.ImportItems", true);
-      MainConfig.yaml().setComment("Core.Server.ImportItems", "#Whether to import exist item currencies into a player's balance when they join for the first time.");
+    if(!MessageConfig.yaml().contains("Messages.Account.BlockedAction")) {
+      MessageConfig.yaml().set("Messages.Account.BlockedAction", "<red>You don't have permission to perform the action \"$action\" with currency \"$currency\"!");
 
       try {
-        MainConfig.yaml().save();
+        MessageConfig.yaml().save();
       } catch(IOException e) {
         logger.error("Issue while updating config.yml to config.yml", e, DebugLevel.OFF);
       }

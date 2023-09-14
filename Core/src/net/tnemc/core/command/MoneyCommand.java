@@ -71,6 +71,16 @@ public class MoneyCommand extends BaseCommand {
   //ArgumentsParser: [currency] [world]
   public static void onBalance(CmdSource<?> sender, Currency currency, String region) {
 
+    final Optional<PlayerProvider> player = sender.player();
+    if(EconomyManager.limitCurrency() && player.isPresent()) {
+      if(!player.get().hasPermission("tne.money.balance." + currency.getIdentifier())) {
+        final MessageData data = new MessageData("Messages.Account.BlockedAction");
+        data.addReplacement("$action", "balance check");
+        data.addReplacement("$currency", currency.getDisplay());
+        return;
+      }
+    }
+
     final Optional<Account> account = sender.account();
     if(account.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
@@ -83,6 +93,24 @@ public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: <amount> <to currency> [from currency]
   public static void onConvert(CmdSource<?> sender, PercentBigDecimal amount, Currency currency, Currency fromCurrency) {
+
+    final Optional<PlayerProvider> player = sender.player();
+    if(EconomyManager.limitCurrency() && player.isPresent()) {
+      if(!player.get().hasPermission("tne.money.convert.to." + currency.getIdentifier())) {
+        final MessageData data = new MessageData("Messages.Account.BlockedAction");
+        data.addReplacement("$action", "convert to");
+        data.addReplacement("$currency", currency.getDisplay());
+        return;
+      }
+
+      if(!player.get().hasPermission("tne.money.convert.from." + fromCurrency.getIdentifier())) {
+        final MessageData data = new MessageData("Messages.Account.BlockedAction");
+        data.addReplacement("$action", "convert from");
+        data.addReplacement("$currency", fromCurrency.getDisplay());
+        return;
+      }
+    }
+
     if(amount.value().compareTo(BigDecimal.ZERO) < 0) {
       sender.message(new MessageData("Messages.Money.Negative"));
       return;
@@ -138,6 +166,16 @@ public class MoneyCommand extends BaseCommand {
   //ArgumentsParser: <amount> [currency]
   public static void onDeposit(CmdSource<?> sender, PercentBigDecimal amount, Currency currency, String region) {
 
+    final Optional<PlayerProvider> player = sender.player();
+    if(EconomyManager.limitCurrency() && player.isPresent()) {
+      if(!player.get().hasPermission("tne.money.deposit." + currency.getIdentifier())) {
+        final MessageData data = new MessageData("Messages.Account.BlockedAction");
+        data.addReplacement("$action", "deposit");
+        data.addReplacement("$currency", currency.getDisplay());
+        return;
+      }
+    }
+
     if(amount.value().compareTo(BigDecimal.ZERO) < 0) {
       sender.message(new MessageData("Messages.Money.Negative"));
       return;
@@ -181,7 +219,17 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> <amount> [world] [currency]
-  public static void onGive(CmdSource<?> sender, Account player, PercentBigDecimal amount, String region, Currency currency) {
+  public static void onGive(CmdSource<?> sender, Account account, PercentBigDecimal amount, String region, Currency currency) {
+
+    final Optional<PlayerProvider> player = sender.player();
+    if(EconomyManager.limitCurrency() && player.isPresent()) {
+      if(!player.get().hasPermission("tne.money.give." + currency.getIdentifier())) {
+        final MessageData data = new MessageData("Messages.Account.BlockedAction");
+        data.addReplacement("$action", "give funds");
+        data.addReplacement("$currency", currency.getDisplay());
+        return;
+      }
+    }
 
     region = TNECore.eco().region().resolve(region);
 
@@ -190,28 +238,28 @@ public class MoneyCommand extends BaseCommand {
                                                            amount);
 
     final Transaction transaction = new Transaction("give")
-        .to(player, modifier)
+        .to(account, modifier)
         .processor(new BaseTransactionProcessor())
         .source(new PlayerSource(sender.identifier()));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()) {
       final MessageData data = new MessageData("Messages.Money.Gave");
-      data.addReplacement("$player", player.getName());
+      data.addReplacement("$player", account.getName());
       data.addReplacement("$currency", currency.getIdentifier());
-      data.addReplacement("$amount", CurrencyFormatter.format(player,
+      data.addReplacement("$amount", CurrencyFormatter.format(account,
                                                               modifier.asEntry()));
       sender.message(data);
 
-      if(player.isPlayer() && ((PlayerAccount)player).isOnline()) {
+      if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
 
-        final Optional<PlayerProvider> provider = ((PlayerAccount)player).getPlayer();
+        final Optional<PlayerProvider> provider = ((PlayerAccount)account).getPlayer();
 
         if(provider.isPresent()) {
           final MessageData msgData = new MessageData("Messages.Money.Given");
           msgData.addReplacement("$currency", currency.getIdentifier());
           msgData.addReplacement("$player", (sender.name() == null)? MainConfig.yaml().getString("Core.Server.Account.Name") : sender.name());
-          msgData.addReplacement("$amount", CurrencyFormatter.format(player,
+          msgData.addReplacement("$amount", CurrencyFormatter.format(account,
                                                                      modifier.asEntry()));
           provider.get().message(msgData);
         }
@@ -228,6 +276,13 @@ public class MoneyCommand extends BaseCommand {
 
       final Optional<PlayerProvider> provider = ((PlayerAccount)account.get()).getPlayer();
       if(provider.isEmpty()) {
+        return;
+      }
+
+      if(EconomyManager.limitCurrency() && !provider.get().hasPermission("tne.money.note." + currency.getIdentifier())) {
+        final MessageData data = new MessageData("Messages.Account.BlockedAction");
+        data.addReplacement("$action", "note");
+        data.addReplacement("$currency", currency.getDisplay());
         return;
       }
 
@@ -270,19 +325,29 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> [world] [currency]
-  public static void onOther(CmdSource<?> sender, Account player, String region, Currency currency) {
+  public static void onOther(CmdSource<?> sender, Account account, String region, Currency currency) {
+
+    final Optional<PlayerProvider> player = sender.player();
+    if(EconomyManager.limitCurrency() && player.isPresent()) {
+      if(!player.get().hasPermission("tne.money.other." + currency.getIdentifier())) {
+        final MessageData data = new MessageData("Messages.Account.BlockedAction");
+        data.addReplacement("$action", "balance check other");
+        data.addReplacement("$currency", currency.getDisplay());
+        return;
+      }
+    }
     final List<HoldingsEntry> holdings = new ArrayList<>();
 
     region = TNECore.eco().region().resolve(region);
 
     if(!currency.isGlobalDefault()) {
       BigDecimal amount = BigDecimal.ZERO;
-      for(HoldingsEntry entry : player.getHoldings(region, currency.getUid())) {
+      for(HoldingsEntry entry : account.getHoldings(region, currency.getUid())) {
         amount = amount.add(entry.getAmount());
       }
       holdings.add(new HoldingsEntry(region, currency.getUid(), amount, EconomyManager.NORMAL));
     } else {
-      holdings.addAll(player.getAllHoldings(region, EconomyManager.NORMAL));
+      holdings.addAll(account.getAllHoldings(region, EconomyManager.NORMAL));
     }
 
     if(holdings.isEmpty()) {
@@ -306,14 +371,24 @@ public class MoneyCommand extends BaseCommand {
 
         final MessageData entryMSG = new MessageData("Messages.Money.HoldingsMultiSingle");
         entryMSG.addReplacement("$currency", entryCur.get().getIdentifier());
-        entryMSG.addReplacement("$amount", CurrencyFormatter.format(player, entry));
+        entryMSG.addReplacement("$amount", CurrencyFormatter.format(account, entry));
         sender.message(entryMSG);
       }
     }
   }
 
   //ArgumentsParser: <player> <amount> [currency] [from:account]
-  public static void onPay(CmdSource<?> sender, Account player, PercentBigDecimal amount, Currency currency, String from) {
+  public static void onPay(CmdSource<?> sender, Account account, PercentBigDecimal amount, Currency currency, String from) {
+
+    final Optional<PlayerProvider> player = sender.player();
+    if(EconomyManager.limitCurrency() && player.isPresent()) {
+      if(!player.get().hasPermission("tne.money.pay." + currency.getIdentifier())) {
+        final MessageData data = new MessageData("Messages.Account.BlockedAction");
+        data.addReplacement("$action", "pay");
+        data.addReplacement("$currency", currency.getDisplay());
+        return;
+      }
+    }
 
     if(amount.value().compareTo(BigDecimal.ZERO) < 0) {
       sender.message(new MessageData("Messages.Money.Negative"));
@@ -329,7 +404,7 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    if(senderAccount.get().getIdentifier().equalsIgnoreCase(player.getIdentifier())) {
+    if(senderAccount.get().getIdentifier().equalsIgnoreCase(account.getIdentifier())) {
       final MessageData data = new MessageData("Messages.Money.SelfPay");
       data.addReplacement("$player", sender.name());
       sender.message(data);
@@ -337,7 +412,7 @@ public class MoneyCommand extends BaseCommand {
     }
 
     if(!MainConfig.yaml().getBoolean("Core.Commands.Pay.Offline", true)) {
-      if(!(player instanceof PlayerAccount) || !((PlayerAccount)player).isOnline()) {
+      if(!(account instanceof PlayerAccount) || !((PlayerAccount)account).isOnline()) {
 
         sender.message(new MessageData("Messages.Money.PayFailedOnline"));
         return;
@@ -349,13 +424,13 @@ public class MoneyCommand extends BaseCommand {
       data.addReplacement("$distance", String.valueOf(MainConfig.yaml().getInt("Core.Commands.Pay.Radius")));
 
       if(!(senderAccount.get() instanceof PlayerAccount) || !((PlayerAccount)senderAccount.get()).isOnline()
-          || !(player instanceof PlayerAccount) || !((PlayerAccount)player).isOnline()) {
+          || !(account instanceof PlayerAccount) || !((PlayerAccount)account).isOnline()) {
         sender.message(data);
         return;
       }
 
       final Optional<PlayerProvider> senderPlayer = ((PlayerAccount)senderAccount.get()).getPlayer();
-      final Optional<PlayerProvider> playerPlayer = ((PlayerAccount)player).getPlayer();
+      final Optional<PlayerProvider> playerPlayer = ((PlayerAccount)account).getPlayer();
       if(senderPlayer.isEmpty() || playerPlayer.isEmpty()
           || senderPlayer.get().getLocation().isEmpty() || playerPlayer.get().getLocation().isEmpty()) {
         sender.message(data);
@@ -374,7 +449,7 @@ public class MoneyCommand extends BaseCommand {
     );
 
     final Transaction transaction = new Transaction("pay")
-        .to(player, modifier)
+        .to(account, modifier)
         .from(senderAccount.get(), modifier.counter())
         .processor(new BaseTransactionProcessor())
         .source(new PlayerSource(sender.identifier()));
@@ -382,20 +457,20 @@ public class MoneyCommand extends BaseCommand {
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()) {
       final MessageData data = new MessageData("Messages.Money.Paid");
-      data.addReplacement("$player", player.getName());
+      data.addReplacement("$player", account.getName());
       data.addReplacement("$currency", currency.getIdentifier());
-      data.addReplacement("$amount", CurrencyFormatter.format(player,
+      data.addReplacement("$amount", CurrencyFormatter.format(account,
                                                               modifier.asEntry()));
       sender.message(data);
 
-      if(player.isPlayer() && ((PlayerAccount)player).isOnline()) {
+      if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
 
-        final Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)player).getUUID());
+        final Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)account).getUUID());
         if(provider.isPresent()) {
 
           final MessageData msgData = new MessageData("Messages.Money.Received");
           msgData.addReplacement("$player", (sender.name() == null)? MainConfig.yaml().getString("Core.Server.Account.Name") : sender.name());
-          msgData.addReplacement("$amount", CurrencyFormatter.format(player,
+          msgData.addReplacement("$amount", CurrencyFormatter.format(account,
                                                                      modifier.asEntry()));
           provider.get().message(msgData);
         }
@@ -404,22 +479,32 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> <amount> [currency]
-  public static void onRequest(CmdSource<?> sender, Account player, BigDecimal amount, Currency currency) {
+  public static void onRequest(CmdSource<?> sender, Account account, BigDecimal amount, Currency currency) {
+
+    final Optional<PlayerProvider> player = sender.player();
+    if(EconomyManager.limitCurrency() && player.isPresent()) {
+      if(!player.get().hasPermission("tne.money.request." + currency.getIdentifier())) {
+        final MessageData data = new MessageData("Messages.Account.BlockedAction");
+        data.addReplacement("$action", "request funds");
+        data.addReplacement("$currency", currency.getDisplay());
+        return;
+      }
+    }
     if(amount.compareTo(BigDecimal.ZERO) < 0) {
       sender.message(new MessageData("Messages.Money.Negative"));
       return;
     }
 
-    final Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)player).getUUID());
+    final Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)account).getUUID());
     if(provider.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
-      data.addReplacement("$player", player.getName());
+      data.addReplacement("$player", account.getName());
       sender.message(data);
       return;
     }
 
     final MessageData msg = new MessageData("Messages.Money.RequestSender");
-    msg.addReplacement("$player", player.getName());
+    msg.addReplacement("$player", account.getName());
     msg.addReplacement("$amount", amount.toPlainString());
     sender.message(msg);
 
@@ -431,7 +516,17 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> <amount> [world] [currency]
-  public static void onSet(CmdSource<?> sender, Account player, BigDecimal amount, String region, Currency currency) {
+  public static void onSet(CmdSource<?> sender, Account account, BigDecimal amount, String region, Currency currency) {
+
+    final Optional<PlayerProvider> player = sender.player();
+    if(EconomyManager.limitCurrency() && player.isPresent()) {
+      if(!player.get().hasPermission("tne.money.set." + currency.getIdentifier())) {
+        final MessageData data = new MessageData("Messages.Account.BlockedAction");
+        data.addReplacement("$action", "set funds");
+        data.addReplacement("$currency", currency.getDisplay());
+        return;
+      }
+    }
 
     region = TNECore.eco().region().resolve(region);
 
@@ -441,7 +536,7 @@ public class MoneyCommand extends BaseCommand {
                                                            HoldingsOperation.SET);
 
     final Transaction transaction = new Transaction("set")
-        .to(player, modifier)
+        .to(account, modifier)
         .processor(new BaseTransactionProcessor())
         .source(new PlayerSource(sender.identifier()));
 
@@ -449,9 +544,9 @@ public class MoneyCommand extends BaseCommand {
 
     if(receipt.isPresent()) {
       final MessageData msg = new MessageData("Messages.Money.Set");
-      msg.addReplacement("$player", player.getName());
+      msg.addReplacement("$player", account.getName());
       msg.addReplacement("$currency", currency.getIdentifier());
-      msg.addReplacement("$amount", CurrencyFormatter.format(player,
+      msg.addReplacement("$amount", CurrencyFormatter.format(account,
                                                              modifier.asEntry())
       );
       sender.message(msg);
@@ -460,6 +555,16 @@ public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: <amount> [world] [currency]
   public static void onSetAll(CmdSource<?> sender, BigDecimal amount, String region, Currency currency) {
+
+    final Optional<PlayerProvider> player = sender.player();
+    if(EconomyManager.limitCurrency() && player.isPresent()) {
+      if(!player.get().hasPermission("tne.money.setall." + currency.getIdentifier())) {
+        final MessageData data = new MessageData("Messages.Account.BlockedAction");
+        data.addReplacement("$action", "set all funds");
+        data.addReplacement("$currency", currency.getDisplay());
+        return;
+      }
+    }
 
     region = TNECore.eco().region().resolve(region);
 
@@ -496,7 +601,17 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> <amount> [world] [currency]
-  public static void onTake(CmdSource<?> sender, Account player, PercentBigDecimal amount, String region, Currency currency) {
+  public static void onTake(CmdSource<?> sender, Account account, PercentBigDecimal amount, String region, Currency currency) {
+
+    final Optional<PlayerProvider> player = sender.player();
+    if(EconomyManager.limitCurrency() && player.isPresent()) {
+      if(!player.get().hasPermission("tne.money.take." + currency.getIdentifier())) {
+        final MessageData data = new MessageData("Messages.Account.BlockedAction");
+        data.addReplacement("$action", "take funds");
+        data.addReplacement("$currency", currency.getDisplay());
+        return;
+      }
+    }
 
     region = TNECore.eco().region().resolve(region);
 
@@ -507,28 +622,28 @@ public class MoneyCommand extends BaseCommand {
     );
 
     final Transaction transaction = new Transaction("take")
-        .to(player, modifier.counter())
+        .to(account, modifier.counter())
         .processor(new BaseTransactionProcessor())
         .source(new PlayerSource(sender.identifier()));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()) {
       final MessageData data = new MessageData("Messages.Money.Took");
-      data.addReplacement("$player", player.getName());
+      data.addReplacement("$player", account.getName());
       data.addReplacement("$currency", currency.getIdentifier());
-      data.addReplacement("$amount", CurrencyFormatter.format(player,
+      data.addReplacement("$amount", CurrencyFormatter.format(account,
                                                               modifier.asEntry()));
       sender.message(data);
 
-      if(player.isPlayer() && ((PlayerAccount)player).isOnline()) {
+      if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
 
-        final Optional<PlayerProvider> provider = ((PlayerAccount)player).getPlayer();
+        final Optional<PlayerProvider> provider = ((PlayerAccount)account).getPlayer();
 
         if(provider.isPresent()) {
           final MessageData msgData = new MessageData("Messages.Money.Taken");
           msgData.addReplacement("$player", (sender.name() == null)? MainConfig.yaml().getString("Core.Server.Account.Name") : sender.name());
           msgData.addReplacement("$currency", currency.getIdentifier());
-          msgData.addReplacement("$amount", CurrencyFormatter.format(player,
+          msgData.addReplacement("$amount", CurrencyFormatter.format(account,
                                                                      modifier.asEntry()));
           provider.get().message(msgData);
         }
@@ -538,6 +653,17 @@ public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: [page] [currency:name] [world:world] [limit:#]
   public static void onTop(CmdSource<?> sender, Integer page, Currency currency, Boolean refresh) {
+
+    final Optional<PlayerProvider> player = sender.player();
+    if(EconomyManager.limitCurrency() && player.isPresent()) {
+      if(!player.get().hasPermission("tne.money.top." + currency.getIdentifier())) {
+        final MessageData data = new MessageData("Messages.Account.BlockedAction");
+        data.addReplacement("$action", "balance top");
+        data.addReplacement("$currency", currency.getDisplay());
+        return;
+      }
+    }
+
     final Optional<Account> senderAccount = sender.account();
 
     if(senderAccount.isEmpty()) {
@@ -571,6 +697,16 @@ public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: <amount> [currency]
   public static void onWithdraw(CmdSource<?> sender, PercentBigDecimal amount, Currency currency, String region) {
+
+    final Optional<PlayerProvider> player = sender.player();
+    if(EconomyManager.limitCurrency() && player.isPresent()) {
+      if(!player.get().hasPermission("tne.money.withdraw." + currency.getIdentifier())) {
+        final MessageData data = new MessageData("Messages.Account.BlockedAction");
+        data.addReplacement("$action", "withdraw funds");
+        data.addReplacement("$currency", currency.getDisplay());
+        return;
+      }
+    }
 
     if(amount.value().compareTo(BigDecimal.ZERO) < 0) {
       sender.message(new MessageData("Messages.Money.Negative"));

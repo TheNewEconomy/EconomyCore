@@ -78,6 +78,8 @@ public class EconomyManager {
 
   private final TopManager topManager;
 
+  private final boolean limitCurrency;
+
   private static EconomyManager instance;
 
   public EconomyManager() {
@@ -89,6 +91,7 @@ public class EconomyManager {
     this.regionProvider = new RegionProvider(MainConfig.yaml().getBoolean("Core.Region.GroupRealms"),
                                              MainConfig.yaml().getString("Core.Region.Mode"));
     this.topManager = new TopManager();
+    this.limitCurrency = MainConfig.yaml().getBoolean("Core.Commands.LimitCurrency", false);
   }
 
   public void init() {
@@ -170,6 +173,10 @@ public class EconomyManager {
 
   public static List<String> invalidCurrencies() {
     return instance.invalidCurrencies;
+  }
+
+  public static boolean limitCurrency() {
+    return instance.limitCurrency;
   }
 
   public void printInvalid() {
