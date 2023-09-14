@@ -191,7 +191,7 @@
         <dependency>
             <groupId>net.tnemc</groupId>
             <artifactId>EconomyCore</artifactId>
-            <version>0.1.2.1-Pre-2</version>
+            <version>0.1.2.2-Pre-1</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
@@ -266,7 +266,7 @@
     <parent>
         <groupId>net.tnemc</groupId>
         <artifactId>TNE</artifactId>
-        <version>0.1.2.1-Pre-2</version>
+        <version>0.1.2.2-Pre-1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 </project>
