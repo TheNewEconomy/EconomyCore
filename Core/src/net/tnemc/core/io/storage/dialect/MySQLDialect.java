@@ -251,6 +251,7 @@ public class MySQLDialect implements Dialect {
         "    );";
   }
 
+
   @Override
   public String receiptsModifiersTable() {
     return "CREATE TABLE IF NOT EXISTS " + prefix + "receipts_modifiers (\n" +
