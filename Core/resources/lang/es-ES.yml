@@ -46,6 +46,7 @@ Messages:
     Locked: "<red>¡No puedes hacer eso con una cuenta bloqueada($player)!"
     NoTransactions: "<white>No tiene ninguna transacción que mostrar en este momento."
     StatusChange: "<white>El estado de tu cuenta ha sido cambiado a <green>$status<white>."
+    BlockedAction: "<red>You don't have permission to perform the action \"$action\" with currency \"$currency\"!"
   Data:
     Backup: "<gold>¡Se ha hecho una copia de seguridad de la base de datos con exito!"
     BackupFailed: "<red>¡No se ha podido hacer una copia de seguridad de la base de datos!"
