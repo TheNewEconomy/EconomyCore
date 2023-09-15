@@ -17,6 +17,7 @@ package net.tnemc.core.handlers.player;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
@@ -93,7 +94,7 @@ public class PlayerInteractHandler {
 
       final Transaction transaction = new Transaction("note")
           .from(account.get(), modifier)
-          .processor(new BaseTransactionProcessor())
+          .processor(EconomyManager.baseProcessor())
           .source(new PlayerSource(provider.identifier()));
 
       try {

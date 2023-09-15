@@ -61,7 +61,7 @@ public class Transaction {
   public Transaction(String type) {
     this.type = type;
 
-    this.processor = new BaseTransactionProcessor();
+    this.processor = EconomyManager.baseProcessor();
   }
 
   /**

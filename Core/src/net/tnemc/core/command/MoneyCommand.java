@@ -150,7 +150,7 @@ public class MoneyCommand extends BaseCommand {
     final Transaction transaction = new Transaction("convert")
         .from(account.get(), modifierFrom)
         .to(account.get(), modifier)
-        .processor(new BaseTransactionProcessor())
+        .processor(EconomyManager.baseProcessor())
         .source(new PlayerSource(sender.identifier()));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
@@ -206,7 +206,7 @@ public class MoneyCommand extends BaseCommand {
     final Transaction transaction = new Transaction("deposit")
             .to(senderAccount.get(), modifier)
             .from(senderAccount.get(), modifier.counter(EconomyManager.ITEM_ONLY))
-            .processor(new BaseTransactionProcessor())
+            .processor(EconomyManager.baseProcessor())
             .source(new PlayerSource(sender.identifier()));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
@@ -239,7 +239,7 @@ public class MoneyCommand extends BaseCommand {
 
     final Transaction transaction = new Transaction("give")
         .to(account, modifier)
-        .processor(new BaseTransactionProcessor())
+        .processor(EconomyManager.baseProcessor())
         .source(new PlayerSource(sender.identifier()));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
@@ -304,7 +304,7 @@ public class MoneyCommand extends BaseCommand {
 
       final Transaction transaction = new Transaction("note")
           .from(account.get(), modifier.counter())
-          .processor(new BaseTransactionProcessor())
+          .processor(EconomyManager.baseProcessor())
           .source(new PlayerSource(sender.identifier()));
 
 
@@ -451,7 +451,7 @@ public class MoneyCommand extends BaseCommand {
     final Transaction transaction = new Transaction("pay")
         .to(account, modifier)
         .from(senderAccount.get(), modifier.counter())
-        .processor(new BaseTransactionProcessor())
+        .processor(EconomyManager.baseProcessor())
         .source(new PlayerSource(sender.identifier()));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
@@ -537,7 +537,7 @@ public class MoneyCommand extends BaseCommand {
 
     final Transaction transaction = new Transaction("set")
         .to(account, modifier)
-        .processor(new BaseTransactionProcessor())
+        .processor(EconomyManager.baseProcessor())
         .source(new PlayerSource(sender.identifier()));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
@@ -576,7 +576,7 @@ public class MoneyCommand extends BaseCommand {
     for(Account account : TNECore.eco().account().getAccounts().values()) {
       final Transaction transaction = new Transaction("set")
           .to(account, modifier)
-          .processor(new BaseTransactionProcessor())
+          .processor(EconomyManager.baseProcessor())
           .source(new PlayerSource(sender.identifier()));
 
       final Optional<Receipt> receipt = processTransaction(sender, transaction);
@@ -623,7 +623,7 @@ public class MoneyCommand extends BaseCommand {
 
     final Transaction transaction = new Transaction("take")
         .to(account, modifier.counter())
-        .processor(new BaseTransactionProcessor())
+        .processor(EconomyManager.baseProcessor())
         .source(new PlayerSource(sender.identifier()));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
@@ -737,7 +737,7 @@ public class MoneyCommand extends BaseCommand {
     final Transaction transaction = new Transaction("withdraw")
             .to(senderAccount.get(), modifier)
             .from(senderAccount.get(), modifier.counter(EconomyManager.VIRTUAL))
-            .processor(new BaseTransactionProcessor())
+            .processor(EconomyManager.baseProcessor())
             .source(new PlayerSource(sender.identifier()));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);

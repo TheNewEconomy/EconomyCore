@@ -18,6 +18,7 @@ package net.tnemc.sponge.impl.eco;
  */
 
 import net.kyori.adventure.text.Component;
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
@@ -134,7 +135,7 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
     final Transaction transaction = new Transaction("set")
             .to(account, modifier)
-            .processor(new BaseTransactionProcessor());
+            .processor(EconomyManager.baseProcessor());
 
     return transaction(transaction, amount, contexts, TransactionTypes.DEPOSIT.get());
   }
@@ -150,7 +151,7 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
     final Transaction transaction = new Transaction("set")
             .to(account, modifier)
-            .processor(new BaseTransactionProcessor());
+            .processor(EconomyManager.baseProcessor());
 
     return transaction(transaction, amount, new HashSet<>(), TransactionTypes.DEPOSIT.get());
   }
@@ -177,7 +178,7 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
       final Transaction transaction = new Transaction("set")
               .to(account, modifier)
-              .processor(new BaseTransactionProcessor());
+              .processor(EconomyManager.baseProcessor());
 
       results.put(new SpongeCurrency(cur), transaction(transaction, cur.getStartingHoldings(), new HashSet<>(), TransactionTypes.DEPOSIT.get()));
     }
@@ -205,7 +206,7 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
     final Transaction transaction = new Transaction("give")
             .to(account, modifier)
-            .processor(new BaseTransactionProcessor());
+            .processor(EconomyManager.baseProcessor());
     return transaction(transaction, amount, contexts, TransactionTypes.DEPOSIT.get());
   }
 
@@ -218,7 +219,7 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
     final Transaction transaction = new Transaction("give")
             .to(account, modifier)
-            .processor(new BaseTransactionProcessor());
+            .processor(EconomyManager.baseProcessor());
     return transaction(transaction, amount, new HashSet<>(), TransactionTypes.DEPOSIT.get());
   }
 
@@ -232,7 +233,7 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
     final Transaction transaction = new Transaction("take")
             .to(account, modifier.counter())
-            .processor(new BaseTransactionProcessor());
+            .processor(EconomyManager.baseProcessor());
 
     return transaction(transaction, amount, contexts, TransactionTypes.WITHDRAW.get());
   }
@@ -247,7 +248,7 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
     final Transaction transaction = new Transaction("take")
             .to(account, modifier.counter())
-            .processor(new BaseTransactionProcessor());
+            .processor(EconomyManager.baseProcessor());
 
     return transaction(transaction, amount, new HashSet<>(), TransactionTypes.WITHDRAW.get());
   }
@@ -267,7 +268,7 @@ public class SpongeVirtualAccount implements VirtualAccount {
     final Transaction transaction = new Transaction("transfer")
             .to(toAccount.get(), modifier)
             .from(account, modifier.counter())
-            .processor(new BaseTransactionProcessor());
+            .processor(EconomyManager.baseProcessor());
 
     return transaction(to, transaction, amount, contexts, TransactionTypes.TRANSFER.get());
   }
@@ -286,7 +287,7 @@ public class SpongeVirtualAccount implements VirtualAccount {
     final Transaction transaction = new Transaction("transfer")
             .to(toAccount.get(), modifier)
             .from(account, modifier.counter())
-            .processor(new BaseTransactionProcessor());
+            .processor(EconomyManager.baseProcessor());
 
     return transaction(to, transaction, amount, new HashSet<>(), TransactionTypes.TRANSFER.get());
   }

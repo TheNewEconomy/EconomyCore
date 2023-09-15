@@ -31,6 +31,7 @@ import net.tnemc.core.manager.CurrencyManager;
 import net.tnemc.core.manager.TopManager;
 import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.region.RegionProvider;
+import net.tnemc.core.transaction.TransactionProcessor;
 import net.tnemc.core.utils.Identifier;
 
 import java.util.ArrayList;
@@ -177,6 +178,10 @@ public class EconomyManager {
 
   public static boolean limitCurrency() {
     return instance.limitCurrency;
+  }
+
+  public static TransactionProcessor baseProcessor() {
+    return instance.transactionManager.getProcessor();
   }
 
   public void printInvalid() {

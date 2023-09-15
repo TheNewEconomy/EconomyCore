@@ -17,6 +17,7 @@ package net.tnemc.core.menu.impl.mybal.consumer;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
@@ -77,7 +78,7 @@ public class ConvertConfirmation extends AmountConfirmation {
         final Transaction transaction = new Transaction("convert")
             .from(account.get(), modifierFrom)
             .to(account.get(), modifier)
-            .processor(new BaseTransactionProcessor())
+            .processor(EconomyManager.baseProcessor())
             .source(new PlayerSource(provider.get().identifier()));
 
         Optional<Receipt> receipt = processTransaction(provider.get(), transaction);

@@ -21,6 +21,7 @@ import me.lokka30.treasury.api.economy.account.Account;
 import me.lokka30.treasury.api.economy.currency.Currency;
 import me.lokka30.treasury.api.economy.transaction.EconomyTransaction;
 import me.lokka30.treasury.api.economy.transaction.EconomyTransactionType;
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.account.holdings.modify.HoldingsOperation;
@@ -82,7 +83,7 @@ public abstract class TreasuryAccount implements Account {
 
     final Transaction transaction = new Transaction(typeToTNE(ecoTrans.getType()))
             .to(account, modifier)
-            .processor(new BaseTransactionProcessor())
+            .processor(EconomyManager.baseProcessor())
             .source(new PluginSource("Treasury"));
 
     try {

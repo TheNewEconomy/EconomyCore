@@ -300,7 +300,7 @@ public class TNEVault implements Economy {
 
     final Transaction transaction = new Transaction("take")
         .to(account.get(), modifier.counter())
-        .processor(new BaseTransactionProcessor())
+        .processor(EconomyManager.baseProcessor())
         .source(new PluginSource("Vault"));
 
     try {
@@ -374,7 +374,7 @@ public class TNEVault implements Economy {
 
     final Transaction transaction = new Transaction("give")
         .to(account.get(), modifier)
-        .processor(new BaseTransactionProcessor())
+        .processor(EconomyManager.baseProcessor())
         .source(new PluginSource("Vault"));
 
     try {
