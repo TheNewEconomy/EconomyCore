@@ -20,17 +20,10 @@ package net.tnemc.core.channel.handlers;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.tnemc.core.TNECore;
-import net.tnemc.core.account.Account;
-import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.channel.ChannelBytesWrapper;
 import net.tnemc.core.channel.ChannelMessageHandler;
 import net.tnemc.core.compatibility.log.DebugLevel;
-import net.tnemc.core.utils.Identifier;
-
-import java.math.BigDecimal;
-import java.util.Optional;
-import java.util.UUID;
 
 /**
  * CreateHandler

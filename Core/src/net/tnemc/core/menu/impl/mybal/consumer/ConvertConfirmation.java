@@ -27,7 +27,6 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.menu.impl.shared.consumer.AmountConfirmation;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
-import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
 import net.tnemc.menu.core.MenuManager;
 
 import java.math.BigDecimal;

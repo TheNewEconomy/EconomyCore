@@ -40,7 +40,6 @@ import net.tnemc.core.manager.top.TopPage;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
-import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 import net.tnemc.item.AbstractItemStack;
 

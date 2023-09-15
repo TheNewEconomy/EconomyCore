@@ -32,7 +32,6 @@ import net.tnemc.core.transaction.check.PreCallbackCheck;
 import net.tnemc.core.transaction.check.StatusCheck;
 import net.tnemc.core.transaction.check.TrackingCheck;
 import net.tnemc.core.transaction.history.AwayHistory;
-import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
 import net.tnemc.core.transaction.tax.TaxType;
 import net.tnemc.core.transaction.tax.type.FlatType;
 import net.tnemc.core.transaction.tax.type.PercentileType;

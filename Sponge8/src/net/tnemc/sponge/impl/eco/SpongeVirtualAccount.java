@@ -26,7 +26,6 @@ import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.account.holdings.modify.HoldingsOperation;
 import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.transaction.Transaction;
-import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Cause;

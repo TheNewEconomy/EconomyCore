@@ -26,7 +26,6 @@ import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.menu.impl.shared.consumer.AmountConfirmation;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
-import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
 
 import java.math.BigDecimal;
 import java.util.Optional;
