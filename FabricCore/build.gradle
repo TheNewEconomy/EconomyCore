@@ -32,7 +32,7 @@ dependencies {
 
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 
-	compileOnly(group:'net.tnemc', name: 'TNE', version: '0.1.2.2-Pre-1')
+	compileOnly(group:'net.tnemc', name: 'EconomyCore', version: '0.1.2.3-Pre1')
 	compileOnly(group:'net.tnemc', name: 'TNML-CORE', version: '1.0-SNAPSHOT-18')
 }
 
