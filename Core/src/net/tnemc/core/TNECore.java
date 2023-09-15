@@ -259,7 +259,7 @@ public abstract class TNECore {
     //Set our server UUID. This is used for proxy messaging.
     final boolean randomUUID = MainConfig.yaml().getBoolean("Core.Server.RandomUUID", false);
 
-    //Added in build 0.1.2.3-Pre1, removed in 0.1.2.6
+    //Added in build 0.1.2.4-Pre1, removed in 0.1.2.6
     if(!MainConfig.yaml().contains("Core.Commands.LimitCurrency")) {
       MainConfig.yaml().set("Core.Commands.LimitCurrency", false);
       MainConfig.yaml().setComment("Core.Commands.LimitCurrency", "#Configuration if money action commands, such as give/take/set require individual permissions.");

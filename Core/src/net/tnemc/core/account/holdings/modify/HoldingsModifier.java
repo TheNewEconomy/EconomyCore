@@ -202,7 +202,7 @@ public class HoldingsModifier {
    */
   public HoldingsModifier counter() {
     final HoldingsModifier mod = new HoldingsModifier(region, currency, modifier.negate(), operation, holdingsID);
-    System.out.println("Percent Counter: " + percent);
+    //System.out.println("Percent Counter: " + percent);
     mod.setPercent(percent);
     return mod;
   }

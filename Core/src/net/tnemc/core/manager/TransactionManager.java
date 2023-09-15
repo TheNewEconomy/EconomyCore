@@ -18,7 +18,6 @@ package net.tnemc.core.manager;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.EconomyManager;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.io.maps.EnhancedHashMap;
 import net.tnemc.core.transaction.Transaction;
@@ -32,6 +31,7 @@ import net.tnemc.core.transaction.check.PreCallbackCheck;
 import net.tnemc.core.transaction.check.StatusCheck;
 import net.tnemc.core.transaction.check.TrackingCheck;
 import net.tnemc.core.transaction.history.AwayHistory;
+import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
 import net.tnemc.core.transaction.tax.TaxType;
 import net.tnemc.core.transaction.tax.type.FlatType;
 import net.tnemc.core.transaction.tax.type.PercentileType;
@@ -113,7 +113,7 @@ public class TransactionManager {
     addTax(new FlatType());
     addTax(new PercentileType());
 
-    this.processor = EconomyManager.baseProcessor();
+    this.processor = new BaseTransactionProcessor(findGroup("core").get().getChecks());
   }
 
   /**
