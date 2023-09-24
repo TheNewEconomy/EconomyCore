@@ -18,7 +18,10 @@ package net.tnemc.core.io.redis;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.compatibility.log.DebugLevel;
 import redis.clients.jedis.BinaryJedisPubSub;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * TNESubscriber
@@ -31,6 +34,10 @@ public class TNESubscriber extends BinaryJedisPubSub {
   @Override
   public void onMessage(byte[] channel, byte[] message) {
     super.onMessage(channel, message);
-    TNECore.instance().getChannelMessageManager().handle("tne:balance", message);
+
+    final String channelStr = new String(channel, StandardCharsets.UTF_8);
+
+    TNECore.log().debug("Redist Message Received: " + channelStr, DebugLevel.STANDARD);
+    TNECore.instance().getChannelMessageManager().handle(channelStr, message);
   }
 }

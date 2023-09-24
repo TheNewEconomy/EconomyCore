@@ -64,7 +64,8 @@ public class PlayerJoinHandler {
       apiResponse = TNECore.eco().account().createAccount(provider.identifier().toString(),
                                                           provider.getName());
 
-      if(!apiResponse.getResponse().success()) {
+      TNECore.log().debug("API Join Check. Account Exists: " + apiResponse.getAccount().isPresent());
+      if(apiResponse.getAccount().isEmpty()) {
         response.setResponse(response.getResponse());
         response.setCancelled(true);
         return response;

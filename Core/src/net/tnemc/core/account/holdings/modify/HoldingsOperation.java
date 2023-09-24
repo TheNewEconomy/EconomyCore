@@ -85,5 +85,4 @@ public enum HoldingsOperation {
   public BigDecimal perform(final BigDecimal value, final BigDecimal modifier) {
     return value.add(modifier);
   }
-
 }

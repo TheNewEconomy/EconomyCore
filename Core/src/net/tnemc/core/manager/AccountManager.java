@@ -36,6 +36,7 @@ import net.tnemc.core.api.callback.account.AccountDeleteCallback;
 import net.tnemc.core.api.callback.account.AccountTypesCallback;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.compatibility.log.DebugLevel;
+import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.io.maps.EnhancedHashMap;
 import net.tnemc.core.manager.id.UUIDPair;
 import net.tnemc.core.manager.id.UUIDProvider;
@@ -112,6 +113,13 @@ public class AccountManager {
       TNECore.log().debug("Account Exists Already. ID: " + identifier);
 
       return new AccountAPIResponse(accounts.get(identifier), AccountResponse.ALREADY_EXISTS);
+    }
+
+    final Optional<UUIDPair> pair = uuidProvider.retrieve(name);
+    if(MainConfig.yaml().getBoolean("Core.Offline", false) && pair.isPresent() && accounts.containsKey(pair.get().getIdentifier().toString())) {
+      TNECore.log().debug("Offline Account Exists Already. ID: " + identifier);
+
+      return new AccountAPIResponse(accounts.get(pair.get().getIdentifier().toString()), AccountResponse.ALREADY_EXISTS);
     }
 
     Account account;

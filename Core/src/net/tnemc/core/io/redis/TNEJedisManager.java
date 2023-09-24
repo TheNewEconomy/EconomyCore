@@ -110,6 +110,14 @@ public class TNEJedisManager {
     out.writeUTF(handler.asID());
     out.writeUTF(amount.toPlainString());
 
+    TNECore.log().debug("=== Redis sending message ===" , DebugLevel.STANDARD);
+    TNECore.log().debug("Account: " + account , DebugLevel.STANDARD);
+    TNECore.log().debug("region: " + region , DebugLevel.STANDARD);
+    TNECore.log().debug("currency: " + currency , DebugLevel.STANDARD);
+    TNECore.log().debug("handler: " + handler.asID() , DebugLevel.STANDARD);
+    TNECore.log().debug("amount: " + amount.toPlainString() , DebugLevel.STANDARD);
+    TNECore.log().debug("=== Redis End Message ===" , DebugLevel.STANDARD);
+
     instance.publish(out.toByteArray());
   }
 }

@@ -74,6 +74,7 @@ Data:
   Database:
 
     #The database type to use. Current options: MySQL, Maria, YAML.
+    #You may use maria-outdated for MariaDB versions less than 10.7.0 or MySQL versions less than 8.0.0.
     Type: "yaml"
 
     #The prefix to use for TheNewEconomy SQL tables

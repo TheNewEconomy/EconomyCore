@@ -29,6 +29,7 @@ import net.tnemc.core.io.redis.TNEJedisManager;
 import net.tnemc.core.io.storage.connect.SQLConnector;
 import net.tnemc.core.io.storage.connect.YAMLConnector;
 import net.tnemc.core.io.storage.dialect.MariaDialect;
+import net.tnemc.core.io.storage.dialect.MariaOutdatedDialect;
 import net.tnemc.core.io.storage.engine.flat.YAML;
 import net.tnemc.core.io.storage.engine.sql.MySQL;
 import net.tnemc.core.io.storage.engine.sql.PostgreSQL;
@@ -66,7 +67,7 @@ public class StorageManager {
 
       sync = DataConfig.yaml().getString("Data.Sync.Type", "Bungee");
       switch(sync.toLowerCase()) {
-        case "jedis" -> this.jedisManager = new TNEJedisManager();
+        case "redis", "jedis" -> this.jedisManager = new TNEJedisManager();
         default -> this.jedisManager = null;
       }
     } else {
@@ -75,6 +76,7 @@ public class StorageManager {
     }
 
     final String engine = DataConfig.yaml().getString("Data.Database.Type");
+    TNECore.log().debug("Engine: " + engine.toLowerCase(), DebugLevel.STANDARD);
 
     switch(engine.toLowerCase()) {
       case "mysql" -> {
@@ -107,6 +109,13 @@ public class StorageManager {
         this.engine = new MySQL(prefix, new MariaDialect(prefix));
         this.connector = new SQLConnector();
       }
+      case "maria-outdated" -> {
+
+        TNECore.log().warning("Using outdated database! Please note: Official Support for this version of TNE is limited.", DebugLevel.OFF);
+        final String prefix = DataConfig.yaml().getString("Data.Database.Prefix");
+        this.engine = new MySQL(prefix, new MariaOutdatedDialect(prefix));
+        this.connector = new SQLConnector();
+      }
       case "postgre" -> {
         this.engine = new PostgreSQL();
         this.connector = new SQLConnector();
@@ -122,13 +131,12 @@ public class StorageManager {
 
   public void sendMessage(final String channel, final byte[] data) {
     switch(sync.toLowerCase()) {
-      case "redis":
+      case "redis", "jedis" -> {
         if(jedisManager != null) {
           jedisManager.publish(channel, data);
         }
-        break;
-      default:
-        TNECore.server().proxy().send(channel, data);
+      }
+      default -> TNECore.server().proxy().send(channel, data);
     }
   }
 

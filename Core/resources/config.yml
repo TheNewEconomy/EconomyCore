@@ -6,6 +6,10 @@ Core:
   #DO NOT MODIFY
   Version: "0.1.2.0"
 
+  #Cracked Server? Set this to true. May cause data issues as spigot/paper UUIDs are unpredictable.
+  #Do not change this unless you know what you're doing.
+  Offline: false
+
   #Configurations relating to debugging
   Debugging:
 

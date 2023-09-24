@@ -20,6 +20,7 @@ package net.tnemc.core.channel;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.channel.handlers.BalanceHandler;
 import net.tnemc.core.channel.handlers.SyncHandler;
+import net.tnemc.core.compatibility.log.DebugLevel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,6 +57,9 @@ public class ChannelMessageManager {
   }
 
   public void handle(String channel, byte[] bytes) {
+    TNECore.log().debug("TNE Channel Message Received.", DebugLevel.STANDARD);
+    TNECore.log().debug("Channel: " + channel, DebugLevel.STANDARD);
+
     if(handlers.containsKey(channel)) {
       handlers.get(channel).handle(bytes);
     }

@@ -105,6 +105,7 @@
                             <include>me.carleslc.Simple-YAML:*</include>
                             <include>com.zaxxer:*</include>
                             <include>redis.clients:*</include>
+                            <include>org.apache.commons:*</include>
                             <include>co.aikar:*</include>
                             <include>cloud.commandframework:*</include>
                             <include>net.kyori:*</include>
@@ -115,6 +116,10 @@
                         <relocation>
                             <pattern>redis.clients</pattern>
                             <shadedPattern>${tne.relocation}.jedis</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>org.apache.commons:*</pattern>
+                            <shadedPattern>${tne.relocation}.commons</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.json.simple</pattern>
