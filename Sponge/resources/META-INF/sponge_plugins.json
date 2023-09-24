@@ -5,7 +5,7 @@
   },
   "license": "AGPL",
   "global": {
-    "version": "0.1.2.4-Pre1",
+    "version": "0.1.2.5-Pre1",
     "links": {
       "homepage": "https://tnemc.net",
       "source": "https://github.com/TheNewEconomy/EconomyCore",

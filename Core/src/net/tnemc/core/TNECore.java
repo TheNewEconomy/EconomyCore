@@ -86,7 +86,7 @@ public abstract class TNECore {
    */
   public static final String coreURL = "https://tnemc.net/files/module-version.xml";
   public static final Pattern UUID_MATCHER_PATTERN = Pattern.compile("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})");
-  public static final String version = "0.1.2.4";
+  public static final String version = "0.1.2.5";
   public static final String build = "Pre-1";
 
   /* Core non-final variables utilized within TNE as settings */
@@ -259,7 +259,7 @@ public abstract class TNECore {
     //Set our server UUID. This is used for proxy messaging.
     final boolean randomUUID = MainConfig.yaml().getBoolean("Core.Server.RandomUUID", false);
 
-    //Added in build 0.1.2.4-Pre1, removed in 0.1.2.6
+    //Added in build 0.1.2.5-Pre1, removed in 0.1.2.6
     if(!MainConfig.yaml().contains("Core.Commands.LimitCurrency")) {
       MainConfig.yaml().set("Core.Commands.LimitCurrency", false);
       MainConfig.yaml().setComment("Core.Commands.LimitCurrency", "#Configuration if money action commands, such as give/take/set require individual permissions.");
