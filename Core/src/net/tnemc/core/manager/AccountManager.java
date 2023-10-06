@@ -151,7 +151,7 @@ public class AccountManager {
           return new AccountAPIResponse(null, AccountResponse.CREATION_FAILED);
         }
       }
-    } else if(!nonPlayer && name.startsWith("*") || !nonPlayer && TNECore.server().online(name)) {
+    } else if(!nonPlayer && name.startsWith(MainConfig.yaml().getString("Core.Server.Geyser", ".")) || !nonPlayer && TNECore.server().online(name)) {
 
       //This is most definitely a geyser player, they're online but not of valid names
       try {

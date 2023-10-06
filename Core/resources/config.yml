@@ -42,6 +42,9 @@ Core:
   #All configurations relating to the server in general.
   Server:
 
+    #The geyser prefix for the server.
+    Geyser: "."
+
     #Whether the ServerID config should be random on each startup. This could impact syncing on
     #restarts, but will not impact anything significant.
     RandomUUID: false

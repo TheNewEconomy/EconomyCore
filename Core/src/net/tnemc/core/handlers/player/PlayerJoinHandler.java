@@ -52,10 +52,14 @@ public class PlayerJoinHandler {
   public HandlerResponse handle(PlayerProvider provider) {
     final HandlerResponse response = new HandlerResponse("", false);
 
+    TNECore.log().debug("Player Join ID: " + provider.identifier());
+
     final Optional<Account> account = TNECore.eco().account().findAccount(provider.identifier());
 
     boolean firstJoin = false;
     AccountAPIResponse apiResponse = null;
+
+    TNECore.log().debug("Join Account Check: " + account.isPresent());
 
     //Our account doesn't exist, so now we need to continue from here
     if(account.isEmpty()) {
@@ -69,8 +73,14 @@ public class PlayerJoinHandler {
         response.setResponse(response.getResponse());
         response.setCancelled(true);
         return response;
+      } else {
+        if(!apiResponse.getResponse().success() && apiResponse.getAccount().isPresent()) {
+          firstJoin = false;
+        }
       }
     }
+
+    TNECore.log().debug("First Join: " + firstJoin);
 
     final Optional<Account> acc = (apiResponse == null)? account :
                                                    apiResponse.getAccount();
@@ -96,11 +106,15 @@ public class PlayerJoinHandler {
             continue;
           }
 
-          acc.get().setHoldings(new HoldingsEntry(region,
-                                                  currency.getUid(),
-                                                  currency.getStartingHoldings(),
-                                                  EconomyManager.NORMAL
-          ));
+          TNECore.log().debug("Setting Balance to Starting Holdings Currency: " + currency.getIdentifier());
+
+          if(firstJoin) {
+            acc.get().setHoldings(new HoldingsEntry(region,
+                    currency.getUid(),
+                    currency.getStartingHoldings(),
+                    EconomyManager.NORMAL
+            ));
+          }
         }
       } else {
         TNECore.eco().account().getLoading().add(id);
