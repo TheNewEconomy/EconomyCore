@@ -136,94 +136,94 @@ Messages:
       Title: "=====<white> <green>$command</green>のヘルプ ページ:<green>$page</green> ====="
       Entry: "<gold>$command $arguments - <white>$description</white>"
       Arguments: "[page]"
-      Description: "Command help pages."
+      Description: "コマンドのヘルプページ"
     Admin:
       Backup:
         Arguments: ""
-        Description: "Creates a backup of all server data."
+        Description: "サーバーデータのバックアップを作成します。"
       Create:
         Arguments: "<name> [balance]"
-        Description: "Creates a new non-player economy account.<newline>- name - The name of the account.<newline>- Balance ~ The starting balance of the account."
+        Description: "新しいノンプレイヤーアカウントを作成します。<newline>- name - アカウントの名前<newline>- Balance ~ アカウントの開始時の残高"
       Debug:
         Arguments: ""
-        Description: "Toggles console debug mode."
+        Description: "コンソールのデバッグモードを切り替えます。"
       Delete:
         Arguments: "<player>"
-        Description: "Deletes a player account.<newline>- Player ~ The account owner."
+        Description: "プレイヤーのアカウントを削除します。<newline>- Player ~ アカウントのオーナー"
       Extract:
         Arguments: ""
-        Description: "Extracts all player balances with their username attached for database-related debugging."
+        Description: "データベースのデバッグ用に、すべてのアカウント残高を抽出します。"
       Main:
         Arguments: ""
-        Description: "The main admin command for TNE."
+        Description: "TNEのAdminメインコマンド"
       MyEco:
         Arguments: ""
-        Description: "Opens the MyEco menu"
+        Description: "MyEcoメニューを開く"
       Purge:
         Arguments: ""
-        Description: "Deletes all player accounts that have the default balance"
+        Description: "デフォルトの残高を持つすべてのプレイヤーアカウントを削除する"
       Reload:
         Arguments: "[configuration]"
-        Description: "Saves modifications made via command, and reloads a configuration file.<newline>- Configuration ~ The identifier of the configuration to reload. Default is all."
+        Description: "コマンドによる変更を保存し、設定ファイルを再読み込みします。<newline>- Configuration ~ 再読み込みするConfigファイルを指定します。デフォルトではすべてのファイルが再読み込みされます。"
       Reset:
         Arguments: ""
-        Description: "Deletes all economy-related data from the database."
+        Description: "データベースからすべてのデータを削除します。"
       Restore:
         Arguments: ""
-        Description: "Restores all balances that are located in extracted.yml after /tne extract."
+        Description: "/tne輸出後にextracted.ymlにあるすべての残高を復元します。"
       Save:
         Arguments: ""
-        Description: "Force saves all TNE data."
+        Description: "すべてのデータを強制的に保存します。"
       Status:
         Arguments: "<player> [status]"
-        Description: "Displays, or sets, the current account status of an account.<newline>- Player ~ The account owner."
+        Description: "アカウントの現在のステータスを表示、設定します。<newline>- Player ~ アカウントのオーナー"
       Version:
         Arguments: ""
-        Description: "Displays the version of TNE currently running."
+        Description: "実行中のTNEバージョンを表示する。"
     Module:
       Available:
         Arguments: "[url]"
-        Description: "Displays available modules at the specified url, or defaults to TNE's core modules.<newline>- url ~ The url to use for the check, only use if you know what you're doing."
+        Description: "指定されたURLで利用可能なモジュールを表示するか、デフォルトのTNEコアモジュールを表示します。<newline>- url ~ チェックに使用するURL"
       Download:
         Arguments: "<name> [url]"
-        Description: "Attempts to download the specified module.<newline>- url ~ The url to use, only use if you know what you're doing, defaults to TNE's core modules url."
+        Description: "指定されたモジュールをダウンロードします。<newline>- url ~ 使用するモジュール。デフォルトはTNEのコアモジュールです。"
       Info:
         Arguments: "<module>"
-        Description: "Displays some information about a module.<newline>- Module ~ The module to look up."
+        Description: "モジュールに関する情報を表示します。<newline>- Module ~ 情報を表示するモジュール"
       List:
         Arguments: ""
-        Description: "Lists all loaded TNE modules."
+        Description: "ロードされているモジュールを表示します。"
       Load:
         Arguments: "<module>"
-        Description: "Load a module from the modules directory.<newline>- Module ~ The module to load."
+        Description: "モジュールをロードします。<newline>- Module ~ロードしたいモジュール"
     Money:
       Balance:
         Arguments: "[currency] [region]"
-        Description: "Displays your current holdings."
+        Description: "現在の所持金を表示します。"
       Convert:
         Arguments: "<amount> <to currency> [from currency]"
-        Description: "Convert some of your holdings to another currency."
+        Description: "所持金を別の通貨に両替します。"
       Deposit:
         Arguments: "<amount> [currency]"
-        Description: "Deposits money from an item form into a virtual bank for mixed currencies."
+        Description: "銀行へお金を預けます。"
       Give:
         Arguments: "<player> <amount> [currency] [world]"
-        Description: "Adds money into your economy, and gives it to a player."
+        Description: "プレイヤーへお金を追加します。"
       Note:
         Arguments: "<amount> [currency]"
-        Description: "Makes your virtual currency physical, for storage/trading purposes."
+        Description: "仮想の通貨を物理的な通貨にします。"
       MyBal:
         Arguments: "[currency]"
-        Description: "Opens the MyBal menu"
+        Description: "MyBalメニューを開きます。"
       Other:
         Arguments: "<player> [currency] [region]"
-        Description: "Retrieves the balance of a player.<newline>- Player ~ The account owner.<newline>- World ~ The world to retrieve the balance from.<newline>- currency ~ The currency to retrieve the balance of."
+        Description: "プレイヤーの残高を取得します。<newline>- Player ~ アカウントのオーナー<newline>- World ~ 残高を取得するワールド<newline>- currency ~ 残高を取得する通貨"
       Pay:
         Arguments: "<player> <amount> [currency]"
-        Description: "Use some of your holdings to pay another player."
+        Description: "他のプレイヤーへ支払います。"
       Request:
         Arguments: "<player> <amount> [currency]"
-        Description: "Request money from a player."
+        Description: "プレイヤーへお金を請求します。"
       Set:
         Arguments: "<player> <amount> [currency] [world]"
         Description: "プレーヤーの持ち金を設定する。"
