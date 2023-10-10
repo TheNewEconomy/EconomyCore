@@ -6,17 +6,17 @@ Messages:
   #DO NOT MODIFY
   Version: "0.1.2.0"
   General:
-    Version: "<white>TNE Version: <green>$version <white>- Build: <green>$build"
-    NoPerm: "<red>I'm sorry, but you do not have permission to do that."
-    Saved: "<yellow>Successfully saved all TNE Data!"
-    NoPlayer: "<red>Unable to locate player '$player'!"
-    Disabled: "<red>Economy features are currently disabled in this world!"
-    IsConsole: "<red>You can not run this command as the console!"
+    Version: "<white>TNE バージョン: <green>$version <white>- ビルド: <green>$build"
+    NoPerm: "<red>あなたには権限がありません!"
+    Saved: "<yellow>データが保存されました。"
+    NoPlayer: "<red>プレイヤー'$player'が見つかりません。"
+    Disabled: "<red>このワールドでは経済機能が無効になっています。"
+    IsConsole: "<red>このコマンドはコンソールでは実行できません。"
   Item:
-    Invalid: "<red>Invalid item name and/or durability combination entered."
-    InvalidAmount: "<red>Invalid item amount entered."
+    Invalid: "<red>無効なアイテム名と耐久度が入力されました。"
+    InvalidAmount: "<red>入力されたアイテム金額は無効です。"
   Admin:
-    NoHoldings: "<red>$player has no holdings for the world '$world'!"
+    NoHoldings: "<red>$playerはワールド '$world'でお金を持っていません!"
     Holdings: "<white>$player currently has <gold>$amount <white>for world '$world'!"
     NoTransactions: "<white>$player has no transactions to display."
     Configuration: "<white>The value of $node is currently $value."
