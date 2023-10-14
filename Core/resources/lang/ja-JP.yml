@@ -73,7 +73,7 @@ Messages:
     Taken: "<white>$playerはあなたから<gold>$amount<white>を受け取りました。"
     Insufficient: "<red>あなたは<gold>$amount<red>を持っていません!"
     HoldingsMulti: "<white>ワールド $worldの残高: "
-    HoldingsMultiSingle: "<white>$currency: <gold>$amount"
+    HoldingsMultiSingle: "<white>$currency<newline>Total: <gold>$amount<newline><white>Inventory: <gold>$inventory<newline><white>Ender Chest: <gold>$ender<newline><white>Virtual: <gold>$virtual"
     Holdings: "<white>あなたは現在<gold>$amount<white>を所持しています。"
     Gave: "<white>$playerへ<gold>$amount<white>を渡しました!"
     RecipientSet: "<white>あなたの残高は$playerによって<gold>$amount<white>に設定されました。"
