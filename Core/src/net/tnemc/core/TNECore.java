@@ -271,7 +271,7 @@ public abstract class TNECore {
       }
     }
 
-    //Added in build 0.1.2.6-Pre1, removed in 0.1.2.7
+    //Added in build 0.1.2.5-Pre1, removed in 0.1.2.7
     if(!MainConfig.yaml().contains("Core.Server.Geyser")) {
       MainConfig.yaml().set("Core.Server.Geyser", ".");
       MainConfig.yaml().setComment("Core.Server.Geyser", "#The geyser prefix for the server.");

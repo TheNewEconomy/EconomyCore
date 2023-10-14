@@ -24,10 +24,12 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.format.CurrencyFormatter;
+import net.tnemc.core.utils.Identifier;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -73,6 +75,37 @@ public class PAPIHook extends PlaceholderExpansion {
 
     final String[] args = identifier.split("_");
 
+    //%tne_balance:inventory/balance:e_chest/balance:experience/balance:virtualargs[1]%
+    if(identifier.contains("balance:")) {
+
+      TNECore.log().debug("Balance ID: " + args[0].split(":")[1]);
+
+      final Identifier id = switch(args[0].split(":")[1]) {
+        case "inventory" -> EconomyManager.INVENTORY_ONLY;
+        case "virtual" -> EconomyManager.VIRTUAL;
+        case "ender" -> EconomyManager.E_CHEST;
+        default -> EconomyManager.NORMAL;
+      };
+
+      final UUID curID = TNECore.eco().currency().getDefaultCurrency().getUid();
+      final List<HoldingsEntry> entries = account.get().getHoldings(TNECore.eco().region().defaultRegion(), curID, id);
+      final BigDecimal amount = (entries.size() > 0)? entries.get(0).getAmount() : BigDecimal.ZERO;
+
+      if(args.length >= 2 && args[1].equalsIgnoreCase("formatted")) {
+        if(entries.size() > 0) {
+          return CurrencyFormatter.format(account.get(), entries.get(0));
+        }
+
+        final HoldingsEntry entry = new HoldingsEntry(TNECore.eco().region().defaultRegion(),
+                curID,
+                amount,
+                EconomyManager.NORMAL);
+        return CurrencyFormatter.format(account.get(), entry);
+      } else {
+        return amount.toPlainString();
+      }
+    }
+
     //%tne_balance%
     if(identifier.contains("balance")) {
 
@@ -89,11 +122,6 @@ public class PAPIHook extends PlaceholderExpansion {
       } else {
         return amount.toPlainString();
       }
-    }
-
-    //%tne_inventory/e_chest/experience/virtualargs[1]%
-    if(identifier.contains(":")) {
-
     }
 
     //%tne_wcurarg[0]_<world name>arg[1]_<currency name>arg[2]
