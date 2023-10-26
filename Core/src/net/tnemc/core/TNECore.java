@@ -236,18 +236,6 @@ public abstract class TNECore {
     //Set our server UUID. This is used for proxy messaging.
     final boolean randomUUID = MainConfig.yaml().getBoolean("Core.Server.RandomUUID", false);
 
-    //Added in build 0.1.2.4-Pre1, removed in 0.1.2.6
-    if(!MainConfig.yaml().contains("Core.Commands.LimitCurrency")) {
-      MainConfig.yaml().set("Core.Commands.LimitCurrency", false);
-      MainConfig.yaml().setComment("Core.Commands.LimitCurrency", "#Configuration if money action commands, such as give/take/set require individual permissions.");
-
-      try {
-        MainConfig.yaml().save();
-      } catch(IOException e) {
-        logger.error("Issue while updating config.yml to config.yml", e, DebugLevel.OFF);
-      }
-    }
-
     //Added in build 0.1.2.5-Pre1, removed in 0.1.2.7
     if(!MainConfig.yaml().contains("Core.Server.Geyser")) {
       MainConfig.yaml().set("Core.Server.Geyser", ".");
@@ -255,16 +243,6 @@ public abstract class TNECore {
 
       try {
         MainConfig.yaml().save();
-      } catch(IOException e) {
-        logger.error("Issue while updating config.yml to config.yml", e, DebugLevel.OFF);
-      }
-    }
-
-    if(!MessageConfig.yaml().contains("Messages.Account.BlockedAction")) {
-      MessageConfig.yaml().set("Messages.Account.BlockedAction", "<red>You don't have permission to perform the action \"$action\" with currency \"$currency\"!");
-
-      try {
-        MessageConfig.yaml().save();
       } catch(IOException e) {
         logger.error("Issue while updating config.yml to config.yml", e, DebugLevel.OFF);
       }
