@@ -78,6 +78,8 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
   public void store(StorageConnector<?> connector, @NotNull HoldingsEntry object, @Nullable String identifier) {
     if(connector instanceof SQLConnector && identifier != null) {
 
+      TNECore.log().debug("Storing holdings for Identifier: " + identifier);
+
       ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveHoldings(),
                                               new Object[] {
                                                   identifier,

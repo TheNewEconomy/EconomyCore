@@ -18,6 +18,8 @@ package net.tnemc.core.currency;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.utils.exceptions.NoValidCurrenciesException;
+
 import java.io.File;
 
 /**
@@ -32,8 +34,9 @@ public interface CurrencyLoader {
   /**
    * Loads all currencies.
    * @param directory The directory to load the currencies from.
+   * @throws NoValidCurrenciesException When no valid currencies can be loaded.
    */
-  void loadCurrencies(final File directory);
+  void loadCurrencies(final File directory) throws NoValidCurrenciesException;
 
   /**
    * Loads a specific currency.

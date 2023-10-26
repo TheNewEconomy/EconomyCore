@@ -32,6 +32,7 @@ import net.tnemc.core.currency.Note;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.utils.IOUtil;
+import net.tnemc.core.utils.exceptions.NoValidCurrenciesException;
 import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.File;
@@ -56,9 +57,10 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
   /**
    * Loads all currencies.
    * @param directory The directory to load the currencies from.
+   * @throws NoValidCurrenciesException When no valid currencies can be loaded.
    */
   @Override
-  public void loadCurrencies(final File directory) {
+  public void loadCurrencies(final File directory) throws NoValidCurrenciesException {
 
     if(directory.exists()) {
       final File[] currencies = IOUtil.getYAMLs(directory);
@@ -69,13 +71,14 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
           final boolean loaded = loadCurrency(directory, curFile);
 
           if(!loaded) {
-            TNECore.log().error("Failed to load currency: " + curFile);
+            TNECore.log().error("Failed to load currency: " + curFile, DebugLevel.OFF);
           }
         }
         return;
       }
     }
-    TNECore.log().error("There are no currencies to load.");
+    TNECore.log().error("There are no currencies to load.", DebugLevel.OFF);
+    throw new NoValidCurrenciesException();
   }
 
   /**
@@ -104,7 +107,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       cur.loadWithComments();
 
     } catch(IOException e) {
-      TNECore.log().error("Failed to load currency: " + cur.getName());
+      TNECore.log().error("Failed to load currency: " + cur.getName(), DebugLevel.OFF);
       e.printStackTrace();
       return false;
     }
@@ -244,12 +247,12 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
     final CurrencyLoadCallback currencyLoad = new CurrencyLoadCallback(currency);
     if(TNECore.callbacks().call(currencyLoad)) {
-      TNECore.log().error("Cancelled currency load through callback.");
+      TNECore.log().error("Cancelled currency load through callback.", DebugLevel.OFF);
       return false;
     }
 
     if(!loadDenominations(new File(directory, identifier), currency)) {
-      TNECore.log().error("Failed to load currency. Unable to load denominations: " + currency.getIdentifier());
+      TNECore.log().error("Failed to load currency. Unable to load denominations: " + currency.getIdentifier(), DebugLevel.OFF);
       return false;
     }
 
@@ -280,15 +283,15 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
           final boolean loaded = loadDenomination(currency, denomination);
 
           if(!loaded) {
-            TNECore.log().error("Unable to load denomination: " + denomination.getName());
+            TNECore.log().error("Unable to load denomination: " + denomination.getName(), DebugLevel.OFF);
           }
         }
         return true;
       }
-      TNECore.log().error("No denominations found for currency: " + currency.getIdentifier());
+      TNECore.log().error("No denominations found for currency: " + currency.getIdentifier(), DebugLevel.OFF);
       return false;
     }
-    TNECore.log().error("No denominations found for currency: " + currency.getIdentifier());
+    TNECore.log().error("No denominations found for currency: " + currency.getIdentifier(), DebugLevel.OFF);
     return false;
   }
 
@@ -316,7 +319,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     try {
       denom.loadWithComments();
     } catch(IOException e) {
-      TNECore.log().error("Failed to load denomination: " + denomFile.getName());
+      TNECore.log().error("Failed to load denomination: " + denomFile.getName(), DebugLevel.OFF);
       e.printStackTrace();
       return false;
     }

@@ -181,47 +181,21 @@ public abstract class TNECore {
     //Call onEnable for all modules loaded.
     loader.getModules().values().forEach((moduleWrapper -> moduleWrapper.getModule().enable(this)));
 
-    //Save our default currency file
-    final File cur = new File(directory, "currency");
-
-    final int count = (cur.exists())? IOUtil.getYAMLs(cur).length : 0;
-    if(!cur.exists()) {
-      final boolean created = cur.mkdir();
-      if(!created) {
-        TNECore.log().error("Failed to create plugin currency directory. Disabling plugin.");
-        return;
-      }
-      if(count == 0) {
-        TNECore.server().saveResource("currency/USD.yml", false);
-      }
-    }
-
-    final File usd = new File(cur, "USD");
-    if(count == 0 && !usd.exists()) {
-      final boolean created = usd.mkdir();
-      if(!created) {
-        TNECore.log().error("Failed to create plugin USD currency directory. Disabling plugin.");
-        return;
-      }
-      TNECore.server().saveResource("currency/USD/one.yml", false);
-      TNECore.server().saveResource("currency/USD/penny.yml", false);
-    }
-
     this.config = new MainConfig();
     this.data = new DataConfig();
     this.messageConfig = new MessageConfig();
 
     TNECore.log().inform("Loading configurations!");
     if(!this.config.load()) {
-      TNECore.log().error("Failed to load main configuration!");
+      TNECore.log().error("Failed to load main configuration!", DebugLevel.OFF);
     }
 
     if(!this.data.load()) {
-      TNECore.log().error("Failed to load data configuration!");
+      TNECore.log().error("Failed to load data configuration!", DebugLevel.OFF);
     }
 
     if(!this.messageConfig.load()) {
-      TNECore.log().error("Failed to load message configuration!");
+      TNECore.log().error("Failed to load message configuration!", DebugLevel.OFF);
     }
 
     //Call initConfigurations for all modules loaded.
@@ -246,7 +220,10 @@ public abstract class TNECore {
 
     this.economyManager.init();
 
-    this.economyManager.currency().load(directory, false);
+    if(!this.economyManager.currency().load(directory, false)) {
+      return;
+    }
+
     this.economyManager.currency().saveCurrenciesUUID(directory);
 
     if(server.pluginAvailable("Treasury")) {
