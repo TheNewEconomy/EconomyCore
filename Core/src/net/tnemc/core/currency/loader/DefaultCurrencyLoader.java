@@ -291,7 +291,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       TNECore.log().error("No denominations found for currency: " + currency.getIdentifier(), DebugLevel.OFF);
       return false;
     }
-    TNECore.log().error("No denominations found for currency: " + currency.getIdentifier(), DebugLevel.OFF);
+    TNECore.log().error("Invalid currency directory! Must be the same name as the currency's identifier value. Currency: " + currency.getIdentifier(), DebugLevel.OFF);
     return false;
   }
 
