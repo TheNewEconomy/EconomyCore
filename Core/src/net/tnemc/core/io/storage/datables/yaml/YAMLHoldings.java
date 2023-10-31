@@ -158,7 +158,7 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
       final File accFile = new File(TNECore.directory(), "accounts/" + identifier + ".yml");
       if(!accFile.exists()) {
 
-        TNECore.log().error("Null account file passed to YAMLAccount.load. Account: " + identifier);
+        TNECore.log().error("Null account file passed to YAMLAccount.load. Account: " + identifier, DebugLevel.OFF);
         return holdings;
       }
 
@@ -168,54 +168,60 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
         yaml = YamlFile.loadConfiguration(accFile);
       } catch(IOException ignore) {
 
-        TNECore.log().error("Issue loading account file. Account: " + identifier);
+        TNECore.log().error("Issue loading account file. Account: " + identifier, DebugLevel.OFF);
       }
 
 
-      //region, currency, amount, type
-      if(yaml != null) {
+      try {
+        //region, currency, amount, type
+        if(yaml != null) {
 
-        //Holdings.Server.Region.Currency.Handler: Balance
-        if(yaml.contains("Holdings")) {
-          final ConfigurationSection main = yaml.getConfigurationSection("Holdings");
-          for(final String server : main.getKeys(false)) {
+          //Holdings.Server.Region.Currency.Handler: Balance
+          if(yaml.contains("Holdings")) {
+            final ConfigurationSection main = yaml.getConfigurationSection("Holdings");
+            for(final String server : main.getKeys(false)) {
 
-            if(!main.contains(server)) {
-              continue;
-            }
-            for(final String region : main.getConfigurationSection(server).getKeys(false)) {
-
-              if(!main.contains(server + "." + region)) {
+              if(! main.contains(server) || ! main.isConfigurationSection(server)) {
                 continue;
               }
-              for(final String currency : main.getConfigurationSection(server + "." + region).getKeys(false)) {
 
-                if(TNECore.eco().currency().findCurrency(currency).isEmpty()) {
-                  EconomyManager.invalidCurrencies().add(currency);
-                }
+              for(final String region : main.getConfigurationSection(server).getKeys(false)) {
 
-                if(!main.contains(server + "." + region + "." + currency)) {
+                if(! main.contains(server + "." + region)) {
                   continue;
                 }
-                for(final String handler : main.getConfigurationSection(server + "." + region + "." + currency).getKeys(false)) {
+                for(final String currency : main.getConfigurationSection(server + "." + region).getKeys(false)) {
 
-                  final String amount = yaml.getString("Holdings." + server + "." + region + "." + currency + "." + handler, "0.0");
+                  if(TNECore.eco().currency().findCurrency(currency).isEmpty()) {
+                    EconomyManager.invalidCurrencies().add(currency);
+                  }
 
-                  //region, currency, amount, type
-                  final HoldingsEntry entry = new HoldingsEntry(region,
-                                                                UUID.fromString(currency),
-                                                                new BigDecimal(amount),
-                                                                Identifier.fromID(handler)
-                  );
+                  if(! main.contains(server + "." + region + "." + currency)) {
+                    continue;
+                  }
+                  for(final String handler : main.getConfigurationSection(server + "." + region + "." + currency).getKeys(false)) {
 
-                  TNECore.log().debug("YAMLHoldings-loadAll-Entry ID:" + entry.getHandler(), DebugLevel.DEVELOPER);
-                  TNECore.log().debug("YAMLHoldings-loadAll-Entry AMT:" + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
-                  holdings.add(entry);
+                    final String amount = yaml.getString("Holdings." + server + "." + region + "." + currency + "." + handler, "0.0");
+
+                    //region, currency, amount, type
+                    final HoldingsEntry entry = new HoldingsEntry(region,
+                            UUID.fromString(currency),
+                            new BigDecimal(amount),
+                            Identifier.fromID(handler)
+                    );
+
+                    TNECore.log().debug("YAMLHoldings-loadAll-Entry ID:" + entry.getHandler(), DebugLevel.DEVELOPER);
+                    TNECore.log().debug("YAMLHoldings-loadAll-Entry AMT:" + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
+                    holdings.add(entry);
+                  }
                 }
               }
             }
           }
         }
+      } catch(Exception ignore) {
+
+        TNECore.log().error("Issue loading account file. Skipping. Account: " + identifier, DebugLevel.OFF);
       }
       yaml = null;
     }
