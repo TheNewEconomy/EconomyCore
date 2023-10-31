@@ -96,6 +96,10 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
       yaml.set("Holdings." + MainConfig.yaml().getString("Core.Server.Name")
                    + "." + object.getRegion() + "." + object.getCurrency().toString() + "."
                    + object.getHandler().asID(), object.getAmount().toPlainString());
+
+      TNECore.log().debug("YAMLHoldings-store-Entry ID:" + identifier, DebugLevel.DEVELOPER);
+      TNECore.log().debug("YAMLHoldings-store-Entry Currency:" + object.getCurrency().toString(), DebugLevel.DEVELOPER);
+      TNECore.log().debug("YAMLHoldings-store-Entry AMT:" + object.getAmount().toPlainString(), DebugLevel.DEVELOPER);
       try {
         yaml.save();
         yaml = null;

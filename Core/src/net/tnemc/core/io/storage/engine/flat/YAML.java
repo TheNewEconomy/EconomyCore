@@ -90,6 +90,12 @@ public class YAML implements StorageEngine {
         file.delete();
       }
     }
+    final File transactionDirectory = new File(TNECore.directory(), "transactions");
+    if(transactionDirectory.exists()) {
+      for(File file : Objects.requireNonNull(transactionDirectory.listFiles())) {
+        file.delete();
+      }
+    }
   }
 
   /**
