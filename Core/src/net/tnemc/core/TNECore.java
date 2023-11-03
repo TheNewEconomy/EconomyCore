@@ -57,7 +57,6 @@ import net.tnemc.core.io.storage.StorageManager;
 import net.tnemc.core.module.ModuleLoader;
 import net.tnemc.core.module.cache.ModuleFileCache;
 import net.tnemc.core.region.RegionGroup;
-import net.tnemc.core.utils.IOUtil;
 import net.tnemc.core.utils.UpdateChecker;
 import net.tnemc.menu.core.MenuManager;
 import org.jetbrains.annotations.Nullable;
