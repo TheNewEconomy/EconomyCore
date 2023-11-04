@@ -197,6 +197,12 @@ public class StorageManager {
   public <T> void store(T object, @Nullable String identifier) {
 
     TNECore.log().inform("Storing Datable of type: " + object.getClass().getName(), DebugLevel.DEVELOPER);
+
+    //Debug
+    if(identifier != null) {
+      TNECore.log().inform("Identifier: " + identifier, DebugLevel.DEVELOPER);
+    }
+
     final Datable<T> data = (Datable<T>)engine.datables().get(object.getClass());
     if(data != null) {
       TNECore.server().scheduler().createDelayedTask(()->data.store(connector, object, identifier),

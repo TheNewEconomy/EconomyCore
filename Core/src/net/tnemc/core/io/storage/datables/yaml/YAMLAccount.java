@@ -27,6 +27,7 @@ import net.tnemc.core.api.callback.account.AccountLoadCallback;
 import net.tnemc.core.api.callback.account.AccountSaveCallback;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.storage.Datable;
 import net.tnemc.core.io.storage.StorageConnector;
@@ -81,6 +82,8 @@ public class YAMLAccount implements Datable<Account> {
    */
   @Override
   public void store(StorageConnector<?> connector, @NotNull Account account, @Nullable String identifier) {
+
+    TNECore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.STANDARD);
 
     final File accFile = new File(TNECore.directory(), "accounts/" + account.getIdentifier() + ".yml");
     if(!accFile.exists()) {

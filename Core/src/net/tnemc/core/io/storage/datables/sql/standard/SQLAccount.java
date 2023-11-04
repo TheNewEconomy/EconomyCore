@@ -87,7 +87,7 @@ public class SQLAccount implements Datable<Account> {
   public void store(StorageConnector<?> connector, @NotNull Account account, @Nullable String identifier) {
     if(connector instanceof SQLConnector) {
 
-      TNECore.log().debug("Saving Account with ID: " + identifier, DebugLevel.STANDARD);
+      TNECore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.STANDARD);
 
       //store the basic account information(accounts table)
       ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveAccount(),

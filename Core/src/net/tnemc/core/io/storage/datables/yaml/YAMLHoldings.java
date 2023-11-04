@@ -181,13 +181,13 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
             final ConfigurationSection main = yaml.getConfigurationSection("Holdings");
             for(final String server : main.getKeys(false)) {
 
-              if(! main.contains(server) || ! main.isConfigurationSection(server)) {
+              if(!main.contains(server) || ! main.isConfigurationSection(server)) {
                 continue;
               }
 
               for(final String region : main.getConfigurationSection(server).getKeys(false)) {
 
-                if(! main.contains(server + "." + region)) {
+                if(!main.contains(server + "." + region)) {
                   continue;
                 }
                 for(final String currency : main.getConfigurationSection(server + "." + region).getKeys(false)) {
@@ -196,7 +196,7 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
                     EconomyManager.invalidCurrencies().add(currency);
                   }
 
-                  if(! main.contains(server + "." + region + "." + currency)) {
+                  if(!main.contains(server + "." + region + "." + currency)) {
                     continue;
                   }
                   for(final String handler : main.getConfigurationSection(server + "." + region + "." + currency).getKeys(false)) {
