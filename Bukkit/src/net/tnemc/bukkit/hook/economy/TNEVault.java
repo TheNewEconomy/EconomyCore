@@ -201,7 +201,7 @@ public class TNEVault implements Economy {
    */
   public double getBalance(OfflinePlayer player, String world) {
     final Optional<Account> account = TNECore.eco().account().findAccount(player.getUniqueId().toString());
-    if(account.isEmpty()) {
+    if(player.getName() != null && account.isEmpty()) {
       return getBalance(player.getName(), world);
     }
     return getBalance(player.getUniqueId().toString(), world);
@@ -224,7 +224,7 @@ public class TNEVault implements Economy {
    */
   public boolean has(OfflinePlayer player, double amount) {
     final Optional<Account> account = TNECore.eco().account().findAccount(player.getUniqueId().toString());
-    if(account.isEmpty()) {
+    if(player.getName() != null && account.isEmpty()) {
       return has(player.getName(), TNECore.eco().region().defaultRegion(), amount);
     }
     return has(player.getUniqueId().toString(), TNECore.eco().region().defaultRegion(), amount);
@@ -251,7 +251,7 @@ public class TNEVault implements Economy {
    */
   public boolean has(OfflinePlayer player, String world, double amount) {
     final Optional<Account> account = TNECore.eco().account().findAccount(player.getUniqueId().toString());
-    if(account.isEmpty()) {
+    if(player.getName() != null && account.isEmpty()) {
       return has(player.getName(), world, amount);
     }
     return has(player.getUniqueId().toString(), world, amount);
@@ -274,7 +274,12 @@ public class TNEVault implements Economy {
    */
   public EconomyResponse withdrawPlayer(OfflinePlayer player, double amount) {
     final EconomyResponse response = withdrawPlayer(player.getUniqueId().toString(), TNECore.eco().region().defaultRegion(), amount);
-    if(response.transactionSuccess()){
+
+    TNECore.log().debug("Player ID: " + player.getUniqueId());
+    TNECore.log().debug("Player Name: " + player.getName());
+    TNECore.log().debug("Response" + response.errorMessage);
+
+    if(response.transactionSuccess() || player.getName() == null) {
       return response;
     }
     return withdrawPlayer(player.getName(), TNECore.eco().region().defaultRegion(), amount);
@@ -324,7 +329,7 @@ public class TNEVault implements Economy {
    */
   public EconomyResponse withdrawPlayer(OfflinePlayer player, String world, double amount) {
     final EconomyResponse response = withdrawPlayer(player.getUniqueId().toString(), world, amount);
-    if(response.transactionSuccess()){
+    if(response.transactionSuccess() || player.getName() == null) {
       return response;
     }
     return withdrawPlayer(player.getName(), world, amount);
@@ -347,7 +352,7 @@ public class TNEVault implements Economy {
    */
   public EconomyResponse depositPlayer(OfflinePlayer player, double amount) {
     final EconomyResponse response = depositPlayer(player.getUniqueId().toString(), TNECore.eco().region().defaultRegion(), amount);
-    if(response.transactionSuccess()){
+    if(response.transactionSuccess() || player.getName() == null) {
       return response;
     }
     return depositPlayer(player.getName(), TNECore.eco().region().defaultRegion(), amount);
@@ -399,7 +404,7 @@ public class TNEVault implements Economy {
    */
   public EconomyResponse depositPlayer(OfflinePlayer player, String world, double amount) {
     final EconomyResponse response = depositPlayer(player.getUniqueId().toString(), world, amount);
-    if(response.transactionSuccess()){
+    if(response.transactionSuccess() || player.getName() == null) {
       return response;
     }
     return depositPlayer(player.getName(), world, amount);

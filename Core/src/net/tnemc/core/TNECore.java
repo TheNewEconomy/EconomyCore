@@ -41,6 +41,7 @@ import net.tnemc.core.command.parameters.suggestion.StatusSuggestion;
 import net.tnemc.core.compatibility.LogProvider;
 import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.core.compatibility.log.DebugLevel;
+import net.tnemc.core.compatibility.scheduler.Chore;
 import net.tnemc.core.compatibility.scheduler.ChoreExecution;
 import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.config.DataConfig;
@@ -112,6 +113,7 @@ public abstract class TNECore {
 
   /* Plugin Instance */
   private static TNECore instance;
+  private Chore<?> autoSaver = null;
 
   private TNEAPI api;
   protected CallbackManager callbackManager;
@@ -367,7 +369,7 @@ public abstract class TNECore {
     //Set up the auto saver if enabled.
     if(DataConfig.yaml().getBoolean("Data.AutoSaver.Enabled")) {
 
-      server.scheduler().createRepeatingTask(()->{
+      this.autoSaver = server.scheduler().createRepeatingTask(()->{
         storage.storeAll();
       }, new ChoreTime(0),
          new ChoreTime(DataConfig.yaml().getInt("Data.AutoSaver.Interval"), TimeUnit.SECONDS),
@@ -394,7 +396,10 @@ public abstract class TNECore {
 
   public void onDisable() {
 
-    //Call onEnable for all modules loaded.
+    if(autoSaver != null) {
+      autoSaver.cancel();
+    }
+
     //store our data syncly because it needs to finish
     final Optional<Datable<?>> data = Optional.ofNullable(storage.getEngine().datables().get(Account.class));
     if(data.isPresent()) {
