@@ -37,22 +37,6 @@ import revxrsal.commands.sponge.annotation.CommandPermission;
 @Command({"module", "mod"})
 public class ModuleCommand {
 
-  @Subcommand({"avail", "available"})
-  @Usage("#{Module.Available.Arguments}")
-  @Description("#{Module.Available.Description}")
-  @CommandPermission("tne.module.available")
-  public void onAvailable(SpongeCommandActor sender, @Default(TNECore.coreURL) String url) {
-    net.tnemc.core.command.ModuleCommand.onAvailable(new SpongeCMDSource(sender), url);
-  }
-
-  @Subcommand({"download", "dl"})
-  @Usage("#{Module.Download.Arguments}")
-  @Description("#{Module.Download.Description}")
-  @CommandPermission("tne.module.download")
-  public void onDownload(SpongeCommandActor sender, String moduleName, @Default(TNECore.coreURL) String url) {
-    net.tnemc.core.command.ModuleCommand.onDownload(new SpongeCMDSource(sender), moduleName, url);
-  }
-
   @Subcommand({"info", "i"})
   @Usage("#{Module.Info.Arguments}")
   @Description("#{Module.Info.Description}")
@@ -68,13 +52,5 @@ public class ModuleCommand {
   @CommandPermission("tne.list.available")
   public void onList(SpongeCommandActor sender) {
     net.tnemc.core.command.ModuleCommand.onList(new SpongeCMDSource(sender));
-  }
-
-  @Subcommand({"load"})
-  @Usage("#{Module.Load.Arguments}")
-  @Description("#{Module.Load.Description}")
-  @CommandPermission("tne.module.load")
-  public void onLoad(SpongeCommandActor sender, String moduleName) {
-    net.tnemc.core.command.ModuleCommand.onLoad(new SpongeCMDSource(sender), moduleName);
   }
 }

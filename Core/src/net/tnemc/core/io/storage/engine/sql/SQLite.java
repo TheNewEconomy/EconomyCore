@@ -26,13 +26,13 @@ import net.tnemc.core.io.storage.engine.StandardSQL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MySQL extends StandardSQL {
+public class SQLite extends StandardSQL {
 
-  public MySQL() {
+  public SQLite() {
     super();
   }
 
-  public MySQL(final String prefix, Dialect dialect) {
+  public SQLite(final String prefix, Dialect dialect) {
     super(prefix, dialect);
   }
 
@@ -43,40 +43,24 @@ public class MySQL extends StandardSQL {
    */
   @Override
   public String name() {
-    return "mysql";
+    return "sqlite";
   }
 
   @Override
   public String[] driver() {
     return new String[] {
-        "org.mariadb.jdbc.Driver",
-        "com.mysql.cj.jdbc.Driver",
-        "com.mysql.jdbc.Driver"
+        "org.sqlite.JDBC"
     };
   }
 
   @Override
   public String[] dataSource() {
-    return new String[] {
-        "org.mariadb.jdbc.MariaDbDataSource",
-        "com.mysql.jdbc.jdbc2.optional.MysqlDataSource",
-        "com.mysql.cj.jdbc.MysqlDataSource"
-    };
+    return new String[0];
   }
 
   @Override
   public String url(String file, String host, int port, String database) {
-    final StringBuilder builder = new StringBuilder("jdbc:mysql://");
-    builder.append(host);
-    builder.append(":");
-    builder.append(port);
-    builder.append("/");
-    builder.append(database);
-    builder.append("?allowPublicKeyRetrieval=");
-    builder.append(DataConfig.yaml().getBoolean("Data.Database.SQL.PublicKey"));
-    builder.append("&useSSL=");
-    builder.append(DataConfig.yaml().getBoolean("Data.Database.SQL.SSL"));
-    return builder.toString();
+    return "jdbc:sqlite:" + file;
   }
 
   /**
@@ -87,18 +71,11 @@ public class MySQL extends StandardSQL {
   public Map<String, Object> properties() {
     final Map<String, Object> properties = new HashMap<>();
 
-    properties.put("autoReconnect", true);
     properties.put("cachePrepStmts", true);
     properties.put("prepStmtCacheSize", 250);
     properties.put("prepStmtCacheSqlLimit", 2048);
     properties.put("rewriteBatchedStatements", true);
     properties.put("useServerPrepStmts", true);
-    properties.put("cacheCallableStmts", true);
-    properties.put("cacheResultSetMetadata", true);
-    properties.put("cacheServerConfiguration", true);
-    properties.put("useLocalSessionState", true);
-    properties.put("elideSetAutoCommits", true);
-    properties.put("alwaysSendSetIsolation", false);
     return properties;
   }
 }

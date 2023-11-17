@@ -87,7 +87,7 @@ public class ModuleLoader {
             TNECore.log().inform("Found module: " + wrapper.name() + " version: " + wrapper.version());
             modules.put(wrapper.name(), wrapper);
 
-            if (!wrapper.getInfo().updateURL().trim().equalsIgnoreCase("")) {
+            if(!TNECore.server().name().equalsIgnoreCase("sponge") && !wrapper.getInfo().updateURL().trim().equalsIgnoreCase("")) {
               TNECore.log().inform("Checking for updates for module " + wrapper.info.name());
               ModuleUpdateChecker checker = new ModuleUpdateChecker(wrapper.info.name(), wrapper.info.updateURL(), wrapper.version());
               checker.check();
@@ -116,7 +116,7 @@ public class ModuleLoader {
         TNECore.log().inform("Found module: " + wrapper.name() + " version: " + wrapper.version());
         modules.put(wrapper.name(), wrapper);
 
-        if(!wrapper.getInfo().updateURL().trim().equalsIgnoreCase("")) {
+        if(!TNECore.server().name().equalsIgnoreCase("sponge") && !wrapper.getInfo().updateURL().trim().equalsIgnoreCase("")) {
           TNECore.log().inform("Checking for updates for module " + moduleName);
           ModuleUpdateChecker checker = new ModuleUpdateChecker(moduleName, wrapper.info.updateURL(), wrapper.version());
           checker.check();
