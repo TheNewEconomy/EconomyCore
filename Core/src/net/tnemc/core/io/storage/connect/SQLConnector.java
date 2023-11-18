@@ -63,20 +63,25 @@ public class SQLConnector implements StorageConnector<Connection> {
 
     if(sourceClass != null) {
       config.setDataSourceClassName(sourceClass);
+    } else {
+      config.setDriverClassName(driverClass);
     }
+
+    final String url = ((SQLEngine)StorageManager.instance().getEngine()).url(
+            new File(TNECore.directory(), DataConfig.yaml().getString("Data.Database.File")).getAbsolutePath(),
+            DataConfig.yaml().getString("Data.Database.SQL.Host"),
+            DataConfig.yaml().getInt("Data.Database.SQL.Port"),
+            DataConfig.yaml().getString("Data.Database.SQL.DB")
+    );
 
     //String file, String host, int port, String database
     config.addDataSourceProperty("url",
-                                 ((SQLEngine)StorageManager.instance().getEngine()).url(
-                                     new File(TNECore.directory(), DataConfig.yaml().getString("Data.Database.File")).getAbsolutePath(),
-                                     DataConfig.yaml().getString("Data.Database.SQL.Host"),
-                                     DataConfig.yaml().getInt("Data.Database.SQL.Port"),
-                                     DataConfig.yaml().getString("Data.Database.SQL.DB")
-                                 ));
+                                 url);
+    config.setJdbcUrl(url);
 
     config.addDataSourceProperty("user",  DataConfig.yaml().getString("Data.Database.SQL.User"));
     config.addDataSourceProperty("password",  DataConfig.yaml().getString("Data.Database.SQL.Password"));
-
+    config.setDriverClassName("org.sqlite.JDBC");
     config.setPoolName("TNE");
     config.setConnectionTestQuery("SELECT 1");
     config.setMaximumPoolSize(DataConfig.yaml().getInt("Data.Pool.MaxSize"));

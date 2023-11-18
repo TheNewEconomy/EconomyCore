@@ -112,7 +112,7 @@ Formatting:
   Format: '<symbol><major.amount><decimal><minor.amount>'
 
   #The SI Prefixes used when <shorten> is used for the currency's format.
-  #TNE's default prefixes are based off of the Internation Bureau of Weights and Measures official list.
+  #TNE's default prefixes are based off of the International Bureau of Weights and Measures official list.
   #http://www.unitarium.com/si-prefixes along with a few addition shorts for above Nonillion.
   #The order in which the characters are:
   #Thousand - k
