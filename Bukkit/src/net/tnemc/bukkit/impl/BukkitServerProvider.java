@@ -260,7 +260,7 @@ public class BukkitServerProvider implements ServerConnector {
   @Override
   public void registerCrafting(@NotNull CraftingRecipe recipe) {
     if(recipe.isShaped()) {
-      final ShapedRecipe shaped = new ShapedRecipe(denominationToStack(recipe.getResult()).locale());
+      final ShapedRecipe shaped = new ShapedRecipe(denominationToStack(recipe.getResult(), recipe.getAmount()).locale());
       shaped.shape(recipe.getRows());
 
       for(Map.Entry<Character, String> ingredient : recipe.getIngredients().entrySet()) {
@@ -268,7 +268,7 @@ public class BukkitServerProvider implements ServerConnector {
       }
       Bukkit.getServer().addRecipe(shaped);
     } else {
-      final ShapelessRecipe shapeless = new ShapelessRecipe(denominationToStack(recipe.getResult()).locale());
+      final ShapelessRecipe shapeless = new ShapelessRecipe(denominationToStack(recipe.getResult(), recipe.getAmount()).locale());
       for(Map.Entry<Character, String> ingredient : recipe.getIngredients().entrySet()) {
         shapeless.addIngredient(1, Material.valueOf(ingredient.getValue()));
       }
@@ -277,8 +277,8 @@ public class BukkitServerProvider implements ServerConnector {
   }
 
   @Override
-  public BukkitItemStack denominationToStack(ItemDenomination denomination) {
-    return new BukkitItemStack().of(denomination.getMaterial(), 1)
+  public BukkitItemStack denominationToStack(ItemDenomination denomination, int amount) {
+    return new BukkitItemStack().of(denomination.getMaterial(), amount)
         .enchant(denomination.getEnchantments())
         .lore(denomination.getLore())
         .flags(denomination.getFlags())

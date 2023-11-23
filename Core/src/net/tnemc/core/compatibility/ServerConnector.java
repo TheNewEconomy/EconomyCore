@@ -216,7 +216,11 @@ public interface ServerConnector {
 
   <S, T extends AbstractItemStack<S>, INV> CalculationsProvider<T, S, INV> calculations();
 
-  <S> AbstractItemStack<S> denominationToStack(final ItemDenomination denomination);
+  default <S> AbstractItemStack<S> denominationToStack(final ItemDenomination denomination) {
+    return denominationToStack(denomination, 1);
+  }
+
+  <S> AbstractItemStack<S> denominationToStack(final ItemDenomination denomination, final int amount);
 
   <INV> ItemCalculations<INV> itemCalculations();
 

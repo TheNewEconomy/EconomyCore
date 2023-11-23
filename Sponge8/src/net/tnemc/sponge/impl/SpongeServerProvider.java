@@ -294,8 +294,8 @@ public class SpongeServerProvider implements ServerConnector {
   }
 
   @Override
-  public SpongeItemStack denominationToStack(ItemDenomination denomination) {
-    return new SpongeItemStack().of(denomination.getMaterial(), 1)
+  public SpongeItemStack denominationToStack(ItemDenomination denomination, int amount) {
+    return new SpongeItemStack().of(denomination.getMaterial(), amount)
             .enchant(denomination.getEnchantments())
             .lore(denomination.getLore())
             .flags(denomination.getFlags())

@@ -238,7 +238,7 @@ public class SpongeServerProvider implements ServerConnector {
   }
 
   @Override
-  public <S> AbstractItemStack<S> denominationToStack(ItemDenomination denomination) {
+  public <S> AbstractItemStack<S> denominationToStack(ItemDenomination denomination, final int amount) {
     return null;
   }
 

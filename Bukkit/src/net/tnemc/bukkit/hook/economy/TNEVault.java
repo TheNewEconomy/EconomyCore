@@ -560,6 +560,10 @@ public class TNEVault implements Economy {
    */
   public boolean createPlayerAccount(OfflinePlayer player, String world) {
     TNECore.log().debug("Vault Method: Create Player Account!", DebugLevel.STANDARD);
+    if(player.getName() == null) {
+      TNECore.log().error("Error from plugin accessing vault createPlayerAccount! Name provided is null!(probably EssentialsX)");
+      return false;
+    }
     return TNECore.eco().account().createAccount(player.getUniqueId().toString(), player.getName()).getResponse().success();
   }
 
