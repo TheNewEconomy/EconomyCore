@@ -49,6 +49,14 @@ public interface ServerConnector {
   String name();
 
   /**
+   * Used to replace placeholders from a string.
+   * @param player The player to use for the placeholder replacement.
+   * @param message The message to replace placeholders in.
+   * @return The string after placeholders have been replaced.
+   */
+  String replacePlaceholder(final UUID player, final String message);
+
+  /**
    * The proxy provider to use for this implementation.
    * @return The proxy provider to use for this implementation.
    */

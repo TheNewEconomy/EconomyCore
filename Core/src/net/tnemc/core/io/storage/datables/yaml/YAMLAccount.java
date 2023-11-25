@@ -213,6 +213,13 @@ public class YAMLAccount implements Datable<Account> {
 
       Account account = null;
 
+      //Validate account file
+      if(!yaml.contains("Info.Name") || !yaml.contains("Info.Type")) {
+
+        TNECore.log().error("Invalid account file. Account: " + identifier, DebugLevel.OFF);
+        return Optional.empty();
+      }
+
       final String type = yaml.getString("Info.Type");
 
       //create our account from the type

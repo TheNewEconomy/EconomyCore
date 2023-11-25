@@ -23,6 +23,7 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.tnemc.core.TNECore;
 
 import java.util.UUID;
 
@@ -75,7 +76,7 @@ public class MessageHandler {
    * @param audience The audience that should receive the translated message.
    */
   public static void translate(final MessageData messageData, UUID identifier, Audience audience) {
-    audience.sendMessage(instance.mini.deserialize(instance.translator.translateNode(messageData, "default")));
+    audience.sendMessage(instance.mini.deserialize(TNECore.server().replacePlaceholder(identifier, instance.translator.translateNode(messageData, "default"))));
   }
 
   /**

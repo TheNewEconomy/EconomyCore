@@ -74,6 +74,7 @@ public class MoneyCommand extends BaseCommand {
         final MessageData data = new MessageData("Messages.Account.BlockedAction");
         data.addReplacement("$action", "balance check");
         data.addReplacement("$currency", currency.getDisplay());
+        sender.message(data);
         return;
       }
     }
@@ -97,6 +98,7 @@ public class MoneyCommand extends BaseCommand {
         final MessageData data = new MessageData("Messages.Account.BlockedAction");
         data.addReplacement("$action", "convert to");
         data.addReplacement("$currency", currency.getDisplay());
+        sender.message(data);
         return;
       }
 
@@ -104,6 +106,7 @@ public class MoneyCommand extends BaseCommand {
         final MessageData data = new MessageData("Messages.Account.BlockedAction");
         data.addReplacement("$action", "convert from");
         data.addReplacement("$currency", fromCurrency.getDisplay());
+        sender.message(data);
         return;
       }
     }
@@ -169,6 +172,7 @@ public class MoneyCommand extends BaseCommand {
         final MessageData data = new MessageData("Messages.Account.BlockedAction");
         data.addReplacement("$action", "deposit");
         data.addReplacement("$currency", currency.getDisplay());
+        sender.message(data);
         return;
       }
     }
@@ -224,6 +228,7 @@ public class MoneyCommand extends BaseCommand {
         final MessageData data = new MessageData("Messages.Account.BlockedAction");
         data.addReplacement("$action", "give funds");
         data.addReplacement("$currency", currency.getDisplay());
+        sender.message(data);
         return;
       }
     }
@@ -280,6 +285,7 @@ public class MoneyCommand extends BaseCommand {
         final MessageData data = new MessageData("Messages.Account.BlockedAction");
         data.addReplacement("$action", "note");
         data.addReplacement("$currency", currency.getDisplay());
+        sender.message(data);
         return;
       }
 
@@ -330,6 +336,7 @@ public class MoneyCommand extends BaseCommand {
         final MessageData data = new MessageData("Messages.Account.BlockedAction");
         data.addReplacement("$action", "balance check other");
         data.addReplacement("$currency", currency.getDisplay());
+        sender.message(data);
         return;
       }
     }
@@ -377,6 +384,7 @@ public class MoneyCommand extends BaseCommand {
         final MessageData data = new MessageData("Messages.Account.BlockedAction");
         data.addReplacement("$action", "pay");
         data.addReplacement("$currency", currency.getDisplay());
+        sender.message(data);
         return;
       }
     }
@@ -478,6 +486,7 @@ public class MoneyCommand extends BaseCommand {
         final MessageData data = new MessageData("Messages.Account.BlockedAction");
         data.addReplacement("$action", "request funds");
         data.addReplacement("$currency", currency.getDisplay());
+        sender.message(data);
         return;
       }
     }
@@ -515,6 +524,7 @@ public class MoneyCommand extends BaseCommand {
         final MessageData data = new MessageData("Messages.Account.BlockedAction");
         data.addReplacement("$action", "set funds");
         data.addReplacement("$currency", currency.getDisplay());
+        sender.message(data);
         return;
       }
     }
@@ -553,6 +563,7 @@ public class MoneyCommand extends BaseCommand {
         final MessageData data = new MessageData("Messages.Account.BlockedAction");
         data.addReplacement("$action", "set all funds");
         data.addReplacement("$currency", currency.getDisplay());
+        sender.message(data);
         return;
       }
     }
@@ -600,6 +611,7 @@ public class MoneyCommand extends BaseCommand {
         final MessageData data = new MessageData("Messages.Account.BlockedAction");
         data.addReplacement("$action", "take funds");
         data.addReplacement("$currency", currency.getDisplay());
+        sender.message(data);
         return;
       }
     }
@@ -651,6 +663,7 @@ public class MoneyCommand extends BaseCommand {
         final MessageData data = new MessageData("Messages.Account.BlockedAction");
         data.addReplacement("$action", "balance top");
         data.addReplacement("$currency", currency.getDisplay());
+        sender.message(data);
         return;
       }
     }
@@ -695,6 +708,7 @@ public class MoneyCommand extends BaseCommand {
         final MessageData data = new MessageData("Messages.Account.BlockedAction");
         data.addReplacement("$action", "withdraw funds");
         data.addReplacement("$currency", currency.getDisplay());
+        sender.message(data);
         return;
       }
     }

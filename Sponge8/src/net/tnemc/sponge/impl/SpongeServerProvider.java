@@ -75,6 +75,19 @@ public class SpongeServerProvider implements ServerConnector {
   }
 
   /**
+   * Used to replace placeholders from a string.
+   *
+   * @param player The player to use for the placeholder replacement.
+   * @param message The message to replace placeholders in.
+   *
+   * @return The string after placeholders have been replaced.
+   */
+  @Override
+  public String replacePlaceholder(UUID player, String message) {
+    return message;
+  }
+
+  /**
    * The proxy provider to use for this implementation.
    *
    * @return The proxy provider to use for this implementation.

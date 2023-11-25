@@ -56,6 +56,10 @@ public class PaperPlayerProvider extends BukkitPlayer implements PlayerProvider 
     return player.getUniqueId();
   }
 
+  public OfflinePlayer getPlayer() {
+    return player;
+  }
+
   /**
    * Used to get the name of this player.
    *

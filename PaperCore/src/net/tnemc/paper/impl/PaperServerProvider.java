@@ -18,6 +18,7 @@ package net.tnemc.paper.impl;
  */
 
 import com.destroystokyo.paper.profile.PlayerProfile;
+import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.compatibility.ProxyProvider;
@@ -30,6 +31,7 @@ import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.bukkit.BukkitCalculationsProvider;
 import net.tnemc.item.bukkit.BukkitItemStack;
 import net.tnemc.paper.TNE;
+import net.tnemc.paper.hook.misc.PAPIParser;
 import net.tnemc.paper.impl.scheduler.PaperScheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -65,6 +67,24 @@ public class PaperServerProvider implements ServerConnector {
   @Override
   public String name() {
     return "paper";
+  }
+
+  /**
+   * Used to replace placeholders from a string.
+   *
+   * @param player The player to use for the placeholder replacement.
+   * @param message The message to replace placeholders in.
+   *
+   * @return The string after placeholders have been replaced.
+   */
+  @Override
+  public String replacePlaceholder(UUID player, String message) {
+    final Optional<PlayerProvider> playerOpt = TNECore.server().findPlayer(player);
+    if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI") && playerOpt.isPresent()
+            && playerOpt.get() instanceof PaperPlayerProvider paperPlayer) {
+      return PAPIParser.parse(paperPlayer, message);
+    }
+    return message;
   }
 
   /**
