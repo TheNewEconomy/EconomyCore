@@ -66,9 +66,8 @@ public class TNEJedisManager {
 
       redisThread.start();
 
-      TNECore.log().error("Redis Subscriber Thread Started", DebugLevel.OFF);
+      TNECore.log().inform("Redis Subscriber Thread Started on host: " + DataConfig.yaml().getString("Data.Sync.Redis.Host"), DebugLevel.OFF);
     } else {
-      TNECore.log().error("Redis Connection Test Failed!", DebugLevel.OFF);
       redisThread = null;
     }
 
@@ -79,7 +78,8 @@ public class TNEJedisManager {
     try(Jedis jedis = pool.getResource()) {
       jedis.ping();
       return true;
-    } catch(Exception ignore) {
+    } catch(Exception e) {
+      TNECore.log().error("Redis Connection Test Failed!", e, DebugLevel.STANDARD);
       return false;
     }
   }

@@ -77,7 +77,11 @@ public class Note {
 
   public void setFlags(List<String> flags) {
     this.flags.clear();
-    this.flags.addAll(flags);
+    for(String str : flags) {
+      if(!str.isEmpty()) {
+        this.flags.add(str);
+      }
+    }
   }
 
   public List<String> getEnchantments() {
@@ -86,7 +90,11 @@ public class Note {
 
   public void setEnchantments(List<String> enchantments) {
     this.enchantments.clear();
-    this.enchantments.addAll(enchantments);
+    for(String str : enchantments) {
+      if(!str.isEmpty()) {
+        this.enchantments.add(str);
+      }
+    }
   }
 
   public String getMaterial() {
