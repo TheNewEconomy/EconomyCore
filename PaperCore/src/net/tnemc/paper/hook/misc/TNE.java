@@ -1,4 +1,4 @@
-package net.tnemc.paper;
+package net.tnemc.paper.hook.misc;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -19,9 +19,8 @@ package net.tnemc.paper;
 
 import net.tnemc.menu.bukkit.listener.BukkitChatListener;
 import net.tnemc.menu.bukkit.listener.BukkitInventoryCloseListener;
+import net.tnemc.paper.PaperCore;
 import net.tnemc.paper.hook.economy.VaultHook;
-import net.tnemc.paper.hook.misc.LuckPermsHook;
-import net.tnemc.paper.hook.misc.PAPIHook;
 import net.tnemc.paper.listeners.player.PlayerClickListener;
 import net.tnemc.paper.listeners.player.PlayerCloseInventoryListener;
 import net.tnemc.paper.listeners.player.PlayerInteractListener;

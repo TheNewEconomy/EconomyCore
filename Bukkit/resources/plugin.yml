@@ -24,6 +24,7 @@ softdepend:
   - GUIShop
   - DiscordSRV
   - Multiverse-Core
+  - LuckPerms
 
 permissions:
   tne.*:

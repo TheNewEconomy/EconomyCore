@@ -15,6 +15,11 @@
       {
         "id": "spongeapi",
         "version": "8.0.0"
+      },
+      {
+        "id": "luckperms",
+        "optional": true,
+        "load-order": "after"
       }
     ],
     "contributors": [
@@ -29,7 +34,7 @@
       "id": "tne",
       "name": "The New Economy",
       "entrypoint": "net.tnemc.sponge.SpongeCore",
-      "description": "The original feature-packed economy plugin for Minecraft."
+      "description": "The original feature-packed economy plugin for Minecraft.",
     }
   ]
 }

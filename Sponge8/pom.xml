@@ -22,6 +22,10 @@
             <id>codemc-releases</id>
             <url>https://repo.codemc.io/repository/maven-public/</url>
         </repository>
+        <repository>
+            <id>luck-repo</id>
+            <url>https://repo.lucko.me/</url>
+        </repository>
     </repositories>
 
 
@@ -164,6 +168,13 @@
     </build>
 
     <dependencies>
+        <!-- LuckPerms API -->
+        <dependency>
+            <groupId>net.luckperms</groupId>
+            <artifactId>api</artifactId>
+            <version>5.3</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>net.tnemc</groupId>
             <artifactId>TNML-Sponge-API-8</artifactId>

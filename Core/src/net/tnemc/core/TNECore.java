@@ -311,15 +311,6 @@ public abstract class TNECore {
       }
     }
 
-    if(!MessageConfig.yaml().contains("Messages.Commands.Help.Entry")) {
-      MessageConfig.yaml().set("Messages.Commands.Help.Entry", "<gold>$command $arguments - <white>$description</white>");
-      try {
-        MessageConfig.yaml().save();
-      } catch(IOException ignore) {
-        TNECore.log().error("Unable to update MessageConfig to add Help Lines, please do this manually.", DebugLevel.OFF);
-      }
-    }
-
     //register our commands
     registerCommandHandler();
     command.setHelpWriter((command, actor) -> {

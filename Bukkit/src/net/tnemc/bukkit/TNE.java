@@ -19,6 +19,7 @@ package net.tnemc.bukkit;
  */
 
 import net.tnemc.bukkit.hook.economy.VaultHook;
+import net.tnemc.bukkit.hook.misc.LuckPermsHook;
 import net.tnemc.bukkit.hook.misc.PAPIHook;
 import net.tnemc.bukkit.listeners.player.PlayerClickListener;
 import net.tnemc.bukkit.listeners.player.PlayerCloseInventoryListener;
@@ -85,6 +86,10 @@ public class TNE extends JavaPlugin {
     //PAPI
     if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
       new PAPIHook().register();
+    }
+
+    if(Bukkit.getPluginManager().isPluginEnabled("LuckPerms")) {
+      LuckPermsHook.register();
     }
 
     final Metrics metrics = new Metrics(this, 602);

@@ -43,6 +43,7 @@ import net.tnemc.sponge.command.ModuleCommand;
 import net.tnemc.sponge.command.MoneyCommand;
 import net.tnemc.sponge.command.ShortCommands;
 import net.tnemc.sponge.command.TransactionCommand;
+import net.tnemc.sponge.hook.misc.LuckPermsHook;
 import net.tnemc.sponge.impl.SpongeLogProvider;
 import net.tnemc.sponge.impl.SpongeServerProvider;
 import net.tnemc.sponge.impl.eco.SpongeEconomy;
@@ -69,6 +70,7 @@ import revxrsal.commands.sponge.SpongeCommandHandler;
 
 import java.math.BigDecimal;
 import java.nio.file.Path;
+import java.util.Optional;
 
 /**
  * The Sponge main plugin class.
@@ -118,6 +120,11 @@ public class SpongeCore extends TNECore {
     command.register(new MoneyCommand());
     command.register(new ShortCommands());
     command.register(new TransactionCommand());
+
+    final Optional<PluginContainer> luckContainer = Sponge.pluginManager().plugin("luckperms");
+    if(luckContainer.isPresent()) {
+      LuckPermsHook.register();
+    }
 
     metrics = metricsFactory.make(19246);
   }
