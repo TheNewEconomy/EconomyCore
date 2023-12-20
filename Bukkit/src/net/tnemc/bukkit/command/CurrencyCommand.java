@@ -1,4 +1,4 @@
-package net.tnemc.paper.hook.misc;
+package net.tnemc.bukkit.command;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,21 +17,11 @@ package net.tnemc.paper.hook.misc;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.luckperms.api.LuckPerms;
-import org.bukkit.Bukkit;
-
 /**
- * LuckPermsHook
+ * CurrencyCommand
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class LuckPermsHook {
-
-  public static void register() {
-    final LuckPerms luckAPI = Bukkit.getServer().getServicesManager().load(LuckPerms.class);
-    if(luckAPI != null) {
-      luckAPI.getContextManager().registerCalculator(new LuckBalanceContext());
-    }
-  }
+public class CurrencyCommand {
 }

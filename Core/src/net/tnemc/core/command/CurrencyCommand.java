@@ -27,7 +27,20 @@ import net.tnemc.core.compatibility.CmdSource;
  */
 public class CurrencyCommand {
 
+  public static void onCreate(CmdSource<?> sender, final String name, final String type) {
+
+  }
+
   public static void onInstall(CmdSource<?> sender, final String template) {
+
+  }
+
+
+  public static void onList(CmdSource<?> sender) {
+
+  }
+
+  public static void onSet(CmdSource<?> sender) {
 
   }
 }

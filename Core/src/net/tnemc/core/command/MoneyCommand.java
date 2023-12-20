@@ -33,6 +33,7 @@ import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.Note;
 import net.tnemc.core.currency.format.CurrencyFormatter;
+import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.type.MixedType;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.manager.TopManager;
@@ -358,11 +359,19 @@ public class MoneyCommand extends BaseCommand {
         amount = amount.add(entry.getAmount());
 
         if(entry.getHandler().asID().equalsIgnoreCase(EconomyManager.INVENTORY_ONLY.asID())) {
-          entryMSG.addReplacement("$inventory", CurrencyFormatter.format(account, entry));
+          if(currency.type().supportsItems()) {
+            entryMSG.addReplacement("$inventory", CurrencyFormatter.format(account, entry));
+          } else {
+            entryMSG.addReplacement("$inventory", "0");
+          }
         }
 
         if(entry.getHandler().asID().equalsIgnoreCase(EconomyManager.E_CHEST.asID())) {
-          entryMSG.addReplacement("$ender", CurrencyFormatter.format(account, entry));
+          if(currency.type().supportsItems()) {
+            entryMSG.addReplacement("$ender", CurrencyFormatter.format(account, entry));
+          } else {
+            entryMSG.addReplacement("$ender", "0");
+          }
         }
 
         if(entry.getHandler().asID().equalsIgnoreCase(EconomyManager.VIRTUAL.asID())) {

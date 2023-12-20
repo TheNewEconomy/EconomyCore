@@ -18,7 +18,6 @@ package net.tnemc.core.io.storage.engine.sql;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.io.storage.Dialect;
 import net.tnemc.core.io.storage.SQLEngine;
 import net.tnemc.core.io.storage.engine.StandardSQL;

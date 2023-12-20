@@ -18,7 +18,7 @@ package net.tnemc.bukkit.hook.misc;
  */
 
 import net.luckperms.api.LuckPerms;
-import net.tnemc.bukkit.TNE;
+import org.bukkit.Bukkit;
 
 /**
  * LuckPermsHook
@@ -29,7 +29,7 @@ import net.tnemc.bukkit.TNE;
 public class LuckPermsHook {
 
   public static void register() {
-    final LuckPerms luckAPI = TNE.instance().getServer().getServicesManager().load(LuckPerms.class);
+    final LuckPerms luckAPI = Bukkit.getServer().getServicesManager().load(LuckPerms.class);
     if(luckAPI != null) {
       luckAPI.getContextManager().registerCalculator(new LuckBalanceContext());
     }
