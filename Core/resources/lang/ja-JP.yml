@@ -17,6 +17,7 @@ Messages:
     InvalidAmount: "<red>入力されたアイテム金額は無効です。"
   Admin:
     NoHoldings: "<red>$playerはワールド '$world'でお金を持っていません!"
+    Reloaded: "<yellow>Reloaded configuration type of: $type"
     Holdings: "<white>$playerは現在ワールド '$world'で<gold>$amount<white>所持しています。"
     NoTransactions: "<white>$playerに取引はありません。"
     Configuration: "<white>現在の$nodeは$valueです。"
