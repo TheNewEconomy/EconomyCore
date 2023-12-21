@@ -81,7 +81,6 @@ public class SQLConnector implements StorageConnector<Connection> {
 
     config.addDataSourceProperty("user",  DataConfig.yaml().getString("Data.Database.SQL.User"));
     config.addDataSourceProperty("password",  DataConfig.yaml().getString("Data.Database.SQL.Password"));
-    config.setDriverClassName("org.sqlite.JDBC");
     config.setPoolName("TNE");
     config.setConnectionTestQuery("SELECT 1");
     config.setMaximumPoolSize(DataConfig.yaml().getInt("Data.Pool.MaxSize"));

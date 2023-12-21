@@ -129,6 +129,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   public static void onReload(CmdSource<?> sender, String type) {
+    String formattedType = type;
     switch(type.toLowerCase()) {
       case "config" -> {
         TNECore.instance().config().load();
@@ -146,8 +147,13 @@ public class AdminCommand extends BaseCommand {
         TNECore.instance().data().load();
         TNECore.storage().loadAll(Account.class, "");
         TNECore.instance().message().load();
+        formattedType = "all";
       }
     }
+
+    final MessageData data = new MessageData("Messages.Admin.Reloaded");
+    data.addReplacement("$type", formattedType);
+    sender.message(data);
   }
 
   public static void onReset(CmdSource<?> sender) {

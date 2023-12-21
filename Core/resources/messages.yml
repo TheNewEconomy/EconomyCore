@@ -21,6 +21,7 @@ Messages:
 
   Admin:
     NoHoldings: "<red>$player has no holdings for the world '$world'!"
+    Reloaded: "<yellow>Reloaded configuration type of: $type"
     Holdings: "<white>$player currently has <gold>$amount <white>for world '$world'!"
     NoTransactions: "<white>$player has no transactions to display."
     Configuration: "<white>The value of $node is currently $value."
