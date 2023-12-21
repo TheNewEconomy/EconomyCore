@@ -328,6 +328,12 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     final String plural = denom.getString("Info.Plural", "Dollars");
 
     final BigDecimal weight = BigDecimal.valueOf(denom.getDouble("Options.Weight", 1));
+    if(weight.compareTo(BigDecimal.ZERO) <= 0) {
+      TNECore.log().error("Failed to load denomination: " + denomFile.getName() + ". Invalid Options.Weight Value: " + weight.toPlainString(), DebugLevel.OFF);
+      return false;
+    }
+
+
     final String material = denom.getString("Options.Material", "PAPER");
 
     Denomination denomination = (currency instanceof ItemCurrency)?
