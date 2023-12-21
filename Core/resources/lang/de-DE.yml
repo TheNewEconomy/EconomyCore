@@ -17,6 +17,7 @@ Messages:
     InvalidAmount: "<red>Ungültige Artikelmenge eingegeben."
   Admin:
     NoHoldings: "<red>$player hat keine Holdings für die Welt '$world'!"
+    Reloaded: "<yellow>Reloaded configuration type of: $type"
     Holdings: "<white>$player hat zur Zeit <gold>$amount <white>für die Welt '$world'!"
     NoTransactions: "<white>$player hat keine Transaktionen anzuzeigen."
     Configuration: "<white>Der Wert von $node ist derzeit $value."
