@@ -17,6 +17,7 @@ Messages:
     InvalidAmount: "<red>Geçersiz item miktarı girilmiştir."
   Admin:
     NoHoldings: "<red>$player oyuncusu '$world' dünyasında herhangi bir depolamaya sahip değildir!"
+    Reloaded: "<yellow>Reloaded configuration type of: $type"
     Holdings: "<white>$player oyuncusu '$world' dünyasında <gold>$amount<white>'a sahip!"
     NoTransactions: "<white>$player için gösterilecek herhangi bir işlem yok."
     Configuration: "<white>$node'un değeri şu anda $value."

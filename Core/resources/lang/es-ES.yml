@@ -17,6 +17,7 @@ Messages:
     InvalidAmount: "<red>Cantidad de objeto ingresada no válida."
   Admin:
     NoHoldings: "<red>$player no tiene pertenencias en el mundo '$world'!"
+    Reloaded: "<yellow>Reloaded configuration type of: $type"
     Holdings: "<white>¡El jugador $player tiene actualmente <gold>$amount <white>para el mundo '$world'!"
     NoTransactions: "<white>$player no tiene ninguna transacción para mostrar."
     Configuration: "<white>El valor de $node es actualmente de $value."

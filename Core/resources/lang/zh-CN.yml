@@ -17,6 +17,7 @@ Messages:
     InvalidAmount: "<red>输入了无效的物品数量。"
   Admin:
     NoHoldings: "<red>$player 在 \"$world\" 没有任何持有货币！"
+    Reloaded: "<yellow>Reloaded configuration type of: $type"
     Holdings: "<white>$player 在 \"$world\" 拥有 <gold>$amount <white>！"
     NoTransactions: "<white>$player 没有交易记录。"
     Configuration: "<white>当前 $node 的值为：$value。"
