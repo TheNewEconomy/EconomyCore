@@ -19,6 +19,7 @@ package net.tnemc.paper;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.TNECallbacks;
+import net.tnemc.menu.bukkit.BukkitMenuHandler;
 import net.tnemc.paper.command.AdminCommand;
 import net.tnemc.paper.command.ModuleCommand;
 import net.tnemc.paper.command.MoneyCommand;
@@ -58,6 +59,11 @@ public class PaperCore extends TNECore {
     if(!this.bukkitConfig.load()) {
       TNECore.log().error("Failed to load bukkit configuration!");
     }
+  }
+
+  @Override
+  public void registerMenuHandler() {
+    this.menuHandler = new BukkitMenuHandler(plugin, true);
   }
 
   @Override

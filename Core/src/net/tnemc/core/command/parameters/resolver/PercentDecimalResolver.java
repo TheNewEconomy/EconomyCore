@@ -24,7 +24,6 @@ import org.jetbrains.annotations.NotNull;
 import revxrsal.commands.process.ValueResolver;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
 /**
  * PercentDecimalResolver

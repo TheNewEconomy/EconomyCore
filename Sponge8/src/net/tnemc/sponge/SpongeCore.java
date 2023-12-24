@@ -37,7 +37,6 @@ import net.tnemc.core.command.parameters.suggestion.StatusSuggestion;
 import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.region.RegionGroup;
-import net.tnemc.menu.sponge8.listeners.Sponge8InventoryClickListener;
 import net.tnemc.sponge.command.AdminCommand;
 import net.tnemc.sponge.command.ModuleCommand;
 import net.tnemc.sponge.command.MoneyCommand;
@@ -129,6 +128,11 @@ public class SpongeCore extends TNECore {
     metrics = metricsFactory.make(19246);
   }
 
+  @Override
+  public void registerMenuHandler() {
+    //TODO: Menu Handler for Sponge
+  }
+
 
   @Listener
   public void onConstruct(final ConstructPluginEvent event) {
@@ -145,7 +149,6 @@ public class SpongeCore extends TNECore {
     //Register our event listeners
     Sponge.eventManager().registerListeners(container, new PlayerJoinListener(container));
     Sponge.eventManager().registerListeners(container, new PlayerLeaveListener(container));
-    Sponge.eventManager().registerListeners(container, new Sponge8InventoryClickListener(container));
     Sponge.eventManager().registerListeners(container, new PlayerCloseInventoryListener(container));
   }
 

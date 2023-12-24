@@ -27,6 +27,7 @@ import net.tnemc.bukkit.impl.BukkitLogProvider;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.TNECallbacks;
 import net.tnemc.folia.impl.FoliaServerProvider;
+import net.tnemc.menu.folia.FoliaMenuHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import revxrsal.commands.bukkit.BukkitCommandHandler;
@@ -51,6 +52,11 @@ public class FoliaCore extends TNECore {
     this.directory = plugin.getDataFolder();
 
     super.onEnable();
+  }
+
+  @Override
+  public void registerMenuHandler() {
+    this.menuHandler = new FoliaMenuHandler(plugin, true);
   }
 
   @Override

@@ -28,6 +28,7 @@ import net.tnemc.bukkit.impl.BukkitLogProvider;
 import net.tnemc.bukkit.impl.BukkitServerProvider;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.TNECallbacks;
+import net.tnemc.menu.bukkit.BukkitMenuHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import revxrsal.commands.bukkit.BukkitCommandHandler;
@@ -60,6 +61,11 @@ public class BukkitCore extends TNECore {
     if(!this.bukkitConfig.load()) {
       TNECore.log().error("Failed to load bukkit configuration!");
     }
+  }
+
+  @Override
+  public void registerMenuHandler() {
+    this.menuHandler = new BukkitMenuHandler(plugin, true);
   }
 
   @Override

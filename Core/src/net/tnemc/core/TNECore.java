@@ -59,7 +59,7 @@ import net.tnemc.core.module.ModuleLoader;
 import net.tnemc.core.module.cache.ModuleFileCache;
 import net.tnemc.core.region.RegionGroup;
 import net.tnemc.core.utils.UpdateChecker;
-import net.tnemc.menu.core.MenuManager;
+import net.tnemc.menu.core.MenuHandler;
 import org.jetbrains.annotations.Nullable;
 import revxrsal.commands.CommandHandler;
 import revxrsal.commands.orphan.Orphans;
@@ -105,6 +105,8 @@ public abstract class TNECore {
   protected StorageManager storage;
   protected EconomyManager economyManager;
   protected CommandHandler command;
+
+  protected MenuHandler menuHandler;
 
   private MainConfig config;
   private DataConfig data;
@@ -350,12 +352,7 @@ public abstract class TNECore {
       moduleWrapper.getModule().registerTransactionSub().forEach((orphan)->command.register(Orphans.path("transaction"), orphan));
       moduleWrapper.getModule().registerAdminSub().forEach((orphan)->command.register(Orphans.path("tne"), orphan));
     }));
-
-
-    new MenuManager();
-    /*MenuManager.instance().addMenu(new MyEcoMenu());
-    MenuManager.instance().addMenu(new MyCurrencyMenu());
-    MenuManager.instance().addMenu(new MyBalMenu());*/
+    registerMenuHandler();
 
     //Set up the auto saver if enabled.
     if(DataConfig.yaml().getBoolean("Data.AutoSaver.Enabled")) {
@@ -399,6 +396,9 @@ public abstract class TNECore {
 
     loader.getModules().values().forEach((moduleWrapper -> moduleWrapper.getModule().disable(this)));
   }
+
+  public abstract void registerMenuHandler();
+
 
   public abstract void registerCommandHandler();
 

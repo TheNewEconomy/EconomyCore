@@ -17,11 +17,8 @@ package net.tnemc.paper.hook.misc;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.menu.bukkit.listener.BukkitChatListener;
-import net.tnemc.menu.bukkit.listener.BukkitInventoryCloseListener;
 import net.tnemc.paper.PaperCore;
 import net.tnemc.paper.hook.economy.VaultHook;
-import net.tnemc.paper.listeners.player.PlayerClickListener;
 import net.tnemc.paper.listeners.player.PlayerCloseInventoryListener;
 import net.tnemc.paper.listeners.player.PlayerInteractListener;
 import net.tnemc.paper.listeners.player.PlayerJoinListener;
@@ -70,11 +67,6 @@ public class TNE extends JavaPlugin {
     //Player Listeners
     Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
     Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), this);
-
-    //Menu-related Listeners from TNML
-    Bukkit.getPluginManager().registerEvents(new BukkitChatListener(this), this);
-    Bukkit.getPluginManager().registerEvents(new PlayerClickListener(this), this);
-    Bukkit.getPluginManager().registerEvents(new BukkitInventoryCloseListener(this), this);
     Bukkit.getPluginManager().registerEvents(new PlayerCloseInventoryListener(), this);
     Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
 

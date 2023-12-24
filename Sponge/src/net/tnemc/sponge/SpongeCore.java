@@ -20,7 +20,6 @@ package net.tnemc.sponge;
 
 import com.google.inject.Inject;
 import net.tnemc.core.TNECore;
-import net.tnemc.menu.sponge7.listeners.Sponge7InventoryClickListener;
 import net.tnemc.sponge.command.AdminCommand;
 import net.tnemc.sponge.command.ModuleCommand;
 import net.tnemc.sponge.command.MoneyCommand;
@@ -72,8 +71,12 @@ public class SpongeCore extends TNECore {
     //Register our event listeners
     Sponge.getEventManager().registerListeners(container, new PlayerJoinListener());
     Sponge.getEventManager().registerListeners(container, new PlayerLeaveListener());
-    Sponge.getEventManager().registerListeners(container, new Sponge7InventoryClickListener(plugin));
     Sponge.getEventManager().registerListeners(container, new PlayerCloseInventoryListener(plugin));
+  }
+
+  @Override
+  public void registerMenuHandler() {
+    //TODO: Menu Handler for Sponge
   }
 
   @Listener

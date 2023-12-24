@@ -1,2 +1,0 @@
-This is a place holder, because I may use this directory at some point, but who knows if I actually will. This file may just be here in order to provide you with a nice story to 
-read. Maybe that is the whole purpose of the reason why you came here... to read a story. 

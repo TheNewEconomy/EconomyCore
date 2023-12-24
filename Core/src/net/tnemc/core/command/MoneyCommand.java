@@ -33,7 +33,6 @@ import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.Note;
 import net.tnemc.core.currency.format.CurrencyFormatter;
-import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.type.MixedType;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.manager.TopManager;

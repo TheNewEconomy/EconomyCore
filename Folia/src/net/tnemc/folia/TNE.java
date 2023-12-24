@@ -17,14 +17,12 @@ package net.tnemc.folia;
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 import net.tnemc.bukkit.hook.economy.VaultHook;
 import net.tnemc.bukkit.listeners.player.PlayerCloseInventoryListener;
 import net.tnemc.bukkit.listeners.player.PlayerJoinListener;
 import net.tnemc.bukkit.listeners.player.PlayerQuitListener;
 import net.tnemc.bukkit.listeners.world.WorldLoadListener;
-import net.tnemc.menu.folia.listener.FoliaChatListener;
-import net.tnemc.menu.folia.listener.FoliaInventoryClickListener;
-import net.tnemc.menu.folia.listener.FoliaInventoryCloseListener;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -61,11 +59,6 @@ public class TNE extends JavaPlugin {
     //Player Listeners
     Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
     Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), this);
-
-    //Menu-related Listeners from TNML
-    Bukkit.getPluginManager().registerEvents(new FoliaChatListener(this), this);
-    Bukkit.getPluginManager().registerEvents(new FoliaInventoryClickListener(this), this);
-    Bukkit.getPluginManager().registerEvents(new FoliaInventoryCloseListener(this), this);
     Bukkit.getPluginManager().registerEvents(new PlayerCloseInventoryListener(), this);
 
     //World Listeners

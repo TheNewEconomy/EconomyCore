@@ -21,14 +21,11 @@ package net.tnemc.bukkit;
 import net.tnemc.bukkit.hook.economy.VaultHook;
 import net.tnemc.bukkit.hook.misc.LuckPermsHook;
 import net.tnemc.bukkit.hook.misc.PAPIHook;
-import net.tnemc.bukkit.listeners.player.PlayerClickListener;
 import net.tnemc.bukkit.listeners.player.PlayerCloseInventoryListener;
 import net.tnemc.bukkit.listeners.player.PlayerInteractListener;
 import net.tnemc.bukkit.listeners.player.PlayerJoinListener;
 import net.tnemc.bukkit.listeners.player.PlayerQuitListener;
 import net.tnemc.bukkit.listeners.world.WorldLoadListener;
-import net.tnemc.menu.bukkit.listener.BukkitChatListener;
-import net.tnemc.menu.bukkit.listener.BukkitInventoryCloseListener;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -72,9 +69,6 @@ public class TNE extends JavaPlugin {
     Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), this);
 
     //Menu-related Listeners from TNML
-    Bukkit.getPluginManager().registerEvents(new BukkitChatListener(this), this);
-    Bukkit.getPluginManager().registerEvents(new PlayerClickListener(this), this);
-    Bukkit.getPluginManager().registerEvents(new BukkitInventoryCloseListener(this), this);
     Bukkit.getPluginManager().registerEvents(new PlayerCloseInventoryListener(), this);
     Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
 
