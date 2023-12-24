@@ -349,17 +349,18 @@ public class MoneyCommand extends BaseCommand {
     sender.message(msg);
 
     final String resolve = region;
+
     TNECore.eco().currency().currencies().forEach((cur)->{
 
       final MessageData entryMSG = new MessageData("Messages.Money.HoldingsMultiSingle");
       entryMSG.addReplacement("$currency", cur.getIdentifier());
 
       BigDecimal amount = BigDecimal.ZERO;
-      for(HoldingsEntry entry : currency.type().getHoldings(account, resolve, currency, EconomyManager.NORMAL)) {
+      for(HoldingsEntry entry : cur.type().getHoldings(account, resolve, cur, EconomyManager.NORMAL)) {
         amount = amount.add(entry.getAmount());
 
         if(entry.getHandler().asID().equalsIgnoreCase(EconomyManager.INVENTORY_ONLY.asID())) {
-          if(currency.type().supportsItems()) {
+          if(cur.type().supportsItems()) {
             entryMSG.addReplacement("$inventory", CurrencyFormatter.format(account, entry));
           } else {
             entryMSG.addReplacement("$inventory", "0");
@@ -367,7 +368,7 @@ public class MoneyCommand extends BaseCommand {
         }
 
         if(entry.getHandler().asID().equalsIgnoreCase(EconomyManager.E_CHEST.asID())) {
-          if(currency.type().supportsItems()) {
+          if(cur.type().supportsItems()) {
             entryMSG.addReplacement("$ender", CurrencyFormatter.format(account, entry));
           } else {
             entryMSG.addReplacement("$ender", "0");

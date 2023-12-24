@@ -17,11 +17,14 @@ package net.tnemc.core.command.parameters.resolver;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.command.parameters.PercentBigDecimal;
+import net.tnemc.core.currency.Currency;
 import org.jetbrains.annotations.NotNull;
 import revxrsal.commands.process.ValueResolver;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 /**
  * PercentDecimalResolver
@@ -38,6 +41,18 @@ public class PercentDecimalResolver implements ValueResolver<PercentBigDecimal> 
     final boolean percent = value.contains("%");
     final String parsed = (percent)? value.replace("%", "") : value;
 
-    return new PercentBigDecimal(percent, new BigDecimal(parsed));
+    return new PercentBigDecimal(percent, new BigDecimal(replaceDecimals(parsed)));
+  }
+
+  public static String replaceDecimals(final String toReplace) {
+
+    String toReturn = toReplace;
+
+    for(Currency cur : TNECore.eco().currency().currencies()) {
+      if(!cur.getDecimal().equalsIgnoreCase(".")) {
+        toReturn = toReturn.replace(cur.getDecimal(), ".");
+      }
+    }
+    return toReturn;
   }
 }

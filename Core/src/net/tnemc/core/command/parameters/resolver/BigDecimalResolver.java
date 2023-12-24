@@ -34,6 +34,6 @@ public class BigDecimalResolver implements ValueResolver<BigDecimal> {
   public BigDecimal resolve(@NotNull ValueResolverContext context) {
     final String value = context.arguments().pop();
 
-    return new BigDecimal(value);
+    return new BigDecimal(PercentDecimalResolver.replaceDecimals(value));
   }
 }
