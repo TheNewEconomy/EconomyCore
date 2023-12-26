@@ -29,15 +29,7 @@ import java.util.Optional;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class TaxEntry {
-
-  private final String type;
-  private final Double amount;
-
-  public TaxEntry(String type, Double amount) {
-    this.type = type;
-    this.amount = amount;
-  }
+public record TaxEntry(String type, Double amount) {
 
   public BigDecimal calculateTax(final BigDecimal amount) {
 
@@ -48,14 +40,6 @@ public class TaxEntry {
     }
 
     return BigDecimal.ZERO;
-  }
-
-  public String getType() {
-    return type;
-  }
-
-  public Double getAmount() {
-    return amount;
   }
 
   public String asString() {

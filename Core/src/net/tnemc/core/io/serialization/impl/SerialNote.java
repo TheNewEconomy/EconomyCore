@@ -17,52 +17,40 @@ package net.tnemc.core.io.serialization.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.currency.Denomination;
-import net.tnemc.core.currency.item.ItemDenomination;
+import net.tnemc.core.currency.Note;
 import net.tnemc.core.io.serialization.JSONAble;
 import org.json.simple.JSONObject;
 
 /**
- * SerialDenomination
+ * SerialNote
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class SerialDenomination implements JSONAble<Denomination> {
+public class SerialNote implements JSONAble<Note> {
+
 
   /**
    * Used to serialize this object to a JSON-valid string.
    *
-   * @param denom The object to serialize.
+   * @param note The object to serialize.
+   *
    * @return The {@link JSONObject} associated with the JSON-valid String.
    */
   @Override
-  public JSONObject toJSON(Denomination denom) {
-    JSONObject json = new JSONObject();
-    json.put("single", denom.singular());
-    json.put("plural", denom.plural());
-    json.put("weight", denom.weight());
-
-    if(denom instanceof ItemDenomination itemDenomination) {
-      json.put("enchantments", itemDenomination.getEnchantments());
-      json.put("flags", itemDenomination.getFlags());
-      json.put("lore", itemDenomination.getLore());
-      json.put("material", itemDenomination.getMaterial());
-      json.put("damage", itemDenomination.getDamage());
-      json.put("name", itemDenomination.getName());
-      json.put("customModel", itemDenomination.getCustomModel());
-      json.put("texture", itemDenomination.getTexture());
-    }
-    return json;
+  public JSONObject toJSON(Note note) {
+    return null;
   }
 
   /**
    * Used to generate information for this object from
+   *
    * @param serialized The JSON-valid String that we are going to deserialize.
+   *
    * @return The object that was deserialized from the JSON string.
    */
   @Override
-  public Denomination fromJSON(String serialized) {
+  public Note fromJSON(String serialized) {
     return null;
   }
 }
