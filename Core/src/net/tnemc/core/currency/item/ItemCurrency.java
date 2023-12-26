@@ -21,10 +21,13 @@ package net.tnemc.core.currency.item;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.Denomination;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 /**
- * Represents a {@link Currency currency} that is able to be represented by physical items in game.
+ * Represents a {@link Currency currency} that is represented by physical items in game.
  *
  * @see Currency
  * @author creatorfromhell

@@ -65,7 +65,7 @@ Options:
   #Will be used if no world-specific configurations are found if multiworld is enabled
   Balance: 200.0
 
-  #The character to use as the decimal place holder.
+  #The character to use as the decimal placeholder.
   Decimal: '.'
 
   #The amount of digits to display after the decimal character.
@@ -86,7 +86,7 @@ Item:
   #Would you like your item currency balances to also check the player's ender chest?
   EnderChest: true
 
-  #Would you like your item currency to be consolidated into least amount of items after each transaction?
+  #Would you like your item currency to be consolidated into the least amount of items after each transaction?
   Consolidate: false
 
 #All configurations related to formatting.
