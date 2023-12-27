@@ -38,7 +38,7 @@ public class SerialDenomination implements JSONAble<Denomination> {
    */
   @Override
   public JSONObject toJSON(Denomination denom) {
-    JSONObject json = new JSONObject();
+    final JSONObject json = new JSONObject();
     json.put("single", denom.singular());
     json.put("plural", denom.plural());
     json.put("weight", denom.weight());

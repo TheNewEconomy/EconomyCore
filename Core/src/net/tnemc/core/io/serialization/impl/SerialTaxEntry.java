@@ -20,6 +20,10 @@ package net.tnemc.core.io.serialization.impl;
 import net.tnemc.core.io.serialization.JSONAble;
 import net.tnemc.core.transaction.tax.TaxEntry;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.math.BigDecimal;
 
 /**
  * SerialTaxEntry
@@ -53,6 +57,16 @@ public class SerialTaxEntry implements JSONAble<TaxEntry> {
    */
   @Override
   public TaxEntry fromJSON(String serialized) {
-    return null;
+    final JSONParser parser = new JSONParser();
+
+    try {
+      final JSONObject jsonObject = (JSONObject)parser.parse(serialized);
+
+      return new TaxEntry((String)jsonObject.get("type"),
+                          Double.parseDouble(jsonObject.get("amount").toString()));
+    } catch(ParseException e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 }

@@ -59,6 +59,12 @@ public class Note {
     }
   }
 
+  public Note(String material, BigDecimal minimum, TaxEntry fee) {
+    this.material = material;
+    this.minimum = minimum;
+    this.fee = fee;
+  }
+
   public BigDecimal getMinimum() {
     return minimum;
   }
