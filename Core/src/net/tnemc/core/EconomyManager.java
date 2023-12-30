@@ -148,6 +148,10 @@ public class EconomyManager {
         .collect(Collectors.toCollection(LinkedList::new));
   }
 
+  public void clearCache() {
+    accountManager.getAccounts().clear();
+  }
+
   public AccountManager account() {
     return accountManager;
   }

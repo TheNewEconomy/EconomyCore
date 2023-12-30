@@ -251,6 +251,7 @@ public class StorageManager {
     TNECore.loader().getModules().values().forEach((moduleWrapper -> moduleWrapper.getModule().enableSave(this)));
 
     TNECore.server().scheduler().createDelayedTask(()->engine.reset(connector), new ChoreTime(0), ChoreExecution.SECONDARY);
+    TNECore.eco().clearCache();
   }
 
   /**

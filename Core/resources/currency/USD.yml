@@ -179,5 +179,4 @@ Converting:
   #Example currency conversion.
   #Format is currency name and decimal based rate
   #In this USD converts to double Example currency so 1 USD is 2 Examples
-  #
-  #Example: 2.0
+  Example: 2.0
