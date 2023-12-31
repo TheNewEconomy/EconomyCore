@@ -241,7 +241,6 @@ public class MoneyCommand extends BaseCommand {
 
     final Transaction transaction = new Transaction("give")
         .to(account, modifier)
-        .processor(EconomyManager.baseProcessor())
         .source(new PlayerSource(sender.identifier()));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);

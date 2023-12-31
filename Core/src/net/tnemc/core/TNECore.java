@@ -21,7 +21,6 @@ package net.tnemc.core;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.api.BaseAPI;
 import net.tnemc.core.api.CallbackManager;
 import net.tnemc.core.api.TNEAPI;
 import net.tnemc.core.api.response.AccountAPIResponse;
@@ -117,7 +116,7 @@ public abstract class TNECore {
   private static TNECore instance;
   private Chore<?> autoSaver = null;
 
-  private TNEAPI api;
+  private final TNEAPI api = new TNEAPI();
   protected CallbackManager callbackManager;
   protected ChannelMessageManager channelMessageManager;
 
@@ -155,7 +154,6 @@ public abstract class TNECore {
     if(!enabled) {
 
       this.enabled = true;
-      this.api = new BaseAPI();
       this.loader = new ModuleLoader();
       onEnable();
 
