@@ -12,6 +12,10 @@ Data:
     #The data syncing method to utilize. Options: Bungee, Redis
     Type: Bungee
 
+    #Configurations related to config syncing.
+    Config:
+
+
     #Configurations relating to redis.
     Redis:
 
