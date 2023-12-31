@@ -141,28 +141,29 @@ public class SerialCurrency implements JSONAble<Currency> {
       currency.setDecimalPlaces(((Long)jsonObject.get("decimalPlaces")).intValue());
       currency.setMinorWeight(((Long)jsonObject.get("minorWeight")).intValue());
 
-      // Item currency
+      //Item currency
       if(currency instanceof ItemCurrency item) {
         item.setEnderChest((Boolean)jsonObject.get("ender"));
       }
 
-      // Note
+      //Note
       if(jsonObject.containsKey("note")) {
 
         final JSONObject noteJson = (JSONObject)jsonObject.get("note");
         currency.setNote(new SerialNote().fromJSON(noteJson.toJSONString()));
       }
 
-      // Denominations
+      //Denominations
       final JSONArray denominationsArray = (JSONArray)jsonObject.get("denominations");
       for(final Object denomObj : denominationsArray) {
 
         final JSONObject denomJson = (JSONObject)denomObj;
-        currency.getDenominations().put(BigDecimal.valueOf(Double.parseDouble(denomJson.get("weight").toString())),
-                new SerialDenomination().fromJSON(denomJson.toJSONString()));
+        final Denomination denom = new SerialDenomination().fromJSON(denomJson.toJSONString());
+
+        currency.getDenominations().put(denom.weight(), denom);
       }
 
-      // Conversion
+      //Conversion
       final JSONArray conversionArray = (JSONArray)jsonObject.get("conversion");
       for(final Object entryObj : conversionArray) {
 

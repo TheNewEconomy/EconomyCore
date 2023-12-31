@@ -17,39 +17,38 @@ package net.tnemc.core.io.serialization.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.account.shared.Member;
 import net.tnemc.core.io.serialization.JSONAble;
-import net.tnemc.core.utils.Identifier;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 /**
- * SerialHoldings
+ * SerialMember
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class SerialHoldings implements JSONAble<HoldingsEntry> {
+public class SerialMember implements JSONAble<Member> {
 
   /**
    * Used to serialize this object to a JSON-valid string.
    *
-   * @param holdings The object to serialize.
+   * @param member The object to serialize.
    *
    * @return The {@link JSONObject} associated with the JSON-valid String.
    */
   @Override
-  public JSONObject toJSON(HoldingsEntry holdings) {
+  public JSONObject toJSON(Member member) {
     final JSONObject json = new JSONObject();
+    json.put("id", member.getId().toString());
 
-    json.put("region", holdings.getRegion());
-    json.put("currency", holdings.getCurrency().toString());
-    json.put("amount", holdings.getAmount().toString());
-    json.put("handler", holdings.getHandler().asID());
+    JSONObject permissionsJson = new JSONObject();
+    member.getPermissions().forEach((permission, value) -> permissionsJson.put(permission, value));
+    json.put("permissions", permissionsJson);
+
     return json;
   }
 
@@ -61,15 +60,21 @@ public class SerialHoldings implements JSONAble<HoldingsEntry> {
    * @return The object that was deserialized from the JSON string.
    */
   @Override
-  public HoldingsEntry fromJSON(String serialized) {
+  public Member fromJSON(String serialized) {
     try {
       final JSONParser parser = new JSONParser();
       final JSONObject json = (JSONObject)parser.parse(serialized);
 
-      return new HoldingsEntry((String)json.get("region"),
-              UUID.fromString((String)json.get("currency")),
-              new BigDecimal((String)json.get("amount")),
-              Identifier.fromID((String)json.get("handler")));
+      final Member member = new Member(UUID.fromString((String)json.get("id")));
+
+      final JSONObject permissionsJson = (JSONObject) json.get("permissions");
+      permissionsJson.forEach((permission, value) -> {
+        if(value instanceof Boolean) {
+          member.addPermission((String) permission, (Boolean) value);
+        }
+      });
+
+      return member;
     } catch (ParseException | NumberFormatException | ClassCastException e) {
       e.printStackTrace();
       return null;

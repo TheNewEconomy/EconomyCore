@@ -21,6 +21,11 @@ import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.io.serialization.JSONAble;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * SerialDenomination
@@ -45,6 +50,7 @@ public class SerialDenomination implements JSONAble<Denomination> {
 
     if(denom instanceof ItemDenomination itemDenomination) {
       json.put("enchantments", itemDenomination.getEnchantments());
+      json.put("item", true);
       json.put("flags", itemDenomination.getFlags());
       json.put("lore", itemDenomination.getLore());
       json.put("material", itemDenomination.getMaterial());
@@ -63,6 +69,36 @@ public class SerialDenomination implements JSONAble<Denomination> {
    */
   @Override
   public Denomination fromJSON(String serialized) {
-    return null;
+    final JSONParser parser = new JSONParser();
+    JSONObject jsonObject = null;
+    try {
+      jsonObject = (JSONObject) parser.parse(serialized);
+
+      final BigDecimal weight = new BigDecimal(jsonObject.get("weight").toString());
+
+      final Denomination denomination = (jsonObject.containsKey("item"))?
+              new ItemDenomination(weight) :
+              new Denomination(weight);
+
+      denomination.setSingle((String)jsonObject.get("single"));
+      denomination.setPlural((String)jsonObject.get("plural"));
+
+      if(denomination instanceof ItemDenomination itemDenomination) {
+
+        itemDenomination.setEnchantments((List<String>) jsonObject.get("enchantments"));
+        itemDenomination.setFlags((List<String>) jsonObject.get("flags"));
+        itemDenomination.setLore((List<String>) jsonObject.get("lore"));
+        itemDenomination.setMaterial((String) jsonObject.get("material"));
+        itemDenomination.setDamage(((Long) jsonObject.get("damage")).shortValue());
+        itemDenomination.setName((String) jsonObject.get("name"));
+        itemDenomination.setCustomModel((Integer) jsonObject.get("customModel"));
+        itemDenomination.setTexture((String) jsonObject.get("texture"));
+
+        return itemDenomination;
+      }
+      return denomination;
+    } catch(ParseException e) {
+      return null;
+    }
   }
 }
