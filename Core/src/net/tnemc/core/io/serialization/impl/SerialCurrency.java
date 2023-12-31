@@ -18,7 +18,6 @@ package net.tnemc.core.io.serialization.impl;
  */
 
 import net.tnemc.core.currency.Currency;
-import net.tnemc.core.currency.CurrencyRegion;
 import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.io.serialization.JSONAble;

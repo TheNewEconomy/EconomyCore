@@ -38,7 +38,6 @@ import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.currency.format.FormatRule;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
-import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 import org.jetbrains.annotations.NotNull;
 

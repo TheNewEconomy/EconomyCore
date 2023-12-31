@@ -21,9 +21,6 @@ package net.tnemc.core.currency.item;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.Denomination;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 
 /**
