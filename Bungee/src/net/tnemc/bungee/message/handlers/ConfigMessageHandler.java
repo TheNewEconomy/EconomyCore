@@ -26,39 +26,35 @@ import java.io.IOException;
 import java.util.UUID;
 
 /**
- * BalanceMessageHandler
+ * ConfigMessageHandler
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class BalanceMessageHandler extends AccountHandler {
-  public BalanceMessageHandler() {
-    super("balance");
+public class ConfigMessageHandler extends MessageHandler {
+  public ConfigMessageHandler() {
+    super("config");
   }
 
   @Override
-  public void handle(String account, String accountName, UUID server, DataInputStream stream) {
+  public void handle(UUID server, DataInputStream stream) {
 
     try {
-      final String region = stream.readUTF();
-      final String currency = stream.readUTF();
-      final String handler = stream.readUTF();
-      final String amount = stream.readUTF();
-      send(server, account, accountName, region, currency, handler, amount);
+
+      send(server, stream.readAllBytes());
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
-  public static void send(UUID server, String account, String accountName, String region, String currency, String handler, String amount) {
+  public static void send(UUID server, byte[] left) {
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
+
+
     out.writeUTF(server.toString());
-    out.writeUTF(account);
-    out.writeUTF(accountName);
-    out.writeUTF(region);
-    out.writeUTF(currency);
-    out.writeUTF(handler);
-    out.writeUTF(amount);
-    sendToAll("tne:balance", out);
+    out.write(left);
+
+
+    sendToAll("tne:config", out);
   }
 }

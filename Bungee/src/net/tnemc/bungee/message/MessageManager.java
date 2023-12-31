@@ -21,7 +21,9 @@ package net.tnemc.bungee.message;
 import net.tnemc.bungee.ProxyProvider;
 import net.tnemc.bungee.message.backlog.BacklogEntry;
 import net.tnemc.bungee.message.backlog.MessageData;
+import net.tnemc.bungee.message.handlers.AccountHandler;
 import net.tnemc.bungee.message.handlers.BalanceMessageHandler;
+import net.tnemc.bungee.message.handlers.ConfigMessageHandler;
 import net.tnemc.bungee.message.handlers.SyncAllMessageHandler;
 
 import java.io.ByteArrayInputStream;
@@ -47,6 +49,7 @@ public class MessageManager {
     instance = this;
     this.proxy = proxy;
     handlers.put("balance", new BalanceMessageHandler());
+    handlers.put("config", new ConfigMessageHandler());
     handlers.put("sync", new SyncAllMessageHandler());
   }
 
@@ -56,13 +59,14 @@ public class MessageManager {
 
     if(handlers.containsKey(tag)) {
       try {
+
+        final MessageHandler handler = handlers.get(tag);
+
         final ByteArrayInputStream stream = new ByteArrayInputStream(data);
         final DataInputStream in = new DataInputStream(stream);
 
         final UUID server = UUID.fromString(in.readUTF());
-        final String account = in.readUTF();
-        final String accountName = in.readUTF();
-        handlers.get(tag).handle(account, accountName, server, in);
+        handler.handle(server, in);
 
         in.close();
         stream.close();

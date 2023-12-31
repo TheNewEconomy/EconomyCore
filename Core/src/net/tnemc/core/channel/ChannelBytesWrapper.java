@@ -53,6 +53,10 @@ public class ChannelBytesWrapper implements AutoCloseable {
     }
   }
 
+  public short readShort() throws IOException {
+    return in.readShort();
+  }
+
   public String readUTF() throws IOException {
     return in.readUTF();
   }

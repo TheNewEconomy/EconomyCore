@@ -12,11 +12,11 @@ Data:
     #The data syncing method to utilize. Options: Bungee, Redis
     Type: Bungee
 
-    #The pin for this server that should be used for sharing. This should be unique.
-    SharingPin: "000000"
-
     #Configurations related to config syncing.
     Config:
+
+      #The pin for this server that should be used for sharing. This should be unique.
+      SharingPin: "000000"
 
       #Whether to sync configurations across bungee/velocity/redis.
       Sync: true
@@ -25,6 +25,12 @@ Data:
       #server. Set to "none" to use the local configurations. Otherwise, you'll set this to the hub
       #server's SharingPin.
       Hub: "none"
+
+      #The configs to sync from the hub.
+      Configs:
+        - "config.yml"
+        - "messages.yml"
+        - "currency"
 
     #Configurations relating to redis.
     Redis:
