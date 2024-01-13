@@ -114,10 +114,10 @@ public class YAMLAccount implements Datable<Account> {
       yaml.set("Info.CreationDate", account.getCreationDate());
       yaml.set("Info.Pin", account.getPin());
 
-      if(account instanceof PlayerAccount) {
-        yaml.set("Info.LastOnline", ((PlayerAccount)account).getLastOnline());
+      if(account instanceof PlayerAccount playerAccount) {
+        yaml.set("Info.LastOnline", playerAccount.getLastOnline());
 
-        final Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)account).getUUID());
+        final Optional<PlayerProvider> provider = TNECore.server().findPlayer(playerAccount.getUUID());
 
         if(provider.isPresent()) {
           final String region = TNECore.eco().region().getMode().region(provider.get());
@@ -135,13 +135,13 @@ public class YAMLAccount implements Datable<Account> {
         }
       }
 
-      if(account instanceof SharedAccount) {
-        final String owner = (((SharedAccount)account).getOwner() == null)? account.getIdentifier() :
-            ((SharedAccount)account).getOwner().toString();
+      if(account instanceof SharedAccount shared) {
+        final String owner = (shared.getOwner() == null)? account.getIdentifier() :
+            shared.getOwner().toString();
 
         yaml.set("Info.Owner", owner);
 
-        for(Member member : ((SharedAccount)account).getMembers().values()) {
+        for(Member member : shared.getMembers().values()) {
           for(Map.Entry<String, Boolean> entry : member.getPermissions().entrySet()) {
 
             yaml.set("Members." + member.getId().toString() + "." + entry.getKey(), entry.getValue());
@@ -239,24 +239,24 @@ public class YAMLAccount implements Datable<Account> {
 
       if(account != null) {
 
-        if(account instanceof PlayerAccount) {
-          ((PlayerAccount)account).setLastOnline(yaml.getLong("Info.LastOnline"));
+        if(account instanceof PlayerAccount playerAccount) {
+          playerAccount.setLastOnline(yaml.getLong("Info.LastOnline"));
         }
 
-        if(account instanceof SharedAccount && yaml.contains("Members")) {
+        if(account instanceof SharedAccount shared && yaml.contains("Members")) {
           final ConfigurationSection section = yaml.getConfigurationSection("Members");
           for(String member : section.getKeys(false)) {
 
             for(String permission : section.getConfigurationSection(member).getKeys(false)) {
 
-              ((SharedAccount)account).addPermission(UUID.fromString(member), permission,
+              shared.addPermission(UUID.fromString(member), permission,
                                                      yaml.getBoolean("Members." + member +
                                                                          "." + permission));
             }
           }
         }
 
-        Collection<HoldingsEntry> holdings = TNECore.storage().loadAll(HoldingsEntry.class, identifier);
+        final Collection<HoldingsEntry> holdings = TNECore.storage().loadAll(HoldingsEntry.class, identifier);
         for(HoldingsEntry entry : holdings) {
           account.getWallet().setHoldings(entry);
         }
