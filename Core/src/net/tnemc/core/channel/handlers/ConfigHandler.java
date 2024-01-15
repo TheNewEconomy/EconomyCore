@@ -50,6 +50,11 @@ public class ConfigHandler extends ChannelMessageHandler {
       return;
     }
 
+    //hub string
+    //currency size short
+    //currencies string
+    //configs
+
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
     out.writeUTF(TNECore.instance().data().getYaml().getString("Data.Sync.Config.SharingPin", "000000"));
 

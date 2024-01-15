@@ -20,6 +20,7 @@ package net.tnemc.bungee.message;
 
 import net.tnemc.bungee.ProxyProvider;
 import net.tnemc.bungee.message.backlog.BacklogEntry;
+import net.tnemc.bungee.message.backlog.ConfigEntry;
 import net.tnemc.bungee.message.backlog.MessageData;
 import net.tnemc.bungee.message.handlers.AccountHandler;
 import net.tnemc.bungee.message.handlers.BalanceMessageHandler;
@@ -42,6 +43,9 @@ public class MessageManager {
 
   private final Map<String, MessageHandler> handlers = new HashMap<>();
   private final Map<String, MessageData> data = new HashMap<>();
+
+  private final Map<String, ConfigEntry> hubs = new HashMap<>();
+
   private final ProxyProvider proxy;
   private static MessageManager instance;
 
@@ -49,7 +53,7 @@ public class MessageManager {
     instance = this;
     this.proxy = proxy;
     handlers.put("balance", new BalanceMessageHandler());
-    handlers.put("config", new ConfigMessageHandler());
+    //handlers.put("config", new ConfigMessageHandler());
     handlers.put("sync", new SyncAllMessageHandler());
   }
 
@@ -78,6 +82,10 @@ public class MessageManager {
 
   public ProxyProvider proxy() {
     return proxy;
+  }
+
+  public Map<String, ConfigEntry> getHubs() {
+    return hubs;
   }
 
   public static MessageManager instance() {

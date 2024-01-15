@@ -44,7 +44,7 @@ public class ChannelMessageManager {
 
     register(new BalanceHandler());
     register(new SyncHandler());
-    register(new ConfigHandler());
+    //register(new ConfigHandler());
     register();
   }
 

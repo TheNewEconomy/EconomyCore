@@ -1,4 +1,4 @@
-package net.tnemc.bungee.message.handlers;
+package net.tnemc.bungee.event;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,46 +17,35 @@ package net.tnemc.bungee.message.handlers;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
-import net.tnemc.bungee.message.MessageHandler;
+import net.md_5.bungee.api.event.ServerConnectEvent;
+import net.md_5.bungee.api.plugin.Listener;
+import net.md_5.bungee.event.EventHandler;
 import net.tnemc.bungee.message.MessageManager;
 import net.tnemc.bungee.message.backlog.ConfigEntry;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.util.UUID;
-
 /**
- * ConfigMessageHandler
+ * ServerConnectListener
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class ConfigMessageHandler extends MessageHandler {
-  public ConfigMessageHandler() {
-    super("config");
-  }
+public class ServerConnectListener implements Listener {
 
-  @Override
-  public void handle(UUID server, DataInputStream stream) {
+  @EventHandler
+  public void onMessage(ServerConnectEvent event) {
 
-    final ConfigEntry entry = ConfigEntry.fromBytes(stream);
-    if(entry != null) {
-      MessageManager.instance().getHubs().put(entry.getPin(), entry);
-      //send(server, entry.getBytes());
+    if(event.getPlayer().getServer().getInfo().getPlayers().size() >= 1) {
+
+      final String address = event.getPlayer().getServer().getInfo().getSocketAddress().toString();
+      MessageManager.instance().backlog(address);
+
+      for(ConfigEntry entry : MessageManager.instance().getHubs().values()) {
+        if(!entry.getSynced().contains(address)) {
+
+          event.getTarget().sendData("tne:config", entry.getBytes(), false);
+          entry.getSynced().add(address);
+        }
+      }
     }
-
-  }
-
-  public static void send(UUID server, byte[] left) {
-    final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-
-
-    out.writeUTF(server.toString());
-    out.write(left);
-
-
-    sendToAll("tne:config", out);
   }
 }
