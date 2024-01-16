@@ -31,6 +31,7 @@ import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.message.MessageData;
+import net.tnemc.core.manager.id.UUIDPair;
 import net.tnemc.core.transaction.history.AwayHistory;
 import net.tnemc.core.utils.HandlerResponse;
 
@@ -90,6 +91,8 @@ public class PlayerJoinHandler {
 
       if(!acc.get().getName().equalsIgnoreCase(provider.getName())) {
         acc.get().setName(provider.getName());
+
+        TNECore.eco().account().uuidProvider().store(new UUIDPair(provider.identifier(), provider.getName()));
       }
 
       if(firstJoin || acc.get().getCreationDate() == ((PlayerAccount)acc.get()).getLastOnline()) {
