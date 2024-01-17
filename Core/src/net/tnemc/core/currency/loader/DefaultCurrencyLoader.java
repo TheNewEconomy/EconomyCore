@@ -103,6 +103,8 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
     final YamlFile cur = new YamlFile(curDirectory);
 
+    System.out.println("Loading: " + curDirectory.getName());
+
     try {
       cur.loadWithComments();
 
@@ -147,6 +149,8 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     }
 
     Currency currency = (type.get().supportsItems())? new ItemCurrency() : new Currency();
+
+    currency.setFile(curDirectory.getName());
 
     final BigDecimal maxBalance = ((new BigDecimal(cur.getString("Options.MaxBalance", largestSupported.toPlainString())).compareTo(largestSupported) > 0)? largestSupported : new BigDecimal(cur.getString("MaxBalance", largestSupported.toPlainString())));
     final BigDecimal minBalance = (type.get().supportsItems())? BigDecimal.ZERO : new BigDecimal(cur.getString("Options.MinBalance", "0.00"));

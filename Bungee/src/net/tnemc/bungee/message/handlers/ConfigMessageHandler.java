@@ -20,45 +20,43 @@ package net.tnemc.bungee.message.handlers;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.tnemc.bungee.message.MessageHandler;
+import net.tnemc.bungee.message.MessageManager;
+import net.tnemc.bungee.message.backlog.ConfigEntry;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.UUID;
 
 /**
- * BalanceMessageHandler
+ * ConfigMessageHandler
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class BalanceMessageHandler extends AccountHandler {
-  public BalanceMessageHandler() {
-    super("balance");
+public class ConfigMessageHandler extends MessageHandler {
+  public ConfigMessageHandler() {
+    super("config");
   }
 
   @Override
-  public void handle(String account, String accountName, UUID server, DataInputStream stream) {
+  public void handle(UUID server, DataInputStream stream) {
 
-    try {
-      final String region = stream.readUTF();
-      final String currency = stream.readUTF();
-      final String handler = stream.readUTF();
-      final String amount = stream.readUTF();
-      send(server, account, accountName, region, currency, handler, amount);
-    } catch (IOException e) {
-      e.printStackTrace();
+    final ConfigEntry entry = ConfigEntry.fromBytes(stream);
+    if(entry != null) {
+      MessageManager.instance().getHubs().put(entry.getPin(), entry);
+      //send(server, entry.getBytes());
     }
+
   }
 
-  public static void send(UUID server, String account, String accountName, String region, String currency, String handler, String amount) {
+  public static void send(UUID server, byte[] left) {
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
+
+
     out.writeUTF(server.toString());
-    out.writeUTF(account);
-    out.writeUTF(accountName);
-    out.writeUTF(region);
-    out.writeUTF(currency);
-    out.writeUTF(handler);
-    out.writeUTF(amount);
-    sendToAll("tne:balance", out);
+    out.write(left);
+
+
+    sendToAll("tne:config", out);
   }
 }

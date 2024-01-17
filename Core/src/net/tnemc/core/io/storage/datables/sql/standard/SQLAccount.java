@@ -103,23 +103,23 @@ public class SQLAccount implements Datable<Account> {
                                                   account.getStatus().identifier(),
                                               });
 
-      if(account instanceof PlayerAccount) {
+      if(account instanceof PlayerAccount playerAccount) {
 
         //Player account storage.(players_accounts table)
         ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().savePlayer(),
                                                 new Object[]{
                                                     account.getIdentifier(),
-                                                    new java.sql.Timestamp(((PlayerAccount)account).getLastOnline()),
-                                                    new java.sql.Timestamp(((PlayerAccount)account).getLastOnline())
+                                                    new java.sql.Timestamp(playerAccount.getLastOnline()),
+                                                    new java.sql.Timestamp(playerAccount.getLastOnline())
                                                 });
 
       }
 
-      if(account instanceof SharedAccount) {
+      if(account instanceof SharedAccount shared) {
 
         //Non-player accounts.(non_players_accounts table)
-        final String owner = (((SharedAccount)account).getOwner() == null)? account.getIdentifier() :
-                                                       ((SharedAccount)account).getOwner().toString();
+        final String owner = (shared.getOwner() == null)? account.getIdentifier() :
+                                                       shared.getOwner().toString();
         ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveNonPlayer(),
                                                 new Object[]{
                                                     account.getIdentifier(),
@@ -128,7 +128,7 @@ public class SQLAccount implements Datable<Account> {
                                                 });
 
         //Account members(account_members table)
-        for(Member member : ((SharedAccount)account).getMembers().values()) {
+        for(Member member : shared.getMembers().values()) {
           for(Map.Entry<String, Boolean> entry : member.getPermissions().entrySet()) {
             ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveMembers(),
                                                     new Object[]{
@@ -211,13 +211,13 @@ public class SQLAccount implements Datable<Account> {
       if(account != null) {
 
         //Load our player account info
-        if(account instanceof PlayerAccount) {
+        if(account instanceof PlayerAccount playerAccount) {
           try(ResultSet result = ((SQLConnector)connector).executeQuery(((SQLConnector)connector).dialect().loadPlayer(),
                                                                         new Object[] {
                                                                             identifier
                                                                         })) {
             if(result.next()) {
-              ((PlayerAccount)account).setLastOnline(result.getTimestamp("last_online").getTime());
+              playerAccount.setLastOnline(result.getTimestamp("last_online").getTime());
             }
           } catch(SQLException e) {
             e.printStackTrace();
@@ -225,13 +225,13 @@ public class SQLAccount implements Datable<Account> {
         }
 
         //load our shared account info
-        if(account instanceof SharedAccount) {
+        if(account instanceof SharedAccount shared) {
           try(ResultSet result = ((SQLConnector)connector).executeQuery(((SQLConnector)connector).dialect().loadNonPlayer(),
                                                                         new Object[] {
                                                                             identifier
                                                                         })) {
             if(result.next()) {
-              ((SharedAccount)account).setOwner(UUID.fromString(result.getString("owner")));
+              shared.setOwner(UUID.fromString(result.getString("owner")));
             }
           } catch(SQLException e) {
             e.printStackTrace();
@@ -243,7 +243,7 @@ public class SQLAccount implements Datable<Account> {
                                                                             identifier
                                                                         })) {
             while(result.next()) {
-              ((SharedAccount)account).addPermission(UUID.fromString(result.getString("uid")),
+              shared.addPermission(UUID.fromString(result.getString("uid")),
                                                      result.getString("perm"),
                                                      result.getBoolean("perm_value")
               );
@@ -254,7 +254,7 @@ public class SQLAccount implements Datable<Account> {
 
         }
 
-        Collection<HoldingsEntry> holdings = TNECore.storage().loadAll(HoldingsEntry.class, identifier);
+        final Collection<HoldingsEntry> holdings = TNECore.storage().loadAll(HoldingsEntry.class, identifier);
         for(HoldingsEntry entry : holdings) {
           account.getWallet().setHoldings(entry);
         }

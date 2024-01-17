@@ -31,6 +31,7 @@ import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.message.MessageData;
+import net.tnemc.core.manager.id.UUIDPair;
 import net.tnemc.core.transaction.history.AwayHistory;
 import net.tnemc.core.utils.HandlerResponse;
 
@@ -88,6 +89,12 @@ public class PlayerJoinHandler {
     final String id = provider.identifier().toString();
     if(acc.isPresent()) {
 
+      if(!acc.get().getName().equalsIgnoreCase(provider.getName())) {
+        acc.get().setName(provider.getName());
+
+        TNECore.eco().account().uuidProvider().store(new UUIDPair(provider.identifier(), provider.getName()));
+      }
+
       if(firstJoin || acc.get().getCreationDate() == ((PlayerAccount)acc.get()).getLastOnline()) {
 
         final String region = TNECore.eco().region().getMode().region(provider);
@@ -123,25 +130,6 @@ public class PlayerJoinHandler {
         for(Currency currency : TNECore.eco().currency().getCurrencies(region)) {
 
           if(currency.type().supportsItems()) {
-
-            /*System.out.println("Region: " + acc.get().getWallet().getHoldings(region).isEmpty());
-            System.out.println("Currency: " + !acc.get().getWallet().getHoldings(region).get().getHoldings().containsKey(currency.getUid()));
-            if(MainConfig.yaml().getBoolean("Core.Server.ImportItems", true)
-                    && acc.get().getWallet().getHoldings(region).isEmpty()
-                    || MainConfig.yaml().getBoolean("Core.Server.ImportItems", true)
-                    && !acc.get().getWallet().getHoldings(region).get().getHoldings().containsKey(currency.getUid())) {
-
-              System.out.println("Importing Item Currency.");
-              TNECore.eco().account().getImporting().add(id);
-
-              for(HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
-
-                acc.get().setHoldings(entry, entry.getHandler());
-              }
-
-              TNECore.eco().account().getImporting().remove(id);
-              continue;
-            }*/
 
             for(HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
 

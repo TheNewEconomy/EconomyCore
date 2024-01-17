@@ -49,7 +49,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
   public void saveCurrencies(final File directory) {
 
     for(final Currency currency : TNECore.eco().currency().currencies()) {
-      saveCurrency(new File(directory, currency.getIdentifier() + ".yml"), currency);
+      saveCurrency(new File(directory, currency.getFile()), currency);
     }
   }
 

@@ -25,6 +25,7 @@ import net.tnemc.core.api.CallbackManager;
 import net.tnemc.core.api.TNEAPI;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.channel.ChannelMessageManager;
+import net.tnemc.core.channel.handlers.ConfigHandler;
 import net.tnemc.core.command.parameters.PercentBigDecimal;
 import net.tnemc.core.command.parameters.resolver.AccountResolver;
 import net.tnemc.core.command.parameters.resolver.BigDecimalResolver;
@@ -378,6 +379,8 @@ public abstract class TNECore {
 
     server.scheduler().createDelayedTask(()-> economyManager.getTopManager().load(), new ChoreTime(2), ChoreExecution.SECONDARY);
     server.scheduler().createRepeatingTask(()-> economyManager.getTopManager().load(), new ChoreTime(2), new ChoreTime(MainConfig.yaml().getInt("Core.Commands.Top.Refresh"), TimeUnit.SECONDS), ChoreExecution.SECONDARY);
+
+    //ConfigHandler.send();
   }
 
   public void onDisable() {

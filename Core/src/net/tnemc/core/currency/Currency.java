@@ -42,6 +42,8 @@ public class Currency {
   //World-related configurations.
   private final Map<String, CurrencyRegion> regions = new HashMap<>();
 
+  private String file;
+
   //Balance-related configurations.
   private BigDecimal startingHoldings;
   private BigDecimal maxBalance;
@@ -144,6 +146,14 @@ public class Currency {
 
   public void setMinBalance(BigDecimal minBalance) {
     this.minBalance = minBalance;
+  }
+
+  public String getFile() {
+    return file;
+  }
+
+  public void setFile(String file) {
+    this.file = file;
   }
 
   public UUID getUid() {
