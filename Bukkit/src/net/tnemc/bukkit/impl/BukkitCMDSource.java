@@ -35,8 +35,7 @@ import java.util.Optional;
  * @since 0.1.2.0
  */
 public class BukkitCMDSource extends CmdSource<BukkitCommandActor> {
-
-  private final BukkitPlayerProvider provider;
+  private final PlayerProvider provider;
 
   public BukkitCMDSource(BukkitCommandActor actor) {
     super(actor);
@@ -45,6 +44,17 @@ public class BukkitCMDSource extends CmdSource<BukkitCommandActor> {
       provider = new BukkitPlayerProvider(actor.getAsPlayer());
     } else {
       provider = null;
+    }
+  }
+
+  public BukkitCMDSource(BukkitCommandActor actor, PlayerProvider provider) {
+    super(actor);
+
+    //null check for sanity purposes.
+    if(actor.isPlayer()) {
+      this.provider = provider;
+    } else {
+      this.provider = null;
     }
   }
 

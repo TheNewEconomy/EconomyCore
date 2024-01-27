@@ -28,6 +28,7 @@ import net.tnemc.folia.command.MoneyCommand;
 import net.tnemc.folia.command.ShortCommands;
 import net.tnemc.folia.command.TransactionCommand;
 import net.tnemc.folia.depend.towny.TownyHandler;
+import net.tnemc.menu.folia.FoliaMenuHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import revxrsal.commands.bukkit.BukkitCommandHandler;
@@ -63,7 +64,7 @@ public class FoliaCore extends TNECore {
 
   @Override
   public void registerMenuHandler() {
-    this.menuHandler = new BukkitMenuHandler(plugin, true);
+    this.menuHandler = new FoliaMenuHandler(plugin, true);
   }
 
   @Override
