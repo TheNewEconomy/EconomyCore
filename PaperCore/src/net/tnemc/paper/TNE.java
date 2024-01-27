@@ -20,7 +20,9 @@ package net.tnemc.paper;
 import net.tnemc.paper.hook.economy.VaultHook;
 import net.tnemc.paper.hook.misc.LuckPermsHook;
 import net.tnemc.paper.hook.misc.PAPIHook;
+import net.tnemc.paper.listeners.entity.EntityKilledListener;
 import net.tnemc.paper.listeners.player.PlayerCloseInventoryListener;
+import net.tnemc.paper.listeners.player.PlayerExperienceGainListener;
 import net.tnemc.paper.listeners.player.PlayerInteractListener;
 import net.tnemc.paper.listeners.player.PlayerJoinListener;
 import net.tnemc.paper.listeners.player.PlayerQuitListener;
@@ -64,6 +66,8 @@ public class TNE extends JavaPlugin {
     this.core.enable();
 
     //Register our event listeners
+    Bukkit.getPluginManager().registerEvents(new EntityKilledListener(), this);
+    Bukkit.getPluginManager().registerEvents(new PlayerExperienceGainListener(), this);
 
     //Player Listeners
     Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);

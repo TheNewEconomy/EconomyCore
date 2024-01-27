@@ -21,7 +21,9 @@ package net.tnemc.bukkit;
 import net.tnemc.bukkit.hook.economy.VaultHook;
 import net.tnemc.bukkit.hook.misc.LuckPermsHook;
 import net.tnemc.bukkit.hook.misc.PAPIHook;
+import net.tnemc.bukkit.listeners.entity.EntityKilledListener;
 import net.tnemc.bukkit.listeners.player.PlayerCloseInventoryListener;
+import net.tnemc.bukkit.listeners.player.PlayerExperienceGainListener;
 import net.tnemc.bukkit.listeners.player.PlayerInteractListener;
 import net.tnemc.bukkit.listeners.player.PlayerJoinListener;
 import net.tnemc.bukkit.listeners.player.PlayerQuitListener;
@@ -63,6 +65,8 @@ public class TNE extends JavaPlugin {
     this.core.enable();
 
     //Register our event listeners
+    Bukkit.getPluginManager().registerEvents(new EntityKilledListener(), this);
+    Bukkit.getPluginManager().registerEvents(new PlayerExperienceGainListener(), this);
 
     //Player Listeners
     Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);

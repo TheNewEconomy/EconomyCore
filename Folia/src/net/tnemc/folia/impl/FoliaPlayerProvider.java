@@ -209,6 +209,10 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
     }
   }
 
+  public OfflinePlayer getPlayer() {
+    return player;
+  }
+
   public static FoliaPlayerProvider find(final String identifier) {
     try {
       return new FoliaPlayerProvider(Bukkit.getOfflinePlayer(UUID.fromString(identifier)));

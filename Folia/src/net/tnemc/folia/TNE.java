@@ -1,5 +1,4 @@
 package net.tnemc.folia;
-
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -18,11 +17,16 @@ package net.tnemc.folia;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.hook.economy.VaultHook;
-import net.tnemc.bukkit.listeners.player.PlayerCloseInventoryListener;
-import net.tnemc.bukkit.listeners.player.PlayerJoinListener;
-import net.tnemc.bukkit.listeners.player.PlayerQuitListener;
-import net.tnemc.bukkit.listeners.world.WorldLoadListener;
+import net.tnemc.folia.hook.economy.VaultHook;
+import net.tnemc.folia.hook.misc.LuckPermsHook;
+import net.tnemc.folia.hook.misc.PAPIHook;
+import net.tnemc.folia.listeners.entity.EntityKilledListener;
+import net.tnemc.folia.listeners.player.PlayerCloseInventoryListener;
+import net.tnemc.folia.listeners.player.PlayerExperienceGainListener;
+import net.tnemc.folia.listeners.player.PlayerInteractListener;
+import net.tnemc.folia.listeners.player.PlayerJoinListener;
+import net.tnemc.folia.listeners.player.PlayerQuitListener;
+import net.tnemc.folia.listeners.world.WorldLoadListener;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -40,41 +44,61 @@ public class TNE extends JavaPlugin {
   private static TNE instance;
   private FoliaCore core;
 
+  @Override
   public void onLoad() {
     instance = this;
 
     //Initialize our TNE Core Class
     this.core = new FoliaCore(instance);
 
-    FoliaCore.eco().currency().load(getDataFolder(), false);
-    FoliaCore.eco().currency().saveCurrenciesUUID(getDataFolder());
+    //Vault
+    try {
+      Class.forName("net.milkbowl.vault.economy.Economy");
+      new VaultHook().register();
+    } catch(Exception ignore) {
+
+    }
   }
 
+  @Override
   public void onEnable() {
 
     this.core.enable();
 
     //Register our event listeners
+    Bukkit.getPluginManager().registerEvents(new EntityKilledListener(), this);
+    Bukkit.getPluginManager().registerEvents(new PlayerExperienceGainListener(), this);
 
     //Player Listeners
     Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
     Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), this);
     Bukkit.getPluginManager().registerEvents(new PlayerCloseInventoryListener(), this);
+    Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
 
     //World Listeners
     Bukkit.getPluginManager().registerEvents(new WorldLoadListener(), this);
 
     //Register our service providers.
 
-    //Vault
-    if(Bukkit.getPluginManager().isPluginEnabled("Vault")) {
-      new VaultHook().register();
+    //PAPI
+    if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+      new PAPIHook().register();
+    }
+
+    if(Bukkit.getPluginManager().isPluginEnabled("LuckPerms")) {
+      LuckPermsHook.register();
     }
 
     final Metrics metrics = new Metrics(this, 602);
 
     getLogger().log(Level.INFO, "The New Economy has been enabled!");
 
+  }
+
+  @Override
+  public void onDisable() {
+
+    this.core.onDisable();
   }
 
   public static TNE instance() {

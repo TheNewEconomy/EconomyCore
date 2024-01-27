@@ -1,5 +1,4 @@
 package net.tnemc.folia;
-
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -18,31 +17,34 @@ package net.tnemc.folia;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.command.AdminCommand;
-import net.tnemc.bukkit.command.ModuleCommand;
-import net.tnemc.bukkit.command.MoneyCommand;
-import net.tnemc.bukkit.command.TransactionCommand;
-import net.tnemc.bukkit.depend.towny.TownyHandler;
-import net.tnemc.bukkit.impl.BukkitLogProvider;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.TNECallbacks;
+import net.tnemc.folia.impl.FoliaLogProvider;
 import net.tnemc.folia.impl.FoliaServerProvider;
-import net.tnemc.menu.folia.FoliaMenuHandler;
+import net.tnemc.menu.bukkit.BukkitMenuHandler;
+import net.tnemc.folia.command.AdminCommand;
+import net.tnemc.folia.command.ModuleCommand;
+import net.tnemc.folia.command.MoneyCommand;
+import net.tnemc.folia.command.ShortCommands;
+import net.tnemc.folia.command.TransactionCommand;
+import net.tnemc.folia.depend.towny.TownyHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import revxrsal.commands.bukkit.BukkitCommandHandler;
 
 /**
- * FoliaCore
+ * PaperCore
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
 public class FoliaCore extends TNECore {
-  private JavaPlugin plugin;
+  private final JavaPlugin plugin;
+
+  private BukkitConfig bukkitConfig;
 
   public FoliaCore(JavaPlugin plugin) {
-    super(new FoliaServerProvider(), new BukkitLogProvider(plugin.getLogger()));
+    super(new FoliaServerProvider(), new FoliaLogProvider(plugin.getLogger()));
     setInstance(this);
     this.plugin = plugin;
   }
@@ -52,11 +54,16 @@ public class FoliaCore extends TNECore {
     this.directory = plugin.getDataFolder();
 
     super.onEnable();
+
+    this.bukkitConfig = new BukkitConfig();
+    if(!this.bukkitConfig.load()) {
+      TNECore.log().error("Failed to load bukkit configuration!");
+    }
   }
 
   @Override
   public void registerMenuHandler() {
-    this.menuHandler = new FoliaMenuHandler(plugin, true);
+    this.menuHandler = new BukkitMenuHandler(plugin, true);
   }
 
   @Override
@@ -71,12 +78,13 @@ public class FoliaCore extends TNECore {
     command.register(new AdminCommand());
     command.register(new ModuleCommand());
     command.register(new MoneyCommand());
+    command.register(new ShortCommands());
     command.register(new TransactionCommand());
   }
 
   @Override
   public void registerCallbacks() {
-    this.callbackManager.addConsumer(TNECallbacks.ACCOUNT_TYPES, (callback->{
+    this.callbackManager.addConsumer(TNECallbacks.ACCOUNT_TYPES, (callback -> {
       if(Bukkit.getPluginManager().isPluginEnabled("Towny")) {
         log().debug("Adding Towny Account Types");
         TownyHandler.addTypes();
