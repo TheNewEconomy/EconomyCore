@@ -18,7 +18,7 @@ package net.tnemc.bukkit.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.TNE;
+import net.tnemc.bukkit.BukkitCore;
 import net.tnemc.bukkit.hook.misc.PAPIParser;
 import net.tnemc.bukkit.impl.scheduler.BukkitScheduler;
 import net.tnemc.core.TNECore;
@@ -38,6 +38,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.jetbrains.annotations.NotNull;
@@ -63,6 +64,10 @@ public class BukkitServerProvider implements ServerConnector {
 
   public BukkitServerProvider() {
     this.scheduler = new BukkitScheduler();
+  }
+
+  public BukkitServerProvider(BukkitScheduler scheduler) {
+    this.scheduler = scheduler;
   }
 
   @Override
@@ -132,6 +137,22 @@ public class BukkitServerProvider implements ServerConnector {
   public Optional<PlayerProvider> findPlayer(@NotNull UUID identifier) {
 
     return Optional.of(BukkitPlayerProvider.find(identifier.toString()));
+  }
+
+  /**
+   * This is used to return an instance of an {@link PlayerProvider player} based on the provided
+   * instance's player object.
+   *
+   * @param player The instance of the player.
+   *
+   * @return The initialized {@link PlayerProvider player object}.
+   */
+  @Override
+  public PlayerProvider initializePlayer(@NotNull Object player) {
+    if(player instanceof Player playerObj) {
+      return new BukkitPlayerProvider(playerObj);
+    }
+    return null;
   }
 
   /**
@@ -257,7 +278,7 @@ public class BukkitServerProvider implements ServerConnector {
 
   @Override
   public void saveResource(String path, boolean replace) {
-    TNE.instance().saveResource(path, replace);
+    BukkitCore.instance().getPlugin().saveResource(path, replace);
   }
 
   /**
@@ -266,7 +287,7 @@ public class BukkitServerProvider implements ServerConnector {
    * @return The scheduler for this implementation.
    */
   @Override
-  public BukkitScheduler scheduler() {
+  public SchedulerProvider<?> scheduler() {
     return scheduler;
   }
 

@@ -134,6 +134,22 @@ public class SpongeServerProvider implements ServerConnector {
   }
 
   /**
+   * This is used to return an instance of an {@link PlayerProvider player} based on the provided
+   * instance's player object.
+   *
+   * @param player The instance of the player.
+   *
+   * @return The initialized {@link PlayerProvider player object}.
+   */
+  @Override
+  public PlayerProvider initializePlayer(@NotNull Object player) {
+    if(player instanceof ServerPlayer playerObj) {
+      return new SpongePlayerProvider(playerObj.user(), SpongeCore.instance().getContainer());
+    }
+    return null;
+  }
+
+  /**
    * Used to determine if this player has played on this server before.
    *
    * @param identifier The {@link UUID} that is associated with the player.

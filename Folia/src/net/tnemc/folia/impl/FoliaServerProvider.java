@@ -19,9 +19,11 @@ package net.tnemc.folia.impl;
  */
 
 import com.destroystokyo.paper.profile.PlayerProfile;
+import net.tnemc.bukkit.BukkitCore;
 import net.tnemc.bukkit.hook.misc.PAPIParser;
 import net.tnemc.bukkit.impl.BukkitItemCalculations;
 import net.tnemc.bukkit.impl.BukkitPlayerProvider;
+import net.tnemc.bukkit.impl.BukkitProxyProvider;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
@@ -31,7 +33,6 @@ import net.tnemc.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.region.RegionMode;
-import net.tnemc.folia.TNE;
 import net.tnemc.folia.impl.scheduler.FoliaScheduler;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.bukkit.BukkitCalculationsProvider;
@@ -41,6 +42,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.jetbrains.annotations.NotNull;
@@ -59,7 +61,7 @@ import java.util.UUID;
 public class FoliaServerProvider implements ServerConnector {
 
   private final BukkitCalculationsProvider calc = new BukkitCalculationsProvider();
-  private final FoliaProxyProvider proxy = new FoliaProxyProvider();
+  private final BukkitProxyProvider proxy = new BukkitProxyProvider();
 
   private final FoliaScheduler scheduler;
 
@@ -134,6 +136,22 @@ public class FoliaServerProvider implements ServerConnector {
   public Optional<PlayerProvider> findPlayer(@NotNull UUID identifier) {
 
     return Optional.of(FoliaPlayerProvider.find(identifier.toString()));
+  }
+
+  /**
+   * This is used to return an instance of an {@link PlayerProvider player} based on the provided
+   * instance's player object.
+   *
+   * @param player The instance of the player.
+   *
+   * @return The initialized {@link PlayerProvider player object}.
+   */
+  @Override
+  public PlayerProvider initializePlayer(@NotNull Object player) {
+    if(player instanceof Player playerObj) {
+      return new FoliaPlayerProvider(playerObj);
+    }
+    return null;
   }
 
   /**
@@ -260,7 +278,7 @@ public class FoliaServerProvider implements ServerConnector {
 
   @Override
   public void saveResource(String path, boolean replace) {
-    TNE.instance().saveResource(path, replace);
+    BukkitCore.instance().getPlugin().saveResource(path, replace);
   }
 
   /**

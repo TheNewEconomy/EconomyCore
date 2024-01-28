@@ -22,9 +22,7 @@ import net.tnemc.bungee.ProxyProvider;
 import net.tnemc.bungee.message.backlog.BacklogEntry;
 import net.tnemc.bungee.message.backlog.ConfigEntry;
 import net.tnemc.bungee.message.backlog.MessageData;
-import net.tnemc.bungee.message.handlers.AccountHandler;
 import net.tnemc.bungee.message.handlers.BalanceMessageHandler;
-import net.tnemc.bungee.message.handlers.ConfigMessageHandler;
 import net.tnemc.bungee.message.handlers.SyncAllMessageHandler;
 
 import java.io.ByteArrayInputStream;

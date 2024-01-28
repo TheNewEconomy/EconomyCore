@@ -17,7 +17,7 @@ package net.tnemc.bukkit.impl.scheduler;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.TNE;
+import net.tnemc.bukkit.BukkitCore;
 import net.tnemc.core.compatibility.scheduler.Chore;
 import net.tnemc.core.compatibility.scheduler.ChoreExecution;
 import net.tnemc.core.compatibility.scheduler.ChoreTime;
@@ -42,10 +42,10 @@ public class BukkitScheduler extends SchedulerProvider<BukkitChore> {
   @Override
   public void createDelayedTask(Runnable task, ChoreTime delay, ChoreExecution environment) {
     if(environment.equals(ChoreExecution.MAIN_THREAD)) {
-      Bukkit.getScheduler().runTaskLater(TNE.instance(), task, delay.asTicks());
+      Bukkit.getScheduler().runTaskLater(BukkitCore.instance().getPlugin(), task, delay.asTicks());
       return;
     }
-    Bukkit.getScheduler().runTaskLaterAsynchronously(TNE.instance(), task, delay.asTicks());
+    Bukkit.getScheduler().runTaskLaterAsynchronously(BukkitCore.instance().getPlugin(), task, delay.asTicks());
   }
 
   /**
@@ -61,8 +61,8 @@ public class BukkitScheduler extends SchedulerProvider<BukkitChore> {
   @Override
   public BukkitChore createRepeatingTask(Runnable task, ChoreTime delay, ChoreTime period, ChoreExecution environment) {
     if(environment.equals(ChoreExecution.MAIN_THREAD)) {
-      return new BukkitChore(Bukkit.getScheduler().runTaskTimer(TNE.instance(), task, delay.asTicks(), period.asTicks()), environment);
+      return new BukkitChore(Bukkit.getScheduler().runTaskTimer(BukkitCore.instance().getPlugin(), task, delay.asTicks(), period.asTicks()), environment);
     }
-    return new BukkitChore(Bukkit.getScheduler().runTaskTimerAsynchronously(TNE.instance(), task, delay.asTicks(), period.asTicks()), environment);
+    return new BukkitChore(Bukkit.getScheduler().runTaskTimerAsynchronously(BukkitCore.instance().getPlugin(), task, delay.asTicks(), period.asTicks()), environment);
   }
 }

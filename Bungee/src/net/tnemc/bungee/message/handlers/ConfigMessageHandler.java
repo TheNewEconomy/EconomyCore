@@ -24,7 +24,6 @@ import net.tnemc.bungee.message.MessageManager;
 import net.tnemc.bungee.message.backlog.ConfigEntry;
 
 import java.io.DataInputStream;
-import java.io.IOException;
 import java.util.UUID;
 
 /**

@@ -1,5 +1,4 @@
-package net.tnemc.folia.listeners.world;
-
+package net.tnemc.bukkit.depend.faction;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -18,23 +17,17 @@ package net.tnemc.folia.listeners.world;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.handlers.region.RegionLoadHandler;
-import net.tnemc.core.region.RegionType;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.world.WorldLoadEvent;
+import net.tnemc.bukkit.BukkitCore;
 
 /**
- * WorldLoadListener
+ * FactionHandler
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class WorldLoadListener implements Listener {
+public class FactionHandler {
 
-  @EventHandler(priority = EventPriority.HIGHEST)
-  public void onLoad(final WorldLoadEvent event) {
-    new RegionLoadHandler().handle(event.getWorld().getName(), RegionType.WORLD);
+  public static void addTypes() {
+    BukkitCore.eco().account().addAccountType(FactionAccount.class, new FactionCheck().check());
   }
 }

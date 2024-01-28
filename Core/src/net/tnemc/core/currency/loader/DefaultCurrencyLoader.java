@@ -103,7 +103,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
     final YamlFile cur = new YamlFile(curDirectory);
 
-    System.out.println("Loading: " + curDirectory.getName());
+    TNECore.log().inform("Loading: " + curDirectory.getName());
 
     try {
       cur.loadWithComments();

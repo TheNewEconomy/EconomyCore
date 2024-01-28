@@ -18,7 +18,6 @@ package net.tnemc.bungee.message.handlers;
  */
 
 import net.tnemc.bungee.BungeeCore;
-import net.tnemc.bungee.message.MessageHandler;
 
 import java.io.DataInputStream;
 import java.util.UUID;

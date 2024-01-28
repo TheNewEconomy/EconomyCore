@@ -17,7 +17,8 @@ package net.tnemc.bukkit.listeners.player;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.impl.BukkitPlayerProvider;
+import net.tnemc.core.TNECore;
+import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.handlers.player.PlayerInteractHandler;
 import net.tnemc.item.bukkit.BukkitItemStack;
 import org.bukkit.event.EventHandler;
@@ -37,7 +38,7 @@ public class PlayerInteractListener implements Listener {
 
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onInteract(final PlayerInteractEvent event) {
-    final BukkitPlayerProvider provider = new BukkitPlayerProvider(event.getPlayer());
+    final PlayerProvider provider = TNECore.server().initializePlayer(event.getPlayer());
 
     final ItemStack stack = event.getItem();
 

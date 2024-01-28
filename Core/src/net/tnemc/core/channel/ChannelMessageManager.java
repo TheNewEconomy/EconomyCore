@@ -19,7 +19,6 @@ package net.tnemc.core.channel;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.channel.handlers.BalanceHandler;
-import net.tnemc.core.channel.handlers.ConfigHandler;
 import net.tnemc.core.channel.handlers.SyncHandler;
 import net.tnemc.core.compatibility.log.DebugLevel;
 

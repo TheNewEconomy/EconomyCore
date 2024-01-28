@@ -19,7 +19,8 @@ package net.tnemc.bukkit.impl;
  */
 
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import net.tnemc.bukkit.TNE;
+import net.tnemc.bukkit.BukkitCore;
+import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.CmdSource;
 import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.io.message.MessageData;
@@ -40,21 +41,10 @@ public class BukkitCMDSource extends CmdSource<BukkitCommandActor> {
   public BukkitCMDSource(BukkitCommandActor actor) {
     super(actor);
 
-    if(actor.isPlayer()) {
-      provider = new BukkitPlayerProvider(actor.getAsPlayer());
+    if(actor.isPlayer() && actor.getAsPlayer() != null) {
+      provider = TNECore.server().initializePlayer(actor.getAsPlayer());
     } else {
       provider = null;
-    }
-  }
-
-  public BukkitCMDSource(BukkitCommandActor actor, PlayerProvider provider) {
-    super(actor);
-
-    //null check for sanity purposes.
-    if(actor.isPlayer()) {
-      this.provider = provider;
-    } else {
-      this.provider = null;
     }
   }
 
@@ -87,7 +77,7 @@ public class BukkitCMDSource extends CmdSource<BukkitCommandActor> {
   @Override
   public void message(final MessageData messageData) {
 
-    try(BukkitAudiences provider = BukkitAudiences.create(TNE.instance())) {
+    try(BukkitAudiences provider = BukkitAudiences.create(BukkitCore.instance().getPlugin())) {
       MessageHandler.translate(messageData, identifier(), provider.sender(actor.getSender()));
     }
   }

@@ -23,11 +23,12 @@ import net.tnemc.bukkit.command.ModuleCommand;
 import net.tnemc.bukkit.command.MoneyCommand;
 import net.tnemc.bukkit.command.ShortCommands;
 import net.tnemc.bukkit.command.TransactionCommand;
+import net.tnemc.bukkit.depend.faction.FactionHandler;
 import net.tnemc.bukkit.depend.towny.TownyHandler;
 import net.tnemc.bukkit.impl.BukkitLogProvider;
-import net.tnemc.bukkit.impl.BukkitServerProvider;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.TNECallbacks;
+import net.tnemc.core.compatibility.ServerConnector;
 import net.tnemc.menu.bukkit.BukkitMenuHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -45,8 +46,8 @@ public class BukkitCore extends TNECore {
 
   private BukkitConfig bukkitConfig;
 
-  public BukkitCore(JavaPlugin plugin) {
-    super(new BukkitServerProvider(), new BukkitLogProvider(plugin.getLogger()));
+  public BukkitCore(JavaPlugin plugin, ServerConnector server) {
+    super(server, new BukkitLogProvider(plugin.getLogger()));
     setInstance(this);
     this.plugin = plugin;
   }
@@ -95,6 +96,7 @@ public class BukkitCore extends TNECore {
 
       if(Bukkit.getPluginManager().getPlugin("Factions") != null) {
         log().debug("Adding Factions Account Types");
+        FactionHandler.addTypes();
       }
       return false;
     }));
@@ -102,5 +104,9 @@ public class BukkitCore extends TNECore {
 
   public static BukkitCore instance() {
     return (BukkitCore)TNECore.instance();
+  }
+
+  public JavaPlugin getPlugin() {
+    return plugin;
   }
 }

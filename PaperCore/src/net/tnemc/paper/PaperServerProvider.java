@@ -1,4 +1,4 @@
-package net.tnemc.paper.listeners.server;
+package net.tnemc.paper;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
@@ -17,20 +17,18 @@ package net.tnemc.paper.listeners.server;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.messaging.PluginMessageListener;
-import org.jetbrains.annotations.NotNull;
+import net.tnemc.bukkit.impl.BukkitServerProvider;
 
 /**
- * MessageChannelListener
+ * PaperServerProvider
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class MessageChannelListener implements PluginMessageListener {
+public class PaperServerProvider extends BukkitServerProvider {
+
   @Override
-  public void onPluginMessageReceived(@NotNull String channel, @NotNull Player player, byte[] bytes) {
-    TNECore.instance().getChannelMessageManager().handle(channel, bytes);
+  public String name() {
+    return "paper";
   }
 }
