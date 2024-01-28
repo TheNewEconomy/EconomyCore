@@ -17,9 +17,9 @@ package net.tnemc.bukkit.listeners.player;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.impl.BukkitPlayerProvider;
+import net.tnemc.core.TNECore;
+import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.handlers.player.PlayerCloseEChestHandler;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -39,7 +39,7 @@ public class PlayerCloseInventoryListener implements Listener {
 
     if(event.getInventory().getType().equals(InventoryType.ENDER_CHEST)) {
 
-      final BukkitPlayerProvider provider = new BukkitPlayerProvider((OfflinePlayer)event.getPlayer());
+      final PlayerProvider provider = TNECore.server().initializePlayer(event.getPlayer());
       new PlayerCloseEChestHandler().handle(provider);
     }
   }

@@ -20,7 +20,7 @@ package net.tnemc.bukkit.hook.economy;
 
 
 import net.milkbowl.vault.economy.Economy;
-import net.tnemc.bukkit.TNE;
+import net.tnemc.bukkit.BukkitCore;
 import net.tnemc.core.hook.Hook;
 import org.bukkit.plugin.ServicePriority;
 
@@ -45,9 +45,9 @@ public class VaultHook implements Hook {
    */
   @Override
   public void register() {
-    TNE.instance().getServer().getServicesManager().register(Economy.class, new TNEVault(),
-                                                             TNE.instance(), ServicePriority.Highest);
+    BukkitCore.instance().getPlugin().getServer().getServicesManager().register(Economy.class, new TNEVault(),
+                                                             BukkitCore.instance().getPlugin(), ServicePriority.Highest);
 
-    TNE.instance().getLogger().info("Hooked into Vault");
+    BukkitCore.instance().getPlugin().getLogger().info("Hooked into Vault");
   }
 }

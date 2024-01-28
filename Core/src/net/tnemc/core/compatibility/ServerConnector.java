@@ -83,6 +83,14 @@ public interface ServerConnector {
   Optional<PlayerProvider> findPlayer(@NotNull UUID identifier);
 
   /**
+   * This is used to return an instance of an {@link PlayerProvider player} based on the provided
+   * instance's player object.
+   * @param player The instance of the player.
+   * @return The initialized {@link PlayerProvider player object}.
+   */
+  PlayerProvider initializePlayer(@NotNull Object player);
+
+  /**
    * Used to get a cached UUID based on a username.
    * @param name The name to use for the check.
    * @return The UUID from the cached player. If no data with the player name exists, this will not

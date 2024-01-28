@@ -19,7 +19,6 @@ package net.tnemc.bungee.message.handlers;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import net.tnemc.bungee.message.MessageHandler;
 
 import java.io.DataInputStream;
 import java.io.IOException;

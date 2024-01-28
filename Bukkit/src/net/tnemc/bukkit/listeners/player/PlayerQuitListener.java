@@ -17,7 +17,7 @@ package net.tnemc.bukkit.listeners.player;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.impl.BukkitPlayerProvider;
+import net.tnemc.core.TNECore;
 import net.tnemc.core.handlers.player.PlayerLeaveHandler;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -34,7 +34,6 @@ public class PlayerQuitListener implements Listener {
 
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onQuit(final PlayerQuitEvent event) {
-    final BukkitPlayerProvider provider = new BukkitPlayerProvider(event.getPlayer());
-    new PlayerLeaveHandler().handle(provider);
+    new PlayerLeaveHandler().handle(TNECore.server().initializePlayer(event.getPlayer()));
   }
 }

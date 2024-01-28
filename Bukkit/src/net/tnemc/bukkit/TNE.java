@@ -18,21 +18,8 @@ package net.tnemc.bukkit;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.hook.economy.VaultHook;
-import net.tnemc.bukkit.hook.misc.LuckPermsHook;
-import net.tnemc.bukkit.hook.misc.PAPIHook;
-import net.tnemc.bukkit.listeners.entity.EntityKilledListener;
-import net.tnemc.bukkit.listeners.player.PlayerCloseInventoryListener;
-import net.tnemc.bukkit.listeners.player.PlayerExperienceGainListener;
-import net.tnemc.bukkit.listeners.player.PlayerInteractListener;
-import net.tnemc.bukkit.listeners.player.PlayerJoinListener;
-import net.tnemc.bukkit.listeners.player.PlayerQuitListener;
-import net.tnemc.bukkit.listeners.world.WorldLoadListener;
-import org.bstats.bukkit.Metrics;
-import org.bukkit.Bukkit;
+import net.tnemc.bukkit.impl.BukkitServerProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.logging.Level;
 
 /**
  * TNE
@@ -42,67 +29,20 @@ import java.util.logging.Level;
  */
 public class TNE extends JavaPlugin {
 
-  private static TNE instance;
-  private BukkitCore core;
+  private final BukkitPlugin bukkit = new BukkitPlugin();
 
   @Override
   public void onLoad() {
-    instance = this;
-
-    //Vault
-    try {
-      Class.forName("net.milkbowl.vault.economy.Economy");
-      new VaultHook().register();
-    } catch(Exception ignore) {}
-
-    //Initialize our TNE Core Class
-    this.core = new BukkitCore(instance);
+    this.bukkit.load(this, new BukkitServerProvider());
   }
 
   @Override
   public void onEnable() {
-
-    this.core.enable();
-
-    //Register our event listeners
-    Bukkit.getPluginManager().registerEvents(new EntityKilledListener(), this);
-    Bukkit.getPluginManager().registerEvents(new PlayerExperienceGainListener(), this);
-
-    //Player Listeners
-    Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
-    Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), this);
-
-    //Menu-related Listeners from TNML
-    Bukkit.getPluginManager().registerEvents(new PlayerCloseInventoryListener(), this);
-    Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
-
-    //World Listeners
-    Bukkit.getPluginManager().registerEvents(new WorldLoadListener(), this);
-
-    //Register our service providers.
-
-    //PAPI
-    if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-      new PAPIHook().register();
-    }
-
-    if(Bukkit.getPluginManager().isPluginEnabled("LuckPerms")) {
-      LuckPermsHook.register();
-    }
-
-    final Metrics metrics = new Metrics(this, 602);
-
-    getLogger().log(Level.INFO, "The New Economy has been enabled!");
-
+    this.bukkit.enable(this);
   }
 
   @Override
   public void onDisable() {
-
-    this.core.onDisable();
-  }
-
-  public static TNE instance() {
-    return instance;
+    this.bukkit.disable(this);
   }
 }

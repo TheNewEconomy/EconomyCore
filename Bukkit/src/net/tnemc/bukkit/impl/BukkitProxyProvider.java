@@ -17,7 +17,7 @@ package net.tnemc.bukkit.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.TNE;
+import net.tnemc.bukkit.BukkitCore;
 import net.tnemc.bukkit.listeners.server.MessageChannelListener;
 import net.tnemc.core.compatibility.ProxyProvider;
 import org.bukkit.Bukkit;
@@ -39,8 +39,8 @@ public class BukkitProxyProvider implements ProxyProvider {
    */
   @Override
   public void registerChannel(String channel) {
-    Bukkit.getMessenger().registerIncomingPluginChannel(TNE.instance(), channel, listener);
-    Bukkit.getMessenger().registerOutgoingPluginChannel(TNE.instance(), channel);
+    Bukkit.getMessenger().registerIncomingPluginChannel(BukkitCore.instance().getPlugin(), channel, listener);
+    Bukkit.getMessenger().registerOutgoingPluginChannel(BukkitCore.instance().getPlugin(), channel);
   }
 
   /**
@@ -55,6 +55,6 @@ public class BukkitProxyProvider implements ProxyProvider {
       return;
     }
 
-    Bukkit.getOnlinePlayers().iterator().next().sendPluginMessage(TNE.instance(), channel, bytes);
+    Bukkit.getOnlinePlayers().iterator().next().sendPluginMessage(BukkitCore.instance().getPlugin(), channel, bytes);
   }
 }

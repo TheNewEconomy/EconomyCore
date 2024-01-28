@@ -19,7 +19,7 @@ package net.tnemc.bukkit.impl;
  */
 
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import net.tnemc.bukkit.TNE;
+import net.tnemc.bukkit.BukkitCore;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.compatibility.Location;
 import net.tnemc.core.compatibility.PlayerProvider;
@@ -43,7 +43,7 @@ public class BukkitPlayerProvider extends BukkitPlayer implements PlayerProvider
   private final OfflinePlayer player;
 
   public BukkitPlayerProvider(OfflinePlayer player) {
-    super(player, TNE.instance());
+    super(player, BukkitCore.instance().getPlugin());
     this.player = player;
   }
 
@@ -172,7 +172,7 @@ public class BukkitPlayerProvider extends BukkitPlayer implements PlayerProvider
 
   @Override
   public BukkitInventoryProvider inventory() {
-    return new BukkitInventoryProvider(identifier(), TNE.instance());
+    return new BukkitInventoryProvider(identifier(), BukkitCore.instance().getPlugin());
   }
 
   /**
@@ -208,7 +208,7 @@ public class BukkitPlayerProvider extends BukkitPlayer implements PlayerProvider
       return;
     }
 
-    try(BukkitAudiences provider = BukkitAudiences.create(TNE.instance())) {
+    try(BukkitAudiences provider = BukkitAudiences.create(BukkitCore.instance().getPlugin())) {
       MessageHandler.translate(messageData, player.getUniqueId(), provider.sender(player.getPlayer()));
     }
   }
