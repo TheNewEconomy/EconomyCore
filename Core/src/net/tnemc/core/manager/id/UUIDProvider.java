@@ -18,7 +18,7 @@ import java.util.UUID;
 import static net.tnemc.core.utils.PlayerHelper.playerMatcher;
 
 /**
- * Represents a provider that is used to resolve and store UUID<->Username Pairs.
+ * Represents a provider that is used to resolve and store UUID/Username Pairs.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
@@ -28,7 +28,7 @@ public interface UUIDProvider {
   /**
    * Returns the associated {@link UUIDAPI uuid api} associated with this provider.
    *
-   * @see UUIDAPI
+   * @see net.tnemc.core.manager.id.UUIDAPI
    * @return The associated {@link UUIDAPI uuid api} associated with this provider.
    */
   UUIDAPI api();
@@ -50,7 +50,7 @@ public interface UUIDProvider {
   Optional<String> retrieveName(final UUID id);
 
   /**
-   * Used to store a Username & UUID pair. This could be to a map, or to
+   * Used to store a Username and UUID pair. This could be to a map, or to
    * a database for persistent usage or to both.
    * @param pair The {@link UUIDPair}
    */

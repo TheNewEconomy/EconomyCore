@@ -47,7 +47,7 @@ public class MixedType extends ItemType {
 
   /**
    * @return True if this currency type supports the exchange command set, which is used to exchange
-   * from items <--> virtual.
+   * from items to/from virtual.
    */
   @Override
   public boolean supportsExchange() {

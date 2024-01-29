@@ -14,7 +14,7 @@ package net.tnemc.core.manager.id;
 import java.util.UUID;
 
 /**
- * Class that represents a Name & UUID pair.
+ * Class that represents a Name and UUID pair.
  *
  * @author creatorfromhell
  * @since 0.1.2.0

@@ -91,7 +91,7 @@ public interface CurrencyType {
 
   /**
    * @return True if this currency type supports the exchange command set, which is used to exchange
-   * from items <--> virtual.
+   * from items to/from virtual.
    */
   default boolean supportsExchange() {
     return false;

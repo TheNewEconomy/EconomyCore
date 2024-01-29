@@ -32,7 +32,7 @@ import org.spongepowered.plugin.PluginContainer;
 import java.util.Optional;
 
 /**
- * The Sponge implementation of the {@link PlayerProvider}.
+ * The Sponge implementation of the {@link net.tnemc.core.compatibility.PlayerProvider}.
  *
  * @author creatorfromhell
  * @since 0.1.2.0

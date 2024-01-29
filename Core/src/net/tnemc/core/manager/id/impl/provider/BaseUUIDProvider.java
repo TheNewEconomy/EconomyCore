@@ -80,7 +80,7 @@ public class BaseUUIDProvider implements UUIDProvider {
   }
 
   /**
-   * Used to store a Username & UUID pair. This could be to a map, or to
+   * Used to store a Username and UUID pair. This could be to a map, or to
    * a database for persistent usage or to both.
    *
    * @param pair The {@link UUIDPair}
