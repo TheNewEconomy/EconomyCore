@@ -76,6 +76,10 @@ public class MessageHandler {
    * @param audience The audience that should receive the translated message.
    */
   public static void translate(final MessageData messageData, UUID identifier, Audience audience) {
+    if(identifier == null) {
+      audience.sendMessage(instance.mini.deserialize(instance.translator.translateNode(messageData, "default")));
+      return;
+    }
     audience.sendMessage(instance.mini.deserialize(TNECore.server().replacePlaceholder(identifier, instance.translator.translateNode(messageData, "default"))));
   }
 

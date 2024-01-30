@@ -51,14 +51,17 @@ public class BukkitPlugin {
    */
   public void load(final JavaPlugin plugin, ServerConnector server) {
 
-    //Vault
-    try {
-      Class.forName("net.milkbowl.vault.economy.Economy");
-      new VaultHook().register();
-    } catch(Exception ignore) {}
-
     //Initialize our TNE Core Class
     this.core = new BukkitCore(plugin, server);
+
+    //Vault
+    System.out.println("Checking for Vault");
+    try {
+      BukkitCore.log().inform("net.milkbowl.vault.economy.Economy");
+      new VaultHook().register();
+    } catch(Exception ignore) {
+      BukkitCore.log().error("Unable to connect to vault!");
+    }
   }
 
   /**

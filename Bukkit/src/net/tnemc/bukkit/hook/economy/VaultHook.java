@@ -48,6 +48,6 @@ public class VaultHook implements Hook {
     BukkitCore.instance().getPlugin().getServer().getServicesManager().register(Economy.class, new TNEVault(),
                                                              BukkitCore.instance().getPlugin(), ServicePriority.Highest);
 
-    BukkitCore.instance().getPlugin().getLogger().info("Hooked into Vault");
+    BukkitCore.log().inform("Hooked into Vault");
   }
 }
