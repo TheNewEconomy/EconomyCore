@@ -1,4 +1,4 @@
-package net.tnemc.sponge.impl.eco;
+package net.tnemc.sponge.impl;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar

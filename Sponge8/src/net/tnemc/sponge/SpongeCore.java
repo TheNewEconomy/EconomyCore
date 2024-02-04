@@ -37,15 +37,14 @@ import net.tnemc.core.command.parameters.suggestion.StatusSuggestion;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.region.RegionGroup;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.sponge.impl.SpongeLogProvider;
+import net.tnemc.plugincore.sponge.impl.SpongeServerProvider;
 import net.tnemc.sponge.command.AdminCommand;
 import net.tnemc.sponge.command.ModuleCommand;
 import net.tnemc.sponge.command.MoneyCommand;
 import net.tnemc.sponge.command.ShortCommands;
 import net.tnemc.sponge.command.TransactionCommand;
 import net.tnemc.sponge.hook.misc.LuckPermsHook;
-import net.tnemc.sponge.impl.SpongeLogProvider;
-import net.tnemc.sponge.impl.SpongeServerProvider;
-import net.tnemc.sponge.impl.eco.SpongeEconomy;
 import net.tnemc.sponge.listeners.player.PlayerCloseInventoryListener;
 import net.tnemc.sponge.listeners.player.PlayerJoinListener;
 import net.tnemc.sponge.listeners.player.PlayerLeaveListener;
@@ -94,7 +93,6 @@ public class SpongeCore extends TNECore {
   SpongeCore(final PluginContainer container, final Logger log, final Metrics.Factory metricsFactory) {
     super(new SpongeServerProvider(), new SpongeLogProvider(log));
     this.container = container;
-    this.logger = new SpongeLogProvider(log);
     setInstance(this);
     command = SpongeCommandHandler.create(container);
 

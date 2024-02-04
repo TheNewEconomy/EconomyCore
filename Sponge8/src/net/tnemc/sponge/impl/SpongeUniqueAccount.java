@@ -1,4 +1,4 @@
-package net.tnemc.sponge.impl.eco;
+package net.tnemc.sponge.impl;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -17,25 +17,28 @@ package net.tnemc.sponge.impl.eco;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.actions.EconomyResponse;
-import org.spongepowered.api.service.economy.account.AccountDeletionResultType;
+import net.tnemc.core.account.PlayerAccount;
+import org.spongepowered.api.service.economy.account.UniqueAccount;
+
+import java.util.UUID;
 
 /**
- * SpongeDeletionResult
+ * SpongeUniqueAccount
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class SpongeDeletionResult implements AccountDeletionResultType {
+public class SpongeUniqueAccount extends SpongeVirtualAccount implements UniqueAccount {
 
-  private final EconomyResponse response;
-
-  public SpongeDeletionResult(EconomyResponse response) {
-    this.response = response;
+  public SpongeUniqueAccount(PlayerAccount account) {
+    super(account);
   }
 
   @Override
-  public boolean isSuccess() {
-    return response.success();
+  public UUID uniqueId() {
+    if(account instanceof PlayerAccount) {
+      return ((PlayerAccount)account).getUUID();
+    }
+    return UUID.fromString(identifier());
   }
 }

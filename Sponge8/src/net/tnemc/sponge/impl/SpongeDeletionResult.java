@@ -1,4 +1,4 @@
-package net.tnemc.sponge.impl.eco;
+package net.tnemc.sponge.impl;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -17,31 +17,25 @@ package net.tnemc.sponge.impl.eco;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.spongepowered.api.event.Cause;
-import org.spongepowered.api.event.economy.EconomyTransactionEvent;
-import org.spongepowered.api.service.economy.transaction.TransactionResult;
+import net.tnemc.core.actions.EconomyResponse;
+import org.spongepowered.api.service.economy.account.AccountDeletionResultType;
 
 /**
- * SpongeTransactionEvent
+ * SpongeDeletionResult
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class SpongeTransactionEvent implements EconomyTransactionEvent {
+public class SpongeDeletionResult implements AccountDeletionResultType {
 
-  private final SpongeReceipt receipt;
+  private final EconomyResponse response;
 
-  public SpongeTransactionEvent(SpongeReceipt receipt) {
-    this.receipt = receipt;
+  public SpongeDeletionResult(EconomyResponse response) {
+    this.response = response;
   }
 
   @Override
-  public TransactionResult transactionResult() {
-    return receipt;
-  }
-
-  @Override
-  public Cause cause() {
-    return null;
+  public boolean isSuccess() {
+    return response.success();
   }
 }
