@@ -18,6 +18,7 @@ package net.tnemc.bukkit.hook.misc;
  */
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import net.tnemc.bukkit.TNE;
 import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
@@ -193,12 +194,29 @@ public class PAPIHook extends PlaceholderExpansion {
       }
     }
 
-    //%tne_toppos%
-    //%tne_toppos_<world name or all>%
-    //%tne_toppos_<world name or all>_<currency name or all>%
+    //%tne_toppos[0]_<currency name>[1]_position[2]_<pos>[3]%
+    //%tne_toppos[0]_<currency name>[1]%
     if(identifier.toLowerCase().contains("toppos")) {
       int pos = 0;
 
+      if(args.length >= 2) {
+
+        final Optional<Currency> currency = TNECore.eco().currency().findCurrency(args[1]);
+        final UUID curID = (currency.isPresent())? currency.get().getUid() : TNECore.eco().currency().getDefaultCurrency().getUid();
+
+        if(args.length >= 4 && args[2].equalsIgnoreCase("position")) {
+
+          //%tne_toppos[0]_<currency name>[1]_position[2]_<pos>[3]%
+          pos = Integer.parseInt(args[3]);
+
+          return TNECore.eco().getTopManager().getAt(pos, curID);
+
+        } else {
+
+          //%tne_toppos[0]_<currency name>[1]%
+          pos = TNECore.eco().getTopManager().position(curID, account.get().getName());
+        }
+      }
       return String.valueOf(pos);
     }
     return null;

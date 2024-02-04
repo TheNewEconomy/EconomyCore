@@ -57,11 +57,6 @@ public class BukkitCore extends TNECore {
     this.directory = plugin.getDataFolder();
 
     super.onEnable();
-
-    this.bukkitConfig = new BukkitConfig();
-    if(!this.bukkitConfig.load()) {
-      TNECore.log().error("Failed to load bukkit configuration!");
-    }
   }
 
   @Override
@@ -72,6 +67,15 @@ public class BukkitCore extends TNECore {
   @Override
   public void registerCommandHandler() {
     command = BukkitCommandHandler.create(plugin);
+  }
+
+  @Override
+  public void registerConfigs() {
+
+    this.bukkitConfig = new BukkitConfig();
+    if(!this.bukkitConfig.load()) {
+      TNECore.log().error("Failed to load bukkit configuration!");
+    }
   }
 
   @Override

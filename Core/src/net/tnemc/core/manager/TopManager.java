@@ -71,6 +71,31 @@ public class TopManager {
     return topMap;
   }
 
+  public int position(final UUID currency, final String account) {
+    if(topMap.containsKey(currency)) {
+      return topMap.get(currency).getBalances().position(account);
+    }
+    return 0;
+  }
+
+  public String getAt(final int position, final UUID currency) {
+    if(topMap.containsKey(currency)) {
+      final int internalPos = (position % 5 == 0)? 5 : position % 5;
+
+
+      return topMap.get(currency).getBalances().getValues(positionToPage(position)).getAt(internalPos);
+    }
+    return "";
+  }
+
+  public int positionToPage(final int position) {
+    int page = position / 5;
+
+    if(position % 5 != 0) page++;
+
+    return page;
+  }
+
   public TopPage<String> page(final int page, final UUID currency) {
     if(topMap.containsKey(currency)) {
       return topMap.get(currency).getBalances().getValues(page);

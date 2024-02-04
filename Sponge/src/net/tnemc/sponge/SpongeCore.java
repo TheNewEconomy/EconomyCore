@@ -109,6 +109,11 @@ public class SpongeCore extends TNECore {
   }
 
   @Override
+  public void registerConfigs() {
+
+  }
+
+  @Override
   public void registerCallbacks() {
     //nothing to see here.
   }

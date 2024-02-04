@@ -36,7 +36,7 @@ import java.util.TreeMap;
  */
 public class MultiTreeMap<V> {
 
-  private final TreeMap<BigDecimal, List<V>> map = new TreeMap<>(Collections. reverseOrder());
+  private final TreeMap<BigDecimal, List<V>> map = new TreeMap<>(Collections.reverseOrder());
   private final Map<Integer, TopPage<V>> pageMap = new HashMap<>();
 
   private final int perPage;

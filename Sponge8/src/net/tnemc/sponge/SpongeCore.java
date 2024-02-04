@@ -82,8 +82,6 @@ import java.util.Optional;
 public class SpongeCore extends TNECore {
 
   protected final PluginContainer container;
-
-  private SpongeCore core;
   private final Metrics metrics;
   @Inject
   @ConfigDir(sharedRoot = false)
@@ -97,7 +95,7 @@ public class SpongeCore extends TNECore {
     super(new SpongeServerProvider(), new SpongeLogProvider(log));
     this.container = container;
     this.logger = new SpongeLogProvider(log);
-    this.core = this;
+    setInstance(this);
     command = SpongeCommandHandler.create(container);
 
     command.registerValueResolver(Account.class, new AccountResolver());
@@ -155,7 +153,7 @@ public class SpongeCore extends TNECore {
   @Listener
   public void onServerStart(final StartedEngineEvent<Server> event) {
     this.directory = configDir.toFile();
-    this.core.enable();
+    instance().enable();
     logger.inform("The New Economy has been enabled.");
   }
 
@@ -183,6 +181,11 @@ public class SpongeCore extends TNECore {
   public void registerCommands() {
 
     //Register our commands
+  }
+
+  @Override
+  public void registerConfigs() {
+
   }
   /*@Listener
   public void handleRegistrationEvent(RegisterCommandEvent<Command> event) {

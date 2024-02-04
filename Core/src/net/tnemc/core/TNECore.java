@@ -199,6 +199,8 @@ public abstract class TNECore {
       TNECore.log().error("Failed to load message configuration!", DebugLevel.OFF);
     }
 
+    registerConfigs();
+
     //Call initConfigurations for all modules loaded.
     loader.getModules().values().forEach((moduleWrapper -> moduleWrapper.getModule().initConfigurations(directory)));
 
@@ -403,6 +405,8 @@ public abstract class TNECore {
   public abstract void registerCommandHandler();
 
   public abstract void registerCommands();
+
+  public abstract void registerConfigs();
 
   public abstract void registerCallbacks();
 

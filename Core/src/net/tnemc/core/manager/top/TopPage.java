@@ -18,7 +18,9 @@ package net.tnemc.core.manager.top;
  */
 
 import java.math.BigDecimal;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * TopPage
@@ -38,6 +40,23 @@ public class TopPage<V> {
 
   public LinkedHashMap<V, BigDecimal> getValues() {
     return values;
+  }
+
+  public V getAt(final int pos) {
+    if(pos > values.size()) return (V)"no one";
+
+    final Iterator<Map.Entry<V, BigDecimal>> it = values.entrySet().iterator();
+
+    int i = 0;
+    while(it.hasNext()) {
+      if(pos - 1 == i) {
+        return it.next().getKey();
+      }
+
+      it.next();
+      i++;
+    }
+    return (V)"no one";
   }
 
   public int getPage() {
