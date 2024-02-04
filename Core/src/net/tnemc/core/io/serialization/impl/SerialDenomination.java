@@ -19,7 +19,7 @@ package net.tnemc.core.io.serialization.impl;
 
 import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.item.ItemDenomination;
-import net.tnemc.core.io.serialization.JSONAble;
+import net.tnemc.plugincore.core.io.serialization.JSONAble;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;

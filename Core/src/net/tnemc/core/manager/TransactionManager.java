@@ -19,7 +19,7 @@ package net.tnemc.core.manager;
  */
 
 import net.tnemc.core.config.MainConfig;
-import net.tnemc.core.io.maps.EnhancedHashMap;
+import net.tnemc.plugincore.core.io.maps.EnhancedHashMap;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionCheck;
 import net.tnemc.core.transaction.TransactionCheckGroup;

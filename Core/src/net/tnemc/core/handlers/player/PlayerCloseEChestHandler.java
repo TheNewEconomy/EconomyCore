@@ -22,9 +22,9 @@ import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.core.utils.HandlerResponse;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
+import net.tnemc.plugincore.core.utils.HandlerResponse;
 
 import java.util.Optional;
 

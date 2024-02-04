@@ -27,14 +27,11 @@ import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.account.holdings.modify.HoldingsOperation;
 import net.tnemc.core.actions.source.PlayerSource;
 import net.tnemc.core.command.parameters.PercentBigDecimal;
-import net.tnemc.core.compatibility.CmdSource;
-import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.Note;
 import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.currency.type.MixedType;
-import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.manager.TopManager;
 import net.tnemc.core.manager.top.TopPage;
 import net.tnemc.core.transaction.Receipt;
@@ -42,6 +39,9 @@ import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 import net.tnemc.item.AbstractItemStack;
+import net.tnemc.plugincore.core.compatibility.CmdSource;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
+import net.tnemc.plugincore.core.io.message.MessageData;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -241,7 +241,7 @@ public class MoneyCommand extends BaseCommand {
 
     final Transaction transaction = new Transaction("give")
         .to(account, modifier)
-        .source(new PlayerSource(sender.identifier()));
+        .source(new PlayerSource(sender.identifier().get()));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()) {

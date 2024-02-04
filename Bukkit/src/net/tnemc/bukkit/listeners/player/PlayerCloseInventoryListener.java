@@ -18,7 +18,7 @@ package net.tnemc.bukkit.listeners.player;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import net.tnemc.core.handlers.player.PlayerCloseEChestHandler;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

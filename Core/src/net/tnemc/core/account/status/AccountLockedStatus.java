@@ -19,7 +19,7 @@ package net.tnemc.core.account.status;
  */
 
 import net.tnemc.core.account.AccountStatus;
-import net.tnemc.core.io.maps.MapKey;
+import net.tnemc.plugincore.core.io.maps.MapKey;
 import org.jetbrains.annotations.NotNull;
 
 /**

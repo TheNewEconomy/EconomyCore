@@ -19,7 +19,7 @@ package net.tnemc.core.currency.calculations;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;

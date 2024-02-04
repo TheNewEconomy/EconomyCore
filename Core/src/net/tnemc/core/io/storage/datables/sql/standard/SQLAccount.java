@@ -26,12 +26,12 @@ import net.tnemc.core.account.shared.Member;
 import net.tnemc.core.api.callback.account.AccountLoadCallback;
 import net.tnemc.core.api.callback.account.AccountSaveCallback;
 import net.tnemc.core.api.response.AccountAPIResponse;
-import net.tnemc.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.core.config.DataConfig;
-import net.tnemc.core.io.storage.Datable;
-import net.tnemc.core.io.storage.StorageConnector;
-import net.tnemc.core.io.storage.connect.SQLConnector;
-import net.tnemc.core.manager.id.UUIDPair;
+import net.tnemc.plugincore.core.id.UUIDPair;
+import net.tnemc.plugincore.core.io.storage.Datable;
+import net.tnemc.plugincore.core.io.storage.StorageConnector;
+import net.tnemc.plugincore.core.io.storage.connect.SQLConnector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

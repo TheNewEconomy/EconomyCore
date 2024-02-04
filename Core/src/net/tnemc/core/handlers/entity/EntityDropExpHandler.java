@@ -18,7 +18,7 @@ package net.tnemc.core.handlers.entity;
  */
 
 import net.tnemc.core.config.MainConfig;
-import net.tnemc.core.utils.HandlerResponse;
+import net.tnemc.plugincore.core.utils.HandlerResponse;
 
 /**
  * EntityDropExpHandler

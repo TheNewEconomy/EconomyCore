@@ -25,7 +25,7 @@ import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.Wallet;
 import net.tnemc.core.account.shared.Member;
 import net.tnemc.core.api.response.AccountAPIResponse;
-import net.tnemc.core.io.serialization.JSONAble;
+import net.tnemc.plugincore.core.io.serialization.JSONAble;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

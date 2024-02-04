@@ -18,7 +18,7 @@ package net.tnemc.core.io.serialization.impl;
  */
 
 import net.tnemc.core.currency.Note;
-import net.tnemc.core.io.serialization.JSONAble;
+import net.tnemc.plugincore.core.io.serialization.JSONAble;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

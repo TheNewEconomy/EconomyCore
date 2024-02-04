@@ -21,7 +21,7 @@ package net.tnemc.core.transaction;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.actions.response.GeneralResponse;
-import net.tnemc.core.io.maps.MapKey;
+import net.tnemc.plugincore.core.io.maps.MapKey;
 import org.jetbrains.annotations.NotNull;
 
 /**

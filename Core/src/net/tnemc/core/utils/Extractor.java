@@ -22,8 +22,8 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.api.response.AccountAPIResponse;
-import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import org.jetbrains.annotations.Nullable;
 import org.simpleyaml.configuration.file.YamlFile;
 

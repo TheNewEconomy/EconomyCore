@@ -18,7 +18,7 @@ package net.tnemc.core.transaction.type;
  */
 
 import net.tnemc.core.config.MainConfig;
-import net.tnemc.core.io.maps.MapKey;
+import net.tnemc.plugincore.core.io.maps.MapKey;
 import net.tnemc.core.transaction.TransactionType;
 import net.tnemc.core.transaction.tax.TaxEntry;
 

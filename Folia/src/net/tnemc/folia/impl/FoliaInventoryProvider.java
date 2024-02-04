@@ -18,8 +18,8 @@ package net.tnemc.folia.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.compatibility.InventoryProvider;
 import net.tnemc.menu.folia.FoliaInventory;
+import net.tnemc.plugincore.core.compatibility.InventoryProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.Inventory;

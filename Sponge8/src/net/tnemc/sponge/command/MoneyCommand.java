@@ -21,7 +21,7 @@ package net.tnemc.sponge.command;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.command.parameters.PercentBigDecimal;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.sponge.impl.SpongeCMDSource;
+import net.tnemc.plugincore.sponge.impl.SpongeCMDSource;;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.DefaultFor;

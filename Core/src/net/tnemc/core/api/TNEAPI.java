@@ -39,6 +39,7 @@ import net.tnemc.core.currency.format.FormatRule;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
+import net.tnemc.plugincore.core.api.CallbackManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;

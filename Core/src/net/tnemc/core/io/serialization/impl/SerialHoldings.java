@@ -18,7 +18,7 @@ package net.tnemc.core.io.serialization.impl;
  */
 
 import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.io.serialization.JSONAble;
+import net.tnemc.plugincore.core.io.serialization.JSONAble;
 import net.tnemc.core.utils.Identifier;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

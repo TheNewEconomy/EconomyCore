@@ -35,12 +35,12 @@ import net.tnemc.core.api.callback.account.AccountCreateCallback;
 import net.tnemc.core.api.callback.account.AccountDeleteCallback;
 import net.tnemc.core.api.callback.account.AccountTypesCallback;
 import net.tnemc.core.api.response.AccountAPIResponse;
-import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.config.MainConfig;
-import net.tnemc.core.io.maps.EnhancedHashMap;
-import net.tnemc.core.manager.id.UUIDPair;
-import net.tnemc.core.manager.id.UUIDProvider;
-import net.tnemc.core.manager.id.impl.provider.BaseUUIDProvider;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.id.UUIDPair;
+import net.tnemc.plugincore.core.id.UUIDProvider;
+import net.tnemc.plugincore.core.id.impl.provider.BaseUUIDProvider;
+import net.tnemc.plugincore.core.io.maps.EnhancedHashMap;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

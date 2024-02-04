@@ -17,8 +17,8 @@ package net.tnemc.core.api.callback.account;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.api.callback.TNECallback;
 import net.tnemc.core.api.callback.TNECallbacks;
+import net.tnemc.plugincore.core.api.callback.Callback;
 
 /**
  * AccountDeleteCallback
@@ -26,7 +26,7 @@ import net.tnemc.core.api.callback.TNECallbacks;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public record AccountDeleteCallback(String identifier) implements TNECallback {
+public record AccountDeleteCallback(String identifier) implements Callback {
 
   /**
    * The name of this callback.

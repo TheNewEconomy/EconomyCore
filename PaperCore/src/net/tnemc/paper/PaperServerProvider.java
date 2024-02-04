@@ -17,7 +17,7 @@ package net.tnemc.paper;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.impl.BukkitServerProvider;
+import net.tnemc.plugincore.bukkit.impl.BukkitServerProvider;
 
 /**
  * PaperServerProvider

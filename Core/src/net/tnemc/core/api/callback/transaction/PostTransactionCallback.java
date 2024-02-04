@@ -17,9 +17,9 @@ package net.tnemc.core.api.callback.transaction;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.api.callback.TNECallback;
 import net.tnemc.core.api.callback.TNECallbacks;
 import net.tnemc.core.transaction.TransactionResult;
+import net.tnemc.plugincore.core.api.callback.Callback;
 
 /**
  * PostTransactionCallback called after a transaction has been processed. Can't cancel the transaction at
@@ -30,7 +30,7 @@ import net.tnemc.core.transaction.TransactionResult;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public record PostTransactionCallback(TransactionResult result) implements TNECallback {
+public record PostTransactionCallback(TransactionResult result) implements Callback {
 
   /**
    * The name of this callback.

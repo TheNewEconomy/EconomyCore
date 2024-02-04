@@ -18,7 +18,7 @@ package net.tnemc.core.transaction.tax;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.io.maps.MapKey;
+import net.tnemc.plugincore.core.io.maps.MapKey;
 
 import java.math.BigDecimal;
 

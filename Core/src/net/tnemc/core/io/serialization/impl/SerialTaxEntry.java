@@ -17,7 +17,7 @@ package net.tnemc.core.io.serialization.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.io.serialization.JSONAble;
+import net.tnemc.plugincore.core.io.serialization.JSONAble;
 import net.tnemc.core.transaction.tax.TaxEntry;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

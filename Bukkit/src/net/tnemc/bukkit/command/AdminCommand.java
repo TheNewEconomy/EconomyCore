@@ -18,7 +18,6 @@ package net.tnemc.bukkit.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.impl.BukkitCMDSource;
 import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
@@ -26,12 +25,13 @@ import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.command.BaseCommand;
-import net.tnemc.core.compatibility.log.DebugLevel;
-import net.tnemc.core.compatibility.scheduler.ChoreExecution;
-import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.utils.Identifier;
+import net.tnemc.plugincore.bukkit.impl.BukkitCMDSource;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.compatibility.scheduler.ChoreExecution;
+import net.tnemc.plugincore.core.compatibility.scheduler.ChoreTime;
+import net.tnemc.plugincore.core.io.message.MessageData;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.Nullable;

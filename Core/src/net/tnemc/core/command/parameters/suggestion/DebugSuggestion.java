@@ -17,7 +17,7 @@ package net.tnemc.core.command.parameters.suggestion;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import org.jetbrains.annotations.NotNull;
 import revxrsal.commands.autocomplete.SuggestionProvider;
 import revxrsal.commands.command.CommandActor;

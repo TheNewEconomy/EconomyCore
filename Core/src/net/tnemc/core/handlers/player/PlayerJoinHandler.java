@@ -24,16 +24,16 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.api.response.AccountAPIResponse;
-import net.tnemc.core.channel.handlers.SyncHandler;
-import net.tnemc.core.compatibility.PlayerProvider;
-import net.tnemc.core.compatibility.scheduler.ChoreExecution;
-import net.tnemc.core.compatibility.scheduler.ChoreTime;
+import net.tnemc.core.channel.SyncHandler;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.core.io.message.MessageData;
-import net.tnemc.core.manager.id.UUIDPair;
 import net.tnemc.core.transaction.history.AwayHistory;
-import net.tnemc.core.utils.HandlerResponse;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
+import net.tnemc.plugincore.core.compatibility.scheduler.ChoreExecution;
+import net.tnemc.plugincore.core.compatibility.scheduler.ChoreTime;
+import net.tnemc.plugincore.core.id.UUIDPair;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.utils.HandlerResponse;
 
 import java.util.Optional;
 

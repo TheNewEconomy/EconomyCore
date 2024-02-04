@@ -24,12 +24,12 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.CurrencyHoldings;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.RegionHoldings;
-import net.tnemc.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.core.config.MainConfig;
-import net.tnemc.core.io.storage.Datable;
-import net.tnemc.core.io.storage.StorageConnector;
-import net.tnemc.core.io.storage.connect.SQLConnector;
+import net.tnemc.plugincore.core.io.storage.Datable;
+import net.tnemc.plugincore.core.io.storage.StorageConnector;
 import net.tnemc.core.utils.Identifier;
+import net.tnemc.plugincore.core.io.storage.connect.SQLConnector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

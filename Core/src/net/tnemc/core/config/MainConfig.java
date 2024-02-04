@@ -18,6 +18,7 @@ package net.tnemc.core.config;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.plugincore.core.config.Config;
 import org.simpleyaml.configuration.file.YamlFile;
 
 /**

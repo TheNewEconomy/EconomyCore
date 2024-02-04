@@ -16,11 +16,10 @@ package net.tnemc.bukkit.command;
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import net.tnemc.bukkit.impl.BukkitCMDSource;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.command.parameters.PercentBigDecimal;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.plugincore.bukkit.impl.BukkitCMDSource;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.Description;

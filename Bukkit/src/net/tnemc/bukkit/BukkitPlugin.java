@@ -27,7 +27,7 @@ import net.tnemc.bukkit.listeners.player.PlayerInteractListener;
 import net.tnemc.bukkit.listeners.player.PlayerJoinListener;
 import net.tnemc.bukkit.listeners.player.PlayerQuitListener;
 import net.tnemc.bukkit.listeners.world.WorldLoadListener;
-import net.tnemc.core.compatibility.ServerConnector;
+import net.tnemc.plugincore.core.compatibility.ServerConnector;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;

@@ -18,7 +18,7 @@ package net.tnemc.core.currency.calculations;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
 
 import java.math.BigDecimal;

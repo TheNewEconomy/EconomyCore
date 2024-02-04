@@ -18,7 +18,7 @@ package net.tnemc.core.region;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

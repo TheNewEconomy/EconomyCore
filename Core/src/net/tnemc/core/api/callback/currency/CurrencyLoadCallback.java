@@ -17,8 +17,8 @@ package net.tnemc.core.api.callback.currency;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.api.callback.TNECallback;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.plugincore.core.api.callback.Callback;
 
 /**
  * DenominationLoadCallback
@@ -26,7 +26,7 @@ import net.tnemc.core.currency.Currency;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class CurrencyLoadCallback implements TNECallback {
+public class CurrencyLoadCallback implements Callback {
 
   private Currency currency;
 

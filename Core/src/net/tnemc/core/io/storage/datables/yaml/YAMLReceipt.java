@@ -17,9 +17,9 @@ package net.tnemc.core.io.storage.datables.yaml;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.io.storage.Datable;
-import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.transaction.Receipt;
+import net.tnemc.plugincore.core.io.storage.Datable;
+import net.tnemc.plugincore.core.io.storage.StorageConnector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -19,7 +19,7 @@ package net.tnemc.core.manager;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyLoader;
 import net.tnemc.core.currency.CurrencySaver;
@@ -32,9 +32,9 @@ import net.tnemc.core.currency.type.ExperienceType;
 import net.tnemc.core.currency.type.ItemType;
 import net.tnemc.core.currency.type.MixedType;
 import net.tnemc.core.currency.type.VirtualType;
-import net.tnemc.core.utils.IOUtil;
 import net.tnemc.core.utils.exceptions.NoValidCurrenciesException;
 import net.tnemc.item.AbstractItemStack;
+import net.tnemc.plugincore.core.utils.IOUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;

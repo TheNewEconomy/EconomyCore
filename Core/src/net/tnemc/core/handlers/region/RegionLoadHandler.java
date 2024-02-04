@@ -20,7 +20,7 @@ package net.tnemc.core.handlers.region;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.region.RegionType;
-import net.tnemc.core.utils.HandlerResponse;
+import net.tnemc.plugincore.core.utils.HandlerResponse;
 
 /**
  * This class is utilized to handle regions being loaded. In TNE, a region could be anything from a

@@ -21,11 +21,11 @@ package net.tnemc.folia.impl;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.tnemc.bukkit.BukkitCore;
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.Location;
-import net.tnemc.core.compatibility.PlayerProvider;
-import net.tnemc.core.io.message.MessageData;
-import net.tnemc.core.io.message.MessageHandler;
+import net.tnemc.plugincore.core.compatibility.Location;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import net.tnemc.menu.folia.FoliaPlayer;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.io.message.MessageHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 

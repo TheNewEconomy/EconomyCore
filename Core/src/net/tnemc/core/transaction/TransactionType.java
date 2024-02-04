@@ -18,8 +18,8 @@ package net.tnemc.core.transaction;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.io.maps.MapKey;
 import net.tnemc.core.transaction.tax.TaxEntry;
+import net.tnemc.plugincore.core.io.maps.MapKey;
 
 import java.util.Optional;
 

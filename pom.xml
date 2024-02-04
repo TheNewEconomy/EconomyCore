@@ -11,7 +11,6 @@
         <module>Bukkit</module>
         <module>Folia</module>
         <module>PaperCore</module>
-        <module>Sponge</module>
         <module>Bungee</module>
         <module>Velocity</module>
         <module>Sponge8</module>
@@ -19,7 +18,7 @@
     </modules>
 
     <properties>
-        <tnpc.version>1.0.0.0</tnpc.version>
+        <tnpc.version>1.0.0.1-Pre-3</tnpc.version>
         <tne.relocation>net.tnemc.libs</tne.relocation>
         <tne.java>17</tne.java>
         <maven.compiler.target>17</maven.compiler.target>

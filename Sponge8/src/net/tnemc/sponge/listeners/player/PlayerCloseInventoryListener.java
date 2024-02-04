@@ -18,7 +18,7 @@ package net.tnemc.sponge.listeners.player;
  */
 
 import net.tnemc.core.handlers.player.PlayerJoinHandler;
-import net.tnemc.core.utils.HandlerResponse;
+import net.tnemc.plugincore.core.utils.HandlerResponse;
 import net.tnemc.sponge.impl.SpongePlayerProvider;
 import org.spongepowered.api.block.entity.EnderChest;
 import org.spongepowered.api.entity.living.player.server.ServerPlayer;

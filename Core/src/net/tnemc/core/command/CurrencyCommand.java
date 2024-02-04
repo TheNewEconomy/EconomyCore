@@ -17,7 +17,7 @@ package net.tnemc.core.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.compatibility.CmdSource;
+import net.tnemc.plugincore.core.compatibility.CmdSource;
 
 /**
  * CurrencyCommand

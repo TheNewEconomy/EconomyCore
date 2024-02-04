@@ -17,9 +17,9 @@ package net.tnemc.core.api.callback.transaction;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.api.callback.TNECallback;
 import net.tnemc.core.api.callback.TNECallbacks;
 import net.tnemc.core.transaction.Transaction;
+import net.tnemc.plugincore.core.api.callback.Callback;
 
 /**
  * PreTransactionCallback represents a callback that is called before a transaction is performed. This
@@ -28,7 +28,7 @@ import net.tnemc.core.transaction.Transaction;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class PreTransactionCallback implements TNECallback {
+public class PreTransactionCallback implements Callback {
 
   protected Transaction transaction;
 

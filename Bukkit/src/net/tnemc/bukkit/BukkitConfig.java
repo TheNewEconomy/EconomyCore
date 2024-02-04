@@ -17,7 +17,7 @@ package net.tnemc.bukkit;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.config.Config;
+import net.tnemc.plugincore.core.config.Config;
 import org.simpleyaml.configuration.file.YamlFile;
 
 /**

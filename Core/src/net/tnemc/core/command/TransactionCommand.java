@@ -21,11 +21,11 @@ package net.tnemc.core.command;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
-import net.tnemc.core.compatibility.CmdSource;
-import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.history.AwayHistory;
 import net.tnemc.core.transaction.history.SortedHistory;
+import net.tnemc.plugincore.core.compatibility.CmdSource;
+import net.tnemc.plugincore.core.io.message.MessageData;
 
 import java.util.Map;
 import java.util.Optional;

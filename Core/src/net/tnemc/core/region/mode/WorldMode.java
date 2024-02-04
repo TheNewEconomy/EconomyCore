@@ -18,10 +18,10 @@ package net.tnemc.core.region.mode;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.region.RegionMode;
 import net.tnemc.core.region.RegionType;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;

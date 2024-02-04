@@ -20,7 +20,7 @@ package net.tnemc.sponge.listeners.player;
 
 import net.kyori.adventure.text.Component;
 import net.tnemc.core.handlers.player.PlayerJoinHandler;
-import net.tnemc.core.utils.HandlerResponse;
+import net.tnemc.plugincore.core.utils.HandlerResponse;
 import net.tnemc.sponge.impl.SpongePlayerProvider;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.network.ServerSideConnectionEvent;

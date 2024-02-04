@@ -17,9 +17,9 @@ package net.tnemc.bukkit.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.impl.BukkitCMDSource;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.command.BaseCommand;
+import net.tnemc.plugincore.bukkit.impl.BukkitCMDSource;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.DefaultFor;

@@ -21,7 +21,6 @@ package net.tnemc.core;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.api.CallbackManager;
 import net.tnemc.core.api.TNEAPI;
 import net.tnemc.core.api.callback.TNECallbackProvider;
 import net.tnemc.core.api.response.AccountAPIResponse;
@@ -37,26 +36,27 @@ import net.tnemc.core.command.parameters.suggestion.CurrencySuggestion;
 import net.tnemc.core.command.parameters.suggestion.DebugSuggestion;
 import net.tnemc.core.command.parameters.suggestion.RegionSuggestion;
 import net.tnemc.core.command.parameters.suggestion.StatusSuggestion;
-import net.tnemc.core.compatibility.scheduler.Chore;
-import net.tnemc.core.compatibility.scheduler.ChoreExecution;
-import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.config.MessageConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.hook.treasury.TreasuryHook;
-import net.tnemc.core.io.message.MessageData;
-import net.tnemc.core.io.message.MessageHandler;
 import net.tnemc.core.io.message.BaseTranslationProvider;
-import net.tnemc.core.io.storage.StorageManager;
-import net.tnemc.core.module.cache.ModuleFileCache;
 import net.tnemc.core.region.RegionGroup;
-import net.tnemc.core.utils.UpdateChecker;
 import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.api.CallbackManager;
 import net.tnemc.plugincore.core.compatibility.LogProvider;
 import net.tnemc.plugincore.core.compatibility.ServerConnector;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.compatibility.scheduler.Chore;
+import net.tnemc.plugincore.core.compatibility.scheduler.ChoreExecution;
+import net.tnemc.plugincore.core.compatibility.scheduler.ChoreTime;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.io.message.MessageHandler;
 import net.tnemc.plugincore.core.io.message.TranslationProvider;
+import net.tnemc.plugincore.core.io.storage.StorageManager;
+import net.tnemc.plugincore.core.module.cache.ModuleFileCache;
+import net.tnemc.plugincore.core.utils.UpdateChecker;
 import revxrsal.commands.orphan.Orphans;
 
 import java.io.IOException;
@@ -134,8 +134,6 @@ public abstract class TNECore extends PluginCore {
     //Call initConfigurations for all modules loaded.
     loader.getModules().values().forEach((moduleWrapper -> moduleWrapper.getModule().initConfigurations(directory)));
 
-    this.callbackManager = new CallbackManager();
-
     registerCallbacks();
 
     //Register the callback listeners and callbacks for the modules
@@ -199,8 +197,6 @@ public abstract class TNECore extends PluginCore {
     } else {
       serverID = UUID.randomUUID();
     }
-
-    this.storage = new StorageManager();
 
     if(!this.storage.meetsRequirement()) {
       TNECore.log().error("This server does not meet SQL requirements needed for TNE!", DebugLevel.OFF);

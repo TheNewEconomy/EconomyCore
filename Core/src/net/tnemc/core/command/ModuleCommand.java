@@ -18,13 +18,13 @@ package net.tnemc.core.command;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.CmdSource;
-import net.tnemc.core.compatibility.scheduler.ChoreExecution;
-import net.tnemc.core.compatibility.scheduler.ChoreTime;
-import net.tnemc.core.io.message.MessageData;
-import net.tnemc.core.module.ModuleUpdateChecker;
-import net.tnemc.core.module.ModuleWrapper;
-import net.tnemc.core.module.cache.ModuleFile;
+import net.tnemc.plugincore.core.compatibility.CmdSource;
+import net.tnemc.plugincore.core.compatibility.scheduler.ChoreExecution;
+import net.tnemc.plugincore.core.compatibility.scheduler.ChoreTime;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.module.ModuleUpdateChecker;
+import net.tnemc.plugincore.core.module.ModuleWrapper;
+import net.tnemc.plugincore.core.module.cache.ModuleFile;
 import revxrsal.commands.orphan.Orphans;
 
 import java.util.List;
@@ -64,7 +64,7 @@ public class ModuleCommand extends BaseCommand {
     TNECore.server().scheduler().createDelayedTask(()->{
       TNECore.core().moduleCache().getModules(url);
 
-      Optional<ModuleFile> module = TNECore.core().moduleCache().getModule(url, moduleName);
+      final Optional<ModuleFile> module = TNECore.core().moduleCache().getModule(url, moduleName);
       if(module.isEmpty()) {
         final MessageData entry = new MessageData("Messages.Module.Invalid");
         entry.addReplacement("$module", moduleName);

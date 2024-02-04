@@ -26,7 +26,7 @@ import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.ActionSource;
 import net.tnemc.core.api.callback.transaction.PostTransactionCallback;
-import net.tnemc.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 
 import java.math.BigDecimal;

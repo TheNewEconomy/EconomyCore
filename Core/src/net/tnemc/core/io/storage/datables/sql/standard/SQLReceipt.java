@@ -23,11 +23,11 @@ import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.config.MainConfig;
-import net.tnemc.core.io.storage.Datable;
-import net.tnemc.core.io.storage.StorageConnector;
-import net.tnemc.core.io.storage.connect.SQLConnector;
+import net.tnemc.plugincore.core.io.storage.Datable;
+import net.tnemc.plugincore.core.io.storage.StorageConnector;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.TransactionParticipant;
+import net.tnemc.plugincore.core.io.storage.connect.SQLConnector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

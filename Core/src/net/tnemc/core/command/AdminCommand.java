@@ -23,13 +23,13 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.api.response.AccountAPIResponse;
-import net.tnemc.core.compatibility.CmdSource;
-import net.tnemc.core.compatibility.log.DebugLevel;
-import net.tnemc.core.compatibility.scheduler.ChoreExecution;
-import net.tnemc.core.compatibility.scheduler.ChoreTime;
-import net.tnemc.core.io.message.MessageData;
-import net.tnemc.core.io.storage.StorageManager;
 import net.tnemc.core.utils.Extractor;
+import net.tnemc.plugincore.core.compatibility.CmdSource;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.compatibility.scheduler.ChoreExecution;
+import net.tnemc.plugincore.core.compatibility.scheduler.ChoreTime;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.io.storage.StorageManager;
 
 import java.util.Optional;
 

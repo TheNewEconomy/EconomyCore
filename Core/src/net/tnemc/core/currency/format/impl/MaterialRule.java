@@ -22,13 +22,13 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.format.FormatRule;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.item.AbstractItemStack;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;

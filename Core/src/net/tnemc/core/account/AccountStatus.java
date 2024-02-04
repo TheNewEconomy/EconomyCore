@@ -18,7 +18,7 @@ package net.tnemc.core.account;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.io.maps.MapKey;
+import net.tnemc.plugincore.core.io.maps.MapKey;
 import org.jetbrains.annotations.NotNull;
 
 /**

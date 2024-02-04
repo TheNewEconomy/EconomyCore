@@ -21,7 +21,8 @@ package net.tnemc.core.config;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
-import net.tnemc.core.io.message.Language;
+import net.tnemc.plugincore.core.config.Config;
+import net.tnemc.plugincore.core.io.message.translation.Language;
 import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.File;
