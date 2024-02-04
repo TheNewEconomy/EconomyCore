@@ -1,7 +1,7 @@
-package net.tnemc.core.channel.handlers;
+package net.tnemc.core.channel;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -20,11 +20,11 @@ package net.tnemc.core.channel.handlers;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.tnemc.core.TNECore;
-import net.tnemc.core.channel.ChannelBytesWrapper;
-import net.tnemc.core.channel.ChannelMessageHandler;
-import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.serialization.impl.SerialCurrency;
+import net.tnemc.plugincore.core.channel.ChannelBytesWrapper;
+import net.tnemc.plugincore.core.channel.ChannelMessageHandler;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.IOException;
@@ -46,7 +46,7 @@ public class ConfigHandler extends ChannelMessageHandler {
 
   public static void send() {
 
-    if(!TNECore.instance().data().getYaml().getString("Data.Sync.Config.Hub", "none").equalsIgnoreCase("none")) {
+    if(!TNECore.core().data().getYaml().getString("Data.Sync.Config.Hub", "none").equalsIgnoreCase("none")) {
       return;
     }
 
@@ -56,7 +56,7 @@ public class ConfigHandler extends ChannelMessageHandler {
     //configs
 
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-    out.writeUTF(TNECore.instance().data().getYaml().getString("Data.Sync.Config.SharingPin", "000000"));
+    out.writeUTF(TNECore.core().data().getYaml().getString("Data.Sync.Config.SharingPin", "000000"));
 
     //write our currencies to the stream
     out.writeShort(TNECore.eco().currency().currencies().size());
@@ -65,20 +65,20 @@ public class ConfigHandler extends ChannelMessageHandler {
     }
 
     try {
-      out.writeUTF("config.yml:" + TNECore.instance().config().getYaml().fileToString());
-      out.writeUTF("messages.yml:" + TNECore.instance().message().getYaml().fileToString());
+      out.writeUTF("config.yml:" + TNECore.core().config().getYaml().fileToString());
+      out.writeUTF("messages.yml:" + TNECore.core().message().getYaml().fileToString());
     } catch(IOException e) {
       TNECore.log().error("Issue when trying to send config sync data!", e, DebugLevel.OFF);
     }
 
-    TNECore.storage().sendMessage("tne:config", out.toByteArray());
+    TNECore.storage().sendProxyMessage("tne:config", out.toByteArray());
   }
 
   @Override
   public void handle(ChannelBytesWrapper wrapper) {
 
-    if(TNECore.instance().data().getYaml().getString("Data.Sync.Config.Hub", "none").equalsIgnoreCase("none") ||
-       !TNECore.instance().data().getYaml().getBoolean("Data.Sync.Config.Sync", true)) {
+    if(TNECore.core().data().getYaml().getString("Data.Sync.Config.Hub", "none").equalsIgnoreCase("none") ||
+       !TNECore.core().data().getYaml().getBoolean("Data.Sync.Config.Sync", true)) {
       return;
     }
 
@@ -86,12 +86,12 @@ public class ConfigHandler extends ChannelMessageHandler {
 
       //make sure this is the hub server we want to sync with.
       final String hub = wrapper.readUTF();
-      if(!hub.equalsIgnoreCase(TNECore.instance().data().getYaml().getString("Data.Sync.Config.Hub", "none"))) {
+      if(!hub.equalsIgnoreCase(TNECore.core().data().getYaml().getString("Data.Sync.Config.Hub", "none"))) {
         return;
       }
 
       final List<String> sync = new ArrayList<>();
-      sync.addAll(TNECore.instance().data().getYaml().getStringList("Data.Sync.Config.Configs"));
+      sync.addAll(TNECore.core().data().getYaml().getStringList("Data.Sync.Config.Configs"));
 
       //sync our currencies
       final short currencies = wrapper.readShort();
@@ -131,12 +131,12 @@ public class ConfigHandler extends ChannelMessageHandler {
         switch(parts[0]) {
           case "messages.yml" -> {
             if(sync.contains("messages.yml")) {
-              TNECore.instance().message().setYaml(YamlFile.loadConfigurationFromString(parts[1], true));
+              TNECore.core().message().setYaml(YamlFile.loadConfigurationFromString(parts[1], true));
             }
           }
           default -> {
             if(sync.contains("config.yml")) {
-              TNECore.instance().config().setYaml(YamlFile.loadConfigurationFromString(parts[1], true));
+              TNECore.core().config().setYaml(YamlFile.loadConfigurationFromString(parts[1], true));
             }
           }
         }

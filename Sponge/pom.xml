@@ -155,20 +155,15 @@
     <dependencies>
         <dependency>
             <groupId>net.tnemc</groupId>
-            <artifactId>TNML-Sponge-API-7</artifactId>
-            <version>1.5.0.0-SNAPSHOT-3</version>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>net.tnemc</groupId>
-                    <artifactId>TNIL-Core</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>net.tnemc</groupId>
             <artifactId>EconomyCore</artifactId>
             <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>net.tnemc</groupId>
+            <artifactId>TNPC-Sponge</artifactId>
+            <version>${tnpc.version}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -178,18 +173,6 @@
             <version>7.4.0</version>
             <type>jar</type>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.Revxrsal.Lamp</groupId>
-            <artifactId>sponge</artifactId>
-            <version>3.1.5</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.kyori</groupId>
-            <artifactId>adventure-platform-spongeapi</artifactId>
-            <version>4.1.2</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 

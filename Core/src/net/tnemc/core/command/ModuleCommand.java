@@ -1,7 +1,7 @@
 package net.tnemc.core.command;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -42,7 +42,7 @@ public class ModuleCommand extends BaseCommand {
 
     TNECore.server().scheduler().createDelayedTask(()->{
 
-      final List<ModuleFile> available = TNECore.instance().moduleCache().getModules(url);
+      final List<ModuleFile> available = TNECore.core().moduleCache().getModules(url);
 
       final MessageData msg = new MessageData("Messages.Module.AvailableHeader");
       msg.addReplacement("$url", url);
@@ -62,9 +62,9 @@ public class ModuleCommand extends BaseCommand {
   public static void onDownload(CmdSource<?> sender, String moduleName, String url) {
 
     TNECore.server().scheduler().createDelayedTask(()->{
-      TNECore.instance().moduleCache().getModules(url);
+      TNECore.core().moduleCache().getModules(url);
 
-      Optional<ModuleFile> module = TNECore.instance().moduleCache().getModule(url, moduleName);
+      Optional<ModuleFile> module = TNECore.core().moduleCache().getModule(url, moduleName);
       if(module.isEmpty()) {
         final MessageData entry = new MessageData("Messages.Module.Invalid");
         entry.addReplacement("$module", moduleName);
@@ -132,7 +132,7 @@ public class ModuleCommand extends BaseCommand {
     final String author = module.getInfo().author();
     final String version = module.getInfo().version();
 
-    module.getModule().enable(TNECore.instance());
+    module.getModule().enable(TNECore.core());
     module.getModule().initConfigurations(TNECore.directory());
 
     module.getModule().enableSave(TNECore.storage());
@@ -145,10 +145,10 @@ public class ModuleCommand extends BaseCommand {
       TNECore.callbacks().addConsumer(key, function);
     });
 
-    module.getModule().registerCommands(TNECore.instance().command());
-    module.getModule().registerMoneySub().forEach((orphan)->TNECore.instance().command().register(Orphans.path("money"), orphan));
-    module.getModule().registerTransactionSub().forEach((orphan)->TNECore.instance().command().register(Orphans.path("transaction"), orphan));
-    module.getModule().registerAdminSub().forEach((orphan)->TNECore.instance().command().register(Orphans.path("tne"), orphan));
+    module.getModule().registerCommands(TNECore.core().command());
+    module.getModule().registerMoneySub().forEach((orphan)->TNECore.core().command().register(Orphans.path("money"), orphan));
+    module.getModule().registerTransactionSub().forEach((orphan)->TNECore.core().command().register(Orphans.path("transaction"), orphan));
+    module.getModule().registerAdminSub().forEach((orphan)->TNECore.core().command().register(Orphans.path("tne"), orphan));
 
     TNECore.loader().getModules().put(module.name(), module);
 

@@ -2,7 +2,7 @@ package net.tnemc.core.command;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -83,7 +83,7 @@ public class AdminCommand extends BaseCommand {
   //<standard/detailed/developer>
   public static void onDebug(CmdSource<?> sender, DebugLevel level) {
 
-    TNECore.instance().setLevel(level);
+    TNECore.core().setLevel(level);
     final MessageData data = new MessageData("Messages.Data.Debug");
     data.addReplacement("$level", level.name());
     sender.message(data);
@@ -132,21 +132,21 @@ public class AdminCommand extends BaseCommand {
     String formattedType = type;
     switch(type.toLowerCase()) {
       case "config" -> {
-        TNECore.instance().config().load();
+        TNECore.core().config().load();
         TNECore.eco().currency().load(TNECore.directory());
       }
       case "data" -> {
-        TNECore.instance().data().load();
+        TNECore.core().data().load();
       }
       case "message" -> {
-        TNECore.instance().message().load();
+        TNECore.core().message().load();
       }
       default -> {
-        TNECore.instance().config().load();
+        TNECore.core().config().load();
         TNECore.eco().currency().load(TNECore.directory());
-        TNECore.instance().data().load();
+        TNECore.core().data().load();
         TNECore.storage().loadAll(Account.class, "");
-        TNECore.instance().message().load();
+        TNECore.core().message().load();
         formattedType = "all";
       }
     }

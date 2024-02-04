@@ -1,7 +1,7 @@
-package net.tnemc.core.channel.handlers;
+package net.tnemc.core.channel;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -20,8 +20,8 @@ package net.tnemc.core.channel.handlers;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.tnemc.core.TNECore;
-import net.tnemc.core.channel.ChannelBytesWrapper;
-import net.tnemc.core.channel.ChannelMessageHandler;
+import net.tnemc.plugincore.core.channel.ChannelBytesWrapper;
+import net.tnemc.plugincore.core.channel.ChannelMessageHandler;
 
 /**
  * SyncHandler
@@ -37,10 +37,10 @@ public class SyncHandler extends ChannelMessageHandler {
 
   public static void send(String account) {
     ByteArrayDataOutput out = ByteStreams.newDataOutput();
-    out.writeUTF(TNECore.instance().getServerID().toString());
+    out.writeUTF(TNECore.core().getServerID().toString());
     out.writeUTF(account);
 
-    TNECore.storage().sendMessage("tne:sync", out.toByteArray());
+    TNECore.storage().sendProxyMessage("tne:sync", out.toByteArray());
   }
 
   @Override

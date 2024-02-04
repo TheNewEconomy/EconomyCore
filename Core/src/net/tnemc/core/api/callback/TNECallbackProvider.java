@@ -1,8 +1,7 @@
-package net.tnemc.core.module.cache;
-
+package net.tnemc.core.api.callback;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,39 +16,19 @@ package net.tnemc.core.module.cache;
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-public class ModuleFile {
 
-  private String name;
-  private String version;
-  private String url;
+import net.tnemc.plugincore.core.api.CallbackManager;
+import net.tnemc.plugincore.core.api.CallbackProvider;
 
-  public ModuleFile(String name, String version, String url) {
-    this.name = name;
-    this.version = version;
-    this.url = url;
-  }
+/**
+ * TNECallbackProvider
+ *
+ * @author creatorfromhell
+ * @since 0.1.2.0
+ */
+public class TNECallbackProvider implements CallbackProvider {
+  @Override
+  public void init(CallbackManager callbackManager) {
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getVersion() {
-    return version;
-  }
-
-  public void setVersion(String version) {
-    this.version = version;
-  }
-
-  public String getUrl() {
-    return url;
-  }
-
-  public void setUrl(String url) {
-    this.url = url;
   }
 }

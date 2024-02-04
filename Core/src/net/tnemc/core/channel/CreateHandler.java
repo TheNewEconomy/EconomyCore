@@ -1,7 +1,7 @@
-package net.tnemc.core.channel.handlers;
+package net.tnemc.core.channel;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -21,9 +21,9 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.response.AccountAPIResponse;
-import net.tnemc.core.channel.ChannelBytesWrapper;
-import net.tnemc.core.channel.ChannelMessageHandler;
-import net.tnemc.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.channel.ChannelBytesWrapper;
+import net.tnemc.plugincore.core.channel.ChannelMessageHandler;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 
 /**
  * CreateHandler
@@ -39,11 +39,11 @@ public class CreateHandler extends ChannelMessageHandler {
 
   public static void send(final String identifier, final String name) {
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-    out.writeUTF(TNECore.instance().getServerID().toString());
+    out.writeUTF(TNECore.core().getServerID().toString());
     out.writeUTF(identifier);
     out.writeUTF(name);
 
-    TNECore.storage().sendMessage("tne:create", out.toByteArray());
+    TNECore.storage().sendProxyMessage("tne:create", out.toByteArray());
   }
 
   @Override

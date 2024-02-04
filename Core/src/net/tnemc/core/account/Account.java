@@ -2,7 +2,7 @@ package net.tnemc.core.account;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -213,12 +213,12 @@ public class Account extends ReceiptBox {
 
     if(result) {
       //Send out our update to our proxies.
-      if(!TNECore.instance().getChannelMessageManager().isAffected(identifier) && !TNECore.eco().account().getLoading().contains(identifier)) {
+      if(!TNECore.core().getChannelMessageManager().isAffected(identifier) && !TNECore.eco().account().getLoading().contains(identifier)) {
         TNECore.server().scheduler().createDelayedTask(()->{
           BalanceHandler.send(identifier, name, region, currencyObject.get().getUid(), entry.getHandler(), entry.getAmount());
         }, new ChoreTime(1), ChoreExecution.SECONDARY);
       } else {
-        TNECore.instance().getChannelMessageManager().removeAccount(identifier);
+        TNECore.core().getChannelMessageManager().removeAccount(identifier);
       }
     }
 

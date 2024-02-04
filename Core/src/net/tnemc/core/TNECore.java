@@ -2,7 +2,7 @@ package net.tnemc.core;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -23,8 +23,8 @@ import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.api.CallbackManager;
 import net.tnemc.core.api.TNEAPI;
+import net.tnemc.core.api.callback.TNECallbackProvider;
 import net.tnemc.core.api.response.AccountAPIResponse;
-import net.tnemc.core.channel.ChannelMessageManager;
 import net.tnemc.core.command.parameters.PercentBigDecimal;
 import net.tnemc.core.command.parameters.resolver.AccountResolver;
 import net.tnemc.core.command.parameters.resolver.BigDecimalResolver;
@@ -37,9 +37,6 @@ import net.tnemc.core.command.parameters.suggestion.CurrencySuggestion;
 import net.tnemc.core.command.parameters.suggestion.DebugSuggestion;
 import net.tnemc.core.command.parameters.suggestion.RegionSuggestion;
 import net.tnemc.core.command.parameters.suggestion.StatusSuggestion;
-import net.tnemc.core.compatibility.LogProvider;
-import net.tnemc.core.compatibility.ServerConnector;
-import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.compatibility.scheduler.Chore;
 import net.tnemc.core.compatibility.scheduler.ChoreExecution;
 import net.tnemc.core.compatibility.scheduler.ChoreTime;
@@ -50,27 +47,23 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.hook.treasury.TreasuryHook;
 import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.io.message.MessageHandler;
-import net.tnemc.core.io.message.TranslationProvider;
-import net.tnemc.core.io.message.translation.BaseTranslationProvider;
-import net.tnemc.core.io.storage.Datable;
+import net.tnemc.core.io.message.BaseTranslationProvider;
 import net.tnemc.core.io.storage.StorageManager;
-import net.tnemc.core.module.ModuleLoader;
 import net.tnemc.core.module.cache.ModuleFileCache;
 import net.tnemc.core.region.RegionGroup;
 import net.tnemc.core.utils.UpdateChecker;
-import net.tnemc.menu.core.MenuHandler;
-import org.jetbrains.annotations.Nullable;
-import revxrsal.commands.CommandHandler;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.LogProvider;
+import net.tnemc.plugincore.core.compatibility.ServerConnector;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.io.message.TranslationProvider;
 import revxrsal.commands.orphan.Orphans;
 
-import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
 
 /**
  * The core class of TNE which should be used within each implementation's class.
@@ -78,88 +71,39 @@ import java.util.regex.Pattern;
  * @since 0.1.1.17
  * @author creatorfromhell
  */
-public abstract class TNECore {
+public abstract class TNECore extends PluginCore {
 
   /*
    * Core final variables utilized within TNE.
    */
   public static final String coreURL = "https://tnemc.net/files/module-version.xml";
-  public static final Pattern UUID_MATCHER_PATTERN = Pattern.compile("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})");
-  public static final String version = "0.1.2.6";
-  public static final String build = "Release-1";
 
-  /* Core non-final variables utilized within TNE as settings */
-  protected File directory;
-
-  //The DebugLevel that the server is currently running in.
-  private DebugLevel level = DebugLevel.STANDARD;
+  public static final String version = "0.1.2.6"; //not in TNPC
+  public static final String build = "Release-1"; //not in TNPC
 
   /* Key Managers and Object instances utilized with TNE */
 
   //General Key Object Instances
-  protected LogProvider logger;
+  protected EconomyManager economyManager; //not in TNPC
 
-  //Manager Instances
-  protected ServerConnector server;
-  protected StorageManager storage;
-  protected EconomyManager economyManager;
-  protected CommandHandler command;
+  private MainConfig config; //not in TNPC
+  private DataConfig data; //not in TNPC
+  private MessageConfig messageConfig; //not in TNPC
+  private Chore<?> autoSaver = null; //not in TNPC
 
-  protected MenuHandler menuHandler;
-
-  private MainConfig config;
-  private DataConfig data;
-  private MessageConfig messageConfig;
-  private final MessageHandler messenger;
-
-  /* Plugin Instance */
-  private static TNECore instance;
-  private Chore<?> autoSaver = null;
-
-  private final TNEAPI api = new TNEAPI();
-  protected CallbackManager callbackManager;
-  protected ChannelMessageManager channelMessageManager;
-
-  protected ModuleLoader loader;
-  protected ModuleFileCache moduleCache;
-
-  private boolean enabled = false;
-
-  protected UUID serverID;
-  protected UUID serverAccount;
-  protected UpdateChecker updateChecker = null;
+  private final TNEAPI api = new TNEAPI(); //not in TNPC
+  protected UUID serverAccount; //not in TNPC
 
   public TNECore(ServerConnector server, LogProvider logger) {
+    super(server, logger, new BaseTranslationProvider(), new TNECallbackProvider());
     this.server = server;
     this.logger = logger;
-    this.messenger = new MessageHandler(new BaseTranslationProvider());
   }
 
   public TNECore(ServerConnector server, LogProvider logger, TranslationProvider provider) {
+    super(server, logger, provider, new TNECallbackProvider());
     this.server = server;
     this.logger = logger;
-    this.messenger = new MessageHandler(provider);
-  }
-
-  public static void setInstance(TNECore core) {
-    if(instance == null) {
-      instance = core;
-    } else {
-      throw new IllegalStateException("TNE has already been initiated. Please refrain from attempting" +
-                                          "to modify the instance variable.");
-    }
-  }
-
-  public void enable() {
-    if(!enabled) {
-
-      this.enabled = true;
-      this.loader = new ModuleLoader();
-      onEnable();
-
-    } else {
-      throw new IllegalStateException("TNE has already been enabled!");
-    }
   }
 
   /**
@@ -167,20 +111,6 @@ public abstract class TNECore {
    * server software is operational.
    */
   protected void onEnable() {
-
-    if(!directory.exists()) {
-      final boolean created = directory.mkdir();
-      if(!created) {
-        TNECore.log().error("Failed to create plugin directory. Disabling plugin.");
-        return;
-      }
-    }
-
-    //Load our modules
-    loader.load();
-
-    //Call onEnable for all modules loaded.
-    loader.getModules().values().forEach((moduleWrapper -> moduleWrapper.getModule().enable(this)));
 
     this.config = new MainConfig();
     this.data = new DataConfig();
@@ -270,8 +200,6 @@ public abstract class TNECore {
       serverID = UUID.randomUUID();
     }
 
-    this.channelMessageManager = new ChannelMessageManager();
-
     this.storage = new StorageManager();
 
     if(!this.storage.meetsRequirement()) {
@@ -314,7 +242,6 @@ public abstract class TNECore {
     }
 
     //register our commands
-    registerCommandHandler();
     command.setHelpWriter((command, actor) -> {
       final MessageData data = new MessageData("Messages.Commands.Help.Entry");
       data.addReplacement("$command", command.getPath().toRealString());
@@ -391,18 +318,14 @@ public abstract class TNECore {
     }
 
     //store our data syncly because it needs to finish
-    final Optional<Datable<?>> data = Optional.ofNullable(storage.getEngine().datables().get(Account.class));
+    /*final Optional<Datable<?>> data = Optional.ofNullable(storage.getEngine().datables().get(Account.class));
     if(data.isPresent()) {
       data.get().storeAll(storage.getConnector(), null);
-    }
+    }*/
 
-    loader.getModules().values().forEach((moduleWrapper -> moduleWrapper.getModule().disable(this)));
+    super.onDisable();
   }
 
-  public abstract void registerMenuHandler();
-
-
-  public abstract void registerCommandHandler();
 
   public abstract void registerCommands();
 
@@ -411,38 +334,12 @@ public abstract class TNECore {
   public abstract void registerCallbacks();
 
   /**
-   * The implementation's {@link LogProvider}.
-   *
-   * @return The log provider.
-   */
-  public static LogProvider log() {
-    return instance.logger;
-  }
-
-  /**
    * The implementation's {@link EconomyManager}, which is used to manage everything economy related
    * in TNE.
    * @return The {@link EconomyManager Economy Manager}.
    */
   public static EconomyManager eco() {
-    return instance.economyManager;
-  }
-
-  /**
-   * The {@link StorageManager} we are utilizing.
-   *
-   * @return The {@link StorageManager}.
-   */
-  public static StorageManager storage() {
-    return instance.storage;
-  }
-
-  /**
-   * The {@link ServerConnector} for the implementation.
-   * @return The {@link ServerConnector} for the implementation.
-   */
-  public static ServerConnector server() {
-    return instance.server;
+    return core().economyManager;
   }
 
   public MainConfig config() {
@@ -457,41 +354,12 @@ public abstract class TNECore {
     return messageConfig;
   }
 
-  public static MessageHandler messenger() {
-    return instance.messenger;
-  }
-
-  public static File directory() {
-    return instance.directory;
-  }
-
-  public static TNECore instance() {
-    return instance;
-  }
-
-  public static CallbackManager callbacks() {
-    return instance.callbackManager;
+  public static TNECore core() {
+    return (TNECore)instance();
   }
 
   public static TNEAPI api() {
-    return instance.api;
-  }
-
-  public ChannelMessageManager getChannelMessageManager() {
-    return channelMessageManager;
-  }
-
-  public static ModuleLoader loader() {
-    return instance.loader;
-  }
-
-  @Nullable
-  public static UpdateChecker update() {
-    return instance.updateChecker;
-  }
-
-  public ModuleFileCache moduleCache() {
-    return moduleCache;
+    return core().api;
   }
 
   public DebugLevel getLevel() {
@@ -502,15 +370,7 @@ public abstract class TNECore {
     this.level = level;
   }
 
-  public CommandHandler command() {
-    return command;
-  }
-
   public UUID getServerAccount() {
     return serverAccount;
-  }
-
-  public UUID getServerID() {
-    return serverID;
   }
 }
