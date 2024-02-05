@@ -53,7 +53,7 @@ public class PAPIHook extends PlaceholderExpansion {
 
   @Override
   public String getVersion() {
-    return "0.1.2.0";
+    return "0.1.2.8";
   }
 
   @Override
@@ -68,12 +68,20 @@ public class PAPIHook extends PlaceholderExpansion {
       return null;
     }
 
-    final Optional<Account> account = TNECore.eco().account().findAccount(player.getUniqueId());
+    final String[] args = identifier.split("_");
+
+    Optional<Account> account = TNECore.eco().account().findAccount(player.getUniqueId());
+    if(identifier.contains("player:")) {
+
+      final String[] playerTest = identifier.split("player:");
+      if(playerTest.length >= 2) {
+        account = TNECore.api().getAccount(playerTest[1]);
+      }
+    }
+
     if(account.isEmpty()) {
       return null;
     }
-
-    final String[] args = identifier.split("_");
 
     //%tne_balance:inventory/balance:e_chest/balance:experience/balance:virtualargs[1]%
     if(identifier.contains("balance:")) {
@@ -219,5 +227,13 @@ public class PAPIHook extends PlaceholderExpansion {
       return String.valueOf(pos);
     }
     return null;
+  }
+
+  public boolean formatted(final String parameter) {
+    return parameter.contains("formatted");
+  }
+
+  public Optional<Account> findFromArgs(final String parameter) {
+    return TNECore.eco().account().findAccount(parameter);
   }
 }
