@@ -99,26 +99,6 @@ public class SpongeCore extends TNECore {
     setInstance(this);
     command = SpongeCommandHandler.create(container);
 
-    command.registerValueResolver(Account.class, new AccountResolver());
-    command.registerValueResolver(AccountStatus.class, new StatusResolver());
-    command.registerValueResolver(DebugLevel.class, new DebugResolver());
-    command.registerValueResolver(Currency.class, new CurrencyResolver());
-    command.registerValueResolver(PercentBigDecimal.class, new PercentDecimalResolver());
-    command.registerValueResolver(BigDecimal.class, new BigDecimalResolver());
-
-    //Annotation
-    command.getAutoCompleter().registerParameterSuggestions(AccountStatus.class, new StatusSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(DebugLevel.class, new DebugSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(RegionGroup.class, new RegionSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(Account.class, new AccountSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(Currency.class, new CurrencySuggestion());
-
-    command.register(new AdminCommand());
-    command.register(new ModuleCommand());
-    command.register(new MoneyCommand());
-    command.register(new ShortCommands());
-    command.register(new TransactionCommand());
-
     final Optional<PluginContainer> luckContainer = Sponge.pluginManager().plugin("luckperms");
     if(luckContainer.isPresent()) {
       LuckPermsHook.register();
@@ -182,23 +162,31 @@ public class SpongeCore extends TNECore {
   public void registerCommands() {
 
     //Register our commands
+    command.registerValueResolver(Account.class, new AccountResolver());
+    command.registerValueResolver(AccountStatus.class, new StatusResolver());
+    command.registerValueResolver(DebugLevel.class, new DebugResolver());
+    command.registerValueResolver(Currency.class, new CurrencyResolver());
+    command.registerValueResolver(PercentBigDecimal.class, new PercentDecimalResolver());
+    command.registerValueResolver(BigDecimal.class, new BigDecimalResolver());
+
+    //Annotation
+    command.getAutoCompleter().registerParameterSuggestions(AccountStatus.class, new StatusSuggestion());
+    command.getAutoCompleter().registerParameterSuggestions(DebugLevel.class, new DebugSuggestion());
+    command.getAutoCompleter().registerParameterSuggestions(RegionGroup.class, new RegionSuggestion());
+    command.getAutoCompleter().registerParameterSuggestions(Account.class, new AccountSuggestion());
+    command.getAutoCompleter().registerParameterSuggestions(Currency.class, new CurrencySuggestion());
+
+    command.register(new AdminCommand());
+    command.register(new ModuleCommand());
+    command.register(new MoneyCommand());
+    command.register(new ShortCommands());
+    command.register(new TransactionCommand());
   }
 
   @Override
   public void registerConfigs() {
 
   }
-  /*@Listener
-  public void handleRegistrationEvent(RegisterCommandEvent<Command> event) {
-    System.out.println("Register TNE Commands.");
-
-    if(command == null) return;
-
-    ((SpongeHandler)command).getRegistered().forEach((name, command)-> {
-      event.register(container, command, name);
-      System.out.println("Register: " + name);
-    });
-  }*/
 
   @Override
   public void registerCallbacks() {
