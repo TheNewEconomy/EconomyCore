@@ -24,6 +24,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.CurrencyHoldings;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.RegionHoldings;
+import net.tnemc.core.io.storage.dialect.TNEDialect;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.plugincore.core.io.storage.Datable;
@@ -76,11 +77,11 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    */
   @Override
   public void store(StorageConnector<?> connector, @NotNull HoldingsEntry object, @Nullable String identifier) {
-    if(connector instanceof SQLConnector && identifier != null) {
+    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne && identifier != null) {
 
       TNECore.log().debug("Storing holdings for Identifier: " + identifier);
 
-      ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveHoldings(),
+      sql.executeUpdate(tne.saveHoldings(),
                                               new Object[] {
                                                   identifier,
                                                   MainConfig.yaml().getString("Core.Server.Name"),
@@ -100,7 +101,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    */
   @Override
   public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
-    if(connector instanceof SQLConnector && identifier != null) {
+    if(connector instanceof SQLConnector sql && identifier != null) {
 
       final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
       if(account.isPresent()) {
@@ -141,9 +142,9 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
   public Collection<HoldingsEntry> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
     final Collection<HoldingsEntry> holdings = new ArrayList<>();
 
-    if(connector instanceof SQLConnector && identifier != null) {
+    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne && identifier != null) {
       TNECore.log().debug("SQLHoldings-loadAll-Account ID:" + identifier, DebugLevel.DEVELOPER);
-      try(ResultSet result = ((SQLConnector)connector).executeQuery(((SQLConnector)connector).dialect().loadHoldings(),
+      try(ResultSet result = sql.executeQuery(tne.loadHoldings(),
                                                                     new Object[] {
                                                                         identifier,
                                                                         MainConfig.yaml().getString("Core.Server.Name")

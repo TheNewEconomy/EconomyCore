@@ -41,7 +41,7 @@ public class TransactionCommand {
 
   //[page #]
   public static void away(CmdSource<?> sender, int page) {
-    final Optional<Account> account = sender.account();
+    final Optional<Account> account = BaseCommand.account(sender);
 
     if(account.isEmpty()) {
       sender.message(new MessageData("Messages.Transaction.AwayNone"));

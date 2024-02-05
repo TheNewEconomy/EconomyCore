@@ -84,7 +84,7 @@ public class EnderChestHandler implements HoldingsHandler {
                                                                  ((PlayerAccount)account).getPlayer()
                                                                      .get().inventory().getInventory(true),
                                                                  ((PlayerAccount)account).getUUID());
-      TNECore.server().itemCalculations().setItems(data, amount);
+      TNECore.core().itemCalculations().setItems(data, amount);
       return true;
     }
     return true;
@@ -130,7 +130,7 @@ public class EnderChestHandler implements HoldingsHandler {
                                                                  ((PlayerAccount)account).getUUID());
 
       return new HoldingsEntry(region, currency.getUid(),
-                               TNECore.server().itemCalculations().calculateHoldings(data), identifier());
+                               TNECore.core().itemCalculations().calculateHoldings(data), identifier());
     }
     //Non-players can't have e-chest holdings so this is always zero.
     return new HoldingsEntry(region,

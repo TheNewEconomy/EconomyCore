@@ -1,4 +1,4 @@
-package net.tnemc.core.io.storage.dialect;
+package net.tnemc.core.io.storage.dialect.impl;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -17,6 +17,7 @@ package net.tnemc.core.io.storage.dialect;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.io.storage.dialect.TNEDialect;
 import net.tnemc.plugincore.core.io.storage.Dialect;
 import org.intellij.lang.annotations.Language;
 
@@ -26,9 +27,9 @@ import org.intellij.lang.annotations.Language;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class MariaOutdatedDialect implements Dialect {
+public class MariaDialect implements TNEDialect {
 
-  public static final String requirement = "10.1.0";
+  public static final String requirement = "10.7.0";
 
   //The load and save queries
   @Language("SQL")
@@ -93,7 +94,7 @@ public class MariaOutdatedDialect implements Dialect {
 
   protected String prefix;
 
-  public MariaOutdatedDialect(final String prefix) {
+  public MariaDialect(final String prefix) {
     this.prefix = prefix;
 
     this.saveName = "INSERT INTO " + prefix + "player_names (uid, username) VALUES (?, ?) ON DUPLICATE KEY UPDATE username = ?";
@@ -158,7 +159,7 @@ public class MariaOutdatedDialect implements Dialect {
   @Override
   public String accountsTable() {
     return "CREATE TABLE IF NOT EXISTS " + prefix + "accounts (\n" +
-            "    uid VARCHAR(36) NOT NULL PRIMARY KEY,\n" +
+            "    uid UUID NOT NULL PRIMARY KEY,\n" +
             "    username VARCHAR(50) NOT NULL UNIQUE,\n" +
             "    account_type VARCHAR(30) NOT NULL,\n" +
             "    created DATETIME NOT NULL,\n" +
@@ -170,8 +171,8 @@ public class MariaOutdatedDialect implements Dialect {
   @Override
   public String accountsNonPlayerTable() {
     return "CREATE TABLE IF NOT EXISTS " + prefix + "non_players_accounts (\n" +
-            "    uid VARCHAR(36) NOT NULL UNIQUE,\n" +
-            "    owner VARCHAR(36) NOT NULL,\n" +
+            "    uid UUID NOT NULL UNIQUE,\n" +
+            "    owner UUID NOT NULL,\n" +
             "    FOREIGN KEY(uid) REFERENCES " + prefix + "accounts(uid) ON DELETE CASCADE,\n" +
             "    FOREIGN KEY(owner) REFERENCES " + prefix + "accounts(uid) ON DELETE CASCADE\n" +
             "    );";
@@ -180,7 +181,7 @@ public class MariaOutdatedDialect implements Dialect {
   @Override
   public String accountsPlayerTable() {
     return "CREATE TABLE IF NOT EXISTS " + prefix + "players_accounts (\n" +
-            "    uid VARCHAR(36) NOT NULL UNIQUE,\n" +
+            "    uid UUID NOT NULL UNIQUE,\n" +
             "    last_online DATETIME NOT NULL,\n" +
             "    FOREIGN KEY(uid) REFERENCES " + prefix + "accounts(uid) ON DELETE CASCADE\n" +
             "    );";
@@ -189,8 +190,8 @@ public class MariaOutdatedDialect implements Dialect {
   @Override
   public String accountMembersTable() {
     return "CREATE TABLE IF NOT EXISTS " + prefix + "account_members (\n" +
-            "    uid VARCHAR(36) NOT NULL,\n" +
-            "    account VARCHAR(36) NOT NULL,\n" +
+            "    uid UUID NOT NULL,\n" +
+            "    account UUID NOT NULL,\n" +
             "    perm VARCHAR(36) NOT NULL,\n" +
             "    perm_value TINYINT(1) NOT NULL,\n" +
             "    FOREIGN KEY(uid) REFERENCES " + prefix + "accounts(uid) ON DELETE CASCADE,\n" +
@@ -201,10 +202,10 @@ public class MariaOutdatedDialect implements Dialect {
   @Override
   public String holdingsTable() {
     return "CREATE TABLE IF NOT EXISTS " + prefix + "holdings (\n" +
-            "    uid VARCHAR(36) NOT NULL,\n" +
+            "    uid UUID NOT NULL,\n" +
             "    server VARCHAR(40) NOT NULL,\n" +
             "    region VARCHAR(40) NOT NULL,\n" +
-            "    currency VARCHAR(36) NOT NULL,\n" +
+            "    currency UUID NOT NULL,\n" +
             "    holdings_type VARCHAR(30) NOT NULL,\n" +
             "    holdings DECIMAL(49, 4) NOT NULL,\n" +
             "    UNIQUE(`uid`, `server`, `region`, `currency`, `holdings_type`),\n" +
@@ -215,7 +216,7 @@ public class MariaOutdatedDialect implements Dialect {
   @Override
   public String receiptsTable() {
     return "CREATE TABLE IF NOT EXISTS " + prefix + "receipts (\n" +
-            "    uid VARCHAR(36) NOT NULL UNIQUE,\n" +
+            "    uid UUID NOT NULL UNIQUE,\n" +
             "    performed DATETIME NOT NULL,\n" +
             "    receipt_type VARCHAR(30) NOT NULL,\n" +
             "    receipt_source VARCHAR(60) NOT NULL,\n" +
@@ -228,12 +229,12 @@ public class MariaOutdatedDialect implements Dialect {
   @Override
   public String receiptsHoldingsTable() {
     return "CREATE TABLE IF NOT EXISTS " + prefix + "receipts_holdings (\n" +
-            "    uid VARCHAR(36) NOT NULL UNIQUE,\n" +
-            "    participant VARCHAR(36) NOT NULL,\n" +
+            "    uid UUID NOT NULL UNIQUE,\n" +
+            "    participant UUID NOT NULL,\n" +
             "    ending TINYINT(1) NOT NULL,\n" +
             "    server VARCHAR(40) NOT NULL,\n" +
             "    region VARCHAR(40) NOT NULL,\n" +
-            "    currency VARCHAR(36) NOT NULL,\n" +
+            "    currency UUID NOT NULL,\n" +
             "    holdings_type VARCHAR(30) NOT NULL,\n" +
             "    holdings DECIMAL(49, 4) NOT NULL,\n" +
             "    FOREIGN KEY(uid) REFERENCES " + prefix + "receipts(uid) ON DELETE CASCADE\n" +
@@ -243,8 +244,8 @@ public class MariaOutdatedDialect implements Dialect {
   @Override
   public String receiptsParticipantsTable() {
     return "CREATE TABLE IF NOT EXISTS " + prefix + "receipts_participants (\n" +
-            "    uid VARCHAR(36) NOT NULL PRIMARY KEY,\n" +
-            "    participant VARCHAR(36) NOT NULL,\n" +
+            "    uid UUID NOT NULL PRIMARY KEY,\n" +
+            "    participant UUID NOT NULL,\n" +
             "    participant_type VARCHAR(10) NOT NULL,\n" +
             "    tax DECIMAL(49, 4) NOT NULL,\n" +
             "    FOREIGN KEY(uid) REFERENCES " + prefix + "receipts(uid) ON DELETE CASCADE\n" +
@@ -254,12 +255,12 @@ public class MariaOutdatedDialect implements Dialect {
   @Override
   public String receiptsModifiersTable() {
     return "CREATE TABLE IF NOT EXISTS " + prefix + "receipts_modifiers (\n" +
-            "    uid VARCHAR(36) NOT NULL PRIMARY KEY,\n" +
-            "    participant VARCHAR(36) NOT NULL,\n" +
+            "    uid UUID NOT NULL PRIMARY KEY,\n" +
+            "    participant UUID NOT NULL,\n" +
             "    participant_type VARCHAR(10) NOT NULL,\n" +
             "    operation VARCHAR(10) NOT NULL,\n" +
             "    region VARCHAR(40) NOT NULL,\n" +
-            "    currency VARCHAR(36) NOT NULL,\n" +
+            "    currency UUID NOT NULL,\n" +
             "    modifier DECIMAL(49, 4) NOT NULL," +
             "    FOREIGN KEY(uid) REFERENCES " + prefix + "receipts(uid) ON DELETE CASCADE" +
             "    );";

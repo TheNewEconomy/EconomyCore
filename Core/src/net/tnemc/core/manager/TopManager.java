@@ -63,7 +63,7 @@ public class TopManager {
 
     topMap.clear();
     for(Currency currency : TNECore.eco().currency().currencies()) {
-      topMap.put(currency.getUid(), new TopCurrency(TNECore.server().defaultRegion(), currency.getUid()));
+      topMap.put(currency.getUid(), new TopCurrency(TNECore.server().defaultWorld(), currency.getUid()));
     }
   }
 

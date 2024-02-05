@@ -1,4 +1,4 @@
-package net.tnemc.core.io.storage.dialect;
+package net.tnemc.core.io.storage.dialect.impl;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -17,6 +17,7 @@ package net.tnemc.core.io.storage.dialect;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.io.storage.dialect.TNEDialect;
 import net.tnemc.plugincore.core.io.storage.Dialect;
 import org.intellij.lang.annotations.Language;
 
@@ -26,7 +27,7 @@ import org.intellij.lang.annotations.Language;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class MySQLDialect implements Dialect {
+public class MySQLDialect implements TNEDialect {
 
   private final String requirement = "8.0.0";
 

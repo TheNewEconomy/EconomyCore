@@ -62,7 +62,7 @@ public abstract class TreasuryAccount implements Account {
   public @NotNull CompletableFuture<BigDecimal> retrieveBalance(@NotNull Currency currency) {
     final Optional<net.tnemc.core.currency.Currency> curOpt = TNECore.eco().currency().findCurrency(currency.getIdentifier());
     if(curOpt.isPresent()) {
-      return CompletableFuture.completedFuture(account.getHoldingsTotal(TNECore.server().defaultRegion(), curOpt.get().getUid()));
+      return CompletableFuture.completedFuture(account.getHoldingsTotal(TNECore.server().defaultWorld(), curOpt.get().getUid()));
     }
 
     return CompletableFuture.failedFuture(new IllegalArgumentException("Invalid currency identifier provided. Please make sure this currency is registered with TNE before performing operations!"));
@@ -75,7 +75,7 @@ public abstract class TreasuryAccount implements Account {
       return CompletableFuture.failedFuture(new IllegalArgumentException("Invalid currency identifier provided. Please make sure this currency is registered with TNE before performing operations!"));
     }
 
-    final HoldingsModifier modifier = new HoldingsModifier(TNECore.server().defaultRegion(),
+    final HoldingsModifier modifier = new HoldingsModifier(TNECore.server().defaultWorld(),
             curOpt.get().getUid(),
             ecoTrans.getAmount().setScale(curOpt.get().getDecimalPlaces(), RoundingMode.DOWN),
             typeToTNEOperation(ecoTrans.getType()));

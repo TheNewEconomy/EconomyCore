@@ -26,6 +26,7 @@ import net.tnemc.core.account.shared.Member;
 import net.tnemc.core.api.callback.account.AccountLoadCallback;
 import net.tnemc.core.api.callback.account.AccountSaveCallback;
 import net.tnemc.core.api.response.AccountAPIResponse;
+import net.tnemc.core.io.storage.dialect.TNEDialect;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.plugincore.core.id.UUIDPair;
@@ -69,8 +70,8 @@ public class SQLAccount implements Datable<Account> {
    */
   @Override
   public void purge(StorageConnector<?> connector) {
-    if(connector instanceof SQLConnector) {
-      ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().accountPurge(
+    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
+      sql.executeUpdate(tne.accountPurge(
                                                   DataConfig.yaml().getInt("Data.Purge.Accounts.Days")
                                               ),
                                               new Object[] {});
@@ -85,12 +86,12 @@ public class SQLAccount implements Datable<Account> {
    */
   @Override
   public void store(StorageConnector<?> connector, @NotNull Account account, @Nullable String identifier) {
-    if(connector instanceof SQLConnector) {
+    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
 
       TNECore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.STANDARD);
 
       //store the basic account information(accounts table)
-      ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveAccount(),
+      sql.executeUpdate(tne.saveAccount(),
                                               new Object[] {
                                                   account.getIdentifier(),
                                                   account.getName(),
@@ -106,7 +107,7 @@ public class SQLAccount implements Datable<Account> {
       if(account instanceof PlayerAccount playerAccount) {
 
         //Player account storage.(players_accounts table)
-        ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().savePlayer(),
+        sql.executeUpdate(tne.savePlayer(),
                                                 new Object[]{
                                                     account.getIdentifier(),
                                                     new java.sql.Timestamp(playerAccount.getLastOnline()),
@@ -120,7 +121,7 @@ public class SQLAccount implements Datable<Account> {
         //Non-player accounts.(non_players_accounts table)
         final String owner = (shared.getOwner() == null)? account.getIdentifier() :
                                                        shared.getOwner().toString();
-        ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveNonPlayer(),
+        sql.executeUpdate(tne.saveNonPlayer(),
                                                 new Object[]{
                                                     account.getIdentifier(),
                                                     owner,
@@ -130,7 +131,7 @@ public class SQLAccount implements Datable<Account> {
         //Account members(account_members table)
         for(Member member : shared.getMembers().values()) {
           for(Map.Entry<String, Boolean> entry : member.getPermissions().entrySet()) {
-            ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveMembers(),
+            sql.executeUpdate(tne.saveMembers(),
                                                     new Object[]{
                                                         member.getId().toString(),
                                                         account.getIdentifier(),
@@ -174,12 +175,12 @@ public class SQLAccount implements Datable<Account> {
    */
   @Override
   public Optional<Account> load(StorageConnector<?> connector, @NotNull String identifier) {
-    if(connector instanceof SQLConnector) {
+    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
 
       Account account = null;
 
       //Loading/creating our account object.
-      try(ResultSet result = ((SQLConnector)connector).executeQuery(((SQLConnector)connector).dialect().loadAccount(),
+      try(ResultSet result = sql.executeQuery(tne.loadAccount(),
                                                                     new Object[] {
                                                                         identifier
                                                                     })) {
@@ -212,7 +213,7 @@ public class SQLAccount implements Datable<Account> {
 
         //Load our player account info
         if(account instanceof PlayerAccount playerAccount) {
-          try(ResultSet result = ((SQLConnector)connector).executeQuery(((SQLConnector)connector).dialect().loadPlayer(),
+          try(ResultSet result = sql.executeQuery(tne.loadPlayer(),
                                                                         new Object[] {
                                                                             identifier
                                                                         })) {
@@ -226,7 +227,7 @@ public class SQLAccount implements Datable<Account> {
 
         //load our shared account info
         if(account instanceof SharedAccount shared) {
-          try(ResultSet result = ((SQLConnector)connector).executeQuery(((SQLConnector)connector).dialect().loadNonPlayer(),
+          try(ResultSet result = sql.executeQuery(tne.loadNonPlayer(),
                                                                         new Object[] {
                                                                             identifier
                                                                         })) {
@@ -238,7 +239,7 @@ public class SQLAccount implements Datable<Account> {
           }
 
           //Load our members for shared accounts
-          try(ResultSet result = ((SQLConnector)connector).executeQuery(((SQLConnector)connector).dialect().loadMembers(),
+          try(ResultSet result = sql.executeQuery(tne.loadMembers(),
                                                                         new Object[] {
                                                                             identifier
                                                                         })) {
@@ -279,10 +280,10 @@ public class SQLAccount implements Datable<Account> {
   public Collection<Account> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
     final Collection<Account> accounts = new ArrayList<>();
 
-    if(connector instanceof SQLConnector) {
+    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
 
       final List<String> ids = new ArrayList<>();
-      try(ResultSet result = ((SQLConnector)connector).executeQuery(((SQLConnector)connector).dialect().loadAccounts(),
+      try(ResultSet result = sql.executeQuery(tne.loadAccounts(),
                                                           new Object[]{})) {
         while(result.next()) {
           ids.add(result.getString("uid"));

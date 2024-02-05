@@ -24,8 +24,8 @@ import net.tnemc.core.account.holdings.HoldingsHandler;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.currency.type.ExperienceType;
-import net.tnemc.core.utils.Experience;
 import net.tnemc.core.utils.Identifier;
+import net.tnemc.plugincore.core.utils.Experience;
 
 import java.math.BigDecimal;
 import java.util.Optional;

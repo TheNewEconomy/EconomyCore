@@ -35,6 +35,7 @@ import net.tnemc.core.command.parameters.suggestion.DebugSuggestion;
 import net.tnemc.core.command.parameters.suggestion.RegionSuggestion;
 import net.tnemc.core.command.parameters.suggestion.StatusSuggestion;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.region.RegionGroup;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.plugincore.sponge.impl.SpongeLogProvider;
@@ -45,6 +46,8 @@ import net.tnemc.sponge.command.MoneyCommand;
 import net.tnemc.sponge.command.ShortCommands;
 import net.tnemc.sponge.command.TransactionCommand;
 import net.tnemc.sponge.hook.misc.LuckPermsHook;
+import net.tnemc.sponge.impl.SpongeEconomy;
+import net.tnemc.sponge.impl.SpongeItemCalculations;
 import net.tnemc.sponge.listeners.player.PlayerCloseInventoryListener;
 import net.tnemc.sponge.listeners.player.PlayerJoinListener;
 import net.tnemc.sponge.listeners.player.PlayerLeaveListener;
@@ -200,6 +203,11 @@ public class SpongeCore extends TNECore {
   @Override
   public void registerCallbacks() {
     //nothing to see here.
+  }
+
+  @Override
+  public SpongeItemCalculations itemCalculations() {
+    return new SpongeItemCalculations();
   }
 
   public boolean hasConsent() {

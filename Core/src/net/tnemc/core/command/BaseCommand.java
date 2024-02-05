@@ -17,9 +17,13 @@ package net.tnemc.core.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
 import net.tnemc.plugincore.core.compatibility.CmdSource;
 import net.tnemc.plugincore.core.io.message.MessageData;
 import revxrsal.commands.help.CommandHelp;
+
+import java.util.Optional;
 
 /**
  * BaseCommand is a class that contains various utility methods for our command classes.
@@ -34,5 +38,23 @@ public class BaseCommand {
     for(final String entry : helpEntries.paginate(page, 5)) {
       source.message(new MessageData(entry));
     }
+  }
+
+  public static Optional<Account> account(CmdSource<?> sender) {
+    if(sender.identifier().isPresent()) {
+      return Optional.empty();
+    }
+    return TNECore.eco().account().findAccount(sender.identifier().get());
+  }
+
+  /**
+   * Used to get the world for this command source.
+   * @return The name of the world that this command source is in.
+   */
+  public static String region(CmdSource<?> sender) {
+    if(sender.player().isPresent()) {
+      return TNECore.eco().region().getMode().region(sender.player().get());
+    }
+    return TNECore.eco().region().defaultRegion();
   }
 }

@@ -53,8 +53,8 @@ public class MaterialRule implements FormatRule {
           final ItemDenomination denom = (ItemDenomination)denomination;
           if(formatted.contains(denom.getMaterial())) {
 
-            final AbstractItemStack<Object> stack = TNECore.server().denominationToStack(denom);
-            final int count = TNECore.server().calculations().count(stack,provider.get().inventory().getInventory(false));
+            final AbstractItemStack<?> stack = TNECore.core().denominationToStack(denom);
+            final int count = TNECore.server().calculations().count((AbstractItemStack<Object>)stack, provider.get().inventory().getInventory(false));
             formatted = formatted.replace("<" + denom.getMaterial() + ">", String.valueOf(count));
           }
         }

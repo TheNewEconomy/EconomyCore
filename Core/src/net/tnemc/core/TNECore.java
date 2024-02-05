@@ -40,11 +40,13 @@ import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.config.MessageConfig;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.currency.calculations.ItemCalculations;
+import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.hook.treasury.TreasuryHook;
 import net.tnemc.core.io.message.BaseTranslationProvider;
 import net.tnemc.core.region.RegionGroup;
+import net.tnemc.item.AbstractItemStack;
 import net.tnemc.plugincore.PluginCore;
-import net.tnemc.plugincore.core.api.CallbackManager;
 import net.tnemc.plugincore.core.compatibility.LogProvider;
 import net.tnemc.plugincore.core.compatibility.ServerConnector;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
@@ -54,9 +56,10 @@ import net.tnemc.plugincore.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.plugincore.core.io.message.MessageData;
 import net.tnemc.plugincore.core.io.message.MessageHandler;
 import net.tnemc.plugincore.core.io.message.TranslationProvider;
-import net.tnemc.plugincore.core.io.storage.StorageManager;
 import net.tnemc.plugincore.core.module.cache.ModuleFileCache;
 import net.tnemc.plugincore.core.utils.UpdateChecker;
+import revxrsal.commands.command.CommandActor;
+import revxrsal.commands.command.ExecutableCommand;
 import revxrsal.commands.orphan.Orphans;
 
 import java.io.IOException;
@@ -78,21 +81,21 @@ public abstract class TNECore extends PluginCore {
    */
   public static final String coreURL = "https://tnemc.net/files/module-version.xml";
 
-  public static final String version = "0.1.2.6"; //not in TNPC
-  public static final String build = "Release-1"; //not in TNPC
+  public static final String version = "0.1.2.8";
+  public static final String build = "Release-1";
 
   /* Key Managers and Object instances utilized with TNE */
 
   //General Key Object Instances
-  protected EconomyManager economyManager; //not in TNPC
+  protected EconomyManager economyManager;
 
-  private MainConfig config; //not in TNPC
-  private DataConfig data; //not in TNPC
-  private MessageConfig messageConfig; //not in TNPC
-  private Chore<?> autoSaver = null; //not in TNPC
+  private MainConfig config;
+  private DataConfig data;
+  private MessageConfig messageConfig;
+  private Chore<?> autoSaver = null;
 
-  private final TNEAPI api = new TNEAPI(); //not in TNPC
-  protected UUID serverAccount; //not in TNPC
+  private final TNEAPI api = new TNEAPI();
+  protected UUID serverAccount;
 
   public TNECore(ServerConnector server, LogProvider logger) {
     super(server, logger, new BaseTranslationProvider(), new TNECallbackProvider());
@@ -238,14 +241,6 @@ public abstract class TNECore extends PluginCore {
     }
 
     //register our commands
-    command.setHelpWriter((command, actor) -> {
-      final MessageData data = new MessageData("Messages.Commands.Help.Entry");
-      data.addReplacement("$command", command.getPath().toRealString());
-      data.addReplacement("$arguments", MessageHandler.getInstance().getTranslator().translateNode(new MessageData("Messages.Commands." + command.getUsage()), "default"));
-      data.addReplacement("$description", MessageHandler.getInstance().getTranslator().translateNode(new MessageData("Messages.Commands." + command.getDescription()), "default"));
-
-      return MessageHandler.getInstance().getTranslator().translateNode(data, "default");
-    });
 
     //Custom Parameters:
     //TODO: Register custom validators
@@ -322,12 +317,36 @@ public abstract class TNECore extends PluginCore {
     super.onDisable();
   }
 
+  @Override
+  public String commandHelpWriter(ExecutableCommand command, CommandActor actor) {
+    final MessageData data = new MessageData("Messages.Commands.Help.Entry");
+    data.addReplacement("$command", command.getPath().toRealString());
+    data.addReplacement("$arguments", MessageHandler.getInstance().getTranslator().translateNode(new MessageData("Messages.Commands." + command.getUsage()), "default"));
+    data.addReplacement("$description", MessageHandler.getInstance().getTranslator().translateNode(new MessageData("Messages.Commands." + command.getDescription()), "default"));
+
+    return MessageHandler.getInstance().getTranslator().translateNode(data, "default");
+  }
+
+  @Override
+  public String version() {
+    return version;
+  }
+
+  @Override
+  public String build() {
+    return build;
+  }
 
   public abstract void registerCommands();
 
   public abstract void registerConfigs();
 
   public abstract void registerCallbacks();
+
+  @Override
+  public void registerStorage() {
+    //TODO: Storage
+  }
 
   /**
    * The implementation's {@link EconomyManager}, which is used to manage everything economy related
@@ -368,5 +387,21 @@ public abstract class TNECore extends PluginCore {
 
   public UUID getServerAccount() {
     return serverAccount;
+  }
+
+  public abstract <INV> ItemCalculations<INV> itemCalculations();
+
+  public AbstractItemStack<?> denominationToStack(final ItemDenomination denomination) {
+    return denominationToStack(denomination, 1);
+  }
+
+  public AbstractItemStack<?> denominationToStack(final ItemDenomination denomination, int amount) {
+    return server.stackBuilder().of(denomination.getMaterial(), amount)
+            .enchant(denomination.getEnchantments())
+            .lore(denomination.getLore())
+            .flags(denomination.getFlags())
+            .damage(denomination.getDamage())
+            .display(denomination.getName())
+            .modelData(denomination.getCustomModel());
   }
 }

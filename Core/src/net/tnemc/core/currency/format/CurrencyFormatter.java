@@ -66,7 +66,7 @@ public class CurrencyFormatter {
   }
 
   public static String format(@Nullable Account account, final BigDecimal amount) {
-    return format(account, new HoldingsEntry(TNECore.server().defaultRegion(), TNECore.eco().currency().getDefaultCurrency().getUid(), amount, EconomyManager.NORMAL));
+    return format(account, new HoldingsEntry(TNECore.server().defaultWorld(), TNECore.eco().currency().getDefaultCurrency().getUid(), amount, EconomyManager.NORMAL));
   }
 
   public static String format(@Nullable Account account, HoldingsEntry entry) {

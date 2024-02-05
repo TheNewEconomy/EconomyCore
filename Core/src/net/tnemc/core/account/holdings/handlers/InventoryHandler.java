@@ -84,7 +84,7 @@ public class InventoryHandler implements HoldingsHandler {
                                                                  ((PlayerAccount)account).getPlayer()
                                                                      .get().inventory().getInventory(false),
                                                                  ((PlayerAccount)account).getUUID());
-      TNECore.server().itemCalculations().setItems(data, amount);
+      TNECore.core().itemCalculations().setItems(data, amount);
       return true;
     }
     return true;
@@ -131,7 +131,7 @@ public class InventoryHandler implements HoldingsHandler {
                                                                  ((PlayerAccount)account).getUUID());
 
       return new HoldingsEntry(region, currency.getUid(),
-                               TNECore.server().itemCalculations().calculateHoldings(data), identifier());
+                               TNECore.core().itemCalculations().calculateHoldings(data), identifier());
     }
     //not item currency? then return zero... should never happen.
     return new HoldingsEntry(region,

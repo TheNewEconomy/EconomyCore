@@ -79,7 +79,7 @@ public class MoneyCommand extends BaseCommand {
       }
     }
 
-    final Optional<Account> account = sender.account();
+    final Optional<Account> account = BaseCommand.account(sender);
     if(account.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
       data.addReplacement("$player", sender.name());
@@ -121,7 +121,7 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    final Optional<Account> account = sender.account();
+    final Optional<Account> account = BaseCommand.account(sender);
     if(account.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
       data.addReplacement("$player", sender.name());
@@ -137,12 +137,12 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
+    final HoldingsModifier modifier = new HoldingsModifier(BaseCommand.region(sender),
                                                            currency.getUid(),
                                                            converted.get().setScale(currency.getDecimalPlaces(), RoundingMode.DOWN)
     );
 
-    final HoldingsModifier modifierFrom = new HoldingsModifier(sender.region(),
+    final HoldingsModifier modifierFrom = new HoldingsModifier(BaseCommand.region(sender),
                                                                fromCurrency.getUid(),
                                                                amount.value().setScale(currency.getDecimalPlaces(), RoundingMode.DOWN).negate()
     );
@@ -151,7 +151,7 @@ public class MoneyCommand extends BaseCommand {
         .from(account.get(), modifierFrom)
         .to(account.get(), modifier)
         .processor(EconomyManager.baseProcessor())
-        .source(new PlayerSource(sender.identifier()));
+        .source(new PlayerSource(sender.identifier().get()));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()){
@@ -182,7 +182,7 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    final Optional<Account> senderAccount = sender.account();
+    final Optional<Account> senderAccount = BaseCommand.account(sender);
 
     if(senderAccount.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
@@ -198,7 +198,7 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
+    final HoldingsModifier modifier = new HoldingsModifier(BaseCommand.region(sender),
             currency.getUid(),
             amount,
             EconomyManager.VIRTUAL
@@ -208,7 +208,7 @@ public class MoneyCommand extends BaseCommand {
             .to(senderAccount.get(), modifier)
             .from(senderAccount.get(), modifier.counter(EconomyManager.ITEM_ONLY))
             .processor(EconomyManager.baseProcessor())
-            .source(new PlayerSource(sender.identifier()));
+            .source(new PlayerSource(sender.identifier().get()));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()) {
@@ -271,7 +271,7 @@ public class MoneyCommand extends BaseCommand {
   //ArgumentsParser: <amount> [currency]
   public static void onNote(CmdSource<?> sender, PercentBigDecimal amount, Currency currency) {
 
-    final Optional<Account> account = sender.account();
+    final Optional<Account> account = BaseCommand.account(sender);
     final Optional<Note> note = currency.getNote();
     if(account.isPresent() && note.isPresent() && account.get() instanceof PlayerAccount) {
 
@@ -299,7 +299,7 @@ public class MoneyCommand extends BaseCommand {
 
       final BigDecimal amt = rounded.add(note.get().getFee().calculateTax(rounded)).setScale(currency.getDecimalPlaces(), RoundingMode.DOWN);
 
-      final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
+      final HoldingsModifier modifier = new HoldingsModifier(BaseCommand.region(sender),
                                                              currency.getUid(),
               amt
       );
@@ -307,12 +307,12 @@ public class MoneyCommand extends BaseCommand {
       final Transaction transaction = new Transaction("note")
           .from(account.get(), modifier.counter())
           .processor(EconomyManager.baseProcessor())
-          .source(new PlayerSource(sender.identifier()));
+          .source(new PlayerSource(sender.identifier().get()));
 
 
       final Optional<Receipt> receipt = processTransaction(sender, transaction);
       if(receipt.isPresent()) {
-        final Collection<AbstractItemStack<Object>> left = TNECore.server().calculations().giveItems(Collections.singletonList(note.get().stack(currency.getIdentifier(), sender.region(), rounded)), provider.get().inventory().getInventory(false));
+        final Collection<AbstractItemStack<Object>> left = TNECore.server().calculations().giveItems(Collections.singletonList(note.get().stack(currency.getIdentifier(), BaseCommand.region(sender), rounded)), provider.get().inventory().getInventory(false));
 
         if(left.size() > 0) {
           TNECore.server().calculations().drop(left, ((PlayerAccount)account.get()).getUUID());
@@ -402,7 +402,7 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    final Optional<Account> senderAccount = sender.account();
+    final Optional<Account> senderAccount = BaseCommand.account(sender);
 
     if(senderAccount.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
@@ -450,7 +450,7 @@ public class MoneyCommand extends BaseCommand {
       }
     }
 
-    final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
+    final HoldingsModifier modifier = new HoldingsModifier(BaseCommand.region(sender),
                                                            currency.getUid(),
             amount
     );
@@ -459,7 +459,7 @@ public class MoneyCommand extends BaseCommand {
         .to(account, modifier)
         .from(senderAccount.get(), modifier.counter())
         .processor(EconomyManager.baseProcessor())
-        .source(new PlayerSource(sender.identifier()));
+        .source(new PlayerSource(sender.identifier().get()));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()) {
@@ -547,7 +547,7 @@ public class MoneyCommand extends BaseCommand {
     final Transaction transaction = new Transaction("set")
         .to(account, modifier)
         .processor(EconomyManager.baseProcessor())
-        .source(new PlayerSource(sender.identifier()));
+        .source(new PlayerSource(sender.identifier().get()));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
 
@@ -587,7 +587,7 @@ public class MoneyCommand extends BaseCommand {
       final Transaction transaction = new Transaction("set")
           .to(account, modifier)
           .processor(EconomyManager.baseProcessor())
-          .source(new PlayerSource(sender.identifier()));
+          .source(new PlayerSource(sender.identifier().get()));
 
       final Optional<Receipt> receipt = processTransaction(sender, transaction);
 
@@ -635,7 +635,7 @@ public class MoneyCommand extends BaseCommand {
     final Transaction transaction = new Transaction("take")
         .to(account, modifier.counter())
         .processor(EconomyManager.baseProcessor())
-        .source(new PlayerSource(sender.identifier()));
+        .source(new PlayerSource(sender.identifier().get()));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()) {
@@ -676,7 +676,7 @@ public class MoneyCommand extends BaseCommand {
       }
     }
 
-    final Optional<Account> senderAccount = sender.account();
+    final Optional<Account> senderAccount = BaseCommand.account(sender);
 
     if(senderAccount.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
@@ -726,7 +726,7 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    final Optional<Account> senderAccount = sender.account();
+    final Optional<Account> senderAccount = BaseCommand.account(sender);
     if(senderAccount.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
       data.addReplacement("$player", sender.name());
@@ -741,7 +741,7 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    final HoldingsModifier modifier = new HoldingsModifier(sender.region(),
+    final HoldingsModifier modifier = new HoldingsModifier(BaseCommand.region(sender),
             currency.getUid(),
             amount,
             EconomyManager.ITEM_ONLY
@@ -751,7 +751,7 @@ public class MoneyCommand extends BaseCommand {
             .to(senderAccount.get(), modifier)
             .from(senderAccount.get(), modifier.counter(EconomyManager.VIRTUAL))
             .processor(EconomyManager.baseProcessor())
-            .source(new PlayerSource(sender.identifier()));
+            .source(new PlayerSource(sender.identifier().get()));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()) {

@@ -27,6 +27,7 @@ import net.tnemc.bukkit.depend.faction.FactionHandler;
 import net.tnemc.bukkit.depend.towny.TownyHandler;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.TNECallbacks;
+import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.menu.bukkit.BukkitMenuHandler;
 import net.tnemc.plugincore.bukkit.impl.BukkitLogProvider;
 import net.tnemc.plugincore.core.compatibility.ServerConnector;
@@ -91,7 +92,7 @@ public class BukkitCore extends TNECore {
 
   @Override
   public void registerCallbacks() {
-    this.callbackManager.addConsumer(TNECallbacks.ACCOUNT_TYPES, (callback->{
+    this.callbackManager.addConsumer(TNECallbacks.ACCOUNT_TYPES.toString(), (callback->{
 
       if(Bukkit.getPluginManager().getPlugin("Towny") != null) {
         log().debug("Adding Towny Account Types");
@@ -104,6 +105,11 @@ public class BukkitCore extends TNECore {
       }
       return false;
     }));
+  }
+
+  @Override
+  public BukkitItemCalculations itemCalculations() {
+    return null;
   }
 
   public static BukkitCore instance() {

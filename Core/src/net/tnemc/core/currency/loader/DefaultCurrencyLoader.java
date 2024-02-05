@@ -346,19 +346,19 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     denomination.setSingle(single);
     denomination.setPlural(plural);
 
-    if(denomination instanceof ItemDenomination) {
+    if(denomination instanceof ItemDenomination item) {
 
-      ((ItemDenomination)denomination).setName(denom.getString("Options.Name", null));
-      ((ItemDenomination)denomination).setLore(denom.getStringList("Options.Lore"));
-      ((ItemDenomination)denomination).setCustomModel(denom.getInt("Options.ModelData", -1));
-      ((ItemDenomination)denomination).setTexture(denom.getString("Options.Texture", null));
+      item.setName(denom.getString("Options.Name", null));
+      item.setLore(denom.getStringList("Options.Lore"));
+      item.setCustomModel(denom.getInt("Options.ModelData", -1));
+      item.setTexture(denom.getString("Options.Texture", null));
 
       if(denom.contains("Options.Enchantments")) {
-        ((ItemDenomination)denomination).setEnchantments(denom.getStringList("Options.Enchantments"));
+        item.setEnchantments(denom.getStringList("Options.Enchantments"));
       }
 
       if(denom.contains("Options.Flags")) {
-        ((ItemDenomination)denomination).setFlags(denom.getStringList("Options.Flags"));
+        item.setFlags(denom.getStringList("Options.Flags"));
       }
 
       //Crafting
@@ -366,7 +366,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
         final boolean shapeless = denom.getBoolean("Options.Crafting.Shapeless", false);
         final int amount = denom.getInt("Options.Crafting.Amount", 1);
 
-        CraftingRecipe recipe = new CraftingRecipe(!shapeless, amount, (ItemDenomination)denomination);
+        CraftingRecipe recipe = new CraftingRecipe(!shapeless, amount, TNECore.core().denominationToStack(item));
 
         for(String materials : denom.getStringList("Options.Crafting.Materials")) {
 

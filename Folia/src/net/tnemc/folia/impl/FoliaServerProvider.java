@@ -21,6 +21,7 @@ package net.tnemc.folia.impl;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import net.tnemc.bukkit.BukkitCore;
 import net.tnemc.core.TNECore;
+import net.tnemc.item.providers.CalculationsProvider;
 import net.tnemc.plugincore.bukkit.hook.PAPIParser;
 import net.tnemc.plugincore.bukkit.impl.BukkitPlayerProvider;
 import net.tnemc.plugincore.bukkit.impl.BukkitProxyProvider;
@@ -62,6 +63,8 @@ public class FoliaServerProvider implements ServerConnector {
   private final BukkitProxyProvider proxy = new BukkitProxyProvider();
 
   private final FoliaScheduler scheduler;
+
+  protected String world = null;
 
   public FoliaServerProvider() {
     this.scheduler = new FoliaScheduler();
@@ -226,6 +229,14 @@ public class FoliaServerProvider implements ServerConnector {
     return Optional.empty();
   }
 
+  @Override
+  public String defaultWorld() {
+    if(world == null) {
+      world = Bukkit.getServer().getWorlds().get(0).getName();
+    }
+    return world;
+  }
+
   /**
    * Determines if a plugin with the correlating name is currently installed.
    *
@@ -294,5 +305,10 @@ public class FoliaServerProvider implements ServerConnector {
       }
       Bukkit.getServer().addRecipe(shapeless);
     }
+  }
+
+  @Override
+  public BukkitCalculationsProvider calculations() {
+    return calc;
   }
 }
