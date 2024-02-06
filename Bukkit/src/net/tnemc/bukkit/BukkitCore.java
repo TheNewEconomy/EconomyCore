@@ -28,7 +28,9 @@ import net.tnemc.bukkit.depend.towny.TownyHandler;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.TNECallbacks;
 import net.tnemc.menu.bukkit.BukkitMenuHandler;
+import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.bukkit.impl.BukkitLogProvider;
+import net.tnemc.plugincore.core.api.CallbackManager;
 import net.tnemc.plugincore.core.compatibility.ServerConnector;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,21 +44,12 @@ import revxrsal.commands.bukkit.BukkitCommandHandler;
  */
 public class BukkitCore extends TNECore {
 
-  private JavaPlugin plugin;
+  private final JavaPlugin plugin;
 
   private BukkitConfig bukkitConfig;
 
-  public BukkitCore(JavaPlugin plugin, ServerConnector server) {
-    super(server, new BukkitLogProvider(plugin.getLogger()));
-    setInstance(this);
+  public BukkitCore(JavaPlugin plugin) {
     this.plugin = plugin;
-  }
-
-  @Override
-  protected void onEnable() {
-    this.directory = plugin.getDataFolder();
-
-    super.onEnable();
   }
 
   @Override
@@ -71,15 +64,17 @@ public class BukkitCore extends TNECore {
 
   @Override
   public void registerConfigs() {
+    super.registerConfigs();
 
     this.bukkitConfig = new BukkitConfig();
     if(!this.bukkitConfig.load()) {
-      TNECore.log().error("Failed to load bukkit configuration!");
+      PluginCore.log().error("Failed to load bukkit configuration!");
     }
   }
 
   @Override
   public void registerCommands() {
+    super.registerCommands();
 
     //Register our commands
     command.register(new AdminCommand());
@@ -90,16 +85,18 @@ public class BukkitCore extends TNECore {
   }
 
   @Override
-  public void registerCallbacks() {
-    this.callbackManager.addConsumer(TNECallbacks.ACCOUNT_TYPES.toString(), (callback->{
+  public void registerCallbacks(CallbackManager callbackManager) {
+    callbackManager.addConsumer(TNECallbacks.ACCOUNT_TYPES.toString(), (callback->{
 
       if(Bukkit.getPluginManager().getPlugin("Towny") != null) {
-        log().debug("Adding Towny Account Types");
+
+        PluginCore.log().debug("Adding Towny Account Types");
         TownyHandler.addTypes();
       }
 
       if(Bukkit.getPluginManager().getPlugin("Factions") != null) {
-        log().debug("Adding Factions Account Types");
+
+        PluginCore.log().debug("Adding Factions Account Types");
         FactionHandler.addTypes();
       }
       return false;

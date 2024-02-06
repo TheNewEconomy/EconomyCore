@@ -27,6 +27,10 @@ import net.tnemc.bukkit.listeners.player.PlayerInteractListener;
 import net.tnemc.bukkit.listeners.player.PlayerJoinListener;
 import net.tnemc.bukkit.listeners.player.PlayerQuitListener;
 import net.tnemc.bukkit.listeners.world.WorldLoadListener;
+import net.tnemc.core.api.callback.TNECallbackProvider;
+import net.tnemc.core.io.message.BaseTranslationProvider;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.bukkit.BukkitPluginCore;
 import net.tnemc.plugincore.core.compatibility.ServerConnector;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -43,6 +47,7 @@ import java.util.logging.Level;
  */
 public class BukkitPlugin {
 
+  private BukkitPluginCore pluginCore;
   private BukkitCore core;
 
   /**
@@ -52,15 +57,16 @@ public class BukkitPlugin {
   public void load(final JavaPlugin plugin, ServerConnector server) {
 
     //Initialize our TNE Core Class
-    this.core = new BukkitCore(plugin, server);
+    this.core = new BukkitCore(plugin);
+    this.pluginCore = new BukkitPluginCore(plugin, core, server, new BaseTranslationProvider(), new TNECallbackProvider());
 
     //Vault
     System.out.println("Checking for Vault");
     try {
-      BukkitCore.log().inform("net.milkbowl.vault.economy.Economy");
+      PluginCore.log().inform("net.milkbowl.vault.economy.Economy");
       new VaultHook().register();
     } catch(Exception ignore) {
-      BukkitCore.log().error("Unable to connect to vault!");
+      PluginCore.log().error("Unable to connect to vault!");
     }
   }
 
@@ -70,7 +76,7 @@ public class BukkitPlugin {
    */
   public void enable(final JavaPlugin plugin) {
 
-    this.core.enable();
+    this.pluginCore.enable();
 
     //Register our event listeners
     Bukkit.getPluginManager().registerEvents(new EntityKilledListener(), plugin);
@@ -108,6 +114,6 @@ public class BukkitPlugin {
    * This method should be used to disable the functionality provided by this class.
    */
   public void disable(final JavaPlugin plugin) {
-    this.core.onDisable();
+    this.pluginCore.onDisable();
   }
 }

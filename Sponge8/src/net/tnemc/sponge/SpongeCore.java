@@ -22,6 +22,7 @@ import com.google.inject.Inject;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.AccountStatus;
+import net.tnemc.core.api.callback.TNECallbackProvider;
 import net.tnemc.core.command.parameters.PercentBigDecimal;
 import net.tnemc.core.command.parameters.resolver.AccountResolver;
 import net.tnemc.core.command.parameters.resolver.BigDecimalResolver;
@@ -35,8 +36,12 @@ import net.tnemc.core.command.parameters.suggestion.DebugSuggestion;
 import net.tnemc.core.command.parameters.suggestion.RegionSuggestion;
 import net.tnemc.core.command.parameters.suggestion.StatusSuggestion;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.io.message.BaseTranslationProvider;
 import net.tnemc.core.region.RegionGroup;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.api.CallbackManager;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.sponge.SpongePluginCore;
 import net.tnemc.plugincore.sponge.impl.SpongeLogProvider;
 import net.tnemc.plugincore.sponge.impl.SpongeServerProvider;
 import net.tnemc.sponge.command.AdminCommand;
@@ -82,6 +87,7 @@ import java.util.Optional;
 @Plugin("tne")
 public class SpongeCore extends TNECore {
 
+  protected final SpongePluginCore pluginCore;
   protected final PluginContainer container;
   private final Metrics metrics;
   @Inject
@@ -93,9 +99,9 @@ public class SpongeCore extends TNECore {
 
   @Inject
   SpongeCore(final PluginContainer container, final Logger log, final Metrics.Factory metricsFactory) {
-    super(new SpongeServerProvider(), new SpongeLogProvider(log));
+    this.pluginCore = new SpongePluginCore(container, this, log, new BaseTranslationProvider(), new TNECallbackProvider());
     this.container = container;
-    setInstance(this);
+
     command = SpongeCommandHandler.create(container);
 
     final Optional<PluginContainer> luckContainer = Sponge.pluginManager().plugin("luckperms");
@@ -121,8 +127,7 @@ public class SpongeCore extends TNECore {
 
   @Listener
   public void onEngineStart(final StartingEngineEvent<Server> event) {
-    setInstance(this);
-    logger.inform("Starting up The New Economy.");
+    PluginCore.log().inform("Starting up The New Economy.");
 
     //Register our event listeners
     Sponge.eventManager().registerListeners(container, new PlayerJoinListener(container));
@@ -132,15 +137,15 @@ public class SpongeCore extends TNECore {
 
   @Listener
   public void onServerStart(final StartedEngineEvent<Server> event) {
-    this.directory = configDir.toFile();
-    instance().enable();
-    logger.inform("The New Economy has been enabled.");
+    //this.directory = configDir.toFile();
+    pluginCore.enable();
+    PluginCore.log().inform("The New Economy has been enabled.");
   }
 
   @Listener
   public void onServerStop(final StoppingEngineEvent<Server> event) {
-    super.onDisable();
-    logger.inform("The New Economy has been disabled.");
+    pluginCore.onDisable();
+    PluginCore.log().inform("The New Economy has been disabled.");
   }
 
   @Listener
@@ -154,7 +159,7 @@ public class SpongeCore extends TNECore {
 
   @Override
   public void registerCommandHandler() {
-    //command = SpongeCommandHandler.create(container);
+    command = SpongeCommandHandler.create(container);
   }
 
   @Override
@@ -188,7 +193,7 @@ public class SpongeCore extends TNECore {
   }
 
   @Override
-  public void registerCallbacks() {
+  public void registerCallbacks(CallbackManager callbackManager) {
     //nothing to see here.
   }
 
