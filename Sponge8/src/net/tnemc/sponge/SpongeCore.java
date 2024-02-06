@@ -20,30 +20,11 @@ package net.tnemc.sponge;
 
 import com.google.inject.Inject;
 import net.tnemc.core.TNECore;
-import net.tnemc.core.account.Account;
-import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.api.callback.TNECallbackProvider;
-import net.tnemc.core.command.parameters.PercentBigDecimal;
-import net.tnemc.core.command.parameters.resolver.AccountResolver;
-import net.tnemc.core.command.parameters.resolver.BigDecimalResolver;
-import net.tnemc.core.command.parameters.resolver.CurrencyResolver;
-import net.tnemc.core.command.parameters.resolver.DebugResolver;
-import net.tnemc.core.command.parameters.resolver.PercentDecimalResolver;
-import net.tnemc.core.command.parameters.resolver.StatusResolver;
-import net.tnemc.core.command.parameters.suggestion.AccountSuggestion;
-import net.tnemc.core.command.parameters.suggestion.CurrencySuggestion;
-import net.tnemc.core.command.parameters.suggestion.DebugSuggestion;
-import net.tnemc.core.command.parameters.suggestion.RegionSuggestion;
-import net.tnemc.core.command.parameters.suggestion.StatusSuggestion;
-import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.message.BaseTranslationProvider;
-import net.tnemc.core.region.RegionGroup;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.api.CallbackManager;
-import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.plugincore.sponge.SpongePluginCore;
-import net.tnemc.plugincore.sponge.impl.SpongeLogProvider;
-import net.tnemc.plugincore.sponge.impl.SpongeServerProvider;
 import net.tnemc.sponge.command.AdminCommand;
 import net.tnemc.sponge.command.ModuleCommand;
 import net.tnemc.sponge.command.MoneyCommand;
@@ -73,7 +54,6 @@ import org.spongepowered.plugin.PluginContainer;
 import org.spongepowered.plugin.builtin.jvm.Plugin;
 import revxrsal.commands.sponge.SpongeCommandHandler;
 
-import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.util.Optional;
 
@@ -165,20 +145,7 @@ public class SpongeCore extends TNECore {
   @Override
   public void registerCommands() {
 
-    //Register our commands
-    command.registerValueResolver(Account.class, new AccountResolver());
-    command.registerValueResolver(AccountStatus.class, new StatusResolver());
-    command.registerValueResolver(DebugLevel.class, new DebugResolver());
-    command.registerValueResolver(Currency.class, new CurrencyResolver());
-    command.registerValueResolver(PercentBigDecimal.class, new PercentDecimalResolver());
-    command.registerValueResolver(BigDecimal.class, new BigDecimalResolver());
-
-    //Annotation
-    command.getAutoCompleter().registerParameterSuggestions(AccountStatus.class, new StatusSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(DebugLevel.class, new DebugSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(RegionGroup.class, new RegionSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(Account.class, new AccountSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(Currency.class, new CurrencySuggestion());
+    super.registerCommands();
 
     command.register(new AdminCommand());
     command.register(new ModuleCommand());
@@ -206,12 +173,8 @@ public class SpongeCore extends TNECore {
     return this.metricsConfigManager.collectionState(this.container).asBoolean();
   }
 
-  public static SpongeCore instance() {
-    return (SpongeCore)TNECore.instance();
-  }
-
   public static ResourceKey key(final String key) {
-    final String[] split = key.split("\\:");
+    final String[] split = key.split(":");
 
     final String namespace = (split.length >= 2)? split[0] : "minecraft";
     final String value = (split.length >= 2)? split[1] : split[0];
