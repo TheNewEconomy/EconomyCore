@@ -18,10 +18,10 @@ package net.tnemc.core.region;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.region.mode.BiomeMode;
 import net.tnemc.core.region.mode.WorldMode;
+import net.tnemc.plugincore.PluginCore;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -120,7 +120,7 @@ public class RegionProvider {
   public String defaultRegion() {
     final String configDefault = MainConfig.yaml().getString("Core.Region.DefaultRegion");
     if(configDefault.equalsIgnoreCase("TNE_SYSTEM")) {
-      return TNECore.server().defaultWorld();
+      return PluginCore.server().defaultWorld();
     }
     return configDefault;
   }

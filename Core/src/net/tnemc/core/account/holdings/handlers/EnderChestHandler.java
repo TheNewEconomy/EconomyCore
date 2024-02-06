@@ -23,12 +23,13 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsHandler;
-import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.currency.calculations.CalculationData;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.utils.Identifier;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -79,12 +80,12 @@ public class EnderChestHandler implements HoldingsHandler {
   public boolean setHoldings(Account account, String region, Currency currency, CurrencyType type, BigDecimal amount) {
     account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, identifier()));
 
-    if(account.isPlayer() && TNECore.server().online(account.getIdentifier()) && !TNECore.eco().account().getImporting().contains(((PlayerAccount)account).getUUID().toString())) {
+    if(account.isPlayer() && PluginCore.server().online(account.getIdentifier()) && !TNECore.eco().account().getImporting().contains(((PlayerAccount)account).getUUID().toString())) {
       final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
                                                                  ((PlayerAccount)account).getPlayer()
                                                                      .get().inventory().getInventory(true),
                                                                  ((PlayerAccount)account).getUUID());
-      TNECore.core().itemCalculations().setItems(data, amount);
+      TNECore.instance().itemCalculations().setItems(data, amount);
       return true;
     }
     return true;
@@ -104,7 +105,7 @@ public class EnderChestHandler implements HoldingsHandler {
   @Override
   public HoldingsEntry getHoldings(Account account, String region, Currency currency, CurrencyType type) {
     if((currency instanceof ItemCurrency) && account.isPlayer()) {
-      if(!TNECore.server().online(account.getIdentifier()) ||
+      if(!PluginCore.server().online(account.getIdentifier()) ||
           TNECore.eco().account().getLoading().contains(((PlayerAccount)account).getUUID().toString())
                   && !TNECore.eco().account().getImporting().contains(((PlayerAccount)account).getUUID().toString())) {
 
@@ -113,7 +114,7 @@ public class EnderChestHandler implements HoldingsHandler {
                                                                                  currency.getUid(),
                                                                                  identifier()
         );
-        TNECore.log().debug("Getting holdings from DB", DebugLevel.DEVELOPER);
+        PluginCore.log().debug("Getting holdings from DB", DebugLevel.DEVELOPER);
 
         if(holdings.isPresent()) {
           return holdings.get();
@@ -123,14 +124,14 @@ public class EnderChestHandler implements HoldingsHandler {
                                  BigDecimal.ZERO,
                                  identifier());
       }
-      TNECore.log().debug("Getting holdings from Ender Chest", DebugLevel.DEVELOPER);
+      PluginCore.log().debug("Getting holdings from Ender Chest", DebugLevel.DEVELOPER);
       final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
                                                                  ((PlayerAccount)account).getPlayer()
                                                                      .get().inventory().getInventory(true),
                                                                  ((PlayerAccount)account).getUUID());
 
       return new HoldingsEntry(region, currency.getUid(),
-                               TNECore.core().itemCalculations().calculateHoldings(data), identifier());
+                               TNECore.instance().itemCalculations().calculateHoldings(data), identifier());
     }
     //Non-players can't have e-chest holdings so this is always zero.
     return new HoldingsEntry(region,

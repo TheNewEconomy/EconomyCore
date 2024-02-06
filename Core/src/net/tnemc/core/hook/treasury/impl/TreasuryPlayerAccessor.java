@@ -22,6 +22,7 @@ import me.lokka30.treasury.api.economy.account.accessor.PlayerAccountAccessor;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.hook.treasury.wrapper.TreasuryPlayerAccount;
+import net.tnemc.plugincore.PluginCore;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -40,7 +41,7 @@ public class TreasuryPlayerAccessor extends PlayerAccountAccessor {
   protected @NotNull CompletableFuture<PlayerAccount> getOrCreate(@NotNull PlayerAccountCreateContext context) {
 
     final UUID id = context.getUniqueId();
-    final Optional<String> name = TNECore.server().fromID(id);
+    final Optional<String> name = PluginCore.server().fromID(id);
     if(name.isEmpty()) {
       return CompletableFuture.failedFuture(new IllegalArgumentException("Invalid player UUID. Not located on server before!"));
     }

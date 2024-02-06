@@ -26,9 +26,10 @@ import net.tnemc.core.account.shared.Member;
 import net.tnemc.core.api.callback.account.AccountLoadCallback;
 import net.tnemc.core.api.callback.account.AccountSaveCallback;
 import net.tnemc.core.api.response.AccountAPIResponse;
-import net.tnemc.core.io.storage.dialect.TNEDialect;
-import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.core.config.DataConfig;
+import net.tnemc.core.io.storage.dialect.TNEDialect;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.plugincore.core.id.UUIDPair;
 import net.tnemc.plugincore.core.io.storage.Datable;
 import net.tnemc.plugincore.core.io.storage.StorageConnector;
@@ -88,7 +89,7 @@ public class SQLAccount implements Datable<Account> {
   public void store(StorageConnector<?> connector, @NotNull Account account, @Nullable String identifier) {
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
 
-      TNECore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.STANDARD);
+      PluginCore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.STANDARD);
 
       //store the basic account information(accounts table)
       sql.executeUpdate(tne.saveAccount(),
@@ -145,9 +146,9 @@ public class SQLAccount implements Datable<Account> {
       }
 
       final AccountSaveCallback callback = new AccountSaveCallback(account);
-      TNECore.callbacks().call(callback);
+      PluginCore.callbacks().call(callback);
 
-      TNECore.storage().storeAll(account.getIdentifier());
+      TNECore.instance().storage().storeAll(account.getIdentifier());
     }
   }
 
@@ -255,13 +256,13 @@ public class SQLAccount implements Datable<Account> {
 
         }
 
-        final Collection<HoldingsEntry> holdings = TNECore.storage().loadAll(HoldingsEntry.class, identifier);
+        final Collection<HoldingsEntry> holdings = TNECore.instance().storage().loadAll(HoldingsEntry.class, identifier);
         for(HoldingsEntry entry : holdings) {
           account.getWallet().setHoldings(entry);
         }
 
         final AccountLoadCallback callback = new AccountLoadCallback(account);
-        TNECore.callbacks().call(callback);
+        PluginCore.callbacks().call(callback);
       }
 
       return Optional.ofNullable(account);

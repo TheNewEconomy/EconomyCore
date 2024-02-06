@@ -33,6 +33,7 @@ import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.region.RegionProvider;
 import net.tnemc.core.transaction.TransactionProcessor;
 import net.tnemc.core.utils.Identifier;
+import net.tnemc.plugincore.PluginCore;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -191,7 +192,7 @@ public class EconomyManager {
   public void printInvalid() {
     if(invalidCurrencies.size() > 0) {
       for(final String currency : invalidCurrencies) {
-        TNECore.log().inform("Account Balances found for non existent currency ID: " + currency);
+        PluginCore.log().inform("Account Balances found for non existent currency ID: " + currency);
       }
     }
   }

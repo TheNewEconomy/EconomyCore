@@ -28,6 +28,7 @@ import net.tnemc.core.currency.format.FormatRule;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.item.AbstractItemStack;
+import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import org.jetbrains.annotations.Nullable;
 
@@ -46,15 +47,15 @@ public class MaterialRule implements FormatRule {
 
     final Optional<Currency> currency = entry.currency();
     if(account != null && account.isPlayer() && currency.isPresent() && currency.get() instanceof ItemCurrency) {
-      final Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)account).getUUID());
+      final Optional<PlayerProvider> provider = PluginCore.server().findPlayer(((PlayerAccount)account).getUUID());
       if(provider.isPresent()) {
         for(Denomination denomination : currency.get().getDenominations().values()) {
 
           final ItemDenomination denom = (ItemDenomination)denomination;
           if(formatted.contains(denom.getMaterial())) {
 
-            final AbstractItemStack<?> stack = TNECore.core().denominationToStack(denom);
-            final int count = TNECore.server().calculations().count((AbstractItemStack<Object>)stack, provider.get().inventory().getInventory(false));
+            final AbstractItemStack<?> stack = TNECore.instance().denominationToStack(denom);
+            final int count = PluginCore.server().calculations().count((AbstractItemStack<Object>)stack, provider.get().inventory().getInventory(false));
             formatted = formatted.replace("<" + denom.getMaterial() + ">", String.valueOf(count));
           }
         }

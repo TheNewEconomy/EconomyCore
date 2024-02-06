@@ -21,6 +21,7 @@ package net.tnemc.core.config;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
+import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.config.Config;
 import net.tnemc.plugincore.core.io.message.translation.Language;
 import org.simpleyaml.configuration.file.YamlFile;
@@ -89,7 +90,7 @@ public class MessageConfig extends Config {
   }
 
   private void loadLanguages() {
-   final File directory = new File(TNECore.directory(), "languages");
+   final File directory = new File(PluginCore.directory(), "languages");
     if(!directory.exists()) {
       directory.mkdir();
       return;
@@ -104,7 +105,7 @@ public class MessageConfig extends Config {
         try {
           config.loadWithComments();
         } catch (Exception ignore) {
-          TNECore.log().debug("Failed to load language: " + name);
+          PluginCore.log().debug("Failed to load language: " + name);
         }
 
         if(config.exists() && !config.isEmpty()) {
@@ -112,7 +113,7 @@ public class MessageConfig extends Config {
 
           languages.put(name, lang);
 
-          TNECore.log().inform("Loaded language: " + name);
+          PluginCore.log().inform("Loaded language: " + name);
         }
       }
     }

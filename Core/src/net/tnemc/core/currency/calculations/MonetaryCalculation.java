@@ -17,9 +17,9 @@ package net.tnemc.core.currency.calculations;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
-import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -92,15 +92,15 @@ public class MonetaryCalculation {
       }
 
 
-      TNECore.log().debug("Working 1: " + workingAmount.toPlainString(), DebugLevel.DEVELOPER);
-      TNECore.log().debug("Denom: " + denomination.toPlainString(), DebugLevel.DEVELOPER);
-      TNECore.log().debug("maxCount: " + maxCount, DebugLevel.DEVELOPER);
-      TNECore.log().debug("count: " + count, DebugLevel.DEVELOPER);
+      PluginCore.log().debug("Working 1: " + workingAmount.toPlainString(), DebugLevel.DEVELOPER);
+      PluginCore.log().debug("Denom: " + denomination.toPlainString(), DebugLevel.DEVELOPER);
+      PluginCore.log().debug("maxCount: " + maxCount, DebugLevel.DEVELOPER);
+      PluginCore.log().debug("count: " + count, DebugLevel.DEVELOPER);
 
       // Subtract the value of these denominations from the total amount
       workingAmount = workingAmount.subtract(denomination.multiply(BigDecimal.valueOf(count)));
 
-      TNECore.log().debug("Working 2: " + workingAmount.toPlainString(), DebugLevel.DEVELOPER);
+      PluginCore.log().debug("Working 2: " + workingAmount.toPlainString(), DebugLevel.DEVELOPER);
 
       // Update the result map
       if (count > 0) {
@@ -109,14 +109,14 @@ public class MonetaryCalculation {
 
       if(workingAmount.compareTo(BigDecimal.ZERO) <= 0) {
 
-        TNECore.log().debug("Working is zero break out", DebugLevel.DEVELOPER);
+        PluginCore.log().debug("Working is zero break out", DebugLevel.DEVELOPER);
         break;
       }
     }
 
 
-    TNECore.log().debug("Working 3: " + workingAmount.toPlainString(), DebugLevel.DEVELOPER);
-    TNECore.log().debug("Calculate comparison:" + workingAmount.compareTo(BigDecimal.ZERO), DebugLevel.DEVELOPER);
+    PluginCore.log().debug("Working 3: " + workingAmount.toPlainString(), DebugLevel.DEVELOPER);
+    PluginCore.log().debug("Calculate comparison:" + workingAmount.compareTo(BigDecimal.ZERO), DebugLevel.DEVELOPER);
 
     // If there is any amount left over, it was not possible to pay for the full amount
     if (workingAmount.compareTo(BigDecimal.ZERO) > 0) {
@@ -142,7 +142,7 @@ public class MonetaryCalculation {
 
 
   public Map<BigDecimal, Integer> calculateBreakdowns(BigDecimal amount) {
-    TNECore.log().debug("calculateBreakdowns Amount:" + amount.toPlainString(), DebugLevel.DEVELOPER);
+    PluginCore.log().debug("calculateBreakdowns Amount:" + amount.toPlainString(), DebugLevel.DEVELOPER);
 
 
     // Get the entry with the smallest key greater than the given amount

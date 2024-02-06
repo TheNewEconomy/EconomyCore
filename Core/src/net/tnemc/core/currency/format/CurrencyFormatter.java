@@ -31,6 +31,7 @@ import net.tnemc.core.currency.format.impl.MinorAmountRule;
 import net.tnemc.core.currency.format.impl.MinorRule;
 import net.tnemc.core.currency.format.impl.ShortenRule;
 import net.tnemc.core.currency.format.impl.SymbolRule;
+import net.tnemc.plugincore.PluginCore;
 
 import javax.annotation.Nullable;
 import java.math.BigDecimal;
@@ -66,7 +67,7 @@ public class CurrencyFormatter {
   }
 
   public static String format(@Nullable Account account, final BigDecimal amount) {
-    return format(account, new HoldingsEntry(TNECore.server().defaultWorld(), TNECore.eco().currency().getDefaultCurrency().getUid(), amount, EconomyManager.NORMAL));
+    return format(account, new HoldingsEntry(PluginCore.server().defaultWorld(), TNECore.eco().currency().getDefaultCurrency().getUid(), amount, EconomyManager.NORMAL));
   }
 
   public static String format(@Nullable Account account, HoldingsEntry entry) {

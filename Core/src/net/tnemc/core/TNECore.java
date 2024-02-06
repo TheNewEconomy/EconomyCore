@@ -22,7 +22,6 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.api.TNEAPI;
-import net.tnemc.core.api.callback.TNECallbackProvider;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.command.parameters.PercentBigDecimal;
 import net.tnemc.core.command.parameters.resolver.AccountResolver;
@@ -43,28 +42,29 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.hook.treasury.TreasuryHook;
-import net.tnemc.core.io.message.BaseTranslationProvider;
 import net.tnemc.core.region.RegionGroup;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.plugincore.PluginCore;
-import net.tnemc.plugincore.core.compatibility.LogProvider;
-import net.tnemc.plugincore.core.compatibility.ServerConnector;
+import net.tnemc.plugincore.core.PluginEngine;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.plugincore.core.compatibility.scheduler.Chore;
 import net.tnemc.plugincore.core.compatibility.scheduler.ChoreExecution;
 import net.tnemc.plugincore.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.plugincore.core.io.message.MessageData;
 import net.tnemc.plugincore.core.io.message.MessageHandler;
-import net.tnemc.plugincore.core.io.message.TranslationProvider;
-import net.tnemc.plugincore.core.module.cache.ModuleFileCache;
+import net.tnemc.plugincore.core.io.storage.Datable;
+import net.tnemc.plugincore.core.io.storage.StorageManager;
+import net.tnemc.plugincore.core.io.storage.engine.StorageSettings;
 import net.tnemc.plugincore.core.utils.UpdateChecker;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 import revxrsal.commands.command.CommandActor;
 import revxrsal.commands.command.ExecutableCommand;
-import revxrsal.commands.orphan.Orphans;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -74,7 +74,9 @@ import java.util.concurrent.TimeUnit;
  * @since 0.1.1.17
  * @author creatorfromhell
  */
-public abstract class TNECore extends PluginCore {
+public abstract class TNECore extends PluginEngine {
+
+  protected static TNECore instance;
 
   /*
    * Core final variables utilized within TNE.
@@ -97,150 +99,80 @@ public abstract class TNECore extends PluginCore {
   private final TNEAPI api = new TNEAPI();
   protected UUID serverAccount;
 
-  public TNECore(ServerConnector server, LogProvider logger) {
-    super(server, logger, new BaseTranslationProvider(), new TNECallbackProvider());
-    this.server = server;
-    this.logger = logger;
+  public TNECore() {
+    instance = this;
   }
 
-  public TNECore(ServerConnector server, LogProvider logger, TranslationProvider provider) {
-    super(server, logger, provider, new TNECallbackProvider());
-    this.server = server;
-    this.logger = logger;
+  @Override
+  public String version() {
+    return version;
   }
 
-  /**
-   * Used to enable the core. This should contain things that can't be initialized until after the
-   * server software is operational.
-   */
-  protected void onEnable() {
+  @Override
+  public String build() {
+    return build;
+  }
+
+  @Override
+  public void registerConfigs() {
 
     this.config = new MainConfig();
     this.data = new DataConfig();
     this.messageConfig = new MessageConfig();
 
-    TNECore.log().inform("Loading configurations!");
+    PluginCore.log().inform("Loading configurations!");
     if(!this.config.load()) {
-      TNECore.log().error("Failed to load main configuration!", DebugLevel.OFF);
+      PluginCore.log().error("Failed to load main configuration!", DebugLevel.OFF);
     }
 
     if(!this.data.load()) {
-      TNECore.log().error("Failed to load data configuration!", DebugLevel.OFF);
+      PluginCore.log().error("Failed to load data configuration!", DebugLevel.OFF);
     }
 
     if(!this.messageConfig.load()) {
-      TNECore.log().error("Failed to load message configuration!", DebugLevel.OFF);
+      PluginCore.log().error("Failed to load message configuration!", DebugLevel.OFF);
     }
+  }
 
-    registerConfigs();
+  @Override
+  public void registerStorage() {
+    final StorageSettings settings = new StorageSettings(
+            DataConfig.yaml().getString("Data.Database.File"),
+            DataConfig.yaml().getString("Data.Database.SQL.Host"),
+            DataConfig.yaml().getInt("Data.Database.SQL.Port"),
+            DataConfig.yaml().getString("Data.Database.SQL.DB"),
+            DataConfig.yaml().getString("Data.Database.SQL.User"),
+            DataConfig.yaml().getString("Data.Database.SQL.Password"),
+            DataConfig.yaml().getString("Data.Database.Prefix"),
+            DataConfig.yaml().getBoolean("Data.Database.SQL.PublicKey"),
+            DataConfig.yaml().getBoolean("Data.Database.SQL.SSL"),
+            "TNE",
+            DataConfig.yaml().getInt("Data.Pool.MaxSize"),
+            DataConfig.yaml().getLong("Data.Pool.MaxLife"),
+            DataConfig.yaml().getLong("Data.Pool.Timeout"),
+            DataConfig.yaml().getString("Data.Sync.Type")
+            );
 
-    //Call initConfigurations for all modules loaded.
-    loader.getModules().values().forEach((moduleWrapper -> moduleWrapper.getModule().initConfigurations(directory)));
+    final JedisPoolConfig config = new JedisPoolConfig();
+    config.setMaxTotal(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.MaxSize", 10));
+    config.setMaxIdle(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.MaxIdle", 10));
+    config.setMinIdle(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.MinIdle", 1));
 
-    registerCallbacks();
+    try(final JedisPool pool = new JedisPool(config, DataConfig.yaml().getString("Data.Sync.Redis.Host"),
+            DataConfig.yaml().getInt("Data.Sync.Redis.Port"),
+            DataConfig.yaml().getInt("Data.Sync.Redis.Timeout"),
+            DataConfig.yaml().getString("Data.Sync.Redis.User"),
+            DataConfig.yaml().getString("Data.Sync.Redis.Password"),
+            DataConfig.yaml().getInt("Data.Sync.Redis.Index"),
+            DataConfig.yaml().getBoolean("Data.Sync.Redis.SSL"))) {
 
-    //Register the callback listeners and callbacks for the modules
-    loader.getModules().values().forEach((moduleWrapper ->{
-      moduleWrapper.getModule().registerCallbacks().forEach((key, entry)->{
-        callbackManager.addCallback(key, entry);
-      });
-
-      moduleWrapper.getModule().registerListeners().forEach((key, function)->{
-        callbackManager.addConsumer(key, function);
-      });
-    }));
-
-    this.economyManager = new EconomyManager();
-
-    this.economyManager.init();
-
-    if(!this.economyManager.currency().load(directory, false)) {
-      return;
+      this.storage = new StorageManager(DataConfig.yaml().getString("Data.Database.Type"),
+              new TNEStorageProvider(), settings, pool);
     }
+  }
 
-    this.economyManager.currency().saveCurrenciesUUID(directory);
-
-    if(server.pluginAvailable("Treasury")) {
-      new TreasuryHook().register();
-    }
-
-    //set our debug options.
-    this.level = DebugLevel.fromID(MainConfig.yaml().getString("Core.Debugging.Mode"));
-
-    //Set our server UUID. This is used for proxy messaging.
-    final boolean randomUUID = MainConfig.yaml().getBoolean("Core.Server.RandomUUID", false);
-
-    //Added in build 0.1.2.5-Pre1, removed in 0.1.2.7
-    if(!MainConfig.yaml().contains("Core.Server.Geyser")) {
-      MainConfig.yaml().set("Core.Server.Geyser", ".");
-      MainConfig.yaml().setComment("Core.Server.Geyser", "#The geyser prefix for the server.");
-
-      try {
-        MainConfig.yaml().save();
-      } catch(IOException e) {
-        logger.error("Issue while updating config.yml to config.yml", e, DebugLevel.OFF);
-      }
-    }
-
-    if(!randomUUID) {
-      if(!MainConfig.yaml().contains("Core.ServerID")) {
-
-        serverID = UUID.randomUUID();
-        MainConfig.yaml().set("Core.ServerID", serverID.toString());
-        MainConfig.yaml().setComment("Core.ServerID", "#Don't modify unless you know what you're doing.");
-
-        try {
-          MainConfig.yaml().save();
-        } catch(IOException e) {
-          logger.error("Issue while saving Server UUID to config.yml", e, DebugLevel.OFF);
-        }
-      } else {
-        serverID = UUID.fromString(MainConfig.yaml().getString("Core.ServerID"));
-      }
-    } else {
-      serverID = UUID.randomUUID();
-    }
-
-    if(!this.storage.meetsRequirement()) {
-      TNECore.log().error("This server does not meet SQL requirements needed for TNE!", DebugLevel.OFF);
-      return;
-    }
-
-    this.storage.loadAll(Account.class, "");
-
-    //Call the enableSave method for all modules loaded.
-    loader.getModules().values().forEach((moduleWrapper -> moduleWrapper.getModule().enableSave(this.storage)));
-
-    if(MainConfig.yaml().getBoolean("Core.Server.Account.Enabled")) {
-
-      logger.inform("Checking Server Account.");
-
-      final String name = MainConfig.yaml().getString("Core.Server.Account.Name");
-      serverAccount = UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8));
-      if(economyManager.account().findAccount(serverAccount.toString()).isEmpty()) {
-
-        logger.inform("Creating Server Account.");
-
-        final AccountAPIResponse response = economyManager.account().createAccount(serverAccount.toString(), name, true);
-        if(response.getResponse().success()) {
-
-          logger.inform("Server Account has been created.");
-
-          final BigDecimal defaultBalance = new BigDecimal(MainConfig.yaml().getString("Core.Server.Account.Balance"));
-          if(defaultBalance.compareTo(BigDecimal.ZERO) > 0) {
-            response.getAccount().ifPresent(value->value.setHoldings(new HoldingsEntry(economyManager.region().defaultRegion(),
-                                                                         economyManager.currency().getDefaultCurrency().getUid(),
-                                                                         defaultBalance,
-                                                                         EconomyManager.NORMAL
-            )));
-          }
-        } else {
-          logger.error("Unable to create Server Account. Reason: " + response.getResponse().response());
-        }
-      }
-    }
-
-    //register our commands
+  @Override
+  public void registerCommands() {
 
     //Custom Parameters:
     //TODO: Register custom validators
@@ -259,62 +191,6 @@ public abstract class TNECore extends PluginCore {
     command.getAutoCompleter().registerParameterSuggestions(RegionGroup.class, new RegionSuggestion());
     command.getAutoCompleter().registerParameterSuggestions(Account.class, new AccountSuggestion());
     command.getAutoCompleter().registerParameterSuggestions(Currency.class, new CurrencySuggestion());
-
-    registerCommands();
-
-    //Call our command methods for the modules.
-    loader.getModules().values().forEach((moduleWrapper ->{
-      moduleWrapper.getModule().registerCommands(command);
-
-      moduleWrapper.getModule().registerMoneySub().forEach((orphan)->command.register(Orphans.path("money"), orphan));
-      moduleWrapper.getModule().registerTransactionSub().forEach((orphan)->command.register(Orphans.path("transaction"), orphan));
-      moduleWrapper.getModule().registerAdminSub().forEach((orphan)->command.register(Orphans.path("tne"), orphan));
-    }));
-    registerMenuHandler();
-
-    //Set up the auto saver if enabled.
-    if(DataConfig.yaml().getBoolean("Data.AutoSaver.Enabled")) {
-
-      this.autoSaver = server.scheduler().createRepeatingTask(()->{
-        storage.storeAll();
-      }, new ChoreTime(0),
-         new ChoreTime(DataConfig.yaml().getInt("Data.AutoSaver.Interval"), TimeUnit.SECONDS),
-         ChoreExecution.SECONDARY);
-    }
-
-    this.moduleCache = new ModuleFileCache();
-
-    if(MainConfig.yaml().getBoolean("Core.Update.Check")) {
-      this.updateChecker = new UpdateChecker();
-
-      TNECore.log().inform("Build Stability: " + this.updateChecker.stable());
-
-      if(this.updateChecker.needsUpdate()) {
-        TNECore.log().inform("Update Available! Latest: " + this.updateChecker.getBuild());
-      }
-    }
-
-    economyManager.printInvalid();
-
-    server.scheduler().createDelayedTask(()-> economyManager.getTopManager().load(), new ChoreTime(2), ChoreExecution.SECONDARY);
-    server.scheduler().createRepeatingTask(()-> economyManager.getTopManager().load(), new ChoreTime(2), new ChoreTime(MainConfig.yaml().getInt("Core.Commands.Top.Refresh"), TimeUnit.SECONDS), ChoreExecution.SECONDARY);
-
-    //ConfigHandler.send();
-  }
-
-  public void onDisable() {
-
-    if(autoSaver != null) {
-      autoSaver.cancel();
-    }
-
-    //store our data syncly because it needs to finish
-    /*final Optional<Datable<?>> data = Optional.ofNullable(storage.getEngine().datables().get(Account.class));
-    if(data.isPresent()) {
-      data.get().storeAll(storage.getConnector(), null);
-    }*/
-
-    super.onDisable();
   }
 
   @Override
@@ -328,24 +204,127 @@ public abstract class TNECore extends PluginCore {
   }
 
   @Override
-  public String version() {
-    return version;
+  public void registerUpdateChecker() {
+    if(MainConfig.yaml().getBoolean("Core.Update.Check")) {
+      this.updateChecker = new UpdateChecker();
+
+      PluginCore.log().inform("Build Stability: " + this.updateChecker.stable());
+
+      if(this.updateChecker.needsUpdate()) {
+        PluginCore.log().inform("Update Available! Latest: " + this.updateChecker.getBuild());
+      }
+    }
   }
 
   @Override
-  public String build() {
-    return build;
+  public void postConfigs() {
+
+    //set our debug options.
+    PluginCore.instance().setLevel(DebugLevel.fromID(MainConfig.yaml().getString("Core.Debugging.Mode")));
+
+    this.economyManager = new EconomyManager();
+
+    this.economyManager.init();
+
+    if(!this.economyManager.currency().load(PluginCore.directory(), false)) {
+      return;
+    }
+
+    this.economyManager.currency().saveCurrenciesUUID(PluginCore.directory());
+
+    if(PluginCore.server().pluginAvailable("Treasury")) {
+      new TreasuryHook().register();
+    }
+
+    UUID serverID;
+    //Set our server UUID. This is used for proxy messaging.
+    final boolean randomUUID = MainConfig.yaml().getBoolean("Core.Server.RandomUUID", false);
+
+    if(!randomUUID) {
+      if(!MainConfig.yaml().contains("Core.ServerID")) {
+
+        serverID = UUID.randomUUID();
+        MainConfig.yaml().set("Core.ServerID", serverID.toString());
+        MainConfig.yaml().setComment("Core.ServerID", "#Don't modify unless you know what you're doing.");
+
+        try {
+          MainConfig.yaml().save();
+        } catch(IOException e) {
+          PluginCore.log().error("Issue while saving Server UUID to config.yml", e, DebugLevel.OFF);
+        }
+      } else {
+        serverID = UUID.fromString(MainConfig.yaml().getString("Core.ServerID"));
+      }
+    } else {
+      serverID = UUID.randomUUID();
+    }
+    PluginCore.instance().setServerID(serverID);
   }
 
-  public abstract void registerCommands();
+  @Override
+  public void postStorage() {
+    this.storage.loadAll(Account.class, "");
 
-  public abstract void registerConfigs();
+    if(MainConfig.yaml().getBoolean("Core.Server.Account.Enabled")) {
 
-  public abstract void registerCallbacks();
+      PluginCore.log().inform("Checking Server Account.");
+
+      final String name = MainConfig.yaml().getString("Core.Server.Account.Name");
+      serverAccount = UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8));
+      if(economyManager.account().findAccount(serverAccount.toString()).isEmpty()) {
+
+        PluginCore.log().inform("Creating Server Account.");
+
+        final AccountAPIResponse response = economyManager.account().createAccount(serverAccount.toString(), name, true);
+        if(response.getResponse().success()) {
+
+          PluginCore.log().inform("Server Account has been created.");
+
+          final BigDecimal defaultBalance = new BigDecimal(MainConfig.yaml().getString("Core.Server.Account.Balance"));
+          if(defaultBalance.compareTo(BigDecimal.ZERO) > 0) {
+            response.getAccount().ifPresent(value->value.setHoldings(new HoldingsEntry(economyManager.region().defaultRegion(),
+                    economyManager.currency().getDefaultCurrency().getUid(),
+                    defaultBalance,
+                    EconomyManager.NORMAL
+            )));
+          }
+        } else {
+          PluginCore.log().error("Unable to create Server Account. Reason: " + response.getResponse().response());
+        }
+      }
+    }
+  }
 
   @Override
-  public void registerStorage() {
-    //TODO: Storage
+  public void postEnable() {
+
+    //Set up the auto saver if enabled.
+    if(DataConfig.yaml().getBoolean("Data.AutoSaver.Enabled")) {
+
+      this.autoSaver = PluginCore.server().scheduler().createRepeatingTask(()->{
+                storage.storeAll();
+              }, new ChoreTime(0),
+              new ChoreTime(DataConfig.yaml().getInt("Data.AutoSaver.Interval"), TimeUnit.SECONDS),
+              ChoreExecution.SECONDARY);
+    }
+
+
+    economyManager.printInvalid();
+
+    PluginCore.server().scheduler().createDelayedTask(()-> economyManager.getTopManager().load(), new ChoreTime(2), ChoreExecution.SECONDARY);
+    PluginCore.server().scheduler().createRepeatingTask(()-> economyManager.getTopManager().load(), new ChoreTime(2), new ChoreTime(MainConfig.yaml().getInt("Core.Commands.Top.Refresh"), TimeUnit.SECONDS), ChoreExecution.SECONDARY);
+  }
+
+  @Override
+  public void postDisable() {
+    if(autoSaver != null) {
+      autoSaver.cancel();
+    }
+
+    final Optional<Datable<?>> data = Optional.ofNullable(storage.getEngine().datables().get(Account.class));
+    if(data.isPresent()) {
+      data.get().storeAll(storage.getConnector(), null);
+    }
   }
 
   /**
@@ -354,7 +333,7 @@ public abstract class TNECore extends PluginCore {
    * @return The {@link EconomyManager Economy Manager}.
    */
   public static EconomyManager eco() {
-    return core().economyManager;
+    return instance.economyManager;
   }
 
   public MainConfig config() {
@@ -369,20 +348,12 @@ public abstract class TNECore extends PluginCore {
     return messageConfig;
   }
 
-  public static TNECore core() {
-    return (TNECore)instance();
+  public static TNECore instance() {
+    return instance;
   }
 
   public static TNEAPI api() {
-    return core().api;
-  }
-
-  public DebugLevel getLevel() {
-    return level;
-  }
-
-  public void setLevel(DebugLevel level) {
-    this.level = level;
+    return instance.api;
   }
 
   public UUID getServerAccount() {
@@ -396,7 +367,7 @@ public abstract class TNECore extends PluginCore {
   }
 
   public AbstractItemStack<?> denominationToStack(final ItemDenomination denomination, int amount) {
-    return server.stackBuilder().of(denomination.getMaterial(), amount)
+    return PluginCore.server().stackBuilder().of(denomination.getMaterial(), amount)
             .enchant(denomination.getEnchantments())
             .lore(denomination.getLore())
             .flags(denomination.getFlags())

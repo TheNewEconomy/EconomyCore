@@ -22,6 +22,7 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.actions.EconomyResponse;
+import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 
 import java.util.Date;
@@ -87,7 +88,7 @@ public interface TransactionProcessor {
       if(check.isPresent()) {
         response = check.get().process(transaction);
 
-        TNECore.log().debug("Check: " + check.get().identifier() + " Result: " + response.success(), DebugLevel.DEVELOPER);
+        PluginCore.log().debug("Check: " + check.get().identifier() + " Result: " + response.success(), DebugLevel.DEVELOPER);
 
         if(!response.success())
           break;

@@ -22,6 +22,7 @@ import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.manager.top.TopCurrency;
 import net.tnemc.core.manager.top.TopPage;
+import net.tnemc.plugincore.PluginCore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +64,7 @@ public class TopManager {
 
     topMap.clear();
     for(Currency currency : TNECore.eco().currency().currencies()) {
-      topMap.put(currency.getUid(), new TopCurrency(TNECore.server().defaultWorld(), currency.getUid()));
+      topMap.put(currency.getUid(), new TopCurrency(PluginCore.server().defaultWorld(), currency.getUid()));
     }
   }
 

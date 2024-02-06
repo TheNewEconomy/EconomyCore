@@ -17,7 +17,7 @@ package net.tnemc.bukkit.listeners.server;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
+import net.tnemc.plugincore.PluginCore;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.jetbrains.annotations.NotNull;
@@ -31,6 +31,6 @@ import org.jetbrains.annotations.NotNull;
 public class MessageChannelListener implements PluginMessageListener {
   @Override
   public void onPluginMessageReceived(@NotNull String channel, @NotNull Player player, byte[] bytes) {
-    TNECore.instance().getChannelMessageManager().handle(channel, bytes);
+    PluginCore.instance().getChannelMessageManager().handle(channel, bytes);
   }
 }

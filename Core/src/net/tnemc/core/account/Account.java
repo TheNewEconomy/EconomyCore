@@ -24,11 +24,12 @@ import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.Wallet;
 import net.tnemc.core.channel.BalanceHandler;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.transaction.receipt.ReceiptBox;
+import net.tnemc.core.utils.Identifier;
+import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.scheduler.ChoreExecution;
 import net.tnemc.plugincore.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.plugincore.core.io.maps.MapKey;
-import net.tnemc.core.transaction.receipt.ReceiptBox;
-import net.tnemc.core.utils.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
@@ -213,12 +214,12 @@ public class Account extends ReceiptBox {
 
     if(result) {
       //Send out our update to our proxies.
-      if(!TNECore.core().getChannelMessageManager().isAffected(identifier) && !TNECore.eco().account().getLoading().contains(identifier)) {
-        TNECore.server().scheduler().createDelayedTask(()->{
+      if(!PluginCore.instance().getChannelMessageManager().isAffected(identifier) && !TNECore.eco().account().getLoading().contains(identifier)) {
+        PluginCore.server().scheduler().createDelayedTask(()->{
           BalanceHandler.send(identifier, name, region, currencyObject.get().getUid(), entry.getHandler(), entry.getAmount());
         }, new ChoreTime(1), ChoreExecution.SECONDARY);
       } else {
-        TNECore.core().getChannelMessageManager().removeAccount(identifier);
+        PluginCore.instance().getChannelMessageManager().removeAccount(identifier);
       }
     }
 

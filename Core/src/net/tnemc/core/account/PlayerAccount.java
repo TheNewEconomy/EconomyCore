@@ -19,6 +19,7 @@ package net.tnemc.core.account;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.Location;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 
@@ -65,7 +66,7 @@ public class PlayerAccount extends Account {
    *         Optional if no player is located.
    */
   public Optional<PlayerProvider> getPlayer() {
-    return TNECore.server().findPlayer(uuid);
+    return PluginCore.server().findPlayer(uuid);
   }
 
   /**

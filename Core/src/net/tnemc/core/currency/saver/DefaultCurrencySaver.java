@@ -26,6 +26,7 @@ import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.Note;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
+import net.tnemc.plugincore.PluginCore;
 import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.File;
@@ -80,12 +81,12 @@ public class DefaultCurrencySaver implements CurrencySaver {
       cur.createOrLoadWithComments();
 
     } catch(IOException e) {
-      TNECore.log().error("Failed to save currency: " + currency.getIdentifier());
+      PluginCore.log().error("Failed to save currency: " + currency.getIdentifier());
       e.printStackTrace();
       return;
     }
 
-    TNECore.log().inform("Saving Currency: " + currency.getIdentifier());
+    PluginCore.log().inform("Saving Currency: " + currency.getIdentifier());
 
     //Currency Info configs.
     cur.set("Info.Icon", currency.getIconMaterial());
@@ -149,7 +150,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     try {
       cur.save();
     } catch(IOException e) {
-      TNECore.log().error("Failed to save currency: " + currency.getIdentifier());
+      PluginCore.log().error("Failed to save currency: " + currency.getIdentifier());
       e.printStackTrace();
     }
 
@@ -166,7 +167,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
       cur.createOrLoadWithComments();
 
     } catch(IOException e) {
-      TNECore.log().error("Failed to save currency: " + currency.getIdentifier());
+      PluginCore.log().error("Failed to save currency: " + currency.getIdentifier());
       e.printStackTrace();
       return;
     }
@@ -180,7 +181,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     try {
       cur.save();
     } catch(IOException e) {
-      TNECore.log().error("Failed to save currency: " + currency.getIdentifier());
+      PluginCore.log().error("Failed to save currency: " + currency.getIdentifier());
       e.printStackTrace();
     }
   }
@@ -198,12 +199,12 @@ public class DefaultCurrencySaver implements CurrencySaver {
     try {
       denom.createOrLoadWithComments();
     } catch(IOException e) {
-      TNECore.log().error("Failed to save currency denomination: " + denomination.singular());
+      PluginCore.log().error("Failed to save currency denomination: " + denomination.singular());
       e.printStackTrace();
       return;
     }
 
-    TNECore.log().inform("Attempting to save currency denomination: " + denomination.singular());
+    PluginCore.log().inform("Attempting to save currency denomination: " + denomination.singular());
 
     denom.set("Info.Single", denomination.singular());
     denom.set("Info.Plural", denomination.plural());
@@ -240,7 +241,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     try {
       denom.save();
     } catch(IOException e) {
-      TNECore.log().error("Failed to save currency denomination: " + denomination.singular());
+      PluginCore.log().error("Failed to save currency denomination: " + denomination.singular());
       e.printStackTrace();
     }
   }

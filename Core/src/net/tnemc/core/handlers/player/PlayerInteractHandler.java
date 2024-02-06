@@ -28,6 +28,7 @@ import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 import net.tnemc.item.AbstractItemStack;
+import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import net.tnemc.plugincore.core.io.message.MessageData;
 import net.tnemc.plugincore.core.utils.HandlerResponse;
@@ -116,7 +117,7 @@ public class PlayerInteractHandler {
           final List<AbstractItemStack<Object>> i = new ArrayList<>();
           i.add((AbstractItemStack<Object>)item);
 
-          TNECore.server().calculations().takeItems(i, provider.identifier());
+          PluginCore.server().calculations().takeItems(i, provider.identifier());
 
           final MessageData claimed = new MessageData("Messages.Note.Claimed");
           claimed.addReplacement("$currency", currency);

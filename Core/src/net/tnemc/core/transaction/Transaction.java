@@ -26,8 +26,9 @@ import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.ActionSource;
 import net.tnemc.core.api.callback.transaction.PostTransactionCallback;
-import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -151,26 +152,26 @@ public class Transaction {
       final HoldingsEntry entry = balances.get(i);
       HoldingsEntry ending;
 
-      TNECore.log().debug("entry bal: " + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
-      TNECore.log().debug("entry bal: " + entry.getRegion(), DebugLevel.DEVELOPER);
+      PluginCore.log().debug("entry bal: " + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
+      PluginCore.log().debug("entry bal: " + entry.getRegion(), DebugLevel.DEVELOPER);
 
       if(!done) {
         if(!take) {
 
           ending = entry.modifyGrab(modifier).modifyGrab(tax.negate());
 
-          TNECore.log().debug("End: " + ending.getAmount().toPlainString(), DebugLevel.DEVELOPER);
-          TNECore.log().debug("End: " + ending.getRegion(), DebugLevel.DEVELOPER);
+          PluginCore.log().debug("End: " + ending.getAmount().toPlainString(), DebugLevel.DEVELOPER);
+          PluginCore.log().debug("End: " + ending.getRegion(), DebugLevel.DEVELOPER);
           done = true;
         } else {
 
-          TNECore.log().debug("Working: " + working.toPlainString(), DebugLevel.DEVELOPER);
+          PluginCore.log().debug("Working: " + working.toPlainString(), DebugLevel.DEVELOPER);
 
           if(entry.getAmount().compareTo(working) >= 0) {
-            TNECore.log().debug("Value: " + working.toPlainString(), DebugLevel.DEVELOPER);
+            PluginCore.log().debug("Value: " + working.toPlainString(), DebugLevel.DEVELOPER);
 
             ending = entry.modifyGrab(working.multiply(new BigDecimal(-1))).modifyGrab(tax.negate());
-            TNECore.log().debug("break out since we are good to go with this entry", DebugLevel.DEVELOPER);
+            PluginCore.log().debug("break out since we are good to go with this entry", DebugLevel.DEVELOPER);
             done = true;
           } else {
 
@@ -178,7 +179,7 @@ public class Transaction {
               ending = entry.modifyGrab(working.multiply(new BigDecimal(-1)));
 
             } else {
-              TNECore.log().debug("Keep Working", DebugLevel.DEVELOPER);
+              PluginCore.log().debug("Keep Working", DebugLevel.DEVELOPER);
               ending = entry.modifyGrab(entry.getAmount().multiply(new BigDecimal(-1)));
               working = working.subtract(entry.getAmount());
             }
@@ -261,26 +262,26 @@ public class Transaction {
       final HoldingsEntry entry = balances.get(i);
       HoldingsEntry ending;
 
-      TNECore.log().debug("entry bal: " + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
-      TNECore.log().debug("entry bal: " + entry.getRegion(), DebugLevel.DEVELOPER);
+      PluginCore.log().debug("entry bal: " + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
+      PluginCore.log().debug("entry bal: " + entry.getRegion(), DebugLevel.DEVELOPER);
 
       if(!done) {
         if(!take) {
 
           ending = entry.modifyGrab(modifier).modifyGrab(tax.negate());
 
-          TNECore.log().debug("End: " + ending.getAmount().toPlainString(), DebugLevel.DEVELOPER);
-          TNECore.log().debug("End: " + ending.getRegion(), DebugLevel.DEVELOPER);
+          PluginCore.log().debug("End: " + ending.getAmount().toPlainString(), DebugLevel.DEVELOPER);
+          PluginCore.log().debug("End: " + ending.getRegion(), DebugLevel.DEVELOPER);
           done = true;
         } else {
 
-          TNECore.log().debug("Working: " + working.toPlainString(), DebugLevel.DEVELOPER);
+          PluginCore.log().debug("Working: " + working.toPlainString(), DebugLevel.DEVELOPER);
 
           if(entry.getAmount().compareTo(working) >= 0) {
-            TNECore.log().debug("Value: " + working.toPlainString(), DebugLevel.DEVELOPER);
+            PluginCore.log().debug("Value: " + working.toPlainString(), DebugLevel.DEVELOPER);
 
             ending = entry.modifyGrab(working.multiply(new BigDecimal(-1))).modifyGrab(tax.negate());
-            TNECore.log().debug("break out since we are good to go with this entry", DebugLevel.DEVELOPER);
+            PluginCore.log().debug("break out since we are good to go with this entry", DebugLevel.DEVELOPER);
             done = true;
           } else {
 
@@ -288,7 +289,7 @@ public class Transaction {
               ending = entry.modifyGrab(working.multiply(new BigDecimal(-1)));
 
             } else {
-              TNECore.log().debug("Keep Working", DebugLevel.DEVELOPER);
+              PluginCore.log().debug("Keep Working", DebugLevel.DEVELOPER);
               ending = entry.modifyGrab(entry.getAmount().multiply(new BigDecimal(-1)));
               working = working.subtract(entry.getAmount());
             }
@@ -384,7 +385,7 @@ public class Transaction {
     }
 
     final PostTransactionCallback postTransaction = new PostTransactionCallback(result);
-    TNECore.callbacks().call(postTransaction);
+    PluginCore.callbacks().call(postTransaction);
 
     return result;
   }

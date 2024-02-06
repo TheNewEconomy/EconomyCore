@@ -24,6 +24,7 @@ import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.utils.Extractor;
+import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.CmdSource;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.plugincore.core.compatibility.scheduler.ChoreExecution;
@@ -83,7 +84,7 @@ public class AdminCommand extends BaseCommand {
   //<standard/detailed/developer>
   public static void onDebug(CmdSource<?> sender, DebugLevel level) {
 
-    TNECore.core().setLevel(level);
+    PluginCore.instance().setLevel(level);
     final MessageData data = new MessageData("Messages.Data.Debug");
     data.addReplacement("$level", level.name());
     sender.message(data);
@@ -120,33 +121,33 @@ public class AdminCommand extends BaseCommand {
   public static void onExtract(CmdSource<?> sender) {
 
 
-    TNECore.server().scheduler().createDelayedTask(Extractor::extract, new ChoreTime(0), ChoreExecution.SECONDARY);
+    PluginCore.server().scheduler().createDelayedTask(Extractor::extract, new ChoreTime(0), ChoreExecution.SECONDARY);
     sender.message(new MessageData("Messages.Admin.Extraction"));
   }
 
   public static void onPurge(CmdSource<?> sender) {
-    TNECore.storage().purge();
+    TNECore.instance().storage().purge();
   }
 
   public static void onReload(CmdSource<?> sender, String type) {
     String formattedType = type;
     switch(type.toLowerCase()) {
       case "config" -> {
-        TNECore.core().config().load();
-        TNECore.eco().currency().load(TNECore.directory());
+        TNECore.instance().config().load();
+        TNECore.eco().currency().load(PluginCore.directory());
       }
       case "data" -> {
-        TNECore.core().data().load();
+        TNECore.instance().data().load();
       }
       case "message" -> {
-        TNECore.core().message().load();
+        TNECore.instance().message().load();
       }
       default -> {
-        TNECore.core().config().load();
-        TNECore.eco().currency().load(TNECore.directory());
-        TNECore.core().data().load();
-        TNECore.storage().loadAll(Account.class, "");
-        TNECore.core().message().load();
+        TNECore.instance().config().load();
+        TNECore.eco().currency().load(PluginCore.directory());
+        TNECore.instance().data().load();
+        TNECore.instance().storage().loadAll(Account.class, "");
+        TNECore.instance().message().load();
         formattedType = "all";
       }
     }
@@ -163,7 +164,7 @@ public class AdminCommand extends BaseCommand {
   public static void onRestore(CmdSource<?> sender, int extraction) {
 
 
-    TNECore.server().scheduler().createDelayedTask(()->Extractor.restore(extraction), new ChoreTime(0), ChoreExecution.SECONDARY);
+    PluginCore.server().scheduler().createDelayedTask(()->Extractor.restore(extraction), new ChoreTime(0), ChoreExecution.SECONDARY);
     sender.message(new MessageData("Messages.Admin.Restoration"));
   }
 

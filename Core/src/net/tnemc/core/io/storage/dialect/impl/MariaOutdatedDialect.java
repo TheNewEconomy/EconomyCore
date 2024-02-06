@@ -18,7 +18,6 @@ package net.tnemc.core.io.storage.dialect.impl;
  */
 
 import net.tnemc.core.io.storage.dialect.TNEDialect;
-import net.tnemc.plugincore.core.io.storage.Dialect;
 import org.intellij.lang.annotations.Language;
 
 /**

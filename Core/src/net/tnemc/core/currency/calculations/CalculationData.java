@@ -19,11 +19,12 @@ package net.tnemc.core.currency.calculations;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.item.AbstractItemStack;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -81,8 +82,8 @@ public class CalculationData<I> {
     for(Map.Entry<BigDecimal, Denomination> entry : currency.getDenominations().entrySet()) {
       if(entry.getValue() instanceof final ItemDenomination denomination) {
 
-        final AbstractItemStack<?> stack = TNECore.core().denominationToStack(denomination);
-        final int count = TNECore.server().calculations().count((AbstractItemStack<Object>)stack, inventory);
+        final AbstractItemStack<?> stack = TNECore.instance().denominationToStack(denomination);
+        final int count = PluginCore.server().calculations().count((AbstractItemStack<Object>)stack, inventory);
 
         if(count > 0) {
           inventoryMaterials.put(entry.getKey(), count);
@@ -92,32 +93,32 @@ public class CalculationData<I> {
   }
 
   public void removeMaterials(Denomination denomination, Integer amount) {
-    final AbstractItemStack<?> stack = TNECore.core().denominationToStack((ItemDenomination)denomination);
+    final AbstractItemStack<?> stack = TNECore.instance().denominationToStack((ItemDenomination)denomination);
     final int contains = inventoryMaterials.getOrDefault(denomination.weight(), 0);
 
     if(contains == amount) {
       inventoryMaterials.remove(denomination.weight());
-      TNECore.log().debug("CalculationData - removeMaterials - equals: Everything equals, remove all materials.", DebugLevel.DEVELOPER);
-      TNECore.server().calculations().removeAll((AbstractItemStack<Object>)stack, inventory);
+      PluginCore.log().debug("CalculationData - removeMaterials - equals: Everything equals, remove all materials.", DebugLevel.DEVELOPER);
+      PluginCore.server().calculations().removeAll((AbstractItemStack<Object>)stack, inventory);
       return;
     }
 
     final int left = contains - amount;
-    TNECore.log().debug("CalculationData - removeMaterials - left: " + left, DebugLevel.DEVELOPER);
+    PluginCore.log().debug("CalculationData - removeMaterials - left: " + left, DebugLevel.DEVELOPER);
     inventoryMaterials.put(denomination.weight(), left);
     final AbstractItemStack<?> stackClone = stack.amount(amount);
-    TNECore.server().calculations().removeItem((AbstractItemStack<Object>)stackClone, inventory);
+    PluginCore.server().calculations().removeItem((AbstractItemStack<Object>)stackClone, inventory);
   }
 
   public void provideMaterials(final Denomination denomination, Integer amount) {
     int contains = (inventoryMaterials.getOrDefault(denomination.weight(), amount));
 
-    final AbstractItemStack<?> stack = TNECore.core().denominationToStack((ItemDenomination)denomination).amount(amount);
-    final Collection<AbstractItemStack<Object>> left = TNECore.server().calculations().giveItems(Collections.singletonList((AbstractItemStack<Object>)stack), inventory);
+    final AbstractItemStack<?> stack = TNECore.instance().denominationToStack((ItemDenomination)denomination).amount(amount);
+    final Collection<AbstractItemStack<Object>> left = PluginCore.server().calculations().giveItems(Collections.singletonList((AbstractItemStack<Object>)stack), inventory);
 
     if(left.size() > 0) {
       contains = contains - left.stream().findFirst().get().amount();
-      failedDrop = TNECore.server().calculations().drop(left, player);
+      failedDrop = PluginCore.server().calculations().drop(left, player);
 
       dropped = true;
     }

@@ -39,6 +39,7 @@ import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 import net.tnemc.item.AbstractItemStack;
+import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.CmdSource;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import net.tnemc.plugincore.core.io.message.MessageData;
@@ -312,10 +313,10 @@ public class MoneyCommand extends BaseCommand {
 
       final Optional<Receipt> receipt = processTransaction(sender, transaction);
       if(receipt.isPresent()) {
-        final Collection<AbstractItemStack<Object>> left = TNECore.server().calculations().giveItems(Collections.singletonList(note.get().stack(currency.getIdentifier(), BaseCommand.region(sender), rounded)), provider.get().inventory().getInventory(false));
+        final Collection<AbstractItemStack<Object>> left = PluginCore.server().calculations().giveItems(Collections.singletonList(note.get().stack(currency.getIdentifier(), BaseCommand.region(sender), rounded)), provider.get().inventory().getInventory(false));
 
         if(left.size() > 0) {
-          TNECore.server().calculations().drop(left, ((PlayerAccount)account.get()).getUUID());
+          PluginCore.server().calculations().drop(left, ((PlayerAccount)account.get()).getUUID());
         }
 
         final MessageData entryMSG = new MessageData("Messages.Note.Given");
@@ -472,7 +473,7 @@ public class MoneyCommand extends BaseCommand {
 
       if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
 
-        final Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)account).getUUID());
+        final Optional<PlayerProvider> provider = PluginCore.server().findPlayer(((PlayerAccount)account).getUUID());
         if(provider.isPresent()) {
 
           final MessageData msgData = new MessageData("Messages.Money.Received");
@@ -503,7 +504,7 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    final Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)account).getUUID());
+    final Optional<PlayerProvider> provider = PluginCore.server().findPlayer(((PlayerAccount)account).getUUID());
     if(provider.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
       data.addReplacement("$player", account.getName());

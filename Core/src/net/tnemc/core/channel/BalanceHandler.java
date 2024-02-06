@@ -24,6 +24,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.utils.Identifier;
+import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.channel.ChannelBytesWrapper;
 import net.tnemc.plugincore.core.channel.ChannelMessageHandler;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
@@ -46,7 +47,7 @@ public class BalanceHandler extends ChannelMessageHandler {
 
   public static void send(final String identifier, final String name, String region, UUID currency, Identifier handler, BigDecimal amount) {
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-    out.writeUTF(TNECore.core().getServerID().toString());
+    out.writeUTF(PluginCore.instance().getServerID().toString());
     out.writeUTF(identifier);
     out.writeUTF(name);
     out.writeUTF(region);
@@ -54,7 +55,7 @@ public class BalanceHandler extends ChannelMessageHandler {
     out.writeUTF(handler.asID());
     out.writeUTF(amount.toPlainString());
 
-    TNECore.storage().sendProxyMessage("tne:balance", out.toByteArray());
+    TNECore.instance().storage().sendProxyMessage("tne:balance", out.toByteArray());
   }
 
   @Override
@@ -80,7 +81,7 @@ public class BalanceHandler extends ChannelMessageHandler {
         }
 
         if(account.isPresent()) {
-          TNECore.core().getChannelMessageManager().addAccount(accountID);
+          PluginCore.instance().getChannelMessageManager().addAccount(accountID);
 
           final Identifier type = Identifier.fromID(handler);
 
@@ -91,7 +92,7 @@ public class BalanceHandler extends ChannelMessageHandler {
       }
 
     } catch(Exception e) {
-      TNECore.log().error("Issue with balance plugin message handler.", e, DebugLevel.STANDARD);
+      PluginCore.log().error("Issue with balance plugin message handler.", e, DebugLevel.STANDARD);
     }
   }
 }

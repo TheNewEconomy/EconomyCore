@@ -21,6 +21,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.response.AccountAPIResponse;
+import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.channel.ChannelBytesWrapper;
 import net.tnemc.plugincore.core.channel.ChannelMessageHandler;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
@@ -39,11 +40,11 @@ public class CreateHandler extends ChannelMessageHandler {
 
   public static void send(final String identifier, final String name) {
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-    out.writeUTF(TNECore.core().getServerID().toString());
+    out.writeUTF(PluginCore.instance().getServerID().toString());
     out.writeUTF(identifier);
     out.writeUTF(name);
 
-    TNECore.storage().sendProxyMessage("tne:create", out.toByteArray());
+    TNECore.instance().storage().sendProxyMessage("tne:create", out.toByteArray());
   }
 
   @Override
@@ -62,7 +63,7 @@ public class CreateHandler extends ChannelMessageHandler {
       }
 
     } catch(Exception e) {
-      TNECore.log().error("Issue with create account plugin message handler.", e, DebugLevel.STANDARD);
+      PluginCore.log().error("Issue with create account plugin message handler.", e, DebugLevel.STANDARD);
     }
   }
 }

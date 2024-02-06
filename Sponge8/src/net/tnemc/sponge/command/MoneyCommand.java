@@ -21,7 +21,7 @@ package net.tnemc.sponge.command;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.command.parameters.PercentBigDecimal;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.plugincore.sponge.impl.SpongeCMDSource;;
+import net.tnemc.plugincore.sponge.impl.SpongeCMDSource;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.DefaultFor;
@@ -33,6 +33,8 @@ import revxrsal.commands.sponge.SpongeCommandActor;
 import revxrsal.commands.sponge.annotation.CommandPermission;
 
 import java.math.BigDecimal;
+
+;
 
 /**
  * MoneyCommands

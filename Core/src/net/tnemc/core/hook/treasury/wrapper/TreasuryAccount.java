@@ -29,6 +29,7 @@ import net.tnemc.core.actions.source.PluginSource;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
+import net.tnemc.plugincore.PluginCore;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
@@ -62,7 +63,7 @@ public abstract class TreasuryAccount implements Account {
   public @NotNull CompletableFuture<BigDecimal> retrieveBalance(@NotNull Currency currency) {
     final Optional<net.tnemc.core.currency.Currency> curOpt = TNECore.eco().currency().findCurrency(currency.getIdentifier());
     if(curOpt.isPresent()) {
-      return CompletableFuture.completedFuture(account.getHoldingsTotal(TNECore.server().defaultWorld(), curOpt.get().getUid()));
+      return CompletableFuture.completedFuture(account.getHoldingsTotal(PluginCore.server().defaultWorld(), curOpt.get().getUid()));
     }
 
     return CompletableFuture.failedFuture(new IllegalArgumentException("Invalid currency identifier provided. Please make sure this currency is registered with TNE before performing operations!"));
@@ -75,7 +76,7 @@ public abstract class TreasuryAccount implements Account {
       return CompletableFuture.failedFuture(new IllegalArgumentException("Invalid currency identifier provided. Please make sure this currency is registered with TNE before performing operations!"));
     }
 
-    final HoldingsModifier modifier = new HoldingsModifier(TNECore.server().defaultWorld(),
+    final HoldingsModifier modifier = new HoldingsModifier(PluginCore.server().defaultWorld(),
             curOpt.get().getUid(),
             ecoTrans.getAmount().setScale(curOpt.get().getDecimalPlaces(), RoundingMode.DOWN),
             typeToTNEOperation(ecoTrans.getType()));

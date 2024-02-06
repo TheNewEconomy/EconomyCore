@@ -35,7 +35,6 @@ import net.tnemc.core.command.parameters.suggestion.DebugSuggestion;
 import net.tnemc.core.command.parameters.suggestion.RegionSuggestion;
 import net.tnemc.core.command.parameters.suggestion.StatusSuggestion;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.region.RegionGroup;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.plugincore.sponge.impl.SpongeLogProvider;

@@ -24,12 +24,13 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.CurrencyHoldings;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.RegionHoldings;
-import net.tnemc.core.io.storage.dialect.TNEDialect;
-import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.core.config.MainConfig;
+import net.tnemc.core.io.storage.dialect.TNEDialect;
+import net.tnemc.core.utils.Identifier;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.plugincore.core.io.storage.Datable;
 import net.tnemc.plugincore.core.io.storage.StorageConnector;
-import net.tnemc.core.utils.Identifier;
 import net.tnemc.plugincore.core.io.storage.connect.SQLConnector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -79,7 +80,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
   public void store(StorageConnector<?> connector, @NotNull HoldingsEntry object, @Nullable String identifier) {
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne && identifier != null) {
 
-      TNECore.log().debug("Storing holdings for Identifier: " + identifier);
+      PluginCore.log().debug("Storing holdings for Identifier: " + identifier);
 
       sql.executeUpdate(tne.saveHoldings(),
                                               new Object[] {
@@ -143,7 +144,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
     final Collection<HoldingsEntry> holdings = new ArrayList<>();
 
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne && identifier != null) {
-      TNECore.log().debug("SQLHoldings-loadAll-Account ID:" + identifier, DebugLevel.DEVELOPER);
+      PluginCore.log().debug("SQLHoldings-loadAll-Account ID:" + identifier, DebugLevel.DEVELOPER);
       try(ResultSet result = sql.executeQuery(tne.loadHoldings(),
                                                                     new Object[] {
                                                                         identifier,
@@ -163,8 +164,8 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
                                                         result.getBigDecimal("holdings"),
                                                         Identifier.fromID(result.getString("holdings_type")));
 
-          TNECore.log().debug("SQLHoldings-loadAll-Entry ID:" + entry.getHandler(), DebugLevel.DEVELOPER);
-          TNECore.log().debug("SQLHoldings-loadAll-Entry AMT:" + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
+          PluginCore.log().debug("SQLHoldings-loadAll-Entry ID:" + entry.getHandler(), DebugLevel.DEVELOPER);
+          PluginCore.log().debug("SQLHoldings-loadAll-Entry AMT:" + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
           holdings.add(entry);
         }
       } catch(SQLException e) {

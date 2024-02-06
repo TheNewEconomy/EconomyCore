@@ -36,6 +36,7 @@ import net.tnemc.core.api.callback.account.AccountDeleteCallback;
 import net.tnemc.core.api.callback.account.AccountTypesCallback;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.config.MainConfig;
+import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.plugincore.core.id.UUIDPair;
 import net.tnemc.plugincore.core.id.UUIDProvider;
@@ -110,14 +111,14 @@ public class AccountManager {
    */
   public AccountAPIResponse createAccount(final String identifier, final String name, boolean nonPlayer) {
     if(identifier != null && accounts.containsKey(identifier)) {
-      TNECore.log().debug("Account Exists Already. ID: " + identifier);
+      PluginCore.log().debug("Account Exists Already. ID: " + identifier);
 
       return new AccountAPIResponse(accounts.get(identifier), AccountResponse.ALREADY_EXISTS);
     }
 
     final Optional<UUIDPair> pair = uuidProvider.retrieve(name);
     if(MainConfig.yaml().getBoolean("Core.Offline", false) && pair.isPresent() && accounts.containsKey(pair.get().getIdentifier().toString())) {
-      TNECore.log().debug("Offline Account Exists Already. ID: " + identifier);
+      PluginCore.log().debug("Offline Account Exists Already. ID: " + identifier);
 
       return new AccountAPIResponse(accounts.get(pair.get().getIdentifier().toString()), AccountResponse.ALREADY_EXISTS);
     }
@@ -129,7 +130,7 @@ public class AccountManager {
 
         if(identifier == null) {
           //Throw NPE if identifier is null to push down to our catch block.
-          TNECore.log().debug("Tried to createAccount for player using null identifier. Name: " + name);
+          PluginCore.log().debug("Tried to createAccount for player using null identifier. Name: " + name);
           throw new NullPointerException("Tried to createAccount for player using null identifier.");
         }
 
@@ -140,7 +141,7 @@ public class AccountManager {
       } catch(Exception ignore) {
 
         //Our identifier is an invalid UUID, let's search for it.
-        final Optional<UUID> id = TNECore.server().fromName(name);
+        final Optional<UUID> id = PluginCore.server().fromName(name);
 
         if(id.isPresent()) {
           account = new PlayerAccount(id.get(), name);
@@ -151,14 +152,14 @@ public class AccountManager {
           return new AccountAPIResponse(null, AccountResponse.CREATION_FAILED);
         }
       }
-    } else if(!nonPlayer && name.startsWith(MainConfig.yaml().getString("Core.Server.Geyser", ".")) || !nonPlayer && TNECore.server().online(name)) {
+    } else if(!nonPlayer && name.startsWith(MainConfig.yaml().getString("Core.Server.Geyser", ".")) || !nonPlayer && PluginCore.server().online(name)) {
 
       //This is most definitely a geyser player, they're online but not of valid names
       try {
 
         if(identifier == null) {
           //Throw NPE if identifier is null to push down to our catch block.
-          TNECore.log().debug("Tried to createAccount for player using null identifier. Name: " + name);
+          PluginCore.log().debug("Tried to createAccount for player using null identifier. Name: " + name);
           throw new NullPointerException("Tried to createAccount for player using null identifier.");
         }
 
@@ -179,13 +180,13 @@ public class AccountManager {
     }
 
     final AccountCreateCallback callback = new AccountCreateCallback(account);
-    if(TNECore.callbacks().call(callback)) {
+    if(PluginCore.callbacks().call(callback)) {
       return new AccountAPIResponse(account, AccountResponse.CREATION_FAILED_PLUGIN);
     }
 
     accounts.put(account.getIdentifier(), account);
 
-    TNECore.storage().store(account, account.getIdentifier());
+    TNECore.instance().storage().store(account, account.getIdentifier());
 
     try {
       uuidProvider.store(new UUIDPair(UUID.fromString(account.getIdentifier()), account.getName()));
@@ -212,7 +213,7 @@ public class AccountManager {
           return Optional.of(entry.getKey().getDeclaredConstructor(String.class, String.class)
                                   .newInstance(name, name));
         } catch(Exception e) {
-          TNECore.log().error("An error occured while trying to create a new NonPlayer Account" +
+          PluginCore.log().error("An error occured while trying to create a new NonPlayer Account" +
                                   "for : " + name, e, DebugLevel.STANDARD);
         }
       }
@@ -244,7 +245,7 @@ public class AccountManager {
     }
 
     final AccountDeleteCallback callback = new AccountDeleteCallback(identifier);
-    TNECore.callbacks().call(callback);
+    PluginCore.callbacks().call(callback);
 
     accounts.remove(identifier);
     return AccountResponse.DELETED;
@@ -329,7 +330,7 @@ public class AccountManager {
    */
   public void addDefaultTypes() {
 
-    TNECore.callbacks().call(new AccountTypesCallback());
+    PluginCore.callbacks().call(new AccountTypesCallback());
 
     addAccountType(NonPlayerAccount.class, (value)->true);
   }

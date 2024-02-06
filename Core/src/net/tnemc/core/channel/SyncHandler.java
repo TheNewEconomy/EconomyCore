@@ -20,6 +20,7 @@ package net.tnemc.core.channel;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.tnemc.core.TNECore;
+import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.channel.ChannelBytesWrapper;
 import net.tnemc.plugincore.core.channel.ChannelMessageHandler;
 
@@ -37,10 +38,10 @@ public class SyncHandler extends ChannelMessageHandler {
 
   public static void send(String account) {
     ByteArrayDataOutput out = ByteStreams.newDataOutput();
-    out.writeUTF(TNECore.core().getServerID().toString());
+    out.writeUTF(PluginCore.instance().getServerID().toString());
     out.writeUTF(account);
 
-    TNECore.storage().sendProxyMessage("tne:sync", out.toByteArray());
+    TNECore.instance().storage().sendProxyMessage("tne:sync", out.toByteArray());
   }
 
   @Override

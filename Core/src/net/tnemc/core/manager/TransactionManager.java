@@ -19,7 +19,6 @@ package net.tnemc.core.manager;
  */
 
 import net.tnemc.core.config.MainConfig;
-import net.tnemc.plugincore.core.io.maps.EnhancedHashMap;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionCheck;
 import net.tnemc.core.transaction.TransactionCheckGroup;
@@ -39,6 +38,7 @@ import net.tnemc.core.transaction.type.ConversionType;
 import net.tnemc.core.transaction.type.DepositType;
 import net.tnemc.core.transaction.type.PayType;
 import net.tnemc.core.transaction.type.WithdrawType;
+import net.tnemc.plugincore.core.io.maps.EnhancedHashMap;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;

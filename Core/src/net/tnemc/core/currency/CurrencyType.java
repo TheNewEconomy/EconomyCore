@@ -174,6 +174,6 @@ public interface CurrencyType {
   default void addDatabase(Account account, String region, Currency currency, Identifier type, BigDecimal amount) {
     account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, type));
 
-    TNECore.storage().store(account, account.getIdentifier());
+    TNECore.instance().storage().store(account, account.getIdentifier());
   }
 }

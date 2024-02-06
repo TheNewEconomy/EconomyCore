@@ -25,6 +25,7 @@ import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.utils.Identifier;
+import net.tnemc.plugincore.PluginCore;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -78,7 +79,7 @@ public class PAPIHook extends PlaceholderExpansion {
     //%tne_balance:inventory/balance:e_chest/balance:experience/balance:virtualargs[1]%
     if(identifier.contains("balance:")) {
 
-      TNECore.log().debug("Balance ID: " + args[0].split(":")[1]);
+      PluginCore.log().debug("Balance ID: " + args[0].split(":")[1]);
 
       final Identifier id = switch(args[0].split(":")[1]) {
         case "inventory" -> EconomyManager.INVENTORY_ONLY;

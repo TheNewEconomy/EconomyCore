@@ -28,6 +28,7 @@ import net.tnemc.core.channel.SyncHandler;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.transaction.history.AwayHistory;
+import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import net.tnemc.plugincore.core.compatibility.scheduler.ChoreExecution;
 import net.tnemc.plugincore.core.compatibility.scheduler.ChoreTime;
@@ -53,14 +54,14 @@ public class PlayerJoinHandler {
   public HandlerResponse handle(PlayerProvider provider) {
     final HandlerResponse response = new HandlerResponse("", false);
 
-    TNECore.log().debug("Player Join ID: " + provider.identifier());
+    PluginCore.log().debug("Player Join ID: " + provider.identifier());
 
     final Optional<Account> account = TNECore.eco().account().findAccount(provider.identifier());
 
     boolean firstJoin = false;
     AccountAPIResponse apiResponse = null;
 
-    TNECore.log().debug("Join Account Check: " + account.isPresent());
+    PluginCore.log().debug("Join Account Check: " + account.isPresent());
 
     //Our account doesn't exist, so now we need to continue from here
     if(account.isEmpty()) {
@@ -69,7 +70,7 @@ public class PlayerJoinHandler {
       apiResponse = TNECore.eco().account().createAccount(provider.identifier().toString(),
                                                           provider.getName());
 
-      TNECore.log().debug("API Join Check. Account Exists: " + apiResponse.getAccount().isPresent());
+      PluginCore.log().debug("API Join Check. Account Exists: " + apiResponse.getAccount().isPresent());
       if(apiResponse.getAccount().isEmpty()) {
         response.setResponse(response.getResponse());
         response.setCancelled(true);
@@ -81,7 +82,7 @@ public class PlayerJoinHandler {
       }
     }
 
-    TNECore.log().debug("First Join: " + firstJoin);
+    PluginCore.log().debug("First Join: " + firstJoin);
 
     final Optional<Account> acc = (apiResponse == null)? account :
                                                    apiResponse.getAccount();
@@ -113,7 +114,7 @@ public class PlayerJoinHandler {
             continue;
           }
 
-          TNECore.log().debug("Setting Balance to Starting Holdings Currency: " + currency.getIdentifier());
+          PluginCore.log().debug("Setting Balance to Starting Holdings Currency: " + currency.getIdentifier());
 
           if(firstJoin) {
             acc.get().setHoldings(new HoldingsEntry(region,
@@ -140,7 +141,7 @@ public class PlayerJoinHandler {
       }
       TNECore.eco().account().getLoading().remove(id);
 
-      TNECore.server().scheduler().createDelayedTask(()->{
+      PluginCore.server().scheduler().createDelayedTask(()->{
 
         final Optional<AwayHistory> away = acc.get().away(((PlayerAccount)acc.get()).getUUID());
         if(away.isPresent()) {
@@ -150,13 +151,13 @@ public class PlayerJoinHandler {
       }, new ChoreTime(0), ChoreExecution.SECONDARY);
 
       if(provider.hasPermission("tne.admin.update")) {
-        if(MainConfig.yaml().getBoolean("Core.Update.Notify") && TNECore.update() != null) {
+        if(MainConfig.yaml().getBoolean("Core.Update.Notify") && TNECore.instance().update() != null) {
 
-          if(TNECore.update().needsUpdate()) {
-            provider.message(new MessageData("<red>[TNE] Update Available! Latest: <white>" + TNECore.update().getBuild()));
+          if(TNECore.instance().update().needsUpdate()) {
+            provider.message(new MessageData("<red>[TNE] Update Available! Latest: <white>" + TNECore.instance().update().getBuild()));
           }
 
-          if(TNECore.update().isEarlyBuild()) {
+          if(TNECore.instance().update().isEarlyBuild()) {
             provider.message(new MessageData("<gold>[TNE] Thank You for testing this pre-release version!"));
           }
         }
@@ -168,7 +169,7 @@ public class PlayerJoinHandler {
       }
 
       //If this is the first player online, sync balances.
-      if(TNECore.server().onlinePlayers() == 1) {
+      if(PluginCore.server().onlinePlayers() == 1) {
         SyncHandler.send(acc.get().getIdentifier());
       }
     }

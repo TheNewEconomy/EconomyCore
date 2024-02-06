@@ -18,6 +18,7 @@ package net.tnemc.core.region;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import org.jetbrains.annotations.NotNull;
 
@@ -42,7 +43,7 @@ public interface RegionMode {
   }
 
   default String region(@NotNull final UUID player) {
-    final Optional<PlayerProvider> provider = TNECore.server().findPlayer(player);
+    final Optional<PlayerProvider> provider = PluginCore.server().findPlayer(player);
     if(provider.isPresent()) {
       return region(provider.get());
     }
