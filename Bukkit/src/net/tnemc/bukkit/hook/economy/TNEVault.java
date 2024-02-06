@@ -184,7 +184,7 @@ public class TNEVault implements Economy {
     TNECore.log().debug("Vault Balance call. Name: " + name + " World: " + world, DebugLevel.STANDARD);
     final Optional<Account> account = TNECore.eco().account().findAccount(name);
     if(account.isPresent()) {
-      TNECore.log().debug("Vault Balance call. Account exists. Name:" + name, DebugLevel.STANDARD);
+      TNECore.log().debug("Vault Balance call. Account exists. Name:" + account.get().getName(), DebugLevel.STANDARD);
       TNECore.log().debug("Vault Balance call. Balance:" + account.get().getHoldingsTotal(world, TNECore.eco().currency().getDefaultCurrency(world).getUid()).doubleValue(), DebugLevel.STANDARD);
       return account.get().getHoldingsTotal(world, TNECore.eco().currency().getDefaultCurrency(world).getUid()).doubleValue();
     }

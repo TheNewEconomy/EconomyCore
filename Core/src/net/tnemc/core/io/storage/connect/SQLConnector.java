@@ -171,6 +171,14 @@ public class SQLConnector implements StorageConnector<Connection> {
 
     } catch(SQLException e) {
       e.printStackTrace();
+      TNECore.log().error("======= Query Statement =======", DebugLevel.OFF);
+      TNECore.log().error(query, DebugLevel.OFF);
+      TNECore.log().error("======= Query Variables Statement =======", DebugLevel.OFF);
+
+      for(int i = 0; i < variables.length; i++) {
+        TNECore.log().error("Variable - " + variables[i], DebugLevel.OFF);
+      }
+      TNECore.log().error("======= End Query Statement =======", DebugLevel.OFF);
     }
     return null;
   }
@@ -191,6 +199,14 @@ public class SQLConnector implements StorageConnector<Connection> {
 
     } catch(SQLException e) {
       e.printStackTrace();
+      TNECore.log().error("======= Query Statement =======", DebugLevel.OFF);
+      TNECore.log().error(query, DebugLevel.OFF);
+      TNECore.log().error("======= Query Variables Statement =======", DebugLevel.OFF);
+
+      for(int i = 0; i < variables.length; i++) {
+        TNECore.log().error("Variable - " + variables[i], DebugLevel.OFF);
+      }
+      TNECore.log().error("======= End Query Statement =======", DebugLevel.OFF);
     }
   }
 
