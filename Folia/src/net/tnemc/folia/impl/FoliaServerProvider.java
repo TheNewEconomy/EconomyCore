@@ -25,6 +25,7 @@ import net.tnemc.folia.impl.scheduler.FoliaScheduler;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.bukkit.BukkitCalculationsProvider;
 import net.tnemc.item.bukkit.BukkitItemStack;
+import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.bukkit.hook.PAPIParser;
 import net.tnemc.plugincore.bukkit.impl.BukkitPlayerProvider;
 import net.tnemc.plugincore.bukkit.impl.BukkitProxyProvider;
@@ -83,7 +84,7 @@ public class FoliaServerProvider implements ServerConnector {
    */
   @Override
   public String replacePlaceholder(UUID player, String message) {
-    final Optional<PlayerProvider> playerOpt = TNECore.server().findPlayer(player);
+    final Optional<PlayerProvider> playerOpt = PluginCore.server().findPlayer(player);
     if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI") && playerOpt.isPresent()
             && playerOpt.get() instanceof BukkitPlayerProvider bukkitPlayer) {
       return PAPIParser.parse(bukkitPlayer, message);
