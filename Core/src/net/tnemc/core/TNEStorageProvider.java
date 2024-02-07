@@ -18,21 +18,34 @@ package net.tnemc.core;
  */
 
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.GeyserAccount;
+import net.tnemc.core.account.NonPlayerAccount;
+import net.tnemc.core.account.PlayerAccount;
+import net.tnemc.core.account.SharedAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.config.DataConfig;
+import net.tnemc.core.io.storage.datables.sql.standard.SQLAccount;
+import net.tnemc.core.io.storage.datables.sql.standard.SQLHoldings;
+import net.tnemc.core.io.storage.datables.sql.standard.SQLReceipt;
+import net.tnemc.core.io.storage.datables.yaml.YAMLAccount;
+import net.tnemc.core.io.storage.datables.yaml.YAMLHoldings;
+import net.tnemc.core.io.storage.dialect.TNEDialect;
 import net.tnemc.core.io.storage.dialect.impl.MariaDialect;
 import net.tnemc.core.io.storage.dialect.impl.MariaOutdatedDialect;
 import net.tnemc.core.io.storage.dialect.impl.MySQLDialect;
+import net.tnemc.core.transaction.Receipt;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.plugincore.core.compatibility.scheduler.ChoreExecution;
 import net.tnemc.plugincore.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.plugincore.core.io.storage.Datable;
+import net.tnemc.plugincore.core.io.storage.SQLEngine;
 import net.tnemc.plugincore.core.io.storage.StorageConnector;
 import net.tnemc.plugincore.core.io.storage.StorageEngine;
 import net.tnemc.plugincore.core.io.storage.StorageProvider;
 import net.tnemc.plugincore.core.io.storage.connect.SQLConnector;
 import net.tnemc.plugincore.core.io.storage.connect.YAMLConnector;
+import net.tnemc.plugincore.core.io.storage.engine.StandardSQL;
 import net.tnemc.plugincore.core.io.storage.engine.flat.YAML;
 import net.tnemc.plugincore.core.io.storage.engine.sql.MySQL;
 import net.tnemc.plugincore.core.io.storage.engine.sql.PostgreSQL;
@@ -98,6 +111,17 @@ public class TNEStorageProvider implements StorageProvider {
         this.connector = new YAMLConnector();
       }
     }
+
+    final Datable<Account> account = (this.engine instanceof StandardSQL)? new SQLAccount() : new YAMLAccount();
+    final Datable<HoldingsEntry> entry  = (this.engine instanceof StandardSQL)? new SQLHoldings() : new YAMLHoldings();
+
+    this.engine.datables().put(Account.class, account);
+    this.engine.datables().put(NonPlayerAccount.class, account);
+    this.engine.datables().put(SharedAccount.class, account);
+    this.engine.datables().put(GeyserAccount.class, account);
+    this.engine.datables().put(PlayerAccount.class, account);
+
+    this.engine.datables().put(HoldingsEntry.class, entry);
   }
 
   @Override
@@ -108,6 +132,24 @@ public class TNEStorageProvider implements StorageProvider {
   @Override
   public StorageEngine engine() {
     return this.engine;
+  }
+
+  @Override
+  public void initialize() {
+    if(connector instanceof SQLConnector sql
+            && this.engine instanceof StandardSQL sqlEngine
+            && sqlEngine.dialect() instanceof TNEDialect tneDialect) {
+
+      sql.executeUpdate(tneDialect.accountsTable(), new Object[]{});
+      sql.executeUpdate(tneDialect.accountsNonPlayerTable(), new Object[]{});
+      sql.executeUpdate(tneDialect.accountsPlayerTable(), new Object[]{});
+      sql.executeUpdate(tneDialect.accountMembersTable(), new Object[]{});
+      sql.executeUpdate(tneDialect.holdingsTable(), new Object[]{});
+      sql.executeUpdate(tneDialect.receiptsTable(), new Object[]{});
+      sql.executeUpdate(tneDialect.receiptsHoldingsTable(), new Object[]{});
+      sql.executeUpdate(tneDialect.receiptsParticipantsTable(), new Object[]{});
+      sql.executeUpdate(tneDialect.receiptsModifiersTable(), new Object[]{});
+    }
   }
 
   @Override
@@ -125,5 +167,20 @@ public class TNEStorageProvider implements StorageProvider {
     //Our account storeAll requires no identifier, so we set it to null
     data.ifPresent(datable->PluginCore.server().scheduler()
             .createDelayedTask(()->datable.storeAll(connector, null), new ChoreTime(0), ChoreExecution.SECONDARY));
+  }
+
+  @Override
+  public void purge() {
+
+  }
+
+  @Override
+  public void reset() {
+    TNECore.eco().clearCache();
+  }
+
+  @Override
+  public void backup() {
+
   }
 }

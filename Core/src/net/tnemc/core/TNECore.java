@@ -23,6 +23,8 @@ import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.api.TNEAPI;
 import net.tnemc.core.api.response.AccountAPIResponse;
+import net.tnemc.core.channel.BalanceHandler;
+import net.tnemc.core.channel.SyncHandler;
 import net.tnemc.core.command.parameters.PercentBigDecimal;
 import net.tnemc.core.command.parameters.resolver.AccountResolver;
 import net.tnemc.core.command.parameters.resolver.BigDecimalResolver;
@@ -132,6 +134,12 @@ public abstract class TNECore extends PluginEngine {
     if(!this.messageConfig.load()) {
       PluginCore.log().error("Failed to load message configuration!", DebugLevel.OFF);
     }
+  }
+
+  @Override
+  public void registerPluginChannels() {
+    PluginCore.instance().getChannelMessageManager().register(new BalanceHandler());
+    PluginCore.instance().getChannelMessageManager().register(new SyncHandler());
   }
 
   @Override

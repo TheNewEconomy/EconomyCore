@@ -105,7 +105,7 @@ public class BukkitCore extends TNECore {
 
   @Override
   public BukkitItemCalculations itemCalculations() {
-    return null;
+    return new BukkitItemCalculations();
   }
 
   public static BukkitCore instance() {
