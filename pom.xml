@@ -18,7 +18,7 @@
     </modules>
 
     <properties>
-        <tnpc.version>1.0.0.1-Pre-15</tnpc.version>
+        <tnpc.version>1.0.0.1-Pre-16</tnpc.version>
         <tne.relocation>net.tnemc.libs</tne.relocation>
         <tne.java>17</tne.java>
         <maven.compiler.target>17</maven.compiler.target>

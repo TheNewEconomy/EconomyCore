@@ -41,7 +41,7 @@ public class BaseCommand {
   }
 
   public static Optional<Account> account(CmdSource<?> sender) {
-    if(sender.identifier().isPresent()) {
+    if(sender.identifier().isEmpty()) {
       return Optional.empty();
     }
     return TNECore.eco().account().findAccount(sender.identifier().get());
