@@ -2,7 +2,7 @@ package net.tnemc.core.account;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -19,8 +19,9 @@ package net.tnemc.core.account;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.Location;
-import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.Location;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -65,7 +66,7 @@ public class PlayerAccount extends Account {
    *         Optional if no player is located.
    */
   public Optional<PlayerProvider> getPlayer() {
-    return TNECore.server().findPlayer(uuid);
+    return PluginCore.server().findPlayer(uuid);
   }
 
   /**

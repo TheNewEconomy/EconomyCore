@@ -1,7 +1,7 @@
 package net.tnemc.core.account.holdings.handlers;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -24,8 +24,8 @@ import net.tnemc.core.account.holdings.HoldingsHandler;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.currency.type.ExperienceType;
-import net.tnemc.core.utils.Experience;
 import net.tnemc.core.utils.Identifier;
+import net.tnemc.plugincore.core.utils.Experience;
 
 import java.math.BigDecimal;
 import java.util.Optional;

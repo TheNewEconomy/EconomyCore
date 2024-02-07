@@ -1,7 +1,7 @@
 package net.tnemc.bukkit.hook.economy;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -25,11 +25,12 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.source.PluginSource;
-import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.Nullable;
 
@@ -181,14 +182,16 @@ public class TNEVault implements Economy {
    */
   @Deprecated
   public double getBalance(String name, String world) {
-    TNECore.log().debug("Vault Balance call. Name: " + name + " World: " + world, DebugLevel.STANDARD);
+    PluginCore.log().debug("Vault Balance call. Name: " + name + " World: " + world, DebugLevel.STANDARD);
+
     final Optional<Account> account = TNECore.eco().account().findAccount(name);
     if(account.isPresent()) {
       TNECore.log().debug("Vault Balance call. Account exists. Name:" + account.get().getName(), DebugLevel.STANDARD);
       TNECore.log().debug("Vault Balance call. Balance:" + account.get().getHoldingsTotal(world, TNECore.eco().currency().getDefaultCurrency(world).getUid()).doubleValue(), DebugLevel.STANDARD);
       return account.get().getHoldingsTotal(world, TNECore.eco().currency().getDefaultCurrency(world).getUid()).doubleValue();
     }
-    TNECore.log().debug("Vault Balance call. Account doesn't exist. Name:" + name, DebugLevel.STANDARD);
+
+    PluginCore.log().debug("Vault Balance call. Account doesn't exist. Name:" + name, DebugLevel.STANDARD);
     return 0;
   }
 
@@ -275,9 +278,9 @@ public class TNEVault implements Economy {
   public EconomyResponse withdrawPlayer(OfflinePlayer player, double amount) {
     final EconomyResponse response = withdrawPlayer(player.getUniqueId().toString(), TNECore.eco().region().defaultRegion(), amount);
 
-    TNECore.log().debug("Player ID: " + player.getUniqueId());
-    TNECore.log().debug("Player Name: " + player.getName());
-    TNECore.log().debug("Response" + response.errorMessage);
+    PluginCore.log().debug("Player ID: " + player.getUniqueId());
+    PluginCore.log().debug("Player Name: " + player.getName());
+    PluginCore.log().debug("Response" + response.errorMessage);
 
     if(response.transactionSuccess() || player.getName() == null) {
       return response;
@@ -547,7 +550,8 @@ public class TNEVault implements Economy {
    */
   @Deprecated
   public boolean createPlayerAccount(String name, String world) {
-    TNECore.log().debug("Vault Method: Create Player Account!", DebugLevel.STANDARD);
+
+    PluginCore.log().debug("Vault Method: Create Player Account!", DebugLevel.STANDARD);
     return TNECore.eco().account().createAccount(name, name).getResponse().success();
   }
 
@@ -559,11 +563,14 @@ public class TNEVault implements Economy {
    * @return if the account creation was successful
    */
   public boolean createPlayerAccount(OfflinePlayer player, String world) {
-    TNECore.log().debug("Vault Method: Create Player Account!", DebugLevel.STANDARD);
+
+    PluginCore.log().debug("Vault Method: Create Player Account!", DebugLevel.STANDARD);
     if(player.getName() == null) {
-      TNECore.log().error("Error from plugin accessing vault createPlayerAccount! Name provided is null!(probably EssentialsX)");
+
+      PluginCore.log().error("Error from plugin accessing vault createPlayerAccount! Name provided is null!(probably EssentialsX)");
       return false;
     }
+
     return TNECore.eco().account().createAccount(player.getUniqueId().toString(), player.getName()).getResponse().success();
   }
 

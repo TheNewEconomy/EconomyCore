@@ -1,7 +1,7 @@
 package net.tnemc.bukkit.listeners.player;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,10 +17,10 @@ package net.tnemc.bukkit.listeners.player;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.handlers.player.PlayerInteractHandler;
 import net.tnemc.item.bukkit.BukkitItemStack;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -38,7 +38,7 @@ public class PlayerInteractListener implements Listener {
 
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onInteract(final PlayerInteractEvent event) {
-    final PlayerProvider provider = TNECore.server().initializePlayer(event.getPlayer());
+    final PlayerProvider provider = PluginCore.server().initializePlayer(event.getPlayer());
 
     final ItemStack stack = event.getItem();
 

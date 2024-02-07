@@ -2,7 +2,7 @@ package net.tnemc.core.currency.loader;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -21,8 +21,6 @@ package net.tnemc.core.currency.loader;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.currency.CurrencyLoadCallback;
 import net.tnemc.core.api.callback.currency.DenominationLoadCallback;
-import net.tnemc.core.compatibility.helper.CraftingRecipe;
-import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyLoader;
 import net.tnemc.core.currency.CurrencyRegion;
@@ -31,8 +29,11 @@ import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.Note;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
-import net.tnemc.core.utils.IOUtil;
 import net.tnemc.core.utils.exceptions.NoValidCurrenciesException;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.helper.CraftingRecipe;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.utils.IOUtil;
 import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.File;
@@ -71,13 +72,13 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
           final boolean loaded = loadCurrency(directory, curFile);
 
           if(!loaded) {
-            TNECore.log().error("Failed to load currency: " + curFile, DebugLevel.OFF);
+            PluginCore.log().error("Failed to load currency: " + curFile, DebugLevel.OFF);
           }
         }
         return;
       }
     }
-    TNECore.log().error("There are no currencies to load.", DebugLevel.OFF);
+    PluginCore.log().error("There are no currencies to load.", DebugLevel.OFF);
     throw new NoValidCurrenciesException();
   }
 
@@ -103,23 +104,23 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
     final YamlFile cur = new YamlFile(curDirectory);
 
-    TNECore.log().inform("Loading: " + curDirectory.getName());
+    PluginCore.log().inform("Loading: " + curDirectory.getName());
 
     try {
       cur.loadWithComments();
 
     } catch(IOException e) {
-      TNECore.log().error("Failed to load currency: " + cur.getName(), DebugLevel.OFF);
+      PluginCore.log().error("Failed to load currency: " + cur.getName(), DebugLevel.OFF);
       e.printStackTrace();
       return false;
     }
 
     if(cur.getBoolean("Options.Disabled", false)) {
-      TNECore.log().inform("Currency wasn't loaded as it's disabled: " + cur.getName());
+      PluginCore.log().inform("Currency wasn't loaded as it's disabled: " + cur.getName());
       return false;
     }
 
-    TNECore.log().inform("Attempting to load currency: " + curDirectory.getName());
+    PluginCore.log().inform("Attempting to load currency: " + curDirectory.getName());
 
     //Currency Info configs.
     final String identifier = cur.getString("Info.Identifier", "Dollar");
@@ -250,13 +251,13 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     }
 
     final CurrencyLoadCallback currencyLoad = new CurrencyLoadCallback(currency);
-    if(TNECore.callbacks().call(currencyLoad)) {
-      TNECore.log().error("Cancelled currency load through callback.", DebugLevel.OFF);
+    if(PluginCore.callbacks().call(currencyLoad)) {
+      PluginCore.log().error("Cancelled currency load through callback.", DebugLevel.OFF);
       return false;
     }
 
     if(!loadDenominations(new File(directory, identifier), currency)) {
-      TNECore.log().error("Failed to load currency. Unable to load denominations: " + currency.getIdentifier(), DebugLevel.OFF);
+      PluginCore.log().error("Failed to load currency. Unable to load denominations: " + currency.getIdentifier(), DebugLevel.OFF);
       return false;
     }
 
@@ -265,7 +266,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     try {
       cur.save();
     } catch(IOException e) {
-      TNECore.log().error("Failed to save currency YAML!", e, DebugLevel.OFF);
+      PluginCore.log().error("Failed to save currency YAML!", e, DebugLevel.OFF);
     }
     return true;
   }
@@ -287,15 +288,15 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
           final boolean loaded = loadDenomination(currency, denomination);
 
           if(!loaded) {
-            TNECore.log().error("Unable to load denomination: " + denomination.getName(), DebugLevel.OFF);
+            PluginCore.log().error("Unable to load denomination: " + denomination.getName(), DebugLevel.OFF);
           }
         }
         return true;
       }
-      TNECore.log().error("No denominations found for currency: " + currency.getIdentifier(), DebugLevel.OFF);
+      PluginCore.log().error("No denominations found for currency: " + currency.getIdentifier(), DebugLevel.OFF);
       return false;
     }
-    TNECore.log().error("Invalid currency directory! Must be the same name as the currency's identifier value. Currency: " + currency.getIdentifier(), DebugLevel.OFF);
+    PluginCore.log().error("Invalid currency directory! Must be the same name as the currency's identifier value. Currency: " + currency.getIdentifier(), DebugLevel.OFF);
     return false;
   }
 
@@ -323,7 +324,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     try {
       denom.loadWithComments();
     } catch(IOException e) {
-      TNECore.log().error("Failed to load denomination: " + denomFile.getName(), DebugLevel.OFF);
+      PluginCore.log().error("Failed to load denomination: " + denomFile.getName(), DebugLevel.OFF);
       e.printStackTrace();
       return false;
     }
@@ -333,7 +334,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
     final BigDecimal weight = BigDecimal.valueOf(denom.getDouble("Options.Weight", 1));
     if(weight.compareTo(BigDecimal.ZERO) <= 0) {
-      TNECore.log().error("Failed to load denomination: " + denomFile.getName() + ". Invalid Options.Weight Value: " + weight.toPlainString(), DebugLevel.OFF);
+      PluginCore.log().error("Failed to load denomination: " + denomFile.getName() + ". Invalid Options.Weight Value: " + weight.toPlainString(), DebugLevel.OFF);
       return false;
     }
 
@@ -346,19 +347,19 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     denomination.setSingle(single);
     denomination.setPlural(plural);
 
-    if(denomination instanceof ItemDenomination) {
+    if(denomination instanceof ItemDenomination item) {
 
-      ((ItemDenomination)denomination).setName(denom.getString("Options.Name", null));
-      ((ItemDenomination)denomination).setLore(denom.getStringList("Options.Lore"));
-      ((ItemDenomination)denomination).setCustomModel(denom.getInt("Options.ModelData", -1));
-      ((ItemDenomination)denomination).setTexture(denom.getString("Options.Texture", null));
+      item.setName(denom.getString("Options.Name", null));
+      item.setLore(denom.getStringList("Options.Lore"));
+      item.setCustomModel(denom.getInt("Options.ModelData", -1));
+      item.setTexture(denom.getString("Options.Texture", null));
 
       if(denom.contains("Options.Enchantments")) {
-        ((ItemDenomination)denomination).setEnchantments(denom.getStringList("Options.Enchantments"));
+        item.setEnchantments(denom.getStringList("Options.Enchantments"));
       }
 
       if(denom.contains("Options.Flags")) {
-        ((ItemDenomination)denomination).setFlags(denom.getStringList("Options.Flags"));
+        item.setFlags(denom.getStringList("Options.Flags"));
       }
 
       //Crafting
@@ -366,7 +367,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
         final boolean shapeless = denom.getBoolean("Options.Crafting.Shapeless", false);
         final int amount = denom.getInt("Options.Crafting.Amount", 1);
 
-        CraftingRecipe recipe = new CraftingRecipe(!shapeless, amount, (ItemDenomination)denomination);
+        CraftingRecipe recipe = new CraftingRecipe(!shapeless, amount, TNECore.instance().denominationToStack(item));
 
         for(String materials : denom.getStringList("Options.Crafting.Materials")) {
 
@@ -385,12 +386,12 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
           i++;
         }
 
-        TNECore.server().registerCrafting(recipe);
+        PluginCore.server().registerCrafting(recipe);
       }
     }
 
     final DenominationLoadCallback denomCallback = new DenominationLoadCallback(currency, denomination);
-    if(TNECore.callbacks().call(denomCallback)) {
+    if(PluginCore.callbacks().call(denomCallback)) {
       return false;
     }
 

@@ -2,7 +2,7 @@ package net.tnemc.bukkit.hook.economy;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -22,6 +22,7 @@ package net.tnemc.bukkit.hook.economy;
 import net.milkbowl.vault.economy.Economy;
 import net.tnemc.bukkit.BukkitCore;
 import net.tnemc.core.hook.Hook;
+import net.tnemc.plugincore.PluginCore;
 import org.bukkit.plugin.ServicePriority;
 
 /**
@@ -48,6 +49,6 @@ public class VaultHook implements Hook {
     BukkitCore.instance().getPlugin().getServer().getServicesManager().register(Economy.class, new TNEVault(),
                                                              BukkitCore.instance().getPlugin(), ServicePriority.Highest);
 
-    BukkitCore.log().inform("Hooked into Vault");
+    PluginCore.log().inform("Hooked into Vault");
   }
 }

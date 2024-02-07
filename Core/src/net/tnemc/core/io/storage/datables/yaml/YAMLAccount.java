@@ -1,7 +1,7 @@
 package net.tnemc.core.io.storage.datables.yaml;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -26,13 +26,14 @@ import net.tnemc.core.account.shared.Member;
 import net.tnemc.core.api.callback.account.AccountLoadCallback;
 import net.tnemc.core.api.callback.account.AccountSaveCallback;
 import net.tnemc.core.api.response.AccountAPIResponse;
-import net.tnemc.core.compatibility.PlayerProvider;
-import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.core.io.storage.Datable;
-import net.tnemc.core.io.storage.StorageConnector;
-import net.tnemc.core.manager.id.UUIDPair;
-import net.tnemc.core.utils.IOUtil;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.id.UUIDPair;
+import net.tnemc.plugincore.core.io.storage.Datable;
+import net.tnemc.plugincore.core.io.storage.StorageConnector;
+import net.tnemc.plugincore.core.utils.IOUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.simpleyaml.configuration.ConfigurationSection;
@@ -83,15 +84,15 @@ public class YAMLAccount implements Datable<Account> {
   @Override
   public void store(StorageConnector<?> connector, @NotNull Account account, @Nullable String identifier) {
 
-    TNECore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.STANDARD);
+    PluginCore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.STANDARD);
 
-    final File accFile = new File(TNECore.directory(), "accounts/" + account.getIdentifier() + ".yml");
+    final File accFile = new File(PluginCore.directory(), "accounts/" + account.getIdentifier() + ".yml");
     if(!accFile.exists()) {
       try {
         accFile.createNewFile();
       } catch(IOException e) {
 
-        TNECore.log().error("Issue loading account file. Account: " + account.getName());
+        PluginCore.log().error("Issue loading account file. Account: " + account.getName());
         return;
       }
     }
@@ -102,7 +103,7 @@ public class YAMLAccount implements Datable<Account> {
       yaml = YamlFile.loadConfiguration(accFile);
     } catch(IOException ignore) {
 
-      TNECore.log().error("Issue loading account file. Account: " + account.getName());
+      PluginCore.log().error("Issue loading account file. Account: " + account.getName());
       return;
     }
 
@@ -117,7 +118,7 @@ public class YAMLAccount implements Datable<Account> {
       if(account instanceof PlayerAccount playerAccount) {
         yaml.set("Info.LastOnline", playerAccount.getLastOnline());
 
-        final Optional<PlayerProvider> provider = TNECore.server().findPlayer(playerAccount.getUUID());
+        final Optional<PlayerProvider> provider = PluginCore.server().findPlayer(playerAccount.getUUID());
 
         if(provider.isPresent()) {
           final String region = TNECore.eco().region().getMode().region(provider.get());
@@ -152,14 +153,14 @@ public class YAMLAccount implements Datable<Account> {
         yaml.save();
 
         final AccountSaveCallback callback = new AccountSaveCallback(account);
-        TNECore.callbacks().call(callback);
+        PluginCore.callbacks().call(callback);
 
         yaml = null;
       } catch(IOException e) {
-        TNECore.log().error("Issue saving account file. Account: " + account.getName());
+        PluginCore.log().error("Issue saving account file. Account: " + account.getName());
         return;
       }
-      TNECore.storage().storeAll(account.getIdentifier());
+      TNECore.instance().storage().storeAll(account.getIdentifier());
     }
   }
 
@@ -186,9 +187,9 @@ public class YAMLAccount implements Datable<Account> {
   @Override
   public Optional<Account> load(StorageConnector<?> connector, @NotNull String identifier) {
 
-    final File accFile = new File(TNECore.directory(), "accounts/" + identifier + ".yml");
+    final File accFile = new File(PluginCore.directory(), "accounts/" + identifier + ".yml");
     if(!accFile.exists()) {
-      TNECore.log().error("Null account file passed to YAMLAccount.load. Account: " + identifier);
+      PluginCore.log().error("Null account file passed to YAMLAccount.load. Account: " + identifier);
       return Optional.empty();
     }
     return load(connector, accFile, identifier);
@@ -197,7 +198,7 @@ public class YAMLAccount implements Datable<Account> {
   public Optional<Account> load(StorageConnector<?> connector, File accFile, final String identifier) {
     if(accFile == null) {
 
-      TNECore.log().error("Null account file passed to YAMLAccount.load. Account: " + identifier);
+      PluginCore.log().error("Null account file passed to YAMLAccount.load. Account: " + identifier);
       return Optional.empty();
     }
 
@@ -206,7 +207,7 @@ public class YAMLAccount implements Datable<Account> {
       yaml = YamlFile.loadConfiguration(accFile);
     } catch(IOException ignore) {
 
-      TNECore.log().error("Issue loading account file. Account: " + identifier);
+      PluginCore.log().error("Issue loading account file. Account: " + identifier);
     }
 
     if(yaml != null) {
@@ -216,7 +217,7 @@ public class YAMLAccount implements Datable<Account> {
       //Validate account file
       if(!yaml.contains("Info.Name") || !yaml.contains("Info.Type")) {
 
-        TNECore.log().error("Invalid account file. Account: " + identifier, DebugLevel.OFF);
+        PluginCore.log().error("Invalid account file. Account: " + identifier, DebugLevel.OFF);
         return Optional.empty();
       }
 
@@ -256,13 +257,13 @@ public class YAMLAccount implements Datable<Account> {
           }
         }
 
-        final Collection<HoldingsEntry> holdings = TNECore.storage().loadAll(HoldingsEntry.class, identifier);
+        final Collection<HoldingsEntry> holdings = TNECore.instance().storage().loadAll(HoldingsEntry.class, identifier);
         for(HoldingsEntry entry : holdings) {
           account.getWallet().setHoldings(entry);
         }
 
         final AccountLoadCallback callback = new AccountLoadCallback(account);
-        TNECore.callbacks().call(callback);
+        PluginCore.callbacks().call(callback);
       }
       yaml = null;
       return Optional.ofNullable(account);
@@ -281,7 +282,7 @@ public class YAMLAccount implements Datable<Account> {
   public Collection<Account> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
     final Collection<Account> accounts = new ArrayList<>();
 
-    for(File file : IOUtil.getYAMLs(new File(TNECore.directory(), "accounts"))) {
+    for(File file : IOUtil.getYAMLs(new File(PluginCore.directory(), "accounts"))) {
 
       final Optional<Account> loaded = load(connector, file, file.getName().replace(".yml", ""));
       if(loaded.isPresent()) {

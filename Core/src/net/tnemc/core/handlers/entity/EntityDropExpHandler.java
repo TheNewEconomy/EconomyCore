@@ -1,7 +1,7 @@
 package net.tnemc.core.handlers.entity;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,7 +18,7 @@ package net.tnemc.core.handlers.entity;
  */
 
 import net.tnemc.core.config.MainConfig;
-import net.tnemc.core.utils.HandlerResponse;
+import net.tnemc.plugincore.core.utils.HandlerResponse;
 
 /**
  * EntityDropExpHandler

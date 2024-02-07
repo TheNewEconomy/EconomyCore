@@ -1,7 +1,7 @@
 package net.tnemc.core.account.holdings.handlers;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -23,12 +23,13 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsHandler;
-import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.currency.calculations.CalculationData;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.utils.Identifier;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -79,12 +80,12 @@ public class InventoryHandler implements HoldingsHandler {
   public boolean setHoldings(Account account, String region, Currency currency, CurrencyType type, BigDecimal amount) {
     account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, identifier()));
 
-    if(account.isPlayer() && TNECore.server().online(account.getIdentifier()) && !TNECore.eco().account().getImporting().contains(((PlayerAccount)account).getUUID().toString())) {
+    if(account.isPlayer() && PluginCore.server().online(account.getIdentifier()) && !TNECore.eco().account().getImporting().contains(((PlayerAccount)account).getUUID().toString())) {
       final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
                                                                  ((PlayerAccount)account).getPlayer()
                                                                      .get().inventory().getInventory(false),
                                                                  ((PlayerAccount)account).getUUID());
-      TNECore.server().itemCalculations().setItems(data, amount);
+      TNECore.instance().itemCalculations().setItems(data, amount);
       return true;
     }
     return true;
@@ -105,7 +106,7 @@ public class InventoryHandler implements HoldingsHandler {
   public HoldingsEntry getHoldings(Account account, String region, Currency currency, CurrencyType type) {
     if((currency instanceof ItemCurrency)) {
 
-      if(!account.isPlayer() || !TNECore.server().online(account.getIdentifier()) ||
+      if(!account.isPlayer() || !PluginCore.server().online(account.getIdentifier()) ||
           TNECore.eco().account().getLoading().contains(((PlayerAccount)account).getUUID().toString())
                   && !TNECore.eco().account().getImporting().contains(((PlayerAccount)account).getUUID().toString())) {
 
@@ -114,7 +115,7 @@ public class InventoryHandler implements HoldingsHandler {
                                                                                  currency.getUid(),
                                                                                  identifier()
         );
-        TNECore.log().debug("Getting holdings from Inventory DB", DebugLevel.DEVELOPER);
+        PluginCore.log().debug("Getting holdings from Inventory DB", DebugLevel.DEVELOPER);
 
         if(holdings.isPresent()) {
           return holdings.get();
@@ -124,14 +125,14 @@ public class InventoryHandler implements HoldingsHandler {
                                  BigDecimal.ZERO,
                                  identifier());
       }
-      TNECore.log().debug("Getting holdings from Inventory", DebugLevel.DEVELOPER);
+      PluginCore.log().debug("Getting holdings from Inventory", DebugLevel.DEVELOPER);
       final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
                                                                  ((PlayerAccount)account).getPlayer()
                                                                      .get().inventory().getInventory(false),
                                                                  ((PlayerAccount)account).getUUID());
 
       return new HoldingsEntry(region, currency.getUid(),
-                               TNECore.server().itemCalculations().calculateHoldings(data), identifier());
+                               TNECore.instance().itemCalculations().calculateHoldings(data), identifier());
     }
     //not item currency? then return zero... should never happen.
     return new HoldingsEntry(region,

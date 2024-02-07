@@ -1,7 +1,7 @@
 package net.tnemc.bukkit.hook.misc;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -25,6 +25,7 @@ import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.utils.Identifier;
+import net.tnemc.plugincore.PluginCore;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -86,7 +87,7 @@ public class PAPIHook extends PlaceholderExpansion {
     //%tne_balance:inventory/balance:e_chest/balance:experience/balance:virtualargs[1]%
     if(identifier.contains("balance:")) {
 
-      TNECore.log().debug("Balance ID: " + args[0].split(":")[1]);
+      PluginCore.log().debug("Balance ID: " + args[0].split(":")[1]);
 
       final Identifier id = switch(args[0].split(":")[1]) {
         case "inventory" -> EconomyManager.INVENTORY_ONLY;

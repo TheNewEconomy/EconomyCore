@@ -1,7 +1,7 @@
 package net.tnemc.core.manager;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -22,6 +22,7 @@ import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.manager.top.TopCurrency;
 import net.tnemc.core.manager.top.TopPage;
+import net.tnemc.plugincore.PluginCore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +64,7 @@ public class TopManager {
 
     topMap.clear();
     for(Currency currency : TNECore.eco().currency().currencies()) {
-      topMap.put(currency.getUid(), new TopCurrency(TNECore.server().defaultRegion(), currency.getUid()));
+      topMap.put(currency.getUid(), new TopCurrency(PluginCore.server().defaultWorld(), currency.getUid()));
     }
   }
 

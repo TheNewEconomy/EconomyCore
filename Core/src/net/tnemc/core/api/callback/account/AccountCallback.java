@@ -1,7 +1,7 @@
 package net.tnemc.core.api.callback.account;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,7 +18,7 @@ package net.tnemc.core.api.callback.account;
  */
 
 import net.tnemc.core.account.Account;
-import net.tnemc.core.api.callback.TNECallback;
+import net.tnemc.plugincore.core.api.callback.Callback;
 
 /**
  * AccountCallback represents a parent callback for anything account related.
@@ -26,7 +26,7 @@ import net.tnemc.core.api.callback.TNECallback;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public abstract class AccountCallback implements TNECallback {
+public abstract class AccountCallback implements Callback {
 
   protected final Account account;
 

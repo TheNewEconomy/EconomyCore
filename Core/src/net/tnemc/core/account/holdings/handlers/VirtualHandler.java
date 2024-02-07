@@ -1,7 +1,7 @@
 package net.tnemc.core.account.holdings.handlers;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,14 +18,14 @@ package net.tnemc.core.account.holdings.handlers;
  */
 
 import net.tnemc.core.EconomyManager;
-import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsHandler;
-import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.utils.Identifier;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -95,7 +95,7 @@ public class VirtualHandler implements HoldingsHandler {
                                                                              EconomyManager.VIRTUAL
     );
 
-    TNECore.log().debug("Getting holdings from Virtual", DebugLevel.DEVELOPER);
+    PluginCore.log().debug("Getting holdings from Virtual", DebugLevel.DEVELOPER);
 
     if(holdings.isPresent()) {
       return holdings.get();

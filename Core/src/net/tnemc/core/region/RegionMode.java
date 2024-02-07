@@ -1,7 +1,7 @@
 package net.tnemc.core.region;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,7 +18,8 @@ package net.tnemc.core.region;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.PlayerProvider;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public interface RegionMode {
   }
 
   default String region(@NotNull final UUID player) {
-    final Optional<PlayerProvider> provider = TNECore.server().findPlayer(player);
+    final Optional<PlayerProvider> provider = PluginCore.server().findPlayer(player);
     if(provider.isPresent()) {
       return region(provider.get());
     }

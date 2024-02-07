@@ -1,7 +1,7 @@
 package net.tnemc.core.handlers.player;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -21,10 +21,10 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.core.io.storage.StorageManager;
-import net.tnemc.core.utils.HandlerResponse;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
+import net.tnemc.plugincore.core.io.storage.StorageManager;
+import net.tnemc.plugincore.core.utils.HandlerResponse;
 
 import java.util.Date;
 import java.util.Optional;

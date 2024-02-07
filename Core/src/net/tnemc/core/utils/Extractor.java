@@ -1,7 +1,7 @@
 package net.tnemc.core.utils;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -22,8 +22,9 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.api.response.AccountAPIResponse;
-import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import org.jetbrains.annotations.Nullable;
 import org.simpleyaml.configuration.file.YamlFile;
 
@@ -43,11 +44,11 @@ import java.util.UUID;
 public class Extractor {
 
   public static boolean extract() {
-    final File file = new File(TNECore.directory(), "extracted.yml");
+    final File file = new File(PluginCore.directory(), "extracted.yml");
 
     //check to see if file exists, if it does we are going to move it to the extracts directory.
     if(file.exists()) {
-      final File directory = new File(TNECore.directory(), "extracted");
+      final File directory = new File(PluginCore.directory(), "extracted");
       if(!directory.exists()) {
 
         directory.mkdir();
@@ -61,7 +62,7 @@ public class Extractor {
     try {
       file.createNewFile();
     } catch(IOException e) {
-      TNECore.log().error("Failed to create extraction file.", e, DebugLevel.STANDARD);
+      PluginCore.log().error("Failed to create extraction file.", e, DebugLevel.STANDARD);
       return false;
     }
 
@@ -69,7 +70,7 @@ public class Extractor {
     try {
       yaml.load();
     } catch(IOException e) {
-      TNECore.log().error("Failed load extraction file for writing.", e, DebugLevel.STANDARD);
+      PluginCore.log().error("Failed load extraction file for writing.", e, DebugLevel.STANDARD);
       return false;
     }
     final int total = TNECore.eco().account().getAccounts().values().size();
@@ -97,16 +98,16 @@ public class Extractor {
 
         if (message) {
           final int progress = (number * 100) / total;
-          TNECore.log().inform("Extraction Progress: " + progress);
+          PluginCore.log().inform("Extraction Progress: " + progress);
         }
       } catch(Exception ignore) {}
     }
 
     try {
       yaml.save();
-      TNECore.log().inform("Extraction has completed!");
+      PluginCore.log().inform("Extraction has completed!");
     } catch(IOException e) {
-      TNECore.log().error("Failed to save extraction file.", e, DebugLevel.STANDARD);
+      PluginCore.log().error("Failed to save extraction file.", e, DebugLevel.STANDARD);
       return false;
     }
     return true;
@@ -116,14 +117,14 @@ public class Extractor {
     File file;
 
     if(extraction != null && extraction > 0) {
-      file = new File(TNECore.directory(), "extracted/extracted-" + extraction + ".yml");
+      file = new File(PluginCore.directory(), "extracted/extracted-" + extraction + ".yml");
     } else {
-      file = new File(TNECore.directory(), "extracted.yml");
+      file = new File(PluginCore.directory(), "extracted.yml");
     }
 
     if(!file.exists()) {
 
-      TNECore.log().inform("The extraction file doesn't exist.");
+      PluginCore.log().inform("The extraction file doesn't exist.");
       return false;
     }
 
@@ -132,7 +133,7 @@ public class Extractor {
     try {
       extracted.load();
     } catch(IOException e) {
-      TNECore.log().error("Failed load extraction file for writing.", e, DebugLevel.STANDARD);
+      PluginCore.log().error("Failed load extraction file for writing.", e, DebugLevel.STANDARD);
       return false;
     }
 
@@ -152,7 +153,7 @@ public class Extractor {
 
         final AccountAPIResponse response = TNECore.eco().account().createAccount(id, username);
         if(!response.getResponse().success() || response.getAccount().isEmpty()) {
-          TNECore.log().inform("Couldn't create account for " + username + ". Skipping.");
+          PluginCore.log().inform("Couldn't create account for " + username + ". Skipping.");
         }
 
         final Set<String> regions = extracted.getConfigurationSection("Accounts." + name + ".Balances").getKeys(false);
@@ -165,18 +166,18 @@ public class Extractor {
               final String finalCurrency = (currency.equalsIgnoreCase("default")) ? TNECore.eco().currency().getDefaultCurrency(region).getIdentifier() : currency;
               Optional<Currency> cur = TNECore.eco().currency().findCurrency(finalCurrency);
 
-              TNECore.log().inform("Currency avail: " + cur.isPresent());
+              PluginCore.log().inform("Currency avail: " + cur.isPresent());
               if(cur.isPresent()) {
                 final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name + ".Balances." + region + "." + currency));
 
-                TNECore.log().inform("Set Balance to: " + amount.toPlainString());
+                PluginCore.log().inform("Set Balance to: " + amount.toPlainString());
                 response.getAccount().get().setHoldings(new HoldingsEntry(region, cur.get().getUid(),
                                                                           amount, EconomyManager.NORMAL));
               } else {
                 final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name + ".Balances." + region + "." + currency));
 
-                TNECore.log().inform("Use default currency");
-                TNECore.log().inform("Set Balance to: " + amount.toPlainString());
+                PluginCore.log().inform("Use default currency");
+                PluginCore.log().inform("Set Balance to: " + amount.toPlainString());
                 response.getAccount().get().setHoldings(new HoldingsEntry(region, TNECore.eco().currency().getDefaultCurrency(region).getUid(),
                         amount, EconomyManager.NORMAL));
               }
@@ -200,13 +201,13 @@ public class Extractor {
 
               if (message) {
                 final int progress = (number * 100) / accounts.size();
-                TNECore.log().inform("Restoration Progress: " + progress);
+                PluginCore.log().inform("Restoration Progress: " + progress);
               }
             } catch(Exception ignore) {}
           }
         }
       }
-      TNECore.log().inform("Restoration has completed!");
+      PluginCore.log().inform("Restoration has completed!");
     }
 
     return true;

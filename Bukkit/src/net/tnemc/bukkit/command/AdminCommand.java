@@ -2,7 +2,7 @@ package net.tnemc.bukkit.command;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,7 +18,6 @@ package net.tnemc.bukkit.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.impl.BukkitCMDSource;
 import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
@@ -26,12 +25,14 @@ import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.command.BaseCommand;
-import net.tnemc.core.compatibility.log.DebugLevel;
-import net.tnemc.core.compatibility.scheduler.ChoreExecution;
-import net.tnemc.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.utils.Identifier;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.bukkit.impl.BukkitCMDSource;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.compatibility.scheduler.ChoreExecution;
+import net.tnemc.plugincore.core.compatibility.scheduler.ChoreTime;
+import net.tnemc.plugincore.core.io.message.MessageData;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.Nullable;
@@ -155,7 +156,7 @@ public class AdminCommand {
   @Description("Admin.Restore.Description")
   @CommandPermission("tne.admin.old")
   public void old(BukkitCommandActor sender, @Default("0") int extraction) {
-    TNECore.server().scheduler().createDelayedTask(()->restoreOld(extraction), new ChoreTime(0), ChoreExecution.SECONDARY);
+    PluginCore.server().scheduler().createDelayedTask(()->restoreOld(extraction), new ChoreTime(0), ChoreExecution.SECONDARY);
     new BukkitCMDSource(sender).message(new MessageData("Messages.Admin.Restoration"));
   }
 
@@ -185,29 +186,29 @@ public class AdminCommand {
 
 
   public static boolean restoreOld(@Nullable final Integer extraction) {
-    final File file = new File(TNECore.directory(), "extracted.yml");
+    final File file = new File(PluginCore.directory(), "extracted.yml");
 
     if(!file.exists()) {
 
-      TNECore.log().inform("The extraction file doesn't exist.", DebugLevel.OFF);
+      PluginCore.log().inform("The extraction file doesn't exist.", DebugLevel.OFF);
       return false;
     }
     YamlFile extracted = null;
     try {
       extracted = new YamlFile(file.getPath());
     } catch(Exception e) {
-      TNECore.log().error("Failed load extraction file for writing.", e, DebugLevel.OFF);
+      PluginCore.log().error("Failed load extraction file for writing.", e, DebugLevel.OFF);
     }
 
     if(extracted == null) {
-      TNECore.log().inform("The extraction file doesn't exist.", DebugLevel.OFF);
+      PluginCore.log().inform("The extraction file doesn't exist.", DebugLevel.OFF);
       return false;
     }
 
     try {
       extracted.loadWithComments();
     } catch(Exception e) {
-      TNECore.log().error("Failed load extraction file for writing.", e, DebugLevel.OFF);
+      PluginCore.log().error("Failed load extraction file for writing.", e, DebugLevel.OFF);
       return false;
     }
 
@@ -232,7 +233,7 @@ public class AdminCommand {
 
         final AccountAPIResponse response = TNECore.eco().account().createAccount(id.toString(), username, nonPlayer);
         if(response.getAccount().isEmpty()) {
-          TNECore.log().inform("Couldn't create account for " + username + ". Reason: " + response.getResponse().response(), DebugLevel.OFF);
+          PluginCore.log().inform("Couldn't create account for " + username + ". Reason: " + response.getResponse().response(), DebugLevel.OFF);
           continue;
         }
 
@@ -272,13 +273,13 @@ public class AdminCommand {
 
               if (message) {
                 final int progress = (number * 100) / accounts.size();
-                TNECore.log().inform("Restoration Progress: " + progress, DebugLevel.OFF);
+                PluginCore.log().inform("Restoration Progress: " + progress, DebugLevel.OFF);
               }
             } catch(Exception ignore) {}
           }
         }
       }
-      TNECore.log().inform("Restoration has completed!", DebugLevel.OFF);
+      PluginCore.log().inform("Restoration has completed!", DebugLevel.OFF);
     }
 
     return true;

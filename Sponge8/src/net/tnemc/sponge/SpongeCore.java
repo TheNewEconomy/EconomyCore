@@ -2,7 +2,7 @@ package net.tnemc.sponge;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -20,32 +20,19 @@ package net.tnemc.sponge;
 
 import com.google.inject.Inject;
 import net.tnemc.core.TNECore;
-import net.tnemc.core.account.Account;
-import net.tnemc.core.account.AccountStatus;
-import net.tnemc.core.command.parameters.PercentBigDecimal;
-import net.tnemc.core.command.parameters.resolver.AccountResolver;
-import net.tnemc.core.command.parameters.resolver.BigDecimalResolver;
-import net.tnemc.core.command.parameters.resolver.CurrencyResolver;
-import net.tnemc.core.command.parameters.resolver.DebugResolver;
-import net.tnemc.core.command.parameters.resolver.PercentDecimalResolver;
-import net.tnemc.core.command.parameters.resolver.StatusResolver;
-import net.tnemc.core.command.parameters.suggestion.AccountSuggestion;
-import net.tnemc.core.command.parameters.suggestion.CurrencySuggestion;
-import net.tnemc.core.command.parameters.suggestion.DebugSuggestion;
-import net.tnemc.core.command.parameters.suggestion.RegionSuggestion;
-import net.tnemc.core.command.parameters.suggestion.StatusSuggestion;
-import net.tnemc.core.compatibility.log.DebugLevel;
-import net.tnemc.core.currency.Currency;
-import net.tnemc.core.region.RegionGroup;
+import net.tnemc.core.api.callback.TNECallbackProvider;
+import net.tnemc.core.io.message.BaseTranslationProvider;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.api.CallbackManager;
+import net.tnemc.plugincore.sponge.SpongePluginCore;
 import net.tnemc.sponge.command.AdminCommand;
 import net.tnemc.sponge.command.ModuleCommand;
 import net.tnemc.sponge.command.MoneyCommand;
 import net.tnemc.sponge.command.ShortCommands;
 import net.tnemc.sponge.command.TransactionCommand;
 import net.tnemc.sponge.hook.misc.LuckPermsHook;
-import net.tnemc.sponge.impl.SpongeLogProvider;
-import net.tnemc.sponge.impl.SpongeServerProvider;
-import net.tnemc.sponge.impl.eco.SpongeEconomy;
+import net.tnemc.sponge.impl.SpongeEconomy;
+import net.tnemc.sponge.impl.SpongeItemCalculations;
 import net.tnemc.sponge.listeners.player.PlayerCloseInventoryListener;
 import net.tnemc.sponge.listeners.player.PlayerJoinListener;
 import net.tnemc.sponge.listeners.player.PlayerLeaveListener;
@@ -67,7 +54,6 @@ import org.spongepowered.plugin.PluginContainer;
 import org.spongepowered.plugin.builtin.jvm.Plugin;
 import revxrsal.commands.sponge.SpongeCommandHandler;
 
-import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.util.Optional;
 
@@ -81,6 +67,7 @@ import java.util.Optional;
 @Plugin("tne")
 public class SpongeCore extends TNECore {
 
+  protected final SpongePluginCore pluginCore;
   protected final PluginContainer container;
   private final Metrics metrics;
   @Inject
@@ -92,31 +79,10 @@ public class SpongeCore extends TNECore {
 
   @Inject
   SpongeCore(final PluginContainer container, final Logger log, final Metrics.Factory metricsFactory) {
-    super(new SpongeServerProvider(), new SpongeLogProvider(log));
+    this.pluginCore = new SpongePluginCore(container, this, log, new BaseTranslationProvider(), new TNECallbackProvider());
     this.container = container;
-    this.logger = new SpongeLogProvider(log);
-    setInstance(this);
+
     command = SpongeCommandHandler.create(container);
-
-    command.registerValueResolver(Account.class, new AccountResolver());
-    command.registerValueResolver(AccountStatus.class, new StatusResolver());
-    command.registerValueResolver(DebugLevel.class, new DebugResolver());
-    command.registerValueResolver(Currency.class, new CurrencyResolver());
-    command.registerValueResolver(PercentBigDecimal.class, new PercentDecimalResolver());
-    command.registerValueResolver(BigDecimal.class, new BigDecimalResolver());
-
-    //Annotation
-    command.getAutoCompleter().registerParameterSuggestions(AccountStatus.class, new StatusSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(DebugLevel.class, new DebugSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(RegionGroup.class, new RegionSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(Account.class, new AccountSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(Currency.class, new CurrencySuggestion());
-
-    command.register(new AdminCommand());
-    command.register(new ModuleCommand());
-    command.register(new MoneyCommand());
-    command.register(new ShortCommands());
-    command.register(new TransactionCommand());
 
     final Optional<PluginContainer> luckContainer = Sponge.pluginManager().plugin("luckperms");
     if(luckContainer.isPresent()) {
@@ -141,8 +107,7 @@ public class SpongeCore extends TNECore {
 
   @Listener
   public void onEngineStart(final StartingEngineEvent<Server> event) {
-    setInstance(this);
-    logger.inform("Starting up The New Economy.");
+    PluginCore.log().inform("Starting up The New Economy.");
 
     //Register our event listeners
     Sponge.eventManager().registerListeners(container, new PlayerJoinListener(container));
@@ -152,15 +117,15 @@ public class SpongeCore extends TNECore {
 
   @Listener
   public void onServerStart(final StartedEngineEvent<Server> event) {
-    this.directory = configDir.toFile();
-    instance().enable();
-    logger.inform("The New Economy has been enabled.");
+    //this.directory = configDir.toFile();
+    pluginCore.enable();
+    PluginCore.log().inform("The New Economy has been enabled.");
   }
 
   @Listener
   public void onServerStop(final StoppingEngineEvent<Server> event) {
-    super.onDisable();
-    logger.inform("The New Economy has been disabled.");
+    pluginCore.onDisable();
+    PluginCore.log().inform("The New Economy has been disabled.");
   }
 
   @Listener
@@ -174,46 +139,42 @@ public class SpongeCore extends TNECore {
 
   @Override
   public void registerCommandHandler() {
-    //command = SpongeCommandHandler.create(container);
+    command = SpongeCommandHandler.create(container);
   }
 
   @Override
   public void registerCommands() {
 
-    //Register our commands
+    super.registerCommands();
+
+    command.register(new AdminCommand());
+    command.register(new ModuleCommand());
+    command.register(new MoneyCommand());
+    command.register(new ShortCommands());
+    command.register(new TransactionCommand());
   }
 
   @Override
   public void registerConfigs() {
 
   }
-  /*@Listener
-  public void handleRegistrationEvent(RegisterCommandEvent<Command> event) {
-    System.out.println("Register TNE Commands.");
-
-    if(command == null) return;
-
-    ((SpongeHandler)command).getRegistered().forEach((name, command)-> {
-      event.register(container, command, name);
-      System.out.println("Register: " + name);
-    });
-  }*/
 
   @Override
-  public void registerCallbacks() {
+  public void registerCallbacks(CallbackManager callbackManager) {
     //nothing to see here.
+  }
+
+  @Override
+  public SpongeItemCalculations itemCalculations() {
+    return new SpongeItemCalculations();
   }
 
   public boolean hasConsent() {
     return this.metricsConfigManager.collectionState(this.container).asBoolean();
   }
 
-  public static SpongeCore instance() {
-    return (SpongeCore)TNECore.instance();
-  }
-
   public static ResourceKey key(final String key) {
-    final String[] split = key.split("\\:");
+    final String[] split = key.split(":");
 
     final String namespace = (split.length >= 2)? split[0] : "minecraft";
     final String value = (split.length >= 2)? split[1] : split[0];

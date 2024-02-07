@@ -1,7 +1,7 @@
 package net.tnemc.core.io.serialization.impl;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,8 +17,8 @@ package net.tnemc.core.io.serialization.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.io.serialization.JSONAble;
 import net.tnemc.core.transaction.tax.TaxEntry;
+import net.tnemc.plugincore.core.io.serialization.JSONAble;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;

@@ -1,7 +1,7 @@
 package net.tnemc.core.api;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -39,6 +39,8 @@ import net.tnemc.core.currency.format.FormatRule;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.api.CallbackManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
@@ -63,7 +65,7 @@ public class TNEAPI {
    * @return The callback manager that is being used.
    */
   public CallbackManager callbacks() {
-    return TNECore.callbacks();
+    return PluginCore.callbacks();
   }
 
   /**

@@ -2,7 +2,7 @@ package net.tnemc.folia.impl;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -20,29 +20,27 @@ package net.tnemc.folia.impl;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 import net.tnemc.bukkit.BukkitCore;
-import net.tnemc.bukkit.hook.misc.PAPIParser;
-import net.tnemc.bukkit.impl.BukkitItemCalculations;
-import net.tnemc.bukkit.impl.BukkitPlayerProvider;
-import net.tnemc.bukkit.impl.BukkitProxyProvider;
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.CmdSource;
-import net.tnemc.core.compatibility.PlayerProvider;
-import net.tnemc.core.compatibility.ProxyProvider;
-import net.tnemc.core.compatibility.ServerConnector;
-import net.tnemc.core.compatibility.helper.CraftingRecipe;
-import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
-import net.tnemc.core.currency.item.ItemDenomination;
-import net.tnemc.core.region.RegionMode;
 import net.tnemc.folia.impl.scheduler.FoliaScheduler;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.bukkit.BukkitCalculationsProvider;
 import net.tnemc.item.bukkit.BukkitItemStack;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.bukkit.hook.PAPIParser;
+import net.tnemc.plugincore.bukkit.impl.BukkitPlayerProvider;
+import net.tnemc.plugincore.bukkit.impl.BukkitProxyProvider;
+import net.tnemc.plugincore.core.compatibility.CmdSource;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
+import net.tnemc.plugincore.core.compatibility.ProxyProvider;
+import net.tnemc.plugincore.core.compatibility.ServerConnector;
+import net.tnemc.plugincore.core.compatibility.helper.CraftingRecipe;
+import net.tnemc.plugincore.core.compatibility.scheduler.SchedulerProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.jetbrains.annotations.NotNull;
@@ -65,6 +63,8 @@ public class FoliaServerProvider implements ServerConnector {
 
   private final FoliaScheduler scheduler;
 
+  protected String world = null;
+
   public FoliaServerProvider() {
     this.scheduler = new FoliaScheduler();
   }
@@ -84,7 +84,7 @@ public class FoliaServerProvider implements ServerConnector {
    */
   @Override
   public String replacePlaceholder(UUID player, String message) {
-    final Optional<PlayerProvider> playerOpt = TNECore.server().findPlayer(player);
+    final Optional<PlayerProvider> playerOpt = PluginCore.server().findPlayer(player);
     if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI") && playerOpt.isPresent()
             && playerOpt.get() instanceof BukkitPlayerProvider bukkitPlayer) {
       return PAPIParser.parse(bukkitPlayer, message);
@@ -228,23 +228,12 @@ public class FoliaServerProvider implements ServerConnector {
     return Optional.empty();
   }
 
-  /**
-   * Returns the name of the default region.
-   *
-   * @param mode The {@link RegionMode} to use for this.
-   *
-   * @return The name of the default region. This could be different based on the current
-   * {@link RegionMode}.
-   */
   @Override
-  public String defaultRegion(final RegionMode mode) {
-
-    if(mode.name().equalsIgnoreCase("biome")) {
-      final World world = Bukkit.getServer().getWorlds().get(0);
-
-      return world.getSpawnLocation().getBlock().getBiome().getKey().getKey();
+  public String defaultWorld() {
+    if(world == null) {
+      world = Bukkit.getServer().getWorlds().get(0).getName();
     }
-    return Bukkit.getServer().getWorlds().get(0).getName();
+    return world;
   }
 
   /**
@@ -301,7 +290,7 @@ public class FoliaServerProvider implements ServerConnector {
   @Override
   public void registerCrafting(@NotNull CraftingRecipe recipe) {
     if(recipe.isShaped()) {
-      final ShapedRecipe shaped = new ShapedRecipe(denominationToStack(recipe.getResult(), recipe.getAmount()).locale());
+      final ShapedRecipe shaped = new ShapedRecipe((ItemStack)recipe.getResult().locale());
       shaped.shape(recipe.getRows());
 
       for(Map.Entry<Character, String> ingredient : recipe.getIngredients().entrySet()) {
@@ -309,7 +298,7 @@ public class FoliaServerProvider implements ServerConnector {
       }
       Bukkit.getServer().addRecipe(shaped);
     } else {
-      final ShapelessRecipe shapeless = new ShapelessRecipe(denominationToStack(recipe.getResult(), recipe.getAmount()).locale());
+      final ShapelessRecipe shapeless = new ShapelessRecipe((ItemStack)recipe.getResult().locale());
       for(Map.Entry<Character, String> ingredient : recipe.getIngredients().entrySet()) {
         shapeless.addIngredient(1, Material.valueOf(ingredient.getValue()));
       }
@@ -318,23 +307,7 @@ public class FoliaServerProvider implements ServerConnector {
   }
 
   @Override
-  public BukkitItemStack denominationToStack(ItemDenomination denomination, int amount) {
-    return new BukkitItemStack().of(denomination.getMaterial(), amount)
-            .enchant(denomination.getEnchantments())
-            .lore(denomination.getLore())
-            .flags(denomination.getFlags())
-            .damage(denomination.getDamage())
-            .display(denomination.getName())
-            .modelData(denomination.getCustomModel());
-  }
-
-  @Override
   public BukkitCalculationsProvider calculations() {
     return calc;
-  }
-
-  @Override
-  public BukkitItemCalculations itemCalculations() {
-    return new BukkitItemCalculations();
   }
 }

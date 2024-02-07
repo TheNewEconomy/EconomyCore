@@ -1,7 +1,7 @@
 package net.tnemc.folia.impl.scheduler;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,10 +18,10 @@ package net.tnemc.folia.impl.scheduler;
  */
 
 import net.tnemc.bukkit.BukkitCore;
-import net.tnemc.core.compatibility.scheduler.Chore;
-import net.tnemc.core.compatibility.scheduler.ChoreExecution;
-import net.tnemc.core.compatibility.scheduler.ChoreTime;
-import net.tnemc.core.compatibility.scheduler.SchedulerProvider;
+import net.tnemc.plugincore.core.compatibility.scheduler.Chore;
+import net.tnemc.plugincore.core.compatibility.scheduler.ChoreExecution;
+import net.tnemc.plugincore.core.compatibility.scheduler.ChoreTime;
+import net.tnemc.plugincore.core.compatibility.scheduler.SchedulerProvider;
 import org.bukkit.Bukkit;
 
 import java.util.concurrent.TimeUnit;

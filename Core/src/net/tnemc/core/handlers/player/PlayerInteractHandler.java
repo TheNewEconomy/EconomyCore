@@ -1,7 +1,7 @@
 package net.tnemc.core.handlers.player;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -23,14 +23,15 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.source.PlayerSource;
-import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.config.MessageConfig;
-import net.tnemc.core.io.message.MessageData;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
-import net.tnemc.core.utils.HandlerResponse;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 import net.tnemc.item.AbstractItemStack;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.utils.HandlerResponse;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -116,7 +117,7 @@ public class PlayerInteractHandler {
           final List<AbstractItemStack<Object>> i = new ArrayList<>();
           i.add((AbstractItemStack<Object>)item);
 
-          TNECore.server().calculations().takeItems(i, provider.identifier());
+          PluginCore.server().calculations().takeItems(i, provider.identifier());
 
           final MessageData claimed = new MessageData("Messages.Note.Claimed");
           claimed.addReplacement("$currency", currency);

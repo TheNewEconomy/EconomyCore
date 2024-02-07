@@ -2,7 +2,7 @@ package net.tnemc.core.transaction.tax.type;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,8 +18,8 @@ package net.tnemc.core.transaction.tax.type;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.io.maps.MapKey;
 import net.tnemc.core.transaction.tax.TaxType;
+import net.tnemc.plugincore.core.io.maps.MapKey;
 
 import java.math.BigDecimal;
 

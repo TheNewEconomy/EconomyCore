@@ -2,7 +2,7 @@ package net.tnemc.core.currency;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -174,6 +174,6 @@ public interface CurrencyType {
   default void addDatabase(Account account, String region, Currency currency, Identifier type, BigDecimal amount) {
     account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, type));
 
-    TNECore.storage().store(account, account.getIdentifier());
+    TNECore.instance().storage().store(account, account.getIdentifier());
   }
 }

@@ -1,7 +1,7 @@
 package net.tnemc.core.transaction.check;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,15 +17,15 @@ package net.tnemc.core.transaction.check;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.actions.response.GeneralResponse;
 import net.tnemc.core.api.callback.transaction.PreTransactionCallback;
-import net.tnemc.core.io.maps.MapKey;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionCheck;
 import net.tnemc.core.transaction.TransactionParticipant;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.io.maps.MapKey;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -65,7 +65,7 @@ public class PreCallbackCheck implements TransactionCheck {
   public EconomyResponse checkParticipant(Transaction transaction, @NotNull TransactionParticipant participant, HoldingsModifier modifier) {
 
     final PreTransactionCallback callback = new PreTransactionCallback(transaction);
-    if(TNECore.callbacks().call(callback)) {
+    if(PluginCore.callbacks().call(callback)) {
       return GeneralResponse.FAILED_PLUGIN;
     }
     return GeneralResponse.SUCCESS;

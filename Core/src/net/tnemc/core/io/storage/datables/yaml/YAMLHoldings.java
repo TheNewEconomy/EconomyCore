@@ -1,7 +1,7 @@
 package net.tnemc.core.io.storage.datables.yaml;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -23,11 +23,12 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.CurrencyHoldings;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.RegionHoldings;
-import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.config.MainConfig;
-import net.tnemc.core.io.storage.Datable;
-import net.tnemc.core.io.storage.StorageConnector;
 import net.tnemc.core.utils.Identifier;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.io.storage.Datable;
+import net.tnemc.plugincore.core.io.storage.StorageConnector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.simpleyaml.configuration.ConfigurationSection;
@@ -78,7 +79,7 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
   @Override
   public void store(StorageConnector<?> connector, @NotNull HoldingsEntry object, @Nullable String identifier) {
 
-    final File accFile = new File(TNECore.directory(), "accounts/" + identifier + ".yml");
+    final File accFile = new File(PluginCore.directory(), "accounts/" + identifier + ".yml");
     if(!accFile.exists()) {
       accFile.mkdirs();
     }
@@ -89,7 +90,7 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
       yaml = YamlFile.loadConfiguration(accFile);
     } catch(IOException ignore) {
 
-      TNECore.log().error("Issue loading account file. Account: " + identifier);
+      PluginCore.log().error("Issue loading account file. Account: " + identifier);
     }
 
     if(yaml != null) {
@@ -97,14 +98,14 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
                    + "." + object.getRegion() + "." + object.getCurrency().toString() + "."
                    + object.getHandler().asID(), object.getAmount().toPlainString());
 
-      TNECore.log().debug("YAMLHoldings-store-Entry ID:" + identifier, DebugLevel.DEVELOPER);
-      TNECore.log().debug("YAMLHoldings-store-Entry Currency:" + object.getCurrency().toString(), DebugLevel.DEVELOPER);
-      TNECore.log().debug("YAMLHoldings-store-Entry AMT:" + object.getAmount().toPlainString(), DebugLevel.DEVELOPER);
+      PluginCore.log().debug("YAMLHoldings-store-Entry ID:" + identifier, DebugLevel.DEVELOPER);
+      PluginCore.log().debug("YAMLHoldings-store-Entry Currency:" + object.getCurrency().toString(), DebugLevel.DEVELOPER);
+      PluginCore.log().debug("YAMLHoldings-store-Entry AMT:" + object.getAmount().toPlainString(), DebugLevel.DEVELOPER);
       try {
         yaml.save();
         yaml = null;
       } catch(IOException e) {
-        TNECore.log().error("Issue saving account holdings to file. Account: " + identifier);
+        PluginCore.log().error("Issue saving account holdings to file. Account: " + identifier);
       }
     }
   }
@@ -155,10 +156,10 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
     final Collection<HoldingsEntry> holdings = new ArrayList<>();
 
     if(identifier != null) {
-      final File accFile = new File(TNECore.directory(), "accounts/" + identifier + ".yml");
+      final File accFile = new File(PluginCore.directory(), "accounts/" + identifier + ".yml");
       if(!accFile.exists()) {
 
-        TNECore.log().error("Null account file passed to YAMLAccount.load. Account: " + identifier, DebugLevel.OFF);
+        PluginCore.log().error("Null account file passed to YAMLAccount.load. Account: " + identifier, DebugLevel.OFF);
         return holdings;
       }
 
@@ -168,7 +169,7 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
         yaml = YamlFile.loadConfiguration(accFile);
       } catch(IOException ignore) {
 
-        TNECore.log().error("Issue loading account file. Account: " + identifier, DebugLevel.OFF);
+        PluginCore.log().error("Issue loading account file. Account: " + identifier, DebugLevel.OFF);
       }
 
 
@@ -211,8 +212,8 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
                             Identifier.fromID(handler)
                     );
 
-                    TNECore.log().debug("YAMLHoldings-loadAll-Entry ID:" + entry.getHandler(), DebugLevel.DEVELOPER);
-                    TNECore.log().debug("YAMLHoldings-loadAll-Entry AMT:" + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
+                    PluginCore.log().debug("YAMLHoldings-loadAll-Entry ID:" + entry.getHandler(), DebugLevel.DEVELOPER);
+                    PluginCore.log().debug("YAMLHoldings-loadAll-Entry AMT:" + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
                     holdings.add(entry);
                   }
                 }
@@ -222,7 +223,7 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
         }
       } catch(Exception ignore) {
 
-        TNECore.log().error("Issue loading account file. Skipping. Account: " + identifier, DebugLevel.OFF);
+        PluginCore.log().error("Issue loading account file. Skipping. Account: " + identifier, DebugLevel.OFF);
       }
       yaml = null;
     }

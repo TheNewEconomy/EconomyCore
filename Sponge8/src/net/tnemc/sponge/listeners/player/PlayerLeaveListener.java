@@ -1,7 +1,7 @@
 package net.tnemc.sponge.listeners.player;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,7 +18,7 @@ package net.tnemc.sponge.listeners.player;
  */
 
 import net.tnemc.core.handlers.player.PlayerLeaveHandler;
-import net.tnemc.sponge.impl.SpongePlayerProvider;
+import net.tnemc.plugincore.sponge.impl.SpongePlayerProvider;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.network.ServerSideConnectionEvent;
 import org.spongepowered.plugin.PluginContainer;

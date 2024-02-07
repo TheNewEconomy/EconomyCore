@@ -2,7 +2,7 @@ package net.tnemc.core.manager;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,8 +18,6 @@ package net.tnemc.core.manager;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyLoader;
 import net.tnemc.core.currency.CurrencySaver;
@@ -32,9 +30,11 @@ import net.tnemc.core.currency.type.ExperienceType;
 import net.tnemc.core.currency.type.ItemType;
 import net.tnemc.core.currency.type.MixedType;
 import net.tnemc.core.currency.type.VirtualType;
-import net.tnemc.core.utils.IOUtil;
 import net.tnemc.core.utils.exceptions.NoValidCurrenciesException;
 import net.tnemc.item.AbstractItemStack;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.utils.IOUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -86,24 +86,24 @@ public class CurrencyManager {
       loader.loadCurrencies(new File(parent, "currency"));
     } catch(NoValidCurrenciesException ignore) {
       if(retry) {
-        TNECore.log().error("No valid currencies found and failed to create USD defaults! Disabling plugin. Configure your currencies properly then retry!", DebugLevel.OFF);
+        PluginCore.log().error("No valid currencies found and failed to create USD defaults! Disabling plugin. Configure your currencies properly then retry!", DebugLevel.OFF);
         return false;
       }
 
-      TNECore.log().error("No valid currencies found, attempting to create and load USD defaults.", DebugLevel.OFF);
+      PluginCore.log().error("No valid currencies found, attempting to create and load USD defaults.", DebugLevel.OFF);
 
       //Save our default currency file
-      final File cur = new File(TNECore.directory(), "currency");
+      final File cur = new File(PluginCore.directory(), "currency");
 
       final int count = (cur.exists())? IOUtil.getYAMLs(cur).length : 0;
       if(!cur.exists()) {
         final boolean created = cur.mkdir();
         if(!created) {
-          TNECore.log().error("Failed to create plugin currency directory. Disabling plugin.", DebugLevel.OFF);
+          PluginCore.log().error("Failed to create plugin currency directory. Disabling plugin.", DebugLevel.OFF);
           return false;
         }
         if(count == 0) {
-          TNECore.server().saveResource("currency/USD.yml", false);
+          PluginCore.server().saveResource("currency/USD.yml", false);
         }
       }
 
@@ -111,11 +111,11 @@ public class CurrencyManager {
       if(count == 0 && !usd.exists()) {
         final boolean created = usd.mkdir();
         if(!created) {
-          TNECore.log().error("Failed to create plugin USD currency directory. Disabling plugin.", DebugLevel.OFF);
+          PluginCore.log().error("Failed to create plugin USD currency directory. Disabling plugin.", DebugLevel.OFF);
           return false;
         }
-        TNECore.server().saveResource("currency/USD/one.yml", false);
-        TNECore.server().saveResource("currency/USD/penny.yml", false);
+        PluginCore.server().saveResource("currency/USD/one.yml", false);
+        PluginCore.server().saveResource("currency/USD/penny.yml", false);
       }
       this.retry = true;
       return load(parent, reset);

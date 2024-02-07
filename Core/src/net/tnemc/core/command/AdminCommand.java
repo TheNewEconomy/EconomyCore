@@ -2,7 +2,7 @@ package net.tnemc.core.command;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -23,13 +23,14 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.api.response.AccountAPIResponse;
-import net.tnemc.core.compatibility.CmdSource;
-import net.tnemc.core.compatibility.log.DebugLevel;
-import net.tnemc.core.compatibility.scheduler.ChoreExecution;
-import net.tnemc.core.compatibility.scheduler.ChoreTime;
-import net.tnemc.core.io.message.MessageData;
-import net.tnemc.core.io.storage.StorageManager;
 import net.tnemc.core.utils.Extractor;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.CmdSource;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.compatibility.scheduler.ChoreExecution;
+import net.tnemc.plugincore.core.compatibility.scheduler.ChoreTime;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.io.storage.StorageManager;
 
 import java.util.Optional;
 
@@ -83,7 +84,7 @@ public class AdminCommand extends BaseCommand {
   //<standard/detailed/developer>
   public static void onDebug(CmdSource<?> sender, DebugLevel level) {
 
-    TNECore.instance().setLevel(level);
+    PluginCore.instance().setLevel(level);
     final MessageData data = new MessageData("Messages.Data.Debug");
     data.addReplacement("$level", level.name());
     sender.message(data);
@@ -120,12 +121,12 @@ public class AdminCommand extends BaseCommand {
   public static void onExtract(CmdSource<?> sender) {
 
 
-    TNECore.server().scheduler().createDelayedTask(Extractor::extract, new ChoreTime(0), ChoreExecution.SECONDARY);
+    PluginCore.server().scheduler().createDelayedTask(Extractor::extract, new ChoreTime(0), ChoreExecution.SECONDARY);
     sender.message(new MessageData("Messages.Admin.Extraction"));
   }
 
   public static void onPurge(CmdSource<?> sender) {
-    TNECore.storage().purge();
+    TNECore.instance().storage().purge();
   }
 
   public static void onReload(CmdSource<?> sender, String type) {
@@ -133,7 +134,7 @@ public class AdminCommand extends BaseCommand {
     switch(type.toLowerCase()) {
       case "config" -> {
         TNECore.instance().config().load();
-        TNECore.eco().currency().load(TNECore.directory());
+        TNECore.eco().currency().load(PluginCore.directory());
       }
       case "data" -> {
         TNECore.instance().data().load();
@@ -143,9 +144,9 @@ public class AdminCommand extends BaseCommand {
       }
       default -> {
         TNECore.instance().config().load();
-        TNECore.eco().currency().load(TNECore.directory());
+        TNECore.eco().currency().load(PluginCore.directory());
         TNECore.instance().data().load();
-        TNECore.storage().loadAll(Account.class, "");
+        TNECore.instance().storage().loadAll(Account.class, "");
         TNECore.instance().message().load();
         formattedType = "all";
       }
@@ -163,7 +164,7 @@ public class AdminCommand extends BaseCommand {
   public static void onRestore(CmdSource<?> sender, int extraction) {
 
 
-    TNECore.server().scheduler().createDelayedTask(()->Extractor.restore(extraction), new ChoreTime(0), ChoreExecution.SECONDARY);
+    PluginCore.server().scheduler().createDelayedTask(()->Extractor.restore(extraction), new ChoreTime(0), ChoreExecution.SECONDARY);
     sender.message(new MessageData("Messages.Admin.Restoration"));
   }
 

@@ -2,7 +2,7 @@ package net.tnemc.core.region.mode;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -19,10 +19,10 @@ package net.tnemc.core.region.mode;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.region.RegionMode;
 import net.tnemc.core.region.RegionType;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;

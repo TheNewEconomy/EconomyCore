@@ -2,7 +2,7 @@ package net.tnemc.core.io.storage.datables.sql.standard;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -24,12 +24,14 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.CurrencyHoldings;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.RegionHoldings;
-import net.tnemc.core.compatibility.log.DebugLevel;
 import net.tnemc.core.config.MainConfig;
-import net.tnemc.core.io.storage.Datable;
-import net.tnemc.core.io.storage.StorageConnector;
-import net.tnemc.core.io.storage.connect.SQLConnector;
+import net.tnemc.core.io.storage.dialect.TNEDialect;
 import net.tnemc.core.utils.Identifier;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.io.storage.Datable;
+import net.tnemc.plugincore.core.io.storage.StorageConnector;
+import net.tnemc.plugincore.core.io.storage.connect.SQLConnector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -76,11 +78,11 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    */
   @Override
   public void store(StorageConnector<?> connector, @NotNull HoldingsEntry object, @Nullable String identifier) {
-    if(connector instanceof SQLConnector && identifier != null) {
+    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne && identifier != null) {
 
-      TNECore.log().debug("Storing holdings for Identifier: " + identifier);
+      PluginCore.log().debug("Storing holdings for Identifier: " + identifier);
 
-      ((SQLConnector)connector).executeUpdate(((SQLConnector)connector).dialect().saveHoldings(),
+      sql.executeUpdate(tne.saveHoldings(),
                                               new Object[] {
                                                   identifier,
                                                   MainConfig.yaml().getString("Core.Server.Name"),
@@ -100,7 +102,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    */
   @Override
   public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
-    if(connector instanceof SQLConnector && identifier != null) {
+    if(connector instanceof SQLConnector sql && identifier != null) {
 
       final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
       if(account.isPresent()) {
@@ -141,9 +143,9 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
   public Collection<HoldingsEntry> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
     final Collection<HoldingsEntry> holdings = new ArrayList<>();
 
-    if(connector instanceof SQLConnector && identifier != null) {
-      TNECore.log().debug("SQLHoldings-loadAll-Account ID:" + identifier, DebugLevel.DEVELOPER);
-      try(ResultSet result = ((SQLConnector)connector).executeQuery(((SQLConnector)connector).dialect().loadHoldings(),
+    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne && identifier != null) {
+      PluginCore.log().debug("SQLHoldings-loadAll-Account ID:" + identifier, DebugLevel.DEVELOPER);
+      try(ResultSet result = sql.executeQuery(tne.loadHoldings(),
                                                                     new Object[] {
                                                                         identifier,
                                                                         MainConfig.yaml().getString("Core.Server.Name")
@@ -162,8 +164,8 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
                                                         result.getBigDecimal("holdings"),
                                                         Identifier.fromID(result.getString("holdings_type")));
 
-          TNECore.log().debug("SQLHoldings-loadAll-Entry ID:" + entry.getHandler(), DebugLevel.DEVELOPER);
-          TNECore.log().debug("SQLHoldings-loadAll-Entry AMT:" + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
+          PluginCore.log().debug("SQLHoldings-loadAll-Entry ID:" + entry.getHandler(), DebugLevel.DEVELOPER);
+          PluginCore.log().debug("SQLHoldings-loadAll-Entry AMT:" + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
           holdings.add(entry);
         }
       } catch(SQLException e) {

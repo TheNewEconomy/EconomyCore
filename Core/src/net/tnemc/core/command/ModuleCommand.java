@@ -1,7 +1,7 @@
 package net.tnemc.core.command;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,13 +18,14 @@ package net.tnemc.core.command;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.compatibility.CmdSource;
-import net.tnemc.core.compatibility.scheduler.ChoreExecution;
-import net.tnemc.core.compatibility.scheduler.ChoreTime;
-import net.tnemc.core.io.message.MessageData;
-import net.tnemc.core.module.ModuleUpdateChecker;
-import net.tnemc.core.module.ModuleWrapper;
-import net.tnemc.core.module.cache.ModuleFile;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.CmdSource;
+import net.tnemc.plugincore.core.compatibility.scheduler.ChoreExecution;
+import net.tnemc.plugincore.core.compatibility.scheduler.ChoreTime;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.module.ModuleUpdateChecker;
+import net.tnemc.plugincore.core.module.ModuleWrapper;
+import net.tnemc.plugincore.core.module.cache.ModuleFile;
 import revxrsal.commands.orphan.Orphans;
 
 import java.util.List;
@@ -40,9 +41,9 @@ public class ModuleCommand extends BaseCommand {
 
   public static void onAvailable(CmdSource<?> sender, String url) {
 
-    TNECore.server().scheduler().createDelayedTask(()->{
+    PluginCore.server().scheduler().createDelayedTask(()->{
 
-      final List<ModuleFile> available = TNECore.instance().moduleCache().getModules(url);
+      final List<ModuleFile> available = PluginCore.instance().moduleCache().getModules(url);
 
       final MessageData msg = new MessageData("Messages.Module.AvailableHeader");
       msg.addReplacement("$url", url);
@@ -61,10 +62,10 @@ public class ModuleCommand extends BaseCommand {
 
   public static void onDownload(CmdSource<?> sender, String moduleName, String url) {
 
-    TNECore.server().scheduler().createDelayedTask(()->{
-      TNECore.instance().moduleCache().getModules(url);
+    PluginCore.server().scheduler().createDelayedTask(()->{
+      PluginCore.instance().moduleCache().getModules(url);
 
-      Optional<ModuleFile> module = TNECore.instance().moduleCache().getModule(url, moduleName);
+      final Optional<ModuleFile> module = PluginCore.instance().moduleCache().getModule(url, moduleName);
       if(module.isEmpty()) {
         final MessageData entry = new MessageData("Messages.Module.Invalid");
         entry.addReplacement("$module", moduleName);
@@ -88,7 +89,7 @@ public class ModuleCommand extends BaseCommand {
 
   public static void onInfo(CmdSource<?> sender, String moduleName) {
 
-    final ModuleWrapper module = TNECore.loader().getModule(moduleName);
+    final ModuleWrapper module = PluginCore.loader().getModule(moduleName);
     if(module == null) {
 
       final MessageData entry = new MessageData("Messages.Module.Invalid");
@@ -106,7 +107,7 @@ public class ModuleCommand extends BaseCommand {
 
   public static void onList(CmdSource<?> sender) {
     final StringBuilder modules = new StringBuilder();
-    TNECore.loader().getModules().forEach((key, value)->{
+    PluginCore.loader().getModules().forEach((key, value)->{
       if(modules.length() > 0) modules.append(", ");
       modules.append(value.getInfo().name());
     });
@@ -117,7 +118,7 @@ public class ModuleCommand extends BaseCommand {
   }
 
   public static void onLoad(CmdSource<?> sender, String moduleName) {
-    final boolean loaded = TNECore.loader().load(moduleName);
+    final boolean loaded = PluginCore.loader().load(moduleName);
 
     if(!loaded) {
 
@@ -127,30 +128,30 @@ public class ModuleCommand extends BaseCommand {
       return;
     }
 
-    final ModuleWrapper module = TNECore.loader().getModule(moduleName);
+    final ModuleWrapper module = PluginCore.loader().getModule(moduleName);
 
     final String author = module.getInfo().author();
     final String version = module.getInfo().version();
 
-    module.getModule().enable(TNECore.instance());
-    module.getModule().initConfigurations(TNECore.directory());
+    module.getModule().enable(PluginCore.instance());
+    module.getModule().initConfigurations(PluginCore.directory());
 
-    module.getModule().enableSave(TNECore.storage());
+    module.getModule().enableSave(TNECore.instance().storage());
 
     module.getModule().registerCallbacks().forEach((key, entry)->{
-      TNECore.callbacks().addCallback(key, entry);
+      PluginCore.callbacks().addCallback(key, entry);
     });
 
     module.getModule().registerListeners().forEach((key, function)->{
-      TNECore.callbacks().addConsumer(key, function);
+      PluginCore.callbacks().addConsumer(key, function);
     });
 
-    module.getModule().registerCommands(TNECore.instance().command());
-    module.getModule().registerMoneySub().forEach((orphan)->TNECore.instance().command().register(Orphans.path("money"), orphan));
-    module.getModule().registerTransactionSub().forEach((orphan)->TNECore.instance().command().register(Orphans.path("transaction"), orphan));
-    module.getModule().registerAdminSub().forEach((orphan)->TNECore.instance().command().register(Orphans.path("tne"), orphan));
+    module.getModule().registerCommands(PluginCore.instance().command());
+    module.getModule().registerMoneySub().forEach((orphan)->PluginCore.instance().command().register(Orphans.path("money"), orphan));
+    module.getModule().registerTransactionSub().forEach((orphan)->PluginCore.instance().command().register(Orphans.path("transaction"), orphan));
+    module.getModule().registerAdminSub().forEach((orphan)->PluginCore.instance().command().register(Orphans.path("tne"), orphan));
 
-    TNECore.loader().getModules().put(module.name(), module);
+    PluginCore.loader().getModules().put(module.name(), module);
 
     final MessageData entry = new MessageData("Messages.Module.Loaded");
     entry.addReplacement("$module", moduleName);

@@ -1,7 +1,7 @@
 package net.tnemc.core.handlers.server;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,7 +17,7 @@ package net.tnemc.core.handlers.server;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
+import net.tnemc.plugincore.PluginCore;
 
 /**
  * ChannelHandler
@@ -29,7 +29,7 @@ public class ChannelHandler {
 
   public void handler(final String channel, final byte[] bytes) {
     if(channel.startsWith("tne:")) {
-      TNECore.instance().getChannelMessageManager().handle(channel, bytes);
+      PluginCore.instance().getChannelMessageManager().handle(channel, bytes);
     }
   }
 }

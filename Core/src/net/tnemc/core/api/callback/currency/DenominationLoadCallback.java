@@ -1,7 +1,7 @@
 package net.tnemc.core.api.callback.currency;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,9 +17,9 @@ package net.tnemc.core.api.callback.currency;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.api.callback.TNECallback;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.Denomination;
+import net.tnemc.plugincore.core.api.callback.Callback;
 
 /**
  * DenominationLoadCallback
@@ -27,7 +27,7 @@ import net.tnemc.core.currency.Denomination;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class DenominationLoadCallback implements TNECallback {
+public class DenominationLoadCallback implements Callback {
 
   private Currency currency;
   private Denomination denomination;

@@ -2,7 +2,7 @@ package net.tnemc.core.currency;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,10 +18,10 @@ package net.tnemc.core.currency;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
 import net.tnemc.core.config.MessageConfig;
 import net.tnemc.core.transaction.tax.TaxEntry;
 import net.tnemc.item.AbstractItemStack;
+import net.tnemc.plugincore.PluginCore;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -134,7 +134,7 @@ public class Note {
     lore.add(MessageConfig.yaml().getString("Messages.Note.Amount").replace("$amount", amount.toPlainString()));
     lore.add(MessageConfig.yaml().getString("Messages.Note.Action"));
 
-    return (AbstractItemStack<Object>)TNECore.server().stackBuilder().of(material, 1)
+    return (AbstractItemStack<Object>)PluginCore.server().stackBuilder().of(material, 1)
         .display(MessageConfig.yaml().getString("Messages.Note.Name"))
         .enchant(enchantments)
         .flags(flags)

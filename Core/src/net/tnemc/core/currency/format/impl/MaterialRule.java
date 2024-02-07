@@ -2,7 +2,7 @@ package net.tnemc.core.currency.format.impl;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -22,13 +22,14 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
-import net.tnemc.core.compatibility.PlayerProvider;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.format.FormatRule;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.item.AbstractItemStack;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -46,15 +47,15 @@ public class MaterialRule implements FormatRule {
 
     final Optional<Currency> currency = entry.currency();
     if(account != null && account.isPlayer() && currency.isPresent() && currency.get() instanceof ItemCurrency) {
-      final Optional<PlayerProvider> provider = TNECore.server().findPlayer(((PlayerAccount)account).getUUID());
+      final Optional<PlayerProvider> provider = PluginCore.server().findPlayer(((PlayerAccount)account).getUUID());
       if(provider.isPresent()) {
         for(Denomination denomination : currency.get().getDenominations().values()) {
 
           final ItemDenomination denom = (ItemDenomination)denomination;
           if(formatted.contains(denom.getMaterial())) {
 
-            final AbstractItemStack<Object> stack = TNECore.server().denominationToStack(denom);
-            final int count = TNECore.server().calculations().count(stack,provider.get().inventory().getInventory(false));
+            final AbstractItemStack<?> stack = TNECore.instance().denominationToStack(denom);
+            final int count = PluginCore.server().calculations().count((AbstractItemStack<Object>)stack, provider.get().inventory().getInventory(false));
             formatted = formatted.replace("<" + denom.getMaterial() + ">", String.valueOf(count));
           }
         }
