@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>Paper</artifactId>
+    <artifactId>BukkitEarlyCore</artifactId>
     <packaging>jar</packaging>
-    <name>The New Economy Paper</name>
+    <name>The New Economy Bukkit Early</name>
 
     <repositories>
         <repository>
@@ -88,11 +88,16 @@
                             <include>org.apache.commons:*</include>
                             <include>co.aikar:*</include>
                             <include>cloud.commandframework:*</include>
-                            <include>net.kyori:*</include>
                             <include>com.github.Revxrsal.Lamp:*</include>
+                            <include>net.kyori:*</include>
+                            <include>org.slf4j:*</include>
                         </includes>
                     </artifactSet>
                     <relocations>
+                        <relocation>
+                            <pattern>org.slf4j</pattern>
+                            <shadedPattern>${tne.relocation}.slf4j</shadedPattern>
+                        </relocation>
                         <relocation>
                             <pattern>redis.clients</pattern>
                             <shadedPattern>${tne.relocation}.jedis</shadedPattern>
@@ -149,6 +154,13 @@
     </build>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.12</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>net.tnemc</groupId>
             <artifactId>EconomyCore</artifactId>

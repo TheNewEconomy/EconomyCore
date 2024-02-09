@@ -184,7 +184,6 @@
             <version>5.3</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>net.tnemc</groupId>
             <artifactId>TNPC-Bukkit</artifactId>

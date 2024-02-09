@@ -15,6 +15,7 @@
         <module>Velocity</module>
         <module>Sponge8</module>
         <module>Currency Templates</module>
+        <module>BukkitEarly</module>
     </modules>
 
     <properties>
