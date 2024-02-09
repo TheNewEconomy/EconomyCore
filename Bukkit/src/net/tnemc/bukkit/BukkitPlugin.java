@@ -65,7 +65,7 @@ public class BukkitPlugin {
     //Vault
     System.out.println("Checking for Vault");
     try {
-      PluginCore.log().inform("net.milkbowl.vault.economy.Economy");
+      Class.forName("net.milkbowl.vault.economy.Economy");
       new VaultHook().register();
     } catch(Exception ignore) {
       PluginCore.log().error("Unable to connect to vault!");
