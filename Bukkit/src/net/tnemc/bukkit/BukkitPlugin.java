@@ -26,6 +26,7 @@ import net.tnemc.bukkit.listeners.player.PlayerExperienceGainListener;
 import net.tnemc.bukkit.listeners.player.PlayerInteractListener;
 import net.tnemc.bukkit.listeners.player.PlayerJoinListener;
 import net.tnemc.bukkit.listeners.player.PlayerQuitListener;
+import net.tnemc.bukkit.listeners.server.PluginEnableListener;
 import net.tnemc.bukkit.listeners.world.WorldLoadListener;
 import net.tnemc.core.api.callback.TNECallbackProvider;
 import net.tnemc.core.io.message.BaseTranslationProvider;
@@ -49,6 +50,7 @@ public class BukkitPlugin {
 
   private BukkitPluginCore pluginCore;
   private BukkitCore core;
+  private boolean papiHooked = false;
 
   /**
    * Called when the plugin is loaded by the Bukkit plugin manager.
@@ -98,6 +100,8 @@ public class BukkitPlugin {
     //PAPI
     if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
       new PAPIHook().register();
+    } else {
+      Bukkit.getPluginManager().registerEvents(new PluginEnableListener(), plugin);
     }
 
     if(Bukkit.getPluginManager().isPluginEnabled("LuckPerms")) {
@@ -115,5 +119,13 @@ public class BukkitPlugin {
    */
   public void disable(final JavaPlugin plugin) {
     this.pluginCore.onDisable();
+  }
+
+  public boolean isPapiHooked() {
+    return papiHooked;
+  }
+
+  public void setPapiHooked(boolean papiHooked) {
+    this.papiHooked = papiHooked;
   }
 }

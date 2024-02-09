@@ -1,8 +1,7 @@
-package net.tnemc.bukkit;
-
+package net.tnemc.bukkit.listeners.server;
 /*
  * The New Economy
- * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,35 +16,24 @@ package net.tnemc.bukkit;
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import net.tnemc.plugincore.bukkit.impl.BukkitServerProvider;
-import org.bukkit.plugin.java.JavaPlugin;
+
+import net.tnemc.bukkit.hook.misc.PAPIHook;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.server.PluginEnableEvent;
 
 /**
- * TNE
+ * PluginEnableListener
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class TNE extends JavaPlugin {
+public class PluginEnableListener implements Listener {
 
-  private final BukkitPlugin bukkit = new BukkitPlugin();
-
-  @Override
-  public void onLoad() {
-    this.bukkit.load(this, new BukkitServerProvider());
-  }
-
-  @Override
-  public void onEnable() {
-    this.bukkit.enable(this);
-  }
-
-  @Override
-  public void onDisable() {
-    this.bukkit.disable(this);
-  }
-
-  public BukkitPlugin getBukkit() {
-    return bukkit;
+  @EventHandler
+  public void onEvent(PluginEnableEvent event) {
+    if(event.getPlugin().getName().equalsIgnoreCase("placeholderapi")) {
+      new PAPIHook().register();
+    }
   }
 }

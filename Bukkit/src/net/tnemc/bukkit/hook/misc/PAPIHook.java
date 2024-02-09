@@ -216,7 +216,6 @@ public class PAPIHook extends PlaceholderExpansion {
 
           //%tne_toppos[0]_<currency name>[1]_position[2]_<pos>[3]%
           pos = Integer.parseInt(args[3]);
-
           return TNECore.eco().getTopManager().getAt(pos, curID);
 
         } else {
