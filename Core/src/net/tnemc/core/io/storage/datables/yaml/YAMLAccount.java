@@ -92,7 +92,7 @@ public class YAMLAccount implements Datable<Account> {
         accFile.createNewFile();
       } catch(IOException e) {
 
-        PluginCore.log().error("Issue loading account file. Account: " + account.getName());
+        PluginCore.log().error("Issue creating account file. Account: " + account.getName());
         return;
       }
     }
@@ -102,6 +102,7 @@ public class YAMLAccount implements Datable<Account> {
     try {
       yaml = YamlFile.loadConfiguration(accFile);
     } catch(IOException ignore) {
+      ignore.printStackTrace();
 
       PluginCore.log().error("Issue loading account file. Account: " + account.getName());
       return;

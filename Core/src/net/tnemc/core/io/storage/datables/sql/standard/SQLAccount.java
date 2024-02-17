@@ -92,7 +92,7 @@ public class SQLAccount implements Datable<Account> {
       PluginCore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.STANDARD);
 
       //store the basic account information(accounts table)
-      sql.executeUpdate(tne.saveAccount(),
+      final int test = sql.executeUpdate(tne.saveAccount(),
                                               new Object[] {
                                                   account.getIdentifier(),
                                                   account.getName(),
@@ -105,15 +105,18 @@ public class SQLAccount implements Datable<Account> {
                                                   account.getStatus().identifier(),
                                               });
 
+      PluginCore.log().debug("Account Insert Executed correctly: " + test + " - " + identifier, DebugLevel.DETAILED);
+
       if(account instanceof PlayerAccount playerAccount) {
 
         //Player account storage.(players_accounts table)
-        sql.executeUpdate(tne.savePlayer(),
+        final int test2 = sql.executeUpdate(tne.savePlayer(),
                                                 new Object[]{
                                                     account.getIdentifier(),
                                                     new java.sql.Timestamp(playerAccount.getLastOnline()),
                                                     new java.sql.Timestamp(playerAccount.getLastOnline())
                                                 });
+        PluginCore.log().debug("Player Account Insert Executed correctly: " + test2 + " - " + identifier, DebugLevel.DETAILED);
 
       }
 

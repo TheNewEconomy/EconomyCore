@@ -81,7 +81,14 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
 
     final File accFile = new File(PluginCore.directory(), "accounts/" + identifier + ".yml");
     if(!accFile.exists()) {
-      accFile.mkdirs();
+      try {
+        accFile.createNewFile();
+      } catch(IOException e) {
+        e.printStackTrace();
+
+        PluginCore.log().error("Issue creating account file. Account: " + identifier);
+        return;
+      }
     }
 
 
@@ -89,8 +96,10 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
     try {
       yaml = YamlFile.loadConfiguration(accFile);
     } catch(IOException ignore) {
+      ignore.printStackTrace();
 
       PluginCore.log().error("Issue loading account file. Account: " + identifier);
+      return;
     }
 
     if(yaml != null) {
@@ -105,6 +114,7 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
         yaml.save();
         yaml = null;
       } catch(IOException e) {
+        e.printStackTrace();
         PluginCore.log().error("Issue saving account holdings to file. Account: " + identifier);
       }
     }

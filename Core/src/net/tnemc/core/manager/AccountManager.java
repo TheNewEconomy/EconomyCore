@@ -110,6 +110,18 @@ public class AccountManager {
    * @return A correlating {@link AccountAPIResponse response} containing the results.
    */
   public AccountAPIResponse createAccount(final String identifier, final String name, boolean nonPlayer) {
+    PluginCore.log().debug("Create Account Called! ID: " + identifier + " Name: " + name);
+    if(name.contains("§")) {
+      PluginCore.log().debug("==== AccountAPIResponse with color code! ====", DebugLevel.DEVELOPER);
+
+      StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+      for (int i = 0; i < elements.length; i++) {
+        final StackTraceElement s = elements[i];
+        PluginCore.log().debug("\tat " + s.getClassName() + "." + s.getMethodName() + "(" + s.getFileName() + ":" + s.getLineNumber() + ")", DebugLevel.DEVELOPER);
+      }
+      PluginCore.log().debug("==== End Stack Print ====", DebugLevel.DEVELOPER);
+    }
+
     if(identifier != null && accounts.containsKey(identifier)) {
       PluginCore.log().debug("Account Exists Already. ID: " + identifier);
 

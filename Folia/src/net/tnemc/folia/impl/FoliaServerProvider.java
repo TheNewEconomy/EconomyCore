@@ -19,6 +19,10 @@ package net.tnemc.folia.impl;
  */
 
 import com.destroystokyo.paper.profile.PlayerProfile;
+import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Town;
 import net.tnemc.bukkit.BukkitCore;
 import net.tnemc.core.TNECore;
 import net.tnemc.folia.impl.scheduler.FoliaScheduler;
@@ -43,6 +47,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 import revxrsal.commands.command.CommandActor;
 
@@ -248,15 +253,11 @@ public class FoliaServerProvider implements ServerConnector {
     return Bukkit.getPluginManager().isPluginEnabled(name);
   }
 
-  /**
-   * Used to replace colour codes in a string.
-   *
-   * @param string The string to format.
-   *
-   * @return The formatted string.
-   */
   @Override
-  public String replaceColours(String string) {
+  public String replaceColours(String string, boolean strip) {
+    if(strip) {
+      return ChatColor.stripColor(string);
+    }
     return ChatColor.translateAlternateColorCodes('&', string);
   }
 

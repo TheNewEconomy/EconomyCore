@@ -185,6 +185,18 @@ public class TNEVault implements Economy {
     PluginCore.log().debug("Vault Balance call. Name: " + name + " World: " + world, DebugLevel.STANDARD);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(name);
+
+    if(name.contains("§")) {
+      PluginCore.log().debug("==== Vault balance call with color code! ====", DebugLevel.DEVELOPER);
+
+      final StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+      for (int i = 1; i < elements.length; i++) {
+        final StackTraceElement s = elements[i];
+        PluginCore.log().debug("\tat " + s.getClassName() + "." + s.getMethodName() + "(" + s.getFileName() + ":" + s.getLineNumber() + ")", DebugLevel.DEVELOPER);
+      }
+      PluginCore.log().debug("==== End Stack Print ====", DebugLevel.DEVELOPER);
+    }
+
     if(account.isPresent()) {
       PluginCore.log().debug("Vault Balance call. Account exists. Name:" + account.get().getName(), DebugLevel.STANDARD);
       PluginCore.log().debug("Vault Balance call. Balance:" + account.get().getHoldingsTotal(world, TNECore.eco().currency().getDefaultCurrency(world).getUid()).doubleValue(), DebugLevel.STANDARD);
@@ -569,6 +581,18 @@ public class TNEVault implements Economy {
 
       PluginCore.log().error("Error from plugin accessing vault createPlayerAccount! Name provided is null!(probably EssentialsX)");
       return false;
+    }
+    PluginCore.log().debug("Vault Method: Name: " + player.getName() + " ID: " + player.getUniqueId(), DebugLevel.STANDARD);
+
+    if(player.getName().contains("§")) {
+      PluginCore.log().debug("==== Vault create call with color code! ====", DebugLevel.DEVELOPER);
+
+      final StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+      for (int i = 1; i < elements.length; i++) {
+        final StackTraceElement s = elements[i];
+        PluginCore.log().debug("\tat " + s.getClassName() + "." + s.getMethodName() + "(" + s.getFileName() + ":" + s.getLineNumber() + ")", DebugLevel.DEVELOPER);
+      }
+      PluginCore.log().debug("==== End Stack Print ====", DebugLevel.DEVELOPER);
     }
 
     return TNECore.eco().account().createAccount(player.getUniqueId().toString(), player.getName()).getResponse().success();
