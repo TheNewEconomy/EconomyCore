@@ -90,7 +90,6 @@ public class YAMLAccount implements Datable<Account> {
     final String file = "accounts/" + identifier + ".yml";
     while(TNECore.yaml().inUse(file)) {
 
-      System.out.println("=========== This would'ved corrupted before ===========");
       try {
         Thread.sleep(1000);
       } catch(InterruptedException ignore) {
