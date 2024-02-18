@@ -79,12 +79,24 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
   @Override
   public void store(StorageConnector<?> connector, @NotNull HoldingsEntry object, @Nullable String identifier) {
 
-    final File accFile = new File(PluginCore.directory(), "accounts/" + identifier + ".yml");
+    //check if our file is in use.
+    final String file = "accounts/" + identifier + ".yml";
+    while(TNECore.yaml().inUse(file)) {
+
+      System.out.println("=========== This would'ved corrupted before ===========");
+      try {
+        Thread.sleep(1000);
+      } catch(InterruptedException ignore) {
+      }
+    }
+
+    TNECore.yaml().add(file);
+
+    final File accFile = new File(PluginCore.directory(), file);
     if(!accFile.exists()) {
       try {
         accFile.createNewFile();
-      } catch(IOException e) {
-        e.printStackTrace();
+      } catch(IOException ignore) {
 
         PluginCore.log().error("Issue creating account file. Account: " + identifier);
         return;
@@ -96,28 +108,25 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
     try {
       yaml = YamlFile.loadConfiguration(accFile);
     } catch(IOException ignore) {
-      ignore.printStackTrace();
 
       PluginCore.log().error("Issue loading account file. Account: " + identifier);
       return;
     }
 
-    if(yaml != null) {
-      yaml.set("Holdings." + MainConfig.yaml().getString("Core.Server.Name")
-                   + "." + object.getRegion() + "." + object.getCurrency().toString() + "."
-                   + object.getHandler().asID(), object.getAmount().toPlainString());
+    yaml.set("Holdings." + MainConfig.yaml().getString("Core.Server.Name")
+            + "." + object.getRegion() + "." + object.getCurrency().toString() + "."
+            + object.getHandler().asID(), object.getAmount().toPlainString());
 
-      PluginCore.log().debug("YAMLHoldings-store-Entry ID:" + identifier, DebugLevel.DEVELOPER);
-      PluginCore.log().debug("YAMLHoldings-store-Entry Currency:" + object.getCurrency().toString(), DebugLevel.DEVELOPER);
-      PluginCore.log().debug("YAMLHoldings-store-Entry AMT:" + object.getAmount().toPlainString(), DebugLevel.DEVELOPER);
-      try {
-        yaml.save();
-        yaml = null;
-      } catch(IOException e) {
-        e.printStackTrace();
-        PluginCore.log().error("Issue saving account holdings to file. Account: " + identifier);
-      }
+    PluginCore.log().debug("YAMLHoldings-store-Entry ID:" + identifier, DebugLevel.DEVELOPER);
+    PluginCore.log().debug("YAMLHoldings-store-Entry Currency:" + object.getCurrency().toString(), DebugLevel.DEVELOPER);
+    PluginCore.log().debug("YAMLHoldings-store-Entry AMT:" + object.getAmount().toPlainString(), DebugLevel.DEVELOPER);
+    try {
+      yaml.save();
+      yaml = null;
+    } catch(IOException ignore) {
+      PluginCore.log().error("Issue saving account holdings to file. Account: " + identifier);
     }
+    TNECore.yaml().remove(file);
   }
 
   /**
@@ -130,13 +139,58 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
     if(account.isPresent()) {
+
+      //check if our file is in use.
+      final String file = "accounts/" + identifier + ".yml";
+      while(TNECore.yaml().inUse(file)) {
+        try {
+          Thread.sleep(1000);
+        } catch(InterruptedException ignore) {
+        }
+      }
+
+      TNECore.yaml().add(file);
+
+      final File accFile = new File(PluginCore.directory(), file);
+      if(!accFile.exists()) {
+        try {
+          accFile.createNewFile();
+        } catch(IOException ignore) {
+
+          PluginCore.log().error("Issue creating account file. Account: " + identifier);
+          return;
+        }
+      }
+
+
+      YamlFile yaml = null;
+      try {
+        yaml = YamlFile.loadConfiguration(accFile);
+      } catch(IOException ignore) {
+
+        PluginCore.log().error("Issue loading account file. Account: " + identifier);
+        return;
+      }
+
       for(RegionHoldings region : account.get().getWallet().getHoldings().values()) {
         for(CurrencyHoldings currency : region.getHoldings().values()) {
           for(HoldingsEntry entry : currency.getHoldings().values()) {
-            store(connector, entry, identifier);
+
+            yaml.set("Holdings." + MainConfig.yaml().getString("Core.Server.Name")
+                    + "." + entry.getRegion() + "." + entry.getCurrency().toString() + "."
+                    + entry.getHandler().asID(), entry.getAmount().toPlainString());
           }
         }
       }
+
+      try {
+        yaml.save();
+        yaml = null;
+      } catch(IOException ignore) {
+        PluginCore.log().error("Issue saving account holdings to file. Account: " + identifier);
+      }
+
+      TNECore.yaml().remove(file);
     }
   }
 

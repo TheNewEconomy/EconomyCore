@@ -86,11 +86,24 @@ public class YAMLAccount implements Datable<Account> {
 
     PluginCore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.STANDARD);
 
-    final File accFile = new File(PluginCore.directory(), "accounts/" + account.getIdentifier() + ".yml");
+    //check if our file is in use.
+    final String file = "accounts/" + identifier + ".yml";
+    while(TNECore.yaml().inUse(file)) {
+
+      System.out.println("=========== This would'ved corrupted before ===========");
+      try {
+        Thread.sleep(1000);
+      } catch(InterruptedException ignore) {
+      }
+    }
+
+    TNECore.yaml().add(file);
+
+    final File accFile = new File(PluginCore.directory(), file);
     if(!accFile.exists()) {
       try {
         accFile.createNewFile();
-      } catch(IOException e) {
+      } catch(IOException ignore) {
 
         PluginCore.log().error("Issue creating account file. Account: " + account.getName());
         return;
@@ -102,67 +115,66 @@ public class YAMLAccount implements Datable<Account> {
     try {
       yaml = YamlFile.loadConfiguration(accFile);
     } catch(IOException ignore) {
-      ignore.printStackTrace();
 
       PluginCore.log().error("Issue loading account file. Account: " + account.getName());
       return;
     }
 
-    if(yaml != null) {
-      yaml.set("Info.ID", account.getIdentifier());
-      yaml.set("Info.Name", account.getName());
-      yaml.set("Info.Type", account.type());
-      yaml.set("Info.Status", account.getStatus().identifier());
-      yaml.set("Info.CreationDate", account.getCreationDate());
-      yaml.set("Info.Pin", account.getPin());
+    yaml.set("Info.ID", account.getIdentifier());
+    yaml.set("Info.Name", account.getName());
+    yaml.set("Info.Type", account.type());
+    yaml.set("Info.Status", account.getStatus().identifier());
+    yaml.set("Info.CreationDate", account.getCreationDate());
+    yaml.set("Info.Pin", account.getPin());
 
-      if(account instanceof PlayerAccount playerAccount) {
-        yaml.set("Info.LastOnline", playerAccount.getLastOnline());
+    if(account instanceof PlayerAccount playerAccount) {
+      yaml.set("Info.LastOnline", playerAccount.getLastOnline());
 
-        final Optional<PlayerProvider> provider = PluginCore.server().findPlayer(playerAccount.getUUID());
+      final Optional<PlayerProvider> provider = PluginCore.server().findPlayer(playerAccount.getUUID());
 
-        if(provider.isPresent()) {
-          final String region = TNECore.eco().region().getMode().region(provider.get());
-          for(Currency currency : TNECore.eco().currency().getCurrencies(region)) {
+      if(provider.isPresent()) {
+        final String region = TNECore.eco().region().getMode().region(provider.get());
+        for(Currency currency : TNECore.eco().currency().getCurrencies(region)) {
 
-            if(currency.type().supportsItems()) {
+          if(currency.type().supportsItems()) {
 
-              for(HoldingsEntry entry : account.getHoldings(region, currency.getUid())) {
+            for(HoldingsEntry entry : account.getHoldings(region, currency.getUid())) {
 
-                //account.get().setHoldings(entry, entry.getHandler());
-                account.getWallet().setHoldings(entry);
-              }
+              //account.get().setHoldings(entry, entry.getHandler());
+              account.getWallet().setHoldings(entry);
             }
           }
         }
       }
+    }
 
-      if(account instanceof SharedAccount shared) {
-        final String owner = (shared.getOwner() == null)? account.getIdentifier() :
-            shared.getOwner().toString();
+    if(account instanceof SharedAccount shared) {
+      final String owner = (shared.getOwner() == null)? account.getIdentifier() :
+          shared.getOwner().toString();
 
-        yaml.set("Info.Owner", owner);
+      yaml.set("Info.Owner", owner);
 
-        for(Member member : shared.getMembers().values()) {
-          for(Map.Entry<String, Boolean> entry : member.getPermissions().entrySet()) {
+      for(Member member : shared.getMembers().values()) {
+        for(Map.Entry<String, Boolean> entry : member.getPermissions().entrySet()) {
 
-            yaml.set("Members." + member.getId().toString() + "." + entry.getKey(), entry.getValue());
-          }
+          yaml.set("Members." + member.getId().toString() + "." + entry.getKey(), entry.getValue());
         }
       }
-      try {
-        yaml.save();
-
-        final AccountSaveCallback callback = new AccountSaveCallback(account);
-        PluginCore.callbacks().call(callback);
-
-        yaml = null;
-      } catch(IOException e) {
-        PluginCore.log().error("Issue saving account file. Account: " + account.getName());
-        return;
-      }
-      TNECore.instance().storage().storeAll(account.getIdentifier());
     }
+    try {
+      yaml.save();
+
+      final AccountSaveCallback callback = new AccountSaveCallback(account);
+      PluginCore.callbacks().call(callback);
+
+      yaml = null;
+    } catch(IOException ignore) {
+      PluginCore.log().error("Issue saving account file. Account: " + account.getName());
+      return;
+    }
+    TNECore.yaml().remove(file);
+
+    TNECore.instance().storage().storeAll(account.getIdentifier());
   }
 
   /**

@@ -44,6 +44,7 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.hook.treasury.TreasuryHook;
+import net.tnemc.core.io.yaml.YamlStorageManager;
 import net.tnemc.core.region.RegionGroup;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.plugincore.PluginCore;
@@ -86,12 +87,14 @@ public abstract class TNECore extends PluginEngine {
   public static final String coreURL = "https://tnemc.net/files/module-version.xml";
 
   public static final String version = "0.1.2.8";
-  public static final String build = "Release-1";
+  public static final String build = "Pre-3";
 
   /* Key Managers and Object instances utilized with TNE */
 
   //General Key Object Instances
   protected EconomyManager economyManager;
+
+  protected YamlStorageManager yamlManager = new YamlStorageManager();
 
   private MainConfig config;
   private DataConfig data;
@@ -339,6 +342,10 @@ public abstract class TNECore extends PluginEngine {
    */
   public static EconomyManager eco() {
     return instance.economyManager;
+  }
+
+  public static YamlStorageManager yaml() {
+    return instance.yamlManager;
   }
 
   public MainConfig config() {
