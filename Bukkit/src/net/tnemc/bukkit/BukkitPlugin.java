@@ -60,7 +60,7 @@ public class BukkitPlugin {
 
     //Initialize our TNE Core Class
     this.core = new BukkitCore(plugin);
-    this.pluginCore = new BukkitPluginCore(plugin, core, server, new BaseTranslationProvider(), new TNECallbackProvider());
+    this.pluginCore = new ModifiedBukkitPluginCore(plugin, core, server, new BaseTranslationProvider(), new TNECallbackProvider());
 
     //Vault
     System.out.println("Checking for Vault");

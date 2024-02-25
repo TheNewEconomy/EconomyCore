@@ -273,12 +273,13 @@ public abstract class TNECore extends PluginEngine {
   public void postStorage() {
     this.storage.loadAll(Account.class, "");
 
+    final String name = MainConfig.yaml().getString("Core.Server.Account.Name");
+    serverAccount = UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8));
+
     if(MainConfig.yaml().getBoolean("Core.Server.Account.Enabled")) {
 
       PluginCore.log().inform("Checking Server Account.");
 
-      final String name = MainConfig.yaml().getString("Core.Server.Account.Name");
-      serverAccount = UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8));
       if(economyManager.account().findAccount(serverAccount.toString()).isEmpty()) {
 
         PluginCore.log().inform("Creating Server Account.");

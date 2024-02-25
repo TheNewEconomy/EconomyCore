@@ -50,6 +50,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * MoneyCommands
@@ -148,11 +149,12 @@ public class MoneyCommand extends BaseCommand {
                                                                amount.value().setScale(currency.getDecimalPlaces(), RoundingMode.DOWN).negate()
     );
 
+    final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
     final Transaction transaction = new Transaction("convert")
         .from(account.get(), modifierFrom)
         .to(account.get(), modifier)
         .processor(EconomyManager.baseProcessor())
-        .source(new PlayerSource(sender.identifier().get()));
+        .source(new PlayerSource(sourceID));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()){
@@ -205,11 +207,12 @@ public class MoneyCommand extends BaseCommand {
             EconomyManager.VIRTUAL
     );
 
+    final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
     final Transaction transaction = new Transaction("deposit")
             .to(senderAccount.get(), modifier)
             .from(senderAccount.get(), modifier.counter(EconomyManager.ITEM_ONLY))
             .processor(EconomyManager.baseProcessor())
-            .source(new PlayerSource(sender.identifier().get()));
+            .source(new PlayerSource(sourceID));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()) {
@@ -240,9 +243,10 @@ public class MoneyCommand extends BaseCommand {
                                                            currency.getUid(),
                                                            amount);
 
+    final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
     final Transaction transaction = new Transaction("give")
         .to(account, modifier)
-        .source(new PlayerSource(sender.identifier().get()));
+        .source(new PlayerSource(sourceID));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()) {
@@ -305,10 +309,11 @@ public class MoneyCommand extends BaseCommand {
               amt
       );
 
+      final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
       final Transaction transaction = new Transaction("note")
           .from(account.get(), modifier.counter())
           .processor(EconomyManager.baseProcessor())
-          .source(new PlayerSource(sender.identifier().get()));
+          .source(new PlayerSource(sourceID));
 
 
       final Optional<Receipt> receipt = processTransaction(sender, transaction);
@@ -456,11 +461,12 @@ public class MoneyCommand extends BaseCommand {
             amount
     );
 
+    final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
     final Transaction transaction = new Transaction("pay")
         .to(account, modifier)
         .from(senderAccount.get(), modifier.counter())
         .processor(EconomyManager.baseProcessor())
-        .source(new PlayerSource(sender.identifier().get()));
+        .source(new PlayerSource(sourceID));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()) {
@@ -545,10 +551,11 @@ public class MoneyCommand extends BaseCommand {
             amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN),
                                                            HoldingsOperation.SET);
 
+    final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
     final Transaction transaction = new Transaction("set")
         .to(account, modifier)
         .processor(EconomyManager.baseProcessor())
-        .source(new PlayerSource(sender.identifier().get()));
+        .source(new PlayerSource(sourceID));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
 
@@ -584,11 +591,12 @@ public class MoneyCommand extends BaseCommand {
             amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN),
                                                            HoldingsOperation.SET);
 
+    final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
     for(Account account : TNECore.eco().account().getAccounts().values()) {
       final Transaction transaction = new Transaction("set")
           .to(account, modifier)
           .processor(EconomyManager.baseProcessor())
-          .source(new PlayerSource(sender.identifier().get()));
+          .source(new PlayerSource(sourceID));
 
       final Optional<Receipt> receipt = processTransaction(sender, transaction);
 
@@ -633,10 +641,11 @@ public class MoneyCommand extends BaseCommand {
                                                            amount
     );
 
+    final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
     final Transaction transaction = new Transaction("take")
         .to(account, modifier.counter())
         .processor(EconomyManager.baseProcessor())
-        .source(new PlayerSource(sender.identifier().get()));
+        .source(new PlayerSource(sourceID));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()) {
@@ -748,11 +757,12 @@ public class MoneyCommand extends BaseCommand {
             EconomyManager.ITEM_ONLY
     );
 
+    final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
     final Transaction transaction = new Transaction("withdraw")
             .to(senderAccount.get(), modifier)
             .from(senderAccount.get(), modifier.counter(EconomyManager.VIRTUAL))
             .processor(EconomyManager.baseProcessor())
-            .source(new PlayerSource(sender.identifier().get()));
+            .source(new PlayerSource(sourceID));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction);
     if(receipt.isPresent()) {

@@ -93,6 +93,7 @@ public class YAMLAccount implements Datable<Account> {
       try {
         Thread.sleep(1000);
       } catch(InterruptedException ignore) {
+        ignore.printStackTrace();
       }
     }
 
