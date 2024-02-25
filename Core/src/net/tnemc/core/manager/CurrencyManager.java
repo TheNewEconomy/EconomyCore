@@ -279,7 +279,14 @@ public class CurrencyManager {
       return Optional.ofNullable(currencies.get(UUID.fromString(identifier)));
     } catch(Exception ignore) {
 
-      return Optional.ofNullable(currencies.get(curIDMap.get(identifier)));
+      for(Map.Entry<String, UUID> entry : curIDMap.entrySet()) {
+
+        if(entry.getKey().equalsIgnoreCase(identifier)) {
+
+          return Optional.ofNullable(currencies.get(entry.getValue()));
+        }
+      }
+      return Optional.empty();
     }
   }
 
