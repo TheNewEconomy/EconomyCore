@@ -195,6 +195,7 @@ public class TNEVault implements Economy {
         PluginCore.log().debug("\tat " + s.getClassName() + "." + s.getMethodName() + "(" + s.getFileName() + ":" + s.getLineNumber() + ")", DebugLevel.DEVELOPER);
       }
       PluginCore.log().debug("==== End Stack Print ====", DebugLevel.DEVELOPER);
+      return 0;
     }
 
     if(account.isPresent()) {
@@ -593,6 +594,7 @@ public class TNEVault implements Economy {
         PluginCore.log().debug("\tat " + s.getClassName() + "." + s.getMethodName() + "(" + s.getFileName() + ":" + s.getLineNumber() + ")", DebugLevel.DEVELOPER);
       }
       PluginCore.log().debug("==== End Stack Print ====", DebugLevel.DEVELOPER);
+      return false;
     }
 
     return TNECore.eco().account().createAccount(player.getUniqueId().toString(), player.getName()).getResponse().success();
