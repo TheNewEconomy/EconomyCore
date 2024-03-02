@@ -350,6 +350,7 @@ public class MoneyCommand extends BaseCommand {
 
     final MessageData msg = new MessageData("Messages.Money.HoldingsMulti");
     msg.addReplacement("$world", region);
+    msg.addReplacement("$player", account.getName());
     sender.message(msg);
 
     final String resolve = region;
