@@ -5,8 +5,13 @@ author: creatorfromhell
 main: net.tnemc.paper.TNE
 api-version: '1.19'
 
+load: POSTWORLD
+
 dependencies:
   - name: Towny
+    required: false
+    bootstrap: false
+  - name: Multiverse-Core
     required: false
     bootstrap: false
   - name: LuckPerms
@@ -19,14 +24,14 @@ dependencies:
     required: false
     bootstrap: false
   - name: mcMMO
-    reqiuired: false
+    required: false
     bootstrap: false
   - name: Essentials
-    reqiuired: false
+    required: false
     bootstrap: false
   - name: EssentialsX
-    reqiuired: false
+    required: false
     bootstrap: false
   - name: PlaceholderAPI
-    reqiuired: false
+    required: false
     bootstrap: false

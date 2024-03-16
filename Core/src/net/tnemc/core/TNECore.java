@@ -87,7 +87,7 @@ public abstract class TNECore extends PluginEngine {
   public static final String coreURL = "https://tnemc.net/files/module-version.xml";
 
   public static final String version = "0.1.2.8";
-  public static final String build = "Pre-3";
+  public static final String build = "Pre-6";
 
   /* Key Managers and Object instances utilized with TNE */
 
@@ -271,6 +271,10 @@ public abstract class TNECore extends PluginEngine {
 
   @Override
   public void postStorage() {
+  }
+
+  @Override
+  public void postEnable() {
     this.storage.loadAll(Account.class, "");
 
     final String name = MainConfig.yaml().getString("Core.Server.Account.Name");
@@ -302,10 +306,6 @@ public abstract class TNECore extends PluginEngine {
         }
       }
     }
-  }
-
-  @Override
-  public void postEnable() {
 
     //Set up the auto saver if enabled.
     if(DataConfig.yaml().getBoolean("Data.AutoSaver.Enabled")) {

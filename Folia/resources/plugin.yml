@@ -13,22 +13,14 @@ folia-supported: true
 
 loadbefore:
   - EconomyShopGUI
-  - Towny
 
 softdepend:
-  - AdvancedAchievements
-  - NoteBlockAPI
-  - WorldEdit
-  - WorldGuard
-  - FastAsyncWorldEdit
   - PlaceholderAPI
-  - Essentials
   - Vault
+  - Treasury
   - Reserve
   - mcMMO
-  - GUIShop
-  - DiscordSRV
-  - Multiverse-Core
+  - LuckPerms
 
 permissions:
   tne.*:
