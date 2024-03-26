@@ -15,6 +15,11 @@
       {
         "id": "spongeapi",
         "version": "8.0.0"
+      },
+      {
+        "id": "luckperms",
+        "optional": true,
+        "load-order": "after"
       }
     ],
     "contributors": [
