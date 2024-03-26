@@ -156,7 +156,7 @@ public class MoneyCommand extends BaseCommand {
         .processor(EconomyManager.baseProcessor())
         .source(new PlayerSource(sourceID));
 
-    final Optional<Receipt> receipt = processTransaction(sender, transaction);
+    final Optional<Receipt> receipt = processTransaction(sender, transaction, account.get().getName(), amount.value());
     if(receipt.isPresent()){
       final MessageData data = new MessageData("Messages.Money.Converted");
       data.addReplacement("$from_amount", amount.value().toPlainString());
@@ -214,7 +214,7 @@ public class MoneyCommand extends BaseCommand {
             .processor(EconomyManager.baseProcessor())
             .source(new PlayerSource(sourceID));
 
-    final Optional<Receipt> receipt = processTransaction(sender, transaction);
+    final Optional<Receipt> receipt = processTransaction(sender, transaction, senderAccount.get().getName(), amount.value());
     if(receipt.isPresent()) {
       final MessageData data = new MessageData("Messages.Money.Deposit");
       data.addReplacement("$amount", CurrencyFormatter.format(senderAccount.get(),
@@ -248,7 +248,7 @@ public class MoneyCommand extends BaseCommand {
         .to(account, modifier)
         .source(new PlayerSource(sourceID));
 
-    final Optional<Receipt> receipt = processTransaction(sender, transaction);
+    final Optional<Receipt> receipt = processTransaction(sender, transaction, account.getName(), amount.value());
     if(receipt.isPresent()) {
       final MessageData data = new MessageData("Messages.Money.Gave");
       data.addReplacement("$player", account.getName());
@@ -316,7 +316,7 @@ public class MoneyCommand extends BaseCommand {
           .source(new PlayerSource(sourceID));
 
 
-      final Optional<Receipt> receipt = processTransaction(sender, transaction);
+      final Optional<Receipt> receipt = processTransaction(sender, transaction, account.get().getName(), amount.value());
       if(receipt.isPresent()) {
         final Collection<AbstractItemStack<Object>> left = PluginCore.server().calculations().giveItems(Collections.singletonList(note.get().stack(currency.getIdentifier(), BaseCommand.region(sender), rounded)), provider.get().inventory().getInventory(false));
 
@@ -469,7 +469,7 @@ public class MoneyCommand extends BaseCommand {
         .processor(EconomyManager.baseProcessor())
         .source(new PlayerSource(sourceID));
 
-    final Optional<Receipt> receipt = processTransaction(sender, transaction);
+    final Optional<Receipt> receipt = processTransaction(sender, transaction, account.getName(), amount.value());
     if(receipt.isPresent()) {
       final MessageData data = new MessageData("Messages.Money.Paid");
       data.addReplacement("$player", account.getName());
@@ -558,7 +558,7 @@ public class MoneyCommand extends BaseCommand {
         .processor(EconomyManager.baseProcessor())
         .source(new PlayerSource(sourceID));
 
-    final Optional<Receipt> receipt = processTransaction(sender, transaction);
+    final Optional<Receipt> receipt = processTransaction(sender, transaction, account.getName(), amount);
 
     if(receipt.isPresent()) {
       final MessageData msg = new MessageData("Messages.Money.Set");
@@ -599,7 +599,7 @@ public class MoneyCommand extends BaseCommand {
           .processor(EconomyManager.baseProcessor())
           .source(new PlayerSource(sourceID));
 
-      final Optional<Receipt> receipt = processTransaction(sender, transaction);
+      final Optional<Receipt> receipt = processTransaction(sender, transaction, account.getName(), amount);
 
       if(receipt.isPresent()) {
         final MessageData msg = new MessageData("Messages.Money.Set");
@@ -648,7 +648,7 @@ public class MoneyCommand extends BaseCommand {
         .processor(EconomyManager.baseProcessor())
         .source(new PlayerSource(sourceID));
 
-    final Optional<Receipt> receipt = processTransaction(sender, transaction);
+    final Optional<Receipt> receipt = processTransaction(sender, transaction, account.getName(), amount.value());
     if(receipt.isPresent()) {
       final MessageData data = new MessageData("Messages.Money.Took");
       data.addReplacement("$player", account.getName());
@@ -765,7 +765,7 @@ public class MoneyCommand extends BaseCommand {
             .processor(EconomyManager.baseProcessor())
             .source(new PlayerSource(sourceID));
 
-    final Optional<Receipt> receipt = processTransaction(sender, transaction);
+    final Optional<Receipt> receipt = processTransaction(sender, transaction, senderAccount.get().getName(), amount.value());
     if(receipt.isPresent()) {
 
       final MessageData data = new MessageData("Messages.Money.Withdrawn");
@@ -776,12 +776,16 @@ public class MoneyCommand extends BaseCommand {
     }
   }
 
-  private static Optional<Receipt> processTransaction(CmdSource<?> sender, Transaction transaction) {
+  private static Optional<Receipt> processTransaction(CmdSource<?> sender, Transaction transaction, final String modifiedAccount, final BigDecimal modifier) {
     try {
       final TransactionResult result = transaction.process();
 
       if(!result.isSuccessful()) {
-        sender.message(new MessageData(result.getMessage()));
+        final MessageData data = new MessageData(result.getMessage());
+        data.addReplacement("$player", modifiedAccount);
+        data.addReplacement("$amount", modifier.toPlainString());
+
+        sender.message(data);
         return Optional.empty();
       }
 

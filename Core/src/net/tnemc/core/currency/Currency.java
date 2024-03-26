@@ -49,6 +49,8 @@ public class Currency {
   private BigDecimal maxBalance;
   private BigDecimal minBalance;
 
+  private boolean negativeSupport = false;
+
   //identifier
   private UUID uid;
 
@@ -282,6 +284,10 @@ public class Currency {
 
   public void setMinorWeight(int minorWeight) {
     this.minorWeight = minorWeight;
+  }
+
+  public boolean negativeSupport() {
+    return negativeSupport;
   }
 
   public void setNote(Note note) {

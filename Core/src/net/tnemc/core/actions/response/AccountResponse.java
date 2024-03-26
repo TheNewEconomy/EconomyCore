@@ -44,7 +44,7 @@ public enum AccountResponse implements EconomyResponse {
 
     @Override
     public String response() {
-      return "The specified account was created successfully.";
+      return "Messages.Admin.Created";
     }
   },
 
@@ -61,7 +61,7 @@ public enum AccountResponse implements EconomyResponse {
 
     @Override
     public String response() {
-      return "The specified account couldn't be created.";
+      return "Messages.Admin.CreationFailed";
     }
   },
 
@@ -79,7 +79,7 @@ public enum AccountResponse implements EconomyResponse {
 
     @Override
     public String response() {
-      return "The specified account couldn't be created.";
+      return "Messages.Admin.CreationFailed";
     }
   },
 
@@ -96,7 +96,7 @@ public enum AccountResponse implements EconomyResponse {
 
     @Override
     public String response() {
-      return "The specified account already exists.";
+      return "Messages.Admin.Exists";
     }
   },
 
@@ -113,7 +113,7 @@ public enum AccountResponse implements EconomyResponse {
 
     @Override
     public String response() {
-      return "The account was deleted successfully";
+      return "Messages.Admin.Deleted";
     }
   },
 
@@ -130,7 +130,7 @@ public enum AccountResponse implements EconomyResponse {
 
     @Override
     public String response() {
-      return "The specified account doesn't exist.";
+      return "Messages.Account.NoSuch";
     }
   },
 

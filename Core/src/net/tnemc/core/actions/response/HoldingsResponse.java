@@ -43,7 +43,7 @@ public enum HoldingsResponse implements EconomyResponse {
 
     @Override
     public String response() {
-      return "The holdings change would put this account above the max allowed holdings.";
+      return "Messages.Money.ExceedsOtherPlayerMaximum";
     }
   },
 
@@ -60,7 +60,7 @@ public enum HoldingsResponse implements EconomyResponse {
 
     @Override
     public String response() {
-      return "The holdings change would put this account below the minimum allowed holdings.";
+      return "Messages.Money.ExceedsOtherPlayerMinimum";
     }
   },
 
@@ -77,7 +77,7 @@ public enum HoldingsResponse implements EconomyResponse {
 
     @Override
     public String response() {
-      return "The specified account has insufficient funds.";
+      return "Messages.Money.InsufficientOther";
     }
   },
 
@@ -94,7 +94,7 @@ public enum HoldingsResponse implements EconomyResponse {
 
     @Override
     public String response() {
-      return "The specified account is locked from receiving funds.";
+      return "Messages.Account.ReceiveLock";
     }
   },
 
@@ -111,7 +111,7 @@ public enum HoldingsResponse implements EconomyResponse {
 
     @Override
     public String response() {
-      return "The specified account is locked from using funds.";
+      return "Messages.Account.UseLock";
     }
   }
 }

@@ -26,6 +26,7 @@ import net.tnemc.core.transaction.TransactionProcessor;
 import net.tnemc.core.transaction.TransactionType;
 import net.tnemc.core.transaction.check.MaximumBalanceCheck;
 import net.tnemc.core.transaction.check.MinimumBalanceCheck;
+import net.tnemc.core.transaction.check.NegativeBalanceCheck;
 import net.tnemc.core.transaction.check.PreCallbackCheck;
 import net.tnemc.core.transaction.check.StatusCheck;
 import net.tnemc.core.transaction.check.TrackingCheck;
@@ -106,6 +107,7 @@ public class TransactionManager {
     addCheck(new PreCallbackCheck(), "core");
     addCheck(new TrackingCheck(), "core");
     addCheck(new StatusCheck(), "core");
+    addCheck(new NegativeBalanceCheck(), "core");
     addCheck(new MinimumBalanceCheck(), "core");
     addCheck(new MaximumBalanceCheck(), "core");
 
