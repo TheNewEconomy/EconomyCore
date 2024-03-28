@@ -20,6 +20,7 @@ package net.tnemc.core.transaction.check;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.actions.response.GeneralResponse;
@@ -28,19 +29,19 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionCheck;
 import net.tnemc.core.transaction.TransactionParticipant;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import net.tnemc.plugincore.core.io.maps.MapKey;
 import org.jetbrains.annotations.NotNull;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 /**
- * NegativeBalanceCheck
+ * RestrictedCurrencyCheck
  *
  * @author creatorfromhell
  * @since 0.1.2.9
  */
-public class NegativeBalanceCheck implements TransactionCheck {
+public class RestrictedCurrencyCheck implements TransactionCheck {
   /**
    * The unique string-based identifier for this check in order to be able to allow control over
    * what checks are running, and which ones may not have to be utilized. For instance, we don't
@@ -52,7 +53,7 @@ public class NegativeBalanceCheck implements TransactionCheck {
   @Override
   @MapKey
   public String identifier() {
-    return "negbal";
+    return "restrictbal";
   }
 
   /**
@@ -71,15 +72,14 @@ public class NegativeBalanceCheck implements TransactionCheck {
   public EconomyResponse checkParticipant(Transaction transaction, @NotNull TransactionParticipant participant, HoldingsModifier modifier) {
 
     final Optional<Account> account = participant.asAccount();
-    if(account.isPresent() && modifier.isRemoval()) {
+    if(account.isPresent() && account.get() instanceof PlayerAccount player) {
 
       final Optional<Currency> currency = TNECore.eco().currency().findCurrency(modifier.getCurrency());
+      final Optional<PlayerProvider> provider = player.getPlayer();
 
-      if(currency.isPresent() && !currency.get().negativeSupport() &&
-          participant.getCombinedEnding().compareTo(BigDecimal.ZERO) < 0) {
-        return HoldingsResponse.INSUFFICIENT;
+      if(currency.isPresent() && provider.isPresent() && provider.get().hasPermission("tne.money.restricted." + currency.get().getIdentifier())) {
+        return HoldingsResponse.RESTRICTED;
       }
-
     }
     return GeneralResponse.SUCCESS;
   }

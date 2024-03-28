@@ -82,6 +82,23 @@ public enum HoldingsResponse implements EconomyResponse {
   },
 
   /**
+   * The action was unsuccessful due to the account not having access to the currency.
+   *
+   * @since 0.1.2.0
+   */
+  RESTRICTED {
+    @Override
+    public boolean success() {
+      return false;
+    }
+
+    @Override
+    public String response() {
+      return "Messages.Money.Restricted";
+    }
+  },
+
+  /**
    * The action was unsuccessful due to the account not having enough funds.
    *
    * @since 0.1.2.0
