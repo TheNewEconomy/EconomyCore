@@ -110,149 +110,149 @@ Messages:
     Only: "<red>Вы не можете удалить единственную загруженную валюту."
     Deleted: "<yellow>Вы успешно удалили валюту $currency."
   Note:
-    Given: "<white>A note has been given to you in the amount of <gold>$amount<white> for currency <green>$currency<white>."
+    Given: "<white>Вам была выдан чек на сумму <gold>$amount<white> для валюты <green>$currency<white>."
     Claimed: "<white>Successfully claimed note for currency <green>$currency<white> in the amount of <gold>$amount<white>.<newline>Your new balance is <gold>$balance<white>."
-    Failed: "<red>I'm sorry, but your attempt to claim that currency note failed!."
-    Minimum: "<red>The minimum note amount of $amount was not met."
-    Name: "Currency Note"
-    Currency: "Currency: $currency"
-    Region: "Region: $region"
-    Amount: "Amount: $amount"
-    Action: "Right click to claim note."
+    Failed: "<red>Извините, Ваша попытка забрать денежный чек не удалась!"
+    Minimum: "<red>Минимальное значение чека в размере $amount не встретилось."
+    Name: "Денежный чек"
+    Currency: "Валюта: $currency"
+    Region: "Регион: $region"
+    Amount: "Сумма: $amount"
+    Action: "ПКМ, чтобы забрать чек."
   Setup:
     General:
-      Failed: "Setup failed during step '$step'!"
-      Successful: "Setup has sucessfully completed!"
-      StepComplete: "Setup step '$step' has successfully been completed."
+      Failed: "Ошибка установки на этапе '$step'!"
+      Successful: "Установка успешно завершена!"
+      StepComplete: "Этап установки '$step' успешно завершен."
     Conversion:
-      Identifier: "conversion"
+      Identifier: "конвертация"
   Transaction:
-    Already: "<red>The transaction with the ID of $transaction has already been voided."
-    Away: "<white>=====[<green>Missed Transactions</green>]===== $page/$page_top<newline>ID | Type"
+    Already: "<red>Транзакция с id $transaction была аннулирована."
+    Away: "<white>=====[<green>Пропущенные Транзакции</green>]===== $page/$page_top<newline>ID | тип"
     AwayEntry: "<green><click:run_command:/transaction info $id>$id</click> <white>|</white> $type"
-    AwayNone: "<red>No transactions occured while you were offline."
-    AwayJoin: "<white>You missed some transactions while you were gone. <green><click:run_command:/transaction away>View Them Now</click>!"
-    History: "<white>=====[<green>Transactions<white>]===== $page/$page_top<newline>ID | Type | Initiator | Recipient"
+    AwayNone: "<red>Пока Вы были офлайн не произошло ни одной транзакции."
+    AwayJoin: "<white>Пока Вас не было Вы пропустили несколько транзакций. <green><click:run_command:/transaction away>Посмотрите их сейчас</click>!"
+    History: "<white>=====[<green>Транзакции<white>]===== $page/$page_top<newline>ID | Тип | Инициатор | Получатель"
     HistoryEntry: "<green><click:run_command:/transaction info $id>$id</click> <white>| <green>$type <white>| <green>$initiator <white>| <green>$recipient"
-    Info: "<white>Transaction Information:<newline><white>ID: <green>$id<newline><white>Type: <green>$type"
-    Invalid: "<red>There is no transaction with the ID of $transaction."
-    Unable: "<red>Unable to void that transaction at this time."
-    Voided: "<white>Successfully voided the transaction with the ID of <green>$transaction<white>."
+    Info: "<white>Информация о транзакции:<newline><white>ID: <green>$id<newline><white>Тип: <green>$type"
+    Invalid: "<red>Транзакций с ID $transaction не найдено."
+    Unable: "<red>Не удалось уничтожить эту транзакцию вовремя."
+    Voided: "<white>Транзакция <green>$transaction<white> успешно уничтожена."
   Commands:
     Help:
-      Title: "=====<white> Help for <green>$command</green> Page: <green>$page</green> ====="
+      Title: "=====<white> Помощь для <green>$command</green> Страница: <green>$page</green> ====="
       Entry: "<gold>$command $arguments - <white>$description</white>"
-      Arguments: "[page]"
-      Description: "Command help pages."
+      Arguments: "[страница]"
+      Description: "Станица помощи по командам."
     Admin:
       Backup:
         Arguments: ""
-        Description: "Creates a backup of all server data."
+        Description: "Создает резервную копию данных всего сервера."
       Create:
-        Arguments: "<name> [balance]"
-        Description: "Creates a new non-player economy account.<newline>- name - The name of the account.<newline>- Balance ~ The starting balance of the account."
+        Arguments: "<name> [баланс]"
+        Description: "Создаёт новый неигровой аккаунт.<newline>- имя - Название аккаунта.<newline>- Баланс ~ начальный баланс аккаунта."
       Debug:
         Arguments: ""
-        Description: "Toggles console debug mode."
+        Description: "Переключает консольный режим отладки."
       Delete:
         Arguments: "<player>"
-        Description: "Deletes a player account.<newline>- Player ~ The account owner."
+        Description: "Удаляет аккаунт игрока.<newline>- Игрок ~ владелец аккаунта."
       Extract:
         Arguments: ""
-        Description: "Extracts all player balances with their username attached for database-related debugging."
+        Description: "Извлекает все балансы игроков с их именем прикрепленным к отладке, связанной с базами данных."
       Main:
         Arguments: ""
-        Description: "The main admin command for TNE."
+        Description: "Основная команда администратора для TNE."
       MyEco:
         Arguments: ""
-        Description: "Opens the MyEco menu"
+        Description: "Открывает меню МояЭкономика"
       Purge:
         Arguments: ""
-        Description: "Deletes all player accounts that have the default balance"
+        Description: "Удаляет аккаунта всех игроков, которые имеют стандартный баланс"
       Reload:
-        Arguments: "[configuration]"
-        Description: "Saves modifications made via command, and reloads a configuration file.<newline>- Configuration ~ The identifier of the configuration to reload. Default is all."
+        Arguments: "[конфигурация]"
+        Description: "Сохраняет модификацию, созданную через команду и перезагружает конфигурационный файл.<newline>- Конфигурация ~ идентификатор конфигурации для перезагрузки. По умолчанию все."
       Reset:
         Arguments: ""
-        Description: "Deletes all economy-related data from the database."
+        Description: "Удаляет все данные связанные с экономикой из всех баз данных."
       Restore:
         Arguments: ""
-        Description: "Restores all balances that are located in extracted.yml after /tne extract."
+        Description: "Восстанавливает все балансы находящиеся в файле extracted.yml после /tne extract."
       Save:
         Arguments: ""
-        Description: "Force saves all TNE data."
+        Description: "Принудительно сохраняет все данные TNE."
       Status:
-        Arguments: "<player> [status]"
-        Description: "Displays, or sets, the current account status of an account.<newline>- Player ~ The account owner."
+        Arguments: "<player> [статус]"
+        Description: "Отображает или устанавливает текущий статус аккаунта.<newline>- Игрок ~ Владелец аккаунта."
       Version:
         Arguments: ""
-        Description: "Displays the version of TNE currently running."
+        Description: "Отображает текущую используемую версию TNE."
     Module:
       Available:
-        Arguments: "[url]"
-        Description: "Displays available modules at the specified url, or defaults to TNE's core modules.<newline>- url ~ The url to use for the check, only use if you know what you're doing."
+        Arguments: "[ссылка]"
+        Description: "Отображает доступные модули в указанной ссылке или стандартные модули TNE.<newline>- ссылка ~ Ссылка для проверки, используйте только если Вы знаете, что делаете."
       Download:
-        Arguments: "<name> [url]"
-        Description: "Attempts to download the specified module.<newline>- url ~ The url to use, only use if you know what you're doing, defaults to TNE's core modules url."
+        Arguments: "<name> [ссылка]"
+        Description: "Попытка загрузки указанного модуля.<newline>- ссылка ~ Ссылка для использования, используйте только если Вы знаете, что делаете, стандартный модуль TNE."
       Info:
         Arguments: "<module>"
-        Description: "Displays some information about a module.<newline>- Module ~ The module to look up."
+        Description: "Отображает больше информации о модуле.<newline>- Модуль ~ Модуль для поиска."
       List:
         Arguments: ""
-        Description: "Lists all loaded TNE modules."
+        Description: "Список всех загруженных модулей TNE."
       Load:
         Arguments: "<module>"
-        Description: "Load a module from the modules directory.<newline>- Module ~ The module to load."
+        Description: "Загрузить модуль из каталога модулей.<newline>- Модуль ~ Модуль для загрузки."
     Money:
       Balance:
-        Arguments: "[currency] [region]"
-        Description: "Displays your current holdings."
+        Arguments: "[валюта] [регион]"
+        Description: "Отображает ваши текущие активы."
       Convert:
-        Arguments: "<amount> <to currency> [from currency]"
-        Description: "Convert some of your holdings to another currency."
+        Arguments: "<amount> <to currency> [из валюты]"
+        Description: "Конвертирует некоторые из ваших активов в другую валюту."
       Deposit:
-        Arguments: "<amount> [currency]"
-        Description: "Deposits money from an item form into a virtual bank for mixed currencies."
+        Arguments: "<amount> [валюта]"
+        Description: "Вносит деньги из предмета в виртуальный банк из смешанных валют."
       Give:
-        Arguments: "<player> <amount> [currency] [world]"
-        Description: "Adds money into your economy, and gives it to a player."
+        Arguments: "<player> <amount> [валюта] [мир]"
+        Description: "Добавляет деньги в вашу экономику, и выдает их игроку."
       Note:
-        Arguments: "<amount> [currency]"
-        Description: "Makes your virtual currency physical, for storage/trading purposes."
+        Arguments: "<amount> [валюта]"
+        Description: "Делает вашу валюту физической для хранения/торговли."
       MyBal:
-        Arguments: "[currency]"
-        Description: "Opens the MyBal menu"
+        Arguments: "[валюта]"
+        Description: "Открывает меню МойБаланс"
       Other:
-        Arguments: "<player> [currency] [region]"
-        Description: "Retrieves the balance of a player.<newline>- Player ~ The account owner.<newline>- World ~ The world to retrieve the balance from.<newline>- currency ~ The currency to retrieve the balance of."
+        Arguments: "<player> [валюта] [регион]"
+        Description: "Возвращает баланс игрока.<newline>- Игрок ~ Владелец аккаунта.<newline>- Мир ~ Мир для возвращения баланса.<newline>- Валюта ~ Валюта для возвращения баланса."
       Pay:
-        Arguments: "<player> <amount> [currency]"
-        Description: "Use some of your holdings to pay another player."
+        Arguments: "<player> <amount> [валюта]"
+        Description: "Используйте некоторые из ваших активов для перевода другому игроку."
       Request:
-        Arguments: "<player> <amount> [currency]"
-        Description: "Request money from a player."
+        Arguments: "<player> <amount> [валюта]"
+        Description: "Запросить деньги у игрока."
       Set:
-        Arguments: "<player> <amount> [currency] [world]"
-        Description: "Set the holdings of a player."
+        Arguments: "<player> <amount> [валюта] [мир]"
+        Description: "Установить активы игрока."
       SetAll:
-        Arguments: "<amount> [currency] [world]"
-        Description: "Set the holdings of all players."
+        Arguments: "<amount> [валюта] [мир]"
+        Description: "Установить активы всех игроков."
       Take:
-        Arguments: "<player> <amount> [currency] [world]"
-        Description: "Removes money from your economy, specifically from a player's balance."
+        Arguments: "<player> <amount> [валюта] [мир]"
+        Description: "Удаляет деньги из вашей экономики, в частности с баланса игрока."
       Top:
-        Arguments: "[page] [currency] [world] [limit]"
-        Description: "A list of players with the highest balances.<newline>[page] - The page number to view. Defaults to 1.<newline>[Currency] - The name of the Currency to get balances from. Defaults to world default. Use overall for all currencies.<newline>[world] - The world name you wish to filter, or all for every world. Defaults to current world. Use overall for all worlds.<newline>[limit] - Limit changes how many players are displayed. Defaults to 10."
+        Arguments: "[страница] [валюта] [мир] [лимит]"
+        Description: "Список игроков с наибольшим балансом.<newline>[страница] - Номер страницы для просмотра. По умолчанию - 1.<newline>[Валюта] - Название Валюты для получения балансов. По умолчанию - та же что и в мире. Используйте для всех валют.<newline>[мир] - Имя мира которое вы хотите отфильтровать, для всех миров. По умолчанию - текущий мир. Используйте для всех миров.<newline>[лимит] - Лимит изменяет, сколько игроков отображать. По умолчанию - 10."
       Withdraw:
-        Arguments: "<amount> [currency]"
-        Description: "Withdraws money from your virtual balance into its item form."
+        Arguments: "<amount> [валюта]"
+        Description: "Вывести деньги из Вашего виртуального баланса в предметную форму."
     Transaction:
       Away:
-        Arguments: "[page #]"
-        Description: "Displays transactions that you missed since the last time you were on."
+        Arguments: "[страница #]"
+        Description: "Отображает транзакции, которые вы пропустили с вашего последнего захода на сервер."
       History:
-        Arguments: "[page] [world] [player]"
-        Description: "See a detailed break down of your transaction history.<newline>- Page ~ The page number you wish to view.<newline>- World ~ The world name you wish to filter, or all for every world. Defaults to current world."
+        Arguments: "[страница] [мир] [игрок]"
+        Description: "Посмотреть подробную историю ваших транзакций.<newline>- Страница ~ Номер страницы, которую Вы хотите увидеть.<newline>- Мир ~ Имя мира, которое Вы хотите отфильтровать, или для всех миров. По умолчанию - этот мир."
       Info:
         Arguments: "<uuid>"
         Description: "Отображает информацию о транзакции.<newline>- UUID ~ id транзакции."
