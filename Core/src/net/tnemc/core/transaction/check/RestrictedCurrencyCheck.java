@@ -77,7 +77,8 @@ public class RestrictedCurrencyCheck implements TransactionCheck {
       final Optional<Currency> currency = TNECore.eco().currency().findCurrency(modifier.getCurrency());
       final Optional<PlayerProvider> provider = player.getPlayer();
 
-      if(currency.isPresent() && provider.isPresent() && provider.get().hasPermission("tne.money.restricted." + currency.get().getIdentifier())) {
+      if(currency.isPresent() && provider.isPresent() && !provider.get().hasPermission("tne.restricted.ignore")
+              && provider.get().hasPermission("tne.money.restricted." + currency.get().getIdentifier())) {
         return HoldingsResponse.RESTRICTED;
       }
     }

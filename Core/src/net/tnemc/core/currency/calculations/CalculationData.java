@@ -98,13 +98,13 @@ public class CalculationData<I> {
 
     if(contains == amount) {
       inventoryMaterials.remove(denomination.weight());
-      PluginCore.log().debug("CalculationData - removeMaterials - equals: Everything equals, remove all materials.", DebugLevel.DEVELOPER);
+      PluginCore.log().debug("CalculationData - removeMaterials - equals: Everything equals, remove all materials. Weight: " + denomination.weight(), DebugLevel.DEVELOPER);
       PluginCore.server().calculations().removeAll((AbstractItemStack<Object>)stack, inventory);
       return;
     }
 
     final int left = contains - amount;
-    PluginCore.log().debug("CalculationData - removeMaterials - left: " + left, DebugLevel.DEVELOPER);
+    PluginCore.log().debug("CalculationData - removeMaterials - left: " + left + "Weight: " + denomination.weight(), DebugLevel.DEVELOPER);
     inventoryMaterials.put(denomination.weight(), left);
     final AbstractItemStack<?> stackClone = stack.amount(amount);
     PluginCore.server().calculations().removeItem((AbstractItemStack<Object>)stackClone, inventory);
@@ -122,6 +122,8 @@ public class CalculationData<I> {
 
       dropped = true;
     }
+
+    PluginCore.log().debug("Weight: " + denomination.weight() + " - Amount: " + amount, DebugLevel.DETAILED);
 
     inventoryMaterials.put(denomination.weight(), contains);
   }

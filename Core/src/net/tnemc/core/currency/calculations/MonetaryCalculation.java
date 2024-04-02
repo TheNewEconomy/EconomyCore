@@ -146,7 +146,7 @@ public class MonetaryCalculation {
 
 
     // Get the entry with the smallest key greater than the given amount
-    final Map.Entry<BigDecimal, Integer> higherEntry = inventoryMaterials.ceilingEntry(amount);
+    final Map.Entry<BigDecimal, Integer> higherEntry = inventoryMaterials.higherEntry(amount);
 
     if(higherEntry == null) {
       return new HashMap<>();
@@ -216,6 +216,7 @@ public class MonetaryCalculation {
    * @param toAdd the map containing the values to add
    */
   private void combineMaps(Map<BigDecimal, Integer> exist, Map<BigDecimal, Integer> toAdd) {
+
 
     // Iterate through the toAdd map
     for(Map.Entry<BigDecimal, Integer> entry : toAdd.entrySet()) {
