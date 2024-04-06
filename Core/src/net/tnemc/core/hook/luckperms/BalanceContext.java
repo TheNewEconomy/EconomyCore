@@ -40,6 +40,7 @@ public class BalanceContext {
 
   public void calculate(@NonNull UUID uuid, @NonNull ContextConsumer contextConsumer) {
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid);
+    System.out.println("Luck hook called.");
 
     if(account.isPresent()) {
 

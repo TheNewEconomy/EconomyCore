@@ -33,6 +33,6 @@ public class LuckPermsHook {
 
   public static void register() {
     final Optional<ServiceRegistration<LuckPerms>> provider = Sponge.serviceProvider().registration(LuckPerms.class);
-    provider.ifPresent(luckPermsServiceRegistration->luckPermsServiceRegistration.service().getContextManager().registerCalculator(new LuckBalanceContext()));
+    //provider.ifPresent(luckPermsServiceRegistration->luckPermsServiceRegistration.service().getContextManager().registerCalculator(new LuckBalanceContext()));
   }
 }

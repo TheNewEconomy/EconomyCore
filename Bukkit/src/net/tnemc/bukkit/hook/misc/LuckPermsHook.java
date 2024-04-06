@@ -31,7 +31,7 @@ public class LuckPermsHook {
   public static void register() {
     final LuckPerms luckAPI = Bukkit.getServer().getServicesManager().load(LuckPerms.class);
     if(luckAPI != null) {
-      luckAPI.getContextManager().registerCalculator(new LuckBalanceContext());
+      //luckAPI.getContextManager().registerCalculator(new LuckBalanceContext());
     }
   }
 }
