@@ -63,7 +63,7 @@ public class BukkitPlugin {
     this.pluginCore = new ModifiedBukkitPluginCore(plugin, core, server, new BaseTranslationProvider(), new TNECallbackProvider());
 
     //Vault
-    System.out.println("Checking for Vault");
+    PluginCore.log().inform("Checking for Vault");
     try {
       Class.forName("net.milkbowl.vault.economy.Economy");
       new VaultHook().register();
