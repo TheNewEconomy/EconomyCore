@@ -19,12 +19,7 @@ package net.tnemc.folia.impl;
  */
 
 import com.destroystokyo.paper.profile.PlayerProfile;
-import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.object.Resident;
-import com.palmergames.bukkit.towny.object.Town;
 import net.tnemc.bukkit.BukkitCore;
-import net.tnemc.core.TNECore;
 import net.tnemc.folia.impl.scheduler.FoliaScheduler;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.bukkit.BukkitCalculationsProvider;
@@ -47,7 +42,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 import revxrsal.commands.command.CommandActor;
 

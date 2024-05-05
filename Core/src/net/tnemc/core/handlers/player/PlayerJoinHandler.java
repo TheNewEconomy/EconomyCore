@@ -30,7 +30,6 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.transaction.history.AwayHistory;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;
-import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.plugincore.core.compatibility.scheduler.ChoreExecution;
 import net.tnemc.plugincore.core.compatibility.scheduler.ChoreTime;
 import net.tnemc.plugincore.core.id.UUIDPair;

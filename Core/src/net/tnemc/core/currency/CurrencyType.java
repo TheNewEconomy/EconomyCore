@@ -19,7 +19,6 @@ package net.tnemc.core.currency;
  */
 
 import net.tnemc.core.EconomyManager;
-import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsHandler;

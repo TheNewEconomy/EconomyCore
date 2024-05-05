@@ -45,6 +45,7 @@ import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.hook.treasury.TreasuryHook;
 import net.tnemc.core.io.yaml.YamlStorageManager;
+import net.tnemc.core.manager.Updater;
 import net.tnemc.core.region.RegionGroup;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.plugincore.PluginCore;
@@ -58,7 +59,6 @@ import net.tnemc.plugincore.core.io.message.MessageHandler;
 import net.tnemc.plugincore.core.io.storage.Datable;
 import net.tnemc.plugincore.core.io.storage.StorageManager;
 import net.tnemc.plugincore.core.io.storage.engine.StorageSettings;
-import net.tnemc.plugincore.core.utils.UpdateChecker;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import revxrsal.commands.command.CommandActor;
@@ -86,13 +86,15 @@ public abstract class TNECore extends PluginEngine {
    */
   public static final String coreURL = "https://tnemc.net/files/module-version.xml";
 
-  public static final String version = "0.1.2.8";
-  public static final String build = "Pre-6";
+  public static final String version = "0.1.3.0";
+  public static final String build = "Pre-1";
 
   /* Key Managers and Object instances utilized with TNE */
 
   //General Key Object Instances
   protected EconomyManager economyManager;
+
+  protected Updater updater;
 
   protected YamlStorageManager yamlManager = new YamlStorageManager();
 
@@ -106,6 +108,11 @@ public abstract class TNECore extends PluginEngine {
 
   public TNECore() {
     instance = this;
+  }
+
+  @Override
+  public String versionCheckSite() {
+    return "https://tnemc.net/files/tnebuild.txt";
   }
 
   @Override
@@ -214,12 +221,18 @@ public abstract class TNECore extends PluginEngine {
   @Override
   public void registerUpdateChecker() {
     if(MainConfig.yaml().getBoolean("Core.Update.Check")) {
-      this.updateChecker = new UpdateChecker();
+      this.updateChecker = new Updater();
+
+      PluginCore.log().inform("Running version: " + version() + " Build: " + build());
 
       PluginCore.log().inform("Build Stability: " + this.updateChecker.stable());
 
       if(this.updateChecker.needsUpdate()) {
         PluginCore.log().inform("Update Available! Latest: " + this.updateChecker.getBuild());
+      }
+
+      if(this.updateChecker.isEarlyBuild()) {
+        PluginCore.log().inform("Running pre-release version! Thanks for being a tester!");
       }
     }
   }
