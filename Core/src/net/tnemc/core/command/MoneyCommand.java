@@ -336,7 +336,11 @@ public class MoneyCommand extends BaseCommand {
   public static void onOther(CmdSource<?> sender, Account account, String region, Currency currency) {
 
     final Optional<PlayerProvider> player = sender.player();
-    if(EconomyManager.limitCurrency() && player.isPresent()) {
+    final Optional<UUID> senderID = sender.identifier();
+
+    final boolean other = (senderID.isPresent() && !senderID.get().toString().equals(account.getIdentifier()));
+
+    if(EconomyManager.limitCurrency() && player.isPresent() && other) {
       if(!player.get().hasPermission("tne.money.other." + currency.getIdentifier())) {
         final MessageData data = new MessageData("Messages.Account.BlockedAction");
         data.addReplacement("$action", "balance check other");
