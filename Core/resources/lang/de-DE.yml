@@ -52,11 +52,11 @@ Messages:
     BlockedAction: "<red>You don't have permission to perform the action \"$action\" with currency \"$currency\"!"
   Data:
     Backup: "<gold>Successfully backed up database!"
-    BackupFailed: "<red>The database backup failed!"
-    Debug: "<green>Debug level has been set to $level."
-    Save: "<green>Saved all TNE data."
+    BackupFailed: "<red>Die Datenbanksicherung ist fehlgeschlagen!"
+    Debug: "<green>Debuglevel wurde auf $level gesetzt."
+    Save: "<green>Alle TNE Daten gespeichert."
   Module:
-    AvailableHeader: "=== Modules Available at $url ==="
+    AvailableHeader: "=== Module, die bei $url verfügbar sind ==="
     AvailableEntry: "$module ~ $version"
     Downloaded: "$module has been downloaded successfully."
     FailedDownload: "$module couldn't be downloaded successfully."
