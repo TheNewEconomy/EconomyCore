@@ -17,7 +17,7 @@ Messages:
     InvalidAmount: "<red>Ungültige Artikelmenge eingegeben."
   Admin:
     NoHoldings: "<red>$player hat keine Holdings für die Welt '$world'!"
-    Reloaded: "<yellow>Reloaded configuration type of: $type"
+    Reloaded: "<yellow>Konfigurationstyp: $type neu geladen."
     Holdings: "<white>$player hat zur Zeit <gold>$amount <white>für die Welt '$world'!"
     NoTransactions: "<white>$player hat keine Transaktionen anzuzeigen."
     Configuration: "<white>Der Wert von $node ist derzeit $value."
@@ -36,13 +36,13 @@ Messages:
     Extraction: "<white>Extraktion gestartet. Bitte beobachte die Konsole zur Vervollständigungsbestätigung."
     Restoration: "<white>Restoration has started. Please watch console for completion confirmation."
   Account:
-    NoSuch: "<red>Unable to locate your account!"
+    NoSuch: "<red>Dein Account konnte nicht gefunden werden!"
     NoHoldings: "<red>You have no holdings for the currency '$currency'."
     PinSetAlready: "<red>You have already set a pin, please provide the old pin to set a new one."
-    PinSet: "<white>Your pin has been set to $pin."
-    PinReset: "<white>The pin of $player has been reset."
-    PinMax: "<red>Pins must be fewer than 60 characters."
-    PinIncorrect: "<red>Pin given is incorrect."
+    PinSet: "<white>Deine Pin wurde auf $pin gesetzt."
+    PinReset: "<white>Die Pin von $player wurde zurückgesetzt."
+    PinMax: "<red>Pins müssen kleiner als 60 Zeichen sein."
+    PinIncorrect: "<red>Die angegebene Pin ist falsch."
     PinInvalid: "<red>Pin requested is invalid."
     Locked: "<red>You can't do that with a locked account($player)!"
     ReceiveLock: "<red>The specified account is locked from receiving funds!"
@@ -52,11 +52,11 @@ Messages:
     BlockedAction: "<red>You don't have permission to perform the action \"$action\" with currency \"$currency\"!"
   Data:
     Backup: "<gold>Successfully backed up database!"
-    BackupFailed: "<red>The database backup failed!"
-    Debug: "<green>Debug level has been set to $level."
-    Save: "<green>Saved all TNE data."
+    BackupFailed: "<red>Die Datenbanksicherung ist fehlgeschlagen!"
+    Debug: "<green>Debuglevel wurde auf $level gesetzt."
+    Save: "<green>Alle TNE Daten gespeichert."
   Module:
-    AvailableHeader: "=== Modules Available at $url ==="
+    AvailableHeader: "=== Module, die bei $url verfügbar sind ==="
     AvailableEntry: "$module ~ $version"
     Downloaded: "$module has been downloaded successfully."
     FailedDownload: "$module couldn't be downloaded successfully."
@@ -244,18 +244,18 @@ Messages:
         Arguments: "[page] [currency] [world] [limit]"
         Description: "A list of players with the highest balances.<newline>[page] - The page number to view. Defaults to 1.<newline>[Currency] - The name of the Currency to get balances from. Defaults to world default. Use overall for all currencies.<newline>[world] - The world name you wish to filter, or all for every world. Defaults to current world. Use overall for all worlds.<newline>[limit] - Limit changes how many players are displayed. Defaults to 10."
       Withdraw:
-        Arguments: "<amount> [currency]"
-        Description: "Withdraws money from your virtual balance into its item form."
+        Arguments: "<amount> [Währung]"
+        Description: "Zieht Geld aus der virtuellen Form ab und verwandelt sie in Items."
     Transaction:
       Away:
-        Arguments: "[page #]"
-        Description: "Displays transactions that you missed since the last time you were on."
+        Arguments: "[Seite #]"
+        Description: "Zeigt Transaktionen, die Sie seit dem letzten Mal verpasst haben."
       History:
-        Arguments: "[page] [world] [player]"
-        Description: "See a detailed break down of your transaction history.<newline>- Page ~ The page number you wish to view.<newline>- World ~ The world name you wish to filter, or all for every world. Defaults to current world."
+        Arguments: "[Seite] [Welt] [Spieler]"
+        Description: "Sehen Sie eine detaillierte Aufschlüsselung Ihres Transaktionsverlaufs.<newline>- Seite ~ Die Seitennummer, die Sie ansehen möchten.<newline>- Welt ~ Der Name der Welt, welche du filtern möchtest, oder all für jede Welt. Standard ist die aktuelle Welt."
       Info:
         Arguments: "<uuid>"
-        Description: "Displays information about a transaction.<newline>- UUID ~ The id of the transaction."
+        Description: "Zeigt Informationen über eine Transaktion an.<newline>- UUID ~ Die ID der Transaktion."
       Void:
         Arguments: "<uuid>"
-        Description: "Undoes a previously completed transaction.<newline>- UUID ~ The id of the transaction."
+        Description: "Löscht eine zuvor abgeschlossene Transaktion.<newline>- UUID ~ Die ID der Transaktion."
