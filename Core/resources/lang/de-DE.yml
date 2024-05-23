@@ -97,7 +97,6 @@ Messages:
     ConvertSame: "<red>You can't convert a currency into itself."
     Top: "<white>=====[<gold>Economy Top<white>]===== $page/$page_top"
     TopEntry: "<white>$player has $amount"
-    PlaceholderTopEntry: "$toppos - $account"
     InvalidFormat: "<red>I'm sorry, but the monetary value you've entered is wrong."
     ExceedsCurrencyMaximum: "<red>I'm sorry, but the monetary value you've entered exceeds the maximum possible balance."
     ExceedsPlayerMaximum: "<red>I'm sorry, but performing this transaction will place your balance over the maximum allowed."
