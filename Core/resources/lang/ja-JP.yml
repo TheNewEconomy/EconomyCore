@@ -97,7 +97,6 @@ Messages:
     ConvertSame: "<red>通貨をその通貨自身に交換することはできません。"
     Top: "<white>=====[<gold>経済ランキング<white>]=====$page/$page_top"
     TopEntry: "<white>$player : $amount"
-    PlaceholderTopEntry: "$toppos - $account"
     InvalidFormat: "<red>入力された金額が間違っています。"
     ExceedsCurrencyMaximum: "<red>入学された金額は最大額を超えています。"
     ExceedsPlayerMaximum: "<red>この取引を実行すると残高の許容金額を超えます。"
