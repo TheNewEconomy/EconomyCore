@@ -23,6 +23,7 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.manager.top.TopCurrency;
 import net.tnemc.core.manager.top.TopPage;
 import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.io.message.MessageData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +88,19 @@ public class TopManager {
       return topMap.get(currency).getBalances().getValues(positionToPage(position)).getAt(internalPos);
     }
     return "";
+  }
+
+  public MessageData getFor(final int position, final UUID currency) {
+    if(topMap.containsKey(currency)) {
+      final int internalPos = (position % 5 == 0)? 5 : position % 5;
+
+
+      return topMap.get(currency).getBalances().getValues(positionToPage(position)).getFor(internalPos);
+    }
+    final MessageData data = new MessageData("Messages.Money.PlaceholderTopEntry");
+    data.addReplacement("$toppos", String.valueOf(position));
+    data.addReplacement("$account", "no one");
+    return data;
   }
 
   public int positionToPage(final int position) {

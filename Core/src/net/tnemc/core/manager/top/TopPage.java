@@ -17,6 +17,8 @@ package net.tnemc.core.manager.top;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.plugincore.core.io.message.MessageData;
+
 import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -57,6 +59,31 @@ public class TopPage<V> {
       i++;
     }
     return (V)"no one";
+  }
+
+  public MessageData getFor(final int pos) {
+
+    final MessageData data = new MessageData("Messages.Money.PlaceholderTopEntry");
+    data.addReplacement("$toppos", String.valueOf(pos));
+    data.addReplacement("$account", "no one");
+
+    if(pos > values.size()) {
+      return data;
+    }
+
+    final Iterator<Map.Entry<V, BigDecimal>> it = values.entrySet().iterator();
+
+    int i = 0;
+    while(it.hasNext()) {
+      if(pos - 1 == i) {
+        data.addReplacement("$account", (String)it.next().getKey());
+        return data;
+      }
+
+      it.next();
+      i++;
+    }
+    return data;
   }
 
   public int getPage() {

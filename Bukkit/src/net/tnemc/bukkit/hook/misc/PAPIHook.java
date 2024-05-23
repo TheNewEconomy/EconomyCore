@@ -26,6 +26,7 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.utils.Identifier;
 import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.io.message.MessageHandler;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -216,7 +217,8 @@ public class PAPIHook extends PlaceholderExpansion {
 
           //%tne_toppos[0]_<currency name>[1]_position[2]_<pos>[3]%
           pos = Integer.parseInt(args[3]);
-          return TNECore.eco().getTopManager().getAt(pos, curID);
+          return MessageHandler.grab(TNECore.eco().getTopManager().getFor(pos, curID), player.getUniqueId()).toString();
+
 
         } else {
 
