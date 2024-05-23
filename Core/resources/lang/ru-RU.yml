@@ -97,6 +97,7 @@ Messages:
     ConvertSame: "<red>Вы не можете конвертировать валюту в саму себя."
     Top: "<white>=====[<gold>Топ экономики<white>]===== $page/$page_top"
     TopEntry: "<white>Игрок $player имеет $amount"
+    PlaceholderTopEntry: "$toppos - $account"
     InvalidFormat: "<red>Извините, введенное денежное значение неверно."
     ExceedsCurrencyMaximum: "<red>Извините, введенное вами денежное значение превышает максимально возможное значение баланса."
     ExceedsPlayerMaximum: "<red>Извините, выполнение этой транзакции сделает ваш баланс больше разрешенного значения."
