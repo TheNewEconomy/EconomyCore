@@ -42,7 +42,7 @@ public class ItemCalculations<I> {
       final int amount = data.getInventoryMaterials().getOrDefault(entry.getKey(), 0);
 
       if(amount > 0) {
-        holdings = holdings.add(entry.getKey().multiply(new BigDecimal("" + amount)));
+        holdings = holdings.add(entry.getKey().multiply(new BigDecimal(amount)));
       }
     }
     return holdings;

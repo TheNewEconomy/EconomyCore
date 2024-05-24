@@ -33,6 +33,7 @@ public enum TNECallbacks {
   ACCOUNT_DELETE("account_delete"),
   TRANSACTION_PRE("transaction_pre"),
   TRANSACTION_POST("transaction_post"),
+  CURRENCY_DROP("currency_drop"),
   CURRENCY_LOAD("currency_load"),
   DENOMINATION_LOAD("denomination_load");
 

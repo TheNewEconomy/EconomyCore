@@ -19,6 +19,8 @@ package net.tnemc.core.currency.calculations;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.api.callback.currency.CurrencyDropCallback;
+import net.tnemc.core.api.callback.currency.CurrencyLoadCallback;
 import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
@@ -117,10 +119,18 @@ public class CalculationData<I> {
     final Collection<AbstractItemStack<Object>> left = PluginCore.server().calculations().giveItems(Collections.singletonList((AbstractItemStack<Object>)stack), inventory);
 
     if(left.size() > 0) {
-      contains = contains - left.stream().findFirst().get().amount();
-      failedDrop = PluginCore.server().calculations().drop(left, player);
 
-      dropped = true;
+      final CurrencyDropCallback currencyDrop = new CurrencyDropCallback(player, currency, left);
+      if(PluginCore.callbacks().call(currencyDrop)) {
+        PluginCore.log().error("Cancelled currency drop through callback.", DebugLevel.OFF);
+
+      } else {
+
+        contains = contains - left.stream().findFirst().get().amount();
+        failedDrop = PluginCore.server().calculations().drop(left, player);
+
+        dropped = true;
+      }
     }
 
     PluginCore.log().debug("Weight: " + denomination.weight() + " - Amount: " + amount, DebugLevel.DETAILED);
