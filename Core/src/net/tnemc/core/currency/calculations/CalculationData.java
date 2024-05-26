@@ -19,12 +19,14 @@ package net.tnemc.core.currency.calculations;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.api.callback.currency.CurrencyDropCallback;
 import net.tnemc.core.api.callback.currency.CurrencyLoadCallback;
 import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.item.AbstractItemStack;
+import net.tnemc.item.InventoryType;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 
@@ -33,6 +35,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
 import java.util.UUID;
 
@@ -95,6 +98,7 @@ public class CalculationData<I> {
   }
 
   public void removeMaterials(Denomination denomination, Integer amount) {
+
     final AbstractItemStack<?> stack = TNECore.instance().denominationToStack((ItemDenomination)denomination);
     final int contains = inventoryMaterials.getOrDefault(denomination.weight(), 0);
 
@@ -120,7 +124,24 @@ public class CalculationData<I> {
 
     if(left.size() > 0) {
 
-      final CurrencyDropCallback currencyDrop = new CurrencyDropCallback(player, currency, left);
+      final Optional<PlayerAccount> account = TNECore.eco().account().findPlayerAccount(player);
+      if(account.isPresent()) {
+        final Collection<AbstractItemStack<Object>> enderLeft = PluginCore.server().calculations().giveItems(left, account.get().getPlayer().get().inventory().getInventory(true));
+
+        if(enderLeft.size() > 0) {
+
+          contains = contains - enderLeft.stream().findFirst().get().amount();
+
+          drop(enderLeft);
+        }
+      } else {
+
+        contains = contains - left.stream().findFirst().get().amount();
+
+        drop(left);
+      }
+
+      /*final CurrencyDropCallback currencyDrop = new CurrencyDropCallback(player, currency, left);
       if(PluginCore.callbacks().call(currencyDrop)) {
         PluginCore.log().error("Cancelled currency drop through callback.", DebugLevel.OFF);
 
@@ -130,12 +151,25 @@ public class CalculationData<I> {
         failedDrop = PluginCore.server().calculations().drop(left, player);
 
         dropped = true;
-      }
+      }*/
     }
 
     PluginCore.log().debug("Weight: " + denomination.weight() + " - Amount: " + amount, DebugLevel.DETAILED);
 
     inventoryMaterials.put(denomination.weight(), contains);
+  }
+
+  public void drop(final Collection<AbstractItemStack<Object>> toDrop) {
+    final CurrencyDropCallback currencyDrop = new CurrencyDropCallback(player, currency, toDrop);
+    if(PluginCore.callbacks().call(currencyDrop)) {
+      PluginCore.log().error("Cancelled currency drop through callback.", DebugLevel.STANDARD);
+
+    } else {
+
+      failedDrop = PluginCore.server().calculations().drop(toDrop, player);
+
+      dropped = true;
+    }
   }
 
   public boolean isDropped() {

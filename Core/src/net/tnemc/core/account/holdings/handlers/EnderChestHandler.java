@@ -78,6 +78,7 @@ public class EnderChestHandler implements HoldingsHandler {
    */
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, CurrencyType type, BigDecimal amount) {
+
     account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, identifier()));
 
     if(account.isPlayer() && PluginCore.server().online(account.getIdentifier()) && !TNECore.eco().account().getImporting().contains(((PlayerAccount)account).getUUID().toString())) {

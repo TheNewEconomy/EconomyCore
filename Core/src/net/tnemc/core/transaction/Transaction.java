@@ -265,6 +265,9 @@ public class Transaction {
       PluginCore.log().debug("entry bal: " + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
       PluginCore.log().debug("entry bal: " + entry.getRegion(), DebugLevel.DEVELOPER);
 
+      //TODO Test this.
+      if(done) break;
+
       if(!done) {
         if(!take) {
 
