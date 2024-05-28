@@ -106,6 +106,8 @@ Messages:
     ExceedsOtherPlayerMinimum: "<red>I'm sorry, but performing this transaction will place the $player's balance under the minimum allowed."
     RequestSender: "<green>あなたは<white>$player<green>に$amountのリクエストを送りました。"
     Request: "<white>あなたは<green>$player<white>から<gold>$amount<white>のリクエストを受け取りました。<click:run_command:/money pay $player $amount $currency><green><underlined>クリックで送金する!</click>"
+    EnderChest: "<red>Some funds were put in your ender chest because your inventory was full!"
+    Dropped: "<red>Some funds were dropped on the ground because your inventory was full!"
   Currency:
     Sure: "<red>通貨 $currencyを削除してもいいですか? 続行するには \"confirm\" を入力し、削除しない場合は何も入力しないでください。"
     Only: "<red>ロードされている通貨が1つしかないため削除することができませんでした。"
