@@ -33,6 +33,7 @@ import java.util.Optional;
 public class ItemCurrency extends Currency {
 
   protected boolean enderChest;
+  protected boolean enderFill;
 
   public Optional<ItemDenomination> getDenominationByMaterial(final String material) {
     for(Denomination denom : getDenominations().values()) {
@@ -51,5 +52,13 @@ public class ItemCurrency extends Currency {
 
   public void setEnderChest(boolean enderChest) {
     this.enderChest = enderChest;
+  }
+
+  public boolean isEnderFill() {
+    return enderFill;
+  }
+
+  public void setEnderFill(boolean enderFill) {
+    this.enderFill = enderFill;
   }
 }

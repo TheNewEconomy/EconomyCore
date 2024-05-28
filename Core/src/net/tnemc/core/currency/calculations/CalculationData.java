@@ -29,6 +29,7 @@ import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.InventoryType;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
+import net.tnemc.plugincore.core.io.message.MessageData;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -122,36 +123,27 @@ public class CalculationData<I> {
     final AbstractItemStack<?> stack = TNECore.instance().denominationToStack((ItemDenomination)denomination).amount(amount);
     final Collection<AbstractItemStack<Object>> left = PluginCore.server().calculations().giveItems(Collections.singletonList((AbstractItemStack<Object>)stack), inventory);
 
-    if(left.size() > 0) {
 
-      final Optional<PlayerAccount> account = TNECore.eco().account().findPlayerAccount(player);
-      if(account.isPresent()) {
+    final Optional<PlayerAccount> account = TNECore.eco().account().findPlayerAccount(player);
+    if(left.size() > 0 && account.isPresent()) {
+
+      if(currency.isEnderFill()) {
         final Collection<AbstractItemStack<Object>> enderLeft = PluginCore.server().calculations().giveItems(left, account.get().getPlayer().get().inventory().getInventory(true));
 
         if(enderLeft.size() > 0) {
 
           contains = contains - enderLeft.stream().findFirst().get().amount();
+          final MessageData messageData = new MessageData("Messages.Money.EnderChest");
+          account.get().getPlayer().ifPresent(player->player.message(messageData));
 
-          drop(enderLeft);
+          drop(enderLeft, account.get());
         }
       } else {
 
         contains = contains - left.stream().findFirst().get().amount();
 
-        drop(left);
+        drop(left, account.get());
       }
-
-      /*final CurrencyDropCallback currencyDrop = new CurrencyDropCallback(player, currency, left);
-      if(PluginCore.callbacks().call(currencyDrop)) {
-        PluginCore.log().error("Cancelled currency drop through callback.", DebugLevel.OFF);
-
-      } else {
-
-        contains = contains - left.stream().findFirst().get().amount();
-        failedDrop = PluginCore.server().calculations().drop(left, player);
-
-        dropped = true;
-      }*/
     }
 
     PluginCore.log().debug("Weight: " + denomination.weight() + " - Amount: " + amount, DebugLevel.DETAILED);
@@ -159,7 +151,7 @@ public class CalculationData<I> {
     inventoryMaterials.put(denomination.weight(), contains);
   }
 
-  public void drop(final Collection<AbstractItemStack<Object>> toDrop) {
+  public void drop(final Collection<AbstractItemStack<Object>> toDrop, PlayerAccount account) {
     final CurrencyDropCallback currencyDrop = new CurrencyDropCallback(player, currency, toDrop);
     if(PluginCore.callbacks().call(currencyDrop)) {
       PluginCore.log().error("Cancelled currency drop through callback.", DebugLevel.STANDARD);
@@ -167,6 +159,9 @@ public class CalculationData<I> {
     } else {
 
       failedDrop = PluginCore.server().calculations().drop(toDrop, player);
+
+      final MessageData messageData = new MessageData("Messages.Money.Dropped");
+      account.getPlayer().ifPresent(player->player.message(messageData));
 
       dropped = true;
     }

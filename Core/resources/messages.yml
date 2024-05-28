@@ -114,6 +114,9 @@ Messages:
     ExceedsOtherPlayerMinimum: "<red>I'm sorry, but performing this transaction will place the $player's balance under the minimum allowed."
     RequestSender: "<green>You have sent a request to <white>$player <green> for $amount."
     Request: "<white>You have received a money request from <green>$player<white> for <gold>$amount<white>! <click:run_command:/money pay $player $amount $currency><green><underlined>Click to send them the funds!</click>"
+    EnderChest: "<red>Some funds were put in your ender chest because your inventory was full!"
+    Dropped: "<red>Some funds were dropped on the ground because your inventory was full!"
+
 
   Currency:
     Sure: "<red>Are you sure that you want to delete currency $currency? Type \"confirm\" to delete, or anything else to not delete."

@@ -132,6 +132,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     //Load our item-back currency configurations.
     if(currency instanceof ItemCurrency item) {
       cur.set("Item.EnderChest", item.canEnderChest());
+      cur.set("Item.EnderFill", item.isEnderFill());
     }
 
     //Load our note configurations.
