@@ -106,6 +106,8 @@ Messages:
     ExceedsOtherPlayerMinimum: "<red>Извините, выполнение этой транзакции сделает баланс игрока $player меньше допустимого значения."
     RequestSender: "<green>Вы запросили $amount у игрока <white>$player<green>."
     Request: "<white>Вы получили запрос средств от <green>$player<white> в размере <gold>$amount<white>!<click:run_command:/money pay $player $amount $currency><green><underlined> Нажмите для перевода!</click>"
+    EnderChest: "<red>Some funds were put in your ender chest because your inventory was full!"
+    Dropped: "<red>Some funds were dropped on the ground because your inventory was full!"
   Currency:
     Sure: "<red>Вы уверены, что хотите удалить валюту $currency? Введите \"confirm\" для удаления, или что-либо другое для отмены."
     Only: "<red>Вы не можете удалить единственную загруженную валюту."
