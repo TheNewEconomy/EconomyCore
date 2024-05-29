@@ -133,10 +133,12 @@ public class CalculationData<I> {
         if(enderLeft.size() > 0) {
 
           contains = contains - enderLeft.stream().findFirst().get().amount();
-          final MessageData messageData = new MessageData("Messages.Money.EnderChest");
-          account.get().getPlayer().ifPresent(player->player.message(messageData));
 
           drop(enderLeft, account.get());
+        } else {
+
+          final MessageData messageData = new MessageData("Messages.Money.EnderChest");
+          account.get().getPlayer().ifPresent(player->player.message(messageData));
         }
       } else {
 
