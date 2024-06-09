@@ -24,8 +24,13 @@ import net.tnemc.menu.core.Menu;
 import net.tnemc.menu.core.Page;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.builder.PageBuilder;
+import net.tnemc.menu.core.icon.action.impl.ChatAction;
+import net.tnemc.menu.core.icon.action.impl.DataAction;
+import net.tnemc.menu.core.icon.action.impl.RunnableAction;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
 import net.tnemc.plugincore.PluginCore;
+
+import java.util.Collections;
 
 /**
  * MyEcoMenu
@@ -44,6 +49,7 @@ public class MyEcoMenu extends Menu {
             new IconBuilder(PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
                     .display("Currencies"))
                     .withActions(new SwitchPageAction("my_eco",2))
+                    .withSlot(2)
                     .build()
     ).build();
     pages.put(1, main);
@@ -52,16 +58,59 @@ public class MyEcoMenu extends Menu {
     //~displays all currencies; right click to edit
     final Page currency = new PageBuilder(2).build();
 
+    //add currency
+    currency.addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
+            .lore(Collections.singletonList("Click to add currency")))
+            .withActions(new SwitchPageAction("my_eco", 3))
+            .withSlot(2)
+            .build());
+
+    int i = 19;
     for(final Currency curObj : TNECore.eco().currency().currencies()) {
 
-      currency.addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(curObj.getIconMaterial(), 1))
-              .withActions(new SwitchPageAction("my_eco", 3))
-              .withConstraint(TNEStringConstraints.CURRENCY_UUID, curObj.getUid().toString())
+      currency.addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(curObj.getIconMaterial(), 1)
+                                           .lore(Collections.singletonList("Click to edit currency")))
+              .withActions(new SwitchPageAction("my_eco", 3), new DataAction("CURRENCY_UUID", curObj.getUid().toString()))
+              .withSlot(i)
               .build());
+
+      i += 2;
     }
     pages.put(2, currency);
 
     final Page currencyEditor = new PageBuilder(3).build();
+
+    //denominations
+    currencyEditor.addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
+            .display("Edit Denominations"))
+            .withSlot(19)
+            .withActions(new SwitchPageAction("my_eco", 4))
+            .build());
+
+    //currency name icon
+    currencyEditor.addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("SIGN", 1)
+                    .lore(Collections.singletonList("Click to set name of currency.")))
+                    .withSlot(21)
+                    .withActions(new ChatAction((message)->{
+
+                      if(message.getPlayer().viewer().isPresent()) {
+                        message.getPlayer().viewer().get().addData("CURRENCY_NAME", message.getMessage());
+                        return true;
+                      }
+                      message.getPlayer().message("Enter a name for the currency:");
+                      return false;
+                    }), new RunnableAction((run)->{
+                      run.player().message("Enter a name for the currency:");
+                    }))
+                    .withItemProvider((provider)->{
+
+                      final String message = (provider.viewer().isPresent())? (String)provider.viewer().get().dataOrDefault("CURRENCY_NAME", "Default") : "Default";
+
+                      return PluginCore.server().stackBuilder().of("", 1)
+                              .lore(Collections.singletonList("Click to set name of currency."))
+                              .display(message);
+                    })
+            .build());
 
     pages.put(3, currencyEditor);
   }
