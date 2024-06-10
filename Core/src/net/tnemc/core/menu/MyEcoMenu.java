@@ -52,7 +52,7 @@ public class MyEcoMenu extends Menu {
                     .withSlot(2)
                     .build()
     ).build();
-    pages.put(1, main);
+    addPage(main);
 
     //Currency Page
     //~displays all currencies; right click to edit
@@ -76,7 +76,7 @@ public class MyEcoMenu extends Menu {
 
       i += 2;
     }
-    pages.put(2, currency);
+    addPage(currency);
 
     final Page currencyEditor = new PageBuilder(3).build();
 
@@ -112,6 +112,33 @@ public class MyEcoMenu extends Menu {
                     })
             .build());
 
-    pages.put(3, currencyEditor);
+    addPage(currencyEditor);
+
+    final Page denominationsPage = new PageBuilder(4).build();
+
+    //add currency
+    denominationsPage.addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
+            .lore(Collections.singletonList("Click to add denomination")))
+            .withActions(new SwitchPageAction("my_eco", 3))
+            .withSlot(2)
+            .build());
+
+    i = 19;
+    for(final Currency curObj : TNECore.eco().currency().currencies()) {
+
+      denominationsPage.addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(curObj.getIconMaterial(), 1)
+              .lore(Collections.singletonList("Click to edit currency")))
+              .withActions(new SwitchPageAction("my_eco", 3), new DataAction("CURRENCY_UUID", curObj.getUid().toString()))
+              .withSlot(i)
+              .build());
+
+      i += 2;
+    }
+
+    addPage(denominationsPage);
+  }
+
+  public void addPage(final Page page) {
+    pages.put(page.number(), page);
   }
 }
