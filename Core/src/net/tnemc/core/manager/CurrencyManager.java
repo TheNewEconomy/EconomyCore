@@ -338,6 +338,10 @@ public class CurrencyManager {
     return Optional.ofNullable(types.get(identifier));
   }
 
+  public Map<String, UUID> getCurIDMap() {
+    return curIDMap;
+  }
+
   public void delete(final UUID uid) {
 
     if(currencies.containsKey(uid)) {

@@ -18,6 +18,7 @@ package net.tnemc.bukkit;
  */
 
 import net.tnemc.bukkit.hook.economy.VaultHook;
+import net.tnemc.bukkit.hook.economy.VaultUnlockedHook;
 import net.tnemc.bukkit.hook.misc.LuckPermsHook;
 import net.tnemc.bukkit.hook.misc.PAPIHook;
 import net.tnemc.bukkit.listeners.entity.EntityKilledListener;
@@ -63,6 +64,14 @@ public class BukkitPlugin {
     this.pluginCore = new ModifiedBukkitPluginCore(plugin, core, server, new BaseTranslationProvider(), new TNECallbackProvider());
 
     //Vault
+    PluginCore.log().inform("Checking for VaultUnlocked");
+    try {
+      Class.forName("net.milkbowl.vault2.economy.Economy");
+      new VaultUnlockedHook().register();
+    } catch(Exception ignore) {
+      PluginCore.log().error("Unable to connect to VaultUnlocked!");
+    }
+
     PluginCore.log().inform("Checking for Vault");
     try {
       Class.forName("net.milkbowl.vault.economy.Economy");
