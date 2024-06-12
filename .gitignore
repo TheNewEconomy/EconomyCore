@@ -35,3 +35,4 @@ hs_err_pid*
 /Sponge/target/maven-archiver/pom.properties
 /Sponge/target/
 /Folia/target/
+/.testserver/

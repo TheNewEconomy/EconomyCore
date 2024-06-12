@@ -19,7 +19,6 @@ package net.tnemc.core.menu;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.core.menu.constraints.TNEStringConstraints;
 import net.tnemc.menu.core.Menu;
 import net.tnemc.menu.core.Page;
 import net.tnemc.menu.core.builder.IconBuilder;
