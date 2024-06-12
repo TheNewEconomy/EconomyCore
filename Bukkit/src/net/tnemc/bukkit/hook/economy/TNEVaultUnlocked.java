@@ -105,6 +105,23 @@ public class TNEVaultUnlocked implements Economy {
    * Plugins use this method to format a given BigDecimal amount into a human-readable amount using
    * your economy plugin's currency names/conventions.
    *
+   * @param amount to format.
+   *
+   * @return Human-readable string describing amount, ie 5 Dollars or 5.55 Pounds.
+   */
+  @Override
+  public String format(BigDecimal amount) {
+    return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
+            TNECore.eco().currency().getDefaultCurrency().getUid(),
+            amount,
+            EconomyManager.NORMAL
+    ));
+  }
+
+  /**
+   * Plugins use this method to format a given BigDecimal amount into a human-readable amount using
+   * your economy plugin's currency names/conventions.
+   *
    * @param amount   to format.
    * @param currency the currency to use for the format.
    *
