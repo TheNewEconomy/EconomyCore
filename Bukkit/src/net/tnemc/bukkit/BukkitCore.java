@@ -53,6 +53,7 @@ public class BukkitCore extends TNECore {
   @Override
   public void registerMenuHandler() {
     this.menuHandler = new BukkitMenuHandler(plugin, true);
+    super.registerMenuHandler();
   }
 
   @Override

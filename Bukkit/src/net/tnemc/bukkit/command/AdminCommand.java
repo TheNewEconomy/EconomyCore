@@ -63,13 +63,13 @@ import java.util.UUID;
 @Description("Admin.Main.Description")
 public class AdminCommand {
 
-  /*@Subcommand({"ecomenu", "menu", "myeco", "ecomenu"})
+  @Subcommand({"ecomenu", "menu", "myeco", "ecomenu"})
   @Usage("Admin.MyEco.Arguments")
   @Description("Admin.MyEco.Description")
   @CommandPermission("tne.money.myeco")
   public void onMyEco(BukkitCommandActor sender) {
     net.tnemc.core.command.AdminCommand.onMyEco(new BukkitCMDSource(sender));
-  }*/
+  }
 
   @Subcommand({"help", "?"})
   @DefaultFor({"tne", "ecomin", "ecoadmin", "ecomanage", "theneweconomy"})

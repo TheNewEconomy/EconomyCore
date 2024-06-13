@@ -46,8 +46,11 @@ import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.hook.treasury.TreasuryHook;
 import net.tnemc.core.io.yaml.YamlStorageManager;
 import net.tnemc.core.manager.Updater;
+import net.tnemc.core.menu.MyEcoMenu;
 import net.tnemc.core.region.RegionGroup;
 import net.tnemc.item.AbstractItemStack;
+import net.tnemc.menu.core.MenuHandler;
+import net.tnemc.menu.core.manager.MenuManager;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.PluginEngine;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
@@ -280,6 +283,11 @@ public abstract class TNECore extends PluginEngine {
       serverID = UUID.randomUUID();
     }
     PluginCore.instance().setServerID(serverID);
+  }
+
+  @Override
+  public void registerMenuHandler() {
+    MenuManager.instance().addMenu(new MyEcoMenu());
   }
 
   @Override
