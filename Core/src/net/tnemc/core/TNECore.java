@@ -286,16 +286,13 @@ public abstract class TNECore extends PluginEngine {
   }
 
   @Override
-  public void registerMenuHandler() {
-    MenuManager.instance().addMenu(new MyEcoMenu());
-  }
-
-  @Override
   public void postStorage() {
   }
 
   @Override
   public void postEnable() {
+    MenuManager.instance().addMenu(new MyEcoMenu());
+
     this.storage.loadAll(Account.class, "");
 
     final String name = MainConfig.yaml().getString("Core.Server.Account.Name");

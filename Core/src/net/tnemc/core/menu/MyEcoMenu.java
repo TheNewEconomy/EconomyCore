@@ -52,6 +52,11 @@ public class MyEcoMenu extends Menu {
 
   public MyEcoMenu() {
 
+    this.name = "my_eco";
+    this.title = "My Eco";
+    this.rows = 5;
+
+    System.out.println("constructing menu.");
     //TODO: Add pages
     //Main page.
     //~Currencies
@@ -89,7 +94,7 @@ public class MyEcoMenu extends Menu {
             .display("Edit Denominations"), "my_eco", DENOMINATIONS_PAGE, ActionType.ANY));
 
     //currency name icon
-    currencyEditor.addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("SIGN", 1)
+    currencyEditor.addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
                     .lore(Collections.singletonList("Click to set name of currency.")))
                     .withSlot(21)
                     .withActions(new ChatAction((message)->{
@@ -107,7 +112,7 @@ public class MyEcoMenu extends Menu {
 
                       final String message = (provider.viewer().isPresent())? (String)provider.viewer().get().dataOrDefault("CURRENCY_NAME", "Default") : "Default";
 
-                      return PluginCore.server().stackBuilder().of("", 1)
+                      return PluginCore.server().stackBuilder().of("PAPER", 1)
                               .lore(Collections.singletonList("Click to set name of currency."))
                               .display(message);
                     })

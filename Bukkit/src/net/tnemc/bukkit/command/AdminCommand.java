@@ -63,7 +63,7 @@ import java.util.UUID;
 @Description("Admin.Main.Description")
 public class AdminCommand {
 
-  @Subcommand({"ecomenu", "menu", "myeco", "ecomenu"})
+  @Subcommand({"ecomenu", "menu", "myeco"})
   @Usage("Admin.MyEco.Arguments")
   @Description("Admin.MyEco.Description")
   @CommandPermission("tne.money.myeco")

@@ -44,6 +44,8 @@ public class AdminCommand extends BaseCommand {
 
   public static void onMyEco(CmdSource<?> sender) {
     if(sender.player().isPresent()) {
+
+      System.out.println("Open menu");
       sender.player().get().inventory().openMenu(sender.player().get(), "my_eco");
     }
   }
