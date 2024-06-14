@@ -30,11 +30,28 @@ import org.jetbrains.annotations.NotNull;
  * @since 0.1.2.0
  */
 public class SwitchPageIcon extends Icon {
+
+  private final String menu;
+  private final int page;
+  private final ActionType actionType;
+
   public SwitchPageIcon(int slot, @NotNull AbstractItemStack<?> item, final String menu, final int page, final ActionType type) {
+    this(slot, item, menu, page, type, true);
+  }
+  public SwitchPageIcon(int slot, @NotNull AbstractItemStack<?> item, final String menu, final int page, final ActionType type, boolean registerAction) {
     super(item, null);
 
     this.slot = slot;
+    this.menu = menu;
+    this.page = page;
+    this.actionType = type;
 
-    actions.add(new SwitchPageAction(menu, page, type));
+    if(registerAction) {
+      actions.add(new SwitchPageAction(menu, page, type));
+    }
+  }
+
+  public void addActions() {
+    actions.add(new SwitchPageAction(menu, page, actionType));
   }
 }

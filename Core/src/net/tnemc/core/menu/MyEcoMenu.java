@@ -24,6 +24,7 @@ import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.menu.icons.myeco.CurrencyIcon;
+import net.tnemc.core.menu.icons.myeco.DenominationIcon;
 import net.tnemc.core.menu.icons.shared.PreviousPageIcon;
 import net.tnemc.core.menu.icons.shared.SwitchPageIcon;
 import net.tnemc.item.AbstractItemStack;
@@ -238,7 +239,7 @@ public class MyEcoMenu extends Menu {
 
           //currency name icon
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-                  .lore(Collections.singletonList("Click to set name of currency.")))
+                  .lore(Collections.singletonList("Click to set the identifier of the currency.")))
                   .withSlot(18)
                   .withActions(new ChatAction((message)->{
 
@@ -360,7 +361,7 @@ public class MyEcoMenu extends Menu {
 
                     final String icon = (provider.viewer().isPresent())? (String)provider.viewer().get().dataOrDefault("CURRENCY_ICON", "PAPER") : "PAPER";
 
-                    return PluginCore.server().stackBuilder().of("PAPER", 1)
+                    return PluginCore.server().stackBuilder().of(icon, 1)
                             .lore(Collections.singletonList("Click to set Material Icon for the currency."))
                             .display(icon);
                   })
@@ -496,13 +497,7 @@ public class MyEcoMenu extends Menu {
           int i = 19;
           for(final Denomination denomObj : currencyOptional.get().getDenominations().values()) {
 
-            final String material = (denomObj.isItem())? ((ItemDenomination)denomObj).getMaterial() : "PAPER";
-
-            final SwitchPageIcon switchIcon = new SwitchPageIcon(i, PluginCore.server().stackBuilder().of(material, 1)
-                    .display(denomObj.singular()).lore(Collections.singletonList("Click to edit denomination")), "my_eco", DENOMINATION_EDIT_PAGE, ActionType.ANY);
-
-            switchIcon.addAction(new DataAction("DENOMINATION_WEIGHT", denomObj.weight()));
-            callback.getPage().addIcon(switchIcon);
+            callback.getPage().addIcon(new DenominationIcon(i, denomObj));
 
             i+= 2;
           }

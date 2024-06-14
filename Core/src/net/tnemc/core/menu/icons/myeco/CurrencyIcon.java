@@ -18,6 +18,7 @@ package net.tnemc.core.menu.icons.myeco;
  */
 
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.menu.icons.shared.SwitchPageIcon;
 import net.tnemc.menu.core.icon.action.ActionType;
 import net.tnemc.menu.core.icon.action.impl.DataAction;
@@ -37,8 +38,30 @@ public class CurrencyIcon extends SwitchPageIcon {
   public CurrencyIcon(int slot, final Currency currency) {
     super(slot, PluginCore.server().stackBuilder().of(currency.getIconMaterial(), 1)
             .display(currency.getIdentifier()).lore(Collections.singletonList("Click to edit currency")),
-            "my_eco", CURRENCY_EDIT_PAGE, ActionType.ANY);
+            "my_eco", CURRENCY_EDIT_PAGE, ActionType.ANY, false);
 
+    //Basic Information
     actions.add(new DataAction("CURRENCY_UUID", currency.getUid().toString()));
+    actions.add(new DataAction("CURRENCY_IDENTIFIER", currency.getIdentifier()));
+
+    actions.add(new DataAction("CURRENCY_STARTING", currency.getStartingHoldings()));
+    actions.add(new DataAction("CURRENCY_MAX", currency.getMaxBalance()));
+    actions.add(new DataAction("CURRENCY_MIN", currency.getMinBalance()));
+    actions.add(new DataAction("CURRENCY_ICON", currency.getIconMaterial()));
+
+    if(currency instanceof ItemCurrency itemCurrency) {
+
+      actions.add(new DataAction("CURRENCY_ENDER", (itemCurrency.canEnderChest())? "ENABLED" : "DISABLED"));
+      actions.add(new DataAction("CURRENCY_ENDER_FILL", (itemCurrency.isEnderFill())? "ENABLED" : "DISABLED"));
+    }
+
+    //Type
+    actions.add(new DataAction("CURRENCY_TYPE", currency.type().name()));
+
+    //Format
+
+    //Note
+
+    addActions();
   }
 }
