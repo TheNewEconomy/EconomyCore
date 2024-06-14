@@ -38,6 +38,11 @@ public class ExperienceType implements CurrencyType {
   }
 
   @Override
+  public String description() {
+    return "A simple currency based on experience. Not the most accurate...";
+  }
+
+  @Override
   public boolean supportsVirtual() {
     return false;
   }

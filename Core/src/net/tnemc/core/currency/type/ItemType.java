@@ -42,6 +42,11 @@ public class ItemType extends VirtualType {
     return "item";
   }
 
+  @Override
+  public String description() {
+    return "A currency based solely on physical items.";
+  }
+
   /**
    * @return True if this currency type is based on physical items.
    */

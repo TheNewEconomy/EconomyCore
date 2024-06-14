@@ -19,7 +19,9 @@ package net.tnemc.core.menu;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.currency.Denomination;
+import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.menu.icons.myeco.CurrencyIcon;
 import net.tnemc.core.menu.icons.shared.SwitchPageIcon;
@@ -165,7 +167,16 @@ public class MyEcoMenu extends Menu {
      * Currency Edit Info
      */
     final Page currencyTypeEditPage = new PageBuilder(CURRENCY_TYPE_EDIT_PAGE).build();
-    currencyTypeEditPage.setOpen((this::handleCurrencyEditTypeOpen));
+
+    i = 19;
+    for(final CurrencyType type : TNECore.eco().currency().getTypes().values()) {
+
+      final SwitchPageIcon switchIcon = new SwitchPageIcon(i, PluginCore.server().stackBuilder().of("PAPER", 1)
+              .display("Type: " + type.name()).lore(Collections.singletonList("Click to set currency to this type.")), "my_eco", CURRENCY_EDIT_PAGE, ActionType.ANY);
+
+      switchIcon.addAction(new DataAction("CURRENCY_TYPE", type.name()));
+      i += 2;
+    }
 
     addPage(currencyTypeEditPage);
 
@@ -238,28 +249,6 @@ public class MyEcoMenu extends Menu {
    * Major Separator
    */
   private void handleCurrencyEditFormatOpen(final PageOpenCallback callback) {
-
-    final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
-    if(viewer.isPresent()) {
-
-      final Optional<Object> currencyUUID = viewer.get().findData("CURRENCY_UUID");
-      if(currencyUUID.isPresent()) {
-
-        final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((String)currencyUUID.get());
-        if(currencyOptional.isPresent()) {
-
-        }
-      }
-    }
-  }
-
-  /*
-   * Currency Types
-   *
-   * Name
-   * Description as lore(will need to update types classes for description)
-   */
-  private void handleCurrencyEditTypeOpen(final PageOpenCallback callback) {
 
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
@@ -363,7 +352,122 @@ public class MyEcoMenu extends Menu {
             final Optional<Denomination> denomOptional = Optional.ofNullable(currencyOptional.get().getDenominationByWeight((BigDecimal)denomWeight.get()));
             if(denomOptional.isPresent()) {
 
+              callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
+                      .lore(Collections.singletonList("Click to set singular name of denomination.")))
+                      .withSlot(21)
+                      .withActions(new ChatAction((message)->{
 
+                        if(message.getPlayer().viewer().isPresent()) {
+                          message.getPlayer().viewer().get().addData("DENOMINATION_SINGULAR", message.getMessage());
+                          return true;
+                        }
+                        message.getPlayer().message("Enter a singular name for the denomination:");
+                        return false;
+                      }), new RunnableAction((run)->run.player().message("Enter a singular name for the denomination:")))
+                      .withItemProvider((provider)->{
+
+                        final String message = (provider.viewer().isPresent())? (String)provider.viewer().get().dataOrDefault("DENOMINATION_SINGULAR", "Dollar") : "Dollar";
+
+                        return PluginCore.server().stackBuilder().of("PAPER", 1)
+                                .lore(Collections.singletonList("Click to set singular name of denomination."))
+                                .display(message);
+                      })
+                      .build());
+
+              callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
+                      .lore(Collections.singletonList("Click to set plural name of denomination.")))
+                      .withSlot(22)
+                      .withActions(new ChatAction((message)->{
+
+                        if(message.getPlayer().viewer().isPresent()) {
+                          message.getPlayer().viewer().get().addData("DENOMINATION_PLURAL", message.getMessage());
+                          return true;
+                        }
+                        message.getPlayer().message("Enter a plural name for the denomination:");
+                        return false;
+                      }), new RunnableAction((run)->run.player().message("Enter a plural name for the denomination:")))
+                      .withItemProvider((provider)->{
+
+                        final String message = (provider.viewer().isPresent())? (String)provider.viewer().get().dataOrDefault("DENOMINATION_PLURAL", "Dollars") : "Dollars";
+
+                        return PluginCore.server().stackBuilder().of("PAPER", 1)
+                                .lore(Collections.singletonList("Click to set plural name of denomination."))
+                                .display(message);
+                      })
+                      .build());
+
+              callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
+                      .lore(Collections.singletonList("Click to set weight of denomination.")))
+                      .withSlot(23)
+                      .withActions(new ChatAction((message)->{
+
+                        if(message.getPlayer().viewer().isPresent()) {
+
+                          try {
+
+                            message.getPlayer().viewer().get().addData("DENOMINATION_WEIGHT", new BigDecimal(message.getMessage()));
+                            return true;
+                          } catch(NumberFormatException ignore) {}
+                        }
+                        message.getPlayer().message("Enter a weight for the denomination:");
+                        return false;
+                      }), new RunnableAction((run)->run.player().message("Enter a weight for the denomination:")))
+                      .withItemProvider((provider)->{
+
+                        final BigDecimal weight = (provider.viewer().isPresent())? (BigDecimal)provider.viewer().get().dataOrDefault("DENOMINATION_WEIGHT", BigDecimal.ONE) : BigDecimal.ONE;
+
+                        return PluginCore.server().stackBuilder().of("PAPER", 1)
+                                .lore(Collections.singletonList("Click to set weight of denomination."))
+                                .display(weight.toString());
+                      })
+                      .build());
+
+              if(currencyOptional.get() instanceof ItemCurrency) {
+                callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
+                        .lore(Collections.singletonList("Click to set material of denomination.")))
+                        .withSlot(24)
+                        .withActions(new ChatAction((message)->{
+
+                          if(message.getPlayer().viewer().isPresent()) {
+                            message.getPlayer().viewer().get().addData("DENOMINATION_MATERIAL", message.getMessage());
+                            return true;
+                          }
+                          message.getPlayer().message("Enter a material for the denomination:");
+                          return false;
+                        }), new RunnableAction((run)->run.player().message("Enter a material for the denomination:")))
+                        .withItemProvider((provider)->{
+
+                          final String message = (provider.viewer().isPresent())? (String)provider.viewer().get().dataOrDefault("DENOMINATION_MATERIAL", "PAPER") : "PAPER";
+
+                          return PluginCore.server().stackBuilder().of("PAPER", 1)
+                                  .lore(Collections.singletonList("Click to set material of denomination."))
+                                  .display(message);
+                        })
+                        .build());
+
+
+                callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
+                        .lore(Collections.singletonList("Click to set display name of the denomination item.")))
+                        .withSlot(25)
+                        .withActions(new ChatAction((message)->{
+
+                          if(message.getPlayer().viewer().isPresent()) {
+                            message.getPlayer().viewer().get().addData("DENOMINATION_DISPLAY", message.getMessage());
+                            return true;
+                          }
+                          message.getPlayer().message("Enter display name of the denomination item:");
+                          return false;
+                        }), new RunnableAction((run)->run.player().message("Enter display name of the denomination item:")))
+                        .withItemProvider((provider)->{
+
+                          final String message = (provider.viewer().isPresent())? (String)provider.viewer().get().dataOrDefault("DENOMINATION_DISPLAY", "No Display") : "No Display";
+
+                          return PluginCore.server().stackBuilder().of("PAPER", 1)
+                                  .lore(Collections.singletonList("Click to set display name of the denomination item."))
+                                  .display(message);
+                        })
+                        .build());
+              }
             }
           }
         }

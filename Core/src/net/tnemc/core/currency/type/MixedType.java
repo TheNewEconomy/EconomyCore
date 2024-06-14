@@ -41,6 +41,11 @@ public class MixedType extends ItemType {
   }
 
   @Override
+  public String description() {
+    return "A currency that is a mixture of item and virtual types.";
+  }
+
+  @Override
   public boolean supportsVirtual() {
     return true;
   }

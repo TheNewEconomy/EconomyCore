@@ -47,6 +47,8 @@ public interface CurrencyType {
    */
   String name();
 
+  String description();
+
   /**
    * @return True if this currency type supports offline players, otherwise false.
    */

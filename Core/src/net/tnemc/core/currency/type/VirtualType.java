@@ -43,6 +43,11 @@ public class VirtualType implements CurrencyType {
     return "virtual";
   }
 
+  @Override
+  public String description() {
+    return "A simple currency type that is strictly virtual, which is imaginary money used in commands.";
+  }
+
   /**
    * @return The {@link Identifier} of the default handler.
    */

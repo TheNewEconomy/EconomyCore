@@ -321,6 +321,10 @@ public class CurrencyManager {
     return currencies.values();
   }
 
+  public Map<String, CurrencyType> getTypes() {
+    return types;
+  }
+
   /**
    * Used to add a currency type.
    * @param type The currency type to add.
