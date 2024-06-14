@@ -20,7 +20,7 @@
     </modules>
 
     <properties>
-        <tnpc.version>1.0.0.1-Pre-29</tnpc.version>
+        <tnpc.version>1.0.0.2-Pre-1</tnpc.version>
         <tne.relocation>net.tnemc.libs</tne.relocation>
         <tne.java>17</tne.java>
         <maven.compiler.target>17</maven.compiler.target>

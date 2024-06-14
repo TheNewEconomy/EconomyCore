@@ -56,7 +56,7 @@ public class Updater extends UpdateChecker {
   @Override
   public String stable() {
     System.out.println("Ver:" + ver);
-    if(new Semver(PluginCore.engine().version() + "-" + PluginCore.engine().build()).isStable()) {
+    if(new Semver(PluginCore.engine().version() + "-" + PluginCore.engine().build(), Semver.SemverType.LOOSE).isStable()) {
       return "Stable";
     }
     return "Not Stable";
