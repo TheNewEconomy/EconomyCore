@@ -22,7 +22,6 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.item.ItemCurrency;
-import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.menu.icons.myeco.CurrencyIcon;
 import net.tnemc.core.menu.icons.myeco.DenominationIcon;
 import net.tnemc.core.menu.icons.shared.PreviousPageIcon;
@@ -631,7 +630,6 @@ public class MyEcoMenu extends Menu {
                                   .display(message);
                         })
                         .build());
-
 
                 callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
                         .lore(Collections.singletonList("Click to set display name of the denomination item.")))

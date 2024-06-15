@@ -49,7 +49,6 @@ import net.tnemc.core.manager.Updater;
 import net.tnemc.core.menu.MyEcoMenu;
 import net.tnemc.core.region.RegionGroup;
 import net.tnemc.item.AbstractItemStack;
-import net.tnemc.menu.core.MenuHandler;
 import net.tnemc.menu.core.manager.MenuManager;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.PluginEngine;
