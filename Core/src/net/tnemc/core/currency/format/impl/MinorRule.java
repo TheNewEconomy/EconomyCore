@@ -31,7 +31,7 @@ import java.util.Optional;
 public class MinorRule implements FormatRule {
   @Override
   public String name() {
-    return "minor";
+    return "<minor>";
   }
 
   @Override

@@ -31,7 +31,7 @@ import java.util.Optional;
 public class MajorNameRule implements FormatRule {
   @Override
   public String name() {
-    return "major_name";
+    return "<major.name>";
   }
 
   @Override

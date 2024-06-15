@@ -1,7 +1,7 @@
 package net.tnemc.core.menu.page.shared;
 /*
- * The New Menu Library
- * Copyright (C) 2022 - 2023 Daniel "creatorfromhell" Vidmar
+ * The New Economy
+ * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,42 +17,44 @@ package net.tnemc.core.menu.page.shared;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.currency.format.CurrencyFormatter;
+import net.tnemc.item.AbstractItemStack;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
 import net.tnemc.menu.core.icon.action.impl.DataAction;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
+import net.tnemc.menu.core.icon.impl.StateIcon;
 import net.tnemc.menu.core.manager.MenuManager;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
 
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Optional;
 
 /**
- * MaterialSelectionMenu
+ * FlagSelectionPage
  *
  * @author creatorfromhell
- * @since 1.5.0.0
+ * @since 0.1.2.0
  */
-public class MaterialSelectionPageCallback {
+public class FlagSelectionPage {
 
   protected final String returnMenu;
   protected final String menuName;
   protected final int menuPage;
   protected final int returnPage;
-  protected final String materialDataID;
-  protected final String materialPageID;
+  protected final String flagsID;
+  protected final String flagPageID;
   protected final int menuRows;
 
-  public MaterialSelectionPageCallback(String materialDataID, String returnMenu, String menuName,
-                                       final int menuPage, final int returnPage, String materialPageID, final int menuRows) {
+  public FlagSelectionPage(String flagsID, String returnMenu, String menuName,
+                           final int menuPage, final int returnPage, String flagPageID, final int menuRows) {
+    this.flagsID = flagsID;
     this.returnMenu = returnMenu;
     this.menuName = menuName;
     this.menuPage = menuPage;
     this.returnPage = returnPage;
-    this.materialDataID = materialDataID;
-    this.materialPageID = materialPageID;
+    this.flagPageID = flagPageID;
 
     //we need a controller row and then at least one row for items.
     this.menuRows = (menuRows <= 1)? 2 : menuRows;
@@ -63,10 +65,10 @@ public class MaterialSelectionPageCallback {
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
 
-      final int page = (Integer)viewer.get().dataOrDefault(materialPageID, 1);
+      final int page = (Integer)viewer.get().dataOrDefault(flagPageID, 1);
       final int items = (menuRows - 1) * 9;
       final int start = ((page - 1) * 9);
-      final int maxPages = (MenuManager.instance().getHelper().materials().size() / items) + (((MenuManager.instance().getHelper().materials().size() % items) > 0)? 1 : 0);
+      final int maxPages = (MenuManager.instance().getHelper().materials().size() / items) + (((MenuManager.instance().getHelper().flags().size() % items) > 0)? 1 : 0);
 
       final int prev = (page <= 0)? maxPages : page - 1;
       final int next = (page >= maxPages)? 1 : page + 1;
@@ -75,30 +77,42 @@ public class MaterialSelectionPageCallback {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
                 .lore(Collections.singletonList("Click to go to previous page.")))
-                .withActions(new DataAction(materialPageID, prev), new SwitchPageAction(menuName, menuPage))
+                .withActions(new DataAction(flagPageID, prev), new SwitchPageAction(menuName, menuPage))
                 .withSlot(0)
                 .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
                 .lore(Collections.singletonList("Click to go to next page.")))
-                .withActions(new DataAction(materialPageID, next), new SwitchPageAction(menuName, menuPage))
+                .withActions(new DataAction(flagPageID, next), new SwitchPageAction(menuName, menuPage))
                 .withSlot(8)
                 .build());
       }
 
 
       for(int i = start; i < start + items; i++) {
-        if(MenuManager.instance().getHelper().materials().size() <= i) {
+        if(MenuManager.instance().getHelper().flags().size() <= i) {
           break;
         }
 
-        final String material = MenuManager.instance().getHelper().materials().get(i);
+        final String flagName = MenuManager.instance().getHelper().flags().get(i);
 
-        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(material, 1)
-                .lore(Collections.singletonList("Click to select material.")))
-                .withActions(new DataAction(materialDataID, material), new SwitchPageAction(returnMenu, returnPage))
-                .withSlot(9 + (i - start))
-                .build());
+        final AbstractItemStack<?> disabledStack = PluginCore.server().stackBuilder().display(flagName + "(Disabled)").of("RED_WOOL", 1);
+        final AbstractItemStack<?> enabledStack = PluginCore.server().stackBuilder().display(flagName + "(Enabled)").of("GREEN_WOOL", 1);
+
+        //ender chest icon
+        final StateIcon flag = new StateIcon(disabledStack, null, menuName + "_" + flagName, "DISABLED", (currentState)->{
+          switch(currentState.toUpperCase(Locale.ROOT)) {
+
+            case "ENABLED":
+              return "ENABLED";
+            default:
+              return "DISABLED";
+          }
+        });
+        flag.setSlot(9 + (i - start));
+        flag.addState("DISABLED", disabledStack.lore(Collections.singletonList("Clicked to add this flag.")));
+        flag.addState("ENABLED", enabledStack.lore(Collections.singletonList("Clicked to remove this flag.")));
+        callback.getPage().addIcon(flag);
       }
     }
   }

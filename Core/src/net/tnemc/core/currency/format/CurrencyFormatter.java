@@ -46,7 +46,7 @@ import java.util.Optional;
  */
 public class CurrencyFormatter {
 
-  final static LinkedHashMap<String, FormatRule> rulesMap = new LinkedHashMap<>();
+  protected final static LinkedHashMap<String, FormatRule> rulesMap = new LinkedHashMap<>();
 
   static {
     addRule(new ShortenRule());
@@ -84,5 +84,9 @@ public class CurrencyFormatter {
     }
 
     return format;
+  }
+
+  public static LinkedHashMap<String, FormatRule> rules() {
+    return rulesMap;
   }
 }

@@ -29,7 +29,7 @@ import java.util.Locale;
 public class MajorAmountRule implements FormatRule {
   @Override
   public String name() {
-    return "major_amount";
+    return "<major.amount>";
   }
 
   @Override

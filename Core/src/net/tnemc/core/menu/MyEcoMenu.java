@@ -403,8 +403,8 @@ public class MyEcoMenu extends Menu {
                   return "DISABLED";
               }
             });
-            enderchest.addState("DISABLED", disabledStack.lore(Collections.singletonList("Clicked to Enable using ender chests for item currency balances.")));
-            enderchest.addState("ENABLED", enabledStack.lore(Collections.singletonList("Clicked to Disable using ender chests for item currency balances.")));
+            enderchest.addState("DISABLED", disabledStack.display("EnderChest(Disabled)").lore(Collections.singletonList("Clicked to Enable using ender chests for item currency balances.")));
+            enderchest.addState("ENABLED", enabledStack.display("EnderChest(Enabled)").lore(Collections.singletonList("Clicked to Disable using ender chests for item currency balances.")));
             callback.getPage().addIcon(enderchest);
 
             //ender chest icon
@@ -417,8 +417,8 @@ public class MyEcoMenu extends Menu {
                   return "DISABLED";
               }
             });
-            enderFill.addState("DISABLED", disabledStack.lore(Collections.singletonList("Clicked to Enable Filling the ender chest when player inventory is full.")));
-            enderFill.addState("ENABLED", enabledStack.lore(Collections.singletonList("Clicked to Disable Filling the ender chest when player inventory is full.")));
+            enderFill.addState("DISABLED", disabledStack.display("EnderChest Fill(Disabled)").lore(Collections.singletonList("Clicked to Enable Filling the ender chest when player inventory is full.")));
+            enderFill.addState("ENABLED", enabledStack.display("EnderChest Fill(Enabled)").lore(Collections.singletonList("Clicked to Disable Filling the ender chest when player inventory is full.")));
             callback.getPage().addIcon(enderFill);
           }
         }

@@ -31,7 +31,7 @@ import java.util.Optional;
 public class ShortenRule implements FormatRule {
   @Override
   public String name() {
-    return "shorten";
+    return "<shorten>";
   }
 
   @Override

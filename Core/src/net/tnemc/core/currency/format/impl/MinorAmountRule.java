@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 public class MinorAmountRule implements FormatRule {
   @Override
   public String name() {
-    return "minor_amount";
+    return "<minor.amount>";
   }
 
   @Override

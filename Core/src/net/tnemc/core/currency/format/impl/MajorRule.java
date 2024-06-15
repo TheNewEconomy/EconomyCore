@@ -30,7 +30,7 @@ import java.util.Optional;
 public class MajorRule implements FormatRule {
   @Override
   public String name() {
-    return "major";
+    return "<major>";
   }
 
   @Override

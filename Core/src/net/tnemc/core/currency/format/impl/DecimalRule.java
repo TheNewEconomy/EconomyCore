@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 public class DecimalRule implements FormatRule {
   @Override
   public String name() {
-    return "decimal";
+    return "<decimal>";
   }
 
   @Override

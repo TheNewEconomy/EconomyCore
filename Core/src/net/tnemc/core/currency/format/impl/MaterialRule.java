@@ -40,6 +40,17 @@ public class MaterialRule implements FormatRule {
     return "material";
   }
 
+  /**
+   * Determines whether this format rule should be included in the menu. By default, it is set to
+   * true.
+   *
+   * @return true if this format rule should be included in the menu, false otherwise.
+   */
+  @Override
+  public boolean includeInMenu() {
+    return false;
+  }
+
   @Override
   public String format(@Nullable Account account, HoldingsEntry entry, String format) {
     String formatted = format;

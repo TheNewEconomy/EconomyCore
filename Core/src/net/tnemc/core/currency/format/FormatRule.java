@@ -37,6 +37,25 @@ public interface FormatRule {
   String name();
 
   /**
+   * Retrieves the description of the format rule.
+   *
+   * @return The description of the format rule as a String.
+   */
+  default String description() {
+    return "";
+  }
+
+  /**
+   * Determines whether this format rule should be included in the menu.
+   * By default, it is set to true.
+   *
+   * @return true if this format rule should be included in the menu, false otherwise.
+   */
+  default boolean includeInMenu() {
+    return true;
+  }
+
+  /**
    * Used to format a TNE format string based on the provided holdings and account information.
    * @param account The account to use for this formatting.
    * @param entry The holdings entry to use for formatting.
