@@ -60,8 +60,11 @@ public class MaterialSelectionPageCallback {
 
   public void handle(final PageOpenCallback callback) {
 
+    System.out.println("Menu Page");
+
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
+      System.out.println("Menu Page viewer present");
 
       final int page = (Integer)viewer.get().dataOrDefault(materialPageID, 1);
       final int items = (menuRows - 1) * 9;
@@ -85,7 +88,7 @@ public class MaterialSelectionPageCallback {
                 .withSlot(8)
                 .build());
       }
-
+      System.out.println("Material Size: " + MenuManager.instance().getHelper().materials().size());
 
       for(int i = start; i < start + items; i++) {
         if(MenuManager.instance().getHelper().materials().size() <= i) {
@@ -93,6 +96,7 @@ public class MaterialSelectionPageCallback {
         }
 
         final String material = MenuManager.instance().getHelper().materials().get(i);
+        System.out.println("Material: " + material + " Slot: " + (9 + (i - start)));
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(material, 1)
                 .lore(Collections.singletonList("Click to select material.")))
