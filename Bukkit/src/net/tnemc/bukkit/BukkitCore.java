@@ -27,6 +27,7 @@ import net.tnemc.bukkit.depend.faction.FactionHandler;
 import net.tnemc.bukkit.depend.towny.TownyHandler;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.TNECallbacks;
+import net.tnemc.item.bukkit.BukkitHelper;
 import net.tnemc.menu.bukkit.BukkitMenuHandler;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.api.CallbackManager;
@@ -53,6 +54,7 @@ public class BukkitCore extends TNECore {
   @Override
   public void registerMenuHandler() {
     this.menuHandler = new BukkitMenuHandler(plugin, true);
+    this.helperMethods = new BukkitHelper();
   }
 
   @Override

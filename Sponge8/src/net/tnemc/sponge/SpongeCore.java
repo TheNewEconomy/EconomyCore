@@ -95,6 +95,7 @@ public class SpongeCore extends TNECore {
   @Override
   public void registerMenuHandler() {
     //TODO: Menu Handler for Sponge
+    this.helperMethods = new SpongeHelper();
   }
 
 

@@ -17,6 +17,7 @@ package net.tnemc.core.menu.page.shared;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
@@ -69,34 +70,42 @@ public class MaterialSelectionPageCallback {
       final int page = (Integer)viewer.get().dataOrDefault(materialPageID, 1);
       final int items = (menuRows - 1) * 9;
       final int start = ((page - 1) * 9);
-      final int maxPages = (MenuManager.instance().getHelper().materials().size() / items) + (((MenuManager.instance().getHelper().materials().size() % items) > 0)? 1 : 0);
 
-      final int prev = (page <= 0)? maxPages : page - 1;
+      final int maxPages = (TNECore.instance().helper().materials().size() / items) + (((TNECore.instance().helper().materials().size() % items) > 0)? 1 : 0);
+
+      final int prev = (page <= 1)? maxPages : page - 1;
       final int next = (page >= maxPages)? 1 : page + 1;
 
       if(maxPages > 1) {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
+                .display("Previous Page")
                 .lore(Collections.singletonList("Click to go to previous page.")))
                 .withActions(new DataAction(materialPageID, prev), new SwitchPageAction(menuName, menuPage))
                 .withSlot(0)
                 .build());
 
+        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
+                .display("Escape Menu")
+                .lore(Collections.singletonList("Click to exit this menu.")))
+                .withActions(new SwitchPageAction(returnMenu, returnPage))
+                .withSlot(4)
+                .build());
+
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
+                .display("Next Page")
                 .lore(Collections.singletonList("Click to go to next page.")))
                 .withActions(new DataAction(materialPageID, next), new SwitchPageAction(menuName, menuPage))
                 .withSlot(8)
                 .build());
       }
-      System.out.println("Material Size: " + MenuManager.instance().getHelper().materials().size());
 
       for(int i = start; i < start + items; i++) {
-        if(MenuManager.instance().getHelper().materials().size() <= i) {
+        if(TNECore.instance().helper().materials().size() <= i) {
           break;
         }
 
-        final String material = MenuManager.instance().getHelper().materials().get(i);
-        System.out.println("Material: " + material + " Slot: " + (9 + (i - start)));
+        final String material = TNECore.instance().helper().materials().get(i);
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(material, 1)
                 .lore(Collections.singletonList("Click to select material.")))

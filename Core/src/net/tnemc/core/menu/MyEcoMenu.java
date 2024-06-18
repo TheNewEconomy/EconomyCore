@@ -282,7 +282,7 @@ public class MyEcoMenu extends Menu {
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
 
-      final Optional<Object> currencyUUID = viewer.get().findData("CURRENCY_UUID");
+      final Optional<Object> currencyUUID = viewer.get().findData("CURRENCY_UUID");//TODO: Replace with just the currency object.
       if(currencyUUID.isPresent()) {
 
         final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((String)currencyUUID.get());
@@ -414,9 +414,9 @@ public class MyEcoMenu extends Menu {
               switch(currentState.toUpperCase(Locale.ROOT)) {
 
                 case "ENABLED":
-                  return "ENABLED";
-                default:
                   return "DISABLED";
+                default:
+                  return "ENABLED";
               }
             });
             enderchest.setSlot(23);
@@ -429,9 +429,9 @@ public class MyEcoMenu extends Menu {
               switch(currentState.toUpperCase(Locale.ROOT)) {
 
                 case "ENABLED":
-                  return "ENABLED";
-                default:
                   return "DISABLED";
+                default:
+                  return "ENABLED";
               }
             });
             enderFill.setSlot(24);
@@ -636,9 +636,9 @@ public class MyEcoMenu extends Menu {
             switch(currentState.toUpperCase(Locale.ROOT)) {
 
               case "ENABLED":
-                return "ENABLED";
-              default:
                 return "DISABLED";
+              default:
+                return "ENABLED";
             }
           });
           majorSeparate.setSlot(18);

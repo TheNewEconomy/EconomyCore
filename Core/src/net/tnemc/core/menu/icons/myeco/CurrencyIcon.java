@@ -40,6 +40,8 @@ public class CurrencyIcon extends SwitchPageIcon {
             .display(currency.getIdentifier()).lore(Collections.singletonList("Click to edit currency")),
             "my_eco", CURRENCY_EDIT_PAGE, ActionType.ANY, false);
 
+    actions.add(new DataAction("CURRENCY_OBJECT", currency));
+
     //Basic Information
     actions.add(new DataAction("CURRENCY_UUID", currency.getUid().toString()));
     actions.add(new DataAction("CURRENCY_IDENTIFIER", currency.getIdentifier()));

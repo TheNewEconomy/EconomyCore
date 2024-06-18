@@ -17,6 +17,7 @@ package net.tnemc.core.menu.page.shared;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
@@ -68,20 +69,31 @@ public class FlagSelectionPage {
       final int page = (Integer)viewer.get().dataOrDefault(flagPageID, 1);
       final int items = (menuRows - 1) * 9;
       final int start = ((page - 1) * 9);
-      final int maxPages = (MenuManager.instance().getHelper().materials().size() / items) + (((MenuManager.instance().getHelper().flags().size() % items) > 0)? 1 : 0);
+      final int maxPages = (TNECore.instance().helper().flags().size() / items) + (((TNECore.instance().helper().flags().size() % items) > 0)? 1 : 0);
 
-      final int prev = (page <= 0)? maxPages : page - 1;
+      final int prev = (page <= 1)? maxPages : page - 1;
       final int next = (page >= maxPages)? 1 : page + 1;
+
+      System.out.println("prev: " + prev + ", next: " + next);
 
       if(maxPages > 1) {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
+                .display("Previous Page")
                 .lore(Collections.singletonList("Click to go to previous page.")))
                 .withActions(new DataAction(flagPageID, prev), new SwitchPageAction(menuName, menuPage))
                 .withSlot(0)
                 .build());
 
+        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
+                .display("Escape Menu")
+                .lore(Collections.singletonList("Click to exit this menu.")))
+                .withActions(new SwitchPageAction(returnMenu, returnPage))
+                .withSlot(4)
+                .build());
+
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
+                .display("Next Page")
                 .lore(Collections.singletonList("Click to go to next page.")))
                 .withActions(new DataAction(flagPageID, next), new SwitchPageAction(menuName, menuPage))
                 .withSlot(8)
@@ -90,11 +102,11 @@ public class FlagSelectionPage {
 
 
       for(int i = start; i < start + items; i++) {
-        if(MenuManager.instance().getHelper().flags().size() <= i) {
+        if(TNECore.instance().helper().flags().size() <= i) {
           break;
         }
 
-        final String flagName = MenuManager.instance().getHelper().flags().get(i);
+        final String flagName = TNECore.instance().helper().flags().get(i);
 
         final AbstractItemStack<?> disabledStack = PluginCore.server().stackBuilder().display(flagName + "(Disabled)").of("RED_WOOL", 1);
         final AbstractItemStack<?> enabledStack = PluginCore.server().stackBuilder().display(flagName + "(Enabled)").of("GREEN_WOOL", 1);
@@ -104,9 +116,9 @@ public class FlagSelectionPage {
           switch(currentState.toUpperCase(Locale.ROOT)) {
 
             case "ENABLED":
-              return "ENABLED";
-            default:
               return "DISABLED";
+            default:
+              return "ENABLED";
           }
         });
         flag.setSlot(9 + (i - start));

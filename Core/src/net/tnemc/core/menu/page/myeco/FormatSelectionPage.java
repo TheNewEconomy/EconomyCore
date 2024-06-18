@@ -72,20 +72,29 @@ public class FormatSelectionPage {
       final int page = (Integer)viewer.get().dataOrDefault(formatPageID, 1);
       final int items = (menuRows - 1) * 9;
       final int start = ((page - 1) * 9);
-      final int maxPages = (MenuManager.instance().getHelper().materials().size() / items) + (((CurrencyFormatter.rules().size() % items) > 0)? 1 : 0);
+      final int maxPages = (CurrencyFormatter.rules().size() / items) + (((CurrencyFormatter.rules().size() % items) > 0)? 1 : 0);
 
-      final int prev = (page <= 0)? maxPages : page - 1;
+      final int prev = (page <= 1)? maxPages : page - 1;
       final int next = (page >= maxPages)? 1 : page + 1;
 
       if(maxPages > 1) {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
+                .display("Previous Page")
                 .lore(Collections.singletonList("Click to go to previous page.")))
                 .withActions(new DataAction(formatPageID, prev), new SwitchPageAction(menuName, menuPage))
                 .withSlot(0)
                 .build());
 
+        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
+                .display("Escape Menu")
+                .lore(Collections.singletonList("Click to exit this menu.")))
+                .withActions(new SwitchPageAction(returnMenu, returnPage))
+                .withSlot(1)
+                .build());
+
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
+                .display("Next Page")
                 .lore(Collections.singletonList("Click to go to next page.")))
                 .withActions(new DataAction(formatPageID, next), new SwitchPageAction(menuName, menuPage))
                 .withSlot(8)
@@ -129,7 +138,7 @@ public class FormatSelectionPage {
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-              .display((String)viewer.get().dataOrDefault(formatID, ""))
+              .display((String)viewer.get().dataOrDefault(formatID, "Nothing Entered Yet"))
               .lore(Collections.singletonList("This is the current format you've selected")))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withClick((click)->formatAddClick(click, " "))
@@ -140,7 +149,8 @@ public class FormatSelectionPage {
       final String[] stringSet = CurrencyFormatter.rules().keySet().toArray(new String[CurrencyFormatter.rules().size()]);
 
       final LinkedList<String> lore = new LinkedList<>();
-      lore.set(0, "Click to add to format.");
+      lore.add("Click to add to format.");
+      lore.add("Placeholder");
 
       int slot = 9;
       for(int i = start; i < start + items; i++) {
