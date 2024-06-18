@@ -27,6 +27,7 @@ import net.tnemc.core.menu.icons.myeco.DenominationIcon;
 import net.tnemc.core.menu.icons.shared.PreviousPageIcon;
 import net.tnemc.core.menu.icons.shared.SwitchPageIcon;
 import net.tnemc.core.menu.page.myeco.FormatSelectionPage;
+import net.tnemc.core.menu.page.shared.AmountSelectionPage;
 import net.tnemc.core.menu.page.shared.EnchantmentSelectionPage;
 import net.tnemc.core.menu.page.shared.FlagSelectionPage;
 import net.tnemc.core.menu.page.shared.MaterialSelectionPageCallback;
@@ -62,19 +63,26 @@ public class MyEcoMenu extends Menu {
   public static final int CURRENCIES_PAGE = 2;
   public static final int CURRENCY_EDIT_PAGE = 3;
   public static final int CURRENCY_INFO_EDIT_PAGE = 4;
-  public static final int CURRENCY_ICON_MATERIAL_PAGE = 5;
-  public static final int CURRENCY_FORMAT_EDIT_PAGE = 6;
-  public static final int CURRENCY_FORMAT_SELECTION_PAGE = 7;
-  public static final int CURRENCY_TYPE_EDIT_PAGE = 8;
-  public static final int CURRENCY_NOTE_EDIT_PAGE = 9;
-  public static final int CURRENCY_NOTE_MATERIAL_PAGE = 10;
-  public static final int CURRENCY_NOTE_FLAGS_PAGE = 11;
-  public static final int CURRENCY_NOTE_ENCHANTS_PAGE = 12;
-  public static final int DENOMINATIONS_PAGE = 13;
-  public static final int DENOMINATION_EDIT_PAGE = 14;
-  public static final int DENOMINATION_MATERIAL_PAGE = 15;
-  public static final int DENOMINATION_ENCHANTS_PAGE = 16;
-  public static final int DENOMINATION_FLAGS_PAGE = 17;
+  public static final int CURRENCY_INFO_MAX_SELECTION_PAGE = 5;
+  public static final int CURRENCY_INFO_MIN_SELECTION_PAGE = 6;
+  public static final int CURRENCY_INFO_STARTING_SELECTION_PAGE = 7;
+  public static final int CURRENCY_ICON_MATERIAL_PAGE = 8;
+  public static final int CURRENCY_FORMAT_EDIT_PAGE = 9;
+  public static final int CURRENCY_FORMAT_SELECTION_PAGE = 10;
+  public static final int CURRENCY_TYPE_EDIT_PAGE = 11;
+  public static final int CURRENCY_NOTE_EDIT_PAGE = 12;
+  public static final int CURRENCY_NOTE_MATERIAL_PAGE = 13;
+  public static final int CURRENCY_NOTE_FLAGS_PAGE = 14;
+  public static final int CURRENCY_NOTE_ENCHANTS_PAGE = 15;
+  public static final int CURRENCY_NOTE_FEE_MAIN_PAGE = 16;
+  public static final int CURRENCY_NOTE_FEE_SELECTION_PAGE = 17;
+  public static final int CURRENCY_NOTE_MIN_SELECTION_PAGE = 18;
+  public static final int DENOMINATIONS_PAGE = 19;
+  public static final int DENOMINATION_EDIT_PAGE = 20;
+  public static final int DENOMINATION_WEIGHT_SELECTION_PAGE = 21;
+  public static final int DENOMINATION_MATERIAL_PAGE = 22;
+  public static final int DENOMINATION_ENCHANTS_PAGE = 23;
+  public static final int DENOMINATION_FLAGS_PAGE = 24;
 
   public static final String CURRENCY_ICON_ID = "CURRENCY_ICON";
   public static final String CURRENCY_FORMAT_ID = "CURRENCY_FORMAT";
@@ -90,7 +98,6 @@ public class MyEcoMenu extends Menu {
     this.name = "my_eco";
     this.title = "My Eco";
     this.rows = 5;
-    //TODO: Add pages
 
     /*
      * Main Page
@@ -136,6 +143,8 @@ public class MyEcoMenu extends Menu {
     for(final Currency curObj : TNECore.eco().currency().currencies()) {
       currency.addIcon(new CurrencyIcon(i, curObj));
 
+      System.out.println("cur file: " + curObj.getFile());
+
       i += 2;
     }
     addPage(currency);
@@ -180,6 +189,18 @@ public class MyEcoMenu extends Menu {
     final Page currencyIconMaterialPage = new PageBuilder(CURRENCY_ICON_MATERIAL_PAGE).build();
     currencyIconMaterialPage.setOpen((open->new MaterialSelectionPageCallback("CURRENCY_ICON_MATERIAL", name, name, CURRENCY_ICON_MATERIAL_PAGE, CURRENCY_INFO_EDIT_PAGE, "CURRENCY_ICON_MATERIAL_PAGE", 5).handle(open)));
     addPage(currencyIconMaterialPage);
+
+    final Page currencyInfoMaxPage = new PageBuilder(CURRENCY_INFO_MAX_SELECTION_PAGE).build();
+    currencyInfoMaxPage.setOpen((open->new AmountSelectionPage("CURRENCY_INFO_MAX", name, name, CURRENCY_INFO_MAX_SELECTION_PAGE, CURRENCY_INFO_EDIT_PAGE).handle(open)));
+    addPage(currencyInfoMaxPage);
+
+    final Page currencyInfoMinPage = new PageBuilder(CURRENCY_INFO_MIN_SELECTION_PAGE).build();
+    currencyInfoMinPage.setOpen((open->new AmountSelectionPage("CURRENCY_INFO_MIN", name, name, CURRENCY_INFO_MIN_SELECTION_PAGE, CURRENCY_INFO_EDIT_PAGE).handle(open)));
+    addPage(currencyInfoMinPage);
+
+    final Page currencyInfoStartingPage = new PageBuilder(CURRENCY_INFO_STARTING_SELECTION_PAGE).build();
+    currencyInfoStartingPage.setOpen((open->new AmountSelectionPage("CURRENCY_INFO_STARTING", name, name, CURRENCY_INFO_STARTING_SELECTION_PAGE, CURRENCY_INFO_EDIT_PAGE).handle(open)));
+    addPage(currencyInfoStartingPage);
 
     /*
      * Currency Edit Format
@@ -234,6 +255,14 @@ public class MyEcoMenu extends Menu {
     currencyNoteFlagPage.setOpen((open->new FlagSelectionPage("CURRENCY_NOTE_FLAGS", name, name, CURRENCY_NOTE_FLAGS_PAGE, CURRENCY_NOTE_EDIT_PAGE, "CURRENCY_NOTE_FLAGS_PAGE", 5).handle(open)));
     addPage(currencyNoteFlagPage);
 
+    final Page noteFeePage = new PageBuilder(CURRENCY_NOTE_FEE_SELECTION_PAGE).build();
+    noteFeePage.setOpen((open->new AmountSelectionPage("CURRENCY_NOTE_FEE", name, name, CURRENCY_NOTE_FEE_SELECTION_PAGE, CURRENCY_NOTE_FEE_MAIN_PAGE).handle(open)));
+    addPage(noteFeePage);
+
+    final Page noteMinPage = new PageBuilder(CURRENCY_NOTE_MIN_SELECTION_PAGE).build();
+    noteMinPage.setOpen((open->new AmountSelectionPage("CURRENCY_NOTE_MIN", name, name, CURRENCY_NOTE_MIN_SELECTION_PAGE, CURRENCY_NOTE_EDIT_PAGE).handle(open)));
+    addPage(noteMinPage);
+
     /*
      * Denominations List Page
      */
@@ -262,6 +291,10 @@ public class MyEcoMenu extends Menu {
     final Page denominationFlagPage = new PageBuilder(DENOMINATION_FLAGS_PAGE).build();
     denominationFlagPage.setOpen((open->new FlagSelectionPage("DENOMINATION_FLAGS", name, name, DENOMINATION_FLAGS_PAGE, DENOMINATION_EDIT_PAGE, "DENOMINATION_FLAGS_PAGE", 5).handle(open)));
     addPage(denominationFlagPage);
+
+    final Page denominationWeightPage = new PageBuilder(DENOMINATION_WEIGHT_SELECTION_PAGE).build();
+    denominationWeightPage.setOpen((open->new AmountSelectionPage("DENOMINATION_WEIGHT", name, name, DENOMINATION_WEIGHT_SELECTION_PAGE, DENOMINATION_EDIT_PAGE).handle(open)));
+    addPage(denominationWeightPage);
   }
 
   /*
@@ -281,6 +314,7 @@ public class MyEcoMenu extends Menu {
 
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
+      //final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((String)currencyUUID.get());
 
       final Optional<Object> currencyUUID = viewer.get().findData("CURRENCY_UUID");//TODO: Replace with just the currency object.
       if(currencyUUID.isPresent()) {
@@ -317,89 +351,30 @@ public class MyEcoMenu extends Menu {
                   })
                   .build());
 
-          //TODO: Make a screen for amount selection
-          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1))
+          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                  .display("Starting Balance")
+                  .lore(Collections.singletonList("New Account Balance for currency")))
                   .withSlot(19)
-                  .withActions(new ChatAction((message)->{
-
-                    if(message.getPlayer().viewer().isPresent()) {
-
-                      try {
-
-                        message.getPlayer().viewer().get().addData("CURRENCY_STARTING", new BigDecimal(message.getMessage()));
-                        return true;
-                      } catch(NumberFormatException ignore) {}
-                    }
-                    message.getPlayer().message("Enter the starting balance of players for the currency:");
-                    return false;
-                  }), new RunnableAction((run)->run.player().message("Enter the starting balance of players for the currency:")))
-                  .withItemProvider((provider)->{
-
-                    final BigDecimal starting = (provider.viewer().isPresent())? (BigDecimal)provider.viewer().get().dataOrDefault("CURRENCY_STARTING", BigDecimal.ZERO) : BigDecimal.ZERO;
-
-
-
-                    return PluginCore.server().stackBuilder().of("PAPER", 1)
-                            .lore(Collections.singletonList("Click to set the starting balance of players for the currency."))
-                            .display(starting.toString());
-                  })
+                  .withActions(new SwitchPageAction("my_eco", CURRENCY_INFO_STARTING_SELECTION_PAGE))
                   .build());
 
-          //TODO: Make a screen for amount selection
-          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1))
+          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                  .display("Maximum Balance")
+                  .lore(Collections.singletonList("Max Allowed Balance for currency")))
                   .withSlot(20)
-                  .withActions(new ChatAction((message)->{
-
-                    if(message.getPlayer().viewer().isPresent()) {
-
-                      try {
-
-                        message.getPlayer().viewer().get().addData("CURRENCY_MAX", new BigDecimal(message.getMessage()));
-                        return true;
-                      } catch(NumberFormatException ignore) {}
-                    }
-                    message.getPlayer().message("Enter the maximum allowed balance of players for the currency:");
-                    return false;
-                  }), new RunnableAction((run)->run.player().message("Enter the maximum allowed balance of players for the currency:")))
-                  .withItemProvider((provider)->{
-
-                    final BigDecimal max = (provider.viewer().isPresent())? (BigDecimal)provider.viewer().get().dataOrDefault("CURRENCY_MAX", BigDecimal.ZERO) : BigDecimal.ZERO;
-
-
-
-                    return PluginCore.server().stackBuilder().of("PAPER", 1)
-                            .lore(Collections.singletonList("Click to set the maximum allowed balance of players for the currency."))
-                            .display(max.toString());
-                  })
+                  .withActions(new SwitchPageAction("my_eco", CURRENCY_INFO_MAX_SELECTION_PAGE))
                   .build());
 
-          //TODO: Make a screen for amount selection
-          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1))
+          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                  .display("Minimum Balance")
+                  .lore(Collections.singletonList("Minimum Required Balance for currency")))
                   .withSlot(21)
-                  .withActions(new ChatAction((message)->{
-
-                    if(message.getPlayer().viewer().isPresent()) {
-
-                      try {
-
-                        message.getPlayer().viewer().get().addData("CURRENCY_MIN", new BigDecimal(message.getMessage()));
-                        return true;
-                      } catch(NumberFormatException ignore) {}
-                    }
-                    message.getPlayer().message("Enter the minimum allowed balance of players for the currency:");
-                    return false;
-                  }), new RunnableAction((run)->run.player().message("Enter the minimum allowed balance of players for the currency:")))
-                  .withItemProvider((provider)->{
-
-                    final BigDecimal min = (provider.viewer().isPresent())? (BigDecimal)provider.viewer().get().dataOrDefault("CURRENCY_MIN", BigDecimal.ZERO) : BigDecimal.ZERO;
-
-                    return PluginCore.server().stackBuilder().of("PAPER", 1)
-                            .lore(Collections.singletonList("Click to set the minimum allowed balance of players for the currency."))
-                            .display(min.toString());
-                  })
+                  .withActions(new SwitchPageAction("my_eco", CURRENCY_INFO_MIN_SELECTION_PAGE))
                   .build());
 
-          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1))
+          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
+                  .display("Set Icon Material")
+                  .lore(Collections.singletonList("Used as item representation in menus.")))
                   .withSlot(22)
                   .withActions(new SwitchPageAction("my_eco", CURRENCY_ICON_MATERIAL_PAGE))
                   .build());
@@ -469,7 +444,9 @@ public class MyEcoMenu extends Menu {
         final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((String)currencyUUID.get());
         if(currencyOptional.isPresent()) {
 
-          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1))
+          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
+                  .display("Click to Set Balance Format")
+                  .lore(Collections.singletonList("The format that is outputted from commands")))
                   .withSlot(10)
                   .withActions(new SwitchPageAction(name, CURRENCY_FORMAT_SELECTION_PAGE))
                   .build());
@@ -694,6 +671,7 @@ public class MyEcoMenu extends Menu {
         if(currencyOptional.isPresent()) {
 
             callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
+                    .display("Note Material")
                     .lore(Collections.singletonList("Click to set the material of the note item.")))
                     .withSlot(10)
                     .withActions(new SwitchPageAction(name, CURRENCY_NOTE_MATERIAL_PAGE))
@@ -711,29 +689,11 @@ public class MyEcoMenu extends Menu {
                     .withActions(new SwitchPageAction(name, CURRENCY_NOTE_ENCHANTS_PAGE))
                     .build());
 
-          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1))
+          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                  .display("Minimum Note Amount")
+                  .lore(Collections.singletonList("Minimum Required Amount for Amount")))
                   .withSlot(13)
-                  .withActions(new ChatAction((message)->{
-
-                    if(message.getPlayer().viewer().isPresent()) {
-
-                      try {
-
-                        message.getPlayer().viewer().get().addData("NOTE_MIN", new BigDecimal(message.getMessage()));
-                        return true;
-                      } catch(NumberFormatException ignore) {}
-                    }
-                    message.getPlayer().message("Click to set the minimum amount a note must be:");
-                    return false;
-                  }), new RunnableAction((run)->run.player().message("Click to set the minimum amount a note must be:")))
-                  .withItemProvider((provider)->{
-
-                    final BigDecimal min = (provider.viewer().isPresent())? (BigDecimal)provider.viewer().get().dataOrDefault("NOTE_MIN", BigDecimal.ZERO) : BigDecimal.ZERO;
-
-                    return PluginCore.server().stackBuilder().of("PAPER", 1)
-                            .lore(Collections.singletonList("Click to set the minimum amount a note must be."))
-                            .display(min.toString());
-                  })
+                  .withActions(new SwitchPageAction("my_eco", CURRENCY_NOTE_MIN_SELECTION_PAGE))
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
@@ -762,8 +722,12 @@ public class MyEcoMenu extends Menu {
                   })
                   .build());
 
-          //TODO: Make a screen for amount selection
-          //TODO: Fee selection page
+          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                  .display("Note Creation Fee")
+                  .lore(Collections.singletonList("Fee for creating Note")))
+                  .withSlot(19)
+                  .withActions(new SwitchPageAction("my_eco", CURRENCY_NOTE_FEE_MAIN_PAGE))
+                  .build());
         }
       }
     }
@@ -869,23 +833,11 @@ public class MyEcoMenu extends Menu {
                       })
                       .build());
 
-              //TODO: Make a screen for amount selection
-              callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-                      .lore(Collections.singletonList("Click to set weight of denomination.")))
+              callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                      .display("Denomination Weight")
+                      .lore(Collections.singletonList("Sets weight for denomination")))
                       .withSlot(12)
-                      .withActions(new ChatAction((message)->{
-
-                        if(message.getPlayer().viewer().isPresent()) {
-
-                          try {
-
-                            message.getPlayer().viewer().get().addData("DENOMINATION_WEIGHT", new BigDecimal(message.getMessage()));
-                            return true;
-                          } catch(NumberFormatException ignore) {}
-                        }
-                        message.getPlayer().message("Enter a weight for the denomination:");
-                        return false;
-                      }), new RunnableAction((run)->run.player().message("Enter a weight for the denomination:")))
+                      .withActions(new SwitchPageAction("my_eco", DENOMINATION_WEIGHT_SELECTION_PAGE))
                       .withItemProvider((provider)->{
 
                         final BigDecimal weight = (provider.viewer().isPresent())? (BigDecimal)provider.viewer().get().dataOrDefault("DENOMINATION_WEIGHT", BigDecimal.ONE) : BigDecimal.ONE;

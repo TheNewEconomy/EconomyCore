@@ -117,7 +117,7 @@ public class SerialCurrency implements JSONAble<Currency> {
     try {
       final JSONObject jsonObject = (JSONObject) parser.parse(serialized);
 
-      final Currency currency = (jsonObject.containsKey("ender"))? new ItemCurrency() : new Currency();
+      final Currency currency = (jsonObject.containsKey("ender"))? new ItemCurrency("USD") : new Currency("USD");
 
       currency.setStartingHoldings(new BigDecimal((String)jsonObject.get("startingHoldings")));
       currency.setMaxBalance(new BigDecimal((String)jsonObject.get("maxBalance")));

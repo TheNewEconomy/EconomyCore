@@ -1,5 +1,4 @@
-package net.tnemc.core.currency;
-
+package net.tnemc.core.utils;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -18,50 +17,23 @@ package net.tnemc.core.currency;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.currency.item.ItemDenomination;
-
-import java.math.BigDecimal;
+import java.util.Random;
 
 /**
- * Represents a denomination for an {@link Currency currency}.
+ * MISCUtils
  *
- * @see Currency
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class Denomination {
+public class MISCUtils {
 
-  private String single;
-  private String plural;
-  private BigDecimal weight;
-
-  public Denomination(BigDecimal weight) {
-    this.weight = weight;
-    this.single = "Singular";
-    this.plural = "Plural";
-  }
-
-  public boolean isItem() {
-    return (this instanceof ItemDenomination);
-  }
-
-  public void setSingle(String single) {
-    this.single = single;
-  }
-
-  public void setPlural(String plural) {
-    this.plural = plural;
-  }
-
-  public String singular() {
-    return single;
-  }
-
-  public String plural() {
-    return plural;
-  }
-
-  public BigDecimal weight() {
-    return weight;
+  public static String randomString(final int length) {
+    final Random rand = new Random();
+    final StringBuilder identifierBuilder = new StringBuilder();
+    for(int i = 0; i < length; i++) {
+      char c = (char)('A' + rand.nextInt(26));
+      identifierBuilder.append(c);
+    }
+    return identifierBuilder.toString();
   }
 }

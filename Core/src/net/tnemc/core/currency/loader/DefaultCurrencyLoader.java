@@ -29,6 +29,7 @@ import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.Note;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
+import net.tnemc.core.utils.MISCUtils;
 import net.tnemc.core.utils.exceptions.NoValidCurrenciesException;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.helper.CraftingRecipe;
@@ -123,7 +124,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     PluginCore.log().inform("Attempting to load currency: " + curDirectory.getName());
 
     //Currency Info configs.
-    final String identifier = cur.getString("Info.Identifier", "Dollar");
+    final String identifier = cur.getString("Info.Identifier", MISCUtils.randomString(3));
     final String icon = cur.getString("Info.Icon", "PAPER");
     final String single = cur.getString("Info.Major_Single", "Dollar");
     final String plural = cur.getString("Info.Major_Plural", "Dollars");
@@ -143,18 +144,12 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     final boolean separate = cur.getBoolean("Formatting.Major_Separate", true);
     final String separator = cur.getString("Formatting.Major_Separator", ",");
 
-    Optional<CurrencyType> type = TNECore.eco().currency().findType(currencyType);
+    final CurrencyType type = TNECore.eco().currency().findTypeOrDefault(currencyType);
 
-    if(type.isEmpty()) {
-      type = TNECore.eco().currency().findType("virtual");
-    }
-
-    Currency currency = (type.get().supportsItems())? new ItemCurrency() : new Currency();
-
-    currency.setFile(curDirectory.getName());
+    final Currency currency = (type.supportsItems())? new ItemCurrency(identifier) : new Currency(identifier);
 
     final BigDecimal maxBalance = ((new BigDecimal(cur.getString("Options.MaxBalance", largestSupported.toPlainString())).compareTo(largestSupported) > 0)? largestSupported : new BigDecimal(cur.getString("MaxBalance", largestSupported.toPlainString())));
-    final BigDecimal minBalance = (type.get().supportsItems())? BigDecimal.ZERO : new BigDecimal(cur.getString("Options.MinBalance", "0.00"));
+    final BigDecimal minBalance = (type.supportsItems())? BigDecimal.ZERO : new BigDecimal(cur.getString("Options.MinBalance", "0.00"));
     final BigDecimal balance = new BigDecimal(cur.getString("Options.Balance", "200.00"));
 
     //Added in build 28, needs removed by build 32.
@@ -184,6 +179,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     }
 
     currency.setIdentifier(identifier);
+    currency.setFile(curDirectory.getName());
     currency.setIconMaterial(icon);
     currency.setMaxBalance(maxBalance);
     currency.setMinBalance(minBalance);
@@ -197,7 +193,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     currency.setDisplayMinor(singleMinor);
     currency.setDisplayPlural(pluralMinor);
     currency.setSymbol(symbol);
-    currency.setType(type.get().name());
+    currency.setType(type.name());
     currency.setSeparateMajor(separate);
     currency.setMajorSeparator(separator);
     currency.setMinorWeight(minorWeight);

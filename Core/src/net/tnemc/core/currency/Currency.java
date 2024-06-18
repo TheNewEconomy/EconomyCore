@@ -25,6 +25,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 import java.util.TreeMap;
 import java.util.UUID;
 
@@ -81,21 +82,38 @@ public class Currency {
   //MISC configurations
   private Note note;
 
-  public Currency() {
+  public Currency(final String identifier) {
+    this.file = identifier + ".yml";
+
+    //Currency Info Configurations
+    this.uid = UUID.randomUUID();
+    this.identifier = identifier;
+    this.iconMaterial = "PAPER";
+    this.display = "Dollar";
+    this.displayPlural = "Dollars";
+    this.displayMinor = "Cent";
+    this.displayMinorPlural = "Cents";
+    this.symbol = "$";
+
+    //Currency Options Configurations
+    this.decimal = ".";
+    this.decimalPlaces = 2;
+    this.type = "virtual";
+    this.minorWeight = 100;
+
+    //Formatting Configurations
+    this.format = "<symbol><major.amount><decimal><minor.amount>";
+    this.prefixes = "kMGTPEZYXWVUN₮";
+    this.separateMajor = true;
+    this.majorSeparator = ",";
+
+    //Balance Configurations
     this.startingHoldings = BigDecimal.ZERO;
     this.maxBalance = CurrencyManager.largestSupported;
     this.minBalance = BigDecimal.ZERO;
 
-    this.uid = UUID.randomUUID();
-    this.type = "virtual";
-
-    this.symbol = "$";
-    this.decimal = ".";
-    this.separateMajor = true;
-    this.majorSeparator = ",";
-
-    this.decimalPlaces = 2;
-    this.minorWeight = 100;
+    //World
+    this.regions.put("global", new CurrencyRegion("global", true, false));
   }
 
   public Denomination getDenominationByWeight(final BigDecimal weight) {
@@ -172,6 +190,7 @@ public class Currency {
 
   public void setIdentifier(String identifier) {
     this.identifier = identifier;
+    this.file = identifier + ".yml";
   }
 
   public String getIconMaterial() {

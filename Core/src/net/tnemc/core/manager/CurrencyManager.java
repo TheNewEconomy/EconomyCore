@@ -30,6 +30,7 @@ import net.tnemc.core.currency.type.ExperienceType;
 import net.tnemc.core.currency.type.ItemType;
 import net.tnemc.core.currency.type.MixedType;
 import net.tnemc.core.currency.type.VirtualType;
+import net.tnemc.core.utils.MISCUtils;
 import net.tnemc.core.utils.exceptions.NoValidCurrenciesException;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.plugincore.PluginCore;
@@ -313,8 +314,9 @@ public class CurrencyManager {
       return currencies.get(identifier);
     }
 
-    if(item) return new ItemCurrency();
-    return new Currency();
+    final String curID = MISCUtils.randomString(3);
+    if(item) return new ItemCurrency(curID);
+    return new Currency(curID);
   }
 
   public Collection<Currency> currencies() {
@@ -340,6 +342,10 @@ public class CurrencyManager {
    */
   public Optional<CurrencyType> findType(final String identifier) {
     return Optional.ofNullable(types.get(identifier));
+  }
+
+  public CurrencyType findTypeOrDefault(final String identifier) {
+    return types.getOrDefault(identifier, types.get("virtual"));
   }
 
   public Map<String, UUID> getCurIDMap() {

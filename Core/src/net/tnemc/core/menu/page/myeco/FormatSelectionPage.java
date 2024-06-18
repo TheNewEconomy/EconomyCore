@@ -141,7 +141,6 @@ public class FormatSelectionPage {
               .display((String)viewer.get().dataOrDefault(formatID, "Nothing Entered Yet"))
               .lore(Collections.singletonList("This is the current format you've selected")))
               .withActions(new SwitchPageAction(menuName, menuPage))
-              .withClick((click)->formatAddClick(click, " "))
               .withSlot(4)
               .build());
 

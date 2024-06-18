@@ -83,13 +83,6 @@ public class EnchantmentSelectionPage {
                 .withSlot(0)
                 .build());
 
-        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
-                .display("Escape Menu")
-                .lore(Collections.singletonList("Click to exit this menu.")))
-                .withActions(new SwitchPageAction(returnMenu, returnPage))
-                .withSlot(4)
-                .build());
-
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
                 .display("Next Page")
                 .lore(Collections.singletonList("Click to go to next page.")))
@@ -97,6 +90,13 @@ public class EnchantmentSelectionPage {
                 .withSlot(8)
                 .build());
       }
+
+      callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
+              .display("Escape Menu")
+              .lore(Collections.singletonList("Click to exit this menu.")))
+              .withActions(new SwitchPageAction(returnMenu, returnPage))
+              .withSlot(4)
+              .build());
 
       for(int i = start; i < start + items; i++) {
         if(TNECore.instance().helper().enchantments().size() <= i) {

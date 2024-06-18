@@ -35,6 +35,13 @@ public class ItemCurrency extends Currency {
   protected boolean enderChest;
   protected boolean enderFill;
 
+  public ItemCurrency(String identifier) {
+    super(identifier);
+
+    this.enderChest = true;
+    this.enderFill = true;
+  }
+
   public Optional<ItemDenomination> getDenominationByMaterial(final String material) {
     for(Denomination denom : getDenominations().values()) {
       final ItemDenomination item = (ItemDenomination)denom;
