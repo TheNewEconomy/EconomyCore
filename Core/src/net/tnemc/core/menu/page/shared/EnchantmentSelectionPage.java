@@ -95,7 +95,15 @@ public class EnchantmentSelectionPage {
               .display("Escape Menu")
               .lore(Collections.singletonList("Click to exit this menu.")))
               .withActions(new SwitchPageAction(returnMenu, returnPage))
-              .withSlot(4)
+              .withSlot(3)
+              .build());
+
+      callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
+              .display("Save.")
+              .lore(Collections.singletonList("Click save the enchantments.")))
+              //TODO: Run Save Action
+              .withActions(new SwitchPageAction(returnMenu, returnPage))
+              .withSlot(6)
               .build());
 
       for(int i = start; i < start + items; i++) {

@@ -100,6 +100,14 @@ public class FlagSelectionPage {
               .withSlot(4)
               .build());
 
+      callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
+              .display("Save.")
+              .lore(Collections.singletonList("Click save the flags.")))
+              //TODO: Run Save Action
+              .withActions(new SwitchPageAction(returnMenu, returnPage))
+              .withSlot(6)
+              .build());
+
 
       for(int i = start; i < start + items; i++) {
         if(TNECore.instance().helper().flags().size() <= i) {

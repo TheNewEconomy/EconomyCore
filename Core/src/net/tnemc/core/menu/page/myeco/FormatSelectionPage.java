@@ -86,13 +86,6 @@ public class FormatSelectionPage {
                 .withSlot(0)
                 .build());
 
-        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
-                .display("Escape Menu")
-                .lore(Collections.singletonList("Click to exit this menu.")))
-                .withActions(new SwitchPageAction(returnMenu, returnPage))
-                .withSlot(1)
-                .build());
-
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
                 .display("Next Page")
                 .lore(Collections.singletonList("Click to go to next page.")))
@@ -142,6 +135,21 @@ public class FormatSelectionPage {
               .lore(Collections.singletonList("This is the current format you've selected")))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withSlot(4)
+              .build());
+
+      callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
+              .display("Escape Menu")
+              .lore(Collections.singletonList("Click to exit this menu.")))
+              .withActions(new SwitchPageAction(returnMenu, returnPage))
+              .withSlot(1)
+              .build());
+
+      callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
+              .display("Save.")
+              .lore(Collections.singletonList("Click save the format.")))
+              //TODO: Run Save Action
+              .withActions(new SwitchPageAction(returnMenu, returnPage))
+              .withSlot(7)
               .build());
 
 
