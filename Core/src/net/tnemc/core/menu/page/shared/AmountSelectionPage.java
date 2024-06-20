@@ -197,7 +197,7 @@ public class AmountSelectionPage {
     }
   }
 
-  private void formatAddClick(final MenuClickHandler click, final BigDecimal toAdd) {
+  protected void formatAddClick(final MenuClickHandler click, final BigDecimal toAdd) {
 
     final Optional<MenuViewer> clickViewer = click.player().viewer();
     clickViewer.ifPresent(menuViewer->addToClickData(menuViewer, toAdd));
