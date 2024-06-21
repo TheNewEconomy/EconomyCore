@@ -33,6 +33,9 @@ import net.tnemc.menu.core.builder.PageBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
 import net.tnemc.menu.core.icon.Icon;
 import net.tnemc.menu.core.icon.action.ActionType;
+import net.tnemc.menu.core.icon.action.IconAction;
+import net.tnemc.menu.core.icon.action.impl.DataAction;
+import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
 import net.tnemc.plugincore.PluginCore;
 
 import java.util.Collections;
@@ -47,9 +50,11 @@ import java.util.Optional;
  */
 public class MyBalMenu extends Menu {
 
-  public static final int BALANCE_VIEW_PAGE = 2;
-  public static final int BALANCE_PAY_PAGE = 3;
-  public static final int BALANCE_AMOUNT_SELECTION_PAGE = 4;
+  public static final int BALANCE_ACTIONS_PAGE = 2;
+  public static final int BALANCE_BREAKDOWN_PAGE = 3;
+  public static final int BALANCE_PAY_PAGE = 4;
+  public static final int BALANCE_AMOUNT_SELECTION_PAGE = 5;
+  public static final int BALANCE_NOTE_AMOUNT_PAGE = 6;
 
   public MyBalMenu() {
     this.name = "my_bal";
@@ -59,15 +64,29 @@ public class MyBalMenu extends Menu {
     /*
      * Main Page
      */
-    final Page main = new PageBuilder(1).withIcons(
-            new SwitchPageIcon(2, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
-                    .display("Currencies"), this.name, BALANCE_VIEW_PAGE, ActionType.ANY)
-    ).build();
+    final Page main = new PageBuilder(1).build();
+    main.setOpen((this::handleMainPage));
     addPage(main);
 
     final Page balanceAmountPage = new PageBuilder(BALANCE_AMOUNT_SELECTION_PAGE).build();
-    //balanceAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_AMOUNT_SELECTION", name, name, CURRENCY_INFO_MAX_SELECTION_PAGE, CURRENCY_INFO_EDIT_PAGE, "BALANCE_AMOUNT_SELECTION").handle(open)));
+    balanceAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_AMOUNT_SELECTION", this.name, this.name, BALANCE_AMOUNT_SELECTION_PAGE, 1, "BALANCE_AMOUNT_TOTAL_SELECTION").handle(open)));
     addPage(balanceAmountPage);
+
+    final Page noteAmountPage = new PageBuilder(BALANCE_NOTE_AMOUNT_PAGE).build();
+    noteAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_NOTE_AMOUNT", this.name, this.name, BALANCE_NOTE_AMOUNT_PAGE, 1, "BALANCE_AMOUNT_TOTAL_SELECTION").handle(open)));
+    addPage(noteAmountPage);
+
+    final Page balanceActionsPage = new PageBuilder(BALANCE_ACTIONS_PAGE).build();
+    //balanceActionsPage.setOpen(((PageOpenCallback open)->new MyBalActionsPage(this.name, this.name, BALANCE_ACTIONS_PAGE, 1).handle(open)));
+    addPage(balanceActionsPage);
+
+    final Page balanceBreakdownPage = new PageBuilder(BALANCE_BREAKDOWN_PAGE).build();
+    //balanceBreakdownPage.setOpen(((PageOpenCallback open)->new MyBalBreakdownPage(this.name, this.name, BALANCE_BREAKDOWN_PAGE, 1).handle(open)));
+    addPage(balanceBreakdownPage);
+
+    final Page balancePayPage = new PageBuilder(BALANCE_PAY_PAGE).build();
+    //balancePayPage.setOpen(((PageOpenCallback open)->new MyBalPayPage(this.name, this.name, BALANCE_PAY_PAGE, 1).handle(open)));
+    addPage(balancePayPage);
   }
 
   public void handleMainPage(final PageOpenCallback callback) {
@@ -92,20 +111,30 @@ public class MyBalMenu extends Menu {
   protected Icon buildBalanceIcon(final int slot, final Currency currency, final Account account) {
 
     final LinkedList<String> lore = new LinkedList<>();
+    final LinkedList<IconAction> actions = new LinkedList<>();
+
+    actions.add(new DataAction("BALANCE_AMOUNT_TOTAL_SELECTION", account.getHoldingsTotal(TNECore.eco().region().defaultRegion(),currency.getUid())));
 
     lore.add("Left click to pay account using currency.");
+    actions.add(new SwitchPageAction(this.name, BALANCE_PAY_PAGE, ActionType.LEFT_CLICK));
+
+    //Drop Action(Other Currency Actions)
+    lore.add("Press Q for other actions using currency.");
+    actions.add(new SwitchPageAction(this.name, BALANCE_ACTIONS_PAGE, ActionType.DROP));
 
     if(currency.type() instanceof VirtualType && currency.isNotable()) {
       lore.add("Right click to create physical currency note.");
+      actions.add(new SwitchPageAction(this.name, BALANCE_NOTE_AMOUNT_PAGE, ActionType.RIGHT_CLICK));
     }
 
     if(currency.type().supportsItems()) {
       lore.add("Right click to view balance breakdown.");
+      actions.add(new SwitchPageAction(this.name, BALANCE_BREAKDOWN_PAGE, ActionType.RIGHT_CLICK));
     }
 
     return new IconBuilder(PluginCore.server().stackBuilder().of(currency.getIconMaterial(), 1)
             .display(currency.getIdentifier()).lore(lore))
             .withSlot(slot)
-            .withActions().build();
+            .withActions(actions.toArray(new IconAction[actions.size()])).build();
   }
 }
