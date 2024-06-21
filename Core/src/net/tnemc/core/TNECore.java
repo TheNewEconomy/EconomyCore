@@ -46,6 +46,7 @@ import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.hook.treasury.TreasuryHook;
 import net.tnemc.core.io.yaml.YamlStorageManager;
 import net.tnemc.core.manager.Updater;
+import net.tnemc.core.menu.MyBalMenu;
 import net.tnemc.core.menu.MyEcoMenu;
 import net.tnemc.core.region.RegionGroup;
 import net.tnemc.item.AbstractItemStack;
@@ -291,6 +292,7 @@ public abstract class TNECore extends PluginEngine {
   @Override
   public void postEnable() {
     MenuManager.instance().addMenu(new MyEcoMenu());
+    MenuManager.instance().addMenu(new MyBalMenu());
 
     this.storage.loadAll(Account.class, "");
 

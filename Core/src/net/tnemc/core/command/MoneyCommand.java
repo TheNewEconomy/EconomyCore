@@ -61,7 +61,7 @@ import java.util.UUID;
 public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: [currency]
-  public static void onMyBal(CmdSource<?> sender, Currency currency) {
+  public static void onMyBal(CmdSource<?> sender) {
     if(sender.player().isPresent()) {
       sender.player().get().inventory().openMenu(sender.player().get(), "my_bal");
     }

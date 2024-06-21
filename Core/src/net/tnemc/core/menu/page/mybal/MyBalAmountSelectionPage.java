@@ -20,6 +20,7 @@ package net.tnemc.core.menu.page.mybal;
 import net.tnemc.core.menu.page.shared.AmountSelectionPage;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
+import net.tnemc.menu.core.icon.Icon;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
 import net.tnemc.plugincore.PluginCore;
 
@@ -45,6 +46,8 @@ public class MyBalAmountSelectionPage extends AmountSelectionPage {
   @Override
   public void handle(PageOpenCallback callback) {
     super.handle(callback);
+
+    //TODO: Action button to run on click from menu.
 
     if(callback.getPlayer().viewer().isPresent()) {
 

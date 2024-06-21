@@ -44,13 +44,13 @@ import java.math.BigDecimal;
 @Command({"money", "eco", "balo", "balance", "bal", "balanceother"})
 public class MoneyCommand {
 
-  /*@Subcommand({"balmenu", "menu", "mybal"})
+  @Subcommand({"balmenu", "menu", "mybal"})
   @Usage("Money.MyBal.Arguments")
   @Description("Money.MyBal.Description")
   @CommandPermission("tne.money.mybal")
-  public void onMyBal(BukkitCommandActor sender, @Named("currency") Currency currency) {
-    net.tnemc.core.command.MoneyCommand.onMyBal(new BukkitCMDSource(sender), currency);
-  }*/
+  public void onMyBal(BukkitCommandActor sender) {
+    net.tnemc.core.command.MoneyCommand.onMyBal(new BukkitCMDSource(sender));
+  }
 
   @Subcommand({"help", "?"})
   @Usage("Help.Arguments")

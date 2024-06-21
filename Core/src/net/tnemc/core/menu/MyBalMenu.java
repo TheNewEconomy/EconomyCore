@@ -19,10 +19,12 @@ package net.tnemc.core.menu;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.type.MixedType;
 import net.tnemc.core.currency.type.VirtualType;
 import net.tnemc.core.menu.icons.myeco.CurrencyIcon;
+import net.tnemc.core.menu.icons.shared.PreviousPageIcon;
 import net.tnemc.core.menu.icons.shared.SwitchPageIcon;
 import net.tnemc.core.menu.page.mybal.MyBalAmountSelectionPage;
 import net.tnemc.core.menu.page.shared.AmountSelectionPage;
@@ -36,11 +38,13 @@ import net.tnemc.menu.core.icon.action.ActionType;
 import net.tnemc.menu.core.icon.action.IconAction;
 import net.tnemc.menu.core.icon.action.impl.DataAction;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
+import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * MyBalMenu
@@ -65,7 +69,7 @@ public class MyBalMenu extends Menu {
      * Main Page
      */
     final Page main = new PageBuilder(1).build();
-    main.setOpen((this::handleMainPage));
+    main.setOpen(this::handleMainPage);
     addPage(main);
 
     final Page balanceAmountPage = new PageBuilder(BALANCE_AMOUNT_SELECTION_PAGE).build();
@@ -77,14 +81,17 @@ public class MyBalMenu extends Menu {
     addPage(noteAmountPage);
 
     final Page balanceActionsPage = new PageBuilder(BALANCE_ACTIONS_PAGE).build();
-    //balanceActionsPage.setOpen(((PageOpenCallback open)->new MyBalActionsPage(this.name, this.name, BALANCE_ACTIONS_PAGE, 1).handle(open)));
+    balanceActionsPage.addIcon(new PreviousPageIcon(0, this.name, 1, ActionType.ANY));
+    actionsPage(balanceActionsPage);
     addPage(balanceActionsPage);
 
     final Page balanceBreakdownPage = new PageBuilder(BALANCE_BREAKDOWN_PAGE).build();
-    //balanceBreakdownPage.setOpen(((PageOpenCallback open)->new MyBalBreakdownPage(this.name, this.name, BALANCE_BREAKDOWN_PAGE, 1).handle(open)));
+    balanceBreakdownPage.addIcon(new PreviousPageIcon(0, this.name, 1, ActionType.ANY));
+    balanceBreakdownPage.setOpen(this::handleBreakdownPage);
     addPage(balanceBreakdownPage);
 
     final Page balancePayPage = new PageBuilder(BALANCE_PAY_PAGE).build();
+    balanceBreakdownPage.addIcon(new PreviousPageIcon(0, this.name, 1, ActionType.ANY));
     //balancePayPage.setOpen(((PageOpenCallback open)->new MyBalPayPage(this.name, this.name, BALANCE_PAY_PAGE, 1).handle(open)));
     addPage(balancePayPage);
   }
@@ -93,14 +100,44 @@ public class MyBalMenu extends Menu {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(callback.getPlayer().identifier());
 
-
     if(account.isPresent()) {
-      int i = 19;
+      int i = 10;
       for(final Currency curObj : TNECore.eco().currency().currencies()) {
 
-        buildBalanceIcon(i, curObj, account.get());
+        callback.getPage().addIcon(buildBalanceIcon(i, curObj, account.get()));
 
         i += 2;
+      }
+    }
+  }
+
+  protected void actionsPage(final Page page) {
+
+  }
+
+  protected void handleBreakdownPage(final PageOpenCallback callback) {
+
+    final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
+    if(viewer.isPresent()) {
+
+      final Optional<Account> account = TNECore.eco().account().findAccount(callback.getPlayer().identifier());
+      if(account.isPresent()) {
+
+        final Optional<Object> currencyUUID = viewer.get().findData("ACTION_CURRENCY");
+        if(currencyUUID.isPresent()) {
+
+          final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((UUID)currencyUUID.get());
+          if(currencyOptional.isPresent()) {
+
+            int i = 10;
+            for(final HoldingsEntry entry : account.get().getHoldings(TNECore.eco().region().defaultRegion(), (UUID)currencyUUID.get())) {
+
+              callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                      .display(entry.getHandler().id())).build());
+              i += 2;
+            }
+          }
+        }
       }
     }
   }
@@ -113,7 +150,8 @@ public class MyBalMenu extends Menu {
     final LinkedList<String> lore = new LinkedList<>();
     final LinkedList<IconAction> actions = new LinkedList<>();
 
-    actions.add(new DataAction("BALANCE_AMOUNT_TOTAL_SELECTION", account.getHoldingsTotal(TNECore.eco().region().defaultRegion(),currency.getUid())));
+    actions.add(new DataAction("ACTION_CURRENCY", currency.getUid()));
+    actions.add(new DataAction("BALANCE_AMOUNT_TOTAL_SELECTION", account.getHoldingsTotal(TNECore.eco().region().defaultRegion(), currency.getUid())));
 
     lore.add("Left click to pay account using currency.");
     actions.add(new SwitchPageAction(this.name, BALANCE_PAY_PAGE, ActionType.LEFT_CLICK));
