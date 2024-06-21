@@ -83,8 +83,8 @@ Item:
   #Would you like your item currency balances to also check the player's ender chest?
   EnderChest: true
 
-  #Would you like your item currency to be consolidated into least amount of items after each transaction?
-  Consolidate: false
+  #Would you like your item currency items to go into the ender chest before dropping on the ground if inventory is full?
+  EnderFill: true
 
 #All configurations related to formatting.
 Formatting:
