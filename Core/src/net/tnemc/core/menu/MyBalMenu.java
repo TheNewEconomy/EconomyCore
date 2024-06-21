@@ -91,7 +91,7 @@ public class MyBalMenu extends Menu {
     addPage(balanceBreakdownPage);
 
     final Page balancePayPage = new PageBuilder(BALANCE_PAY_PAGE).build();
-    balanceBreakdownPage.addIcon(new PreviousPageIcon(0, this.name, 1, ActionType.ANY));
+    balancePayPage.addIcon(new PreviousPageIcon(0, this.name, 1, ActionType.ANY));
     //balancePayPage.setOpen(((PageOpenCallback open)->new MyBalPayPage(this.name, this.name, BALANCE_PAY_PAGE, 1).handle(open)));
     addPage(balancePayPage);
   }
@@ -133,7 +133,9 @@ public class MyBalMenu extends Menu {
             for(final HoldingsEntry entry : account.get().getHoldings(TNECore.eco().region().defaultRegion(), (UUID)currencyUUID.get())) {
 
               callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                      .display(entry.getHandler().id())).build());
+                      .display(entry.getHandler().id())
+                      .lore(Collections.singletonList("Balance: " + entry.getAmount())))
+                      .withSlot(i).build());
               i += 2;
             }
           }
