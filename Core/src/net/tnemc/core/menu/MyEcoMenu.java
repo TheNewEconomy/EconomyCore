@@ -104,7 +104,7 @@ public class MyEcoMenu extends Menu {
      */
     final Page main = new PageBuilder(1).withIcons(
             new SwitchPageIcon(2, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
-                    .display("Currencies"), "my_eco", CURRENCIES_PAGE, ActionType.ANY)
+                    .display("Currencies"), this.name, CURRENCIES_PAGE, ActionType.ANY)
     ).build();
     addPage(main);
 
@@ -114,11 +114,11 @@ public class MyEcoMenu extends Menu {
      * Currency List Page
      */
     final Page currency = new PageBuilder(CURRENCIES_PAGE).build();
-    currency.addIcon(new PreviousPageIcon(0, "my_eco", 1, ActionType.ANY));
+    currency.addIcon(new PreviousPageIcon(0, this.name, 1, ActionType.ANY));
 
     //add currency
     final SwitchPageIcon addCurrencyIcon = new SwitchPageIcon(2, PluginCore.server().stackBuilder().of("ARROW", 1)
-            .display("Add Currency").lore(Collections.singletonList("Click to add currency")), "my_eco", CURRENCY_EDIT_PAGE, ActionType.ANY);
+            .display("Add Currency").lore(Collections.singletonList("Click to add currency")), this.name, CURRENCY_EDIT_PAGE, ActionType.ANY);
     addCurrencyIcon.addAction(new DataAction("CURRENCY_UUID", UUID.randomUUID().toString()));
     addCurrencyIcon.addAction(new ChatAction((message)->{
 
@@ -153,27 +153,27 @@ public class MyEcoMenu extends Menu {
      * Currency Edit Page
      */
     final Page currencyEditor = new PageBuilder(CURRENCY_EDIT_PAGE).build();
-    currencyEditor.addIcon(new PreviousPageIcon(0, "my_eco", CURRENCIES_PAGE, ActionType.ANY));
+    currencyEditor.addIcon(new PreviousPageIcon(0, this.name, CURRENCIES_PAGE, ActionType.ANY));
 
     //denominations
     currencyEditor.addIcon(new SwitchPageIcon(19, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
-            .display("Edit Denominations"), "my_eco", DENOMINATIONS_PAGE, ActionType.ANY));
+            .display("Edit Denominations"), this.name, DENOMINATIONS_PAGE, ActionType.ANY));
 
     //CURRENCY_INFO_EDIT_PAGE
     currencyEditor.addIcon(new SwitchPageIcon(20, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
-            .display("Basic Currency Information"), "my_eco", CURRENCY_INFO_EDIT_PAGE, ActionType.ANY));
+            .display("Basic Currency Information"), this.name, CURRENCY_INFO_EDIT_PAGE, ActionType.ANY));
 
     //CURRENCY_FORMAT_EDIT_PAGE
     currencyEditor.addIcon(new SwitchPageIcon(21, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
-            .display("Currency Format Options"), "my_eco", CURRENCY_FORMAT_EDIT_PAGE, ActionType.ANY));
+            .display("Currency Format Options"), this.name, CURRENCY_FORMAT_EDIT_PAGE, ActionType.ANY));
 
     //CURRENCY_TYPE_EDIT_PAGE
     currencyEditor.addIcon(new SwitchPageIcon(22, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
-            .display("Currency Type"), "my_eco", CURRENCY_TYPE_EDIT_PAGE, ActionType.ANY));
+            .display("Currency Type"), this.name, CURRENCY_TYPE_EDIT_PAGE, ActionType.ANY));
 
     //CURRENCY_NOTE_EDIT_PAGE
     currencyEditor.addIcon(new SwitchPageIcon(23, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
-            .display("Currency Note Options"), "my_eco", CURRENCY_NOTE_EDIT_PAGE, ActionType.ANY));
+            .display("Currency Note Options"), this.name, CURRENCY_NOTE_EDIT_PAGE, ActionType.ANY));
 
     addPage(currencyEditor);
 
@@ -181,51 +181,51 @@ public class MyEcoMenu extends Menu {
      * Currency Edit Info
      */
     final Page currencyInfoEditPage = new PageBuilder(CURRENCY_INFO_EDIT_PAGE).build();
-    currencyInfoEditPage.addIcon(new PreviousPageIcon(0, "my_eco", CURRENCY_EDIT_PAGE, ActionType.ANY));
+    currencyInfoEditPage.addIcon(new PreviousPageIcon(0, this.name, CURRENCY_EDIT_PAGE, ActionType.ANY));
     currencyInfoEditPage.setOpen((this::handleCurrencyEditInfoOpen));
 
     addPage(currencyInfoEditPage);
 
     final Page currencyIconMaterialPage = new PageBuilder(CURRENCY_ICON_MATERIAL_PAGE).build();
-    currencyIconMaterialPage.setOpen((open->new MaterialSelectionPageCallback("CURRENCY_ICON_MATERIAL", name, name, CURRENCY_ICON_MATERIAL_PAGE, CURRENCY_INFO_EDIT_PAGE, "CURRENCY_ICON_MATERIAL_PAGE", this.rows).handle(open)));
+    currencyIconMaterialPage.setOpen((open->new MaterialSelectionPageCallback("CURRENCY_ICON_MATERIAL", this.name, this.name, CURRENCY_ICON_MATERIAL_PAGE, CURRENCY_INFO_EDIT_PAGE, "CURRENCY_ICON_MATERIAL_PAGE", this.rows).handle(open)));
     addPage(currencyIconMaterialPage);
 
     final Page currencyInfoMaxPage = new PageBuilder(CURRENCY_INFO_MAX_SELECTION_PAGE).build();
-    currencyInfoMaxPage.setOpen((open->new AmountSelectionPage("CURRENCY_INFO_MAX", name, name, CURRENCY_INFO_MAX_SELECTION_PAGE, CURRENCY_INFO_EDIT_PAGE).handle(open)));
+    currencyInfoMaxPage.setOpen((open->new AmountSelectionPage("CURRENCY_INFO_MAX", this.name, this.name, CURRENCY_INFO_MAX_SELECTION_PAGE, CURRENCY_INFO_EDIT_PAGE).handle(open)));
     addPage(currencyInfoMaxPage);
 
     final Page currencyInfoMinPage = new PageBuilder(CURRENCY_INFO_MIN_SELECTION_PAGE).build();
-    currencyInfoMinPage.setOpen((open->new AmountSelectionPage("CURRENCY_INFO_MIN", name, name, CURRENCY_INFO_MIN_SELECTION_PAGE, CURRENCY_INFO_EDIT_PAGE).handle(open)));
+    currencyInfoMinPage.setOpen((open->new AmountSelectionPage("CURRENCY_INFO_MIN", this.name, this.name, CURRENCY_INFO_MIN_SELECTION_PAGE, CURRENCY_INFO_EDIT_PAGE).handle(open)));
     addPage(currencyInfoMinPage);
 
     final Page currencyInfoStartingPage = new PageBuilder(CURRENCY_INFO_STARTING_SELECTION_PAGE).build();
-    currencyInfoStartingPage.setOpen((open->new AmountSelectionPage("CURRENCY_INFO_STARTING", name, name, CURRENCY_INFO_STARTING_SELECTION_PAGE, CURRENCY_INFO_EDIT_PAGE).handle(open)));
+    currencyInfoStartingPage.setOpen((open->new AmountSelectionPage("CURRENCY_INFO_STARTING", this.name, this.name, CURRENCY_INFO_STARTING_SELECTION_PAGE, CURRENCY_INFO_EDIT_PAGE).handle(open)));
     addPage(currencyInfoStartingPage);
 
     /*
      * Currency Edit Format
      */
     final Page currencyFormatEditPage = new PageBuilder(CURRENCY_FORMAT_EDIT_PAGE).build();
-    currencyFormatEditPage.addIcon(new PreviousPageIcon(0, "my_eco", CURRENCY_EDIT_PAGE, ActionType.ANY));
+    currencyFormatEditPage.addIcon(new PreviousPageIcon(0, this.name, CURRENCY_EDIT_PAGE, ActionType.ANY));
     currencyFormatEditPage.setOpen((this::handleCurrencyEditFormatOpen));
 
     addPage(currencyFormatEditPage);
 
     final Page currencyFormatSelectionPage = new PageBuilder(CURRENCY_FORMAT_SELECTION_PAGE).build();
-    currencyFormatSelectionPage.setOpen((open->new FormatSelectionPage("CURRENCY_FORMAT_SELECTION", name, name, CURRENCY_FORMAT_SELECTION_PAGE, CURRENCY_FORMAT_EDIT_PAGE, "CURRENCY_FORMAT_SELECTION_PAGE", this.rows).handle(open)));
+    currencyFormatSelectionPage.setOpen((open->new FormatSelectionPage("CURRENCY_FORMAT_SELECTION", this.name, this.name, CURRENCY_FORMAT_SELECTION_PAGE, CURRENCY_FORMAT_EDIT_PAGE, "CURRENCY_FORMAT_SELECTION_PAGE", this.rows).handle(open)));
     addPage(currencyFormatSelectionPage);
 
     /*
      * Currency Edit Type
      */
     final Page currencyTypeEditPage = new PageBuilder(CURRENCY_TYPE_EDIT_PAGE).build();
-    currencyTypeEditPage.addIcon(new PreviousPageIcon(0, "my_eco", CURRENCY_EDIT_PAGE, ActionType.ANY));
+    currencyTypeEditPage.addIcon(new PreviousPageIcon(0, this.name, CURRENCY_EDIT_PAGE, ActionType.ANY));
 
     i = 19;
     for(final CurrencyType type : TNECore.eco().currency().getTypes().values()) {
 
       final SwitchPageIcon switchIcon = new SwitchPageIcon(i, PluginCore.server().stackBuilder().of("PAPER", 1)
-              .display("Type: " + type.name()).lore(Collections.singletonList("Click to set currency to this type.")), "my_eco", CURRENCY_EDIT_PAGE, ActionType.ANY);
+              .display("Type: " + type.name()).lore(Collections.singletonList("Click to set currency to this type.")), this.name, CURRENCY_EDIT_PAGE, ActionType.ANY);
 
       switchIcon.addAction(new DataAction("CURRENCY_TYPE", type.name()));
       currencyTypeEditPage.addIcon(switchIcon);
@@ -238,36 +238,36 @@ public class MyEcoMenu extends Menu {
      * Currency Note Edit Info
      */
     final Page currencyFormatNotePage = new PageBuilder(CURRENCY_NOTE_EDIT_PAGE).build();
-    currencyFormatNotePage.addIcon(new PreviousPageIcon(0, "my_eco", CURRENCY_EDIT_PAGE, ActionType.ANY));
+    currencyFormatNotePage.addIcon(new PreviousPageIcon(0, this.name, CURRENCY_EDIT_PAGE, ActionType.ANY));
     currencyFormatNotePage.setOpen((this::handleCurrencyEditNoteOpen));
 
     addPage(currencyFormatNotePage);
 
     final Page currencyNoteMaterialPage = new PageBuilder(CURRENCY_NOTE_MATERIAL_PAGE).build();
-    currencyNoteMaterialPage.setOpen((open->new MaterialSelectionPageCallback("CURRENCY_NOTE_MATERIAL", name, name, CURRENCY_NOTE_MATERIAL_PAGE, CURRENCY_NOTE_EDIT_PAGE, "CURRENCY_NOTE_MATERIAL_PAGE", this.rows).handle(open)));
+    currencyNoteMaterialPage.setOpen((open->new MaterialSelectionPageCallback("CURRENCY_NOTE_MATERIAL", this.name, this.name, CURRENCY_NOTE_MATERIAL_PAGE, CURRENCY_NOTE_EDIT_PAGE, "CURRENCY_NOTE_MATERIAL_PAGE", this.rows).handle(open)));
     addPage(currencyNoteMaterialPage);
 
     final Page currencyNoteEnchantPage = new PageBuilder(CURRENCY_NOTE_ENCHANTS_PAGE).build();
-    currencyNoteEnchantPage.setOpen((open->new EnchantmentSelectionPage("CURRENCY_NOTE_ENCHANTS", name, name, CURRENCY_NOTE_ENCHANTS_PAGE, CURRENCY_NOTE_EDIT_PAGE, "CURRENCY_NOTE_ENCHANTS_PAGE", this.rows).handle(open)));
+    currencyNoteEnchantPage.setOpen((open->new EnchantmentSelectionPage("CURRENCY_NOTE_ENCHANTS", this.name, this.name, CURRENCY_NOTE_ENCHANTS_PAGE, CURRENCY_NOTE_EDIT_PAGE, "CURRENCY_NOTE_ENCHANTS_PAGE", this.rows).handle(open)));
     addPage(currencyNoteEnchantPage);
 
     final Page currencyNoteFlagPage = new PageBuilder(CURRENCY_NOTE_FLAGS_PAGE).build();
-    currencyNoteFlagPage.setOpen((open->new FlagSelectionPage("CURRENCY_NOTE_FLAGS", name, name, CURRENCY_NOTE_FLAGS_PAGE, CURRENCY_NOTE_EDIT_PAGE, "CURRENCY_NOTE_FLAGS_PAGE", this.rows).handle(open)));
+    currencyNoteFlagPage.setOpen((open->new FlagSelectionPage("CURRENCY_NOTE_FLAGS", this.name, this.name, CURRENCY_NOTE_FLAGS_PAGE, CURRENCY_NOTE_EDIT_PAGE, "CURRENCY_NOTE_FLAGS_PAGE", this.rows).handle(open)));
     addPage(currencyNoteFlagPage);
 
     final Page noteFeePage = new PageBuilder(CURRENCY_NOTE_FEE_SELECTION_PAGE).build();
-    noteFeePage.setOpen((open->new AmountSelectionPage("CURRENCY_NOTE_FEE", name, name, CURRENCY_NOTE_FEE_SELECTION_PAGE, CURRENCY_NOTE_FEE_MAIN_PAGE).handle(open)));
+    noteFeePage.setOpen((open->new AmountSelectionPage("CURRENCY_NOTE_FEE", this.name, this.name, CURRENCY_NOTE_FEE_SELECTION_PAGE, CURRENCY_NOTE_FEE_MAIN_PAGE).handle(open)));
     addPage(noteFeePage);
 
     final Page noteMinPage = new PageBuilder(CURRENCY_NOTE_MIN_SELECTION_PAGE).build();
-    noteMinPage.setOpen((open->new AmountSelectionPage("CURRENCY_NOTE_MIN", name, name, CURRENCY_NOTE_MIN_SELECTION_PAGE, CURRENCY_NOTE_EDIT_PAGE).handle(open)));
+    noteMinPage.setOpen((open->new AmountSelectionPage("CURRENCY_NOTE_MIN", this.name, this.name, CURRENCY_NOTE_MIN_SELECTION_PAGE, CURRENCY_NOTE_EDIT_PAGE).handle(open)));
     addPage(noteMinPage);
 
     /*
      * Denominations List Page
      */
     final Page denominationsPage = new PageBuilder(DENOMINATIONS_PAGE).build();
-    denominationsPage.addIcon(new PreviousPageIcon(0, "my_eco", CURRENCY_EDIT_PAGE, ActionType.ANY));
+    denominationsPage.addIcon(new PreviousPageIcon(0, this.name, CURRENCY_EDIT_PAGE, ActionType.ANY));
     denominationsPage.setOpen((this::handleDenominationOpen));
 
     addPage(denominationsPage);
@@ -276,24 +276,24 @@ public class MyEcoMenu extends Menu {
      * Denominations Edit Page
      */
     final Page denominationsEditPage = new PageBuilder(DENOMINATION_EDIT_PAGE).build();
-    denominationsEditPage.addIcon(new PreviousPageIcon(0, "my_eco", DENOMINATIONS_PAGE, ActionType.ANY));
+    denominationsEditPage.addIcon(new PreviousPageIcon(0, this.name, DENOMINATIONS_PAGE, ActionType.ANY));
     denominationsEditPage.setOpen((this::handleDenominationEditOpen));
     addPage(denominationsEditPage);
 
     final Page denominationMaterialPage = new PageBuilder(DENOMINATION_MATERIAL_PAGE).build();
-    denominationMaterialPage.setOpen((open->new MaterialSelectionPageCallback("DENOMINATION_MATERIAL", name, name, DENOMINATION_MATERIAL_PAGE, DENOMINATION_EDIT_PAGE, "DENOMINATION_MATERIAL_PAGE", this.rows).handle(open)));
+    denominationMaterialPage.setOpen((open->new MaterialSelectionPageCallback("DENOMINATION_MATERIAL", this.name, this.name, DENOMINATION_MATERIAL_PAGE, DENOMINATION_EDIT_PAGE, "DENOMINATION_MATERIAL_PAGE", this.rows).handle(open)));
     addPage(denominationMaterialPage);
 
     final Page denominationEnchantPage = new PageBuilder(DENOMINATION_ENCHANTS_PAGE).build();
-    denominationEnchantPage.setOpen((open->new EnchantmentSelectionPage("DENOMINATION_ENCHANTS", name, name, DENOMINATION_ENCHANTS_PAGE, DENOMINATION_EDIT_PAGE, "DENOMINATION_ENCHANTS_PAGE", this.rows).handle(open)));
+    denominationEnchantPage.setOpen((open->new EnchantmentSelectionPage("DENOMINATION_ENCHANTS", this.name, this.name, DENOMINATION_ENCHANTS_PAGE, DENOMINATION_EDIT_PAGE, "DENOMINATION_ENCHANTS_PAGE", this.rows).handle(open)));
     addPage(denominationEnchantPage);
 
     final Page denominationFlagPage = new PageBuilder(DENOMINATION_FLAGS_PAGE).build();
-    denominationFlagPage.setOpen((open->new FlagSelectionPage("DENOMINATION_FLAGS", name, name, DENOMINATION_FLAGS_PAGE, DENOMINATION_EDIT_PAGE, "DENOMINATION_FLAGS_PAGE", this.rows).handle(open)));
+    denominationFlagPage.setOpen((open->new FlagSelectionPage("DENOMINATION_FLAGS", this.name, this.name, DENOMINATION_FLAGS_PAGE, DENOMINATION_EDIT_PAGE, "DENOMINATION_FLAGS_PAGE", this.rows).handle(open)));
     addPage(denominationFlagPage);
 
     final Page denominationWeightPage = new PageBuilder(DENOMINATION_WEIGHT_SELECTION_PAGE).build();
-    denominationWeightPage.setOpen((open->new AmountSelectionPage("DENOMINATION_WEIGHT", name, name, DENOMINATION_WEIGHT_SELECTION_PAGE, DENOMINATION_EDIT_PAGE).handle(open)));
+    denominationWeightPage.setOpen((open->new AmountSelectionPage("DENOMINATION_WEIGHT", this.name, this.name, DENOMINATION_WEIGHT_SELECTION_PAGE, DENOMINATION_EDIT_PAGE).handle(open)));
     addPage(denominationWeightPage);
   }
 
@@ -355,28 +355,28 @@ public class MyEcoMenu extends Menu {
                   .display("Starting Balance")
                   .lore(Collections.singletonList("New Account Balance for currency")))
                   .withSlot(19)
-                  .withActions(new SwitchPageAction("my_eco", CURRENCY_INFO_STARTING_SELECTION_PAGE))
+                  .withActions(new SwitchPageAction(this.name, CURRENCY_INFO_STARTING_SELECTION_PAGE))
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
                   .display("Maximum Balance")
                   .lore(Collections.singletonList("Max Allowed Balance for currency")))
                   .withSlot(20)
-                  .withActions(new SwitchPageAction("my_eco", CURRENCY_INFO_MAX_SELECTION_PAGE))
+                  .withActions(new SwitchPageAction(this.name, CURRENCY_INFO_MAX_SELECTION_PAGE))
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
                   .display("Minimum Balance")
                   .lore(Collections.singletonList("Minimum Required Balance for currency")))
                   .withSlot(21)
-                  .withActions(new SwitchPageAction("my_eco", CURRENCY_INFO_MIN_SELECTION_PAGE))
+                  .withActions(new SwitchPageAction(this.name, CURRENCY_INFO_MIN_SELECTION_PAGE))
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
                   .display("Set Icon Material")
                   .lore(Collections.singletonList("Used as item representation in menus.")))
                   .withSlot(22)
-                  .withActions(new SwitchPageAction("my_eco", CURRENCY_ICON_MATERIAL_PAGE))
+                  .withActions(new SwitchPageAction(this.name, CURRENCY_ICON_MATERIAL_PAGE))
                   .build());
 
           if(currencyOptional.get() instanceof ItemCurrency) {
@@ -448,7 +448,7 @@ public class MyEcoMenu extends Menu {
                   .display("Click to Set Balance Format")
                   .lore(Collections.singletonList("The format that is outputted from commands")))
                   .withSlot(10)
-                  .withActions(new SwitchPageAction(name, CURRENCY_FORMAT_SELECTION_PAGE))
+                  .withActions(new SwitchPageAction(this.name, CURRENCY_FORMAT_SELECTION_PAGE))
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1))
@@ -674,26 +674,26 @@ public class MyEcoMenu extends Menu {
                     .display("Note Material")
                     .lore(Collections.singletonList("Click to set the material of the note item.")))
                     .withSlot(10)
-                    .withActions(new SwitchPageAction(name, CURRENCY_NOTE_MATERIAL_PAGE))
+                    .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_MATERIAL_PAGE))
                     .build());
 
             callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
                     .lore(Collections.singletonList("Click to set the flags of the note item.")))
                     .withSlot(11)
-                    .withActions(new SwitchPageAction(name, CURRENCY_NOTE_FLAGS_PAGE))
+                    .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_FLAGS_PAGE))
                     .build());
 
             callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
                     .lore(Collections.singletonList("Click to set the enchantments of the note item.")))
                     .withSlot(12)
-                    .withActions(new SwitchPageAction(name, CURRENCY_NOTE_ENCHANTS_PAGE))
+                    .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_ENCHANTS_PAGE))
                     .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
                   .display("Minimum Note Amount")
                   .lore(Collections.singletonList("Minimum Required Amount for Amount")))
                   .withSlot(13)
-                  .withActions(new SwitchPageAction("my_eco", CURRENCY_NOTE_MIN_SELECTION_PAGE))
+                  .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_MIN_SELECTION_PAGE))
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
@@ -726,7 +726,7 @@ public class MyEcoMenu extends Menu {
                   .display("Note Creation Fee")
                   .lore(Collections.singletonList("Fee for creating Note")))
                   .withSlot(19)
-                  .withActions(new SwitchPageAction("my_eco", CURRENCY_NOTE_FEE_MAIN_PAGE))
+                  .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_FEE_MAIN_PAGE))
                   .build());
         }
       }
@@ -837,7 +837,7 @@ public class MyEcoMenu extends Menu {
                       .display("Denomination Weight")
                       .lore(Collections.singletonList("Sets weight for denomination")))
                       .withSlot(12)
-                      .withActions(new SwitchPageAction("my_eco", DENOMINATION_WEIGHT_SELECTION_PAGE))
+                      .withActions(new SwitchPageAction(this.name, DENOMINATION_WEIGHT_SELECTION_PAGE))
                       .withItemProvider((provider)->{
 
                         final BigDecimal weight = (provider.viewer().isPresent())? (BigDecimal)provider.viewer().get().dataOrDefault("DENOMINATION_WEIGHT", BigDecimal.ONE) : BigDecimal.ONE;
@@ -852,7 +852,7 @@ public class MyEcoMenu extends Menu {
                 callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
                         .lore(Collections.singletonList("Click to set material of denomination.")))
                         .withSlot(13)
-                        .withActions(new SwitchPageAction(name, DENOMINATION_MATERIAL_PAGE))
+                        .withActions(new SwitchPageAction(this.name, DENOMINATION_MATERIAL_PAGE))
                         .build());
 
                 callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
@@ -950,13 +950,13 @@ public class MyEcoMenu extends Menu {
                 callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
                         .lore(Collections.singletonList("Click to set flags of denomination item.")))
                         .withSlot(18)
-                        .withActions(new SwitchPageAction(name, DENOMINATION_FLAGS_PAGE))
+                        .withActions(new SwitchPageAction(this.name, DENOMINATION_FLAGS_PAGE))
                         .build());
 
                 callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
                         .lore(Collections.singletonList("Click to set enchantments of denomination item.")))
                         .withSlot(19)
-                        .withActions(new SwitchPageAction(name, DENOMINATION_ENCHANTS_PAGE))
+                        .withActions(new SwitchPageAction(this.name, DENOMINATION_ENCHANTS_PAGE))
                         .build());
               }
             }

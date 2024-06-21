@@ -24,6 +24,8 @@ import net.tnemc.core.currency.type.MixedType;
 import net.tnemc.core.currency.type.VirtualType;
 import net.tnemc.core.menu.icons.myeco.CurrencyIcon;
 import net.tnemc.core.menu.icons.shared.SwitchPageIcon;
+import net.tnemc.core.menu.page.mybal.MyBalAmountSelectionPage;
+import net.tnemc.core.menu.page.shared.AmountSelectionPage;
 import net.tnemc.menu.core.Menu;
 import net.tnemc.menu.core.Page;
 import net.tnemc.menu.core.builder.IconBuilder;
@@ -46,24 +48,26 @@ import java.util.Optional;
 public class MyBalMenu extends Menu {
 
   public static final int BALANCE_VIEW_PAGE = 2;
-  public static final int BALANCE_PAY_PAGE = 2;
+  public static final int BALANCE_PAY_PAGE = 3;
+  public static final int BALANCE_AMOUNT_SELECTION_PAGE = 4;
 
   public MyBalMenu() {
-    this.name = "my_eco";
-    this.title = "My Eco";
+    this.name = "my_bal";
+    this.title = "My Bal";
     this.rows = 6;
-
-
-
 
     /*
      * Main Page
      */
     final Page main = new PageBuilder(1).withIcons(
             new SwitchPageIcon(2, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
-                    .display("Currencies"), "my_eco", BALANCE_VIEW_PAGE, ActionType.ANY)
+                    .display("Currencies"), this.name, BALANCE_VIEW_PAGE, ActionType.ANY)
     ).build();
     addPage(main);
+
+    final Page balanceAmountPage = new PageBuilder(BALANCE_AMOUNT_SELECTION_PAGE).build();
+    //balanceAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_AMOUNT_SELECTION", name, name, CURRENCY_INFO_MAX_SELECTION_PAGE, CURRENCY_INFO_EDIT_PAGE, "BALANCE_AMOUNT_SELECTION").handle(open)));
+    addPage(balanceAmountPage);
   }
 
   public void handleMainPage(final PageOpenCallback callback) {
@@ -74,7 +78,8 @@ public class MyBalMenu extends Menu {
     if(account.isPresent()) {
       int i = 19;
       for(final Currency curObj : TNECore.eco().currency().currencies()) {
-        callback.getPage().addIcon(new CurrencyIcon(i, curObj));
+
+        buildBalanceIcon(i, curObj, account.get());
 
         i += 2;
       }
@@ -84,7 +89,7 @@ public class MyBalMenu extends Menu {
   /*
    * Virtual Right click = create note
    */
-  public Icon buildBalanceIcon(final int slot, final Currency currency, final Account account) {
+  protected Icon buildBalanceIcon(final int slot, final Currency currency, final Account account) {
 
     final LinkedList<String> lore = new LinkedList<>();
 
