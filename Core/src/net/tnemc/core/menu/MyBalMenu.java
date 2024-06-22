@@ -64,6 +64,9 @@ public class MyBalMenu extends Menu {
   public static final int BALANCE_NOTE_AMOUNT_PAGE = 10;
 
   public static final String ACTION_ACCOUNT_ID = "ACTION_ACCOUNT";
+  public static final String ACTION_CURRENCY = "ACTION_CURRENCY";
+  public static final String ACTION_MAX_HOLDINGS = "ACTION_MAX_HOLDINGS";
+  public static final String ACTION_HOLDINGS = "ACTION_HOLDINGS";
 
   public MyBalMenu() {
     this.name = "my_bal";
@@ -83,19 +86,19 @@ public class MyBalMenu extends Menu {
     addPage(balanceActionsPage);
 
     final Page balanceConvertCurrencyPage = new PageBuilder(BALANCE_ACTION_CONVERT_CURRENCY_PAGE).build();
-    balanceConvertCurrencyPage.setOpen((open->new CurrencySelectionPage("CONVERT_CURRENCY", this.name, this.name, BALANCE_ACTION_CONVERT_CURRENCY_PAGE, 1, "CONVERT_CURRENCY_SELECTION", this.rows).handle(open)));
+    balanceConvertCurrencyPage.setOpen((open->new CurrencySelectionPage("CONVERT_CURRENCY", this.name, this.name, BALANCE_ACTION_CONVERT_CURRENCY_PAGE, BALANCE_ACTION_CONVERT_AMOUNT_PAGE, "CONVERT_CURRENCY_SELECTION", this.rows).handle(open)));
     addPage(balanceConvertCurrencyPage);
 
     final Page balanceConvertAmountPage = new PageBuilder(BALANCE_ACTION_CONVERT_AMOUNT_PAGE).build();
-    balanceConvertAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_CONVERT_SELECTION", this.name, this.name, BALANCE_ACTION_CONVERT_AMOUNT_PAGE, 1, "BALANCE_AMOUNT_CONVERT_SELECTION").handle(open)));
+    balanceConvertAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_CONVERT_SELECTION", this.name, this.name, BALANCE_ACTION_CONVERT_AMOUNT_PAGE, 1).handle(open)));
     addPage(balanceConvertAmountPage);
 
     final Page balanceDepositAmountPage = new PageBuilder(BALANCE_ACTION_DEPOSIT_AMOUNT_PAGE).build();
-    balanceDepositAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_AMOUNT_DEPOSIT", this.name, this.name, BALANCE_ACTION_DEPOSIT_AMOUNT_PAGE, 1, "BALANCE_AMOUNT_DEPOSIT_SELECTION").handle(open)));
+    balanceDepositAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_AMOUNT_DEPOSIT", this.name, this.name, BALANCE_ACTION_DEPOSIT_AMOUNT_PAGE, 1).handle(open)));
     addPage(balanceDepositAmountPage);
 
     final Page balanceWithdrawAmountPage = new PageBuilder(BALANCE_ACTION_WITHDRAW_AMOUNT_PAGE).build();
-    balanceWithdrawAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_AMOUNT_WITHDRAW", this.name, this.name, BALANCE_ACTION_WITHDRAW_AMOUNT_PAGE, 1, "BALANCE_AMOUNT_WITHDRAW_SELECTION").handle(open)));
+    balanceWithdrawAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_AMOUNT_WITHDRAW", this.name, this.name, BALANCE_ACTION_WITHDRAW_AMOUNT_PAGE, 1).handle(open)));
     addPage(balanceWithdrawAmountPage);
 
     final Page balanceBreakdownPage = new PageBuilder(BALANCE_BREAKDOWN_PAGE).build();
@@ -109,11 +112,11 @@ public class MyBalMenu extends Menu {
     addPage(balancePayPage);
 
     final Page balancePayAmountPage = new PageBuilder(BALANCE_PAY_AMOUNT_PAGE).build();
-    balancePayAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_PAY_AMOUNT", this.name, this.name, BALANCE_PAY_AMOUNT_PAGE, 1, "BALANCE_PAY_AMOUNT_SELECTION").handle(open)));
+    balancePayAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_PAY_AMOUNT", this.name, this.name, BALANCE_PAY_AMOUNT_PAGE, 1).handle(open)));
     addPage(balancePayAmountPage);
 
     final Page noteAmountPage = new PageBuilder(BALANCE_NOTE_AMOUNT_PAGE).build();
-    noteAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_NOTE_AMOUNT", this.name, this.name, BALANCE_NOTE_AMOUNT_PAGE, 1, "BALANCE_NOTE_AMOUNT_SELECTION").handle(open)));
+    noteAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_NOTE_AMOUNT", this.name, this.name, BALANCE_NOTE_AMOUNT_PAGE, 1).handle(open)));
     addPage(noteAmountPage);
   }
 
@@ -212,8 +215,8 @@ public class MyBalMenu extends Menu {
     final LinkedList<String> lore = new LinkedList<>();
     final LinkedList<IconAction> actions = new LinkedList<>();
 
-    actions.add(new DataAction("ACTION_CURRENCY", currency.getUid()));
-    actions.add(new DataAction("BALANCE_AMOUNT_TOTAL_SELECTION", account.getHoldingsTotal(TNECore.eco().region().defaultRegion(), currency.getUid())));
+    actions.add(new DataAction(ACTION_CURRENCY, currency.getUid()));
+    actions.add(new DataAction(ACTION_MAX_HOLDINGS, account.getHoldingsTotal(TNECore.eco().region().defaultRegion(), currency.getUid())));
 
     lore.add("Balance: " + CurrencyFormatter.format(account, account.getHoldingsTotal(TNECore.eco().region().defaultRegion(), currency.getUid())));
 

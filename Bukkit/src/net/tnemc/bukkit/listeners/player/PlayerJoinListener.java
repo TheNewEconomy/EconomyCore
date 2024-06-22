@@ -22,10 +22,13 @@ import net.tnemc.core.handlers.player.PlayerJoinHandler;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import net.tnemc.plugincore.core.utils.HandlerResponse;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 /**
  * PlayerJoinListener
@@ -43,6 +46,13 @@ public class PlayerJoinListener implements Listener {
 
     if(handle.isCancelled()) {
       event.getPlayer().kickPlayer(handle.getResponse());
+    }
+
+    ItemStack stack = new ItemStack(Material.PLAYER_HEAD);
+    if(stack.hasItemMeta() && stack.getItemMeta() instanceof SkullMeta skullMeta) {
+
+      //stack.getItemMeta().has
+
     }
 
     //Is john joining?

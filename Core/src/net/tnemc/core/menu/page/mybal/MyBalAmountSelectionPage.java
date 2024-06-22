@@ -40,12 +40,8 @@ import java.util.UUID;
  */
 public class MyBalAmountSelectionPage extends AmountSelectionPage {
 
-  protected final String maxAMTID;
-
-  public MyBalAmountSelectionPage(String amtID, String returnMenu, String menuName, int menuPage, int returnPage, String maxAMTID) {
+  public MyBalAmountSelectionPage(String amtID, String returnMenu, String menuName, int menuPage, int returnPage) {
     super(amtID, returnMenu, menuName, menuPage, returnPage);
-
-    this.maxAMTID = maxAMTID;
   }
 
   @Override
@@ -62,8 +58,8 @@ public class MyBalAmountSelectionPage extends AmountSelectionPage {
               .display("Add Max")
               .lore(Collections.singletonList("Adds your entire balance.")))
               .withActions(new SwitchPageAction(menuName, menuPage))
-              .withClick((click)->balAddClick(click, ((BigDecimal)viewer.get().dataOrDefault(maxAMTID, BigDecimal.ZERO))))
-              .withSlot(22)
+              .withClick((click)->balAddClick(click, ((BigDecimal)viewer.get().dataOrDefault(MyBalMenu.ACTION_MAX_HOLDINGS, BigDecimal.ZERO))))
+              .withSlot(31)
               .build());
 
       Optional<Object> name = viewer.get().findData(MyBalMenu.ACTION_ACCOUNT_ID + "_NAME");
@@ -77,13 +73,16 @@ public class MyBalAmountSelectionPage extends AmountSelectionPage {
           profile = new SkullProfile();
           profile.setUuid(account);
 
+          System.out.println();
+
         } catch(Exception ignore) {}
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PLAYER_HEAD", 1)
                 .display((String)name.get())
-                .lore(Collections.singletonList("Player action will be performed on.")))
+                .lore(Collections.singletonList("Player action will be performed on."))
+                .profile(profile))
                 .withActions(new SwitchPageAction(menuName, menuPage))
-                .withSlot(11)
+                .withSlot(13)
                 .build());
       }
     }
