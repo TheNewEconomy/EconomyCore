@@ -161,18 +161,6 @@
             <version>2.0.12</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>net.tnemc</groupId>
-            <artifactId>EconomyCore</artifactId>
-            <version>0.1.3.0-SNAPSHOT-3</version>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>net.tnemc</groupId>
-                    <artifactId>TNML-Bukkit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
 
         <dependency>
             <groupId>io.papermc.paper</groupId>

@@ -43,6 +43,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -319,8 +320,8 @@ public class CurrencyManager {
     return new Currency(curID);
   }
 
-  public Collection<Currency> currencies() {
-    return currencies.values();
+  public LinkedList<Currency> currencies() {
+    return new LinkedList<>(currencies.values());
   }
 
   public Map<String, CurrencyType> getTypes() {

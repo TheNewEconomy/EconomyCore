@@ -21,13 +21,12 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.core.currency.type.MixedType;
+import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.currency.type.VirtualType;
-import net.tnemc.core.menu.icons.myeco.CurrencyIcon;
 import net.tnemc.core.menu.icons.shared.PreviousPageIcon;
-import net.tnemc.core.menu.icons.shared.SwitchPageIcon;
 import net.tnemc.core.menu.page.mybal.MyBalAmountSelectionPage;
-import net.tnemc.core.menu.page.shared.AmountSelectionPage;
+import net.tnemc.core.menu.page.shared.AccountSelectionPage;
+import net.tnemc.core.menu.page.shared.CurrencySelectionPage;
 import net.tnemc.menu.core.Menu;
 import net.tnemc.menu.core.Page;
 import net.tnemc.menu.core.builder.IconBuilder;
@@ -55,10 +54,16 @@ import java.util.UUID;
 public class MyBalMenu extends Menu {
 
   public static final int BALANCE_ACTIONS_PAGE = 2;
-  public static final int BALANCE_BREAKDOWN_PAGE = 3;
-  public static final int BALANCE_PAY_PAGE = 4;
-  public static final int BALANCE_AMOUNT_SELECTION_PAGE = 5;
-  public static final int BALANCE_NOTE_AMOUNT_PAGE = 6;
+  public static final int BALANCE_ACTION_CONVERT_CURRENCY_PAGE = 3;
+  public static final int BALANCE_ACTION_CONVERT_AMOUNT_PAGE = 4;
+  public static final int BALANCE_ACTION_DEPOSIT_AMOUNT_PAGE = 5;
+  public static final int BALANCE_ACTION_WITHDRAW_AMOUNT_PAGE = 6;
+  public static final int BALANCE_BREAKDOWN_PAGE = 7;
+  public static final int BALANCE_PAY_PAGE = 8;
+  public static final int BALANCE_PAY_AMOUNT_PAGE = 9;
+  public static final int BALANCE_NOTE_AMOUNT_PAGE = 10;
+
+  public static final String ACTION_ACCOUNT_ID = "ACTION_ACCOUNT";
 
   public MyBalMenu() {
     this.name = "my_bal";
@@ -72,18 +77,26 @@ public class MyBalMenu extends Menu {
     main.setOpen(this::handleMainPage);
     addPage(main);
 
-    final Page balanceAmountPage = new PageBuilder(BALANCE_AMOUNT_SELECTION_PAGE).build();
-    balanceAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_AMOUNT_SELECTION", this.name, this.name, BALANCE_AMOUNT_SELECTION_PAGE, 1, "BALANCE_AMOUNT_TOTAL_SELECTION").handle(open)));
-    addPage(balanceAmountPage);
-
-    final Page noteAmountPage = new PageBuilder(BALANCE_NOTE_AMOUNT_PAGE).build();
-    noteAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_NOTE_AMOUNT", this.name, this.name, BALANCE_NOTE_AMOUNT_PAGE, 1, "BALANCE_AMOUNT_TOTAL_SELECTION").handle(open)));
-    addPage(noteAmountPage);
-
     final Page balanceActionsPage = new PageBuilder(BALANCE_ACTIONS_PAGE).build();
     balanceActionsPage.addIcon(new PreviousPageIcon(0, this.name, 1, ActionType.ANY));
-    actionsPage(balanceActionsPage);
+    balanceActionsPage.setOpen(this::actionsPage);
     addPage(balanceActionsPage);
+
+    final Page balanceConvertCurrencyPage = new PageBuilder(BALANCE_ACTION_CONVERT_CURRENCY_PAGE).build();
+    balanceConvertCurrencyPage.setOpen((open->new CurrencySelectionPage("CONVERT_CURRENCY", this.name, this.name, BALANCE_ACTION_CONVERT_CURRENCY_PAGE, 1, "CONVERT_CURRENCY_SELECTION", this.rows).handle(open)));
+    addPage(balanceConvertCurrencyPage);
+
+    final Page balanceConvertAmountPage = new PageBuilder(BALANCE_ACTION_CONVERT_AMOUNT_PAGE).build();
+    balanceConvertAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_CONVERT_SELECTION", this.name, this.name, BALANCE_ACTION_CONVERT_AMOUNT_PAGE, 1, "BALANCE_AMOUNT_CONVERT_SELECTION").handle(open)));
+    addPage(balanceConvertAmountPage);
+
+    final Page balanceDepositAmountPage = new PageBuilder(BALANCE_ACTION_DEPOSIT_AMOUNT_PAGE).build();
+    balanceDepositAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_AMOUNT_DEPOSIT", this.name, this.name, BALANCE_ACTION_DEPOSIT_AMOUNT_PAGE, 1, "BALANCE_AMOUNT_DEPOSIT_SELECTION").handle(open)));
+    addPage(balanceDepositAmountPage);
+
+    final Page balanceWithdrawAmountPage = new PageBuilder(BALANCE_ACTION_WITHDRAW_AMOUNT_PAGE).build();
+    balanceWithdrawAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_AMOUNT_WITHDRAW", this.name, this.name, BALANCE_ACTION_WITHDRAW_AMOUNT_PAGE, 1, "BALANCE_AMOUNT_WITHDRAW_SELECTION").handle(open)));
+    addPage(balanceWithdrawAmountPage);
 
     final Page balanceBreakdownPage = new PageBuilder(BALANCE_BREAKDOWN_PAGE).build();
     balanceBreakdownPage.addIcon(new PreviousPageIcon(0, this.name, 1, ActionType.ANY));
@@ -92,8 +105,16 @@ public class MyBalMenu extends Menu {
 
     final Page balancePayPage = new PageBuilder(BALANCE_PAY_PAGE).build();
     balancePayPage.addIcon(new PreviousPageIcon(0, this.name, 1, ActionType.ANY));
-    //balancePayPage.setOpen(((PageOpenCallback open)->new MyBalPayPage(this.name, this.name, BALANCE_PAY_PAGE, 1).handle(open)));
+    balancePayPage.setOpen((open->new AccountSelectionPage(ACTION_ACCOUNT_ID, this.name, this.name, BALANCE_PAY_PAGE, BALANCE_PAY_AMOUNT_PAGE, "PAY_ACCOUNT_NAME_SELECTION", this.rows).handle(open)));
     addPage(balancePayPage);
+
+    final Page balancePayAmountPage = new PageBuilder(BALANCE_PAY_AMOUNT_PAGE).build();
+    balancePayAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_PAY_AMOUNT", this.name, this.name, BALANCE_PAY_AMOUNT_PAGE, 1, "BALANCE_PAY_AMOUNT_SELECTION").handle(open)));
+    addPage(balancePayAmountPage);
+
+    final Page noteAmountPage = new PageBuilder(BALANCE_NOTE_AMOUNT_PAGE).build();
+    noteAmountPage.setOpen((open->new MyBalAmountSelectionPage("BALANCE_NOTE_AMOUNT", this.name, this.name, BALANCE_NOTE_AMOUNT_PAGE, 1, "BALANCE_NOTE_AMOUNT_SELECTION").handle(open)));
+    addPage(noteAmountPage);
   }
 
   public void handleMainPage(final PageOpenCallback callback) {
@@ -111,8 +132,47 @@ public class MyBalMenu extends Menu {
     }
   }
 
-  protected void actionsPage(final Page page) {
+  protected void actionsPage(final PageOpenCallback callback) {
 
+    final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
+    if(viewer.isPresent()) {
+
+      final Optional<Account> account = TNECore.eco().account().findAccount(callback.getPlayer().identifier());
+      if(account.isPresent()) {
+
+        final Optional<Object> currencyUUID = viewer.get().findData("ACTION_CURRENCY");
+        if(currencyUUID.isPresent()) {
+
+          final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((UUID)currencyUUID.get());
+          if(currencyOptional.isPresent()) {
+
+            callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                    .display("Convert Currency")
+                    .lore(Collections.singletonList("Click to convert this currency to another.")))
+                    .withSlot(10)
+                    .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_CONVERT_CURRENCY_PAGE))
+                    .build());
+
+            if(currencyOptional.get().type().supportsExchange()) {
+
+              callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                      .display("Deposit Currency")
+                      .lore(Collections.singletonList("Click to deposit some physical currency to your virtual balance.")))
+                      .withSlot(12)
+                      .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_DEPOSIT_AMOUNT_PAGE))
+                      .build());
+
+              callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                      .display("Withdraw Currency")
+                      .lore(Collections.singletonList("Click to withdraw some physical currency from your virtual balance.")))
+                      .withSlot(14)
+                      .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_WITHDRAW_AMOUNT_PAGE))
+                      .build());
+            }
+          }
+        }
+      }
+    }
   }
 
   protected void handleBreakdownPage(final PageOpenCallback callback) {
@@ -154,6 +214,8 @@ public class MyBalMenu extends Menu {
 
     actions.add(new DataAction("ACTION_CURRENCY", currency.getUid()));
     actions.add(new DataAction("BALANCE_AMOUNT_TOTAL_SELECTION", account.getHoldingsTotal(TNECore.eco().region().defaultRegion(), currency.getUid())));
+
+    lore.add("Balance: " + CurrencyFormatter.format(account, account.getHoldingsTotal(TNECore.eco().region().defaultRegion(), currency.getUid())));
 
     lore.add("Left click to pay account using currency.");
     actions.add(new SwitchPageAction(this.name, BALANCE_PAY_PAGE, ActionType.LEFT_CLICK));

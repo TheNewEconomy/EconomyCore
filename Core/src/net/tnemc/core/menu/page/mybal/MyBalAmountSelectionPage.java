@@ -17,15 +17,20 @@ package net.tnemc.core.menu.page.mybal;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.menu.MyBalMenu;
 import net.tnemc.core.menu.page.shared.AmountSelectionPage;
+import net.tnemc.item.providers.SkullProfile;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
 import net.tnemc.menu.core.icon.Icon;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
+import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
 
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * MyBalAmountSelectionPage
@@ -49,15 +54,38 @@ public class MyBalAmountSelectionPage extends AmountSelectionPage {
 
     //TODO: Action button to run on click from menu.
 
-    if(callback.getPlayer().viewer().isPresent()) {
+
+    final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
+    if(viewer.isPresent()) {
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
               .display("Add Max")
               .lore(Collections.singletonList("Adds your entire balance.")))
               .withActions(new SwitchPageAction(menuName, menuPage))
-              .withClick((click)->formatAddClick(click, ((BigDecimal)callback.getPlayer().viewer().get().dataOrDefault(maxAMTID, BigDecimal.ZERO))))
+              .withClick((click)->balAddClick(click, ((BigDecimal)viewer.get().dataOrDefault(maxAMTID, BigDecimal.ZERO))))
               .withSlot(22)
               .build());
+
+      Optional<Object> name = viewer.get().findData(MyBalMenu.ACTION_ACCOUNT_ID + "_NAME");
+      Optional<Object> id = viewer.get().findData(MyBalMenu.ACTION_ACCOUNT_ID + "_ID");
+      if(name.isPresent() && id.isPresent()) {
+
+        SkullProfile profile = null;
+        try {
+
+          final UUID account = UUID.fromString((String)id.get());
+          profile = new SkullProfile();
+          profile.setUuid(account);
+
+        } catch(Exception ignore) {}
+
+        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PLAYER_HEAD", 1)
+                .display((String)name.get())
+                .lore(Collections.singletonList("Player action will be performed on.")))
+                .withActions(new SwitchPageAction(menuName, menuPage))
+                .withSlot(11)
+                .build());
+      }
     }
   }
 }

@@ -163,17 +163,10 @@
     </build>
 
     <dependencies>
-        <!-- LuckPerms API -->
-        <dependency>
-            <groupId>net.luckperms</groupId>
-            <artifactId>api</artifactId>
-            <version>5.3</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>net.tnemc</groupId>
             <artifactId>TNML-Folia</artifactId>
-            <version>1.5.0.1-SNAPSHOT-2</version>
+            <version>${tnml.version}</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
@@ -210,12 +203,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>com.palmergames.bukkit.towny</groupId>
-            <artifactId>towny</artifactId>
-            <version>0.98.2.0</version>
-            <scope>provided</scope>
-        </dependency>
+
         <dependency>
             <groupId>dev.folia</groupId>
             <artifactId>folia-api</artifactId>
@@ -228,20 +216,6 @@
             <artifactId>bstats-bukkit</artifactId>
             <version>3.0.2</version>
             <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>me.clip</groupId>
-            <artifactId>placeholderapi</artifactId>
-            <version>2.11.3</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.MilkBowl</groupId>
-            <artifactId>VaultAPI</artifactId>
-            <version>1.7</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 
