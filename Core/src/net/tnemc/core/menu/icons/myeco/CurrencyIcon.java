@@ -26,6 +26,7 @@ import net.tnemc.plugincore.PluginCore;
 
 import java.util.Collections;
 
+import static net.tnemc.core.menu.MyEcoMenu.ACTIVE_CURRENCY;
 import static net.tnemc.core.menu.MyEcoMenu.CURRENCY_EDIT_PAGE;
 
 /**
@@ -40,7 +41,7 @@ public class CurrencyIcon extends SwitchPageIcon {
             .display(currency.getIdentifier()).lore(Collections.singletonList("Click to edit currency")),
             "my_eco", CURRENCY_EDIT_PAGE, ActionType.ANY, false);
 
-    actions.add(new DataAction("CURRENCY_OBJECT", currency));
+    actions.add(new DataAction(ACTIVE_CURRENCY, currency));
 
     //Basic Information
     actions.add(new DataAction("CURRENCY_UUID", currency.getUid().toString()));

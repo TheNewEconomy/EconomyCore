@@ -64,4 +64,8 @@ public class Denomination {
   public BigDecimal weight() {
     return weight;
   }
+
+  public void setWeight(BigDecimal weight) {
+    this.weight = weight;
+  }
 }

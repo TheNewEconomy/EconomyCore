@@ -33,15 +33,15 @@ import java.util.List;
  */
 public class ItemDenomination extends Denomination {
 
-  private List<String> enchantments = new ArrayList<>();
-  private List<String> flags = new ArrayList<>();
-  private List<String> lore = new ArrayList<>();
+  private final List<String> enchantments = new ArrayList<>();
+  private final List<String> flags = new ArrayList<>();
+  private final List<String> lore = new ArrayList<>();
 
   private String material;
   private short damage;
   private String name = null;
-  private Integer customModel = null;
-  private String texture;
+  private Integer customModel = -1;
+  private String texture = null;
 
   public ItemDenomination(BigDecimal weight, String material) {
     this(weight, material, (short)0);
@@ -62,7 +62,8 @@ public class ItemDenomination extends Denomination {
   }
 
   public void setEnchantments(List<String> enchantments) {
-    this.enchantments = enchantments;
+    this.enchantments.clear();
+    this.enchantments.addAll(enchantments);
   }
 
   public List<String> getFlags() {
@@ -70,7 +71,8 @@ public class ItemDenomination extends Denomination {
   }
 
   public void setFlags(List<String> flags) {
-    this.flags = flags;
+    this.flags.clear();
+    this.flags.addAll(flags);
   }
 
   public String getMaterial() {
@@ -102,7 +104,8 @@ public class ItemDenomination extends Denomination {
   }
 
   public void setLore(List<String> lore) {
-    this.lore = lore;
+    this.lore.clear();
+    this.lore.addAll(lore);
   }
 
   public int getCustomModel() {
