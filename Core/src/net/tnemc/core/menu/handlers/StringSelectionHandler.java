@@ -1,4 +1,4 @@
-package net.tnemc.core.menu.icons.shared;
+package net.tnemc.core.menu.handlers;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -17,24 +17,29 @@ package net.tnemc.core.menu.icons.shared;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.item.AbstractItemStack;
-import net.tnemc.menu.core.icon.Icon;
-import net.tnemc.menu.core.icon.action.ActionType;
-import net.tnemc.menu.core.icon.action.impl.SwitchMenuAction;
-import org.jetbrains.annotations.NotNull;
+import net.tnemc.menu.core.handlers.MenuClickHandler;
 
 /**
- * SwitchPageIcon
+ * StringSelectionCallback
  *
  * @author creatorfromhell
  * @since 0.1.3.0
  */
-public class SwitchMenuIcon extends Icon {
-  public SwitchMenuIcon(int slot, @NotNull AbstractItemStack<?> item, final String menu, final ActionType type) {
-    super(item, null);
+public class StringSelectionHandler {
 
-    this.slot = slot;
+  private final MenuClickHandler click;
+  private final String value;
 
-    actions.add(new SwitchMenuAction(menu, type));
+  public StringSelectionHandler(MenuClickHandler click, String value) {
+    this.click = click;
+    this.value = value;
+  }
+
+  public MenuClickHandler getClick() {
+    return click;
+  }
+
+  public String getValue() {
+    return value;
   }
 }

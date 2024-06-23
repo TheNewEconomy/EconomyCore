@@ -17,6 +17,7 @@ package net.tnemc.core.menu.page.shared;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.menu.handlers.AmountSelectionHandler;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
 import net.tnemc.menu.core.handlers.MenuClickHandler;
@@ -29,12 +30,13 @@ import net.tnemc.plugincore.PluginCore;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * AmountSelectionPage
  *
  * @author creatorfromhell
- * @since 0.1.2.0
+ * @since 0.1.3.0
  */
 public class AmountSelectionPage {
 
@@ -44,13 +46,16 @@ public class AmountSelectionPage {
   protected final int returnPage;
   protected final String amtID;
 
+  protected final Consumer<AmountSelectionHandler> selectionListener;
+
   public AmountSelectionPage(String amtID, String returnMenu, String menuName,
-                             final int menuPage, final int returnPage) {
+                             final int menuPage, final int returnPage, Consumer<AmountSelectionHandler> selectionListener) {
     this.returnMenu = returnMenu;
     this.menuName = menuName;
     this.menuPage = menuPage;
     this.returnPage = returnPage;
     this.amtID = amtID;
+    this.selectionListener = selectionListener;
   }
 
   public void handle(final PageOpenCallback callback) {
@@ -68,8 +73,12 @@ public class AmountSelectionPage {
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
               .display("Save.")
               .lore(Collections.singletonList("Click save the amount.")))
-              //TODO: Run Save Action
-              .withActions(new SwitchPageAction(returnMenu, returnPage))
+              .withActions(new RunnableAction((click)->{
+                        if(selectionListener != null) {
+
+                          selectionListener.accept(new AmountSelectionHandler(click, ((BigDecimal)viewer.get().dataOrDefault(amtID, BigDecimal.ZERO))));
+                        }
+                      }), new SwitchPageAction(returnMenu, returnPage))
               .withSlot(8)
               .build());
 

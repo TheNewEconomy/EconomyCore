@@ -18,25 +18,27 @@ package net.tnemc.core.menu.page.shared;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.menu.handlers.StringSelectionHandler;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
 import net.tnemc.menu.core.icon.action.impl.DataAction;
+import net.tnemc.menu.core.icon.action.impl.RunnableAction;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
 import net.tnemc.menu.core.icon.impl.StateIcon;
-import net.tnemc.menu.core.manager.MenuManager;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
 
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * EnchantmentSelectionPage
  *
  * @author creatorfromhell
- * @since 0.1.2.0
+ * @since 0.1.3.0
  */
 public class EnchantmentSelectionPage {
 
@@ -48,8 +50,11 @@ public class EnchantmentSelectionPage {
   protected final String enchantPageID;
   protected final int menuRows;
 
+  protected final Consumer<StringSelectionHandler> selectionListener;
+
   public EnchantmentSelectionPage(String enchantsID, String returnMenu, String menuName,
-                                  final int menuPage, final int returnPage, String enchantPageID, final int menuRows) {
+                                  final int menuPage, final int returnPage, String enchantPageID,
+                                  final int menuRows, Consumer<StringSelectionHandler> selectionListener) {
     this.enchantsID = enchantsID;
     this.returnMenu = returnMenu;
     this.menuName = menuName;
@@ -59,6 +64,7 @@ public class EnchantmentSelectionPage {
 
     //we need a controller row and then at least one row for items.
     this.menuRows = (menuRows <= 1)? 2 : menuRows;
+    this.selectionListener = selectionListener;
   }
 
   public void handle(final PageOpenCallback callback) {
@@ -99,10 +105,28 @@ public class EnchantmentSelectionPage {
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-              .display("Save.")
-              .lore(Collections.singletonList("Click save the enchantments.")))
-              //TODO: Run Save Action
-              .withActions(new SwitchPageAction(returnMenu, returnPage))
+              .display("Save")
+              .lore(Collections.singletonList("Click to save the enchantments.")))
+              .withActions(new RunnableAction((click)->{
+
+                        if(selectionListener != null) {
+
+                          final StringBuilder builder = new StringBuilder();
+                          for(final String enchant : TNECore.instance().helper().enchantments()) {
+
+                            final String value = (String)viewer.get().dataOrDefault(menuName + "_" + enchant, "Disabled");
+                            final boolean enabled = value.equalsIgnoreCase("enabled");
+                            if(enabled) {
+
+                              if(!builder.isEmpty()) {
+                                builder.append(",");
+                              }
+                              builder.append(enchant);
+                            }
+                          }
+                          selectionListener.accept(new StringSelectionHandler(click, builder.toString()));
+                        }
+                      }), new SwitchPageAction(returnMenu, returnPage))
               .withSlot(6)
               .build());
 

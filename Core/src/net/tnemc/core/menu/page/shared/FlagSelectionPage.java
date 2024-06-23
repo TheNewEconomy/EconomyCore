@@ -18,25 +18,27 @@ package net.tnemc.core.menu.page.shared;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.menu.handlers.StringSelectionHandler;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
 import net.tnemc.menu.core.icon.action.impl.DataAction;
+import net.tnemc.menu.core.icon.action.impl.RunnableAction;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
 import net.tnemc.menu.core.icon.impl.StateIcon;
-import net.tnemc.menu.core.manager.MenuManager;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
 
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * FlagSelectionPage
  *
  * @author creatorfromhell
- * @since 0.1.2.0
+ * @since 0.1.3.0
  */
 public class FlagSelectionPage {
 
@@ -48,8 +50,11 @@ public class FlagSelectionPage {
   protected final String flagPageID;
   protected final int menuRows;
 
+  protected final Consumer<StringSelectionHandler> selectionListener;
+
   public FlagSelectionPage(String flagsID, String returnMenu, String menuName,
-                           final int menuPage, final int returnPage, String flagPageID, final int menuRows) {
+                           final int menuPage, final int returnPage, String flagPageID,
+                           final int menuRows, Consumer<StringSelectionHandler> selectionListener) {
     this.flagsID = flagsID;
     this.returnMenu = returnMenu;
     this.menuName = menuName;
@@ -59,6 +64,7 @@ public class FlagSelectionPage {
 
     //we need a controller row and then at least one row for items.
     this.menuRows = (menuRows <= 1)? 2 : menuRows;
+    this.selectionListener = selectionListener;
   }
 
   public void handle(final PageOpenCallback callback) {
@@ -101,10 +107,28 @@ public class FlagSelectionPage {
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-              .display("Save.")
-              .lore(Collections.singletonList("Click save the flags.")))
-              //TODO: Run Save Action
-              .withActions(new SwitchPageAction(returnMenu, returnPage))
+              .display("Save")
+              .lore(Collections.singletonList("Click to save the flags.")))
+              .withActions(new RunnableAction((click)->{
+
+                        if(selectionListener != null) {
+
+                          final StringBuilder builder = new StringBuilder();
+                          for(final String flag : TNECore.instance().helper().flags()) {
+
+                            final String value = (String)viewer.get().dataOrDefault(menuName + "_" + flag, "Disabled");
+                            final boolean enabled = value.equalsIgnoreCase("enabled");
+                            if(enabled) {
+
+                              if(!builder.isEmpty()) {
+                                builder.append(",");
+                              }
+                              builder.append(flag);
+                            }
+                          }
+                          selectionListener.accept(new StringSelectionHandler(click, builder.toString()));
+                        }
+                      }), new SwitchPageAction(returnMenu, returnPage))
               .withSlot(6)
               .build());
 

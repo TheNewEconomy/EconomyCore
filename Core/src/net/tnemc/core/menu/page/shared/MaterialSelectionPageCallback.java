@@ -18,17 +18,18 @@ package net.tnemc.core.menu.page.shared;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.currency.format.CurrencyFormatter;
+import net.tnemc.core.menu.handlers.StringSelectionHandler;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
 import net.tnemc.menu.core.icon.action.impl.DataAction;
+import net.tnemc.menu.core.icon.action.impl.RunnableAction;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
-import net.tnemc.menu.core.manager.MenuManager;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
 
 import java.util.Collections;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * MaterialSelectionMenu
@@ -46,8 +47,11 @@ public class MaterialSelectionPageCallback {
   protected final String materialPageID;
   protected final int menuRows;
 
+  protected final Consumer<StringSelectionHandler> selectionListener;
+
   public MaterialSelectionPageCallback(String materialDataID, String returnMenu, String menuName,
-                                       final int menuPage, final int returnPage, String materialPageID, final int menuRows) {
+                                       final int menuPage, final int returnPage, String materialPageID,
+                                       final int menuRows, Consumer<StringSelectionHandler> selectionListener) {
     this.returnMenu = returnMenu;
     this.menuName = menuName;
     this.menuPage = menuPage;
@@ -57,6 +61,7 @@ public class MaterialSelectionPageCallback {
 
     //we need a controller row and then at least one row for items.
     this.menuRows = (menuRows <= 1)? 2 : menuRows;
+    this.selectionListener = selectionListener;
   }
 
   public void handle(final PageOpenCallback callback) {
@@ -109,7 +114,14 @@ public class MaterialSelectionPageCallback {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(material, 1)
                 .lore(Collections.singletonList("Click to select material.")))
-                .withActions(new DataAction(materialDataID, material), new SwitchPageAction(returnMenu, returnPage))
+                .withActions(new DataAction(materialDataID, material),
+                        new RunnableAction((click)->{
+
+                          if(selectionListener != null) {
+
+                            selectionListener.accept(new StringSelectionHandler(click, material));
+                          }
+                        }), new SwitchPageAction(returnMenu, returnPage))
                 .withSlot(9 + (i - start))
                 .build());
       }

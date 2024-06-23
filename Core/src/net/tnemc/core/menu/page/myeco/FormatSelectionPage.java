@@ -17,9 +17,9 @@ package net.tnemc.core.menu.page.myeco;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
 import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.currency.format.FormatRule;
+import net.tnemc.core.menu.handlers.StringSelectionHandler;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
 import net.tnemc.menu.core.handlers.MenuClickHandler;
@@ -27,19 +27,19 @@ import net.tnemc.menu.core.icon.action.impl.ChatAction;
 import net.tnemc.menu.core.icon.action.impl.DataAction;
 import net.tnemc.menu.core.icon.action.impl.RunnableAction;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
-import net.tnemc.menu.core.manager.MenuManager;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * FormatSelectionPage
  *
  * @author creatorfromhell
- * @since 0.1.2.0
+ * @since 0.1.3.0
  */
 public class FormatSelectionPage {
 
@@ -51,8 +51,11 @@ public class FormatSelectionPage {
   protected final String formatPageID;
   protected final int menuRows;
 
+  protected final Consumer<StringSelectionHandler> selectionListener;
+
   public FormatSelectionPage(String formatID, String returnMenu, String menuName,
-                             final int menuPage, final int returnPage, String formatPageID, final int menuRows) {
+                             final int menuPage, final int returnPage, String formatPageID,
+                             final int menuRows, Consumer<StringSelectionHandler> selectionListener) {
     this.returnMenu = returnMenu;
     this.menuName = menuName;
     this.menuPage = menuPage;
@@ -62,6 +65,7 @@ public class FormatSelectionPage {
 
     //we need a controller row and then at least one row for items.
     this.menuRows = (menuRows <= 1)? 2 : menuRows;
+    this.selectionListener = selectionListener;
   }
 
   public void handle(final PageOpenCallback callback) {
@@ -145,10 +149,15 @@ public class FormatSelectionPage {
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-              .display("Save.")
-              .lore(Collections.singletonList("Click save the format.")))
-              //TODO: Run Save Action
-              .withActions(new SwitchPageAction(returnMenu, returnPage))
+              .display("Save")
+              .lore(Collections.singletonList("Click to save the format.")))
+              .withActions(new RunnableAction((click)->{
+
+                if(selectionListener != null) {
+
+                  selectionListener.accept(new StringSelectionHandler(click, (String)viewer.get().dataOrDefault(formatID, "<symbol><major.amount><decimal><minor.amount>")));
+                }
+              }), new SwitchPageAction(returnMenu, returnPage))
               .withSlot(7)
               .build());
 

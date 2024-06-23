@@ -23,7 +23,7 @@ import net.tnemc.menu.core.constraints.impl.StringConstraint;
  * TNEStringConstraints
  *
  * @author creatorfromhell
- * @since 0.1.2.0
+ * @since 0.1.3.0
  */
 public enum TNEStringConstraints implements StringConstraint {
 

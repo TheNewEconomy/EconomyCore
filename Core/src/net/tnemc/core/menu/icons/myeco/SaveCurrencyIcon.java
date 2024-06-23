@@ -31,7 +31,7 @@ import static net.tnemc.core.menu.MyEcoMenu.CURRENCIES_PAGE;
  * SaveCurrencyIcon
  *
  * @author creatorfromhell
- * @since 0.1.2.0
+ * @since 0.1.3.0
  */
 public class SaveCurrencyIcon extends SwitchPageIcon {
   public SaveCurrencyIcon(int slot, final Currency currency) {

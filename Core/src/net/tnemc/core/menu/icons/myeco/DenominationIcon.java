@@ -32,7 +32,7 @@ import static net.tnemc.core.menu.MyEcoMenu.DENOMINATION_EDIT_PAGE;
  * DenominationIcon
  *
  * @author creatorfromhell
- * @since 0.1.2.0
+ * @since 0.1.3.0
  */
 public class DenominationIcon extends SwitchPageIcon {
 
@@ -42,13 +42,13 @@ public class DenominationIcon extends SwitchPageIcon {
             "my_eco", DENOMINATION_EDIT_PAGE, ActionType.ANY, false);
 
 
+    actions.add(new DataAction("ACTIVE_DENOMINATION", denomination));
     actions.add(new DataAction("DENOMINATION_WEIGHT", denomination.weight()));
     actions.add(new DataAction("DENOMINATION_SINGULAR", denomination.singular()));
     actions.add(new DataAction("DENOMINATION_PLURAL", denomination.plural()));
 
     if(denomination instanceof ItemDenomination itemDenomination) {
       actions.add(new DataAction("DENOMINATION_MATERIAL", itemDenomination.getMaterial()));
-      actions.add(new DataAction("DENOMINATION_DISPLAY", itemDenomination.getName()));
     }
 
     super.addActions();

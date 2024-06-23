@@ -18,11 +18,11 @@ package net.tnemc.core.menu.page.mybal;
  */
 
 import net.tnemc.core.menu.MyBalMenu;
+import net.tnemc.core.menu.handlers.AmountSelectionHandler;
 import net.tnemc.core.menu.page.shared.AmountSelectionPage;
 import net.tnemc.item.providers.SkullProfile;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
-import net.tnemc.menu.core.icon.Icon;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
@@ -31,25 +31,24 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 /**
  * MyBalAmountSelectionPage
  *
  * @author creatorfromhell
- * @since 0.1.2.0
+ * @since 0.1.3.0
  */
 public class MyBalAmountSelectionPage extends AmountSelectionPage {
 
-  public MyBalAmountSelectionPage(String amtID, String returnMenu, String menuName, int menuPage, int returnPage) {
-    super(amtID, returnMenu, menuName, menuPage, returnPage);
+  public MyBalAmountSelectionPage(String amtID, String returnMenu, String menuName, int menuPage,
+                                  int returnPage, final Consumer<AmountSelectionHandler> selectionListener) {
+    super(amtID, returnMenu, menuName, menuPage, returnPage, selectionListener);
   }
 
   @Override
   public void handle(PageOpenCallback callback) {
     super.handle(callback);
-
-    //TODO: Action button to run on click from menu.
-
 
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {

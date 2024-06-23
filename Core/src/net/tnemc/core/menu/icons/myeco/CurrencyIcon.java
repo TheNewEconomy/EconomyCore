@@ -32,7 +32,7 @@ import static net.tnemc.core.menu.MyEcoMenu.CURRENCY_EDIT_PAGE;
  * CurrencyIcon
  *
  * @author creatorfromhell
- * @since 0.1.2.0
+ * @since 0.1.3.0
  */
 public class CurrencyIcon extends SwitchPageIcon {
   public CurrencyIcon(int slot, final Currency currency) {
