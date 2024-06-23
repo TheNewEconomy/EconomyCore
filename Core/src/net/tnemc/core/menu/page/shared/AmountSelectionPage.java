@@ -96,7 +96,6 @@ public class AmountSelectionPage {
                             message.getPlayer().viewer().get().addData(amtID, new BigDecimal(message.getMessage()));
                             return true;
                           } catch(NumberFormatException ignore) {}
-                          return true;
                         }
 
                         message.getPlayer().message("Enter a valid decimal value:");

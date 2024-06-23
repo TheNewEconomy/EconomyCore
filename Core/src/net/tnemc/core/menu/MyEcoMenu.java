@@ -47,6 +47,7 @@ import net.tnemc.menu.core.icon.impl.StateIcon;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Optional;
@@ -292,7 +293,37 @@ public class MyEcoMenu extends Menu {
     final Page denominationsPage = new PageBuilder(DENOMINATIONS_PAGE).build();
     denominationsPage.addIcon(new PreviousPageIcon(0, this.name, CURRENCY_EDIT_PAGE, ActionType.ANY));
     denominationsPage.setOpen((this::handleDenominationOpen));
+    //add denomination
+    final SwitchPageIcon addDenominationIcon = new SwitchPageIcon(2, PluginCore.server().stackBuilder().of("ARROW", 1)
+            .display("Add Denomination").lore(Collections.singletonList("Click to add denomination")), this.name, DENOMINATIONS_PAGE, ActionType.ANY);
+    addDenominationIcon.addAction(new ChatAction((message)->{
 
+      if(message.getPlayer().viewer().isPresent()) {
+
+        final Optional<Object> currencyOpt = message.getPlayer().viewer().get().findData(ACTIVE_CURRENCY);
+        if(currencyOpt.isPresent()) {
+
+          try {
+
+            final BigDecimal weight = new BigDecimal(message.getMessage());
+            final Currency currencyObject = (Currency)currencyOpt.get();
+            if(currencyObject.getDenominations().containsKey(weight)) {
+              message.getPlayer().message("A denomination with that weight already exists! Enter a valid decimal for the weight of the denomination:");
+              return false;
+            }
+            final Denomination denomObj = (currencyObject instanceof ItemCurrency)? new ItemDenomination(weight) : new Denomination(weight);
+
+            message.getPlayer().viewer().get().addData(ACTIVE_DENOMINATION, denomObj);
+            message.getPlayer().viewer().get().addData("DENOMINATION_WEIGHT", weight);
+            return true;
+          } catch(NumberFormatException ignore) {}
+        }
+      }
+      message.getPlayer().message("Enter a valid decimal for the weight of the denomination:");
+      return false;
+    }));
+    addDenominationIcon.addAction(new RunnableAction((run)->run.player().message("Enter a valid decimal for the weight of the denomination:")));
+    denominationsPage.addIcon(addDenominationIcon);
     addPage(denominationsPage);
 
     /*
