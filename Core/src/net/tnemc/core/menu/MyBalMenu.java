@@ -112,15 +112,15 @@ public class MyBalMenu extends Menu {
     addPage(balanceConvertCurrencyPage);
 
     final Page balanceConvertAmountPage = new PageBuilder(BALANCE_ACTION_CONVERT_AMOUNT_PAGE).build();
-    balanceConvertAmountPage.setOpen((open->new MyBalAmountSelectionPage(ACTION_HOLDINGS, this.name, this.name, BALANCE_ACTION_CONVERT_AMOUNT_PAGE, 1, this::convert).handle(open)));
+    balanceConvertAmountPage.setOpen((open->new MyBalAmountSelectionPage(ACTION_HOLDINGS, this.name, this.name, BALANCE_ACTION_CONVERT_AMOUNT_PAGE, -1, this::convert).handle(open)));
     addPage(balanceConvertAmountPage);
 
     final Page balanceDepositAmountPage = new PageBuilder(BALANCE_ACTION_DEPOSIT_AMOUNT_PAGE).build();
-    balanceDepositAmountPage.setOpen((open->new MyBalAmountSelectionPage(ACTION_HOLDINGS, this.name, this.name, BALANCE_ACTION_DEPOSIT_AMOUNT_PAGE, 1, this::deposit).handle(open)));
+    balanceDepositAmountPage.setOpen((open->new MyBalAmountSelectionPage(ACTION_HOLDINGS, this.name, this.name, BALANCE_ACTION_DEPOSIT_AMOUNT_PAGE, -1, this::deposit).handle(open)));
     addPage(balanceDepositAmountPage);
 
     final Page balanceWithdrawAmountPage = new PageBuilder(BALANCE_ACTION_WITHDRAW_AMOUNT_PAGE).build();
-    balanceWithdrawAmountPage.setOpen((open->new MyBalAmountSelectionPage(ACTION_HOLDINGS, this.name, this.name, BALANCE_ACTION_WITHDRAW_AMOUNT_PAGE, 1, this::withdraw).handle(open)));
+    balanceWithdrawAmountPage.setOpen((open->new MyBalAmountSelectionPage(ACTION_HOLDINGS, this.name, this.name, BALANCE_ACTION_WITHDRAW_AMOUNT_PAGE, -1, this::withdraw).handle(open)));
     addPage(balanceWithdrawAmountPage);
 
     final Page balanceBreakdownPage = new PageBuilder(BALANCE_BREAKDOWN_PAGE).build();
@@ -134,11 +134,11 @@ public class MyBalMenu extends Menu {
     addPage(balancePayPage);
 
     final Page balancePayAmountPage = new PageBuilder(BALANCE_PAY_AMOUNT_PAGE).build();
-    balancePayAmountPage.setOpen((open->new MyBalAmountSelectionPage(ACTION_HOLDINGS, this.name, this.name, BALANCE_PAY_AMOUNT_PAGE, 1, this::pay).handle(open)));
+    balancePayAmountPage.setOpen((open->new MyBalAmountSelectionPage(ACTION_HOLDINGS, this.name, this.name, BALANCE_PAY_AMOUNT_PAGE, -1, this::pay).handle(open)));
     addPage(balancePayAmountPage);
 
     final Page noteAmountPage = new PageBuilder(BALANCE_NOTE_AMOUNT_PAGE).build();
-    noteAmountPage.setOpen((open->new MyBalAmountSelectionPage(ACTION_HOLDINGS, this.name, this.name, BALANCE_NOTE_AMOUNT_PAGE, 1, this::note).handle(open)));
+    noteAmountPage.setOpen((open->new MyBalAmountSelectionPage(ACTION_HOLDINGS, this.name, this.name, BALANCE_NOTE_AMOUNT_PAGE, -1, this::note).handle(open)));
     addPage(noteAmountPage);
   }
 

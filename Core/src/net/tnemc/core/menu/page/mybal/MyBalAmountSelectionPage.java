@@ -72,8 +72,6 @@ public class MyBalAmountSelectionPage extends AmountSelectionPage {
           profile = new SkullProfile();
           profile.setUuid(account);
 
-          System.out.println();
-
         } catch(Exception ignore) {}
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PLAYER_HEAD", 1)

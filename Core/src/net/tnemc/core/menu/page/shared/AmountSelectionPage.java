@@ -18,6 +18,7 @@ package net.tnemc.core.menu.page.shared;
  */
 
 import net.tnemc.core.menu.handlers.AmountSelectionHandler;
+import net.tnemc.core.menu.icons.actions.PageSwitchWithClose;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
 import net.tnemc.menu.core.handlers.MenuClickHandler;
@@ -78,7 +79,7 @@ public class AmountSelectionPage {
 
                           selectionListener.accept(new AmountSelectionHandler(click, ((BigDecimal)viewer.get().dataOrDefault(amtID, BigDecimal.ZERO))));
                         }
-                      }), new SwitchPageAction(returnMenu, returnPage))
+                      }), new PageSwitchWithClose(returnMenu, returnPage))
               .withSlot(8)
               .build());
 
