@@ -19,6 +19,7 @@ package net.tnemc.core.menu.page.shared;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.menu.handlers.StringSelectionHandler;
+import net.tnemc.item.AbstractItemStack;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
 import net.tnemc.menu.core.icon.action.impl.DataAction;
@@ -74,7 +75,7 @@ public class MaterialSelectionPageCallback {
 
       final int page = (Integer)viewer.get().dataOrDefault(materialPageID, 1);
       final int items = (menuRows - 1) * 9;
-      final int start = ((page - 1) * 9);
+      final int start = ((page - 1) * items);
 
       final int maxPages = (TNECore.instance().helper().materials().size() / items) + (((TNECore.instance().helper().materials().size() % items) > 0)? 1 : 0);
 

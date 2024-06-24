@@ -43,13 +43,6 @@ public class DenominationIcon extends SwitchPageIcon {
 
 
     actions.add(new DataAction("ACTIVE_DENOMINATION", denomination));
-    actions.add(new DataAction("DENOMINATION_WEIGHT", denomination.weight()));
-    actions.add(new DataAction("DENOMINATION_SINGULAR", denomination.singular()));
-    actions.add(new DataAction("DENOMINATION_PLURAL", denomination.plural()));
-
-    if(denomination instanceof ItemDenomination itemDenomination) {
-      actions.add(new DataAction("DENOMINATION_MATERIAL", itemDenomination.getMaterial()));
-    }
 
     super.addActions();
   }

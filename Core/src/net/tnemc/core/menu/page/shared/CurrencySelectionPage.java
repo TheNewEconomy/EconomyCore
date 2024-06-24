@@ -66,7 +66,7 @@ public class CurrencySelectionPage {
 
       final int page = (Integer)viewer.get().dataOrDefault(currencyPageID, 1);
       final int items = (menuRows - 1) * 9;
-      final int start = ((page - 1) * 9);
+      final int start = ((page - 1) * items);
 
       final int maxPages = (TNECore.eco().currency().currencies().size() / items) + (((TNECore.eco().currency().currencies().size() % items) > 0)? 1 : 0);
 

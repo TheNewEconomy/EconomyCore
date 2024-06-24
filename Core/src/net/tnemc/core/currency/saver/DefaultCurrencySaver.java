@@ -123,7 +123,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     }
 
     //Conversion
-    if(currency.getConversion().size() > 0) {
+    if(!currency.getConversion().isEmpty()) {
       for(Map.Entry<String, Double> entry : currency.getConversion().entrySet()) {
         cur.set("Converting." + entry.getKey(), entry.getValue());
       }
@@ -155,8 +155,21 @@ public class DefaultCurrencySaver implements CurrencySaver {
       e.printStackTrace();
     }
 
+    final File curDirectory = new File(directory.getParentFile(), currency.getIdentifier());
+    if(!curDirectory.exists()) {
+      try {
+
+        curDirectory.mkdirs();
+      } catch(Exception e) {
+
+        PluginCore.log().error("Failed to save currency: " + currency.getIdentifier());
+        e.printStackTrace();
+        return;
+      }
+    }
+
     for(final Denomination denomination : currency.getDenominations().values()) {
-      saveDenomination(new File(directory, currency.getIdentifier()), currency, denomination);
+      saveDenomination(curDirectory, currency, denomination);
     }
   }
 
@@ -196,8 +209,9 @@ public class DefaultCurrencySaver implements CurrencySaver {
    */
   @Override
   public void saveDenomination(final File directory, Currency currency, Denomination denomination) {
-    final YamlFile denom = new YamlFile(directory);
+    final YamlFile denom = new YamlFile(new File(directory, denomination.singular() + ".yml"));
     try {
+
       denom.createOrLoadWithComments();
     } catch(IOException e) {
       PluginCore.log().error("Failed to save currency denomination: " + denomination.singular());

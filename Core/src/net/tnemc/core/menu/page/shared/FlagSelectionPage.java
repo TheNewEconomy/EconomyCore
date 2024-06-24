@@ -74,7 +74,7 @@ public class FlagSelectionPage {
 
       final int page = (Integer)viewer.get().dataOrDefault(flagPageID, 1);
       final int items = (menuRows - 1) * 9;
-      final int start = ((page - 1) * 9);
+      final int start = ((page - 1) * items);
       final int maxPages = (TNECore.instance().helper().flags().size() / items) + (((TNECore.instance().helper().flags().size() % items) > 0)? 1 : 0);
 
       final int prev = (page <= 1)? maxPages : page - 1;

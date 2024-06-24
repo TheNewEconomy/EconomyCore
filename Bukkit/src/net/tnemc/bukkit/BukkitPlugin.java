@@ -36,6 +36,8 @@ import net.tnemc.plugincore.bukkit.BukkitPluginCore;
 import net.tnemc.plugincore.core.compatibility.ServerConnector;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;

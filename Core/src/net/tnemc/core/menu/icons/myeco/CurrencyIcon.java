@@ -43,28 +43,6 @@ public class CurrencyIcon extends SwitchPageIcon {
 
     actions.add(new DataAction(ACTIVE_CURRENCY, currency));
 
-    //Basic Information
-    actions.add(new DataAction("CURRENCY_UUID", currency.getUid().toString()));
-    actions.add(new DataAction("CURRENCY_IDENTIFIER", currency.getIdentifier()));
-
-    actions.add(new DataAction("CURRENCY_STARTING", currency.getStartingHoldings()));
-    actions.add(new DataAction("CURRENCY_MAX", currency.getMaxBalance()));
-    actions.add(new DataAction("CURRENCY_MIN", currency.getMinBalance()));
-    actions.add(new DataAction("CURRENCY_ICON", currency.getIconMaterial()));
-
-    if(currency instanceof ItemCurrency itemCurrency) {
-
-      actions.add(new DataAction("CURRENCY_ENDER", (itemCurrency.canEnderChest())? "ENABLED" : "DISABLED"));
-      actions.add(new DataAction("CURRENCY_ENDER_FILL", (itemCurrency.isEnderFill())? "ENABLED" : "DISABLED"));
-    }
-
-    //Type
-    actions.add(new DataAction("CURRENCY_TYPE", currency.type().name()));
-
-    //Format
-
-    //Note
-
     addActions();
   }
 }

@@ -21,8 +21,11 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.currency.Denomination;
+import net.tnemc.core.currency.Note;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
+import net.tnemc.core.menu.handlers.StringSelectionHandler;
+import net.tnemc.core.menu.icons.actions.PageSwitchWithClose;
 import net.tnemc.core.menu.icons.myeco.CurrencyIcon;
 import net.tnemc.core.menu.icons.myeco.DenominationIcon;
 import net.tnemc.core.menu.icons.shared.PreviousPageIcon;
@@ -32,6 +35,7 @@ import net.tnemc.core.menu.page.shared.AmountSelectionPage;
 import net.tnemc.core.menu.page.shared.EnchantmentSelectionPage;
 import net.tnemc.core.menu.page.shared.FlagSelectionPage;
 import net.tnemc.core.menu.page.shared.MaterialSelectionPageCallback;
+import net.tnemc.core.transaction.tax.TaxEntry;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.menu.core.Menu;
 import net.tnemc.menu.core.Page;
@@ -47,10 +51,13 @@ import net.tnemc.menu.core.icon.impl.StateIcon;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -124,7 +131,17 @@ public class MyEcoMenu extends Menu {
     //add currency
     final SwitchPageIcon addCurrencyIcon = new SwitchPageIcon(2, PluginCore.server().stackBuilder().of("ARROW", 1)
             .display("Add Currency").lore(Collections.singletonList("Click to add currency")), this.name, CURRENCY_EDIT_PAGE, ActionType.ANY);
-    addCurrencyIcon.addAction(new DataAction("CURRENCY_UUID", UUID.randomUUID().toString()));
+
+    currency.addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
+            .display("Save")
+            .lore(Collections.singletonList("Click to save the enchantments.")))
+            .withActions(new RunnableAction((click)->{
+
+              TNECore.eco().currency().getSaver().saveCurrencies(new File(PluginCore.directory(), "currency"));
+            }), new PageSwitchWithClose(this.name, -1))
+            .withSlot(6)
+            .build());
+
     addCurrencyIcon.addAction(new ChatAction((message)->{
 
       if(message.getPlayer().viewer().isPresent()) {
@@ -142,14 +159,16 @@ public class MyEcoMenu extends Menu {
     }));
     addCurrencyIcon.addAction(new RunnableAction((run)->run.player().message("Enter an identifier for the currency:")));
     currency.addIcon(addCurrencyIcon);
+    currency.setOpen((open)->{
 
+      int i = 19;
+      for(final Currency curObj : TNECore.eco().currency().currencies()) {
+        currency.addIcon(new CurrencyIcon(i, curObj));
 
-    int i = 19;
-    for(final Currency curObj : TNECore.eco().currency().currencies()) {
-      currency.addIcon(new CurrencyIcon(i, curObj));
+        i += 2;
+      }
+    });
 
-      i += 2;
-    }
     addPage(currency);
 
     /*
@@ -159,38 +178,35 @@ public class MyEcoMenu extends Menu {
     currencyEditor.addIcon(new PreviousPageIcon(0, this.name, CURRENCIES_PAGE, ActionType.ANY));
 
     //denominations
-    currencyEditor.addIcon(new SwitchPageIcon(19, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
+    currencyEditor.addIcon(new SwitchPageIcon(10, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
             .display("Edit Denominations"), this.name, DENOMINATIONS_PAGE, ActionType.ANY));
 
     //CURRENCY_INFO_EDIT_PAGE
-    currencyEditor.addIcon(new SwitchPageIcon(20, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
+    currencyEditor.addIcon(new SwitchPageIcon(11, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
             .display("Basic Currency Information"), this.name, CURRENCY_INFO_EDIT_PAGE, ActionType.ANY));
 
     //CURRENCY_FORMAT_EDIT_PAGE
-    currencyEditor.addIcon(new SwitchPageIcon(21, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
+    currencyEditor.addIcon(new SwitchPageIcon(12, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
             .display("Currency Format Options"), this.name, CURRENCY_FORMAT_EDIT_PAGE, ActionType.ANY));
 
-    //CURRENCY_TYPE_EDIT_PAGE
-    currencyEditor.addIcon(new SwitchPageIcon(22, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
-            .display("Currency Type"), this.name, CURRENCY_TYPE_EDIT_PAGE, ActionType.ANY));
-
     //CURRENCY_NOTE_EDIT_PAGE
-    currencyEditor.addIcon(new SwitchPageIcon(23, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
+    currencyEditor.addIcon(new SwitchPageIcon(14, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
             .display("Currency Note Options"), this.name, CURRENCY_NOTE_EDIT_PAGE, ActionType.ANY));
 
     currencyEditor.setOpen((open)->{
       if(open.getPlayer().viewer().isPresent()) {
 
         final Optional<Object> currencyOpt = open.getPlayer().viewer().get().findData(ACTIVE_CURRENCY);
-
         if(currencyOpt.isPresent()) {
 
           final Currency currencyObject = (Currency)currencyOpt.get();
-          System.out.println("Material Icon Test: " + currencyObject.getIconMaterial());
+
+          //CURRENCY_TYPE_EDIT_PAGE
+          currencyEditor.addIcon(new SwitchPageIcon(13, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
+                  .display("Type: " + currencyObject.getType()).lore(Collections.singletonList("Set the currency type.")), this.name, CURRENCY_TYPE_EDIT_PAGE, ActionType.ANY));
         }
       }
     });
-
     addPage(currencyEditor);
 
     /*
@@ -289,13 +305,24 @@ public class MyEcoMenu extends Menu {
     final Page currencyTypeEditPage = new PageBuilder(CURRENCY_TYPE_EDIT_PAGE).build();
     currencyTypeEditPage.addIcon(new PreviousPageIcon(0, this.name, CURRENCY_EDIT_PAGE, ActionType.ANY));
 
-    i = 19;
+    int i = 19;
     for(final CurrencyType type : TNECore.eco().currency().getTypes().values()) {
 
       final SwitchPageIcon switchIcon = new SwitchPageIcon(i, PluginCore.server().stackBuilder().of("PAPER", 1)
-              .display("Type: " + type.name()).lore(Collections.singletonList("Click to set currency to this type.")), this.name, CURRENCY_EDIT_PAGE, ActionType.ANY);
+              .display("Type: " + type.name()).lore(Collections.singletonList("Click to set currency to this type.")), this.name, CURRENCY_EDIT_PAGE, ActionType.ANY, false);
+      switchIcon.addAction(new RunnableAction((click)->{
 
-      switchIcon.addAction(new DataAction("CURRENCY_TYPE", type.name()));
+        if(click.player().viewer().isPresent()) {
+
+          final Optional<Object> currencyOpt = click.player().viewer().get().findData(ACTIVE_CURRENCY);
+          if(currencyOpt.isPresent()) {
+
+            final Currency currencyObject = (Currency)currencyOpt.get();
+            currencyObject.setType(type.name());
+          }
+        }
+      }));
+      switchIcon.addActions();
       currencyTypeEditPage.addIcon(switchIcon);
       i += 2;
     }
@@ -313,31 +340,85 @@ public class MyEcoMenu extends Menu {
 
     final Page currencyNoteMaterialPage = new PageBuilder(CURRENCY_NOTE_MATERIAL_PAGE).build();
     currencyNoteMaterialPage.setOpen((open->new MaterialSelectionPageCallback("CURRENCY_NOTE_MATERIAL", this.name, this.name, CURRENCY_NOTE_MATERIAL_PAGE, CURRENCY_NOTE_EDIT_PAGE, "CURRENCY_NOTE_MATERIAL_PAGE", this.rows, (selection)->{
-      //TODO: Handle Note Material
+
+      if(open.getPlayer().viewer().isPresent()) {
+
+        final Optional<Object> currencyOpt = open.getPlayer().viewer().get().findData(ACTIVE_CURRENCY);
+        if(currencyOpt.isPresent()) {
+
+          final Currency currencyObject = (Currency)currencyOpt.get();
+          if(currencyObject.getNote().isPresent()) {
+            currencyObject.getNote().get().setMaterial(selection.getValue());
+          }
+        }
+      }
     }).handle(open)));
     addPage(currencyNoteMaterialPage);
 
     final Page currencyNoteEnchantPage = new PageBuilder(CURRENCY_NOTE_ENCHANTS_PAGE).build();
     currencyNoteEnchantPage.setOpen((open->new EnchantmentSelectionPage("CURRENCY_NOTE_ENCHANTS", this.name, this.name, CURRENCY_NOTE_ENCHANTS_PAGE, CURRENCY_NOTE_EDIT_PAGE, "CURRENCY_NOTE_ENCHANTS_PAGE", this.rows, (selection)->{
-      //TODO: Handle Note Enchants
+      if(open.getPlayer().viewer().isPresent()) {
+
+        final Optional<Object> currencyOpt = open.getPlayer().viewer().get().findData(ACTIVE_CURRENCY);
+        if(currencyOpt.isPresent()) {
+
+          final Currency currencyObject = (Currency)currencyOpt.get();
+          if(currencyObject.getNote().isPresent()) {
+            currencyObject.getNote().get().setEnchantments(Arrays.asList(selection.getValue().split(",")));
+          }
+        }
+      }
     }).handle(open)));
     addPage(currencyNoteEnchantPage);
 
     final Page currencyNoteFlagPage = new PageBuilder(CURRENCY_NOTE_FLAGS_PAGE).build();
     currencyNoteFlagPage.setOpen((open->new FlagSelectionPage("CURRENCY_NOTE_FLAGS", this.name, this.name, CURRENCY_NOTE_FLAGS_PAGE, CURRENCY_NOTE_EDIT_PAGE, "CURRENCY_NOTE_FLAGS_PAGE", this.rows, (selection)->{
-      //TODO: Handle Note Flags
+
+      if(open.getPlayer().viewer().isPresent()) {
+
+        final Optional<Object> currencyOpt = open.getPlayer().viewer().get().findData(ACTIVE_CURRENCY);
+        if(currencyOpt.isPresent()) {
+
+          final Currency currencyObject = (Currency)currencyOpt.get();
+          if(currencyObject.getNote().isPresent()) {
+            currencyObject.getNote().get().setFlags(Arrays.asList(selection.getValue().split(",")));
+          }
+        }
+      }
     }).handle(open)));
     addPage(currencyNoteFlagPage);
 
     final Page noteFeePage = new PageBuilder(CURRENCY_NOTE_FEE_SELECTION_PAGE).build();
     noteFeePage.setOpen((open->new AmountSelectionPage("CURRENCY_NOTE_FEE", this.name, this.name, CURRENCY_NOTE_FEE_SELECTION_PAGE, CURRENCY_NOTE_FEE_MAIN_PAGE, (selection)->{
-      //TODO: Handle Note Fee
+
+      if(open.getPlayer().viewer().isPresent()) {
+
+        final Optional<Object> currencyOpt = open.getPlayer().viewer().get().findData(ACTIVE_CURRENCY);
+        if(currencyOpt.isPresent()) {
+
+          final Currency currencyObject = (Currency)currencyOpt.get();
+          if(currencyObject.getNote().isPresent()) {
+            //TODO: Note fee
+          }
+        }
+      }
     }).handle(open)));
     addPage(noteFeePage);
 
     final Page noteMinPage = new PageBuilder(CURRENCY_NOTE_MIN_SELECTION_PAGE).build();
     noteMinPage.setOpen((open->new AmountSelectionPage("CURRENCY_NOTE_MIN", this.name, this.name, CURRENCY_NOTE_MIN_SELECTION_PAGE, CURRENCY_NOTE_EDIT_PAGE, (selection)->{
-      //TODO: Handle Note Min
+
+      if(open.getPlayer().viewer().isPresent()) {
+
+        final Optional<Object> currencyOpt = open.getPlayer().viewer().get().findData(ACTIVE_CURRENCY);
+        if(currencyOpt.isPresent()) {
+
+          final Currency currencyObject = (Currency)currencyOpt.get();
+          if(currencyObject.getNote().isPresent()) {
+            currencyObject.getNote().get().setMinimum(selection.getAmount());
+          }
+        }
+      }
     }).handle(open)));
     addPage(noteMinPage);
 
@@ -366,9 +447,9 @@ public class MyEcoMenu extends Menu {
               return false;
             }
             final Denomination denomObj = (currencyObject instanceof ItemCurrency)? new ItemDenomination(weight) : new Denomination(weight);
+            currencyObject.getDenominations().put(weight, denomObj);
 
             message.getPlayer().viewer().get().addData(ACTIVE_DENOMINATION, denomObj);
-            message.getPlayer().viewer().get().addData("DENOMINATION_WEIGHT", weight);
             return true;
           } catch(NumberFormatException ignore) {}
         }
@@ -500,7 +581,7 @@ public class MyEcoMenu extends Menu {
                 }), new RunnableAction((run)->run.player().message("Enter a name for the currency:")))
                 .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
                         .lore(Collections.singletonList("Enter an identifier for the currency."))
-                        .display(currencyObject.getDisplay()))
+                        .display(currencyObject.getIdentifier()))
                 .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
@@ -783,30 +864,53 @@ public class MyEcoMenu extends Menu {
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
 
-      final Optional<Object> currencyUUID = viewer.get().findData("CURRENCY_UUID");
-      if(currencyUUID.isPresent()) {
+      final Optional<Object> currencyOpt = viewer.get().findData(ACTIVE_CURRENCY);
+      if(currencyOpt.isPresent()) {
 
-        final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((String)currencyUUID.get());
-        if(currencyOptional.isPresent()) {
+        final Currency currency = (Currency)currencyOpt.get();
 
-            callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-                    .display("Note Material")
-                    .lore(Collections.singletonList("Click to set the material of the note item.")))
-                    .withSlot(10)
-                    .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_MATERIAL_PAGE))
-                    .build());
+        final AbstractItemStack<?> disabledStack = PluginCore.server().stackBuilder().display("Disabled").of("RED_WOOL", 1);
+        final AbstractItemStack<?> enabledStack = PluginCore.server().stackBuilder().display("Enabled").of("GREEN_WOOL", 1);
 
-            callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-                    .lore(Collections.singletonList("Click to set the flags of the note item.")))
-                    .withSlot(11)
-                    .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_FLAGS_PAGE))
-                    .build());
+        //ender chest icon
+        final String noteState = (currency.isNotable())? "ENABLED" : "DISABLED";
+        final StateIcon notableIcon = new StateIcon(disabledStack, null, "CURRENCY_NOTE", noteState, (currentState)->{
+          switch(currentState.toUpperCase(Locale.ROOT)) {
 
-            callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-                    .lore(Collections.singletonList("Click to set the enchantments of the note item.")))
-                    .withSlot(12)
-                    .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_ENCHANTS_PAGE))
-                    .build());
+            case "ENABLED":
+              currency.setNote(null);
+              return "DISABLED";
+            default:
+              currency.setNote(new Note("PAPER", BigDecimal.ZERO, new TaxEntry("flat", 0.0)));
+              return "ENABLED";
+          }
+        });
+        notableIcon.setSlot(23);
+        notableIcon.addState("DISABLED", disabledStack.display("Notable(Disabled)").lore(Collections.singletonList("Click to enable noting for this currency.")));
+        notableIcon.addState("ENABLED", enabledStack.display("Notable(Enabled)").lore(Collections.singletonList("Click to disable noting for this currency.")));
+        callback.getPage().addIcon(notableIcon);
+
+        if(currency.getNote().isPresent()) {
+
+          final String material = (currency.getNote().isPresent())? currency.getNote().get().getMaterial() : "PAPER";
+          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(material, 1)
+                  .display("Note Material")
+                  .lore(Collections.singletonList("Click to set the material of the note item.")))
+                  .withSlot(10)
+                  .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_MATERIAL_PAGE))
+                  .build());
+
+          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                  .lore(Collections.singletonList("Click to set the flags of the note item.")))
+                  .withSlot(11)
+                  .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_FLAGS_PAGE))
+                  .build());
+
+          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                  .lore(Collections.singletonList("Click to set the enchantments of the note item.")))
+                  .withSlot(12)
+                  .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_ENCHANTS_PAGE))
+                  .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
                   .display("Minimum Note Amount")
@@ -824,21 +928,17 @@ public class MyEcoMenu extends Menu {
 
                       try {
 
-                        message.getPlayer().viewer().get().addData("CURRENCY_NOTE_MODEL", Integer.valueOf(message.getMessage()));
+                        currency.getNote().get().setCustomModelData(Integer.parseInt(message.getMessage()));
+
                         return true;
                       } catch(NumberFormatException ignore) {}
                     }
                     message.getPlayer().message("Enter custom model of the note item:");
                     return false;
                   }), new RunnableAction((run)->run.player().message("Enter custom model of the note item:")))
-                  .withItemProvider((provider)->{
-
-                    final Integer message = (provider.viewer().isPresent())? (Integer)provider.viewer().get().dataOrDefault("CURRENCY_NOTE_MODEL", -1) : -1;
-
-                    return PluginCore.server().stackBuilder().of("PAPER", 1)
-                            .lore(Collections.singletonList("Click to set custom model of the note item. Optional."))
-                            .display(String.valueOf(message));
-                  })
+                  .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
+                          .lore(Collections.singletonList("Click to set custom model of the note item. Optional."))
+                          .display(String.valueOf(currency.getNote().get().getCustomModelData())))
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
@@ -857,19 +957,16 @@ public class MyEcoMenu extends Menu {
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
 
-      final Optional<Object> currencyUUID = viewer.get().findData("CURRENCY_UUID");
-      if(currencyUUID.isPresent()) {
+      final Optional<Object> currencyOpt = viewer.get().findData(ACTIVE_CURRENCY);
+      if(currencyOpt.isPresent()) {
 
-        final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((String)currencyUUID.get());
-        if(currencyOptional.isPresent()) {
+        final Currency currency = (Currency)currencyOpt.get();
+        int i = 19;
+        for(final Denomination denomObj : currency.getDenominations().values()) {
 
-          int i = 19;
-          for(final Denomination denomObj : currencyOptional.get().getDenominations().values()) {
+          callback.getPage().addIcon(new DenominationIcon(i, denomObj));
 
-            callback.getPage().addIcon(new DenominationIcon(i, denomObj));
-
-            i+= 2;
-          }
+          i+= 2;
         }
       }
     }

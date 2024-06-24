@@ -37,8 +37,8 @@ public class ItemDenomination extends Denomination {
   private final List<String> flags = new ArrayList<>();
   private final List<String> lore = new ArrayList<>();
 
-  private String material;
-  private short damage;
+  private String material = "PAPER";
+  private short damage = 0;
   private String name = null;
   private Integer customModel = -1;
   private String texture = null;
