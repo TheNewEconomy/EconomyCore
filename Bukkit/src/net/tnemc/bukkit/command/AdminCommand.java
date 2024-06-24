@@ -63,6 +63,7 @@ import java.util.UUID;
 @Description("Admin.Main.Description")
 public class AdminCommand {
 
+  @DefaultFor({"tne", "ecomin", "ecoadmin", "ecomanage", "theneweconomy"})
   @Subcommand({"ecomenu", "menu", "myeco"})
   @Usage("Admin.MyEco.Arguments")
   @Description("Admin.MyEco.Description")
@@ -72,7 +73,6 @@ public class AdminCommand {
   }
 
   @Subcommand({"help", "?"})
-  @DefaultFor({"tne", "ecomin", "ecoadmin", "ecomanage", "theneweconomy"})
   @Usage("Help.Arguments")
   @Description("Help.Description")
   public void help(BukkitCommandActor actor, CommandHelp<String> helpEntries, @Default("1") int page) {

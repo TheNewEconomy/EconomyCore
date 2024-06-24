@@ -41,9 +41,10 @@ import java.math.BigDecimal;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-@Command({"money", "eco", "balo", "balance", "bal", "balanceother"})
+@Command({"money", "eco", "balo", "balance", "bal", "balanceother", "mybal"})
 public class MoneyCommand {
 
+  @DefaultFor({"bal", "mybal"})
   @Subcommand({"balmenu", "menu", "mybal"})
   @Usage("Money.MyBal.Arguments")
   @Description("Money.MyBal.Description")
@@ -59,7 +60,7 @@ public class MoneyCommand {
     BaseCommand.help(new BukkitCMDSource(actor), helpEntries, page);
   }
 
-  @DefaultFor({"money", "eco", "bal", "balance"})
+  @DefaultFor({"money", "eco", "balance"})
   @Subcommand({"balance", "bal", "val"})
   @Usage("Money.Balance.Arguments")
   @Description("Money.Balance.Description")

@@ -34,16 +34,23 @@ import revxrsal.commands.sponge.annotation.CommandPermission;
 
 import java.math.BigDecimal;
 
-;
-
 /**
  * MoneyCommands
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-@Command({"money", "eco", "balo", "balance", "bal", "balanceother"})
+@Command({"money", "eco", "balo", "balance", "bal", "balanceother", "mybal"})
 public class MoneyCommand {
+
+  @DefaultFor({"bal", "mybal"})
+  @Subcommand({"balmenu", "menu", "mybal"})
+  @Usage("Money.MyBal.Arguments")
+  @Description("Money.MyBal.Description")
+  @CommandPermission("tne.money.mybal")
+  public void onMyBal(SpongeCommandActor sender) {
+    net.tnemc.core.command.MoneyCommand.onMyBal(new SpongeCMDSource(sender));
+  }
 
   @DefaultFor({"money", "eco", "bal", "balance"})
   @Subcommand({"balance", "bal", "val"})

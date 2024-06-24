@@ -128,10 +128,6 @@ public class MyEcoMenu extends Menu {
     final Page currency = new PageBuilder(CURRENCIES_PAGE).build();
     currency.addIcon(new PreviousPageIcon(0, this.name, 1, ActionType.ANY));
 
-    //add currency
-    final SwitchPageIcon addCurrencyIcon = new SwitchPageIcon(2, PluginCore.server().stackBuilder().of("ARROW", 1)
-            .display("Add Currency").lore(Collections.singletonList("Click to add currency")), this.name, CURRENCY_EDIT_PAGE, ActionType.ANY);
-
     currency.addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
             .display("Save")
             .lore(Collections.singletonList("Click to save the enchantments.")))
@@ -142,6 +138,10 @@ public class MyEcoMenu extends Menu {
             .withSlot(6)
             .build());
 
+    //add currency
+    final SwitchPageIcon addCurrencyIcon = new SwitchPageIcon(2, PluginCore.server().stackBuilder().of("ARROW", 1)
+            .display("Add Currency").lore(Collections.singletonList("Click to add currency")), this.name, CURRENCY_EDIT_PAGE, ActionType.ANY);
+
     addCurrencyIcon.addAction(new ChatAction((message)->{
 
       if(message.getPlayer().viewer().isPresent()) {
@@ -151,7 +151,8 @@ public class MyEcoMenu extends Menu {
           return false;
         }
 
-        message.getPlayer().viewer().get().addData("CURRENCY_IDENTIFIER", message.getMessage());
+        //TODO: Create currency: Also when we switch currency types how should we readd/remove the ItemCurrency initialization?
+        message.getPlayer().viewer().get().addData(ACTIVE_CURRENCY, message.getMessage());
         return true;
       }
       message.getPlayer().message("Enter an identifier for the currency:");

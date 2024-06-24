@@ -10,8 +10,7 @@ Info:
   #Whether to use the Identifier config as the currency's UUID. Not Recommended. Can lead to issues in the future
   UUIDAsId: false
 
-  #The material name to use as the icon for this currency in
-  #the plugin menus.
+  #The material name to use as the icon for this currency in the plugin menus.
   Icon: "PAPER"
 
   #The singular form of this currency's major denomination.
