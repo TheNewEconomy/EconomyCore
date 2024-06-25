@@ -19,6 +19,7 @@ package net.tnemc.core.currency.saver;
  */
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyRegion;
 import net.tnemc.core.currency.CurrencySaver;
@@ -90,7 +91,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
 
     //Currency Info configs.
     cur.setComment("Info.Server", "The server this currency belongs to, for data saving purposes.");
-    cur.set("Info.Server", "Main Server");
+    cur.set("Info.Server", MainConfig.yaml().getString("Core.Server.Name"));
 
     cur.setComment("Info.Identifier", "The identifier of this currency used for various commands.");
     cur.set("Info.Identifier", currency.getIdentifier());
