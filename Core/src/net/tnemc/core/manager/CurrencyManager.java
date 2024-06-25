@@ -353,6 +353,10 @@ public class CurrencyManager {
     return curIDMap;
   }
 
+  public Map<UUID, Currency> getCurrencies() {
+    return currencies;
+  }
+
   public void delete(final UUID uid) {
 
     if(currencies.containsKey(uid)) {

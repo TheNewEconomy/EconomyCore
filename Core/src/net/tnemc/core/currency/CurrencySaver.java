@@ -18,7 +18,12 @@ package net.tnemc.core.currency;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.plugincore.PluginCore;
+
 import java.io.File;
+import java.io.IOException;
+
+import static net.tnemc.core.utils.MISCUtils.zipFolder;
 
 /**
  * Used to load currencies.
@@ -55,4 +60,19 @@ public interface CurrencySaver {
    * @param denomination The denomination to save.
    */
   void saveDenomination(final File directory, Currency currency, Denomination denomination);
+
+  default void backupCurrency(final File directory) {
+    try {
+      final File currencyBackupFolder = new File(PluginCore.directory(), "currency-backups");
+      currencyBackupFolder.mkdir();
+
+      final String timestamp = String.valueOf(System.currentTimeMillis());
+      final String zipFilePath = new File(currencyBackupFolder, "currency-" + timestamp + ".zip").getPath();
+      zipFolder(directory, zipFilePath);
+
+      PluginCore.log().inform("Currency folder backed up to: " + currencyBackupFolder.getPath());
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 }

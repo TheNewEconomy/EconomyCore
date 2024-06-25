@@ -36,6 +36,8 @@ import net.tnemc.core.menu.page.shared.EnchantmentSelectionPage;
 import net.tnemc.core.menu.page.shared.FlagSelectionPage;
 import net.tnemc.core.menu.page.shared.MaterialSelectionPageCallback;
 import net.tnemc.core.transaction.tax.TaxEntry;
+import net.tnemc.core.utils.MISCUtils;
+import net.tnemc.core.utils.exceptions.NoValidCurrenciesException;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.menu.core.Menu;
 import net.tnemc.menu.core.Page;
@@ -133,7 +135,20 @@ public class MyEcoMenu extends Menu {
             .lore(Collections.singletonList("Click to save the enchantments.")))
             .withActions(new RunnableAction((click)->{
 
-              TNECore.eco().currency().getSaver().saveCurrencies(new File(PluginCore.directory(), "currency"));
+              final File directory = new File(PluginCore.directory(), "currency");
+              TNECore.eco().currency().getSaver().backupCurrency(directory);
+
+              MISCUtils.deleteFolder(directory);
+
+              TNECore.eco().currency().getSaver().saveCurrencies(directory);
+
+              try {
+
+                TNECore.eco().currency().getCurrencies().clear();
+                TNECore.eco().currency().getCurIDMap().clear();
+
+                TNECore.eco().currency().getLoader().loadCurrencies(directory);
+              } catch(NoValidCurrenciesException ignore) {}
             }), new PageSwitchWithClose(this.name, -1))
             .withSlot(6)
             .build());
@@ -151,8 +166,7 @@ public class MyEcoMenu extends Menu {
           return false;
         }
 
-        //TODO: Create currency: Also when we switch currency types how should we readd/remove the ItemCurrency initialization?
-        message.getPlayer().viewer().get().addData(ACTIVE_CURRENCY, message.getMessage());
+        message.getPlayer().viewer().get().addData(ACTIVE_CURRENCY, new Currency(message.getMessage()));
         return true;
       }
       message.getPlayer().message("Enter an identifier for the currency:");
@@ -315,11 +329,23 @@ public class MyEcoMenu extends Menu {
 
         if(click.player().viewer().isPresent()) {
 
-          final Optional<Object> currencyOpt = click.player().viewer().get().findData(ACTIVE_CURRENCY);
+          Optional<Object> currencyOpt = click.player().viewer().get().findData(ACTIVE_CURRENCY);
           if(currencyOpt.isPresent()) {
 
-            final Currency currencyObject = (Currency)currencyOpt.get();
-            currencyObject.setType(type.name());
+            Currency currencyObject = (Currency)currencyOpt.get();
+
+            final CurrencyType origType = TNECore.eco().currency().findTypeOrDefault(currencyObject.getType());
+            final CurrencyType newType = TNECore.eco().currency().findTypeOrDefault(type.name());
+            if(origType.supportsItems() && !newType.supportsItems() || !origType.supportsItems() && newType.supportsItems()) {
+              currencyObject.setType(type.name());
+
+              currencyObject = Currency.clone(currencyObject, newType.supportsItems());
+              TNECore.eco().currency().addCurrency(currencyObject);
+              click.player().viewer().get().addData(ACTIVE_CURRENCY, currencyObject);
+
+            } else {
+              currencyObject.setType(type.name());
+            }
           }
         }
       }));
@@ -998,7 +1024,6 @@ public class MyEcoMenu extends Menu {
       final Optional<Object> currencyOpt = viewer.get().findData(ACTIVE_CURRENCY);
       if(denomOpt.isPresent() && currencyOpt.isPresent()) {
 
-        final Currency currency = (Currency)currencyOpt.get();
         final Denomination denomination = (Denomination)denomOpt.get();
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
@@ -1053,7 +1078,7 @@ public class MyEcoMenu extends Menu {
 
         if(denomination instanceof ItemDenomination itemDenomination) {
 
-          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(itemDenomination.getMaterial(), 1)
                   .lore(Collections.singletonList("Click to set material of denomination.")))
                   .withSlot(13)
                   .withActions(new SwitchPageAction(this.name, DENOMINATION_MATERIAL_PAGE))

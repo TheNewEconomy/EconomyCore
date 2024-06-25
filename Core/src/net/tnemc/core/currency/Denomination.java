@@ -21,6 +21,7 @@ package net.tnemc.core.currency;
 import net.tnemc.core.currency.item.ItemDenomination;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 /**
  * Represents a denomination for an {@link Currency currency}.
@@ -39,6 +40,28 @@ public class Denomination {
     this.weight = weight;
     this.single = "Singular";
     this.plural = "Plural";
+  }
+
+  public static Denomination clone(final Denomination original, boolean item) {
+    Denomination cloned = (item)? new ItemDenomination(original.weight()) : new Denomination(original.weight());
+
+    cloned.setSingle(original.singular());
+    cloned.setPlural(original.plural());
+    cloned.setWeight(original.weight());
+
+    if(cloned instanceof ItemDenomination clonedItem && original instanceof ItemDenomination itemDenomination) {
+
+      clonedItem.setEnchantments(new ArrayList<>(itemDenomination.getEnchantments()));
+      clonedItem.setFlags(new ArrayList<>(itemDenomination.getFlags()));
+      clonedItem.setLore(new ArrayList<>(itemDenomination.getLore()));
+      clonedItem.setMaterial(itemDenomination.getMaterial());
+      clonedItem.setDamage(itemDenomination.getDamage());
+      clonedItem.setName(itemDenomination.getName());
+      clonedItem.setCustomModel(itemDenomination.getCustomModel());
+      clonedItem.setTexture(itemDenomination.getTexture());
+    }
+
+    return cloned;
   }
 
   public boolean isItem() {
