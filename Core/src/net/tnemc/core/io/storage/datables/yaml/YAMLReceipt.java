@@ -17,12 +17,22 @@ package net.tnemc.core.io.storage.datables.yaml;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
+import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.transaction.Receipt;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.id.UUIDPair;
 import net.tnemc.plugincore.core.io.storage.Datable;
 import net.tnemc.plugincore.core.io.storage.StorageConnector;
+import net.tnemc.plugincore.core.utils.IOUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.simpleyaml.configuration.file.YamlFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -88,6 +98,39 @@ public class YAMLReceipt implements Datable<Receipt> {
    */
   @Override
   public Optional<Receipt> load(StorageConnector<?> connector, @NotNull String identifier) {
+
+    final File file = new File(PluginCore.directory(), "transactions/" + identifier + ".yml");
+    if(!file.exists()) {
+
+      PluginCore.log().error("Null receipt file passed to YAMLReceipt.load. Receipt: " + identifier);
+      return Optional.empty();
+    }
+    return load(connector, file, identifier);
+  }
+
+  public Optional<Receipt> load(StorageConnector<?> connector, File file, final String identifier) {
+    if(file == null) {
+
+      PluginCore.log().error("Null account file passed to YAMLReceipt.load. Receipt: " + identifier);
+      return Optional.empty();
+    }
+
+    YamlFile yaml = null;
+    try {
+      yaml = YamlFile.loadConfiguration(file);
+    } catch(IOException ignore) {
+
+      PluginCore.log().error("Issue loading account file. Receipt: " + identifier);
+    }
+
+    if(yaml != null) {
+
+      Receipt receipt = null;
+
+
+
+      return Optional.ofNullable(receipt);
+    }
     return Optional.empty();
   }
 
@@ -102,6 +145,16 @@ public class YAMLReceipt implements Datable<Receipt> {
    */
   @Override
   public Collection<Receipt> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
-    return null;
+    final Collection<Receipt> receipts = new ArrayList<>();
+
+    for(File file : IOUtil.getYAMLs(new File(PluginCore.directory(), "transactions"))) {
+
+      final Optional<Receipt> loaded = load(connector, file, file.getName().replace(".yml", ""));
+      if(loaded.isPresent()) {
+        receipts.add(loaded.get());
+        TransactionManager.receipts().log(loaded.get());
+      }
+    }
+    return receipts;
   }
 }
