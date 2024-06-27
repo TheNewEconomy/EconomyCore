@@ -294,7 +294,7 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
   @Override
   public String identifier() {
-    return account.getIdentifier();
+    return account.getIdentifier().toString();
   }
 
   public Account getAccount() {

@@ -22,6 +22,7 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import net.tnemc.core.account.NonPlayerAccount;
 
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Represents an account linked to a Town in the Towny Plugin.
@@ -31,7 +32,7 @@ import java.util.Objects;
  */
 public class TownAccount extends NonPlayerAccount {
 
-  public TownAccount(String identifier, String name) {
+  public TownAccount(UUID identifier, String name) {
     super(identifier, name);
     //this.owner = Objects.requireNonNull(TownyAPI.getInstance().getTown(name)).getMayor().getUUID();
   }
@@ -47,9 +48,9 @@ public class TownAccount extends NonPlayerAccount {
   }
 
   @Override
-  public String generateIdentifier(String name) {
+  public UUID generateIdentifier(String name) {
     try {
-      return Objects.requireNonNull(TownyAPI.getInstance().getTown(name)).getUUID().toString();
+      return Objects.requireNonNull(TownyAPI.getInstance().getTown(name)).getUUID();
     } catch(Exception ignore) {
       return super.generateIdentifier(name);
     }

@@ -149,7 +149,7 @@ public class YAMLAccount implements Datable<Account> {
     }
 
     if(account instanceof SharedAccount shared) {
-      final String owner = (shared.getOwner() == null)? account.getIdentifier() :
+      final String owner = (shared.getOwner() == null)? account.getIdentifier().toString() :
           shared.getOwner().toString();
 
       yaml.set("Info.Owner", owner);
@@ -174,7 +174,7 @@ public class YAMLAccount implements Datable<Account> {
     }
     TNECore.yaml().remove(file);
 
-    TNECore.instance().storage().storeAll(account.getIdentifier());
+    TNECore.instance().storage().storeAll(account.getIdentifier().toString());
   }
 
   /**
@@ -185,7 +185,7 @@ public class YAMLAccount implements Datable<Account> {
   @Override
   public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
     for(Account account : TNECore.eco().account().getAccounts().values()) {
-      store(connector, account, account.getIdentifier());
+      store(connector, account, account.getIdentifier().toString());
     }
   }
 
@@ -300,7 +300,7 @@ public class YAMLAccount implements Datable<Account> {
       final Optional<Account> loaded = load(connector, file, file.getName().replace(".yml", ""));
       if(loaded.isPresent()) {
         accounts.add(loaded.get());
-        TNECore.eco().account().uuidProvider().store(new UUIDPair(UUID.fromString(loaded.get().getIdentifier()), loaded.get().getName()));
+        TNECore.eco().account().uuidProvider().store(new UUIDPair(loaded.get().getIdentifier(), loaded.get().getName()));
       }
     }
     return accounts;

@@ -20,16 +20,21 @@ package net.tnemc.core.transaction.receipt;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
+import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.history.AwayHistory;
 import net.tnemc.core.transaction.history.SortedHistory;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Queue;
 import java.util.TreeMap;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * ReceiptBox represents an object that can hold receipts.
@@ -40,11 +45,17 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ReceiptBox {
 
-  private final ConcurrentHashMap<UUID, Receipt> receipts = new ConcurrentHashMap<>();
+  private final Queue<UUID> receipts = new ConcurrentLinkedQueue<>();
 
   private AwayHistory away = null;
   private SortedHistory sorted = null;
   private boolean checked = false;
+
+  private final UUID owner;
+
+  public ReceiptBox(UUID owner) {
+    this.owner = owner;
+  }
 
   /**
    * Used to calculate transactions that happened while an account owner was away.
@@ -76,8 +87,8 @@ public class ReceiptBox {
 
       final Receipt receipt = entry.getValue();
 
-      if(receipt.getFrom() != null && receipt.getFrom().getId().equalsIgnoreCase(account.toString())
-          || receipt.getTo() != null && receipt.getTo().getId().equalsIgnoreCase(account.toString())) {
+      if(receipt.getFrom() != null && receipt.getFrom().getId().equals(account)
+          || receipt.getTo() != null && receipt.getTo().getId().equals(account)) {
         history.getReceipts().put(receipt.getTime(), receipt.getId());
         i++;
       }
@@ -91,7 +102,7 @@ public class ReceiptBox {
     return Optional.of(history);
   }
 
-  public SortedHistory getSorted(final String identifier) {
+  public SortedHistory getSorted(final UUID identifier) {
     if(sorted == null) {
       sorted = new SortedHistory(identifier);
     }
@@ -107,11 +118,11 @@ public class ReceiptBox {
   }
 
   /**
-   * Logs a receipt to this receipt box.
+   * Logs a receipt reference to this receipt box.
    * @param receipt The {@link Receipt} to log.
    */
-  public void log(final Receipt receipt) {
-    receipts.put(receipt.getId(), receipt);
+  public void logReference(final Receipt receipt) {
+    receipts.add(receipt.getId());
   }
 
   /**
@@ -119,7 +130,7 @@ public class ReceiptBox {
    * @param time The time to use for the destruction.
    */
   public void destroy(final long time) {
-    receipts.entrySet().removeIf(entry->entry.getValue().getTime() == time);
+    TransactionManager.receipts().removeReceiptsByTimeAndParticipant(time, owner);
   }
 
   /**
@@ -135,14 +146,9 @@ public class ReceiptBox {
    * @param time The time to use for the search.
    * @return An optional with the {@link Receipt} if it exists, otherwise an empty Optional.
    */
-  public Optional<Receipt> findReceipt(final long time) {
+  public List<Receipt> findReceipts(final long time) {
 
-    for(Receipt receipt : receipts.values()) {
-      if(receipt.getTime() == time) {
-        return Optional.of(receipt);
-      }
-    }
-    return Optional.empty();
+    return TransactionManager.receipts().getReceiptByTime(time);
   }
 
   /**
@@ -151,7 +157,7 @@ public class ReceiptBox {
    * @return An optional with the {@link Receipt} if it exists, otherwise an empty Optional.
    */
   public Optional<Receipt> findReceipt(final UUID identifier) {
-    return Optional.ofNullable(receipts.get(identifier));
+    return TransactionManager.receipts().getReceiptByUUID(identifier);
   }
 
   /**
@@ -161,18 +167,11 @@ public class ReceiptBox {
    * @return A {@link TreeMap} of the receipts that occurred during the time range.
    */
   public TreeMap<Long, Receipt> range(final long start, final long end) {
-    final TreeMap<Long, Receipt> range = new TreeMap<>();
 
-    for(Receipt receipt : receipts.values()) {
-      final long time = receipt.getTime();
-      if(start <= time && end >= time) {
-        range.put(time, receipt);
-      }
-    }
-    return range;
+    return TransactionManager.receipts().getReceiptsBetweenTimesAndParticipant(start, end, owner);
   }
 
-  public ConcurrentHashMap<UUID, Receipt> getReceipts() {
+  public Queue<UUID> getReceipts() {
     return receipts;
   }
 }

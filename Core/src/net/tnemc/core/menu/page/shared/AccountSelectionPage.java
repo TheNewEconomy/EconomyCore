@@ -104,7 +104,7 @@ public class AccountSelectionPage {
               .build());
 
       int i = 0;
-      for(Map.Entry<String, Account> entry : TNECore.eco().account().getAccounts().entrySet()) {
+      for(Map.Entry<UUID, Account> entry : TNECore.eco().account().getAccounts().entrySet()) {
 
         if(i < start) {
 
@@ -118,9 +118,8 @@ public class AccountSelectionPage {
         try {
 
           if(entry.getValue() instanceof PlayerAccount) {
-            final UUID account = UUID.fromString(entry.getKey());
             profile = new SkullProfile();
-            profile.setUuid(account);
+            profile.setUuid(entry.getKey());
           }
 
         } catch(Exception ignore) {}

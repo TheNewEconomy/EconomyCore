@@ -24,6 +24,7 @@ import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.io.storage.dialect.TNEDialect;
+import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.TransactionParticipant;
 import net.tnemc.plugincore.core.io.storage.Datable;
@@ -35,6 +36,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * SQLReceipt
@@ -112,11 +114,11 @@ public class SQLReceipt implements Datable<Receipt> {
 
       //store holdings
       for(HoldingsEntry entry : participant.getStartingBalances()) {
-        storeReceiptHolding(connector, entry, participant.getId(), identifier, false);
+        storeReceiptHolding(connector, entry, participant.getId().toString(), identifier, false);
       }
 
       for(HoldingsEntry entry : participant.getEndingBalances()) {
-        storeReceiptHolding(connector, entry, participant.getId(), identifier, true);
+        storeReceiptHolding(connector, entry, participant.getId().toString(), identifier, true);
       }
 
       //store modifier
@@ -162,7 +164,7 @@ public class SQLReceipt implements Datable<Receipt> {
 
       final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
       if(account.isPresent()) {
-        for(Receipt receipt : account.get().getReceipts().values()) {
+        for(Receipt receipt : TransactionManager.receipts().getReceiptsByParticipant(account.get().getIdentifier())) {
           store(connector, receipt, identifier);
         }
       }

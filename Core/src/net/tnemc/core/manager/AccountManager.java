@@ -61,7 +61,7 @@ import java.util.function.Function;
  */
 public class AccountManager {
 
-  private final EnhancedHashMap<String, Account> accounts = new EnhancedHashMap<>();
+  private final EnhancedHashMap<UUID, Account> accounts = new EnhancedHashMap<>();
 
   private final EnhancedHashMap<String, AccountStatus> statuses = new EnhancedHashMap<>();
 
@@ -73,13 +73,13 @@ public class AccountManager {
    * list for if player accounts are loading in this will mean that players in this list
    * will have balances loaded from the database for item-based currencies.
    */
-  protected final List<String> loading = new ArrayList<>();
+  protected final List<UUID> loading = new ArrayList<>();
 
   /*
    * List for players that are loading in, but need to have their item currency imported from the inventory
    * not the DB since they are new, or the currency doesn't exist.
    */
-  protected final List<String> importing = new ArrayList<>();
+  protected final List<UUID> importing = new ArrayList<>();
 
   /**
    * Used to create a new non-player account based on the provided name.
@@ -198,10 +198,10 @@ public class AccountManager {
 
     accounts.put(account.getIdentifier(), account);
 
-    TNECore.instance().storage().store(account, account.getIdentifier());
+    TNECore.instance().storage().store(account, account.getIdentifier().toString());
 
     try {
-      uuidProvider.store(new UUIDPair(UUID.fromString(account.getIdentifier()), account.getName()));
+      uuidProvider.store(new UUIDPair(account.getIdentifier(), account.getName()));
     } catch(Exception ignore) {
       //identifier isn't an uuid, so it'll be a string, most likely a non-player.
     }
@@ -361,7 +361,7 @@ public class AccountManager {
     return statuses;
   }
 
-  public EnhancedHashMap<String, Account> getAccounts() {
+  public EnhancedHashMap<UUID, Account> getAccounts() {
     return accounts;
   }
 
@@ -369,11 +369,11 @@ public class AccountManager {
     return uuidProvider;
   }
 
-  public List<String> getLoading() {
+  public List<UUID> getLoading() {
     return loading;
   }
 
-  public List<String> getImporting() {
+  public List<UUID> getImporting() {
     return importing;
   }
 }

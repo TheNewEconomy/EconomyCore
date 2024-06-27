@@ -81,7 +81,7 @@ public class EnderChestHandler implements HoldingsHandler {
 
     account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, identifier()));
 
-    if(account.isPlayer() && PluginCore.server().online(account.getIdentifier()) && !TNECore.eco().account().getImporting().contains(((PlayerAccount)account).getUUID().toString())) {
+    if(account.isPlayer() && PluginCore.server().online(account.getIdentifier().toString()) && !TNECore.eco().account().getImporting().contains(account.getIdentifier())) {
       final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
                                                                  ((PlayerAccount)account).getPlayer()
                                                                      .get().inventory().getInventory(true),
@@ -106,9 +106,9 @@ public class EnderChestHandler implements HoldingsHandler {
   @Override
   public HoldingsEntry getHoldings(Account account, String region, Currency currency, CurrencyType type) {
     if((currency instanceof ItemCurrency) && account.isPlayer()) {
-      if(!PluginCore.server().online(account.getIdentifier()) ||
-          TNECore.eco().account().getLoading().contains(((PlayerAccount)account).getUUID().toString())
-                  && !TNECore.eco().account().getImporting().contains(((PlayerAccount)account).getUUID().toString())) {
+      if(!PluginCore.server().online(account.getIdentifier().toString()) ||
+          TNECore.eco().account().getLoading().contains(account.getIdentifier())
+                  && !TNECore.eco().account().getImporting().contains(account.getIdentifier())) {
 
         //Offline players have their balances saved to their wallet so check it.
         final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,

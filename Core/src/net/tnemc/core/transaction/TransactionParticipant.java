@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Represents a participant in a {@link Transaction transaction}.
@@ -39,10 +40,10 @@ public class TransactionParticipant {
   private final List<HoldingsEntry> startingBalances = new ArrayList<>();
   private final List<HoldingsEntry> endingBalances = new ArrayList<>();
 
-  private final String id;
+  private final UUID id;
   private BigDecimal tax;
 
-  public TransactionParticipant(final String id, List<HoldingsEntry> startBalances) {
+  public TransactionParticipant(final UUID id, List<HoldingsEntry> startBalances) {
     this.id = id;
     this.startingBalances.addAll(startBalances);
     this.tax = BigDecimal.ZERO;
@@ -52,7 +53,7 @@ public class TransactionParticipant {
     return TNECore.eco().account().findAccount(id);
   }
 
-  public String getId() {
+  public UUID getId() {
     return id;
   }
 

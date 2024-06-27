@@ -20,6 +20,8 @@ package net.tnemc.bukkit.depend.faction;
 
 import net.tnemc.core.account.NonPlayerAccount;
 
+import java.util.UUID;
+
 
 /**
  * Represents an account linked to a Faction in a Factions Plugin.
@@ -29,7 +31,7 @@ import net.tnemc.core.account.NonPlayerAccount;
  */
 public class FactionAccount extends NonPlayerAccount {
 
-  public FactionAccount(String identifier, String name) {
+  public FactionAccount(UUID identifier, String name) {
     super(identifier, name);
   }
 

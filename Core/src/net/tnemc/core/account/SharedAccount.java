@@ -41,7 +41,7 @@ public class SharedAccount extends Account {
    */
   protected UUID owner;
 
-  public SharedAccount(String identifier, String name, UUID owner) {
+  public SharedAccount(UUID identifier, String name, UUID owner) {
     super(identifier, name);
 
     this.owner = owner;

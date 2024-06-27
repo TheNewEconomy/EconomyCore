@@ -48,7 +48,7 @@ import java.util.UUID;
  */
 public class Account extends ReceiptBox {
 
-  protected String identifier;
+  protected UUID identifier;
   protected String name;
   protected long creationDate;
   protected String pin;
@@ -57,7 +57,8 @@ public class Account extends ReceiptBox {
 
   protected AccountStatus status;
 
-  public Account(String identifier, String name) {
+  public Account(UUID identifier, String name) {
+    super(identifier);
     this.identifier = identifier;
     this.name = name;
 
@@ -214,12 +215,14 @@ public class Account extends ReceiptBox {
 
     if(result) {
       //Send out our update to our proxies.
-      if(!PluginCore.instance().getChannelMessageManager().isAffected(identifier) && !TNECore.eco().account().getLoading().contains(identifier)) {
+      if(!PluginCore.instance().getChannelMessageManager().isAffected(identifier.toString()) && !TNECore.eco().account().getLoading().contains(identifier)) {
         PluginCore.server().scheduler().createDelayedTask(()->{
-          BalanceHandler.send(identifier, name, region, currencyObject.get().getUid(), entry.getHandler(), entry.getAmount());
+          BalanceHandler.send(identifier.toString(), name, region, currencyObject.get().getUid(), entry.getHandler(), entry.getAmount());
         }, new ChoreTime(1), ChoreExecution.SECONDARY);
       } else {
-        PluginCore.instance().getChannelMessageManager().removeAccount(identifier);
+
+        //TODO: Fix plugin core to change this to uuid
+        PluginCore.instance().getChannelMessageManager().removeAccount(identifier.toString());
       }
     }
 
@@ -227,12 +230,8 @@ public class Account extends ReceiptBox {
   }
 
   @MapKey
-  public String getIdentifier() {
+  public UUID getIdentifier() {
     return identifier;
-  }
-
-  public void setIdentifier(String identifier) {
-    this.identifier = identifier;
   }
 
   public String getName() {
