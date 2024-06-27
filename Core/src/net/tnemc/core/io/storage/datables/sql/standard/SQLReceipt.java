@@ -195,8 +195,8 @@ public class SQLReceipt implements Datable<Receipt> {
    */
   @Override
   public Collection<Receipt> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
-    final Collection<Receipt> receipts = new ArrayList<>();
 
+    final Collection<Receipt> receipts = new ArrayList<>();
     if(connector instanceof SQLConnector) {
 
     }
