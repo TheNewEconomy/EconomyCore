@@ -25,6 +25,7 @@ import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.id.UUIDPair;
 import net.tnemc.plugincore.core.io.storage.Datable;
 import net.tnemc.plugincore.core.io.storage.StorageConnector;
+import net.tnemc.plugincore.core.io.storage.connect.SQLConnector;
 import net.tnemc.plugincore.core.utils.IOUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -85,7 +86,15 @@ public class YAMLReceipt implements Datable<Receipt> {
    */
   @Override
   public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
+    if(connector instanceof SQLConnector && identifier != null) {
 
+      final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
+      if(account.isPresent()) {
+        for(Receipt receipt : TransactionManager.receipts().getReceiptsByParticipant(account.get().getIdentifier())) {
+          store(connector, receipt, identifier);
+        }
+      }
+    }
   }
 
   /**
@@ -126,8 +135,6 @@ public class YAMLReceipt implements Datable<Receipt> {
     if(yaml != null) {
 
       Receipt receipt = null;
-
-
 
       return Optional.ofNullable(receipt);
     }

@@ -63,7 +63,7 @@ public class SQLReceipt implements Datable<Receipt> {
   @Override
   public void purge(StorageConnector<?> connector) {
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
-      sql.executeUpdate(tne.accountPurge(DataConfig.yaml().getInt("Data.Purge.Transaction.Days")),
+      sql.executeUpdate(tne.receiptPurge(DataConfig.yaml().getInt("Data.Purge.Transaction.Days")),
                                               new Object[] {});
     }
   }
@@ -198,6 +198,7 @@ public class SQLReceipt implements Datable<Receipt> {
 
     final Collection<Receipt> receipts = new ArrayList<>();
     if(connector instanceof SQLConnector) {
+
 
     }
     return receipts;
