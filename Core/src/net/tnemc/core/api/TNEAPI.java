@@ -265,7 +265,7 @@ public class TNEAPI {
    * @since 0.1.2.0
    **/
   public EconomyResponse deleteAccount(@NotNull UUID identifier, @NotNull ActionSource source) {
-    return TNECore.eco().account().deleteAccount(identifier.toString());
+    return TNECore.eco().account().deleteAccount(identifier);
   }
 
   /**

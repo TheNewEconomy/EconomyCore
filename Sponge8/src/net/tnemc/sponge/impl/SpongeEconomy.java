@@ -109,6 +109,8 @@ public class SpongeEconomy implements EconomyService {
 
   @Override
   public AccountDeletionResultType deleteAccount(String identifier) {
-    return new SpongeDeletionResult(TNECore.eco().account().deleteAccount(identifier));
+    final Optional<net.tnemc.core.account.Account> account = TNECore.eco().account().findAccount(identifier);
+
+    return new SpongeDeletionResult(TNECore.eco().account().deleteAccount(account.get().getIdentifier()));
   }
 }

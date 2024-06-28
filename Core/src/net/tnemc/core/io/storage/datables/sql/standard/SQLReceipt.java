@@ -33,16 +33,15 @@ import net.tnemc.plugincore.core.io.storage.connect.SQLConnector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
 /**
- * SQLReceipt
  *
- * @author creatorfromhell
- * @since 0.1.2.0
  */
 public class SQLReceipt implements Datable<Receipt> {
   /**
@@ -181,9 +180,30 @@ public class SQLReceipt implements Datable<Receipt> {
    */
   @Override
   public Optional<Receipt> load(StorageConnector<?> connector, @NotNull String identifier) {
-    if(connector instanceof SQLConnector) {
-    }
+
+    //We shouldn't load individual Receipts, it doesn't make sense to me/no use case with caching. - creatorfromhell
     return Optional.empty();
+  }
+
+  /**
+   * Loads a Receipt object from a ResultSet.
+   *
+   * @param result The ResultSet containing the data to load into a Receipt object.
+   * @return An Optional containing the loaded Receipt object. Returns an empty Optional if the ResultSet is empty.
+   * @throws SQLException if an error occurs while accessing the ResultSet data.
+   */
+  public Optional<Receipt> load(ResultSet result) throws SQLException {
+
+    //SQL Columns: uid, performed, receipt_type, receipt_source, receipt_source_type, archive, voided
+    Receipt receipt = new Receipt(
+            UUID.fromString(result.getString("uid")),
+            result.getTimestamp("performed").getTime(),
+            null
+    );
+    receipt.setArchive(result.getBoolean("archive"));
+    receipt.setVoided(result.getBoolean("voided"));
+
+    return Optional.ofNullable(receipt);
   }
 
   /**
@@ -195,11 +215,20 @@ public class SQLReceipt implements Datable<Receipt> {
    */
   @Override
   public Collection<Receipt> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
+    final Collection<Receipt> receipts = new ArrayList<>(); // is this required? Not entirely sure it is - seems maybe a waste
+    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
 
-    final Collection<Receipt> receipts = new ArrayList<>();
-    if(connector instanceof SQLConnector) {
+      try(ResultSet result = sql.executeQuery(tne.loadReceipts(), new Object[0])) {
 
+        if(result.next()) {
 
+          final Optional<Receipt> receipt = load(result);
+          if(receipt.isPresent()) {
+
+          }
+        }
+
+      } catch(Exception ignore) {}
     }
     return receipts;
   }

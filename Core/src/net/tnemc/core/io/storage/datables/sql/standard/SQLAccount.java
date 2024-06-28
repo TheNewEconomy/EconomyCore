@@ -282,7 +282,7 @@ public class SQLAccount implements Datable<Account> {
    */
   @Override
   public Collection<Account> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
-    final Collection<Account> accounts = new ArrayList<>();
+    final Collection<Account> accounts = new ArrayList<>(); // is this required? Not entirely sure it is - seems maybe a waste
 
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
 

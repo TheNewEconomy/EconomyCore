@@ -20,6 +20,8 @@ package net.tnemc.core.api.callback.account;
 import net.tnemc.core.api.callback.TNECallbacks;
 import net.tnemc.plugincore.core.api.callback.Callback;
 
+import java.util.UUID;
+
 /**
  * AccountDeleteCallback
  *

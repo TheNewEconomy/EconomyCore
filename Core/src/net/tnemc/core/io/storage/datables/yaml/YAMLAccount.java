@@ -120,7 +120,7 @@ public class YAMLAccount implements Datable<Account> {
       return;
     }
 
-    yaml.set("Info.ID", account.getIdentifier());
+    yaml.set("Info.ID", account.getIdentifier().toString());
     yaml.set("Info.Name", account.getName());
     yaml.set("Info.Type", account.type());
     yaml.set("Info.Status", account.getStatus().identifier());

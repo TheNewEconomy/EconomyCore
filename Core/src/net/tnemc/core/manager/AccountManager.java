@@ -61,7 +61,7 @@ import java.util.function.Function;
  */
 public class AccountManager {
 
-  private final EnhancedHashMap<UUID, Account> accounts = new EnhancedHashMap<>();
+  private final EnhancedHashMap<String, Account> accounts = new EnhancedHashMap<>();
 
   private final EnhancedHashMap<String, AccountStatus> statuses = new EnhancedHashMap<>();
 
@@ -196,7 +196,7 @@ public class AccountManager {
       return new AccountAPIResponse(account, AccountResponse.CREATION_FAILED_PLUGIN);
     }
 
-    accounts.put(account.getIdentifier(), account);
+    accounts.put(account.getIdentifier().toString(), account);
 
     TNECore.instance().storage().store(account, account.getIdentifier().toString());
 
@@ -222,8 +222,8 @@ public class AccountManager {
     for(Map.Entry<Class<? extends SharedAccount>, Function<String, Boolean>> entry : types.entrySet()) {
       if(entry.getValue().apply(name)) {
         try {
-          return Optional.of(entry.getKey().getDeclaredConstructor(String.class, String.class)
-                                  .newInstance(name, name));
+          return Optional.of(entry.getKey().getDeclaredConstructor(UUID.class, String.class)
+                                  .newInstance(UUID.randomUUID(), name));
         } catch(Exception e) {
           PluginCore.log().error("An error occured while trying to create a new NonPlayer Account" +
                                   "for : " + name, e, DebugLevel.STANDARD);
@@ -361,7 +361,7 @@ public class AccountManager {
     return statuses;
   }
 
-  public EnhancedHashMap<UUID, Account> getAccounts() {
+  public EnhancedHashMap<String, Account> getAccounts() {
     return accounts;
   }
 
