@@ -205,7 +205,6 @@ public class AccountManager {
     } catch(Exception ignore) {
       //identifier isn't an uuid, so it'll be a string, most likely a non-player.
     }
-
     return new AccountAPIResponse(account, AccountResponse.CREATED);
   }
 

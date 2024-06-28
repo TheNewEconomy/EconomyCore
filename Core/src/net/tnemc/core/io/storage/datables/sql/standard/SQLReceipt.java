@@ -21,22 +21,27 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
+import net.tnemc.core.account.holdings.modify.HoldingsOperation;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.io.storage.dialect.TNEDialect;
 import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.TransactionParticipant;
+import net.tnemc.core.utils.Identifier;
 import net.tnemc.plugincore.core.io.storage.Datable;
 import net.tnemc.plugincore.core.io.storage.StorageConnector;
 import net.tnemc.plugincore.core.io.storage.connect.SQLConnector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -71,33 +76,33 @@ public class SQLReceipt implements Datable<Receipt> {
    * Used to store this object.
    *
    * @param connector The storage connector to use for this transaction.
-   * @param object    The object to be stored.
+   * @param receipt    The object to be stored.
    */
   @Override
-  public void store(StorageConnector<?> connector, @NotNull Receipt object, @Nullable String identifier) {
+  public void store(StorageConnector<?> connector, @NotNull Receipt receipt, @Nullable String identifier) {
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
 
       //Store the receipt info
       sql.executeUpdate(tne.saveReceipt(),
                                               new Object[]{
-                                                  object.getId().toString(),
-                                                  new java.sql.Timestamp(object.getTime()),
-                                                  object.getType(),
-                                                  object.getSource().name(),
-                                                  object.getSource().type(),
-                                                  object.isArchive(),
-                                                  object.isVoided(),
-                                                  object.isArchive(),
-                                                  object.isVoided()
+                                                  receipt.getId().toString(),
+                                                  new java.sql.Timestamp(receipt.getTime()),
+                                                  receipt.getType(),
+                                                  receipt.getSource().name(),
+                                                  receipt.getSource().type(),
+                                                  receipt.isArchive(),
+                                                  receipt.isVoided(),
+                                                  receipt.isArchive(),
+                                                  receipt.isVoided()
                                               });
 
-      storeParticipant(connector, object.getFrom(), object.getModifierFrom(), object.getId().toString());
-      storeParticipant(connector, object.getTo(), object.getModifierTo(), object.getId().toString());
+      storeParticipant(connector, receipt.getFrom(), receipt.getModifierFrom(), "from", receipt.getId().toString());
+      storeParticipant(connector, receipt.getTo(), receipt.getModifierTo(), "to", receipt.getId().toString());
     }
   }
 
   private void storeParticipant(StorageConnector<?> connector, @Nullable TransactionParticipant participant,
-                                @Nullable HoldingsModifier modifier, @NotNull String identifier) {
+                                @Nullable HoldingsModifier modifier, final String type, @NotNull String identifier) {
 
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne
             && participant != null && modifier != null) {
@@ -107,7 +112,7 @@ public class SQLReceipt implements Datable<Receipt> {
                                               new Object[]{
                                                   identifier,
                                                   participant.getId(),
-                                                  "account",
+                                                      type,
                                                   participant.getTax()
                                               });
 
@@ -125,7 +130,7 @@ public class SQLReceipt implements Datable<Receipt> {
                                               new Object[]{
                                                   identifier,
                                                   participant.getId(),
-                                                  "account",
+                                                  type,
                                                   modifier.getOperation().name(),
                                                   modifier.getRegion(),
                                                   modifier.getCurrency().toString(),
@@ -192,10 +197,10 @@ public class SQLReceipt implements Datable<Receipt> {
    * @return An Optional containing the loaded Receipt object. Returns an empty Optional if the ResultSet is empty.
    * @throws SQLException if an error occurs while accessing the ResultSet data.
    */
-  public Optional<Receipt> load(ResultSet result) throws SQLException {
+  public Receipt load(ResultSet result, SQLConnector sql, TNEDialect dialect) throws SQLException {
 
     //SQL Columns: uid, performed, receipt_type, receipt_source, receipt_source_type, archive, voided
-    Receipt receipt = new Receipt(
+    final Receipt receipt = new Receipt(
             UUID.fromString(result.getString("uid")),
             result.getTimestamp("performed").getTime(),
             null
@@ -203,7 +208,81 @@ public class SQLReceipt implements Datable<Receipt> {
     receipt.setArchive(result.getBoolean("archive"));
     receipt.setVoided(result.getBoolean("voided"));
 
-    return Optional.ofNullable(receipt);
+    return receipt;
+  }
+
+  public void loadParticipants(Receipt receipt, SQLConnector sql, TNEDialect dialect) {
+    try(ResultSet result = sql.executeQuery(dialect.loadParticipants(), new Object[]{
+            receipt.getId().toString()})) {
+      while(result.next()) {
+
+        final String type = result.getString("participant_type").toLowerCase(Locale.ROOT);
+        final UUID id = UUID.fromString(result.getString("participant"));
+        final BigDecimal tax = result.getBigDecimal("tax");
+
+        final TransactionParticipant participant = new TransactionParticipant(id, new ArrayList<>());
+        participant.getStartingBalances().addAll(loadHoldings(receipt.getId(), id, false, sql, dialect));
+        participant.getEndingBalances().addAll(loadHoldings(receipt.getId(), id, true, sql, dialect));
+
+        participant.setTax(tax);
+        final Optional<HoldingsModifier> modifier = loadModifier(receipt.getId(), id, type, sql, dialect);
+
+        switch(type) {
+          case "from":
+            receipt.setFrom(participant);
+            modifier.ifPresent(receipt::setModifierFrom);
+            break;
+          default:
+            receipt.setTo(participant);
+            modifier.ifPresent(receipt::setModifierTo);
+            break;
+        }
+      }
+    } catch(Exception ignore) {}
+  }
+
+  public Optional<HoldingsModifier> loadModifier(final UUID receiptID, final UUID participant,
+                                       final String type, SQLConnector sql, TNEDialect dialect) {
+
+    HoldingsModifier modifier = null;
+    //participant, participant_type, operation, region, currency AS currency, modifier  - uid/participant
+    try(ResultSet result = sql.executeQuery(dialect.loadReceiptHolding(), new Object[] {
+            receiptID.toString(), participant, type })) {
+
+      if(result.next()) {
+
+        modifier = new HoldingsModifier(
+                result.getString("region"),
+                UUID.fromString(result.getString("currency")),
+                result.getBigDecimal("modifier"),
+                HoldingsOperation.valueOf(result.getString("operation")));
+      }
+    } catch(Exception ignore) {}
+    return Optional.ofNullable(modifier);
+  }
+
+  public List<HoldingsEntry> loadHoldings(final UUID receiptID, final UUID participant, final boolean ending,
+                                          SQLConnector sql, TNEDialect dialect) {
+
+    final List<HoldingsEntry> holdings = new ArrayList<>();
+
+    //participant, ending, server, region, currency AS currency, holdings_type, holdings - uid/participant
+    try(ResultSet result = sql.executeQuery(dialect.loadReceiptHolding(), new Object[] {
+            receiptID.toString(), participant, ending })) {
+
+      while(result.next()) {
+
+        final HoldingsEntry entry = new HoldingsEntry(
+                result.getString("region"),
+                UUID.fromString(result.getString("currency")),
+                result.getBigDecimal("holdings"),
+                Identifier.fromID(result.getString("holdings_type"))
+        );
+        holdings.add(entry);
+      }
+    } catch(Exception ignore) {}
+
+    return holdings;
   }
 
   /**
@@ -220,12 +299,9 @@ public class SQLReceipt implements Datable<Receipt> {
 
       try(ResultSet result = sql.executeQuery(tne.loadReceipts(), new Object[0])) {
 
-        if(result.next()) {
+        while(result.next()) {
 
-          final Optional<Receipt> receipt = load(result);
-          if(receipt.isPresent()) {
-
-          }
+          receipts.add(load(result, sql, tne));
         }
 
       } catch(Exception ignore) {}

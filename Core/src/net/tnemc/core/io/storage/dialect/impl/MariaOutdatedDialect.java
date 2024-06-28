@@ -135,7 +135,7 @@ public class MariaOutdatedDialect implements TNEDialect {
 
     this.loadReceiptHolding = "SELECT participant AS participant, ending, server, region, " +
             "currency AS currency, holdings_type, holdings FROM " +
-            prefix + "receipts_holdings WHERE uid = ?";
+            prefix + "receipts_holdings WHERE uid = ? AND participant = ? AND ending = ?";
 
     this.saveReceiptHolding = "INSERT INTO " + prefix + "receipts_holdings (uid, participant, ending, " +
             "server, region, currency, holdings_type, holdings) " +
@@ -148,7 +148,7 @@ public class MariaOutdatedDialect implements TNEDialect {
             "VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE uid=uid";
 
     this.loadModifiers = "SELECT participant AS participant, participant_type, operation, region, " +
-            "currency AS currency, modifier FROM " + prefix + "receipts_modifiers WHERE uid = ?";
+            "currency AS currency, modifier FROM " + prefix + "receipts_modifiers WHERE uid = ? AND participant = ? AND participant_type = ?";
 
     this.saveModifier = "INSERT INTO " + prefix + "receipts_modifiers (uid, participant, participant_type, operation, region, currency, modifier) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE uid = uid";
