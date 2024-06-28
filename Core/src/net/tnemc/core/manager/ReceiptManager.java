@@ -198,4 +198,8 @@ public class ReceiptManager {
     }
     return removedReceipts;
   }
+
+  public ConcurrentMap<UUID, Receipt> getReceipts() {
+    return receipts;
+  }
 }

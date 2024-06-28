@@ -166,11 +166,8 @@ public class SQLReceipt implements Datable<Receipt> {
   public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
     if(connector instanceof SQLConnector && identifier != null) {
 
-      final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
-      if(account.isPresent()) {
-        for(Receipt receipt : TransactionManager.receipts().getReceiptsByParticipant(account.get().getIdentifier())) {
-          store(connector, receipt, identifier);
-        }
+      for(Receipt receipt : TransactionManager.receipts().getReceipts().values()) {
+        store(connector, receipt, identifier);
       }
     }
   }
@@ -203,7 +200,7 @@ public class SQLReceipt implements Datable<Receipt> {
     final Receipt receipt = new Receipt(
             UUID.fromString(result.getString("uid")),
             result.getTimestamp("performed").getTime(),
-            null
+            result.getString("receipt_type")
     );
     receipt.setArchive(result.getBoolean("archive"));
     receipt.setVoided(result.getBoolean("voided"));

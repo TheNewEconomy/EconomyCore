@@ -51,9 +51,10 @@ public class Receipt {
   private boolean archive = false;
   private boolean voided = false;
 
-  public Receipt(final UUID id, final long time) {
+  public Receipt(final UUID id, final long time, final String type) {
     this.id = id;
     this.time = time;
+    this.type = type;
   }
 
   public Receipt(final UUID id, final long time, final Transaction transaction) {
