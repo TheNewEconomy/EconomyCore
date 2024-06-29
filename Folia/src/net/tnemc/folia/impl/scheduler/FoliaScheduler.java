@@ -1,4 +1,5 @@
 package net.tnemc.folia.impl.scheduler;
+
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar

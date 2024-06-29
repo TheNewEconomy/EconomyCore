@@ -1,4 +1,5 @@
 package net.tnemc.core.io.storage.dialect.impl;
+
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
