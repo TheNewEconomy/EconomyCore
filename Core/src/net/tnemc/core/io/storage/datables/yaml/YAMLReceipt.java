@@ -22,6 +22,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.account.holdings.modify.HoldingsOperation;
+import net.tnemc.core.actions.ActionSource;
 import net.tnemc.core.api.callback.account.AccountSaveCallback;
 import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.transaction.Receipt;
@@ -230,6 +231,7 @@ public class YAMLReceipt implements Datable<Receipt> {
       final String sourceName = yaml.getString("source.name");
 
       final Receipt receipt = new Receipt(id, time, type);
+      receipt.setSource(ActionSource.create(sourceName, sourceType));
 
       loadParticipant(yaml, receipt, "from");
       loadParticipant(yaml, receipt, "to");

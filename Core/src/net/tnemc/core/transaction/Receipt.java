@@ -1,6 +1,5 @@
 package net.tnemc.core.transaction;
 
-
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -120,6 +119,10 @@ public class Receipt {
 
   public ActionSource getSource() {
     return source;
+  }
+
+  public void setSource(final ActionSource source) {
+    this.source = source;
   }
 
   public TransactionParticipant getFrom() {

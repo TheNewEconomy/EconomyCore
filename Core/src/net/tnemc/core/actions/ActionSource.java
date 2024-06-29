@@ -1,6 +1,5 @@
 package net.tnemc.core.actions;
 
-
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -18,6 +17,12 @@ package net.tnemc.core.actions;
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+import net.tnemc.core.actions.source.PlayerSource;
+import net.tnemc.core.actions.source.PluginSource;
+
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * Represents the source of an action that was performed. This could be anything from balance changes
@@ -48,12 +53,17 @@ public interface ActionSource {
    */
   String type();
 
-  /**
-   * Used to get a description of the reason for why the action was performed.
-   *
-   * @return The reason for the action that was performed.
-   *
-   * @since 0.1.2.0
-   */
-  String reason();
+  static ActionSource create(String name, String type) {
+
+    switch(type.toLowerCase(Locale.ROOT)) {
+      case "player":
+        try {
+          return new PlayerSource(UUID.fromString(name));
+        } catch(Exception ignore) {}
+        break;
+      default:
+        return new PluginSource(name);
+    }
+    return new PluginSource(name);
+  }
 }

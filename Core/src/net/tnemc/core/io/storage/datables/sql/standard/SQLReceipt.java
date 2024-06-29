@@ -22,6 +22,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.account.holdings.modify.HoldingsOperation;
+import net.tnemc.core.actions.ActionSource;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.io.storage.dialect.TNEDialect;
@@ -202,6 +203,7 @@ public class SQLReceipt implements Datable<Receipt> {
             result.getTimestamp("performed").getTime(),
             result.getString("receipt_type")
     );
+    receipt.setSource(ActionSource.create(result.getString("receipt_source"), result.getString("receipt_source_type")));
     receipt.setArchive(result.getBoolean("archive"));
     receipt.setVoided(result.getBoolean("voided"));
 
