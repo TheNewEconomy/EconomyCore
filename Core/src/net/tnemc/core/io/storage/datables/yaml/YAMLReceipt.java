@@ -21,10 +21,12 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
+import net.tnemc.core.account.holdings.modify.HoldingsOperation;
 import net.tnemc.core.api.callback.account.AccountSaveCallback;
 import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.TransactionParticipant;
+import net.tnemc.core.utils.Identifier;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.id.UUIDPair;
 import net.tnemc.plugincore.core.io.storage.Datable;
@@ -33,12 +35,16 @@ import net.tnemc.plugincore.core.io.storage.connect.SQLConnector;
 import net.tnemc.plugincore.core.utils.IOUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.simpleyaml.configuration.ConfigurationSection;
 import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -225,7 +231,8 @@ public class YAMLReceipt implements Datable<Receipt> {
 
       final Receipt receipt = new Receipt(id, time, type);
 
-
+      loadParticipant(yaml, receipt, "from");
+      loadParticipant(yaml, receipt, "to");
 
       receipt.setArchive(yaml.getBoolean("archive"));
       receipt.setVoided(yaml.getBoolean("voided"));
@@ -233,6 +240,67 @@ public class YAMLReceipt implements Datable<Receipt> {
       return Optional.of(receipt);
     }
     return Optional.empty();
+  }
+
+  public void loadParticipant(YamlFile yaml, Receipt receipt, String type) {
+    final BigDecimal tax = new BigDecimal(yaml.getString(type + ".tax"));
+
+    final TransactionParticipant participant = new TransactionParticipant(UUID.fromString(yaml.getString(type + ".id")), new ArrayList<>());
+    participant.setTax(tax);
+
+    participant.getStartingBalances().addAll(loadHoldings(yaml, type, "starting"));
+    participant.getEndingBalances().addAll(loadHoldings(yaml, type, "ending"));
+
+    switch(type.toLowerCase(Locale.ROOT)) {
+
+      case "from":
+        receipt.setFrom(participant);
+        receipt.setModifierFrom(loadModifier(yaml, type));
+        break;
+      default:
+        receipt.setTo(participant);
+        receipt.setModifierTo(loadModifier(yaml, type));
+        break;
+    }
+  }
+
+  public HoldingsModifier loadModifier(YamlFile yaml, String type) {
+
+    return new HoldingsModifier(yaml.getString(type + ".modifier.region"),
+            UUID.fromString(yaml.getString(type + ".modifier.currency")),
+            new BigDecimal(yaml.getString(type + ".modifier.modifier")),
+            HoldingsOperation.valueOf(yaml.getString(type + ".modifier.operation")));
+
+  }
+
+  public List<HoldingsEntry> loadHoldings(YamlFile yaml, String type, String holdingsType) {
+    final List<HoldingsEntry> holdings = new ArrayList<>();
+
+    final ConfigurationSection startingSection = yaml.getConfigurationSection(type + "." + holdingsType);
+    if(startingSection != null) {
+
+      for(final String region : startingSection.getKeys(false)) {
+
+        final ConfigurationSection currencySection = startingSection.getConfigurationSection(region);
+        if(currencySection != null) {
+
+          for(final String currency : currencySection.getKeys(false)) {
+
+            final ConfigurationSection handlerSection = currencySection.getConfigurationSection(currency);
+            if(handlerSection != null) {
+
+              for(final String handler : handlerSection.getKeys(false)) {
+
+                final BigDecimal amount = new BigDecimal(handlerSection.getString(handler));
+                final HoldingsEntry entry = new HoldingsEntry(region, UUID.fromString(currency), amount, Identifier.fromID(handler));
+                holdings.add(entry);
+              }
+            }
+          }
+        }
+      }
+    }
+    return holdings;
   }
 
   /**
