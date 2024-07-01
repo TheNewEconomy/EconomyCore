@@ -19,7 +19,6 @@ package net.tnemc.bukkit;
 
 import net.tnemc.bukkit.hook.economy.VaultHook;
 import net.tnemc.bukkit.hook.economy.VaultUnlockedHook;
-import net.tnemc.bukkit.hook.misc.LuckPermsHook;
 import net.tnemc.bukkit.hook.misc.PAPIHook;
 import net.tnemc.bukkit.listeners.entity.EntityKilledListener;
 import net.tnemc.bukkit.listeners.player.PlayerCloseInventoryListener;
@@ -36,8 +35,6 @@ import net.tnemc.plugincore.bukkit.BukkitPluginCore;
 import net.tnemc.plugincore.core.compatibility.ServerConnector;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
@@ -113,10 +110,6 @@ public class BukkitPlugin {
       new PAPIHook().register();
     } else {
       Bukkit.getPluginManager().registerEvents(new PluginEnableListener(), plugin);
-    }
-
-    if(Bukkit.getPluginManager().isPluginEnabled("LuckPerms")) {
-      LuckPermsHook.register();
     }
 
     final Metrics metrics = new Metrics(plugin, 602);
