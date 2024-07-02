@@ -18,8 +18,12 @@ package net.tnemc.bukkit;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import dev.dejvokep.boostedyaml.YamlDocument;
+import dev.dejvokep.boostedyaml.dvs.versioning.BasicVersioning;
+import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
 import net.tnemc.plugincore.core.config.Config;
-import org.simpleyaml.configuration.file.YamlFile;
+
+import java.util.Collections;
 
 /**
  * BukkitConfig
@@ -31,12 +35,12 @@ public class BukkitConfig extends Config {
 
   private static BukkitConfig instance;
   public BukkitConfig() {
-    super("bukkit.yml", "bukkit.yml", "Bukkit");
+    super("bukkit.yml", "bukkit.yml", Collections.singletonList("Bukkit"), UpdaterSettings.builder().setAutoSave(true).setVersioning(new BasicVersioning("config-version")).build());
 
     instance = this;
   }
 
-  public static YamlFile yaml() {
+  public static YamlDocument yaml() {
     return instance.getYaml();
   }
 }

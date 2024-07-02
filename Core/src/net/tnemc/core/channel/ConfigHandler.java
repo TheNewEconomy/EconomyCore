@@ -27,7 +27,6 @@ import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.channel.ChannelBytesWrapper;
 import net.tnemc.plugincore.core.channel.ChannelMessageHandler;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
-import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -65,13 +64,8 @@ public class ConfigHandler extends ChannelMessageHandler {
     for(Currency currency : TNECore.eco().currency().currencies()) {
       out.writeUTF(new SerialCurrency().toJSON(currency).toJSONString());
     }
-
-    try {
-      out.writeUTF("config.yml:" + TNECore.instance().config().getYaml().fileToString());
-      out.writeUTF("messages.yml:" + TNECore.instance().message().getYaml().fileToString());
-    } catch(IOException e) {
-      PluginCore.log().error("Issue when trying to send config sync data!", e, DebugLevel.OFF);
-    }
+    out.writeUTF("config.yml:" + TNECore.instance().config().getYaml().dump());
+    out.writeUTF("messages.yml:" + TNECore.instance().message().getYaml().dump());
 
     TNECore.instance().storage().sendProxyMessage("tne:config", out.toByteArray());
   }
@@ -133,12 +127,14 @@ public class ConfigHandler extends ChannelMessageHandler {
         switch(parts[0]) {
           case "messages.yml" -> {
             if(sync.contains("messages.yml")) {
-              TNECore.instance().message().setYaml(YamlFile.loadConfigurationFromString(parts[1], true));
+              //TODO: This needs a new work around or removed since plugin channels are limited.
+              //TNECore.instance().message().setYaml(YamlFile.loadConfigurationFromString(parts[1], true));
             }
           }
           default -> {
             if(sync.contains("config.yml")) {
-              TNECore.instance().config().setYaml(YamlFile.loadConfigurationFromString(parts[1], true));
+              //TODO: This needs a new work around or removed since plugin channels are limited.
+              //TNECore.instance().config().setYaml(YamlFile.loadConfigurationFromString(parts[1], true));
             }
           }
         }

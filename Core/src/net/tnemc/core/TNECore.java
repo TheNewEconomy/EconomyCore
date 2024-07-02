@@ -264,7 +264,7 @@ public abstract class TNECore extends PluginEngine {
 
         serverID = UUID.randomUUID();
         MainConfig.yaml().set("Core.ServerID", serverID.toString());
-        MainConfig.yaml().setComment("Core.ServerID", "#Don't modify unless you know what you're doing.");
+        MainConfig.yaml().set("Core.ServerID", "#Don't modify unless you know what you're doing.");
 
         try {
           MainConfig.yaml().save();

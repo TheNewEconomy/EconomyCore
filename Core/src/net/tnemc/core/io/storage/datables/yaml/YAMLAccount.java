@@ -18,6 +18,8 @@ package net.tnemc.core.io.storage.datables.yaml;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import dev.dejvokep.boostedyaml.YamlDocument;
+import dev.dejvokep.boostedyaml.block.implementation.Section;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
@@ -37,8 +39,6 @@ import net.tnemc.plugincore.core.io.storage.StorageConnector;
 import net.tnemc.plugincore.core.utils.IOUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.simpleyaml.configuration.ConfigurationSection;
-import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -93,8 +93,8 @@ public class YAMLAccount implements Datable<Account> {
 
       try {
         Thread.sleep(1000);
-      } catch(InterruptedException ignore) {
-        ignore.printStackTrace();
+      } catch(InterruptedException e) {
+        e.printStackTrace();
       }
     }
 
@@ -112,9 +112,9 @@ public class YAMLAccount implements Datable<Account> {
     }
 
 
-    YamlFile yaml = null;
+    YamlDocument yaml = null;
     try {
-      yaml = YamlFile.loadConfiguration(accFile);
+      yaml = YamlDocument.create(accFile);
     } catch(IOException ignore) {
 
       PluginCore.log().error("Issue loading account file. Account: " + account.getName());
@@ -206,19 +206,19 @@ public class YAMLAccount implements Datable<Account> {
       PluginCore.log().error("Null account file passed to YAMLAccount.load. Account: " + identifier);
       return Optional.empty();
     }
-    return load(connector, accFile, identifier);
+    return load(accFile, identifier);
   }
 
-  public Optional<Account> load(StorageConnector<?> connector, File accFile, final String identifier) {
+  public Optional<Account> load(File accFile, final String identifier) {
     if(accFile == null) {
 
       PluginCore.log().error("Null account file passed to YAMLAccount.load. Account: " + identifier);
       return Optional.empty();
     }
 
-    YamlFile yaml = null;
+    YamlDocument yaml = null;
     try {
-      yaml = YamlFile.loadConfiguration(accFile);
+      yaml = YamlDocument.create(accFile);
     } catch(IOException ignore) {
 
       PluginCore.log().error("Issue loading account file. Account: " + identifier);
@@ -259,11 +259,14 @@ public class YAMLAccount implements Datable<Account> {
         }
 
         if(account instanceof SharedAccount shared && yaml.contains("Members")) {
-          final ConfigurationSection section = yaml.getConfigurationSection("Members");
-          for(String member : section.getKeys(false)) {
 
-            for(String permission : section.getConfigurationSection(member).getKeys(false)) {
+          final Section section = yaml.getSection("Members");
+          for(Object memberObj : section.getKeys()) {
 
+            final String member = (String)memberObj;
+            for(Object permissionObj : section.getSection(member).getKeys()) {
+
+              final String permission = (String)permissionObj;
               shared.addPermission(UUID.fromString(member), permission,
                                                      yaml.getBoolean("Members." + member +
                                                                          "." + permission));
@@ -298,7 +301,7 @@ public class YAMLAccount implements Datable<Account> {
 
     for(File file : IOUtil.getYAMLs(new File(PluginCore.directory(), "accounts"))) {
 
-      final Optional<Account> loaded = load(connector, file, file.getName().replace(".yml", ""));
+      final Optional<Account> loaded = load(file, file.getName().replace(".yml", ""));
       if(loaded.isPresent()) {
         accounts.add(loaded.get());
         TNECore.eco().account().uuidProvider().store(new UUIDPair(loaded.get().getIdentifier(), loaded.get().getName()));

@@ -18,6 +18,7 @@ package net.tnemc.core.utils;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import dev.dejvokep.boostedyaml.YamlDocument;
 import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
@@ -27,7 +28,6 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import org.jetbrains.annotations.Nullable;
-import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,9 +67,9 @@ public class Extractor {
       return false;
     }
 
-    YamlFile yaml = new YamlFile(file);
+    YamlDocument yaml = null;
     try {
-      yaml.load();
+      yaml = YamlDocument.create(file);
     } catch(IOException e) {
       PluginCore.log().error("Failed load extraction file for writing.", e, DebugLevel.STANDARD);
       return false;
@@ -129,24 +129,26 @@ public class Extractor {
       return false;
     }
 
-    YamlFile extracted = new YamlFile(file);
+    YamlDocument extracted = null;
 
     try {
-      extracted.load();
+      extracted = YamlDocument.create(file);
     } catch(IOException e) {
       PluginCore.log().error("Failed load extraction file for writing.", e, DebugLevel.STANDARD);
       return false;
     }
 
     if(extracted.contains("Accounts")) {
-      final Set<String> accounts = extracted.getConfigurationSection("Accounts").getKeys(false);
+      final Set<Object> accounts = extracted.getSection("Accounts").getKeys();
 
       final int frequency = (int)(accounts.size() * 0.10);
       int number = 1;
 
       final boolean recode = extracted.contains("Version");
 
-      for(String name : accounts) {
+      for(Object nameObj : accounts) {
+
+        final String name = (String)nameObj;
 
         final String username = name.replaceAll("\\!", ".").replaceAll("\\@", "-").replaceAll("\\%", "_");
 
@@ -157,12 +159,14 @@ public class Extractor {
           PluginCore.log().inform("Couldn't create account for " + username + ". Skipping.");
         }
 
-        final Set<String> regions = extracted.getConfigurationSection("Accounts." + name + ".Balances").getKeys(false);
-        for(String region : regions) {
+        final Set<Object> regions = extracted.getSection("Accounts." + name + ".Balances").getKeys();
+        for(Object regionObj : regions) {
 
-          final Set<String> currencies = extracted.getConfigurationSection("Accounts." + name + ".Balances." + region).getKeys(false);
-          for(String currency : currencies) {
+          final String region = (String)regionObj;
+          final Set<Object> currencies = extracted.getSection("Accounts." + name + ".Balances." + region).getKeys();
+          for(Object currencyObj : currencies) {
 
+            final String currency = (String)currencyObj;
             if(!recode) {
               final String finalCurrency = (currency.equalsIgnoreCase("default")) ? TNECore.eco().currency().getDefaultCurrency(region).getIdentifier() : currency;
               Optional<Currency> cur = TNECore.eco().currency().findCurrency(finalCurrency);
@@ -184,9 +188,10 @@ public class Extractor {
               }
             } else {
 
-              final Set<String> types = extracted.getConfigurationSection("Accounts." + name + ".Balances." + region + "." + currency).getKeys(false);
-              for(String type : types) {
+              final Set<Object> types = extracted.getSection("Accounts." + name + ".Balances." + region + "." + currency).getKeys();
+              for(Object typeObj : types) {
 
+                final String type = (String)typeObj;
                 final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name
                                                                                  + ".Balances." + region
                                                                                  + "." + currency + "."

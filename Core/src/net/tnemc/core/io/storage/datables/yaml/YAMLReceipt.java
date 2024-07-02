@@ -18,27 +18,23 @@ package net.tnemc.core.io.storage.datables.yaml;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import dev.dejvokep.boostedyaml.YamlDocument;
+import dev.dejvokep.boostedyaml.block.implementation.Section;
 import net.tnemc.core.TNECore;
-import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.account.holdings.modify.HoldingsOperation;
 import net.tnemc.core.actions.ActionSource;
-import net.tnemc.core.api.callback.account.AccountSaveCallback;
 import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.TransactionParticipant;
 import net.tnemc.core.utils.Identifier;
 import net.tnemc.plugincore.PluginCore;
-import net.tnemc.plugincore.core.id.UUIDPair;
 import net.tnemc.plugincore.core.io.storage.Datable;
 import net.tnemc.plugincore.core.io.storage.StorageConnector;
-import net.tnemc.plugincore.core.io.storage.connect.SQLConnector;
 import net.tnemc.plugincore.core.utils.IOUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.simpleyaml.configuration.ConfigurationSection;
-import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -104,9 +100,9 @@ public class YAMLReceipt implements Datable<Receipt> {
     }
 
 
-    YamlFile yaml = null;
+    YamlDocument yaml = null;
     try {
-      yaml = YamlFile.loadConfiguration(file);
+      yaml = YamlDocument.create(file);
     } catch(IOException ignore) {
 
       PluginCore.log().error("Issue loading transaction file. Transaction: " + receipt.getId().toString());
@@ -215,9 +211,9 @@ public class YAMLReceipt implements Datable<Receipt> {
       return Optional.empty();
     }
 
-    YamlFile yaml = null;
+    YamlDocument yaml = null;
     try {
-      yaml = YamlFile.loadConfiguration(file);
+      yaml = YamlDocument.create(file);
     } catch(IOException ignore) {
 
       PluginCore.log().error("Issue loading account file. Receipt: " + identifier);
@@ -245,7 +241,7 @@ public class YAMLReceipt implements Datable<Receipt> {
     return Optional.empty();
   }
 
-  public void loadParticipant(YamlFile yaml, Receipt receipt, String type) {
+  public void loadParticipant(YamlDocument yaml, Receipt receipt, String type) {
     final BigDecimal tax = new BigDecimal(yaml.getString(type + ".tax"));
 
     final TransactionParticipant participant = new TransactionParticipant(UUID.fromString(yaml.getString(type + ".id")), new ArrayList<>());
@@ -267,7 +263,7 @@ public class YAMLReceipt implements Datable<Receipt> {
     }
   }
 
-  public HoldingsModifier loadModifier(YamlFile yaml, String type) {
+  public HoldingsModifier loadModifier(YamlDocument yaml, String type) {
 
     return new HoldingsModifier(yaml.getString(type + ".modifier.region"),
             UUID.fromString(yaml.getString(type + ".modifier.currency")),
@@ -276,24 +272,29 @@ public class YAMLReceipt implements Datable<Receipt> {
 
   }
 
-  public List<HoldingsEntry> loadHoldings(YamlFile yaml, String type, String holdingsType) {
+  public List<HoldingsEntry> loadHoldings(YamlDocument yaml, String type, String holdingsType) {
     final List<HoldingsEntry> holdings = new ArrayList<>();
 
-    final ConfigurationSection startingSection = yaml.getConfigurationSection(type + "." + holdingsType);
+
+    final Section startingSection = yaml.getSection(type + "." + holdingsType);
     if(startingSection != null) {
 
-      for(final String region : startingSection.getKeys(false)) {
+      for(final Object regionObj : startingSection.getKeys()) {
 
-        final ConfigurationSection currencySection = startingSection.getConfigurationSection(region);
+
+        final String region = (String)regionObj;
+        final Section currencySection = startingSection.getSection(region);
         if(currencySection != null) {
 
-          for(final String currency : currencySection.getKeys(false)) {
+          for(final Object currencyObj : currencySection.getKeys()) {
 
-            final ConfigurationSection handlerSection = currencySection.getConfigurationSection(currency);
+            final String currency = (String)currencyObj;
+            final Section handlerSection = currencySection.getSection(currency);
             if(handlerSection != null) {
 
-              for(final String handler : handlerSection.getKeys(false)) {
+              for(final Object handlerObj : handlerSection.getKeys()) {
 
+                final String handler = (String)handlerObj;
                 final BigDecimal amount = new BigDecimal(handlerSection.getString(handler));
                 final HoldingsEntry entry = new HoldingsEntry(region, UUID.fromString(currency), amount, Identifier.fromID(handler));
                 holdings.add(entry);

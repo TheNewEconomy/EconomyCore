@@ -18,10 +18,14 @@ package net.tnemc.core.utils;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import dev.dejvokep.boostedyaml.YamlDocument;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -33,6 +37,17 @@ import java.util.zip.ZipOutputStream;
  * @since 0.1.2.0
  */
 public class MISCUtils {
+
+  public static void setComment(YamlDocument yaml, String route, String comment) {
+    setComment(yaml, route, Collections.singletonList(comment));
+  }
+
+  public static void setComment(YamlDocument yaml, String route, List<String> comments) {
+
+    if(yaml.contains(route)) {
+      yaml.getBlock(route).setComments(comments);
+    }
+  }
 
   public static String randomString(final int length) {
     final Random rand = new Random();

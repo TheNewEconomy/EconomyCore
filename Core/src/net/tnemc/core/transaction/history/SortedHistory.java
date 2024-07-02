@@ -55,7 +55,7 @@ public class SortedHistory {
 
     final long time = new Date().getTime();
 
-    if(lastSort != -1 && time - lastSort < MainConfig.yaml().getLong("Core.Transactions.History.Refresh", 1200)) {
+    if(lastSort != -1 && time - lastSort < MainConfig.yaml().getLong("Core.Transactions.History.Refresh", 1200L)) {
       return;
     }
 

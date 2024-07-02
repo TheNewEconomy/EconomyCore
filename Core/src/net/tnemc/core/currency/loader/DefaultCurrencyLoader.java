@@ -18,6 +18,7 @@ package net.tnemc.core.currency.loader;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import dev.dejvokep.boostedyaml.YamlDocument;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.currency.CurrencyLoadCallback;
 import net.tnemc.core.api.callback.currency.DenominationLoadCallback;
@@ -35,7 +36,6 @@ import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.plugincore.core.utils.IOUtil;
-import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -103,16 +103,15 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
   @Override
   public boolean loadCurrency(final File directory, File curDirectory) {
 
-    final YamlFile cur = new YamlFile(curDirectory);
+    YamlDocument cur = null;
 
     PluginCore.log().inform("Loading: " + curDirectory.getName());
 
     try {
-      cur.loadWithComments();
+      cur = YamlDocument.create(curDirectory);
 
     } catch(IOException e) {
-      PluginCore.log().error("Failed to load currency: " + cur.getName(), DebugLevel.OFF);
-      e.printStackTrace();
+      PluginCore.log().error("Failed to load currency: " + curDirectory.getName(), e, DebugLevel.OFF);
       return false;
     }
 
@@ -156,7 +155,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     boolean uuidAsId = false;
     if(!cur.contains("Info.UUIDAsId")) {
       cur.set("Info.UUIDAsId", false);
-      cur.setComment("Info.UUIDAsId", "#Whether to use the Identifier config as the currency's UUID. Not Recommended. Can lead to issues in the future");
+      MISCUtils.setComment(cur, "Info.UUIDAsId", "#Whether to use the Identifier config as the currency's UUID. Not Recommended. Can lead to issues in the future");
     } else {
       uuidAsId = cur.getBoolean("Info.UUIDAsId");
     }
@@ -203,17 +202,20 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     currency.getRegions().put("global", new CurrencyRegion("global", global, globalDefault));
 
     if(cur.contains("Options.MultiRegion.Regions")) {
-      for(String region : cur.getConfigurationSection("Options.MultiRegion.Regions").getKeys(false)) {
+      for(Object regionObj : cur.getSection("Options.MultiRegion.Regions").getKeys()) {
 
+        final String region = (String)regionObj;
         final boolean isDefault = cur.getBoolean("Options.MultiRegion.Regions." + region + ".Default", true);
         currency.getRegions().put(region, new CurrencyRegion(region, true, isDefault));
       }
     }
 
     if(cur.contains("Converting")) {
-      final Set<String> converting = cur.getConfigurationSection("Converting").getKeys(false);
+      final Set<Object> converting = cur.getSection("Converting").getKeys();
 
-      for(String str : converting) {
+      for(Object strObj : converting) {
+
+        final String str = (String)strObj;
         currency.getConversion().put(str, cur.getDouble("Converting." + str, 1.0));
       }
     }
@@ -317,19 +319,18 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
    */
   @Override
   public boolean loadDenomination(Currency currency, File denomFile) {
-    final YamlFile denom = new YamlFile(denomFile);
+    YamlDocument denom = null;
     try {
-      denom.loadWithComments();
+      denom = YamlDocument.create(denomFile);
     } catch(IOException e) {
-      PluginCore.log().error("Failed to load denomination: " + denomFile.getName(), DebugLevel.OFF);
-      e.printStackTrace();
+      PluginCore.log().error("Failed to load denomination: " + denomFile.getName(), e, DebugLevel.OFF);
       return false;
     }
 
     final String single = denom.getString("Info.Single", "Dollar");
     final String plural = denom.getString("Info.Plural", "Dollars");
 
-    final BigDecimal weight = BigDecimal.valueOf(denom.getDouble("Options.Weight", 1));
+    final BigDecimal weight = BigDecimal.valueOf(denom.getDouble("Options.Weight", 1.0));
     if(weight.compareTo(BigDecimal.ZERO) <= 0) {
       PluginCore.log().error("Failed to load denomination: " + denomFile.getName() + ". Invalid Options.Weight Value: " + weight.toPlainString(), DebugLevel.OFF);
       return false;
