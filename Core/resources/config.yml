@@ -36,6 +36,10 @@ Core:
     #Example: Setting this to true would make world, world_nether and world_the_end share balances automatically.
     GroupRealms: true
 
+    #Regions that should have their economy disabled.
+    DisabledRegions:
+      - ExampleWorld
+
     Sharing:
       #worldname: share_balances_with_this_world_name
 

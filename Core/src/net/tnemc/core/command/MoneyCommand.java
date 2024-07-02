@@ -180,6 +180,10 @@ public class MoneyCommand extends BaseCommand {
       }
     }
 
+    if(player.isPresent() && region.equalsIgnoreCase("world-113")) {
+      region = player.get().world();
+    }
+
     if(amount.value().compareTo(BigDecimal.ZERO) < 0) {
       sender.message(new MessageData("Messages.Money.Negative"));
       return;
@@ -201,7 +205,7 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    final HoldingsModifier modifier = new HoldingsModifier(BaseCommand.region(sender),
+    final HoldingsModifier modifier = new HoldingsModifier(region,
             currency.getUid(),
             amount,
             EconomyManager.VIRTUAL
@@ -235,6 +239,10 @@ public class MoneyCommand extends BaseCommand {
         sender.message(data);
         return;
       }
+    }
+
+    if(player.isPresent() && region.equalsIgnoreCase("world-113")) {
+      region = player.get().world();
     }
 
     region = TNECore.eco().region().resolve(region);
@@ -320,7 +328,7 @@ public class MoneyCommand extends BaseCommand {
       if(receipt.isPresent()) {
         final Collection<AbstractItemStack<Object>> left = PluginCore.server().calculations().giveItems(Collections.singletonList(note.get().stack(currency.getIdentifier(), BaseCommand.region(sender), rounded)), provider.get().inventory().getInventory(false));
 
-        if(left.size() > 0) {
+        if(!left.isEmpty()) {
           PluginCore.server().calculations().drop(left, ((PlayerAccount)account.get()).getUUID());
         }
 
@@ -350,14 +358,25 @@ public class MoneyCommand extends BaseCommand {
       }
     }
 
+    if(player.isPresent() && region.equalsIgnoreCase("world-113")) {
+      region = player.get().world();
+    }
+
     region = TNECore.eco().region().resolve(region);
+
+    final String resolve = region;
+
+    if(TNECore.eco().region().getDisabledRegions().contains(resolve)) {
+
+      final MessageData regionMSG = new MessageData("Messages.General.Disabled");
+      sender.message(regionMSG);
+      return;
+    }
 
     final MessageData msg = new MessageData("Messages.Money.HoldingsMulti");
     msg.addReplacement("$world", region);
     msg.addReplacement("$player", account.getName());
     sender.message(msg);
-
-    final String resolve = region;
 
     TNECore.eco().currency().currencies().forEach((cur)->{
 
@@ -510,6 +529,7 @@ public class MoneyCommand extends BaseCommand {
         return;
       }
     }
+
     if(amount.compareTo(BigDecimal.ZERO) < 0) {
       sender.message(new MessageData("Messages.Money.Negative"));
       return;
@@ -547,6 +567,10 @@ public class MoneyCommand extends BaseCommand {
         sender.message(data);
         return;
       }
+    }
+
+    if(player.isPresent() && region.equalsIgnoreCase("world-113")) {
+      region = player.get().world();
     }
 
     region = TNECore.eco().region().resolve(region);
@@ -587,6 +611,10 @@ public class MoneyCommand extends BaseCommand {
         sender.message(data);
         return;
       }
+    }
+
+    if(player.isPresent() && region.equalsIgnoreCase("world-113")) {
+      region = player.get().world();
     }
 
     region = TNECore.eco().region().resolve(region);
@@ -636,6 +664,10 @@ public class MoneyCommand extends BaseCommand {
         sender.message(data);
         return;
       }
+    }
+
+    if(player.isPresent() && region.equalsIgnoreCase("world-113")) {
+      region = player.get().world();
     }
 
     region = TNECore.eco().region().resolve(region);
@@ -700,6 +732,13 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
+    if(player.isPresent() && TNECore.eco().region().getDisabledRegions().contains(player.get().world())) {
+
+      final MessageData regionMSG = new MessageData("Messages.General.Disabled");
+      sender.message(regionMSG);
+      return;
+    }
+
     if(refresh && !senderAccount.get().isPlayer() || refresh && senderAccount.get().isPlayer() && ((PlayerAccount)senderAccount.get()).getPlayer().isPresent()
             && ((PlayerAccount)senderAccount.get()).getPlayer().get().hasPermission("tne.money.top.refresh")) {
 
@@ -734,6 +773,10 @@ public class MoneyCommand extends BaseCommand {
         sender.message(data);
         return;
       }
+    }
+
+    if(player.isPresent() && region.equalsIgnoreCase("world-113")) {
+      region = player.get().world();
     }
 
     if(amount.value().compareTo(BigDecimal.ZERO) < 0) {

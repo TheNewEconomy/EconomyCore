@@ -130,5 +130,22 @@ public enum HoldingsResponse implements EconomyResponse {
     public String response() {
       return "Messages.Account.UseLock";
     }
+  },
+
+  DISABLED_REGION {
+    /**
+     * @return True if the associated action was performed correctly.
+     *
+     * @since 0.1.2.0
+     */
+    @Override
+    public boolean success() {
+      return false;
+    }
+
+    @Override
+    public String response() {
+      return "Messages.General.Disabled";
+    }
   }
 }

@@ -24,7 +24,9 @@ import net.tnemc.core.region.mode.WorldMode;
 import net.tnemc.plugincore.PluginCore;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -40,6 +42,7 @@ public class RegionProvider {
   private final Map<String, RegionGroup> regions = new HashMap<>();
 
   private final Map<String, RegionMode> modes = new HashMap<>();
+  private final List<String> disabledRegions = new ArrayList<>();
 
   private boolean realmSharing;
 
@@ -51,6 +54,8 @@ public class RegionProvider {
     //add modes
     modes.put("biome", new BiomeMode());
     modes.put("world", new WorldMode());
+
+    disabledRegions.addAll(MainConfig.yaml().getStringList("Core.Region.DisabledRegions"));
 
     //set mode
     this.mode = modes.getOrDefault(mode, modes.get("world"));
@@ -110,6 +115,11 @@ public class RegionProvider {
    */
   @NotNull
   public String resolve(final String region) {
+
+    if(disabledRegions.contains(region)) {
+      return region;
+    }
+
     if(!MainConfig.yaml().getBoolean("Core.Region.MultiRegion")) {
       return defaultRegion();
     }
@@ -143,5 +153,9 @@ public class RegionProvider {
 
   public Map<String, RegionGroup> getRegions() {
     return regions;
+  }
+
+  public List<String> getDisabledRegions() {
+    return disabledRegions;
   }
 }
