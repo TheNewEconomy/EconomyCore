@@ -138,6 +138,7 @@
                             <include>cloud.commandframework:*</include>
                             <include>com.github.Revxrsal.Lamp:*</include>
                             <include>net.kyori:*</include>
+                            <include>dev.dejvokep:boosted-yaml</include>
                         </includes>
                     </artifactSet>
                     <relocations>

@@ -106,6 +106,7 @@
                             <include>co.aikar:*</include>
                             <include>cloud.commandframework:*</include>
                             <include>com.github.Revxrsal.Lamp:*</include>
+                            <include>dev.dejvokep:boosted-yaml</include>
                         </includes>
                         <excludes>
                             <exclude>net.kyori.*</exclude>
@@ -132,6 +133,10 @@
                             <pattern>me.carleslc</pattern>
                             <pattern>org.yaml</pattern>
                             <shadedPattern>${tne.relocation}.yaml</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>dev.dejvokep.boostedyaml.*</pattern>
+                            <shadedPattern>${tne.relocation}.boosted</shadedPattern>
                         </relocation>
                         <!--<relocation>
                             <pattern>net.kyori</pattern>
