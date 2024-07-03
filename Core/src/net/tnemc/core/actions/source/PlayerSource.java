@@ -54,15 +54,4 @@ public record PlayerSource(UUID id) implements ActionSource {
   public String type() {
     return "player";
   }
-
-  /**
-   * Used to get a description of the reason for why the action was performed.
-   *
-   * @return The reason for the action that was performed.
-   * @since 0.1.2.0
-   */
-  @Override
-  public String reason() {
-    return "command";
-  }
 }

@@ -1,4 +1,5 @@
 package net.tnemc.bungee.event;
+
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar

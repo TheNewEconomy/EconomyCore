@@ -1,4 +1,5 @@
 package net.tnemc.core.transaction.history;
+
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -20,6 +21,7 @@ package net.tnemc.core.transaction.history;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.config.MainConfig;
+import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.transaction.Receipt;
 
 import java.util.Date;
@@ -39,10 +41,10 @@ public class SortedHistory {
 
   protected final NavigableMap<Long, UUID> receipts = new TreeMap<>();
 
-  private final String account;
+  private final UUID account;
   private long lastSort;
 
-  public SortedHistory(String account) {
+  public SortedHistory(UUID account) {
     this.account = account;
     this.lastSort = -1;
 
@@ -53,7 +55,7 @@ public class SortedHistory {
 
     final long time = new Date().getTime();
 
-    if(lastSort != -1 && time - lastSort < MainConfig.yaml().getLong("Core.Transactions.History.Refresh", 1200)) {
+    if(lastSort != -1 && time - lastSort < MainConfig.yaml().getLong("Core.Transactions.History.Refresh", 1200L)) {
       return;
     }
 
@@ -61,8 +63,8 @@ public class SortedHistory {
 
     if(acc.isPresent()) {
       int i = 0;
-      for(Map.Entry<UUID, Receipt> entry : acc.get().getReceipts().entrySet()) {
-        receipts.put(entry.getValue().getTime(), entry.getKey());
+      for(Receipt receipt : TransactionManager.receipts().getReceiptsByParticipant(acc.get().getIdentifier())) {
+        receipts.put(receipt.getTime(), receipt.getId());
 
         if(i >= 200) {
           break;

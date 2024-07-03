@@ -20,6 +20,8 @@ package net.tnemc.core.hook.tnk;
 
 import net.tnemc.core.account.NonPlayerAccount;
 
+import java.util.UUID;
+
 /**
  * Represents an account linked to a Camp in the TNK Plugin.
  *
@@ -28,7 +30,7 @@ import net.tnemc.core.account.NonPlayerAccount;
  */
 public class CampAccount extends NonPlayerAccount {
 
-  public CampAccount(String identifier, String name) {
+  public CampAccount(UUID identifier, String name) {
     super(identifier, name);
     //this.owner = Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getKing().getUUID();
   }
@@ -40,11 +42,11 @@ public class CampAccount extends NonPlayerAccount {
    */
   @Override
   public String type() {
-    return "kingdom";
+    return "camp";
   }
 
   @Override
-  public String generateIdentifier(String name) {
+  public UUID generateIdentifier(String name) {
 
     try {
       //return Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getUUID().toString();

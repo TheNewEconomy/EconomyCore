@@ -18,6 +18,7 @@ package net.tnemc.bukkit.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import dev.dejvokep.boostedyaml.YamlDocument;
 import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
@@ -36,7 +37,6 @@ import net.tnemc.plugincore.core.io.message.MessageData;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.Nullable;
-import org.simpleyaml.configuration.file.YamlFile;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.DefaultFor;
@@ -193,9 +193,9 @@ public class AdminCommand {
       PluginCore.log().inform("The extraction file doesn't exist.", DebugLevel.OFF);
       return false;
     }
-    YamlFile extracted = null;
+    YamlDocument extracted = null;
     try {
-      extracted = new YamlFile(file.getPath());
+      extracted = YamlDocument.create(file);
     } catch(Exception e) {
       PluginCore.log().error("Failed load extraction file for writing.", e, DebugLevel.OFF);
     }
@@ -205,23 +205,17 @@ public class AdminCommand {
       return false;
     }
 
-    try {
-      extracted.loadWithComments();
-    } catch(Exception e) {
-      PluginCore.log().error("Failed load extraction file for writing.", e, DebugLevel.OFF);
-      return false;
-    }
-
     if(extracted.contains("Accounts")) {
-      final Set<String> accounts = extracted.getConfigurationSection("Accounts").getKeys(false);
+      final Set<Object> accounts = extracted.getSection("Accounts").getKeys();
 
       final int frequency = (int)(accounts.size() * 0.10);
       int number = 1;
 
       final boolean recode = extracted.contains("Version");
 
-      for(String name : accounts) {
+      for(Object nameObj : accounts) {
 
+        final String name = (String)nameObj;
         final String username = name.replaceAll("\\!", "\\.").replaceAll("\\@", "-").replaceAll("\\%", "_");
         boolean nonPlayer = false;
 
@@ -237,12 +231,14 @@ public class AdminCommand {
           continue;
         }
 
-        final Set<String> regions = extracted.getConfigurationSection("Accounts." + name + ".Balances").getKeys(false);
-        for(String region : regions) {
+        final Set<Object> regions = extracted.getSection("Accounts." + name + ".Balances").getKeys();
+        for(Object regionObj : regions) {
 
-          final Set<String> currencies = extracted.getConfigurationSection("Accounts." + name + ".Balances." + region).getKeys(false);
-          for(String currency : currencies) {
+          final String region = (String)regionObj;
+          final Set<Object> currencies = extracted.getSection("Accounts." + name + ".Balances." + region).getKeys();
+          for(Object currencyNameObj : currencies) {
 
+            final String currency = (String)currencyNameObj;
             if(!recode) {
               final String finalCurrency = (currency.equalsIgnoreCase("default")) ? TNECore.eco().currency().getDefaultCurrency().getIdentifier() : currency;
               final Optional<Currency> cur = TNECore.eco().currency().findCurrency(finalCurrency);
@@ -255,9 +251,10 @@ public class AdminCommand {
                       amount, EconomyManager.NORMAL), TNECore.eco().getFor(currencyObj.type()).get(0).identifier());
             } else {
 
-              final Set<String> types = extracted.getConfigurationSection("Accounts." + name + ".Balances." + region + "." + currency).getKeys(false);
-              for(String type : types) {
+              final Set<Object> types = extracted.getSection("Accounts." + name + ".Balances." + region + "." + currency).getKeys();
+              for(Object typeObj : types) {
 
+                final String type = (String)typeObj;
                 final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name
                         + ".Balances." + region
                         + "." + currency + "."

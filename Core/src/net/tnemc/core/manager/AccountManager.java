@@ -1,6 +1,5 @@
 package net.tnemc.core.manager;
 
-
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -73,13 +72,13 @@ public class AccountManager {
    * list for if player accounts are loading in this will mean that players in this list
    * will have balances loaded from the database for item-based currencies.
    */
-  protected final List<String> loading = new ArrayList<>();
+  protected final List<UUID> loading = new ArrayList<>();
 
   /*
    * List for players that are loading in, but need to have their item currency imported from the inventory
    * not the DB since they are new, or the currency doesn't exist.
    */
-  protected final List<String> importing = new ArrayList<>();
+  protected final List<UUID> importing = new ArrayList<>();
 
   /**
    * Used to create a new non-player account based on the provided name.
@@ -196,16 +195,15 @@ public class AccountManager {
       return new AccountAPIResponse(account, AccountResponse.CREATION_FAILED_PLUGIN);
     }
 
-    accounts.put(account.getIdentifier(), account);
+    accounts.put(account.getIdentifier().toString(), account);
 
-    TNECore.instance().storage().store(account, account.getIdentifier());
+    TNECore.instance().storage().store(account, account.getIdentifier().toString());
 
     try {
-      uuidProvider.store(new UUIDPair(UUID.fromString(account.getIdentifier()), account.getName()));
+      uuidProvider.store(new UUIDPair(account.getIdentifier(), account.getName()));
     } catch(Exception ignore) {
       //identifier isn't an uuid, so it'll be a string, most likely a non-player.
     }
-
     return new AccountAPIResponse(account, AccountResponse.CREATED);
   }
 
@@ -222,8 +220,8 @@ public class AccountManager {
     for(Map.Entry<Class<? extends SharedAccount>, Function<String, Boolean>> entry : types.entrySet()) {
       if(entry.getValue().apply(name)) {
         try {
-          return Optional.of(entry.getKey().getDeclaredConstructor(String.class, String.class)
-                                  .newInstance(name, name));
+          return Optional.of(entry.getKey().getDeclaredConstructor(UUID.class, String.class)
+                                  .newInstance(UUID.randomUUID(), name));
         } catch(Exception e) {
           PluginCore.log().error("An error occured while trying to create a new NonPlayer Account" +
                                   "for : " + name, e, DebugLevel.STANDARD);
@@ -369,11 +367,11 @@ public class AccountManager {
     return uuidProvider;
   }
 
-  public List<String> getLoading() {
+  public List<UUID> getLoading() {
     return loading;
   }
 
-  public List<String> getImporting() {
+  public List<UUID> getImporting() {
     return importing;
   }
 }

@@ -1,5 +1,4 @@
-package net.tnemc.core.command.parameters.resolver;
-
+package net.tnemc.core.menu;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -20,32 +19,47 @@ package net.tnemc.core.command.parameters.resolver;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
-import net.tnemc.core.utils.exceptions.InvalidAccountException;
-import org.jetbrains.annotations.NotNull;
-import revxrsal.commands.process.ValueResolver;
+import net.tnemc.core.currency.Currency;
+import net.tnemc.menu.core.Menu;
+import net.tnemc.menu.core.Page;
+import net.tnemc.menu.core.builder.PageBuilder;
+import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
 
 import java.util.Optional;
 
 /**
- * AccountResolver
+ * BaltopMenu
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class AccountResolver implements ValueResolver<Account> {
+public class BaltopMenu extends Menu {
 
-  @Override
-  public Account resolve(@NotNull ValueResolverContext context) throws Throwable {
-    String value = context.arguments().pop();
+  public BaltopMenu() {
+    this.name = "bal_top";
+    this.title = "Bal Top";
+    this.rows = 6;
 
-    if(value.equalsIgnoreCase("SELF_ACCOUNT")) {
-      value = context.actor().getName();
-    }
+    /*
+     * Main Page
+     */
+    final Page main = new PageBuilder(1).build();
+    main.setOpen(this::handleMainPage);
+    addPage(main);
+  }
 
-    final Optional<Account> account = TNECore.eco().account().findAccount(value);
+  public void handleMainPage(final PageOpenCallback callback) {
+
+    final Optional<Account> account = TNECore.eco().account().findAccount(callback.getPlayer().identifier());
+
     if(account.isPresent()) {
-      return account.get();
+      int i = 10;
+      for(final Currency curObj : TNECore.eco().currency().currencies()) {
+
+        //callback.getPage().addIcon(buildBalanceIcon(i, curObj, account.get()));
+
+        i += 2;
+      }
     }
-    throw new InvalidAccountException(value);
   }
 }

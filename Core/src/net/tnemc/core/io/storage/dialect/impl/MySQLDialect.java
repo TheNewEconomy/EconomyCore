@@ -1,4 +1,5 @@
 package net.tnemc.core.io.storage.dialect.impl;
+
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -135,7 +136,7 @@ public class MySQLDialect implements TNEDialect {
 
     this.loadReceiptHolding = "SELECT BIN_TO_UUID(participant) AS participant, ending, server, region, " +
                               "BIN_TO_UUID(currency) AS currency, holdings_type, holdings FROM " +
-                              prefix + "receipts_holdings WHERE uid = UUID_TO_BIN(?)";
+                              prefix + "receipts_holdings WHERE uid = UUID_TO_BIN(?) AND participant = UUID_TO_BIN(?) AND ending = ?";
 
     this.saveReceiptHolding = "INSERT INTO " + prefix + "receipts_holdings (uid, participant, ending, " +
                               "server, region, currency, holdings_type, holdings) " +
@@ -148,7 +149,7 @@ public class MySQLDialect implements TNEDialect {
                            "VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?), ?, ?) ON DUPLICATE KEY UPDATE uid=uid";
 
     this.loadModifiers = "SELECT BIN_TO_UUID(participant) AS participant, participant_type, operation, region, " +
-                          "BIN_TO_UUID(currency) AS currency, modifier FROM " + prefix + "receipts_modifiers WHERE uid = UUID_TO_BIN(?)";
+                          "BIN_TO_UUID(currency) AS currency, modifier FROM " + prefix + "receipts_modifiers WHERE uid = UUID_TO_BIN(?) AND participant = UUID_TO_BIN(?) AND participant_type = ?";
 
     this.saveModifier = "INSERT INTO " + prefix + "receipts_modifiers (uid, participant, participant_type, operation, region, currency, modifier) " +
                         "VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?), ?, ?, ?, UUID_TO_BIN(?), ?) ON DUPLICATE KEY UPDATE uid = uid";

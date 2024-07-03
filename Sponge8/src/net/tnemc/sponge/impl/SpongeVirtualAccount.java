@@ -1,4 +1,5 @@
 package net.tnemc.sponge.impl;
+
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -294,7 +295,7 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
   @Override
   public String identifier() {
-    return account.getIdentifier();
+    return account.getIdentifier().toString();
   }
 
   public Account getAccount() {

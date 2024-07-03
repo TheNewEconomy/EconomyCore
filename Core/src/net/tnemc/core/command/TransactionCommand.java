@@ -78,7 +78,7 @@ public class TransactionCommand {
 
     final SortedHistory sorted = account.getSorted(account.getIdentifier());
 
-    if(sorted == null || sorted.getReceipts().size() == 0) {
+    if(sorted == null || sorted.getReceipts().isEmpty()) {
       sender.message(new MessageData("Messages.Transaction.HistoryNone"));
       return;
     }

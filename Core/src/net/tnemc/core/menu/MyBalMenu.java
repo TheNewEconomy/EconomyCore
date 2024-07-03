@@ -1,4 +1,5 @@
 package net.tnemc.core.menu;
+
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -534,7 +535,7 @@ public class MyBalMenu extends Menu {
               return;
             }
 
-            if(senderAccount.get().getIdentifier().equalsIgnoreCase(account.get().getIdentifier())) {
+            if(senderAccount.get().getIdentifier().equals(account.get().getIdentifier())) {
               final MessageData data = new MessageData("Messages.Money.SelfPay");
               data.addReplacement("$player", player.get().getName());
               player.get().message(data);
@@ -688,16 +689,6 @@ public class MyBalMenu extends Menu {
 
         player.message(data);
         return Optional.empty();
-      }
-
-      if(result.getReceipt().isPresent()) {
-        if(transaction.getTo() != null) {
-          transaction.getTo().asAccount().ifPresent((account->account.log(result.getReceipt().get())));
-        }
-
-        if(transaction.getFrom() != null) {
-          transaction.getFrom().asAccount().ifPresent((account->account.log(result.getReceipt().get())));
-        }
       }
 
       return result.getReceipt();

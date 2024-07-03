@@ -1,4 +1,4 @@
-package net.tnemc.core.menu.page.shared;
+package net.tnemc.core.menu.page.top;
 
 /*
  * The New Economy
@@ -19,46 +19,46 @@ package net.tnemc.core.menu.page.shared;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.account.Account;
-import net.tnemc.core.account.PlayerAccount;
-import net.tnemc.item.providers.SkullProfile;
+import net.tnemc.core.menu.handlers.StringSelectionHandler;
+import net.tnemc.item.AbstractItemStack;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
 import net.tnemc.menu.core.icon.action.impl.DataAction;
+import net.tnemc.menu.core.icon.action.impl.RunnableAction;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
+import net.tnemc.menu.core.icon.impl.StateIcon;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
 
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.Locale;
 import java.util.Optional;
-import java.util.UUID;
+import java.util.function.Consumer;
 
 /**
- * AccountSelectionPage
+ * EnchantmentSelectionPage
  *
  * @author creatorfromhell
  * @since 0.1.3.0
  */
-public class AccountSelectionPage {
+public class BalTopPage {
 
   protected final String returnMenu;
   protected final String menuName;
   protected final int menuPage;
   protected final int returnPage;
-  protected final String accountDataID;
-  protected final String accountPageID;
+  protected final String pageID;
   protected final int menuRows;
 
-  public AccountSelectionPage(String accountDataID, String returnMenu, String menuName,
-                              final int menuPage, final int returnPage, String accountPageID, final int menuRows) {
+  public BalTopPage(String returnMenu, String menuName,
+                    final int menuPage, final int returnPage, String pageID,
+                    final int menuRows) {
+
     this.returnMenu = returnMenu;
     this.menuName = menuName;
     this.menuPage = menuPage;
     this.returnPage = returnPage;
-    this.accountDataID = accountDataID;
-    this.accountPageID = accountPageID;
+    this.pageID = pageID;
 
     //we need a controller row and then at least one row for items.
     this.menuRows = (menuRows <= 1)? 2 : menuRows;
@@ -66,16 +66,13 @@ public class AccountSelectionPage {
 
   public void handle(final PageOpenCallback callback) {
 
-    final LinkedList<String> accounts = new LinkedList<>();
-
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
 
-      final int page = (Integer)viewer.get().dataOrDefault(accountPageID, 1);
+      final int page = (Integer)viewer.get().dataOrDefault(menuName + "_PAGE", 1);
       final int items = (menuRows - 1) * 9;
-      final int start = ((page - 1) * 9);
-
-      final int maxPages = (TNECore.eco().account().getAccounts().size() / items) + (((TNECore.eco().account().getAccounts().size() % items) > 0)? 1 : 0);
+      final int start = ((page - 1) * items);
+      final int maxPages = (TNECore.instance().helper().enchantments().size() / items) + (((TNECore.instance().helper().enchantments().size() % items) > 0)? 1 : 0);
 
       final int prev = (page <= 1)? maxPages : page - 1;
       final int next = (page >= maxPages)? 1 : page + 1;
@@ -85,14 +82,14 @@ public class AccountSelectionPage {
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
                 .display("Previous Page")
                 .lore(Collections.singletonList("Click to go to previous page.")))
-                .withActions(new DataAction(accountPageID, prev), new SwitchPageAction(menuName, menuPage))
+                .withActions(new DataAction(menuName + "_PAGE", prev), new SwitchPageAction(menuName, menuPage))
                 .withSlot(0)
                 .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
                 .display("Next Page")
                 .lore(Collections.singletonList("Click to go to next page.")))
-                .withActions(new DataAction(accountPageID, next), new SwitchPageAction(menuName, menuPage))
+                .withActions(new DataAction(menuName + "_PAGE", next), new SwitchPageAction(menuName, menuPage))
                 .withSlot(8)
                 .build());
       }
@@ -101,43 +98,13 @@ public class AccountSelectionPage {
               .display("Escape Menu")
               .lore(Collections.singletonList("Click to exit this menu.")))
               .withActions(new SwitchPageAction(returnMenu, returnPage))
-              .withSlot(4)
+              .withSlot(3)
               .build());
 
-      int i = 0;
-      for(Map.Entry<String, Account> entry : TNECore.eco().account().getAccounts().entrySet()) {
-
-        if(i < start) {
-
-          i++;
-
-          continue;
-        }
-        if(i >= (start + items)) break;
-
-        SkullProfile profile = null;
-        try {
-
-          if(entry.getValue() instanceof PlayerAccount) {
-            profile = new SkullProfile();
-
-            profile.setUuid(UUID.fromString(entry.getKey()));
-          }
-
-        } catch(Exception ignore) {}
+      for(int i = start; i < start + items; i++) {
 
 
-        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PLAYER_HEAD", 1)
-                .display(entry.getValue().getName())
-                .lore(Collections.singletonList("Click to select account."))
-                .profile(profile))
-                .withActions(new DataAction(accountDataID + "_ID", entry.getKey()),
-                             new DataAction(accountDataID + "_NAME", entry.getValue().getName()),
-                             new SwitchPageAction(returnMenu, returnPage))
-                .withSlot(9 + (i - start))
-                .build());
 
-        i++;
       }
     }
   }

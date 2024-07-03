@@ -1,3 +1,5 @@
+config-version: 2
+
 #Configurations relating to basic information about this currency.
 Info:
 

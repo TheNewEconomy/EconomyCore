@@ -43,12 +43,12 @@ import net.tnemc.core.config.MessageConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
-import net.tnemc.core.hook.treasury.TreasuryHook;
 import net.tnemc.core.io.yaml.YamlStorageManager;
 import net.tnemc.core.manager.Updater;
 import net.tnemc.core.menu.MyBalMenu;
 import net.tnemc.core.menu.MyEcoMenu;
 import net.tnemc.core.region.RegionGroup;
+import net.tnemc.core.utils.MISCUtils;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.menu.core.manager.MenuManager;
 import net.tnemc.plugincore.PluginCore;
@@ -256,10 +256,6 @@ public abstract class TNECore extends PluginEngine {
 
     this.economyManager.currency().saveCurrenciesUUID(PluginCore.directory());
 
-    if(PluginCore.server().pluginAvailable("Treasury")) {
-      new TreasuryHook().register();
-    }
-
     UUID serverID;
     //Set our server UUID. This is used for proxy messaging.
     final boolean randomUUID = MainConfig.yaml().getBoolean("Core.Server.RandomUUID", false);
@@ -269,7 +265,7 @@ public abstract class TNECore extends PluginEngine {
 
         serverID = UUID.randomUUID();
         MainConfig.yaml().set("Core.ServerID", serverID.toString());
-        MainConfig.yaml().setComment("Core.ServerID", "#Don't modify unless you know what you're doing.");
+        MISCUtils.setComment(MainConfig.yaml(), "Core.ServerID", "Don't modify unless you know what you're doing.");
 
         try {
           MainConfig.yaml().save();

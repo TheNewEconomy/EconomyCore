@@ -1,4 +1,5 @@
 package net.tnemc.core.io.storage.datables.yaml;
+
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -17,6 +18,8 @@ package net.tnemc.core.io.storage.datables.yaml;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import dev.dejvokep.boostedyaml.YamlDocument;
+import dev.dejvokep.boostedyaml.block.implementation.Section;
 import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
@@ -31,8 +34,6 @@ import net.tnemc.plugincore.core.io.storage.Datable;
 import net.tnemc.plugincore.core.io.storage.StorageConnector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.simpleyaml.configuration.ConfigurationSection;
-import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -102,9 +103,9 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
     }
 
 
-    YamlFile yaml = null;
+    YamlDocument yaml = null;
     try {
-      yaml = YamlFile.loadConfiguration(accFile);
+      yaml = YamlDocument.create(accFile);
     } catch(IOException ignore) {
 
       PluginCore.log().error("Issue loading account file. Account: " + identifier);
@@ -161,9 +162,9 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
       }
 
 
-      YamlFile yaml = null;
+      YamlDocument yaml = null;
       try {
-        yaml = YamlFile.loadConfiguration(accFile);
+        yaml = YamlDocument.create(accFile);
       } catch(IOException ignore) {
 
         PluginCore.log().error("Issue loading account file. Account: " + identifier);
@@ -226,9 +227,9 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
       }
 
 
-      YamlFile yaml = null;
+      YamlDocument yaml = null;
       try {
-        yaml = YamlFile.loadConfiguration(accFile);
+        yaml = YamlDocument.create(accFile);
       } catch(IOException ignore) {
 
         PluginCore.log().error("Issue loading account file. Account: " + identifier, DebugLevel.OFF);
@@ -241,30 +242,36 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
 
           //Holdings.Server.Region.Currency.Handler: Balance
           if(yaml.contains("Holdings")) {
-            final ConfigurationSection main = yaml.getConfigurationSection("Holdings");
-            for(final String server : main.getKeys(false)) {
+            final Section main = yaml.getSection("Holdings");
+            for(final Object serverObj : main.getKeys()) {
 
-              if(!main.contains(server) || !main.isConfigurationSection(server)) {
+              final String server = (String)serverObj;
+              if(!main.contains(server) || !main.isSection(server)) {
                 continue;
               }
 
-              for(final String region : main.getConfigurationSection(server).getKeys(false)) {
+              for(final Object regionObj : main.getSection(server).getKeys()) {
 
-                if(!main.contains(server + "." + region) || !main.isConfigurationSection(server + "." + region)) {
+                final String region = (String)regionObj;
+                if(!main.contains(server + "." + region) || !main.isSection(server + "." + region)) {
                   continue;
                 }
 
-                for(final String currency : main.getConfigurationSection(server + "." + region).getKeys(false)) {
+                for(final Object currencyObj : main.getSection(server + "." + region).getKeys()) {
 
+
+                  final String currency = (String)currencyObj;
                   if(TNECore.eco().currency().findCurrency(currency).isEmpty()) {
                     EconomyManager.invalidCurrencies().add(currency);
                   }
 
-                  if(!main.contains(server + "." + region + "." + currency) || !main.isConfigurationSection(server + "." + region + "." + currency)) {
+                  if(!main.contains(server + "." + region + "." + currency) || !main.isSection(server + "." + region + "." + currency)) {
                     continue;
                   }
-                  for(final String handler : main.getConfigurationSection(server + "." + region + "." + currency).getKeys(false)) {
 
+                  for(final Object handlerObj : main.getSection(server + "." + region + "." + currency).getKeys()) {
+
+                    final String handler = (String)handlerObj;
                     final String amount = yaml.getString("Holdings." + server + "." + region + "." + currency + "." + handler, "0.0");
 
                     //region, currency, amount, type

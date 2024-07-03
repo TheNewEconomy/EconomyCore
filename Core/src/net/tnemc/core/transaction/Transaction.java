@@ -1,6 +1,5 @@
 package net.tnemc.core.transaction;
 
-
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -26,6 +25,7 @@ import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.ActionSource;
 import net.tnemc.core.api.callback.transaction.PostTransactionCallback;
+import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
@@ -33,6 +33,7 @@ import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 /**
@@ -98,7 +99,7 @@ public class Transaction {
    * @return An instance of the Transaction object with the new
    * participant.
    */
-  public Transaction from(final String id, final HoldingsModifier modifier) {
+  public Transaction from(final UUID id, final HoldingsModifier modifier) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(id);
     account.ifPresent(value->from(value, modifier));
@@ -207,7 +208,7 @@ public class Transaction {
    * @return An instance of the Transaction object with the new
    * participant.
    */
-  public Transaction to(final String id, final HoldingsModifier modifier) {
+  public Transaction to(final UUID id, final HoldingsModifier modifier) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(id);
     account.ifPresent(value->to(value, modifier));
@@ -389,6 +390,20 @@ public class Transaction {
 
     final PostTransactionCallback postTransaction = new PostTransactionCallback(result);
     PluginCore.callbacks().call(postTransaction);
+
+    //Log our stuff.
+    if(result.getReceipt().isPresent()) {
+
+      TransactionManager.receipts().log(result.getReceipt().get());
+
+      if(to != null) {
+        to.asAccount().ifPresent((acc->acc.logReference(result.getReceipt().get())));
+      }
+
+      if(from != null) {
+        from.asAccount().ifPresent((acc->acc.logReference(result.getReceipt().get())));
+      }
+    }
 
     return result;
   }

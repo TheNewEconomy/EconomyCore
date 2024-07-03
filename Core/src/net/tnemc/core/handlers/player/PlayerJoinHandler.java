@@ -37,6 +37,7 @@ import net.tnemc.plugincore.core.io.message.MessageData;
 import net.tnemc.plugincore.core.utils.HandlerResponse;
 
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Represents an event where a player is joining.
@@ -87,7 +88,7 @@ public class PlayerJoinHandler {
     final Optional<Account> acc = (apiResponse == null)? account :
                                                    apiResponse.getAccount();
 
-    final String id = provider.identifier().toString();
+    final UUID id = provider.identifier();
     if(acc.isPresent()) {
 
       if(!acc.get().getName().equalsIgnoreCase(provider.getName())) {
@@ -170,7 +171,7 @@ public class PlayerJoinHandler {
 
       //If this is the first player online, sync balances.
       if(PluginCore.server().onlinePlayers() == 1) {
-        SyncHandler.send(acc.get().getIdentifier());
+        SyncHandler.send(acc.get().getIdentifier().toString());
       }
     }
     return response;

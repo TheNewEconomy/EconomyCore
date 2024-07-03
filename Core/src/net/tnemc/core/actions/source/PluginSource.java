@@ -1,6 +1,5 @@
 package net.tnemc.core.actions.source;
 
-
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -36,11 +35,6 @@ public class PluginSource implements ActionSource {
   private String plugin;
 
   /**
-   * Represents the reason for actions.
-   */
-  private String reason = "Default action.";
-
-  /**
    * Used to create an {@link ActionSource source} object that represents a plugin.
    *
    * @param plugin The name of the plugin causing the action.
@@ -49,35 +43,6 @@ public class PluginSource implements ActionSource {
    */
   public PluginSource(String plugin) {
     this.plugin = plugin;
-  }
-
-  /**
-   * Used to create an {@link ActionSource source} object that represents a plugin with a specific
-   * reason attached.
-   *
-   * @param plugin The name of the plugin causing the action.
-   * @param reason The reason the action was performed.
-   *
-   * @since 0.1.2.0
-   */
-  public PluginSource(@NotNull String plugin, @NotNull String reason) {
-    this.plugin = plugin;
-    this.reason = reason;
-  }
-
-  /**
-   * Used to change the reason of this {@link PluginSource source}. This could be used to utilize a
-   * singular {@link PluginSource source} object while further modifying the reason as needed.
-   *
-   * @param reason The reason the action was performed.
-   *
-   * @return The modified {@link PluginSource source} with the specified reason.
-   *
-   * @since 0.1.2.0
-   */
-  public PluginSource withReason(@NotNull String reason) {
-    this.reason = reason;
-    return this;
   }
 
   /**
@@ -104,17 +69,5 @@ public class PluginSource implements ActionSource {
   @Override
   public String type() {
     return "plugin";
-  }
-
-  /**
-   * Used to get a description of the reason for why the action was performed.
-   *
-   * @return The reason for the action that was performed.
-   *
-   * @since 0.1.2.0
-   */
-  @Override
-  public String reason() {
-    return reason;
   }
 }

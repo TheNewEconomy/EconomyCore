@@ -18,7 +18,9 @@ package net.tnemc.core.manager;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.config.MainConfig;
+import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionCheck;
 import net.tnemc.core.transaction.TransactionCheckGroup;
@@ -52,6 +54,7 @@ import java.util.Optional;
 import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Manages everything related to the transaction system. This is usually just keeping track of the
@@ -65,6 +68,7 @@ import java.util.UUID;
 public class TransactionManager {
 
   private final SimpleDateFormat format;
+  private ReceiptManager receiptManager;
 
   private final EnhancedHashMap<String, TransactionCheck> checks = new EnhancedHashMap<>();
 
@@ -73,10 +77,6 @@ public class TransactionManager {
   private final EnhancedHashMap<String, TransactionType> types = new EnhancedHashMap<>();
 
   private final EnhancedHashMap<String, TaxType> tax = new EnhancedHashMap<>();
-
-  private final NavigableMap<Long, UUID> sender = new TreeMap<>();
-
-  private final Map<UUID, AwayHistory> away = new HashMap<>();
 
   private boolean track;
   private BigDecimal amount;
@@ -98,6 +98,8 @@ public class TransactionManager {
       //Invalid configuration so we set our default
       this.amount = new BigDecimal("400");
     }
+
+    this.receiptManager = new ReceiptManager();
 
     //Add our default TransactionTypes.
     addType(new ConversionType());
@@ -227,10 +229,6 @@ public class TransactionManager {
     return Optional.ofNullable(checkGroups.get(identifier));
   }
 
-  public void clearAway(final UUID account) {
-    away.remove(account);
-  }
-
   public boolean isTrack() {
     return track;
   }
@@ -253,5 +251,9 @@ public class TransactionManager {
 
   public void setProcessor(TransactionProcessor processor) {
     this.processor = processor;
+  }
+
+  public static ReceiptManager receipts() {
+    return TNECore.eco().transaction().receiptManager;
   }
 }

@@ -1,4 +1,5 @@
 package net.tnemc.core.io.storage.datables.sql.standard;
+
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -94,7 +95,7 @@ public class SQLAccount implements Datable<Account> {
       //store the basic account information(accounts table)
       final int test = sql.executeUpdate(tne.saveAccount(),
                                               new Object[] {
-                                                  account.getIdentifier(),
+                                                  account.getIdentifier().toString(),
                                                   account.getName(),
                                                   (account.type()),
                                                   new java.sql.Timestamp(account.getCreationDate()),
@@ -112,7 +113,7 @@ public class SQLAccount implements Datable<Account> {
         //Player account storage.(players_accounts table)
         final int test2 = sql.executeUpdate(tne.savePlayer(),
                                                 new Object[]{
-                                                    account.getIdentifier(),
+                                                    account.getIdentifier().toString(),
                                                     new java.sql.Timestamp(playerAccount.getLastOnline()),
                                                     new java.sql.Timestamp(playerAccount.getLastOnline())
                                                 });
@@ -123,11 +124,11 @@ public class SQLAccount implements Datable<Account> {
       if(account instanceof SharedAccount shared) {
 
         //Non-player accounts.(non_players_accounts table)
-        final String owner = (shared.getOwner() == null)? account.getIdentifier() :
+        final String owner = (shared.getOwner() == null)? account.getIdentifier().toString() :
                                                        shared.getOwner().toString();
         sql.executeUpdate(tne.saveNonPlayer(),
                                                 new Object[]{
-                                                    account.getIdentifier(),
+                                                    account.getIdentifier().toString(),
                                                     owner,
                                                     owner
                                                 });
@@ -138,7 +139,7 @@ public class SQLAccount implements Datable<Account> {
             sql.executeUpdate(tne.saveMembers(),
                                                     new Object[]{
                                                         member.getId().toString(),
-                                                        account.getIdentifier(),
+                                                        account.getIdentifier().toString(),
                                                         entry.getKey(),
                                                         entry.getValue(),
                                                         entry.getValue()
@@ -151,7 +152,7 @@ public class SQLAccount implements Datable<Account> {
       final AccountSaveCallback callback = new AccountSaveCallback(account);
       PluginCore.callbacks().call(callback);
 
-      TNECore.instance().storage().storeAll(account.getIdentifier());
+      TNECore.instance().storage().storeAll(account.getIdentifier().toString());
     }
   }
 
@@ -164,7 +165,7 @@ public class SQLAccount implements Datable<Account> {
   public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
     if(connector instanceof SQLConnector) {
       for(Account account : TNECore.eco().account().getAccounts().values()) {
-        store(connector, account, account.getIdentifier());
+        store(connector, account, account.getIdentifier().toString());
       }
     }
   }
@@ -282,7 +283,7 @@ public class SQLAccount implements Datable<Account> {
    */
   @Override
   public Collection<Account> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
-    final Collection<Account> accounts = new ArrayList<>();
+    final Collection<Account> accounts = new ArrayList<>(); // is this required? Not entirely sure it is - seems maybe a waste
 
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
 
@@ -302,7 +303,7 @@ public class SQLAccount implements Datable<Account> {
         final Optional<Account> loaded = load(connector, id);
         if(loaded.isPresent()) {
           accounts.add(loaded.get());
-          TNECore.eco().account().uuidProvider().store(new UUIDPair(UUID.fromString(loaded.get().getIdentifier()), loaded.get().getName()));
+          TNECore.eco().account().uuidProvider().store(new UUIDPair(loaded.get().getIdentifier(), loaded.get().getName()));
         }
       }
     }

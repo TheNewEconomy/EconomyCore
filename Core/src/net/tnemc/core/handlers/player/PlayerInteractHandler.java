@@ -1,4 +1,5 @@
 package net.tnemc.core.handlers.player;
+
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -106,13 +107,6 @@ public class PlayerInteractHandler {
         }
 
         if(result.getReceipt().isPresent()) {
-          if(transaction.getTo() != null) {
-            transaction.getTo().asAccount().ifPresent((acc->acc.log(result.getReceipt().get())));
-          }
-
-          if(transaction.getFrom() != null) {
-            transaction.getFrom().asAccount().ifPresent((acc->acc.log(result.getReceipt().get())));
-          }
 
           final List<AbstractItemStack<Object>> i = new ArrayList<>();
           i.add((AbstractItemStack<Object>)item);

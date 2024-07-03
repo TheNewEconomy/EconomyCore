@@ -22,6 +22,7 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import net.tnemc.core.account.NonPlayerAccount;
 
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Represents an account linked to a Nation in the Towny Plugin.
@@ -31,7 +32,7 @@ import java.util.Objects;
  */
 public class NationAccount extends NonPlayerAccount {
 
-  public NationAccount(String identifier, String name) {
+  public NationAccount(UUID identifier, String name) {
     super(identifier, name);
     //this.owner = Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getKing().getUUID();
   }
@@ -47,10 +48,10 @@ public class NationAccount extends NonPlayerAccount {
   }
 
   @Override
-  public String generateIdentifier(String name) {
+  public UUID generateIdentifier(String name) {
 
     try {
-      return Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getUUID().toString();
+      return Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getUUID();
     } catch(Exception ignore) {
       return super.generateIdentifier(name);
     }

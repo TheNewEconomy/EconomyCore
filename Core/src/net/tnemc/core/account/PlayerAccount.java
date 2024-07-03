@@ -40,7 +40,7 @@ public class PlayerAccount extends Account {
   protected String language;
 
   public PlayerAccount(UUID identifier, String name) {
-    super(identifier.toString(), name);
+    super(identifier, name);
 
     this.uuid = identifier;
 

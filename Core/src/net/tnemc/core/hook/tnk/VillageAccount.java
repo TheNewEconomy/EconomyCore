@@ -20,6 +20,8 @@ package net.tnemc.core.hook.tnk;
 
 import net.tnemc.core.account.NonPlayerAccount;
 
+import java.util.UUID;
+
 /**
  * Represents an account linked to a Village in the TNK Plugin.
  *
@@ -28,7 +30,7 @@ import net.tnemc.core.account.NonPlayerAccount;
  */
 public class VillageAccount extends NonPlayerAccount {
 
-  public VillageAccount(String identifier, String name) {
+  public VillageAccount(UUID identifier, String name) {
     super(identifier, name);
     //this.owner = Objects.requireNonNull(TownyAPI.getInstance().getTown(name)).getMayor().getUUID();
   }
@@ -44,7 +46,7 @@ public class VillageAccount extends NonPlayerAccount {
   }
 
   @Override
-  public String generateIdentifier(String name) {
+  public UUID generateIdentifier(String name) {
     try {
       //return Objects.requireNonNull(TownyAPI.getInstance().getTown(name)).getUUID().toString();
     } catch(Exception ignore) {

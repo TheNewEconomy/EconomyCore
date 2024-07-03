@@ -61,18 +61,12 @@
                 <configuration>
                     <source>17</source>
                     <target>17</target>
-                    <compilerArgs>
-                        <arg>--enable-preview</arg>
-                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M7</version>
-                <configuration>
-                    <argLine>--enable-preview</argLine>
-                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.apache.maven.surefire</groupId>
@@ -129,6 +123,7 @@
                             <include>cloud.commandframework:*</include>
                             <include>com.github.Revxrsal.Lamp:*</include>
                             <include>net.kyori:*</include>
+                            <include>dev.dejvokep:boosted-yaml</include>
                         </includes>
                     </artifactSet>
                     <relocations>
@@ -152,6 +147,10 @@
                             <pattern>me.carleslc</pattern>
                             <pattern>org.yaml</pattern>
                             <shadedPattern>${tne.relocation}.yaml</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>dev.dejvokep.boostedyaml.*</pattern>
+                            <shadedPattern>${tne.relocation}.boosted</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>net.kyori</pattern>

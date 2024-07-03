@@ -20,6 +20,8 @@ package net.tnemc.core.hook.tnk;
 
 import net.tnemc.core.account.NonPlayerAccount;
 
+import java.util.UUID;
+
 /**
  * Represents an account linked to a Pact in the TNK Plugin.
  *
@@ -28,7 +30,7 @@ import net.tnemc.core.account.NonPlayerAccount;
  */
 public class PactAccount extends NonPlayerAccount {
 
-  public PactAccount(String identifier, String name) {
+  public PactAccount(UUID identifier, String name) {
     super(identifier, name);
     //this.owner = Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getKing().getUUID();
   }
@@ -44,7 +46,7 @@ public class PactAccount extends NonPlayerAccount {
   }
 
   @Override
-  public String generateIdentifier(String name) {
+  public UUID generateIdentifier(String name) {
 
     try {
       //return Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getUUID().toString();

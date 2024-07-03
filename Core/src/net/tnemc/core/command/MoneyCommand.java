@@ -441,7 +441,7 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    if(senderAccount.get().getIdentifier().equalsIgnoreCase(account.getIdentifier())) {
+    if(senderAccount.get().getIdentifier().equals(account.getIdentifier())) {
       final MessageData data = new MessageData("Messages.Money.SelfPay");
       data.addReplacement("$player", sender.name());
       sender.message(data);
@@ -834,16 +834,6 @@ public class MoneyCommand extends BaseCommand {
 
         sender.message(data);
         return Optional.empty();
-      }
-
-      if(result.getReceipt().isPresent()) {
-        if(transaction.getTo() != null) {
-          transaction.getTo().asAccount().ifPresent((account->account.log(result.getReceipt().get())));
-        }
-
-        if(transaction.getFrom() != null) {
-          transaction.getFrom().asAccount().ifPresent((account->account.log(result.getReceipt().get())));
-        }
       }
 
       return result.getReceipt();

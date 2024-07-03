@@ -1,6 +1,5 @@
 package net.tnemc.core.transaction;
 
-
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -51,7 +50,13 @@ public class Receipt {
   private boolean archive = false;
   private boolean voided = false;
 
-  public Receipt(UUID id, long time, Transaction transaction) {
+  public Receipt(final UUID id, final long time, final String type) {
+    this.id = id;
+    this.time = time;
+    this.type = type;
+  }
+
+  public Receipt(final UUID id, final long time, final Transaction transaction) {
     this.id = id;
     this.time = time;
     this.type = transaction.getType();
@@ -114,6 +119,10 @@ public class Receipt {
 
   public ActionSource getSource() {
     return source;
+  }
+
+  public void setSource(final ActionSource source) {
+    this.source = source;
   }
 
   public TransactionParticipant getFrom() {

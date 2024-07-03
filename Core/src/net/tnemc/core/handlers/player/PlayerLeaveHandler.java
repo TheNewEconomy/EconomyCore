@@ -1,4 +1,5 @@
 package net.tnemc.core.handlers.player;
+
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -63,7 +64,7 @@ public class PlayerLeaveHandler {
 
       ((PlayerAccount)account.get()).setLastOnline(new Date().getTime());
       account.get().clearAwayReceipts();
-      StorageManager.instance().store(account.get(), account.get().getIdentifier());
+      StorageManager.instance().store(account.get(), account.get().getIdentifier().toString());
     }
     return response;
   }
