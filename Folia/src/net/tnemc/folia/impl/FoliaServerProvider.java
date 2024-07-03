@@ -43,8 +43,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import revxrsal.commands.command.CommandActor;
 
+import java.io.InputStream;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -265,6 +267,11 @@ public class FoliaServerProvider implements ServerConnector {
     BukkitCore.instance().getPlugin().saveResource(path, replace);
   }
 
+  @Override
+  public @Nullable InputStream getResource(@NotNull String s) {
+    return null;
+  }
+
   /**
    * Provides this implementation's {@link SchedulerProvider scheduler}.
    *
@@ -305,4 +312,6 @@ public class FoliaServerProvider implements ServerConnector {
   public BukkitCalculationsProvider calculations() {
     return calc;
   }
+
+
 }

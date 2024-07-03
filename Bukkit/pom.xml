@@ -123,7 +123,8 @@
                             <include>cloud.commandframework:*</include>
                             <include>com.github.Revxrsal.Lamp:*</include>
                             <include>net.kyori:*</include>
-                            <include>dev.dejvokep:boosted-yaml</include>
+                            <include>dev.dejvokep:*</include>
+                            <include>dev.dejvokep.boostedyaml:*</include>
                         </includes>
                     </artifactSet>
                     <relocations>
@@ -150,6 +151,7 @@
                         </relocation>
                         <relocation>
                             <pattern>dev.dejvokep.boostedyaml.*</pattern>
+                            <pattern>dev.dejvokep</pattern>
                             <shadedPattern>${tne.relocation}.boosted</shadedPattern>
                         </relocation>
                         <relocation>
