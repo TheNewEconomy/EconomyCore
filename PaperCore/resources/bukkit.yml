@@ -3,6 +3,8 @@
 # License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 Bukkit:
 
+  config-version: 1
+
   #The prefix used by the Factions plugin to denote faction UUIDs
   Faction: "faction-"
 

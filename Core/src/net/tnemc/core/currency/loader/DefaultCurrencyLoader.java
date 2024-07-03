@@ -155,7 +155,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     boolean uuidAsId = false;
     if(!cur.contains("Info.UUIDAsId")) {
       cur.set("Info.UUIDAsId", false);
-      MISCUtils.setComment(cur, "Info.UUIDAsId", "#Whether to use the Identifier config as the currency's UUID. Not Recommended. Can lead to issues in the future");
+      MISCUtils.setComment(cur, "Info.UUIDAsId", "Whether to use the Identifier config as the currency's UUID. Not Recommended. Can lead to issues in the future");
     } else {
       uuidAsId = cur.getBoolean("Info.UUIDAsId");
     }

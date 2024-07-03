@@ -4,8 +4,7 @@
 # All configurable messages in TNE
 Messages:
 
-  #DO NOT MODIFY
-  Version: "0.1.2.0"
+  config-version: 1
 
   General:
     Version: "<white>TNE Version: <green>$version <white>- Build: <green>$build"

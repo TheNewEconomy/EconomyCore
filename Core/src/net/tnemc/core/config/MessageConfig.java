@@ -20,6 +20,7 @@ package net.tnemc.core.config;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
 import dev.dejvokep.boostedyaml.dvs.versioning.BasicVersioning;
+import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
@@ -48,7 +49,9 @@ public class MessageConfig extends Config {
   private final Map<String, Language> languages = new HashMap<>();
 
   public MessageConfig() {
-    super("messages.yml", "messages.yml", Collections.singletonList("Messages"), UpdaterSettings.builder().setAutoSave(true).setVersioning(new BasicVersioning("config-version")).build());
+    super("messages.yml", "messages.yml", Collections.singletonList("Messages"),
+            LoaderSettings.builder().setAutoUpdate(true).build(),
+            UpdaterSettings.builder().setAutoSave(true).setVersioning(new BasicVersioning("Messages.config-version")).build());
 
     instance = this;
   }

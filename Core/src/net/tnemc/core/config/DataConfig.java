@@ -20,6 +20,7 @@ package net.tnemc.core.config;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
 import dev.dejvokep.boostedyaml.dvs.versioning.BasicVersioning;
+import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
 import net.tnemc.plugincore.core.config.Config;
 
@@ -36,7 +37,9 @@ public class DataConfig extends Config {
   private static DataConfig instance;
 
   public DataConfig() {
-    super("data.yml", "data.yml", Collections.singletonList("Data"), UpdaterSettings.builder().setAutoSave(true).setVersioning(new BasicVersioning("config-version")).build());
+    super("data.yml", "data.yml", Collections.singletonList("Data"),
+            LoaderSettings.builder().setAutoUpdate(true).build(),
+            UpdaterSettings.builder().setAutoSave(true).setVersioning(new BasicVersioning("Data.config-version")).build());
 
     instance = this;
   }

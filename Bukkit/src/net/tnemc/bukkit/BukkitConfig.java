@@ -20,6 +20,7 @@ package net.tnemc.bukkit;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
 import dev.dejvokep.boostedyaml.dvs.versioning.BasicVersioning;
+import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
 import net.tnemc.plugincore.core.config.Config;
 
@@ -35,7 +36,9 @@ public class BukkitConfig extends Config {
 
   private static BukkitConfig instance;
   public BukkitConfig() {
-    super("bukkit.yml", "bukkit.yml", Collections.singletonList("Bukkit"), UpdaterSettings.builder().setAutoSave(true).setVersioning(new BasicVersioning("config-version")).build());
+    super("bukkit.yml", "bukkit.yml", Collections.singletonList("Bukkit"),
+            LoaderSettings.builder().setAutoUpdate(true).build(),
+            UpdaterSettings.builder().setAutoSave(true).setVersioning(new BasicVersioning("Bukkit.config-version")).build());
 
     instance = this;
   }

@@ -272,7 +272,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     }
 
     if(!cur.contains("Info.UUID")) {
-      MISCUtils.setComment(cur, "Info.UUID", "#Used for data saving. Do NOT modify.");
+      MISCUtils.setComment(cur, "Info.UUID", "Used for data saving. Do NOT modify.");
     }
 
     cur.set("Info.UUID", currency.getUid().toString());

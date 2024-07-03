@@ -20,6 +20,8 @@ package net.tnemc.core.config;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
 import dev.dejvokep.boostedyaml.dvs.versioning.BasicVersioning;
+import dev.dejvokep.boostedyaml.route.Route;
+import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
 import net.tnemc.plugincore.core.config.Config;
 
@@ -35,7 +37,9 @@ public class MainConfig extends Config {
 
   private static MainConfig instance;
   public MainConfig() {
-    super("config.yml", "config.yml", Collections.singletonList("Core"), UpdaterSettings.builder().setAutoSave(true).setVersioning(new BasicVersioning("config-version")).build());
+    super("config.yml", "config.yml", Collections.singletonList("Core"),
+            LoaderSettings.builder().setAutoUpdate(true).build(),
+            UpdaterSettings.builder().setAutoSave(true).addIgnoredRoute("1", Route.fromString("Core.Region.RegionSharing")).setVersioning(new BasicVersioning("Core.config-version")).build());
 
     instance = this;
   }
