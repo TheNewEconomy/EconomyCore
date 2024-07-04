@@ -35,8 +35,6 @@ import net.tnemc.plugincore.core.io.storage.StorageConnector;
 import net.tnemc.plugincore.core.utils.IOUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.simpleyaml.configuration.ConfigurationSection;
-import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -93,7 +91,10 @@ public class YAMLReceipt implements Datable<Receipt> {
     final File file = new File(PluginCore.directory(), "transactions/" + receipt.getId().toString() + ".yml");
     if(!file.exists()) {
       try {
-        file.createNewFile();
+        if(!file.createNewFile()) {
+          PluginCore.log().error("Issue creating transaction file. Transaction: " + receipt.getId().toString());
+          return;
+        }
       } catch(IOException ignore) {
 
         PluginCore.log().error("Issue creating transaction file. Transaction: " + receipt.getId().toString());
@@ -200,10 +201,10 @@ public class YAMLReceipt implements Datable<Receipt> {
       PluginCore.log().error("Null receipt file passed to YAMLReceipt.load. Receipt: " + identifier);
       return Optional.empty();
     }
-    return load(connector, file, identifier);
+    return load(file, identifier);
   }
 
-  public Optional<Receipt> load(StorageConnector<?> connector, File file, final String identifier) {
+  public Optional<Receipt> load(File file, final String identifier) {
     if(file == null) {
 
       PluginCore.log().error("Null account file passed to YAMLReceipt.load. Receipt: " + identifier);
@@ -249,16 +250,12 @@ public class YAMLReceipt implements Datable<Receipt> {
     participant.getStartingBalances().addAll(loadHoldings(yaml, type, "starting"));
     participant.getEndingBalances().addAll(loadHoldings(yaml, type, "ending"));
 
-    switch(type.toLowerCase(Locale.ROOT)) {
-
-      case "from":
-        receipt.setFrom(participant);
-        receipt.setModifierFrom(loadModifier(yaml, type));
-        break;
-      default:
-        receipt.setTo(participant);
-        receipt.setModifierTo(loadModifier(yaml, type));
-        break;
+    if(type.toLowerCase(Locale.ROOT).equals("from")) {
+      receipt.setFrom(participant);
+      receipt.setModifierFrom(loadModifier(yaml, type));
+    } else {
+      receipt.setTo(participant);
+      receipt.setModifierTo(loadModifier(yaml, type));
     }
   }
   public HoldingsModifier loadModifier(YamlDocument yaml, String type) {
@@ -320,7 +317,7 @@ public class YAMLReceipt implements Datable<Receipt> {
 
     for(File file : IOUtil.getYAMLs(new File(PluginCore.directory(), "transactions"))) {
 
-      final Optional<Receipt> loaded = load(connector, file, file.getName().replace(".yml", ""));
+      final Optional<Receipt> loaded = load(file, file.getName().replace(".yml", ""));
       if(loaded.isPresent()) {
         receipts.add(loaded.get());
         TransactionManager.receipts().log(loaded.get());
