@@ -27,12 +27,15 @@ import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.io.storage.datables.sql.standard.SQLAccount;
 import net.tnemc.core.io.storage.datables.sql.standard.SQLHoldings;
+import net.tnemc.core.io.storage.datables.sql.standard.SQLReceipt;
 import net.tnemc.core.io.storage.datables.yaml.YAMLAccount;
 import net.tnemc.core.io.storage.datables.yaml.YAMLHoldings;
+import net.tnemc.core.io.storage.datables.yaml.YAMLReceipt;
 import net.tnemc.core.io.storage.dialect.TNEDialect;
 import net.tnemc.core.io.storage.dialect.impl.MariaDialect;
 import net.tnemc.core.io.storage.dialect.impl.MariaOutdatedDialect;
 import net.tnemc.core.io.storage.dialect.impl.MySQLDialect;
+import net.tnemc.core.transaction.Receipt;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.plugincore.core.compatibility.scheduler.ChoreExecution;
@@ -112,6 +115,7 @@ public class TNEStorageProvider implements StorageProvider {
 
     final Datable<Account> account = (this.engine instanceof StandardSQL)? new SQLAccount() : new YAMLAccount();
     final Datable<HoldingsEntry> entry  = (this.engine instanceof StandardSQL)? new SQLHoldings() : new YAMLHoldings();
+    final Datable<Receipt> receipt  = (this.engine instanceof StandardSQL)? new SQLReceipt() : new YAMLReceipt();
 
     this.engine.datables().put(Account.class, account);
     this.engine.datables().put(NonPlayerAccount.class, account);
@@ -120,6 +124,7 @@ public class TNEStorageProvider implements StorageProvider {
     this.engine.datables().put(PlayerAccount.class, account);
 
     this.engine.datables().put(HoldingsEntry.class, entry);
+    this.engine.datables().put(Receipt.class, receipt);
   }
 
   @Override
@@ -164,6 +169,13 @@ public class TNEStorageProvider implements StorageProvider {
 
     //Our account storeAll requires no identifier, so we set it to null
     data.ifPresent(datable->PluginCore.server().scheduler()
+            .createDelayedTask(()->datable.storeAll(connector, null), new ChoreTime(0), ChoreExecution.SECONDARY));
+
+
+    final Optional<Datable<?>> receiptData = Optional.ofNullable(engine.datables().get(Receipt.class));
+
+    //Our account storeAll requires no identifier, so we set it to null
+    receiptData.ifPresent(datable->PluginCore.server().scheduler()
             .createDelayedTask(()->datable.storeAll(connector, null), new ChoreTime(0), ChoreExecution.SECONDARY));
   }
 

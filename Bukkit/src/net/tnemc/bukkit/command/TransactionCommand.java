@@ -24,6 +24,7 @@ import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.DefaultFor;
 import revxrsal.commands.annotation.Description;
+import revxrsal.commands.annotation.Named;
 import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
 import revxrsal.commands.bukkit.BukkitCommandActor;
@@ -61,7 +62,7 @@ public class TransactionCommand {
   @Usage("Transaction.History.Arguments")
   @Description("Transaction.History.Description")
   @CommandPermission("tne.transaction.history")
-  public void history(BukkitCommandActor sender, @Default("1") int page, String region, @Default("SELF_ACCOUNT") Account account) {
+  public void history(BukkitCommandActor sender, @Default("1") int page, @Default("world-113") @Named("region") String region, @Default("SELF_ACCOUNT") Account account) {
     net.tnemc.core.command.TransactionCommand.history(new BukkitCMDSource(sender), page, region, account);
   }
 
@@ -69,8 +70,8 @@ public class TransactionCommand {
   @Usage("Transaction.Info.Arguments")
   @Description("Transaction.Info.Description")
   @CommandPermission("tne.info.history")
-  public void info(BukkitCommandActor sender, UUID uuid, @Default("SELF_ACCOUNT") Account account) {
-    net.tnemc.core.command.TransactionCommand.info(new BukkitCMDSource(sender), uuid, account);
+  public void info(BukkitCommandActor sender, UUID uuid) {
+    net.tnemc.core.command.TransactionCommand.info(new BukkitCMDSource(sender), uuid);
   }
 
   @Subcommand({"void", "retract", "undo"})

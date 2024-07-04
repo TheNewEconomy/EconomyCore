@@ -19,21 +19,17 @@ package net.tnemc.core.io.storage.datables.yaml;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.account.holdings.modify.HoldingsOperation;
 import net.tnemc.core.actions.ActionSource;
-import net.tnemc.core.api.callback.account.AccountSaveCallback;
 import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.TransactionParticipant;
 import net.tnemc.core.utils.Identifier;
 import net.tnemc.plugincore.PluginCore;
-import net.tnemc.plugincore.core.id.UUIDPair;
 import net.tnemc.plugincore.core.io.storage.Datable;
 import net.tnemc.plugincore.core.io.storage.StorageConnector;
-import net.tnemc.plugincore.core.io.storage.connect.SQLConnector;
 import net.tnemc.plugincore.core.utils.IOUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -122,8 +118,6 @@ public class YAMLReceipt implements Datable<Receipt> {
     yaml.set("voided", receipt.isVoided());
     yaml.set("from", receipt.getFrom());
     yaml.set("to", receipt.getTo());
-    yaml.set("modifierTo", receipt.getModifierTo());
-    yaml.set("modifierFrom", receipt.getModifierFrom());
 
     if(receipt.getFrom() != null && receipt.getModifierFrom() != null) {
       yaml.set("from.id", receipt.getFrom().getId().toString());
