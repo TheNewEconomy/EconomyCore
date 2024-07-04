@@ -21,6 +21,7 @@ package net.tnemc.core.command;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
+import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.history.AwayHistory;
 import net.tnemc.core.transaction.history.SortedHistory;
@@ -116,8 +117,8 @@ public class TransactionCommand {
   }
 
   //<uuid>
-  public static void info(CmdSource<?> sender, UUID uuid, Account account) {
-    final Optional<Receipt> receipt = account.findReceipt(uuid);
+  public static void info(CmdSource<?> sender, UUID uuid) {
+    final Optional<Receipt> receipt = TransactionManager.receipts().getReceiptByUUID(uuid);
 
     if(receipt.isEmpty()) {
       final MessageData message = new MessageData("Messages.Transaction.Invalid");

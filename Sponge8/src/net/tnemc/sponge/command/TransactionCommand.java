@@ -63,8 +63,8 @@ public class TransactionCommand {
   @Usage("Transaction.Info.Arguments")
   @Description("Transaction.Info.Description")
   @CommandPermission("tne.info.history")
-  public void info(SpongeCommandActor sender, UUID uuid, @Default("SELF_ACCOUNT") Account account) {
-    net.tnemc.core.command.TransactionCommand.info(new SpongeCMDSource(sender), uuid, account);
+  public void info(SpongeCommandActor sender, UUID uuid) {
+    net.tnemc.core.command.TransactionCommand.info(new SpongeCMDSource(sender), uuid);
   }
 
   @Subcommand({"void", "retract", "undo"})

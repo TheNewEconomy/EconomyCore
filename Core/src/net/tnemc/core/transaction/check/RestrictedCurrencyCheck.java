@@ -78,8 +78,8 @@ public class RestrictedCurrencyCheck implements TransactionCheck {
       final Optional<PlayerProvider> provider = player.getPlayer();
 
       if(currency.isPresent() && provider.isPresent() && provider.get().hasPermission("tne.money.restricted")
-         && !provider.get().hasPermission("tne.money.restricted.override") && provider.get().hasPermission("tne.money.restricted." + currency.get().getIdentifier())) {
-
+              && !provider.get().hasPermission("tne.money.restricted.override")
+              && provider.get().hasPermission("tne.money.restricted." + currency.get().getIdentifier())) {
         return HoldingsResponse.RESTRICTED;
       }
     }

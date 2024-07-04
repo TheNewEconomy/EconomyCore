@@ -35,6 +35,8 @@ import net.tnemc.plugincore.core.io.storage.StorageConnector;
 import net.tnemc.plugincore.core.utils.IOUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.simpleyaml.configuration.ConfigurationSection;
+import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -99,7 +101,6 @@ public class YAMLReceipt implements Datable<Receipt> {
       }
     }
 
-
     YamlDocument yaml = null;
     try {
       yaml = YamlDocument.create(file);
@@ -118,8 +119,6 @@ public class YAMLReceipt implements Datable<Receipt> {
     yaml.set("voided", receipt.isVoided());
     yaml.set("from", receipt.getFrom());
     yaml.set("to", receipt.getTo());
-    yaml.set("modifierTo", receipt.getModifierTo());
-    yaml.set("modifierFrom", receipt.getModifierFrom());
 
     if(receipt.getFrom() != null && receipt.getModifierFrom() != null) {
       yaml.set("from.id", receipt.getFrom().getId().toString());
@@ -262,7 +261,6 @@ public class YAMLReceipt implements Datable<Receipt> {
         break;
     }
   }
-
   public HoldingsModifier loadModifier(YamlDocument yaml, String type) {
 
     return new HoldingsModifier(yaml.getString(type + ".modifier.region"),

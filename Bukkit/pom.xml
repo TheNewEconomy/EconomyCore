@@ -125,6 +125,7 @@
                             <include>net.kyori:*</include>
                             <include>dev.dejvokep:*</include>
                             <include>dev.dejvokep.boostedyaml:*</include>
+                            <include>dev.dejvokep:boosted-yaml</include>
                         </includes>
                     </artifactSet>
                     <relocations>

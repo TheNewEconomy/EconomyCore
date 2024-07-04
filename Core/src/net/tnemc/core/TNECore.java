@@ -49,6 +49,7 @@ import net.tnemc.core.menu.MyBalMenu;
 import net.tnemc.core.menu.MyEcoMenu;
 import net.tnemc.core.region.RegionGroup;
 import net.tnemc.core.utils.MISCUtils;
+import net.tnemc.core.transaction.Receipt;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.menu.core.manager.MenuManager;
 import net.tnemc.plugincore.PluginCore;
@@ -291,6 +292,8 @@ public abstract class TNECore extends PluginEngine {
     MenuManager.instance().addMenu(new MyBalMenu());
 
     this.storage.loadAll(Account.class, "");
+
+    this.storage.loadAll(Receipt.class, "");
 
     final String name = MainConfig.yaml().getString("Core.Server.Account.Name");
     serverAccount = UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8));
