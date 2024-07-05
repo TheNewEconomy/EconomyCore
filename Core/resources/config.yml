@@ -3,7 +3,7 @@
 # License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 Core:
 
-  config-version: 1
+  config-version: 2
 
   #Cracked Server? Set this to true. May cause data issues as spigot/paper UUIDs are unpredictable.
   #Do not change this unless you know what you're doing.
@@ -38,6 +38,10 @@ Core:
     #Regions that should have their economy disabled.
     DisabledRegions:
       - ExampleWorld
+
+    Shared:
+
+      example: example_shared
 
   #All configurations relating to the server in general.
   Server:

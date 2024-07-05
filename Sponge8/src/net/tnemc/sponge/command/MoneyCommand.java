@@ -85,6 +85,14 @@ public class MoneyCommand {
     net.tnemc.core.command.MoneyCommand.onGive(new SpongeCMDSource(sender), player, amount, region, currency);
   }
 
+  @Subcommand({"givenote", "+note", "addnote"})
+  @Usage("Money.GiveNote.Arguments")
+  @Description("Money.GiveNote.Description")
+  @CommandPermission("tne.money.givenote")
+  public void onGiveNote(SpongeCommandActor sender, Account player, @Named("amount") BigDecimal amount, @Default("") @Named("currency") Currency currency) {
+    net.tnemc.core.command.MoneyCommand.onGiveNote(new SpongeCMDSource(sender), player, amount, currency);
+  }
+
   @Subcommand({"note", "n"})
   @Usage("#{Money.Note.Arguments}")
   @Description("#{Money.Note.Description}")

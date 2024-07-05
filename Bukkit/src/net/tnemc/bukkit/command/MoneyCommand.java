@@ -93,6 +93,14 @@ public class MoneyCommand {
     net.tnemc.core.command.MoneyCommand.onGive(new BukkitCMDSource(sender), player, amount, region, currency);
   }
 
+  @Subcommand({"givenote", "+note", "addnote"})
+  @Usage("Money.GiveNote.Arguments")
+  @Description("Money.GiveNote.Description")
+  @CommandPermission("tne.money.givenote")
+  public void onGiveNote(BukkitCommandActor sender, Account player, @Named("amount") BigDecimal amount, @Default("") @Named("currency") Currency currency) {
+    net.tnemc.core.command.MoneyCommand.onGiveNote(new BukkitCMDSource(sender), player, amount, currency);
+  }
+
   @Subcommand({"note", "n"})
   @Usage("Money.Note.Arguments")
   @Description("Money.Note.Description")

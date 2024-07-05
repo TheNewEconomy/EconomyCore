@@ -98,7 +98,7 @@ Messages:
     Negative: "<red>Amount cannot be a negative value!"
     NoCurrency: "<red>The currency '$currency' could not be found in '$world'."
     SelfPay: "<red>You can't pay yourself!"
-    PayFailedOnline: "<red>Players to be online to receive payments."
+    PayFailedOnline: "<red>Players need to be online to receive payments."
     PayFailedDistance: "<red>That player is too far to pay them! You must be within $distance blocks."
     Converted: "<white>Successfully exchanged '<gold>$from_amount<white>' to '<gold>$amount<white>'."
     ConvertSame: "<red>You can't convert a currency into itself."
@@ -208,6 +208,7 @@ Messages:
 
   Note:
 
+    Created: "<white>You gave a note to $player in the amount of <gold>$amount<white> for currency <green>$currency<white>."
     Given: "<white>A note has been given to you in the amount of <gold>$amount<white> for currency <green>$currency<white>."
     Claimed: "<white>Successfully claimed note for currency <green>$currency<white> in the amount of <gold>$amount<white>."
     Failed: "<red>I'm sorry, but your attempt to claim that currency note failed!."
@@ -217,6 +218,8 @@ Messages:
     Region: "Region: $region"
     Amount: "Amount: $amount"
     Action: "Right click to claim note."
+    Dropped: "<red>Your inventory was full, so your currency note was dropped on the ground."
+    CreateOffline: "<red>You can't create notes for an offline player!"
 
   Setup:
     General:
@@ -318,6 +321,9 @@ Messages:
       Give:
         Arguments: "<player> <amount> [currency] [world]"
         Description: "Adds money into your economy, and gives it to a player."
+      GiveNote:
+        Arguments: "<player> <amount> [currency]"
+        Description: "Gives a player a physical money note they can redeem for monies."
       Note:
         Arguments: "<amount> [currency]"
         Description: "Makes your virtual currency physical, for storage/trading purposes."

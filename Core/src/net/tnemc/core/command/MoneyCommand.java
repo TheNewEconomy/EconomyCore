@@ -281,14 +281,56 @@ public class MoneyCommand extends BaseCommand {
     }
   }
 
+  public static void onGiveNote(CmdSource<?> sender, Account account, BigDecimal amount, Currency currency) {
+
+    final Optional<Note> note = currency.getNote();
+    if(note.isPresent() && account instanceof PlayerAccount player) {
+
+      final Optional<PlayerProvider> provider = player.getPlayer();
+      if(provider.isEmpty() || !player.isOnline()) {
+        sender.message(new MessageData("Messages.Note.CreateOffline"));
+        return;
+      }
+
+      if(amount.compareTo(note.get().getMinimum()) < 0) {
+        final MessageData min = new MessageData("Messages.Note.Minimum");
+        min.addReplacement("$amount", note.get().getMinimum().toPlainString());
+        sender.message(min);
+        return;
+      }
+
+      final BigDecimal rounded = amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN);
+
+      final Collection<AbstractItemStack<Object>> left = PluginCore.server().calculations().giveItems(Collections.singletonList(note.get().stack(currency.getIdentifier(), BaseCommand.region(sender), rounded)), provider.get().inventory().getInventory(false));
+
+      final MessageData entryMSG = new MessageData("Messages.Note.Given");
+      entryMSG.addReplacement("$currency",currency.getIdentifier());
+      entryMSG.addReplacement("$amount", CurrencyFormatter.format(account, rounded));
+      provider.get().message(entryMSG);
+
+      final MessageData senderMSG = new MessageData("Messages.Note.Created");
+      senderMSG.addReplacement("$player", provider.get().getName());
+      senderMSG.addReplacement("$currency", currency.getIdentifier());
+      senderMSG.addReplacement("$amount", CurrencyFormatter.format(account, rounded));
+      sender.message(senderMSG);
+
+      if(!left.isEmpty()) {
+        PluginCore.server().calculations().drop(left, player.getUUID());
+        provider.get().message(new MessageData("Messages.Note.Dropped"));
+      }
+      return;
+    }
+    sender.message(new MessageData("Messages.Note.CreateOffline"));
+  }
+
   //ArgumentsParser: <amount> [currency]
   public static void onNote(CmdSource<?> sender, PercentBigDecimal amount, Currency currency) {
 
     final Optional<Account> account = BaseCommand.account(sender);
     final Optional<Note> note = currency.getNote();
-    if(account.isPresent() && note.isPresent() && account.get() instanceof PlayerAccount) {
+    if(account.isPresent() && note.isPresent() && account.get() instanceof PlayerAccount player) {
 
-      final Optional<PlayerProvider> provider = ((PlayerAccount)account.get()).getPlayer();
+      final Optional<PlayerProvider> provider = player.getPlayer();
       if(provider.isEmpty()) {
         return;
       }
@@ -328,14 +370,15 @@ public class MoneyCommand extends BaseCommand {
       if(receipt.isPresent()) {
         final Collection<AbstractItemStack<Object>> left = PluginCore.server().calculations().giveItems(Collections.singletonList(note.get().stack(currency.getIdentifier(), BaseCommand.region(sender), rounded)), provider.get().inventory().getInventory(false));
 
-        if(!left.isEmpty()) {
-          PluginCore.server().calculations().drop(left, ((PlayerAccount)account.get()).getUUID());
-        }
-
         final MessageData entryMSG = new MessageData("Messages.Note.Given");
         entryMSG.addReplacement("$currency",currency.getIdentifier());
         entryMSG.addReplacement("$amount", CurrencyFormatter.format(account.get(), modifier.asEntry()));
         sender.message(entryMSG);
+
+        if(!left.isEmpty()) {
+          PluginCore.server().calculations().drop(left, ((PlayerAccount)account.get()).getUUID());
+          sender.message(new MessageData("Messages.Note.Dropped"));
+        }
       }
     }
   }
@@ -346,7 +389,7 @@ public class MoneyCommand extends BaseCommand {
     final Optional<PlayerProvider> player = sender.player();
     final Optional<UUID> senderID = sender.identifier();
 
-    final boolean other = (senderID.isPresent() && !senderID.get().toString().equals(account.getIdentifier()));
+    final boolean other = (senderID.isPresent() && !senderID.get().equals(account.getIdentifier()));
 
     if(EconomyManager.limitCurrency() && player.isPresent() && other) {
       if(!player.get().hasPermission("tne.money.other." + currency.getIdentifier())) {
