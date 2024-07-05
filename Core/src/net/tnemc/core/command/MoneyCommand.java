@@ -287,6 +287,7 @@ public class MoneyCommand extends BaseCommand {
     if(note.isPresent() && account instanceof PlayerAccount player) {
 
       final Optional<PlayerProvider> provider = player.getPlayer();
+
       if(provider.isEmpty() || !player.isOnline()) {
         sender.message(new MessageData("Messages.Note.CreateOffline"));
         return;

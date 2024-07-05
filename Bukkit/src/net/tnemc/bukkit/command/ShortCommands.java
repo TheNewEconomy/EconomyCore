@@ -48,7 +48,7 @@ public class ShortCommands {
     net.tnemc.core.command.MoneyCommand.onGive(new BukkitCMDSource(sender), player, amount, region, currency);
   }
 
-  @Subcommand({"givenote", "+note", "addnote"})
+  @Command({"givenote", "+note", "addnote"})
   @Usage("Money.GiveNote.Arguments")
   @Description("Money.GiveNote.Description")
   @CommandPermission("tne.money.givenote")
