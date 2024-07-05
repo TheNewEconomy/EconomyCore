@@ -107,7 +107,79 @@ Messages:
     Request: "<white>あなたは<green>$player<white>から<gold>$amount<white>のリクエストを受け取りました。<click:run_command:/money pay $player $amount $currency><green><underlined>クリックで送金する!</click>"
     EnderChest: "<red>Some funds were put in your ender chest because your inventory was full!"
     Dropped: "<red>Some funds were dropped on the ground because your inventory was full!"
+  Menu:
+    Shared:
+      PreviousPageDisplay: "Previous Page"
+      PreviousPage: "Click to go to previous page."
+      NextPageDisplay: "Next Page"
+      NextPage: "Click to go to next page."
+      EscapeDisplay: "Escape Menu"
+      Escape: "Click to exit this menu."
+      AmountSelect:
+        SaveDisplay: "Save"
+        Save: "Click save the amount."
+        EnterDisplay: "Enter Your Own"
+        Enter: "Click to enter a custom amount."
+        EnterValid: "Enter a valid decimal value:"
+        Amount: "The Amount"
+        ResetDisplay: "Reset To Zero"
+        Reset: "Click to reset the amount to zero."
+        Add100: "Add 100"
+        Add50: "Add 50"
+        Add10: "Add 10"
+        AddTenth: "Add .10"
+        AddHundredth: "Add .01"
+        Remove100: "Remove 100"
+        Remove50: "Remove 50"
+        Remove10: "Remove 10"
+        RemoveTenth: "Remove .10"
+        RemoveHundredth: "Remove .01"
+    MyEco:
+      Main:
+        Display: "Currencies"
+      Currencies:
+        SaveDisplay: "Save"
+        Save: "Click to save the currencies."
+        AddDisplay: "Add Currency"
+        Add: "Click to add currency."
+        Exists: "A currency with that identifier already exists! Enter an identifier for the currency:"
+        EnterValid: "Enter an identifier for the currency:"
+        EditDenom: "Edit Denominations"
+        EditInfo: "Basic Currency Information"
+        EditFormat: "Currency Format Options"
+        EditNote: "Currency Note Options"
+        TypeDisplay: "Type: $type"
+        Type: "Set the currency type."
+      EditInfo:
+        ID: "Click to set the identifier of the currency."
+    MyBal:
+      Main:
+        Balance: "Balance: $balance"
+        Pay: "Left click to pay account using currency."
+        Other: "Press Q for other actions using currency."
+        Note: "Right click to create physical currency note."
+        Breakdown: "Right click to view balance breakdown."
+      Actions:
+        ConvertDisplay: "Convert Currency"
+        Convert: "Click to convert this currency to another"
+        DepositDisplay: "Deposit Currency"
+        Deposit: "Click to deposit some physical currency to your virtual balance."
+        WithdrawDisplay: "Withdraw Currency"
+        Withdraw: "Click to withdraw some physical currency from your virtual balance."
+      Breakdown:
+        Balance: "Balance: $balance"
+      Currency:
+        Select: "Click to select currency."
+      AmountSelect:
+        MaxDisplay: "Add Max"
+        Max: "Adds your entire balance."
+        Player: "Player action will be performed on."
   Currency:
+    Type:
+      VIRTUAL_HOLDINGS: "Virtual Holdings"
+      EXPERIENCE_HOLDINGS: "Experience Holdings"
+      INVENTORY_HOLDINGS: "Inventory Holdings"
+      ENDER_HOLDINGS: "Ender Chest Holdings"
     Sure: "<red>通貨 $currencyを削除してもいいですか? 続行するには \"confirm\" を入力し、削除しない場合は何も入力しないでください。"
     Only: "<red>ロードされている通貨が1つしかないため削除することができませんでした。"
     Deleted: "<yellow>通貨 $currencyの削除に成功しました。"
