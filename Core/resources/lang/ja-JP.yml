@@ -90,7 +90,7 @@ Messages:
     Negative: "<red>金額を負の値にすることすることはできません。"
     NoCurrency: "<red>通貨 $currencyは$worldに存在しません。"
     SelfPay: "<red>自分で支払うことはできません!"
-    PayFailedOnline: "<red>支払いを受けるにはプレイヤーがオンラインでなければいけません。"
+    PayFailedOnline: "<red>Players need to be online to receive payments."
     PayFailedDistance: "<red>プレイヤーが遠くて支払うことができません! $distanceブロック以内にいる必要があります!"
     Converted: "<white><gold>$from_amount<white>から<gold>$amount<white>へ交換しました。"
     ConvertSame: "<red>通貨をその通貨自身に交換することはできません。"
@@ -184,6 +184,7 @@ Messages:
     Only: "<red>ロードされている通貨が1つしかないため削除することができませんでした。"
     Deleted: "<yellow>通貨 $currencyの削除に成功しました。"
   Note:
+    Created: "<white>You gave a note to $player in the amount of <gold>$amount<white> for currency <green>$currency<white>."
     Given: "<white>通貨 <green>$currency<white>に対して<gold>$amount<white>の紙幣が渡されました。"
     Claimed: "<white>Successfully claimed note for currency <green>$currency<white> in the amount of <gold>$amount<white>.<newline>Your new balance is <gold>$balance<white>."
     Failed: "<red>その紙幣を要求する試みは失敗しました。"
@@ -193,6 +194,8 @@ Messages:
     Region: "地域: $region"
     Amount: "金額: $amount"
     Action: "右クリックで請求する"
+    Dropped: "<red>Your inventory was full, so your currency note was dropped on the ground."
+    CreateOffline: "<red>You can't create notes for an offline player!"
   Setup:
     General:
       Failed: "$stepでのセットアップに失敗しました。"
@@ -290,6 +293,9 @@ Messages:
       Give:
         Arguments: "<player> <amount> [currency] [world]"
         Description: "プレイヤーへお金を追加します。"
+      GiveNote:
+        Arguments: "<player> <amount> [currency]"
+        Description: "Gives a player a physical money note they can redeem for monies."
       Note:
         Arguments: "<amount> [currency]"
         Description: "仮想の通貨を物理的な通貨にします。"
