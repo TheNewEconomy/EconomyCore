@@ -118,8 +118,6 @@ public class YAMLReceipt implements Datable<Receipt> {
     yaml.set("source.name", receipt.getSource().name());
     yaml.set("archive", receipt.isArchive());
     yaml.set("voided", receipt.isVoided());
-    yaml.set("from", receipt.getFrom());
-    yaml.set("to", receipt.getTo());
 
     if(receipt.getFrom() != null && receipt.getModifierFrom() != null) {
       yaml.set("from.id", receipt.getFrom().getId().toString());

@@ -39,7 +39,7 @@ public class MainConfig extends Config {
   public MainConfig() {
     super("config.yml", "config.yml", Collections.singletonList("Core"),
             LoaderSettings.builder().setAutoUpdate(true).build(),
-            UpdaterSettings.builder().setAutoSave(true).addIgnoredRoute("1", Route.fromString("Core.Region.RegionSharing")).setVersioning(new BasicVersioning("Core.config-version")).build());
+            UpdaterSettings.builder().setAutoSave(true).setVersioning(new BasicVersioning("Core.config-version")).build());
 
     instance = this;
   }
