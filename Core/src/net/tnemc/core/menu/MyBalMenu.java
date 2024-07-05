@@ -241,6 +241,9 @@ public class MyBalMenu extends Menu {
     actions.add(new DataAction(ACTION_CURRENCY, currency.getUid()));
     actions.add(new DataAction(ACTION_MAX_HOLDINGS, account.getHoldingsTotal(TNECore.eco().region().defaultRegion(), currency.getUid())));
 
+    final MessageData balance = new MessageData("Messages.Menu.MyBal.Balance");
+    balance.addReplacement("$balance", CurrencyFormatter.format(account, account.getHoldingsTotal(TNECore.eco().region().defaultRegion(), currency.getUid())));
+
     lore.add("Balance: " + CurrencyFormatter.format(account, account.getHoldingsTotal(TNECore.eco().region().defaultRegion(), currency.getUid())));
 
     lore.add("Left click to pay account using currency.");

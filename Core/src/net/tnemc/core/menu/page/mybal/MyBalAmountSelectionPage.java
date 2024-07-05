@@ -62,8 +62,8 @@ public class MyBalAmountSelectionPage extends AmountSelectionPage {
               .withSlot(31)
               .build());
 
-      Optional<Object> name = viewer.get().findData(MyBalMenu.ACTION_ACCOUNT_ID + "_NAME");
-      Optional<Object> id = viewer.get().findData(MyBalMenu.ACTION_ACCOUNT_ID + "_ID");
+      final Optional<Object> name = viewer.get().findData(MyBalMenu.ACTION_ACCOUNT_ID + "_NAME");
+      final Optional<Object> id = viewer.get().findData(MyBalMenu.ACTION_ACCOUNT_ID + "_ID");
       if(name.isPresent() && id.isPresent()) {
 
         SkullProfile profile = null;

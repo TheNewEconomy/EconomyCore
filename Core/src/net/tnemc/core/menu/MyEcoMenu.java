@@ -133,7 +133,7 @@ public class MyEcoMenu extends Menu {
 
     currency.addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
             .display("Save")
-            .lore(Collections.singletonList("Click to save the enchantments.")))
+            .lore(Collections.singletonList("Click to save the currencies.")))
             .withActions(new RunnableAction((click)->{
 
               final File directory = new File(PluginCore.directory(), "currency");
@@ -606,9 +606,9 @@ public class MyEcoMenu extends Menu {
                   }
                   message.getPlayer().message("Enter an identifier for the currency:");
                   return false;
-                }), new RunnableAction((run)->run.player().message("Enter a name for the currency:")))
+                }), new RunnableAction((run)->run.player().message("Enter a identifier for the currency:")))
                 .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                        .lore(Collections.singletonList("Enter an identifier for the currency."))
+                        .lore(Collections.singletonList("Click to set the identifier of the currency."))
                         .display(currencyObject.getIdentifier()))
                 .build());
 
