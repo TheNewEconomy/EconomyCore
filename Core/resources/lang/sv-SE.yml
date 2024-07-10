@@ -3,7 +3,7 @@
 #License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 #All configurable messages in TNE
 Messages:
-  config-version: 1
+  config-version: 2
   General:
     Version: "<white>TNE Version: <green>$version <white>- Build: <green>$build"
     NoPerm: "<red>I'm sorry, but you do not have permission to do that."
@@ -11,6 +11,8 @@ Messages:
     NoPlayer: "<red>Unable to locate player '$player'!"
     Disabled: "<red>Economy features are currently disabled in this world!"
     IsConsole: "<red>You can not run this command as the console!"
+  Worlds:
+    example: "replacement"
   Item:
     Invalid: "<red>Invalid item name and/or durability combination entered."
     InvalidAmount: "<red>Invalid item amount entered."
