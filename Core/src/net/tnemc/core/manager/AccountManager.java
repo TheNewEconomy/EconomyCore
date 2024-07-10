@@ -66,7 +66,7 @@ public class AccountManager {
 
   private final LinkedHashMap<Class<? extends SharedAccount>, Function<String, Boolean>> types = new LinkedHashMap<>();
 
-  protected UUIDProvider uuidProvider = new BaseUUIDProvider();
+  protected final UUIDProvider uuidProvider = new BaseUUIDProvider();
 
   /*
    * list for if player accounts are loading in this will mean that players in this list

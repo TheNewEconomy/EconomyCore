@@ -48,14 +48,6 @@ public class VirtualType implements CurrencyType {
     return "A simple currency type that is strictly virtual, which is imaginary money used in commands.";
   }
 
-  /**
-   * @return The {@link Identifier} of the default handler.
-   */
-  @Override
-  public Identifier defaultHandler() {
-    return EconomyManager.VIRTUAL;
-  }
-
   protected HoldingsEntry virtual(Account account, String region, Currency currency) {
     final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
                                                                              currency.getUid(),

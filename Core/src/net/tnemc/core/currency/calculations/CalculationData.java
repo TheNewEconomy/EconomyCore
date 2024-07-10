@@ -123,12 +123,12 @@ public class CalculationData<I> {
 
 
     final Optional<PlayerAccount> account = TNECore.eco().account().findPlayerAccount(player);
-    if(left.size() > 0 && account.isPresent()) {
+    if(!left.isEmpty() && account.isPresent()) {
 
       if(currency.isEnderFill()) {
         final Collection<AbstractItemStack<Object>> enderLeft = PluginCore.server().calculations().giveItems(left, account.get().getPlayer().get().inventory().getInventory(true));
 
-        if(enderLeft.size() > 0) {
+        if(!enderLeft.isEmpty()) {
 
           contains = contains - enderLeft.stream().findFirst().get().amount();
 

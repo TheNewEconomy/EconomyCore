@@ -137,12 +137,8 @@ public class AdminCommand extends BaseCommand {
         TNECore.instance().config().load();
         TNECore.eco().currency().load(PluginCore.directory());
       }
-      case "data" -> {
-        TNECore.instance().data().load();
-      }
-      case "message" -> {
-        TNECore.instance().message().load();
-      }
+      case "data" -> TNECore.instance().data().load();
+      case "message" -> TNECore.instance().message().load();
       default -> {
         TNECore.instance().config().load();
         TNECore.eco().currency().load(PluginCore.directory());

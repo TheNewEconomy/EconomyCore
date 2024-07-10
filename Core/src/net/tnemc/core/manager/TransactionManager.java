@@ -68,7 +68,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TransactionManager {
 
   private final SimpleDateFormat format;
-  private ReceiptManager receiptManager;
+  private final ReceiptManager receiptManager;
 
   private final EnhancedHashMap<String, TransactionCheck> checks = new EnhancedHashMap<>();
 

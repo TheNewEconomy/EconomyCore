@@ -100,10 +100,10 @@ public class PAPIHook extends PlaceholderExpansion {
 
       final UUID curID = TNECore.eco().currency().getDefaultCurrency().getUid();
       final List<HoldingsEntry> entries = account.get().getHoldings(TNECore.eco().region().defaultRegion(), curID, id);
-      final BigDecimal amount = (entries.size() > 0)? entries.get(0).getAmount() : BigDecimal.ZERO;
+      final BigDecimal amount = (!entries.isEmpty())? entries.get(0).getAmount() : BigDecimal.ZERO;
 
       if(args.length >= 2 && args[1].equalsIgnoreCase("formatted")) {
-        if(entries.size() > 0) {
+        if(!entries.isEmpty()) {
           return CurrencyFormatter.format(account.get(), entries.get(0));
         }
 

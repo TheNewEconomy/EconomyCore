@@ -40,7 +40,7 @@ public class BungeeProxy implements ProxyProvider {
   @Override
   public void sendToAll(String channel, byte[] out) {
     BungeeCore.instance().getProxy().getServers().values().forEach(server->{
-      if(server.getPlayers().size() > 0) {
+      if(!server.getPlayers().isEmpty()) {
         server.sendData(channel, out, false);
       } else {
         MessageManager.instance().addData(server.getSocketAddress().toString(), new BacklogEntry(channel, out));

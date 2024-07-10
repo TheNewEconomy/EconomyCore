@@ -31,7 +31,6 @@ import revxrsal.commands.sponge.annotation.CommandPermission;
 
 import java.util.UUID;
 
-;
 
 /**
  * TransactionCommand

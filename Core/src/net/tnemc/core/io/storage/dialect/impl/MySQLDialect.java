@@ -33,66 +33,66 @@ public class MySQLDialect implements TNEDialect {
 
   //The load and save queries
   @Language("SQL")
-  protected String saveName;
+  protected final String saveName;
 
   @Language("SQL")
-  protected String loadAccounts;
+  protected final String loadAccounts;
 
   @Language("SQL")
-  protected String loadAccount;
+  protected final String loadAccount;
 
   @Language("SQL")
-  protected String saveAccount;
+  protected final String saveAccount;
 
   @Language("SQL")
-  protected String loadNonPlayer;
+  protected final String loadNonPlayer;
 
   @Language("SQL")
-  protected String saveNonPlayer;
+  protected final String saveNonPlayer;
 
   @Language("SQL")
-  protected String loadPlayer;
+  protected final String loadPlayer;
 
   @Language("SQL")
-  protected String savePlayer;
+  protected final String savePlayer;
 
   @Language("SQL")
-  protected String loadMembers;
+  protected final String loadMembers;
 
   @Language("SQL")
-  protected String saveMember;
+  protected final String saveMember;
 
   @Language("SQL")
-  protected String loadHoldings;
+  protected final String loadHoldings;
 
   @Language("SQL")
-  protected String saveHolding;
+  protected final String saveHolding;
 
   @Language("SQL")
-  protected String loadReceipts;
+  protected final String loadReceipts;
 
   @Language("SQL")
-  protected String saveReceipt;
+  protected final String saveReceipt;
 
   @Language("SQL")
-  protected String loadReceiptHolding;
+  protected final String loadReceiptHolding;
 
   @Language("SQL")
-  protected String saveReceiptHolding;
+  protected final String saveReceiptHolding;
 
   @Language("SQL")
-  protected String loadParticipants;
+  protected final String loadParticipants;
 
   @Language("SQL")
-  protected String saveParticipant;
+  protected final String saveParticipant;
 
   @Language("SQL")
-  protected String loadModifiers;
+  protected final String loadModifiers;
 
   @Language("SQL")
-  protected String saveModifier;
+  protected final String saveModifier;
 
-  protected String prefix;
+  protected final String prefix;
 
   public MySQLDialect(final String prefix) {
     this.prefix = prefix;

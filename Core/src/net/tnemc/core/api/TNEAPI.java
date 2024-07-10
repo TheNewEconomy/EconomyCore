@@ -148,10 +148,6 @@ public class TNEAPI {
   public AccountAPIResponse getOrCreateAccount(@NotNull String identifier, @NotNull String name) {
     AccountAPIResponse response = TNECore.eco().account().createAccount(identifier, name);
 
-    if(response.getResponse().equals(AccountResponse.ALREADY_EXISTS)) {
-      return response;
-    }
-
     return response;
   }
 

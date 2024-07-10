@@ -55,14 +55,12 @@ public interface ActionSource {
 
   static ActionSource create(String name, String type) {
 
-    switch(type.toLowerCase(Locale.ROOT)) {
-      case "player":
-        try {
-          return new PlayerSource(UUID.fromString(name));
-        } catch(Exception ignore) {}
-        break;
-      default:
-        return new PluginSource(name);
+    if(type.toLowerCase(Locale.ROOT).equals("player")) {
+      try {
+        return new PlayerSource(UUID.fromString(name));
+      } catch(Exception ignore) {}
+    } else {
+      return new PluginSource(name);
     }
     return new PluginSource(name);
   }

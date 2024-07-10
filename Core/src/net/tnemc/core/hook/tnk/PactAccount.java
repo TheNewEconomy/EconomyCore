@@ -47,12 +47,6 @@ public class PactAccount extends NonPlayerAccount {
 
   @Override
   public UUID generateIdentifier(String name) {
-
-    try {
-      //return Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getUUID().toString();
-    } catch(Exception ignore) {
-      return super.generateIdentifier(name);
-    }
     return super.generateIdentifier(name);
   }
 }

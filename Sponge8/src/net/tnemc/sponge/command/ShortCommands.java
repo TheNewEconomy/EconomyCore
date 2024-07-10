@@ -33,7 +33,6 @@ import revxrsal.commands.sponge.annotation.CommandPermission;
 
 import java.math.BigDecimal;
 
-;
 
 /**
  * ShortCommands

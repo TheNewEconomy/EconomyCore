@@ -648,15 +648,12 @@ public class MyEcoMenu extends Menu {
           //ender chest icon
           final String enderState = (itemCurrency.canEnderChest())? "ENABLED" : "DISABLED";
           final StateIcon enderchest = new StateIcon(disabledStack, null, "CURRENCY_ENDER", enderState, (currentState)->{
-            switch(currentState.toUpperCase(Locale.ROOT)) {
-
-              case "ENABLED":
-                itemCurrency.setEnderChest(false);
-                return "DISABLED";
-              default:
-                itemCurrency.setEnderChest(true);
-                return "ENABLED";
+            if(currentState.toUpperCase(Locale.ROOT).equals("ENABLED")) {
+              itemCurrency.setEnderChest(false);
+              return "DISABLED";
             }
+            itemCurrency.setEnderChest(true);
+            return "ENABLED";
           });
           enderchest.setSlot(23);
           enderchest.addState("DISABLED", disabledStack.display("EnderChest(Disabled)").lore(Collections.singletonList("Clicked to Enable using ender chests for item currency balances.")));
@@ -666,15 +663,12 @@ public class MyEcoMenu extends Menu {
           //ender chest icon
           final String fillState = (itemCurrency.isEnderFill())? "ENABLED" : "DISABLED";
           final StateIcon enderFill = new StateIcon(disabledStack, null, "CURRENCY_ENDER_FILL", fillState, (currentState)->{
-            switch(currentState.toUpperCase(Locale.ROOT)) {
-
-              case "ENABLED":
-                itemCurrency.setEnderChest(false);
-                return "DISABLED";
-              default:
-                itemCurrency.setEnderChest(true);
-                return "ENABLED";
+            if(currentState.toUpperCase(Locale.ROOT).equals("ENABLED")) {
+              itemCurrency.setEnderChest(false);
+              return "DISABLED";
             }
+            itemCurrency.setEnderChest(true);
+            return "ENABLED";
           });
           enderFill.setSlot(24);
           enderFill.addState("DISABLED", disabledStack.display("EnderChest Fill(Disabled)").lore(Collections.singletonList("Clicked to Enable Filling the ender chest when player inventory is full.")));
@@ -842,15 +836,12 @@ public class MyEcoMenu extends Menu {
 
         //ender chest icon
         final StateIcon majorSeparate = new StateIcon(disabledStack, null, "CURRENCY_SEPARATE", state, (currentState)->{
-          switch(currentState.toUpperCase(Locale.ROOT)) {
-
-            case "ENABLED":
-              currencyObject.setSeparateMajor(false);
-              return "DISABLED";
-            default:
-              currencyObject.setSeparateMajor(true);
-              return "ENABLED";
+          if(currentState.toUpperCase(Locale.ROOT).equals("ENABLED")) {
+            currencyObject.setSeparateMajor(false);
+            return "DISABLED";
           }
+          currencyObject.setSeparateMajor(true);
+          return "ENABLED";
         });
         majorSeparate.setSlot(18);
         majorSeparate.addState("DISABLED", disabledStack.display("Separate Major Amounts(Disabled)").lore(Collections.singletonList("Click to separate the major numeric every three numbers.")));
@@ -903,15 +894,12 @@ public class MyEcoMenu extends Menu {
         //ender chest icon
         final String noteState = (currency.isNotable())? "ENABLED" : "DISABLED";
         final StateIcon notableIcon = new StateIcon(disabledStack, null, "CURRENCY_NOTE", noteState, (currentState)->{
-          switch(currentState.toUpperCase(Locale.ROOT)) {
-
-            case "ENABLED":
-              currency.setNote(null);
-              return "DISABLED";
-            default:
-              currency.setNote(new Note("PAPER", BigDecimal.ZERO, new TaxEntry("flat", 0.0)));
-              return "ENABLED";
+          if(currentState.toUpperCase(Locale.ROOT).equals("ENABLED")) {
+            currency.setNote(null);
+            return "DISABLED";
           }
+          currency.setNote(new Note("PAPER", BigDecimal.ZERO, new TaxEntry("flat", 0.0)));
+          return "ENABLED";
         });
         notableIcon.setSlot(23);
         notableIcon.addState("DISABLED", disabledStack.display("Notable(Disabled)").lore(Collections.singletonList("Click to enable noting for this currency.")));

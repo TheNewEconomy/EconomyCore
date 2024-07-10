@@ -124,18 +124,15 @@ public class ConfigHandler extends ChannelMessageHandler {
           continue;
         }
 
-        switch(parts[0]) {
-          case "messages.yml" -> {
-            if(sync.contains("messages.yml")) {
-              //TODO: This needs a new work around or removed since plugin channels are limited.
-              //TNECore.instance().message().setYaml(YamlFile.loadConfigurationFromString(parts[1], true));
-            }
+        if(parts[0].equals("messages.yml")) {
+          if(sync.contains("messages.yml")) {
+            //TODO: This needs a new work around or removed since plugin channels are limited.
+            //TNECore.instance().message().setYaml(YamlFile.loadConfigurationFromString(parts[1], true));
           }
-          default -> {
-            if(sync.contains("config.yml")) {
-              //TODO: This needs a new work around or removed since plugin channels are limited.
-              //TNECore.instance().config().setYaml(YamlFile.loadConfigurationFromString(parts[1], true));
-            }
+        } else {
+          if(sync.contains("config.yml")) {
+            //TODO: This needs a new work around or removed since plugin channels are limited.
+            //TNECore.instance().config().setYaml(YamlFile.loadConfigurationFromString(parts[1], true));
           }
         }
 

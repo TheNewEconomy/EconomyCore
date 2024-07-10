@@ -32,7 +32,7 @@ public class PluginSource implements ActionSource {
   /**
    * Represents the name of the plugin that is being used for actions.
    */
-  private String plugin;
+  private final String plugin;
 
   /**
    * Used to create an {@link ActionSource source} object that represents a plugin.

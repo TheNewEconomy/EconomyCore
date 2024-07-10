@@ -36,9 +36,9 @@ import java.util.UUID;
 public class Receipt {
 
   //Our archival information
-  private UUID id;
-  private long time;
-  private String type;
+  private final UUID id;
+  private final long time;
+  private final String type;
 
   private ActionSource source;
   private TransactionParticipant from;

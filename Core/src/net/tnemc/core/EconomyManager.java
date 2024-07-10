@@ -190,7 +190,7 @@ public class EconomyManager {
   }
 
   public void printInvalid() {
-    if(invalidCurrencies.size() > 0) {
+    if(!invalidCurrencies.isEmpty()) {
       for(final String currency : invalidCurrencies) {
         PluginCore.log().inform("Account Balances found for non existent currency ID: " + currency);
       }

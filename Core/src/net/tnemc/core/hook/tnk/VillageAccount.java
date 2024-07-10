@@ -47,11 +47,6 @@ public class VillageAccount extends NonPlayerAccount {
 
   @Override
   public UUID generateIdentifier(String name) {
-    try {
-      //return Objects.requireNonNull(TownyAPI.getInstance().getTown(name)).getUUID().toString();
-    } catch(Exception ignore) {
-      return super.generateIdentifier(name);
-    }
     return super.generateIdentifier(name);
   }
 }

@@ -100,7 +100,7 @@ public abstract class TNECore extends PluginEngine {
 
   protected Updater updater;
 
-  protected YamlStorageManager yamlManager = new YamlStorageManager();
+  protected final YamlStorageManager yamlManager = new YamlStorageManager();
 
   private MainConfig config;
   private DataConfig data;

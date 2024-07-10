@@ -109,7 +109,7 @@ public class ModuleCommand extends BaseCommand {
   public static void onList(CmdSource<?> sender) {
     final StringBuilder modules = new StringBuilder();
     PluginCore.loader().getModules().forEach((key, value)->{
-      if(modules.length() > 0) modules.append(", ");
+      if(!modules.isEmpty()) modules.append(", ");
       modules.append(value.getInfo().name());
     });
 

@@ -143,13 +143,10 @@ public class EnchantmentSelectionPage {
 
         //ender chest icon
         final StateIcon enchant = new StateIcon(disabledStack, null, menuName + "_" + enchantment, "DISABLED", (currentState)->{
-          switch(currentState.toUpperCase(Locale.ROOT)) {
-
-            case "ENABLED":
-              return "DISABLED";
-            default:
-              return "ENABLED";
+          if(currentState.toUpperCase(Locale.ROOT).equals("ENABLED")) {
+            return "DISABLED";
           }
+          return "ENABLED";
         });
         enchant.setSlot(9 + (i - start));
         enchant.addState("DISABLED", disabledStack.lore(Collections.singletonList("Clicked to add this enchant.")));

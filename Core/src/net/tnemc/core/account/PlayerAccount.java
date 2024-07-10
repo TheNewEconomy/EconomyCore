@@ -35,7 +35,7 @@ import java.util.UUID;
  */
 public class PlayerAccount extends Account {
 
-  protected UUID uuid;
+  protected final UUID uuid;
   protected long lastOnline;
   protected String language;
 

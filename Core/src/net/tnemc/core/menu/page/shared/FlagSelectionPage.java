@@ -146,13 +146,10 @@ public class FlagSelectionPage {
 
         //ender chest icon
         final StateIcon flag = new StateIcon(disabledStack, null, menuName + "_" + flagName, "DISABLED", (currentState)->{
-          switch(currentState.toUpperCase(Locale.ROOT)) {
-
-            case "ENABLED":
-              return "DISABLED";
-            default:
-              return "ENABLED";
+          if(currentState.toUpperCase(Locale.ROOT).equals("ENABLED")) {
+            return "DISABLED";
           }
+          return "ENABLED";
         });
         flag.setSlot(9 + (i - start));
         flag.addState("DISABLED", disabledStack.lore(Collections.singletonList("Clicked to add this flag.")));

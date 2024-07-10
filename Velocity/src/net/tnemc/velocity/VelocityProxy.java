@@ -45,7 +45,7 @@ public class VelocityProxy implements ProxyProvider {
   @Override
   public void sendToAll(String channel, byte[] out) {
     VelocityCore.instance().getServer().getAllServers().forEach(server->{
-      if(server.getPlayersConnected().size() > 0) {
+      if(!server.getPlayersConnected().isEmpty()) {
         server.sendPluginMessage(MinecraftChannelIdentifier.from(channel), out);
       } else {
         MessageManager.instance().addData(String.valueOf(server.getServerInfo().getAddress().getPort()), new BacklogEntry(channel, out));

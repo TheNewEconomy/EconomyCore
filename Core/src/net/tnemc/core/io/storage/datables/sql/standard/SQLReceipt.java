@@ -227,15 +227,12 @@ public class SQLReceipt implements Datable<Receipt> {
         participant.setTax(tax);
         final Optional<HoldingsModifier> modifier = loadModifier(receipt.getId(), id, type, sql, dialect);
 
-        switch(type) {
-          case "from":
-            receipt.setFrom(participant);
-            modifier.ifPresent(receipt::setModifierFrom);
-            break;
-          default:
-            receipt.setTo(participant);
-            modifier.ifPresent(receipt::setModifierTo);
-            break;
+        if(type.equals("from")) {
+          receipt.setFrom(participant);
+          modifier.ifPresent(receipt::setModifierFrom);
+        } else {
+          receipt.setTo(participant);
+          modifier.ifPresent(receipt::setModifierTo);
         }
       }
     } catch(Exception ignore) {}

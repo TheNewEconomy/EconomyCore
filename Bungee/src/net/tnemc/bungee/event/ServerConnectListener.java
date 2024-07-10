@@ -35,7 +35,7 @@ public class ServerConnectListener implements Listener {
   @EventHandler
   public void onMessage(ServerConnectEvent event) {
 
-    if(event.getPlayer().getServer().getInfo().getPlayers().size() >= 1) {
+    if(!event.getPlayer().getServer().getInfo().getPlayers().isEmpty()) {
 
       final String address = event.getPlayer().getServer().getInfo().getSocketAddress().toString();
       MessageManager.instance().backlog(address);
