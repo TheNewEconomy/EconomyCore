@@ -35,7 +35,6 @@ import net.tnemc.plugincore.core.io.message.MessageData;
 import net.tnemc.plugincore.core.utils.HandlerResponse;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -108,10 +107,11 @@ public class PlayerInteractHandler {
 
         if(result.getReceipt().isPresent()) {
 
-          final List<AbstractItemStack<Object>> i = new ArrayList<>();
-          i.add((AbstractItemStack<Object>)item);
+          //final List<AbstractItemStack<Object>> i = new ArrayList<>();
+         // i.add((AbstractItemStack<Object>)item);
 
-          PluginCore.server().calculations().takeItems(i, provider.identifier());
+          //PluginCore.server().calculations().takeItems(i, provider.identifier());
+          PluginCore.server().calculations().removeItem((AbstractItemStack<Object>)item, provider.identifier());
 
           final MessageData claimed = new MessageData("Messages.Note.Claimed");
           claimed.addReplacement("$currency", currency);
