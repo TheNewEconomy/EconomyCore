@@ -25,6 +25,7 @@ import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.source.PlayerSource;
 import net.tnemc.core.config.MessageConfig;
+import net.tnemc.core.currency.Currency;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
@@ -35,6 +36,7 @@ import net.tnemc.plugincore.core.io.message.MessageData;
 import net.tnemc.plugincore.core.utils.HandlerResponse;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +53,7 @@ public class PlayerInteractHandler {
    * @param provider The {@link PlayerProvider} associated with the platform event.
    * @return True if the event should be cancelled, otherwise false.
    */
-  public HandlerResponse handle(PlayerProvider provider, AbstractItemStack<?> item) {
+  public HandlerResponse handle(PlayerProvider provider, final AbstractItemStack<?> item) {
     final HandlerResponse response = new HandlerResponse("", false);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(provider.identifier());
@@ -85,12 +87,12 @@ public class PlayerInteractHandler {
       if(currency == null || region == null || amount == null) return response;
 
 
+      final Optional<Currency> curObj = TNECore.eco().currency().findCurrency(currency);
+      if(curObj.isEmpty() || curObj.get().getNote().isEmpty()) return response;
+
       final BigDecimal value = new BigDecimal(amount);
 
-      final HoldingsModifier modifier = new HoldingsModifier(region,
-                                                             TNECore.eco().currency().findCurrency(currency).get().getUid(),
-                                                             value
-      );
+      final HoldingsModifier modifier = new HoldingsModifier(region, curObj.get().getUid(), value);
 
       final Transaction transaction = new Transaction("note")
           .from(account.get(), modifier)
@@ -107,11 +109,7 @@ public class PlayerInteractHandler {
 
         if(result.getReceipt().isPresent()) {
 
-          //final List<AbstractItemStack<Object>> i = new ArrayList<>();
-         // i.add((AbstractItemStack<Object>)item);
-
-          //PluginCore.server().calculations().takeItems(i, provider.identifier());
-          PluginCore.server().calculations().removeItem((AbstractItemStack<Object>)item, provider.identifier());
+          PluginCore.server().calculations().removeItem(curObj.get().getNote().get().stack(currency, region, value), provider.identifier());
 
           final MessageData claimed = new MessageData("Messages.Note.Claimed");
           claimed.addReplacement("$currency", currency);
