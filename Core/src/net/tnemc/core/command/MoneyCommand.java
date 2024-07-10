@@ -37,6 +37,7 @@ import net.tnemc.core.manager.top.TopPage;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
+import net.tnemc.core.utils.MISCUtils;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.plugincore.PluginCore;
@@ -418,7 +419,7 @@ public class MoneyCommand extends BaseCommand {
     }
 
     final MessageData msg = new MessageData("Messages.Money.HoldingsMulti");
-    msg.addReplacement("$world", region);
+    msg.addReplacement("$world", MISCUtils.worldFormatted(region));
     msg.addReplacement("$player", account.getName());
     sender.message(msg);
 

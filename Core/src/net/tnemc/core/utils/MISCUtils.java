@@ -19,6 +19,7 @@ package net.tnemc.core.utils;
  */
 
 import dev.dejvokep.boostedyaml.YamlDocument;
+import net.tnemc.core.config.MessageConfig;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,6 +38,10 @@ import java.util.zip.ZipOutputStream;
  * @since 0.1.2.0
  */
 public class MISCUtils {
+
+  public static String worldFormatted(final String world) {
+    return MessageConfig.yaml().getString("Messages.Worlds." + world, world);
+  }
 
   public static void setComment(YamlDocument yaml, String route, String comment) {
     setComment(yaml, route, Collections.singletonList(comment));
