@@ -240,10 +240,12 @@ public class YAMLReceipt implements Datable<Receipt> {
   }
 
   public void loadParticipant(YamlDocument yaml, Receipt receipt, String type) {
-    final BigDecimal tax = new BigDecimal(yaml.getString(type + ".tax"));
 
     final TransactionParticipant participant = new TransactionParticipant(UUID.fromString(yaml.getString(type + ".id")), new ArrayList<>());
-    participant.setTax(tax);
+
+    if(yaml.contains(type + ".tax")) {
+      participant.setTax(new BigDecimal(yaml.getString(type + ".tax")));
+    }
 
     participant.getStartingBalances().addAll(loadHoldings(yaml, type, "starting"));
     participant.getEndingBalances().addAll(loadHoldings(yaml, type, "ending"));

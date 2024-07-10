@@ -39,9 +39,10 @@ Core:
     DisabledRegions:
       - ExampleWorld
 
-    Shared:
+    #Regions that should have their economy disabled.
+    SharedRegions:
 
-      example: example_shared
+      ExampleRegion: test
 
   #All configurations relating to the server in general.
   Server:

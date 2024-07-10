@@ -25,6 +25,7 @@ import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.bukkit.BukkitCalculationsProvider;
 import net.tnemc.item.bukkit.BukkitItemStack;
 import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.bukkit.BukkitPluginCore;
 import net.tnemc.plugincore.bukkit.hook.PAPIParser;
 import net.tnemc.plugincore.bukkit.impl.BukkitPlayerProvider;
 import net.tnemc.plugincore.bukkit.impl.BukkitProxyProvider;
@@ -37,6 +38,7 @@ import net.tnemc.plugincore.core.compatibility.scheduler.SchedulerProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -290,22 +292,35 @@ public class FoliaServerProvider implements ServerConnector {
    * @see CraftingRecipe
    */
   @Override
-  public void registerCrafting(@NotNull CraftingRecipe recipe) {
-    if(recipe.isShaped()) {
-      final ShapedRecipe shaped = new ShapedRecipe((ItemStack)recipe.getResult().locale());
-      shaped.shape(recipe.getRows());
+  public void registerCrafting(@NotNull final String key, @NotNull CraftingRecipe recipe) {if(recipe.isShaped()) {
+    ShapedRecipe shaped;
 
-      for(Map.Entry<Character, String> ingredient : recipe.getIngredients().entrySet()) {
-        shaped.setIngredient(ingredient.getKey(), Material.valueOf(ingredient.getValue()));
-      }
-      Bukkit.getServer().addRecipe(shaped);
-    } else {
-      final ShapelessRecipe shapeless = new ShapelessRecipe((ItemStack)recipe.getResult().locale());
-      for(Map.Entry<Character, String> ingredient : recipe.getIngredients().entrySet()) {
-        shapeless.addIngredient(1, Material.valueOf(ingredient.getValue()));
-      }
-      Bukkit.getServer().addRecipe(shapeless);
+    try {
+      shaped = new ShapedRecipe(new NamespacedKey(BukkitPluginCore.instance().getPlugin(), key), (ItemStack)recipe.getResult().locale());
+    } catch(Exception ignore) {
+      shaped = new ShapedRecipe((ItemStack)recipe.getResult().locale());
     }
+
+    shaped.shape(recipe.getRows());
+
+    for(Map.Entry<Character, String> ingredient : recipe.getIngredients().entrySet()) {
+      shaped.setIngredient(ingredient.getKey(), Material.valueOf(ingredient.getValue()));
+    }
+    Bukkit.getServer().addRecipe(shaped);
+  } else {
+    ShapelessRecipe shapeless;
+
+    try {
+      shapeless = new ShapelessRecipe(new NamespacedKey(BukkitPluginCore.instance().getPlugin(), key), (ItemStack)recipe.getResult().locale());
+    } catch(Exception ignore) {
+      shapeless = new ShapelessRecipe((ItemStack)recipe.getResult().locale());
+    }
+
+    for(Map.Entry<Character, String> ingredient : recipe.getIngredients().entrySet()) {
+      shapeless.addIngredient(1, Material.valueOf(ingredient.getValue()));
+    }
+    Bukkit.getServer().addRecipe(shapeless);
+  }
   }
 
   @Override
