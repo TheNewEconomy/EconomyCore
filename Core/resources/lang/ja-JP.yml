@@ -3,7 +3,7 @@
 #License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 #All configurable messages in TNE
 Messages:
-  config-version: 1
+  config-version: 2
   General:
     Version: "<white>TNE バージョン: <green>$version <white>- ビルド: <green>$build"
     NoPerm: "<red>あなたには権限がありません!"
@@ -11,6 +11,8 @@ Messages:
     NoPlayer: "<red>プレイヤー'$player'が見つかりません。"
     Disabled: "<red>このワールドでは経済機能が無効になっています。"
     IsConsole: "<red>このコマンドはコンソールでは実行できません。"
+  Worlds:
+    example: "replacement"
   Item:
     Invalid: "<red>無効なアイテム名と耐久度が入力されました。"
     InvalidAmount: "<red>入力されたアイテム金額は無効です。"

@@ -3,7 +3,7 @@
 #License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 #All configurable messages in TNE
 Messages:
-  config-version: 1
+  config-version: 2
   General:
     Version: "<white>Versión de TNE: <green>$version <white>- Compilación: <green>$build"
     NoPerm: "<red>Desafortunadamente, No tienes permiso para hacer eso."
@@ -11,6 +11,8 @@ Messages:
     NoPlayer: "<red>¡No se pudo localizar al jugador '$player'!"
     Disabled: "<red>¡Las características de economía están actualmente deshabilitadas en este mundo!"
     IsConsole: "<red>You can not run this command as the console!"
+  Worlds:
+    example: "replacement"
   Item:
     Invalid: "<red>Nombre de objeto y/o combinación de durabilidad inválido."
     InvalidAmount: "<red>Cantidad de objeto ingresada no válida."
