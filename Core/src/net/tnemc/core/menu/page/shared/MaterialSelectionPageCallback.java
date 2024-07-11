@@ -66,11 +66,8 @@ public class MaterialSelectionPageCallback {
 
   public void handle(final PageOpenCallback callback) {
 
-    System.out.println("Menu Page");
-
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
-      System.out.println("Menu Page viewer present");
 
       final int page = (Integer)viewer.get().dataOrDefault(materialPageID, 1);
       final int items = (menuRows - 1) * 9;

@@ -81,8 +81,6 @@ public class FlagSelectionPage {
       final int prev = (page <= 1)? maxPages : page - 1;
       final int next = (page >= maxPages)? 1 : page + 1;
 
-      System.out.println("prev: " + prev + ", next: " + next);
-
       if(maxPages > 1) {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
