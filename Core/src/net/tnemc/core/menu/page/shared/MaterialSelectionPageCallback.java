@@ -17,14 +17,13 @@ package net.tnemc.core.menu.page.shared;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
 import net.tnemc.core.menu.handlers.StringSelectionHandler;
-import net.tnemc.item.AbstractItemStack;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
 import net.tnemc.menu.core.icon.action.impl.DataAction;
 import net.tnemc.menu.core.icon.action.impl.RunnableAction;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
+import net.tnemc.menu.core.manager.MenuManager;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
 
@@ -77,7 +76,7 @@ public class MaterialSelectionPageCallback {
       final int items = (menuRows - 1) * 9;
       final int start = ((page - 1) * items);
 
-      final int maxPages = (TNECore.instance().helper().materials().size() / items) + (((TNECore.instance().helper().materials().size() % items) > 0)? 1 : 0);
+      final int maxPages = (MenuManager.instance().getHelper().materials().size() / items) + (((MenuManager.instance().getHelper().materials().size() % items) > 0)? 1 : 0);
 
       final int prev = (page <= 1)? maxPages : page - 1;
       final int next = (page >= maxPages)? 1 : page + 1;
@@ -107,11 +106,11 @@ public class MaterialSelectionPageCallback {
               .build());
 
       for(int i = start; i < start + items; i++) {
-        if(TNECore.instance().helper().materials().size() <= i) {
+        if(MenuManager.instance().getHelper().materials().size() <= i) {
           break;
         }
 
-        final String material = TNECore.instance().helper().materials().get(i);
+        final String material = MenuManager.instance().getHelper().materials().get(i);
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(material, 1)
                 .lore(Collections.singletonList("Click to select material.")))

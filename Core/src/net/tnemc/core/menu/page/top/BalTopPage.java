@@ -18,22 +18,16 @@ package net.tnemc.core.menu.page.top;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
-import net.tnemc.core.menu.handlers.StringSelectionHandler;
-import net.tnemc.item.AbstractItemStack;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
 import net.tnemc.menu.core.icon.action.impl.DataAction;
-import net.tnemc.menu.core.icon.action.impl.RunnableAction;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
-import net.tnemc.menu.core.icon.impl.StateIcon;
+import net.tnemc.menu.core.manager.MenuManager;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
 
 import java.util.Collections;
-import java.util.Locale;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 /**
  * EnchantmentSelectionPage
@@ -72,7 +66,7 @@ public class BalTopPage {
       final int page = (Integer)viewer.get().dataOrDefault(menuName + "_PAGE", 1);
       final int items = (menuRows - 1) * 9;
       final int start = ((page - 1) * items);
-      final int maxPages = (TNECore.instance().helper().enchantments().size() / items) + (((TNECore.instance().helper().enchantments().size() % items) > 0)? 1 : 0);
+      final int maxPages = (MenuManager.instance().getHelper().enchantments().size() / items) + (((MenuManager.instance().getHelper().enchantments().size() % items) > 0)? 1 : 0);
 
       final int prev = (page <= 1)? maxPages : page - 1;
       final int next = (page >= maxPages)? 1 : page + 1;

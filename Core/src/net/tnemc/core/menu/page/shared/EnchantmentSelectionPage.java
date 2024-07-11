@@ -18,7 +18,6 @@ package net.tnemc.core.menu.page.shared;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
 import net.tnemc.core.menu.handlers.StringSelectionHandler;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.menu.core.builder.IconBuilder;
@@ -27,6 +26,7 @@ import net.tnemc.menu.core.icon.action.impl.DataAction;
 import net.tnemc.menu.core.icon.action.impl.RunnableAction;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
 import net.tnemc.menu.core.icon.impl.StateIcon;
+import net.tnemc.menu.core.manager.MenuManager;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
 
@@ -76,7 +76,7 @@ public class EnchantmentSelectionPage {
       final int page = (Integer)viewer.get().dataOrDefault(menuName + "_ENCHANTMENT_SELECTION_PAGE", 1);
       final int items = (menuRows - 1) * 9;
       final int start = ((page - 1) * items);
-      final int maxPages = (TNECore.instance().helper().enchantments().size() / items) + (((TNECore.instance().helper().enchantments().size() % items) > 0)? 1 : 0);
+      final int maxPages = (MenuManager.instance().getHelper().enchantments().size() / items) + (((MenuManager.instance().getHelper().enchantments().size() % items) > 0)? 1 : 0);
 
       final int prev = (page <= 1)? maxPages : page - 1;
       final int next = (page >= maxPages)? 1 : page + 1;
@@ -113,7 +113,7 @@ public class EnchantmentSelectionPage {
                         if(selectionListener != null) {
 
                           final StringBuilder builder = new StringBuilder();
-                          for(final String enchant : TNECore.instance().helper().enchantments()) {
+                          for(final String enchant : MenuManager.instance().getHelper().enchantments()) {
 
                             final String value = (String)viewer.get().dataOrDefault(menuName + "_" + enchant, "Disabled");
                             final boolean enabled = value.equalsIgnoreCase("enabled");
@@ -132,11 +132,11 @@ public class EnchantmentSelectionPage {
               .build());
 
       for(int i = start; i < start + items; i++) {
-        if(TNECore.instance().helper().enchantments().size() <= i) {
+        if(MenuManager.instance().getHelper().enchantments().size() <= i) {
           break;
         }
 
-        final String enchantment = TNECore.instance().helper().enchantments().get(i);
+        final String enchantment = MenuManager.instance().getHelper().enchantments().get(i);
 
         final AbstractItemStack<?> disabledStack = PluginCore.server().stackBuilder().display(enchantment + "(Disabled)").of("RED_WOOL", 1);
         final AbstractItemStack<?> enabledStack = PluginCore.server().stackBuilder().display(enchantment + "(Enabled)").of("GREEN_WOOL", 1);

@@ -22,6 +22,7 @@ import com.google.inject.Inject;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.TNECallbackProvider;
 import net.tnemc.core.io.message.BaseTranslationProvider;
+import net.tnemc.menu.sponge8.Sponge8MenuHandler;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.api.CallbackManager;
 import net.tnemc.plugincore.sponge.SpongePluginCore;
@@ -95,7 +96,7 @@ public class SpongeCore extends TNECore {
   @Override
   public void registerMenuHandler() {
     //TODO: Menu Handler for Sponge
-    this.helperMethods = new SpongeHelper();
+    this.menuHandler = new Sponge8MenuHandler(container, true);
   }
 
 

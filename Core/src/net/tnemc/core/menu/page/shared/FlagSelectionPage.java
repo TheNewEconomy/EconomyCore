@@ -18,7 +18,6 @@ package net.tnemc.core.menu.page.shared;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
 import net.tnemc.core.menu.handlers.StringSelectionHandler;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.menu.core.builder.IconBuilder;
@@ -27,6 +26,7 @@ import net.tnemc.menu.core.icon.action.impl.DataAction;
 import net.tnemc.menu.core.icon.action.impl.RunnableAction;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
 import net.tnemc.menu.core.icon.impl.StateIcon;
+import net.tnemc.menu.core.manager.MenuManager;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
 
@@ -76,7 +76,7 @@ public class FlagSelectionPage {
       final int page = (Integer)viewer.get().dataOrDefault(flagPageID, 1);
       final int items = (menuRows - 1) * 9;
       final int start = ((page - 1) * items);
-      final int maxPages = (TNECore.instance().helper().flags().size() / items) + (((TNECore.instance().helper().flags().size() % items) > 0)? 1 : 0);
+      final int maxPages = (MenuManager.instance().getHelper().flags().size() / items) + (((MenuManager.instance().getHelper().flags().size() % items) > 0)? 1 : 0);
 
       final int prev = (page <= 1)? maxPages : page - 1;
       final int next = (page >= maxPages)? 1 : page + 1;
@@ -115,7 +115,7 @@ public class FlagSelectionPage {
                         if(selectionListener != null) {
 
                           final StringBuilder builder = new StringBuilder();
-                          for(final String flag : TNECore.instance().helper().flags()) {
+                          for(final String flag : MenuManager.instance().getHelper().flags()) {
 
                             final String value = (String)viewer.get().dataOrDefault(menuName + "_" + flag, "Disabled");
                             final boolean enabled = value.equalsIgnoreCase("enabled");
@@ -135,11 +135,11 @@ public class FlagSelectionPage {
 
 
       for(int i = start; i < start + items; i++) {
-        if(TNECore.instance().helper().flags().size() <= i) {
+        if(MenuManager.instance().getHelper().flags().size() <= i) {
           break;
         }
 
-        final String flagName = TNECore.instance().helper().flags().get(i);
+        final String flagName = MenuManager.instance().getHelper().flags().get(i);
 
         final AbstractItemStack<?> disabledStack = PluginCore.server().stackBuilder().display(flagName + "(Disabled)").of("RED_WOOL", 1);
         final AbstractItemStack<?> enabledStack = PluginCore.server().stackBuilder().display(flagName + "(Enabled)").of("GREEN_WOOL", 1);
