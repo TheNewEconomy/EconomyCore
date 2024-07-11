@@ -611,7 +611,6 @@ public class MyEcoMenu extends Menu {
                         .lore(Collections.singletonList("Click to set the identifier of the currency."))
                         .display(currencyObject.getIdentifier()))
                 .build());
-//TODO: Keep adding to messages.yml from here on.
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
                 .display("Starting Balance")
                 .lore(Collections.singletonList("Set the starting balance for new accounts")))
