@@ -18,6 +18,7 @@ package net.tnemc.core.menu.page.myeco;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.text.Component;
 import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.currency.format.FormatRule;
 import net.tnemc.core.menu.handlers.StringSelectionHandler;
@@ -30,10 +31,13 @@ import net.tnemc.menu.core.icon.action.impl.RunnableAction;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.io.message.MessageHandler;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 /**
@@ -74,6 +78,8 @@ public class FormatSelectionPage {
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
 
+      final UUID id = viewer.get().uuid();
+
       final int page = (Integer)viewer.get().dataOrDefault(formatPageID, 1);
       final int items = (menuRows - 1) * 9;
       final int start = ((page - 1) * 9);
@@ -81,35 +87,34 @@ public class FormatSelectionPage {
 
       final int prev = (page <= 1)? maxPages : page - 1;
       final int next = (page >= maxPages)? 1 : page + 1;
-
       if(maxPages > 1) {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
-                .display("Previous Page")
-                .lore(Collections.singletonList("Click to go to previous page.")))
+                .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
+                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))))
                 .withActions(new DataAction(formatPageID, prev), new SwitchPageAction(menuName, menuPage))
                 .withSlot(0)
                 .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                .display("Next Page")
-                .lore(Collections.singletonList("Click to go to next page.")))
+                .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
+                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPage"), id))))
                 .withActions(new DataAction(formatPageID, next), new SwitchPageAction(menuName, menuPage))
                 .withSlot(8)
                 .build());
       }
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-              .display("SPACE CHARACTER")
-              .lore(Collections.singletonList("Click to add to format.")))
+              .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Space"), id))
+              .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Add"), id))))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withClick((click)->formatAddClick(click, " "))
               .withSlot(2)
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-              .display("Enter your own")
-              .lore(Collections.singletonList("Click to enter your own text to add to the format.")))
+              .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.OwnDisplay"), id))
+              .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Own"), id))))
               .withActions(new ChatAction((message)->{
 
 
@@ -128,30 +133,31 @@ public class FormatSelectionPage {
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BLACK_WOOL", 1)
-              .display("Reset Format to nothing")
-              .lore(Collections.singletonList("Click to reset the format to a blank string.")))
+              .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.ResetDisplay"), id))
+              .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Reset"), id))))
               .withClick((click)->click.player().viewer().ifPresent(menuViewer->menuViewer.addData(formatID, "")))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withSlot(6)
               .build());
 
+      //TODO: Fix display
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-              .display((String)viewer.get().dataOrDefault(formatID, "Nothing Entered Yet"))
-              .lore(Collections.singletonList("This is the current format you've selected")))
+              .display((Component)viewer.get().dataOrDefault(formatID, MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.None"), id)))
+              .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Format"), id))))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withSlot(4)
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
-              .display("Escape Menu")
-              .lore(Collections.singletonList("Click to exit this menu.")))
+              .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EscapeDisplay"), id))
+              .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Escape"), id))))
               .withActions(new SwitchPageAction(returnMenu, returnPage))
               .withSlot(1)
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-              .display("Save")
-              .lore(Collections.singletonList("Click to save the format.")))
+              .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Save"), id))
+              .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Save"), id))))
               .withActions(new RunnableAction((click)->{
 
                 if(selectionListener != null) {
@@ -165,9 +171,9 @@ public class FormatSelectionPage {
 
       final String[] stringSet = CurrencyFormatter.rules().keySet().toArray(new String[CurrencyFormatter.rules().size()]);
 
-      final LinkedList<String> lore = new LinkedList<>();
-      lore.add("Click to add to format.");
-      lore.add("Placeholder");
+      final LinkedList<Component> lore = new LinkedList<>();
+      lore.add(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Add"), id));
+      lore.add(Component.text("Placeholder"));
 
       int slot = 9;
       for(int i = start; i < start + items; i++) {
@@ -182,10 +188,10 @@ public class FormatSelectionPage {
         }
 
         //reset lore to include description for each rule.
-        lore.set(1, rule.description());
+        lore.set(1, Component.text(rule.description()));
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                .display(rule.name())
+                .display(Component.text(rule.name()))
                 .lore(lore))
                 .withActions(new SwitchPageAction(menuName, menuPage))
                 .withClick((click)->formatAddClick(click, rule.name()))

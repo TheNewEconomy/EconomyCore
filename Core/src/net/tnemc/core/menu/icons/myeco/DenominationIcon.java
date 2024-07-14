@@ -18,6 +18,7 @@ package net.tnemc.core.menu.icons.myeco;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.text.Component;
 import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.menu.icons.shared.SwitchPageIcon;
@@ -39,7 +40,7 @@ public class DenominationIcon extends SwitchPageIcon {
 
   public DenominationIcon(int slot, final Denomination denomination) {
     super(slot, PluginCore.server().stackBuilder().of((denomination instanceof ItemDenomination)? ((ItemDenomination)denomination).getMaterial() : "PAPER", 1)
-                    .display(denomination.weight().toString()).lore(Collections.singletonList("Click to edit denomination")),
+                    .display(Component.text(denomination.weight().toString())).lore(Collections.singletonList(Component.text("Click to edit denomination"))),
             "my_eco", DENOMINATION_EDIT_PAGE, ActionType.ANY, false);
 
 

@@ -90,7 +90,7 @@
                     <artifactSet>
                         <includes>
                             <include>net.tnemc:*</include>
-                            <include>org.bstats:*</include>
+                            <!--<include>org.bstats:*</include>
                             <include>org.json.simple:*</include>
                             <include>org.yaml:*</include>
                             <include>me.carleslc.Simple-YAML:*</include>
@@ -100,13 +100,13 @@
                             <include>co.aikar:*</include>
                             <include>cloud.commandframework:*</include>
                             <include>com.github.Revxrsal.Lamp:*</include>
-                            <include>dev.dejvokep:boosted-yaml</include>
+                            <include>dev.dejvokep:boosted-yaml</include>-->
                         </includes>
                         <excludes>
                             <exclude>net.kyori.*</exclude>
                         </excludes>
                     </artifactSet>
-                    <relocations>
+                    <!--<relocations>
                         <relocation>
                             <pattern>redis.clients</pattern>
                             <shadedPattern>${tne.relocation}.jedis</shadedPattern>
@@ -132,10 +132,6 @@
                             <pattern>dev.dejvokep.boostedyaml.*</pattern>
                             <shadedPattern>${tne.relocation}.boosted</shadedPattern>
                         </relocation>
-                        <!--<relocation>
-                            <pattern>net.kyori</pattern>
-                            <shadedPattern>${tne.relocation}.kyori</shadedPattern>
-                        </relocation>-->
                         <relocation>
                             <pattern>cloud.commandframework</pattern>
                             <shadedPattern>${tne.relocation}.cloud</shadedPattern>
@@ -150,17 +146,17 @@
                         </relocation>
                         <relocation>
                             <pattern>co.aikar.commands</pattern>
-                            <shadedPattern>${tne.relocation}.acf</shadedPattern> <!-- Replace this -->
+                            <shadedPattern>${tne.relocation}.acf</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>co.aikar.locales</pattern>
-                            <shadedPattern>${tne.relocation}.locales</shadedPattern> <!-- Replace this -->
+                            <shadedPattern>${tne.relocation}.locales</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>co.aikar.idb-core</pattern>
                             <shadedPattern>${tne.relocation}.idb</shadedPattern>
                         </relocation>
-                    </relocations>
+                    </relocations>-->
                 </configuration>
             </plugin>
         </plugins>
@@ -191,7 +187,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <groupId>org.spongepowered</groupId>
             <artifactId>spongeapi</artifactId>
@@ -199,7 +194,6 @@
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-sponge</artifactId>

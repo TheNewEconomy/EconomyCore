@@ -18,6 +18,7 @@ package net.tnemc.core.handlers.player;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.text.Component;
 import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
@@ -36,7 +37,6 @@ import net.tnemc.plugincore.core.io.message.MessageData;
 import net.tnemc.plugincore.core.utils.HandlerResponse;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,7 +58,7 @@ public class PlayerInteractHandler {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(provider.identifier());
     if(account.isPresent() && (account.get() instanceof PlayerAccount) && item.display() != null
-    && item.display().equalsIgnoreCase(MessageConfig.yaml().getString("Messages.Note.Name"))) {
+    && Component.EQUALS.test(item.display(), Component.text(MessageConfig.yaml().getString("Messages.Note.Name")))) {
 
       String currency = null;
       String region = null;
@@ -68,17 +68,18 @@ public class PlayerInteractHandler {
       final String regionCompare = MessageConfig.yaml().getString("Messages.Note.Region").split(":")[0];
       final String amtCompare = MessageConfig.yaml().getString("Messages.Note.Amount").split(":")[0];
 
-      final List<String> lore = item.lore();
+      final List<Component> lore = item.lore();
 
-      for(String s : lore) {
-        final String[] info = s.split(":");
+      for(Component component : lore) {
+        //TODO: Fix
+        final String[] info = component.toString().split(":");
         if(info.length < 2) continue;
 
-        if(info[0].equalsIgnoreCase(curCompare)) {
+        if(info[0].contains(curCompare)) {
           currency = info[1].trim();
-        } else if(info[0].equalsIgnoreCase(regionCompare)) {
+        } else if(info[0].contains(regionCompare)) {
           region = info[1].trim();
-        } else if(info[0].equalsIgnoreCase(amtCompare)) {
+        } else if(info[0].contains(amtCompare)) {
           amount = info[1].trim();
         }
 

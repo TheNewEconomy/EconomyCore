@@ -18,6 +18,7 @@ package net.tnemc.core.menu.page.shared;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.text.Component;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
@@ -28,9 +29,10 @@ import net.tnemc.menu.core.icon.action.impl.DataAction;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.io.message.MessageHandler;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -66,11 +68,10 @@ public class AccountSelectionPage {
 
   public void handle(final PageOpenCallback callback) {
 
-    final LinkedList<String> accounts = new LinkedList<>();
-
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
 
+      final UUID id = viewer.get().uuid();
       final int page = (Integer)viewer.get().dataOrDefault(accountPageID, 1);
       final int items = (menuRows - 1) * 9;
       final int start = ((page - 1) * 9);
@@ -83,23 +84,23 @@ public class AccountSelectionPage {
       if(maxPages > 1) {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
-                .display("Previous Page")
-                .lore(Collections.singletonList("Click to go to previous page.")))
+                .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
+                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))))
                 .withActions(new DataAction(accountPageID, prev), new SwitchPageAction(menuName, menuPage))
                 .withSlot(0)
                 .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                .display("Next Page")
-                .lore(Collections.singletonList("Click to go to next page.")))
+                .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
+                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPage"), id))))
                 .withActions(new DataAction(accountPageID, next), new SwitchPageAction(menuName, menuPage))
                 .withSlot(8)
                 .build());
       }
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
-              .display("Escape Menu")
-              .lore(Collections.singletonList("Click to exit this menu.")))
+              .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EscapeDisplay"), id))
+              .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Escape"), id))))
               .withActions(new SwitchPageAction(returnMenu, returnPage))
               .withSlot(4)
               .build());
@@ -128,8 +129,8 @@ public class AccountSelectionPage {
 
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PLAYER_HEAD", 1)
-                .display(entry.getValue().getName())
-                .lore(Collections.singletonList("Click to select account."))
+                .display(Component.text(entry.getValue().getName()))
+                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Account.Select"), id)))
                 .profile(profile))
                 .withActions(new DataAction(accountDataID + "_ID", entry.getKey()),
                              new DataAction(accountDataID + "_NAME", entry.getValue().getName()),

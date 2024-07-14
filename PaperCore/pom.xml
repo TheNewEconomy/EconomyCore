@@ -73,7 +73,7 @@
                     <artifactSet>
                         <includes>
                             <include>net.tnemc:*</include>
-                            <include>org.bstats:*</include>
+                            <!--<include>org.bstats:*</include>
                             <include>org.json.simple:*</include>
                             <include>org.yaml:*</include>
                             <include>me.carleslc.Simple-YAML:*</include>
@@ -84,9 +84,10 @@
                             <include>cloud.commandframework:*</include>
                             <include>net.kyori:*</include>
                             <include>com.github.Revxrsal.Lamp:*</include>
-                            <include>dev.dejvokep:boosted-yaml</include>
+                            <include>dev.dejvokep:boosted-yaml</include>-->
                         </includes>
                     </artifactSet>
+                    <!--
                     <relocations>
                         <relocation>
                             <pattern>redis.clients</pattern>
@@ -131,17 +132,17 @@
                         </relocation>
                         <relocation>
                             <pattern>co.aikar.commands</pattern>
-                            <shadedPattern>${tne.relocation}.acf</shadedPattern> <!-- Replace this -->
+                            <shadedPattern>${tne.relocation}.acf</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>co.aikar.locales</pattern>
-                            <shadedPattern>${tne.relocation}.locales</shadedPattern> <!-- Replace this -->
+                            <shadedPattern>${tne.relocation}.locales</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>co.aikar.idb-core</pattern>
                             <shadedPattern>${tne.relocation}.idb</shadedPattern>
                         </relocation>
-                    </relocations>
+                    </relocations>-->
                 </configuration>
             </plugin>
         </plugins>

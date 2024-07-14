@@ -18,6 +18,7 @@ package net.tnemc.core.menu;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.text.Component;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
@@ -325,7 +326,7 @@ public class MyEcoMenu extends Menu {
     for(final CurrencyType type : TNECore.eco().currency().getTypes().values()) {
 
       final SwitchPageIcon switchIcon = new SwitchPageIcon(i, PluginCore.server().stackBuilder().of("PAPER", 1)
-              .display("Type: " + type.name()).lore(Collections.singletonList("Click to set currency to this type.")), this.name, CURRENCY_EDIT_PAGE, ActionType.ANY, false);
+              .display(Component.text("Type: " + type.name())).lore(Collections.singletonList(Component.text("Click to set currency to this type."))), this.name, CURRENCY_EDIT_PAGE, ActionType.ANY, false);
       switchIcon.addAction(new RunnableAction((click)->{
 
         if(click.player().viewer().isPresent()) {
@@ -583,6 +584,7 @@ public class MyEcoMenu extends Menu {
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
 
+      final UUID id = viewer.get().uuid();
       final Optional<Object> currencyOpt = viewer.get().findData(ACTIVE_CURRENCY);
       if(currencyOpt.isPresent()) {
 
@@ -697,6 +699,7 @@ public class MyEcoMenu extends Menu {
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
 
+      final UUID id = viewer.get().uuid();
       final Optional<Object> currencyOpt = viewer.get().findData(ACTIVE_CURRENCY);
       if(currencyOpt.isPresent()) {
 
@@ -882,6 +885,7 @@ public class MyEcoMenu extends Menu {
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
 
+      final UUID id = viewer.get().uuid();
       final Optional<Object> currencyOpt = viewer.get().findData(ACTIVE_CURRENCY);
       if(currencyOpt.isPresent()) {
 
@@ -1008,6 +1012,7 @@ public class MyEcoMenu extends Menu {
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
 
+      final UUID id = viewer.get().uuid();
       final Optional<Object> denomOpt = viewer.get().findData(ACTIVE_DENOMINATION);
       final Optional<Object> currencyOpt = viewer.get().findData(ACTIVE_CURRENCY);
       if(denomOpt.isPresent() && currencyOpt.isPresent()) {

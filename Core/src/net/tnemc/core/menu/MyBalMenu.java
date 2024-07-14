@@ -18,6 +18,7 @@ package net.tnemc.core.menu;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.text.Component;
 import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
@@ -25,7 +26,6 @@ import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.source.PlayerSource;
-import net.tnemc.core.command.BaseCommand;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.Note;
@@ -36,7 +36,6 @@ import net.tnemc.core.menu.handlers.AmountSelectionHandler;
 import net.tnemc.core.menu.icons.shared.PreviousPageIcon;
 import net.tnemc.core.menu.page.mybal.MyBalAmountSelectionPage;
 import net.tnemc.core.menu.page.shared.AccountSelectionPage;
-import net.tnemc.core.menu.page.shared.AmountSelectionPage;
 import net.tnemc.core.menu.page.shared.CurrencySelectionPage;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
@@ -55,9 +54,9 @@ import net.tnemc.menu.core.icon.action.impl.DataAction;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
-import net.tnemc.plugincore.core.compatibility.CmdSource;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.io.message.MessageHandler;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -163,6 +162,7 @@ public class MyBalMenu extends Menu {
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
 
+      final UUID id = viewer.get().uuid();
       final Optional<Account> account = TNECore.eco().account().findAccount(callback.getPlayer().identifier());
       if(account.isPresent()) {
 
@@ -173,8 +173,8 @@ public class MyBalMenu extends Menu {
           if(currencyOptional.isPresent()) {
 
             callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                    .display("Convert Currency")
-                    .lore(Collections.singletonList("Click to convert this currency to another.")))
+                    .display(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.ConvertDisplay"), id))
+                    .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.Convert"), id))))
                     .withSlot(10)
                     .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_CONVERT_CURRENCY_PAGE))
                     .build());
@@ -182,15 +182,15 @@ public class MyBalMenu extends Menu {
             if(currencyOptional.get().type().supportsExchange()) {
 
               callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                      .display("Deposit Currency")
-                      .lore(Collections.singletonList("Click to deposit some physical currency to your virtual balance.")))
+                      .display(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.DepositDisplay"), id))
+                      .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.Deposit"), id))))
                       .withSlot(12)
                       .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_DEPOSIT_AMOUNT_PAGE))
                       .build());
 
               callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                      .display("Withdraw Currency")
-                      .lore(Collections.singletonList("Click to withdraw some physical currency from your virtual balance.")))
+                      .display(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.WithdrawDisplay"), id))
+                      .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.Withdraw"), id))))
                       .withSlot(14)
                       .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_WITHDRAW_AMOUNT_PAGE))
                       .build());
@@ -206,6 +206,7 @@ public class MyBalMenu extends Menu {
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
 
+      final UUID id = viewer.get().uuid();
       final Optional<Account> account = TNECore.eco().account().findAccount(callback.getPlayer().identifier());
       if(account.isPresent()) {
 
@@ -218,9 +219,12 @@ public class MyBalMenu extends Menu {
             int i = 10;
             for(final HoldingsEntry entry : account.get().getHoldings(TNECore.eco().region().defaultRegion(), (UUID)currencyUUID.get())) {
 
+              final MessageData balMessage = new MessageData("Messages.Menu.MyBal.Breakdown.Balance");
+              balMessage.addReplacement("$balance", entry.getAmount());
+
               callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                      .display(entry.getHandler().id())
-                      .lore(Collections.singletonList("Balance: " + entry.getAmount())))
+                      .display(Component.text(entry.getHandler().id()))
+                      .lore(Collections.singletonList(MessageHandler.grab(balMessage, id))))
                       .withSlot(i).build());
               i += 2;
             }
@@ -235,36 +239,38 @@ public class MyBalMenu extends Menu {
    */
   protected Icon buildBalanceIcon(final int slot, final Currency currency, final Account account) {
 
-    final LinkedList<String> lore = new LinkedList<>();
+    final UUID id = account.getIdentifier();
+
+    final LinkedList<Component> lore = new LinkedList<>();
     final LinkedList<IconAction> actions = new LinkedList<>();
 
     actions.add(new DataAction(ACTION_CURRENCY, currency.getUid()));
     actions.add(new DataAction(ACTION_MAX_HOLDINGS, account.getHoldingsTotal(TNECore.eco().region().defaultRegion(), currency.getUid())));
 
-    final MessageData balance = new MessageData("Messages.Menu.MyBal.Balance");
+    final MessageData balance = new MessageData("Messages.Menu.MyBal.Main.Balance");
     balance.addReplacement("$balance", CurrencyFormatter.format(account, account.getHoldingsTotal(TNECore.eco().region().defaultRegion(), currency.getUid())));
 
-    lore.add("Balance: " + CurrencyFormatter.format(account, account.getHoldingsTotal(TNECore.eco().region().defaultRegion(), currency.getUid())));
+    lore.add(MessageHandler.grab(balance, id));
 
-    lore.add("Left click to pay account using currency.");
+    lore.add(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Main.Pay"), id));
     actions.add(new SwitchPageAction(this.name, BALANCE_PAY_PAGE, ActionType.LEFT_CLICK));
 
     //Drop Action(Other Currency Actions)
-    lore.add("Press Q for other actions using currency.");
+    lore.add(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Main.Other"), id));
     actions.add(new SwitchPageAction(this.name, BALANCE_ACTIONS_PAGE, ActionType.DROP));
 
     if(currency.type() instanceof VirtualType && currency.isNotable()) {
-      lore.add("Right click to create physical currency note.");
+      lore.add(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Main.Note"), id));
       actions.add(new SwitchPageAction(this.name, BALANCE_NOTE_AMOUNT_PAGE, ActionType.RIGHT_CLICK));
     }
 
     if(currency.type().supportsItems()) {
-      lore.add("Right click to view balance breakdown.");
+      lore.add(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Main.Breakdown"), id));
       actions.add(new SwitchPageAction(this.name, BALANCE_BREAKDOWN_PAGE, ActionType.RIGHT_CLICK));
     }
 
     return new IconBuilder(PluginCore.server().stackBuilder().of(currency.getIconMaterial(), 1)
-            .display(currency.getIdentifier()).lore(lore))
+            .display(Component.text(currency.getIdentifier())).lore(lore))
             .withSlot(slot)
             .withActions(actions.toArray(new IconAction[actions.size()])).build();
   }

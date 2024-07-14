@@ -18,6 +18,7 @@ package net.tnemc.core.menu.page.shared;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.text.Component;
 import net.tnemc.core.menu.handlers.StringSelectionHandler;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.menu.core.builder.IconBuilder;
@@ -84,30 +85,30 @@ public class FlagSelectionPage {
       if(maxPages > 1) {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
-                .display("Previous Page")
-                .lore(Collections.singletonList("Click to go to previous page.")))
+                .display(Component.text("Previous Page"))
+                .lore(Collections.singletonList(Component.text("Click to go to previous page."))))
                 .withActions(new DataAction(flagPageID, prev), new SwitchPageAction(menuName, menuPage))
                 .withSlot(0)
                 .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                .display("Next Page")
-                .lore(Collections.singletonList("Click to go to next page.")))
+                .display(Component.text("Next Page"))
+                .lore(Collections.singletonList(Component.text("Click to go to next page."))))
                 .withActions(new DataAction(flagPageID, next), new SwitchPageAction(menuName, menuPage))
                 .withSlot(8)
                 .build());
       }
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
-              .display("Escape Menu")
-              .lore(Collections.singletonList("Click to exit this menu.")))
+              .display(Component.text("Escape Menu"))
+              .lore(Collections.singletonList(Component.text("Click to exit this menu."))))
               .withActions(new SwitchPageAction(returnMenu, returnPage))
               .withSlot(4)
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-              .display("Save")
-              .lore(Collections.singletonList("Click to save the flags.")))
+              .display(Component.text("Save"))
+              .lore(Collections.singletonList(Component.text("Click to save the flags."))))
               .withActions(new RunnableAction((click)->{
 
                         if(selectionListener != null) {
@@ -139,8 +140,8 @@ public class FlagSelectionPage {
 
         final String flagName = MenuManager.instance().getHelper().flags().get(i);
 
-        final AbstractItemStack<?> disabledStack = PluginCore.server().stackBuilder().display(flagName + "(Disabled)").of("RED_WOOL", 1);
-        final AbstractItemStack<?> enabledStack = PluginCore.server().stackBuilder().display(flagName + "(Enabled)").of("GREEN_WOOL", 1);
+        final AbstractItemStack<?> disabledStack = PluginCore.server().stackBuilder().display(Component.text(flagName + "(Disabled)")).of("RED_WOOL", 1);
+        final AbstractItemStack<?> enabledStack = PluginCore.server().stackBuilder().display(Component.text(flagName + "(Enabled)")).of("GREEN_WOOL", 1);
 
         //ender chest icon
         final StateIcon flag = new StateIcon(disabledStack, null, menuName + "_" + flagName, "DISABLED", (currentState)->{
@@ -150,8 +151,8 @@ public class FlagSelectionPage {
           return "ENABLED";
         });
         flag.setSlot(9 + (i - start));
-        flag.addState("DISABLED", disabledStack.lore(Collections.singletonList("Clicked to add this flag.")));
-        flag.addState("ENABLED", enabledStack.lore(Collections.singletonList("Clicked to remove this flag.")));
+        flag.addState("DISABLED", disabledStack.lore(Collections.singletonList(Component.text("Clicked to add this flag."))));
+        flag.addState("ENABLED", enabledStack.lore(Collections.singletonList(Component.text("Clicked to remove this flag."))));
         callback.getPage().addIcon(flag);
       }
     }

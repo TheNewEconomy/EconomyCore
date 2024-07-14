@@ -18,6 +18,7 @@ package net.tnemc.core.menu.page.shared;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.text.Component;
 import net.tnemc.core.menu.handlers.AmountSelectionHandler;
 import net.tnemc.core.menu.icons.actions.PageSwitchWithClose;
 import net.tnemc.menu.core.builder.IconBuilder;
@@ -66,15 +67,15 @@ public class AmountSelectionPage {
     if(viewer.isPresent()) {
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
-              .display("Escape Menu")
-              .lore(Collections.singletonList("Click to exit this menu.")))
+              .display(Component.text("Escape Menu"))
+              .lore(Collections.singletonList(Component.text("Click to exit this menu."))))
               .withActions(new SwitchPageAction(returnMenu, returnPage))
               .withSlot(0)
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-              .display("Save.")
-              .lore(Collections.singletonList("Click save the amount.")))
+              .display(Component.text("Save."))
+              .lore(Collections.singletonList(Component.text("Click save the amount."))))
               .withActions(new RunnableAction((click)->{
                         if(selectionListener != null) {
 
@@ -85,8 +86,8 @@ public class AmountSelectionPage {
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-              .display("Enter your own")
-              .lore(Collections.singletonList("Click to enter a custom amount.")))
+              .display(Component.text("Enter your own"))
+              .lore(Collections.singletonList(Component.text("Click to enter a custom amount."))))
               .withActions(new ChatAction((message)->{
 
 
@@ -107,99 +108,99 @@ public class AmountSelectionPage {
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-              .display(((BigDecimal)viewer.get().dataOrDefault(amtID, BigDecimal.ZERO)).toPlainString())
-              .lore(Collections.singletonList("The amount")))
+              .display(Component.text(((BigDecimal)viewer.get().dataOrDefault(amtID, BigDecimal.ZERO)).toPlainString()))
+              .lore(Collections.singletonList(Component.text("The amount"))))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withSlot(4)
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BLACK_WOOL", 1)
-              .display("Reset To Zero")
-              .lore(Collections.singletonList("Click to reset the amount to zero.")))
+              .display(Component.text("Reset To Zero"))
+              .lore(Collections.singletonList(Component.text("Click to reset the amount to zero."))))
               .withClick((click)->click.player().viewer().ifPresent(menuViewer->menuViewer.addData(amtID, BigDecimal.ZERO)))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withSlot(6)
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display("Add 100"))
+              .display(Component.text("Add 100")))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withClick((click)->balAddClick(click, new BigDecimal("100")))
               .withSlot(15)
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display("Add 50"))
+              .display(Component.text("Add 50")))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withClick((click)->balAddClick(click, new BigDecimal("50")))
               .withSlot(17)
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display("Add 10"))
+              .display(Component.text("Add 10")))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withClick((click)->balAddClick(click, new BigDecimal("10")))
               .withSlot(33)
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display("Add 1"))
+              .display(Component.text("Add 1")))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withClick((click)->balAddClick(click, new BigDecimal("1")))
               .withSlot(35)
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display("Add .10"))
+              .display(Component.text("Add .10")))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withClick((click)->balAddClick(click, new BigDecimal(".10")))
               .withSlot(51)
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display("Add .01"))
+              .display(Component.text("Add .01")))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withClick((click)->balAddClick(click, new BigDecimal(".01")))
               .withSlot(53)
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display("Remove 100"))
+              .display(Component.text("Remove 100")))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withClick((click)->balAddClick(click, new BigDecimal("-100")))
               .withSlot(11)
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display("Remove 50"))
+              .display(Component.text("Remove 50")))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withClick((click)->balAddClick(click, new BigDecimal("-50")))
               .withSlot(9)
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display("Remove 10"))
+              .display(Component.text("Remove 10")))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withClick((click)->balAddClick(click, new BigDecimal("-10")))
               .withSlot(29)
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display("Remove 1"))
+              .display(Component.text("Remove 1")))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withClick((click)->balAddClick(click, new BigDecimal("-1")))
               .withSlot(27)
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display("Remove .10"))
+              .display(Component.text("Remove .10")))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withClick((click)->balAddClick(click, new BigDecimal("-.10")))
               .withSlot(47)
               .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display("Remove .01"))
+              .display(Component.text("Remove .01")))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withClick((click)->balAddClick(click, new BigDecimal("-.01")))
               .withSlot(45)

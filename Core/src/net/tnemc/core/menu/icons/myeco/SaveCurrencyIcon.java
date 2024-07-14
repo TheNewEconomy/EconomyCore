@@ -18,6 +18,7 @@ package net.tnemc.core.menu.icons.myeco;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.text.Component;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.menu.icons.shared.SwitchPageIcon;
 import net.tnemc.menu.core.icon.action.ActionType;
@@ -37,7 +38,7 @@ import static net.tnemc.core.menu.MyEcoMenu.CURRENCIES_PAGE;
 public class SaveCurrencyIcon extends SwitchPageIcon {
   public SaveCurrencyIcon(int slot, final Currency currency) {
     super(slot, PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                    .display(currency.getIdentifier()).lore(Collections.singletonList("Click to Save Currency")),
+                    .display(Component.text(currency.getIdentifier())).lore(Collections.singletonList(Component.text("Click to Save Currency"))),
             "my_eco", CURRENCIES_PAGE, ActionType.ANY, false);
 
     addAction(new RunnableAction((click->{

@@ -119,9 +119,11 @@ Messages:
     EnderChest: "<red>Some funds were put in your ender chest because your inventory was full!"
     Dropped: "<red>Some funds were dropped on the ground because your inventory was full!"
 
+#Messages.Menu.
   Menu:
 
     Shared:
+      Save: "Save"
       PreviousPageDisplay: "Previous Page"
       PreviousPage: "Click to go to previous page."
       NextPageDisplay: "Next Page"
@@ -130,11 +132,10 @@ Messages:
       Escape: "Click to exit this menu."
       Enabled: "Enabled"
       Disabled: "Disabled"
+      EnterDisplay: "Enter Your Own"
 
     AmountSelect:
-      SaveDisplay: "Save"
       Save: "Click save the amount."
-      EnterDisplay: "Enter Your Own"
       Enter: "Click to enter a custom amount."
       EnterValid: "Enter a valid decimal value:"
       Amount: "The Amount"
@@ -157,7 +158,6 @@ Messages:
         Display: "Currencies"
 
       Currency:
-        SaveDisplay: "Save"
         SaveLore: "Click to save the currencies."
         CurrencyExistsMessage: "A currency with that identifier already exists! Enter an identifier for the currency:"
         SetIdentifierMessage: "Enter an identifier for the currency:"
@@ -264,6 +264,7 @@ Messages:
         SetFlagsLore: "Click to set flags of denomination item."
         SetEnchantsLore: "Click to set enchantments of denomination item."
 
+      #Messages.Menu.MyEco.
       Format:
 
         Add: "Click to add to format."
@@ -273,14 +274,14 @@ Messages:
         ResetDisplay: "Reset Format to nothing"
         Reset: "Click to reset the format to a blank string."
         Format: "This is the current format you've selected"
-        FormatNone: "Nothing Entered Yet"
+        None: "Nothing Entered Yet"
+        Space: "SPACE CHARACTER"
         Save: "Click to save the format."
 
       Account:
         Select: "Click to select account."
 
       Currencies:
-        SaveDisplay: "Save"
         Save: "Click to save the currencies."
         Edit: "Click to edit currency."
         AddDisplay: "Add Currency"

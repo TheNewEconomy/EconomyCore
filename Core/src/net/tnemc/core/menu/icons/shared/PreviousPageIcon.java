@@ -18,6 +18,7 @@ package net.tnemc.core.menu.icons.shared;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.text.Component;
 import net.tnemc.menu.core.icon.Icon;
 import net.tnemc.menu.core.icon.action.ActionType;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
@@ -32,7 +33,7 @@ import net.tnemc.plugincore.PluginCore;
 public class PreviousPageIcon extends Icon {
 
   public PreviousPageIcon(int slot, final String menu, final int page, final ActionType type) {
-    super(PluginCore.server().stackBuilder().of("RED_WOOL", 1).display("Previous Page"), null);
+    super(PluginCore.server().stackBuilder().of("RED_WOOL", 1).display(Component.text("Previous Page")), null);
 
     this.slot = slot;
 

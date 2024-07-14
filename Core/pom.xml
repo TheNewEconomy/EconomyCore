@@ -124,8 +124,8 @@
                     <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
                     <artifactSet>
                         <includes>
-                            <include>org.json.simple:*</include>
                             <include>net.tnemc:*</include>
+                            <!--<include>org.json.simple:*</include>
                             <include>com.zaxxer:*</include>
                             <include>redis.clients:*</include>
                             <include>org.apache.commons:*</include>
@@ -135,7 +135,7 @@
                             <include>cloud.commandframework:*</include>
                             <include>com.github.Revxrsal.Lamp:*</include>
                             <include>net.kyori:*</include>
-                            <include>dev.dejvokep:boosted-yaml</include>
+                            <include>dev.dejvokep:boosted-yaml</include>-->
                         </includes>
                     </artifactSet>
                     <relocations>
