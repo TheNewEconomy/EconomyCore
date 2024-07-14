@@ -155,7 +155,7 @@ Messages:
     MyEco:
 
       Main:
-        Display: "Currencies"
+        Currencies: "Currencies"
 
       Currency:
         SaveLore: "Click to save the currencies."
@@ -232,13 +232,12 @@ Messages:
         NoteMaterialLore: "Click to set the material of the note item."
         NoteFlagsLore: "Click to set the flags of the note item."
         NoteEnchantsLore: "Click to set the enchantments of the note item."
-        MinNoteAmountDisplay: "Minimum Note Amount"
-        MinNoteAmountLore: "Minimum Required Amount for Amount"
-        CustomModelLore: "Click to set custom model of the denomination item. Optional."
+        NoteMinDisplay: "Minimum Note Amount"
+        NoteMinLore: "Minimum Required Amount for Amount"
         EnterCustomModelMessage: "Enter custom model of the note item:"
-        CustomModelProviderLore: "Click to set custom model of the note item. Optional."
-        NoteCreationFeeDisplay: "Note Creation Fee"
-        NoteCreationFeeLore: "Fee for creating Note"
+        CustomModelLore: "Click to set custom model of the note item. Optional."
+        NoteFeeDisplay: "Note Creation Fee"
+        NoteFeeLore: "Fee for creating Note"
 
       DenomEdit:
         Icon: "Click to edit denomination"
@@ -246,8 +245,7 @@ Messages:
         SingularNameMessage: "Enter a singular name for the denomination:"
         PluralNameLore: "Click to set plural name of denomination."
         PluralNameMessage: "Enter a plural name for the denomination:"
-        DenominationWeightDisplay: "Denomination Weight"
-        DenominationWeightLore: "Sets weight for denomination"
+        SetWeightDisplay: "Denomination Weight"
         SetWeightLore: "Click to set weight of denomination."
         SetMaterialLore: "Click to set material of denomination."
         DisplayNameLore: "Click to set display name of the denomination item. Optional."
@@ -255,7 +253,7 @@ Messages:
         NoDisplayMessage: "No Display"
         CustomModelLore: "Click to set custom model of the denomination item. Optional."
         CustomModelMessage: "Enter custom model of the denomination item:"
-        SetBase64TextureLore: "Click to set the base64 texture to use if the material of the denomination item is PLAYER_HEAD. Not implemented Currently."
+        SetBase64TextureLore: "Click to set the base64 texture to use if the material of the denomination item is PLAYER_HEAD."
         SetBase64TextureMessage: "Enter the base64 texture to use if the material of the denomination item is PLAYER_HEAD:"
         NoTextureMessage: "No Texture"
         LoreStringLore: "Click to set the lore string this denomination item must have in order to be considered currency."

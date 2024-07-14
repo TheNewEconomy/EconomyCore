@@ -54,6 +54,8 @@ import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
 import net.tnemc.menu.core.icon.impl.StateIcon;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.io.message.MessageHandler;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -118,10 +120,15 @@ public class MyEcoMenu extends Menu {
     /*
      * Main Page
      */
-    final Page main = new PageBuilder(1).withIcons(
-            new SwitchPageIcon(2, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
-                    .display("Currencies"), this.name, CURRENCIES_PAGE, ActionType.ANY)
-    ).build();
+    final Page main = new PageBuilder(1).build();
+    main.setOpen((open)->{
+              if(open.getPlayer().viewer().isPresent()) {
+
+                final UUID id = open.getPlayer().identifier();
+                main.addIcon(new SwitchPageIcon(2, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
+                        .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Main.Currencies"), id)), this.name, CURRENCIES_PAGE, ActionType.ANY));
+              }
+            });
     addPage(main);
 
     //Currency Page
@@ -131,29 +138,36 @@ public class MyEcoMenu extends Menu {
      */
     final Page currency = new PageBuilder(CURRENCIES_PAGE).build();
     currency.addIcon(new PreviousPageIcon(0, this.name, 1, ActionType.ANY));
+    currency.setOpen((open)->{
 
-    currency.addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-            .display("Save")
-            .lore(Collections.singletonList("Click to save the currencies.")))
-            .withActions(new RunnableAction((click)->{
+      if(open.getPlayer().viewer().isPresent()) {
 
-              final File directory = new File(PluginCore.directory(), "currency");
-              TNECore.eco().currency().getSaver().backupCurrency(directory);
+        final UUID id = open.getPlayer().identifier();
 
-              MISCUtils.deleteFolder(directory);
+        currency.addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
+                .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Save"), id))
+                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Currency.SaveLore"), id))))
+                .withActions(new RunnableAction((click)->{
 
-              TNECore.eco().currency().getSaver().saveCurrencies(directory);
+                  final File directory = new File(PluginCore.directory(), "currency");
+                  TNECore.eco().currency().getSaver().backupCurrency(directory);
 
-              try {
+                  MISCUtils.deleteFolder(directory);
 
-                TNECore.eco().currency().getCurrencies().clear();
-                TNECore.eco().currency().getCurIDMap().clear();
+                  TNECore.eco().currency().getSaver().saveCurrencies(directory);
 
-                TNECore.eco().currency().getLoader().loadCurrencies(directory);
-              } catch(NoValidCurrenciesException ignore) {}
-            }), new PageSwitchWithClose(this.name, -1))
-            .withSlot(6)
-            .build());
+                  try {
+
+                    TNECore.eco().currency().getCurrencies().clear();
+                    TNECore.eco().currency().getCurIDMap().clear();
+
+                    TNECore.eco().currency().getLoader().loadCurrencies(directory);
+                  } catch(NoValidCurrenciesException ignore) {}
+                }), new PageSwitchWithClose(this.name, -1))
+                .withSlot(6)
+                .build());
+      }
+    });
 
     //add currency
     final SwitchPageIcon addCurrencyIcon = new SwitchPageIcon(2, PluginCore.server().stackBuilder().of("ARROW", 1)
@@ -592,7 +606,7 @@ public class MyEcoMenu extends Menu {
 
         //currency name icon
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                .lore(Collections.singletonList("Click to set the identifier of the currency.")))
+                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.SetIdentifierLore"), id))))
                 .withSlot(18)
                 .withActions(new ChatAction((message)->{
 
@@ -610,41 +624,41 @@ public class MyEcoMenu extends Menu {
                   return false;
                 }), new RunnableAction((run)->run.player().message("Enter a identifier for the currency:")))
                 .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                        .lore(Collections.singletonList("Click to set the identifier of the currency."))
-                        .display(currencyObject.getIdentifier()))
+                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.SetIdentifierLore"), id)))
+                        .display(Component.text(currencyObject.getIdentifier())))
                 .build());
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                .display("Starting Balance")
-                .lore(Collections.singletonList("Set the starting balance for new accounts")))
+                .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.StartingBalanceDisplay"), id))
+                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.StartingBalanceLore"), id))))
                 .withSlot(19)
                 .withActions(new SwitchPageAction(this.name, CURRENCY_INFO_STARTING_SELECTION_PAGE))
                 .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                .display("Maximum Balance")
-                .lore(Collections.singletonList("Set the max balance for this currency")))
+                .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.MaximumBalanceDisplay"), id))
+                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.MaximumBalanceLore"), id))))
                 .withSlot(20)
                 .withActions(new SwitchPageAction(this.name, CURRENCY_INFO_MAX_SELECTION_PAGE))
                 .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                .display("Minimum Balance")
-                .lore(Collections.singletonList("Set the minimum balance for this currency")))
+                .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.MinimumBalanceDisplay"), id))
+                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.MinimumBalanceLore"), id))))
                 .withSlot(21)
                 .withActions(new SwitchPageAction(this.name, CURRENCY_INFO_MIN_SELECTION_PAGE))
                 .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(currencyObject.getIconMaterial(), 1)
-                .display("Set Icon Material")
-                .lore(Collections.singletonList("Used as item representation in menus.")))
+                .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.SetIconMaterialDisplay"), id))
+                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.SetIconMaterialLore"), id))))
                 .withSlot(22)
                 .withActions(new SwitchPageAction(this.name, CURRENCY_ICON_MATERIAL_PAGE))
                 .build());
 
         if(currencyObject instanceof ItemCurrency itemCurrency) {
 
-          final AbstractItemStack<?> disabledStack = PluginCore.server().stackBuilder().display("Disabled").of("RED_WOOL", 1);
-          final AbstractItemStack<?> enabledStack = PluginCore.server().stackBuilder().display("Enabled").of("GREEN_WOOL", 1);
+          final AbstractItemStack<?> disabledStack = PluginCore.server().stackBuilder().display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Disabled"), id)).of("RED_WOOL", 1);
+          final AbstractItemStack<?> enabledStack = PluginCore.server().stackBuilder().display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Enabled"), id)).of("GREEN_WOOL", 1);
 
           //ender chest icon
           final String enderState = (itemCurrency.canEnderChest())? "ENABLED" : "DISABLED";
@@ -828,8 +842,8 @@ public class MyEcoMenu extends Menu {
                   return false;
                 }), new RunnableAction((run)->run.player().message("Enter the minor plural display for the currency:")))
                 .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                        .lore(Collections.singletonList("Click to set the minor plural display for the currency."))
-                        .display(currencyObject.getDisplayMinorPlural()))
+                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SetMinorPluralDisplayLore"), id)))
+                        .display(Component.text(currencyObject.getDisplayMinorPlural())))
                 .build());
 
         final AbstractItemStack<?> disabledStack = PluginCore.server().stackBuilder().display("Disabled").of("RED_WOOL", 1);
@@ -863,8 +877,8 @@ public class MyEcoMenu extends Menu {
                   return false;
                 }), new RunnableAction((run)->run.player().message("Enter the major value separator for the currency:")))
                 .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                        .lore(Collections.singletonList("Click to set the major value separator for the currency."))
-                        .display(currencyObject.getMajorSeparator()))
+                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SetMajorSeparatorLore"), id)))
+                        .display(Component.text(currencyObject.getMajorSeparator())))
                 .build());
       }
     }
@@ -891,8 +905,8 @@ public class MyEcoMenu extends Menu {
 
         final Currency currency = (Currency)currencyOpt.get();
 
-        final AbstractItemStack<?> disabledStack = PluginCore.server().stackBuilder().display("Disabled").of("RED_WOOL", 1);
-        final AbstractItemStack<?> enabledStack = PluginCore.server().stackBuilder().display("Enabled").of("GREEN_WOOL", 1);
+        final AbstractItemStack<?> disabledStack = PluginCore.server().stackBuilder().display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Disabled"), id)).of("RED_WOOL", 1);
+        final AbstractItemStack<?> enabledStack = PluginCore.server().stackBuilder().display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Enabled"), id)).of("GREEN_WOOL", 1);
 
         //ender chest icon
         final String noteState = (currency.isNotable())? "ENABLED" : "DISABLED";
@@ -913,33 +927,33 @@ public class MyEcoMenu extends Menu {
 
           final String material = (currency.getNote().isPresent())? currency.getNote().get().getMaterial() : "PAPER";
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(material, 1)
-                  .display("Note Material")
-                  .lore(Collections.singletonList("Click to set the material of the note item.")))
+                  .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteMaterialDisplay"), id))
+                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteMaterialLore"), id))))
                   .withSlot(10)
                   .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_MATERIAL_PAGE))
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .lore(Collections.singletonList("Click to set the flags of the note item.")))
+                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteFlagsLore"), id))))
                   .withSlot(11)
                   .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_FLAGS_PAGE))
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .lore(Collections.singletonList("Click to set the enchantments of the note item.")))
+                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteEnchantsLore"), id))))
                   .withSlot(12)
                   .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_ENCHANTS_PAGE))
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .display("Minimum Note Amount")
-                  .lore(Collections.singletonList("Minimum Required Amount for Amount")))
+                  .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteMinDisplay"), id))
+                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteMinLore"), id))))
                   .withSlot(13)
                   .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_MIN_SELECTION_PAGE))
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-                  .lore(Collections.singletonList("Click to set custom model of the denomination item. Optional.")))
+                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.CustomModelLore"), id))))
                   .withSlot(14)
                   .withActions(new ChatAction((message)->{
 
@@ -956,13 +970,13 @@ public class MyEcoMenu extends Menu {
                     return false;
                   }), new RunnableAction((run)->run.player().message("Enter custom model of the note item:")))
                   .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                          .lore(Collections.singletonList("Click to set custom model of the note item. Optional."))
-                          .display(String.valueOf(currency.getNote().get().getCustomModelData())))
+                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.CustomModelLore"), id)))
+                          .display(Component.text(String.valueOf(currency.getNote().get().getCustomModelData()))))
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .display("Note Creation Fee")
-                  .lore(Collections.singletonList("Fee for creating Note")))
+                  .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteFeeDisplay"), id))
+                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteFeeLore"), id))))
                   .withSlot(19)
                   .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_FEE_MAIN_PAGE))
                   .build());
@@ -1020,7 +1034,7 @@ public class MyEcoMenu extends Menu {
         final Denomination denomination = (Denomination)denomOpt.get();
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                .lore(Collections.singletonList("Click to set singular name of denomination.")))
+                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SingularNameLore"), id))))
                 .withSlot(10)
                 .withActions(new ChatAction((message)->{
 
@@ -1035,12 +1049,12 @@ public class MyEcoMenu extends Menu {
 
                 }), new RunnableAction((run)->run.player().message("Enter a singular name for the denomination:")))
                 .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                        .lore(Collections.singletonList("Click to set singular name of denomination."))
-                        .display(denomination.singular()))
+                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SingularNameLore"), id)))
+                        .display(Component.text(denomination.singular())))
                 .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                .lore(Collections.singletonList("Click to set plural name of denomination.")))
+                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.PluralNameLore"), id))))
                 .withSlot(11)
                 .withActions(new ChatAction((message)->{
 
@@ -1055,30 +1069,30 @@ public class MyEcoMenu extends Menu {
 
                 }), new RunnableAction((run)->run.player().message("Enter a plural name for the denomination:")))
                 .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                        .lore(Collections.singletonList("Click to set plural name of denomination."))
-                        .display(denomination.plural()))
+                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.PluralNameLore"), id)))
+                        .display(Component.text(denomination.plural())))
                 .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                .display("Denomination Weight")
-                .lore(Collections.singletonList("Sets weight for denomination")))
+                .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetWeightDisplay"), id))
+                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetWeightLore"), id))))
                 .withSlot(12)
                 .withActions(new SwitchPageAction(this.name, DENOMINATION_WEIGHT_SELECTION_PAGE))
                 .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                        .lore(Collections.singletonList("Click to set weight of denomination."))
-                        .display(denomination.weight().toString()))
+                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetWeightLore"), id)))
+                        .display(Component.text(denomination.weight().toString())))
                 .build());
 
         if(denomination instanceof ItemDenomination itemDenomination) {
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(itemDenomination.getMaterial(), 1)
-                  .lore(Collections.singletonList("Click to set material of denomination.")))
+                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetMaterialLore"), id))))
                   .withSlot(13)
                   .withActions(new SwitchPageAction(this.name, DENOMINATION_MATERIAL_PAGE))
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .lore(Collections.singletonList("Click to set display name of the denomination item. Optional.")))
+                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.DisplayNameLore"), id))))
                   .withSlot(14)
                   .withActions(new ChatAction((message)->{
 
@@ -1095,13 +1109,13 @@ public class MyEcoMenu extends Menu {
                     final String message = (itemDenomination.getName() != null)? itemDenomination.getName() : "No Display";
 
                     return PluginCore.server().stackBuilder().of("PAPER", 1)
-                            .lore(Collections.singletonList("Click to set display name of the denomination item. Optional."))
-                            .display(message);
+                            .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.DisplayNameLore"), id)))
+                            .display(Component.text(message));
                   })
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .lore(Collections.singletonList("Click to set custom model of the denomination item. Optional.")))
+                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.CustomModelLore"), id))))
                   .withSlot(15)
                   .withActions(new ChatAction((message)->{
 
@@ -1117,12 +1131,12 @@ public class MyEcoMenu extends Menu {
                     return false;
                   }), new RunnableAction((run)->run.player().message("Enter custom model of the denomination item:")))
                   .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                          .lore(Collections.singletonList("Click to set custom model of the denomination item. Optional."))
-                          .display(String.valueOf(itemDenomination.getCustomModel())))
+                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.CustomModelLore"), id)))
+                          .display(Component.text(String.valueOf(itemDenomination.getCustomModel()))))
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .lore(Collections.singletonList("Click to set the base64 texture to use if the material of the denomination item is PLAYER_HEAD. Not implemented Currently.")))
+                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetBase64TextureLore"), id))))
                   .withSlot(16)
                   .withActions(new ChatAction((message)->{
 
@@ -1138,13 +1152,13 @@ public class MyEcoMenu extends Menu {
                     final String message = (itemDenomination.getTexture() != null)? itemDenomination.getTexture() : "No Texture";
 
                     return PluginCore.server().stackBuilder().of("PAPER", 1)
-                            .lore(Collections.singletonList("Click to set the base64 texture to use if the material of the denomination item is PLAYER_HEAD. Not implemented Currently."))
-                            .display(message);
+                            .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetBase64TextureLore"), id)))
+                            .display(Component.text(message));
                   })
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .lore(Collections.singletonList("Click to set the lore string this denomination item must have in order to be considered currency.")))
+                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.LoreStringLore"), id))))
                   .withSlot(17)
                   .withActions(new ChatAction((message)->{
 
@@ -1160,19 +1174,19 @@ public class MyEcoMenu extends Menu {
                     final String message = (provider.viewer().isPresent())? (String)provider.viewer().get().dataOrDefault("DENOMINATION_LORE", "No Lore") : "No Lore";
 
                     return PluginCore.server().stackBuilder().of("PAPER", 1)
-                            .lore(Collections.singletonList("Click to set the lore string this denomination item must have in order to be considered currency."))
-                            .display(message);
+                            .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.LoreStringLore"), id)))
+                            .display(Component.text(message));
                   })
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .lore(Collections.singletonList("Click to set flags of denomination item.")))
+                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetFlagsLore"), id))))
                   .withSlot(18)
                   .withActions(new SwitchPageAction(this.name, DENOMINATION_FLAGS_PAGE))
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .lore(Collections.singletonList("Click to set enchantments of denomination item.")))
+                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetEnchantsLore"), id))))
                   .withSlot(19)
                   .withActions(new SwitchPageAction(this.name, DENOMINATION_ENCHANTS_PAGE))
                   .build());
