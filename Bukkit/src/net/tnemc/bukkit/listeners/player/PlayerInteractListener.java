@@ -18,13 +18,10 @@ package net.tnemc.bukkit.listeners.player;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.tnemc.core.handlers.player.PlayerInteractHandler;
 import net.tnemc.item.bukkit.BukkitItemStack;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;
-import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

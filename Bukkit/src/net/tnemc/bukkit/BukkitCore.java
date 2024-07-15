@@ -27,13 +27,14 @@ import net.tnemc.bukkit.depend.faction.FactionHandler;
 import net.tnemc.bukkit.depend.towny.TownyHandler;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.TNECallbacks;
-import net.tnemc.item.bukkit.BukkitHelper;
 import net.tnemc.menu.bukkit.BukkitMenuHandler;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.api.CallbackManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import revxrsal.commands.bukkit.BukkitCommandHandler;
+import revxrsal.commands.command.CommandActor;
+import revxrsal.commands.command.ExecutableCommand;
 
 /**
  * BukkitCore
@@ -59,6 +60,11 @@ public class BukkitCore extends TNECore {
   @Override
   public void registerCommandHandler() {
     command = BukkitCommandHandler.create(plugin);
+  }
+
+  @Override
+  public String commandHelpWriter(ExecutableCommand executableCommand, CommandActor commandActor) {
+    return "";
   }
 
   @Override

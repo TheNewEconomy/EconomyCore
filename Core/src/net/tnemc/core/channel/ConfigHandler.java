@@ -28,7 +28,6 @@ import net.tnemc.plugincore.core.channel.ChannelBytesWrapper;
 import net.tnemc.plugincore.core.channel.ChannelMessageHandler;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

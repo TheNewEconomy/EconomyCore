@@ -53,6 +53,8 @@ import org.spongepowered.api.service.economy.EconomyService;
 import org.spongepowered.api.util.metric.MetricsConfigManager;
 import org.spongepowered.plugin.PluginContainer;
 import org.spongepowered.plugin.builtin.jvm.Plugin;
+import revxrsal.commands.command.CommandActor;
+import revxrsal.commands.command.ExecutableCommand;
 import revxrsal.commands.sponge.SpongeCommandHandler;
 
 import java.nio.file.Path;
@@ -142,6 +144,11 @@ public class SpongeCore extends TNECore {
   @Override
   public void registerCommandHandler() {
     command = SpongeCommandHandler.create(container);
+  }
+
+  @Override
+  public String commandHelpWriter(ExecutableCommand executableCommand, CommandActor commandActor) {
+    return "";
   }
 
   @Override

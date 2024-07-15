@@ -20,7 +20,6 @@ package net.tnemc.core.menu.icons.myeco;
 
 import net.kyori.adventure.text.Component;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.menu.icons.shared.SwitchPageIcon;
 import net.tnemc.menu.core.icon.action.ActionType;
 import net.tnemc.menu.core.icon.action.impl.DataAction;

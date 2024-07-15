@@ -97,19 +97,27 @@
                     <artifactSet>
                         <includes>
                             <include>net.tnemc:*</include>
-                            <!--<include>org.bstats:*</include>
+                            <include>org.bstats:*</include>
                             <include>org.json.simple:*</include>
-                            <include>org.yaml:*</include>
-                            <include>me.carleslc.Simple-YAML:*</include>
                             <include>com.zaxxer:*</include>
-                            <include>co.aikar:*</include>
-                            <include>cloud.commandframework:*</include>
-                            <include>net.kyori:*</include>
                             <include>com.github.Revxrsal.Lamp:*</include>
-                            <include>dev.dejvokep:boosted-yaml</include>-->
+                            <include>net.kyori:adventure-key</include>
+                            <include>net.kyori:adventure-text-minimessage</include>
+                            <include>net.kyori:examination-api</include>
+                            <include>net.kyori:examination-string</include>
+                            <include>redis.clients:*</include>
+                            <include>org.apache:*</include>
+                            <include>org.apache.commons:*</include>
+                            <include>org.apache.commons.pool2:*</include>
+                            <include>dev.dejvokep:boosted-yaml</include>
+                            <include>com.vdurmont:*</include>
                         </includes>
+                        <excludes>
+                            <exclude>net.kyori:adventure-api</exclude>
+                            <exclude>net.kyori:adventure-text-serializer-legacy</exclude>
+                        </excludes>
                     </artifactSet>
-                    <!--<relocations>
+                    <relocations>
                         <relocation>
                             <pattern>org.json.simple</pattern>
                             <shadedPattern>${tne.relocation}.json</shadedPattern>
@@ -119,24 +127,17 @@
                             <shadedPattern>${tne.relocation}.zaxxer</shadedPattern>
                         </relocation>
                         <relocation>
-                            <pattern>me.carleslc</pattern>
-                            <pattern>org.yaml</pattern>
-                            <shadedPattern>${tne.relocation}.yaml</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>dev.dejvokep.boostedyaml.*</pattern>
-                            <shadedPattern>${tne.relocation}.boosted</shadedPattern>
-                        </relocation>
-                        <relocation>
                             <pattern>net.kyori</pattern>
                             <shadedPattern>${tne.relocation}.kyori</shadedPattern>
+                            <includes>
+                                <include>net.kyori.adventure.key.*</include>
+                                <include>net.kyori.adventure.text.*</include>
+                                <include>net.kyori.option.*</include>
+                                <include>net.kyori.examination.*</include>
+                            </includes>
                         </relocation>
                         <relocation>
-                            <pattern>cloud.commandframework</pattern>
-                            <shadedPattern>${tne.relocation}.cloud</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>ore.bstats</pattern>
+                            <pattern>org.bstats</pattern>
                             <shadedPattern>${tne.relocation}.bstats</shadedPattern>
                         </relocation>
                         <relocation>
@@ -144,18 +145,25 @@
                             <shadedPattern>${tne.relocation}.lamp</shadedPattern>
                         </relocation>
                         <relocation>
-                            <pattern>co.aikar.commands</pattern>
-                            <shadedPattern>${tne.relocation}.acf</shadedPattern>
+                            <pattern>redis.clients</pattern>
+                            <shadedPattern>${tne.relocation}.jedis</shadedPattern>
                         </relocation>
                         <relocation>
-                            <pattern>co.aikar.locales</pattern>
-                            <shadedPattern>${tne.relocation}.locales</shadedPattern>
+                            <pattern>org.apache</pattern>
+                            <shadedPattern>${tne.relocation}.commons</shadedPattern>
+                            <excludes>
+                                <exclude>org.apache.logging.*</exclude>
+                            </excludes>
                         </relocation>
                         <relocation>
-                            <pattern>co.aikar.idb-core</pattern>
-                            <shadedPattern>${tne.relocation}.idb</shadedPattern>
+                            <pattern>com.vdurmont</pattern>
+                            <shadedPattern>${tne.relocation}.vdurmont</shadedPattern>
                         </relocation>
-                    </relocations>-->
+                        <relocation>
+                            <pattern>dev.dejvokep.boostedyaml</pattern>
+                            <shadedPattern>${tne.relocation}.boosted</shadedPattern>
+                        </relocation>
+                    </relocations>
                 </configuration>
             </plugin>
         </plugins>
@@ -202,14 +210,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <groupId>dev.folia</groupId>
             <artifactId>folia-api</artifactId>
             <version>1.19.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>

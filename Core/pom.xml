@@ -69,7 +69,7 @@
     </parent>
 
     <build>
-        <defaultGoal>clean package</defaultGoal>
+        <defaultGoal>clean install</defaultGoal>
         <directory>target</directory>
         <outputDirectory>target/classes</outputDirectory>
         <finalName>TNE-${project.artifactId}-${project.version}</finalName>
@@ -125,21 +125,12 @@
                     <artifactSet>
                         <includes>
                             <include>net.tnemc:*</include>
-                            <!--<include>org.json.simple:*</include>
-                            <include>com.zaxxer:*</include>
-                            <include>redis.clients:*</include>
-                            <include>org.apache.commons:*</include>
-                            <include>org.yaml:*</include>
-                            <include>me.carleslc.Simple-YAML:*</include>
-                            <include>co.aikar:*</include>
-                            <include>cloud.commandframework:*</include>
-                            <include>com.github.Revxrsal.Lamp:*</include>
-                            <include>net.kyori:*</include>
-                            <include>dev.dejvokep:boosted-yaml</include>-->
                         </includes>
+                        <excludes>
+                            <exclude>net.kyori:adventure-api</exclude>
+                            <exclude>net.kyori:adventure-text-serializer-legacy</exclude>
+                        </excludes>
                     </artifactSet>
-                    <relocations>
-                    </relocations>
                 </configuration>
             </plugin>
         </plugins>
