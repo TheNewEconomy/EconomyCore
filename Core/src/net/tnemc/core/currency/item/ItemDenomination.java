@@ -40,9 +40,9 @@ public class ItemDenomination extends Denomination {
 
   private String material = "PAPER";
   private short damage = 0;
-  private String name = null;
+  private String name = "";
   private Integer customModel = -1;
-  private String texture = null;
+  private String texture = "";
 
   public ItemDenomination(BigDecimal weight, String material) {
     this(weight, material, (short)0);

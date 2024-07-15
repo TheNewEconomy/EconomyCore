@@ -116,7 +116,7 @@
                             <include>org.json.simple:*</include>
                             <include>com.zaxxer:*</include>
                             <include>com.github.Revxrsal.Lamp:*</include>
-                            <include>net.kyori:adventure-key</include>
+                            <include>net.kyori:*</include>
                             <include>net.kyori:adventure-platform-bukkit</include>
                             <include>net.kyori:adventure-text-minimessage</include>
                             <include>net.kyori:examination-api</include>
@@ -137,10 +137,6 @@
                         <relocation>
                             <pattern>com.zaxxer</pattern>
                             <shadedPattern>${tne.relocation}.zaxxer</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>net.kyori</pattern>
-                            <shadedPattern>${tne.relocation}.kyori</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.bstats</pattern>
@@ -260,7 +256,7 @@
     <parent>
         <groupId>net.tnemc</groupId>
         <artifactId>TNE</artifactId>
-        <version>0.1.3.0-SNAPSHOT-10</version>
+        <version>0.1.3.0-SNAPSHOT-11</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 </project>

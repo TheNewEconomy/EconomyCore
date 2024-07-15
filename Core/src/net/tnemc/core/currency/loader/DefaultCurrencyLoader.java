@@ -350,7 +350,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
     if(denomination instanceof ItemDenomination item) {
 
-      item.setName(denom.getString("Options.Name", null));
+      item.setName(denom.getString("Options.Name", ""));
 
       final List<String> loreStr = denom.getStringList("Options.Lore");
       final LinkedList<Component> lore = new LinkedList<>();
@@ -360,7 +360,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
       item.setLore(lore);
       item.setCustomModel(denom.getInt("Options.ModelData", -1));
-      item.setTexture(denom.getString("Options.Texture", null));
+      item.setTexture(denom.getString("Options.Texture", ""));
 
       if(denom.contains("Options.Enchantments")) {
         item.setEnchantments(denom.getStringList("Options.Enchantments"));

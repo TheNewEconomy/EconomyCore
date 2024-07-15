@@ -121,7 +121,7 @@ public class MyEcoMenu extends Menu {
               if(open.getPlayer().viewer().isPresent()) {
 
                 final UUID id = open.getPlayer().identifier();
-                main.addIcon(new SwitchPageIcon(2, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
+                open.getPage().addIcon(new SwitchPageIcon(2, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
                         .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Main.Currencies"), id)), this.name, CURRENCIES_PAGE, ActionType.ANY));
               }
             });
@@ -140,7 +140,7 @@ public class MyEcoMenu extends Menu {
 
         final UUID id = open.getPlayer().identifier();
 
-        currency.addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
+        open.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
                 .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Save"), id))
                 .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Currency.SaveLore"), id))))
                 .withActions(new RunnableAction((click)->{
