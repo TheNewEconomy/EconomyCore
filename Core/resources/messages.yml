@@ -191,13 +191,13 @@ Messages:
         SetIconMaterialDisplay: "Set Icon Material"
         SetIconMaterialLore: "Used as item representation in menus."
         EnderChestDisabledDisplay: "EnderChest(Disabled)"
-        EnderChestDisabledLore: "Clicked to Enable using ender chests for item currency balances."
+        EnderChestDisabledLore: "Click to Enable using ender chests for item currency balances."
         EnderChestEnabledDisplay: "EnderChest(Enabled)"
-        EnderChestEnabledLore: "Clicked to Disable using ender chests for item currency balances."
+        EnderChestEnabledLore: "Click to Disable using ender chests for item currency balances."
         EnderFillDisabledDisplay: "EnderChest Fill(Disabled)"
-        EnderFillDisabledLore: "Clicked to Enable Filling the ender chest when player inventory is full."
+        EnderFillDisabledLore: "Click to Enable Filling the ender chest when player inventory is full."
         EnderFillEnabledDisplay: "EnderChest Fill(Enabled)"
-        EnderFillEnabledLore: "Clicked to Disable Filling the ender chest when player inventory is full."
+        EnderFillEnabledLore: "Click to Disable Filling the ender chest when player inventory is full."
 
       EditFormat:
         BalanceFormatDisplay: "Click to Set Balance Format"

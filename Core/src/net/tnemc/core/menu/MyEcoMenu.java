@@ -118,12 +118,10 @@ public class MyEcoMenu extends Menu {
      */
     final Page main = new PageBuilder(1).build();
     main.setOpen((open)->{
-              if(open.getPlayer().viewer().isPresent()) {
 
-                final UUID id = open.getPlayer().identifier();
-                open.getPage().addIcon(new SwitchPageIcon(2, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
-                        .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Main.Currencies"), id)), this.name, CURRENCIES_PAGE, ActionType.ANY));
-              }
+      final UUID id = open.getPlayer().identifier();
+      open.getPage().addIcon(new SwitchPageIcon(2, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
+              .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Main.Currencies"), id)), this.name, CURRENCIES_PAGE, ActionType.ANY));
             });
     addPage(main);
 
@@ -237,7 +235,7 @@ public class MyEcoMenu extends Menu {
 
           final Currency currencyObject = (Currency)currencyOpt.get();
 
-          final MessageData typeMessage = new MessageData("Messages.Menu.MyEco.Currency.SetCurrencyTypeLore");
+          final MessageData typeMessage = new MessageData("Messages.Menu.MyEco.Currency.CurrencyTypeDisplay");
           typeMessage.addReplacement("$type", currencyObject.getType());
 
           //CURRENCY_TYPE_EDIT_PAGE

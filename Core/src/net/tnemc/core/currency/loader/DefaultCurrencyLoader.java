@@ -193,7 +193,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     currency.setDisplay(single);
     currency.setDisplayPlural(plural);
     currency.setDisplayMinor(singleMinor);
-    currency.setDisplayPlural(pluralMinor);
+    currency.setDisplayMinorPlural(pluralMinor);
     currency.setSymbol(symbol);
     currency.setType(type.name());
     currency.setSeparateMajor(separate);
