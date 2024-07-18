@@ -19,6 +19,7 @@ package net.tnemc.core;
  */
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.account.holdings.HoldingsEntry;
@@ -404,7 +405,7 @@ public abstract class TNECore extends PluginEngine {
             .lore(denomination.getLore())
             .flags(denomination.getFlags())
             .damage(denomination.getDamage())
-            .display(Component.text(denomination.getName()))
-            .modelData(denomination.getCustomModel());
+            .display(MiniMessage.miniMessage().deserialize(denomination.getName()))
+            .modelData(denomination.getCustomModel()).debug(false);
   }
 }

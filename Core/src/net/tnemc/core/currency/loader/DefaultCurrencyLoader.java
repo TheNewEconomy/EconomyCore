@@ -20,6 +20,7 @@ package net.tnemc.core.currency.loader;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.currency.CurrencyLoadCallback;
 import net.tnemc.core.api.callback.currency.DenominationLoadCallback;
@@ -355,7 +356,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       final List<String> loreStr = denom.getStringList("Options.Lore");
       final LinkedList<Component> lore = new LinkedList<>();
       for(String str : loreStr) {
-        lore.add(Component.text(str));
+        lore.add(MiniMessage.miniMessage().deserialize(str));
       }
 
       item.setLore(lore);

@@ -20,8 +20,8 @@
     </modules>
 
     <properties>
-        <tnml.version>1.5.0.1-SNAPSHOT-8</tnml.version>
-        <tnpc.version>1.0.0.2-Pre-22</tnpc.version>
+        <tnml.version>1.5.0.1-SNAPSHOT-14</tnml.version>
+        <tnpc.version>1.0.0.2-Pre-29</tnpc.version>
         <tne.relocation>net.tnemc.libs</tne.relocation>
         <tne.java>17</tne.java>
         <maven.compiler.target>17</maven.compiler.target>

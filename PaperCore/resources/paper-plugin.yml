@@ -19,7 +19,7 @@ dependencies:
     bootstrap: false
   - name: Vault
     required: false
-    bootstrap: false
+    bootstrap: true
   - name: Treasury
     required: false
     bootstrap: false
@@ -34,4 +34,4 @@ dependencies:
     bootstrap: false
   - name: PlaceholderAPI
     required: false
-    bootstrap: false
+    bootstrap: true

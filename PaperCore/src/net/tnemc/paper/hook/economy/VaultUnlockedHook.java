@@ -1,4 +1,4 @@
-package net.tnemc.paper;
+package net.tnemc.paper.hook.economy;
 
 /*
  * The New Economy
@@ -18,30 +18,37 @@ package net.tnemc.paper;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.bukkit.plugin.java.JavaPlugin;
+import net.milkbowl.vault2.economy.Economy;
+import net.tnemc.bukkit.BukkitCore;
+import net.tnemc.core.hook.Hook;
+import net.tnemc.paper.PaperCore;
+import net.tnemc.plugincore.PluginCore;
+import org.bukkit.plugin.ServicePriority;
 
 /**
- * TNE
+ * VaultUnlockedHook
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class TNE extends JavaPlugin {
+public class VaultUnlockedHook implements Hook {
 
-  private final PaperPlugin paper = new PaperPlugin();
-
+  /**
+   * @return True if this hook is enabled, otherwise false.
+   */
   @Override
-  public void onLoad() {
-    this.paper.load(this);
+  public boolean enabled() {
+    return false;
   }
 
+  /**
+   * Used to register this service.
+   */
   @Override
-  public void onEnable() {
-    this.paper.enable(this);
-  }
+  public void register() {
+    PaperCore.instance().getPlugin().getServer().getServicesManager().register(Economy.class, new TNEVaultUnlocked(),
+            PaperCore.instance().getPlugin(), ServicePriority.Highest);
 
-  @Override
-  public void onDisable() {
-    this.paper.disable(this);
+    PluginCore.log().inform("Hooked into VaultUnlocked");
   }
 }
