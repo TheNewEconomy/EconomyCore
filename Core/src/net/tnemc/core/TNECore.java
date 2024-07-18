@@ -18,6 +18,8 @@ package net.tnemc.core;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.account.holdings.HoldingsEntry;
@@ -48,8 +50,8 @@ import net.tnemc.core.manager.Updater;
 import net.tnemc.core.menu.MyBalMenu;
 import net.tnemc.core.menu.MyEcoMenu;
 import net.tnemc.core.region.RegionGroup;
-import net.tnemc.core.utils.MISCUtils;
 import net.tnemc.core.transaction.Receipt;
+import net.tnemc.core.utils.MISCUtils;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.menu.core.manager.MenuManager;
 import net.tnemc.plugincore.PluginCore;
@@ -403,7 +405,7 @@ public abstract class TNECore extends PluginEngine {
             .lore(denomination.getLore())
             .flags(denomination.getFlags())
             .damage(denomination.getDamage())
-            .display(denomination.getName())
-            .modelData(denomination.getCustomModel());
+            .display(MiniMessage.miniMessage().deserialize(denomination.getName()))
+            .modelData(denomination.getCustomModel()).debug(false);
   }
 }

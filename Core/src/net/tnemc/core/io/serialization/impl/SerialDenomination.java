@@ -18,6 +18,7 @@ package net.tnemc.core.io.serialization.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.text.Component;
 import net.tnemc.core.currency.Denomination;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.plugincore.core.io.serialization.JSONAble;
@@ -88,7 +89,7 @@ public class SerialDenomination implements JSONAble<Denomination> {
 
         itemDenomination.setEnchantments((List<String>) jsonObject.get("enchantments"));
         itemDenomination.setFlags((List<String>) jsonObject.get("flags"));
-        itemDenomination.setLore((List<String>) jsonObject.get("lore"));
+        itemDenomination.setLore((List<Component>) jsonObject.get("lore"));
         itemDenomination.setMaterial((String) jsonObject.get("material"));
         itemDenomination.setDamage(((Long) jsonObject.get("damage")).shortValue());
         itemDenomination.setName((String) jsonObject.get("name"));

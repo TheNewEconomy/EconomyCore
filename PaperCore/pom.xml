@@ -9,6 +9,14 @@
             <id>papermc</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
+        <repository>
+            <id>placeholderapi</id>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
 
@@ -75,27 +83,25 @@
                             <include>net.tnemc:*</include>
                             <include>org.bstats:*</include>
                             <include>org.json.simple:*</include>
-                            <include>org.yaml:*</include>
-                            <include>me.carleslc.Simple-YAML:*</include>
                             <include>com.zaxxer:*</include>
-                            <include>redis.clients:*</include>
-                            <include>org.apache.commons:*</include>
-                            <include>co.aikar:*</include>
-                            <include>cloud.commandframework:*</include>
-                            <include>net.kyori:*</include>
                             <include>com.github.Revxrsal.Lamp:*</include>
+                            <!--<include>net.kyori:adventure-key</include>
+                            <include>net.kyori:adventure-text-minimessage</include>
+                            <include>net.kyori:examination-api</include>
+                            <include>net.kyori:examination-string</include>-->
+                            <include>redis.clients:*</include>
+                            <include>org.apache:*</include>
+                            <include>org.apache.commons:*</include>
+                            <include>org.apache.commons.pool2:*</include>
                             <include>dev.dejvokep:boosted-yaml</include>
+                            <include>com.vdurmont:*</include>
                         </includes>
+                        <excludes>
+                            <exclude>net.kyori:adventure-api</exclude>
+                            <exclude>net.kyori:adventure-text-serializer-legacy</exclude>
+                        </excludes>
                     </artifactSet>
                     <relocations>
-                        <relocation>
-                            <pattern>redis.clients</pattern>
-                            <shadedPattern>${tne.relocation}.jedis</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>org.apache.commons:*</pattern>
-                            <shadedPattern>${tne.relocation}.commons</shadedPattern>
-                        </relocation>
                         <relocation>
                             <pattern>org.json.simple</pattern>
                             <shadedPattern>${tne.relocation}.json</shadedPattern>
@@ -104,23 +110,16 @@
                             <pattern>com.zaxxer</pattern>
                             <shadedPattern>${tne.relocation}.zaxxer</shadedPattern>
                         </relocation>
-                        <relocation>
-                            <pattern>me.carleslc</pattern>
-                            <pattern>org.yaml</pattern>
-                            <shadedPattern>${tne.relocation}.yaml</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>dev.dejvokep.boostedyaml.*</pattern>
-                            <shadedPattern>${tne.relocation}.boosted</shadedPattern>
-                        </relocation>
-                        <relocation>
+                        <!--<relocation>
                             <pattern>net.kyori</pattern>
-                            <shadedPattern>${tne.relocation}.kyori</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>cloud.commandframework</pattern>
-                            <shadedPattern>${tne.relocation}.cloud</shadedPattern>
-                        </relocation>
+                            <shadedPattern>${tne.relocation}.kyori.examination</shadedPattern>
+                            <includes>
+                                <include>net.kyori.adventure.key.*</include>
+                                <include>net.kyori.adventure.text.*</include>
+                                <include>net.kyori.option.*</include>
+                                <include>net.kyori.examination.*</include>
+                            </includes>
+                        </relocation>-->
                         <relocation>
                             <pattern>org.bstats</pattern>
                             <shadedPattern>${tne.relocation}.bstats</shadedPattern>
@@ -130,16 +129,23 @@
                             <shadedPattern>${tne.relocation}.lamp</shadedPattern>
                         </relocation>
                         <relocation>
-                            <pattern>co.aikar.commands</pattern>
-                            <shadedPattern>${tne.relocation}.acf</shadedPattern> <!-- Replace this -->
+                            <pattern>redis.clients</pattern>
+                            <shadedPattern>${tne.relocation}.jedis</shadedPattern>
                         </relocation>
                         <relocation>
-                            <pattern>co.aikar.locales</pattern>
-                            <shadedPattern>${tne.relocation}.locales</shadedPattern> <!-- Replace this -->
+                            <pattern>org.apache</pattern>
+                            <shadedPattern>${tne.relocation}.commons</shadedPattern>
+                            <excludes>
+                                <exclude>org.apache.logging.*</exclude>
+                            </excludes>
                         </relocation>
                         <relocation>
-                            <pattern>co.aikar.idb-core</pattern>
-                            <shadedPattern>${tne.relocation}.idb</shadedPattern>
+                            <pattern>com.vdurmont</pattern>
+                            <shadedPattern>${tne.relocation}.vdurmont</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>dev.dejvokep.boostedyaml</pattern>
+                            <shadedPattern>${tne.relocation}.boosted</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
@@ -151,7 +157,7 @@
         <dependency>
             <groupId>net.tnemc</groupId>
             <artifactId>EconomyCore</artifactId>
-            <version>0.1.3.0-SNAPSHOT-10</version>
+            <version>0.1.3.0-SNAPSHOT-11</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
@@ -160,7 +166,18 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+        <dependency>
+            <groupId>net.tnemc</groupId>
+            <artifactId>TNPC-Paper</artifactId>
+            <version>${tnpc.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.tnemc</groupId>
+            <artifactId>BukkitCore</artifactId>
+            <version>0.1.3.0-SNAPSHOT-11</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
@@ -168,17 +185,29 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.tnemc</groupId>
-            <artifactId>BukkitCore</artifactId>
-            <version>0.1.3.0-SNAPSHOT-10</version>
-            <scope>compile</scope>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.11.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.MilkBowl</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.7</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.milkbowl.vault</groupId>
+            <artifactId>VaultUnlockedAPI</artifactId>
+            <version>2.1</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
     <parent>
         <groupId>net.tnemc</groupId>
         <artifactId>TNE</artifactId>
-        <version>0.1.3.0-SNAPSHOT-10</version>
+        <version>0.1.3.0-SNAPSHOT-11</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 </project>

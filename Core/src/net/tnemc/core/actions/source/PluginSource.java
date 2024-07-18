@@ -19,7 +19,6 @@ package net.tnemc.core.actions.source;
  */
 
 import net.tnemc.core.actions.ActionSource;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents an {@link ActionSource source} that represents a plugin performing actions.

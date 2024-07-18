@@ -1,4 +1,4 @@
-package net.tnemc.paper;
+package net.tnemc.paper.command;
 
 /*
  * The New Economy
@@ -18,18 +18,11 @@ package net.tnemc.paper;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.plugincore.bukkit.impl.BukkitServerProvider;
-
 /**
- * PaperServerProvider
+ * CurrencyCommand
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class PaperServerProvider extends BukkitServerProvider {
-
-  @Override
-  public String name() {
-    return "paper";
-  }
+public class CurrencyCommand {
 }

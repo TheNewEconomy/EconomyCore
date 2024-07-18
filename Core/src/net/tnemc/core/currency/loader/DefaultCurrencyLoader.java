@@ -19,6 +19,8 @@ package net.tnemc.core.currency.loader;
  */
 
 import dev.dejvokep.boostedyaml.YamlDocument;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.currency.CurrencyLoadCallback;
 import net.tnemc.core.api.callback.currency.DenominationLoadCallback;
@@ -41,6 +43,8 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -190,7 +194,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     currency.setDisplay(single);
     currency.setDisplayPlural(plural);
     currency.setDisplayMinor(singleMinor);
-    currency.setDisplayPlural(pluralMinor);
+    currency.setDisplayMinorPlural(pluralMinor);
     currency.setSymbol(symbol);
     currency.setType(type.name());
     currency.setSeparateMajor(separate);
@@ -347,10 +351,17 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
     if(denomination instanceof ItemDenomination item) {
 
-      item.setName(denom.getString("Options.Name", null));
-      item.setLore(denom.getStringList("Options.Lore"));
+      item.setName(denom.getString("Options.Name", ""));
+
+      final List<String> loreStr = denom.getStringList("Options.Lore");
+      final LinkedList<Component> lore = new LinkedList<>();
+      for(String str : loreStr) {
+        lore.add(MiniMessage.miniMessage().deserialize(str));
+      }
+
+      item.setLore(lore);
       item.setCustomModel(denom.getInt("Options.ModelData", -1));
-      item.setTexture(denom.getString("Options.Texture", null));
+      item.setTexture(denom.getString("Options.Texture", ""));
 
       if(denom.contains("Options.Enchantments")) {
         item.setEnchantments(denom.getStringList("Options.Enchantments"));

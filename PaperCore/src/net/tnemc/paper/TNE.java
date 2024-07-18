@@ -18,7 +18,6 @@ package net.tnemc.paper;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.BukkitPlugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -29,20 +28,20 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class TNE extends JavaPlugin {
 
-  private final BukkitPlugin bukkit = new BukkitPlugin();
+  private final PaperPlugin paper = new PaperPlugin();
 
   @Override
   public void onLoad() {
-    this.bukkit.load(this, new PaperServerProvider());
+    this.paper.load(this);
   }
 
   @Override
   public void onEnable() {
-    this.bukkit.enable(this);
+    this.paper.enable(this);
   }
 
   @Override
   public void onDisable() {
-    this.bukkit.disable(this);
+    this.paper.disable(this);
   }
 }

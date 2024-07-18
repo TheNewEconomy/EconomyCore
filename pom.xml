@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.tnemc</groupId>
     <artifactId>TNE</artifactId>
-    <version>0.1.3.0-SNAPSHOT-10</version>
+    <version>0.1.3.0-SNAPSHOT-11</version>
     <packaging>pom</packaging>
     <name>The New Economy</name>
 
@@ -20,8 +20,8 @@
     </modules>
 
     <properties>
-        <tnml.version>1.5.0.1-SNAPSHOT-7</tnml.version>
-        <tnpc.version>1.0.0.2-Pre-15</tnpc.version>
+        <tnml.version>1.5.0.1-SNAPSHOT-14</tnml.version>
+        <tnpc.version>1.0.0.2-Pre-29</tnpc.version>
         <tne.relocation>net.tnemc.libs</tne.relocation>
         <tne.java>17</tne.java>
         <maven.compiler.target>17</maven.compiler.target>

@@ -17,6 +17,7 @@ package net.tnemc.core.menu.page.shared;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.text.Component;
 import net.tnemc.core.menu.handlers.StringSelectionHandler;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
@@ -81,23 +82,23 @@ public class MaterialSelectionPageCallback {
       if(maxPages > 1) {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
-                .display("Previous Page")
-                .lore(Collections.singletonList("Click to go to previous page.")))
+                .display(Component.text("Previous Page"))
+                .lore(Collections.singletonList(Component.text("Click to go to previous page."))))
                 .withActions(new DataAction(materialPageID, prev), new SwitchPageAction(menuName, menuPage))
                 .withSlot(0)
                 .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                .display("Next Page")
-                .lore(Collections.singletonList("Click to go to next page.")))
+                .display(Component.text("Next Page"))
+                .lore(Collections.singletonList(Component.text("Click to go to next page."))))
                 .withActions(new DataAction(materialPageID, next), new SwitchPageAction(menuName, menuPage))
                 .withSlot(8)
                 .build());
       }
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
-              .display("Escape Menu")
-              .lore(Collections.singletonList("Click to exit this menu.")))
+              .display(Component.text("Escape Menu"))
+              .lore(Collections.singletonList(Component.text("Click to exit this menu."))))
               .withActions(new SwitchPageAction(returnMenu, returnPage))
               .withSlot(4)
               .build());
@@ -110,7 +111,7 @@ public class MaterialSelectionPageCallback {
         final String material = MenuManager.instance().getHelper().materials().get(i);
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(material, 1)
-                .lore(Collections.singletonList("Click to select material.")))
+                .lore(Collections.singletonList(Component.text("Click to select material."))))
                 .withActions(new DataAction(materialDataID, material),
                         new RunnableAction((click)->{
 

@@ -20,7 +20,6 @@ package net.tnemc.core.manager;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.config.MainConfig;
-import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionCheck;
 import net.tnemc.core.transaction.TransactionCheckGroup;
@@ -34,7 +33,6 @@ import net.tnemc.core.transaction.check.RegionCheck;
 import net.tnemc.core.transaction.check.RestrictedCurrencyCheck;
 import net.tnemc.core.transaction.check.StatusCheck;
 import net.tnemc.core.transaction.check.TrackingCheck;
-import net.tnemc.core.transaction.history.AwayHistory;
 import net.tnemc.core.transaction.processor.BaseTransactionProcessor;
 import net.tnemc.core.transaction.tax.TaxType;
 import net.tnemc.core.transaction.tax.type.FlatType;
@@ -47,14 +45,8 @@ import net.tnemc.plugincore.core.io.maps.EnhancedHashMap;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NavigableMap;
 import java.util.Optional;
 import java.util.TimeZone;
-import java.util.TreeMap;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Manages everything related to the transaction system. This is usually just keeping track of the

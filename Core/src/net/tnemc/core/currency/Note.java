@@ -18,6 +18,7 @@ package net.tnemc.core.currency;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.text.Component;
 import net.tnemc.core.config.MessageConfig;
 import net.tnemc.core.transaction.tax.TaxEntry;
 import net.tnemc.item.AbstractItemStack;
@@ -128,14 +129,14 @@ public class Note {
   }
 
   public AbstractItemStack<Object> stack(final String currency, final String region, final BigDecimal amount) {
-    final LinkedList<String> lore = new LinkedList<>();
-    lore.add(MessageConfig.yaml().getString("Messages.Note.Currency").replace("$currency", currency));
-    lore.add(MessageConfig.yaml().getString("Messages.Note.Region").replace("$region", region));
-    lore.add(MessageConfig.yaml().getString("Messages.Note.Amount").replace("$amount", amount.toPlainString()));
-    lore.add(MessageConfig.yaml().getString("Messages.Note.Action"));
+    final LinkedList<Component> lore = new LinkedList<>();
+    lore.add(Component.text(MessageConfig.yaml().getString("Messages.Note.Currency").replace("$currency", currency)));
+    lore.add(Component.text(MessageConfig.yaml().getString("Messages.Note.Region").replace("$region", region)));
+    lore.add(Component.text(MessageConfig.yaml().getString("Messages.Note.Amount").replace("$amount", amount.toPlainString())));
+    lore.add(Component.text(MessageConfig.yaml().getString("Messages.Note.Action")));
 
     return (AbstractItemStack<Object>)PluginCore.server().stackBuilder().of(material, 1)
-        .display(MessageConfig.yaml().getString("Messages.Note.Name"))
+        .display(Component.text(MessageConfig.yaml().getString("Messages.Note.Name")))
         .enchant(enchantments)
         .flags(flags)
         .modelData(customModelData)

@@ -119,9 +119,11 @@ Messages:
     EnderChest: "<red>Some funds were put in your ender chest because your inventory was full!"
     Dropped: "<red>Some funds were dropped on the ground because your inventory was full!"
 
+#Messages.Menu.
   Menu:
 
     Shared:
+      Save: "Save"
       PreviousPageDisplay: "Previous Page"
       PreviousPage: "Click to go to previous page."
       NextPageDisplay: "Next Page"
@@ -130,11 +132,10 @@ Messages:
       Escape: "Click to exit this menu."
       Enabled: "Enabled"
       Disabled: "Disabled"
+      EnterDisplay: "Enter Your Own"
 
     AmountSelect:
-      SaveDisplay: "Save"
       Save: "Click save the amount."
-      EnterDisplay: "Enter Your Own"
       Enter: "Click to enter a custom amount."
       EnterValid: "Enter a valid decimal value:"
       Amount: "The Amount"
@@ -154,10 +155,9 @@ Messages:
     MyEco:
 
       Main:
-        Display: "Currencies"
+        Currencies: "Currencies"
 
       Currency:
-        SaveDisplay: "Save"
         SaveLore: "Click to save the currencies."
         CurrencyExistsMessage: "A currency with that identifier already exists! Enter an identifier for the currency:"
         SetIdentifierMessage: "Enter an identifier for the currency:"
@@ -168,7 +168,7 @@ Messages:
         BasicCurrencyInfoDisplay: "Basic Currency Information"
         CurrencyFormatOptionsDisplay: "Currency Format Options"
         CurrencyNoteOptionsDisplay: "Currency Note Options"
-        CurrencyTypeDisplay: "Type:"
+        CurrencyTypeDisplay: "Type: $type"
         SetCurrencyTypeLore: "Set the currency type."
         AddDenominationDisplay: "Add Denomination"
         AddDenominationLore: "Click to add denomination"
@@ -191,13 +191,13 @@ Messages:
         SetIconMaterialDisplay: "Set Icon Material"
         SetIconMaterialLore: "Used as item representation in menus."
         EnderChestDisabledDisplay: "EnderChest(Disabled)"
-        EnderChestDisabledLore: "Clicked to Enable using ender chests for item currency balances."
+        EnderChestDisabledLore: "Click to Enable using ender chests for item currency balances."
         EnderChestEnabledDisplay: "EnderChest(Enabled)"
-        EnderChestEnabledLore: "Clicked to Disable using ender chests for item currency balances."
+        EnderChestEnabledLore: "Click to Disable using ender chests for item currency balances."
         EnderFillDisabledDisplay: "EnderChest Fill(Disabled)"
-        EnderFillDisabledLore: "Clicked to Enable Filling the ender chest when player inventory is full."
+        EnderFillDisabledLore: "Click to Enable Filling the ender chest when player inventory is full."
         EnderFillEnabledDisplay: "EnderChest Fill(Enabled)"
-        EnderFillEnabledLore: "Clicked to Disable Filling the ender chest when player inventory is full."
+        EnderFillEnabledLore: "Click to Disable Filling the ender chest when player inventory is full."
 
       EditFormat:
         BalanceFormatDisplay: "Click to Set Balance Format"
@@ -232,13 +232,12 @@ Messages:
         NoteMaterialLore: "Click to set the material of the note item."
         NoteFlagsLore: "Click to set the flags of the note item."
         NoteEnchantsLore: "Click to set the enchantments of the note item."
-        MinNoteAmountDisplay: "Minimum Note Amount"
-        MinNoteAmountLore: "Minimum Required Amount for Amount"
-        CustomModelLore: "Click to set custom model of the denomination item. Optional."
+        NoteMinDisplay: "Minimum Note Amount"
+        MinLore: "Minimum Required Amount for Amount"
         EnterCustomModelMessage: "Enter custom model of the note item:"
-        CustomModelProviderLore: "Click to set custom model of the note item. Optional."
-        NoteCreationFeeDisplay: "Note Creation Fee"
-        NoteCreationFeeLore: "Fee for creating Note"
+        CustomModelLore: "Click to set custom model of the note item. Optional."
+        NoteFeeDisplay: "Note Creation Fee"
+        NoteFeeLore: "Fee for creating Note"
 
       DenomEdit:
         Icon: "Click to edit denomination"
@@ -246,8 +245,7 @@ Messages:
         SingularNameMessage: "Enter a singular name for the denomination:"
         PluralNameLore: "Click to set plural name of denomination."
         PluralNameMessage: "Enter a plural name for the denomination:"
-        DenominationWeightDisplay: "Denomination Weight"
-        DenominationWeightLore: "Sets weight for denomination"
+        SetWeightDisplay: "Denomination Weight"
         SetWeightLore: "Click to set weight of denomination."
         SetMaterialLore: "Click to set material of denomination."
         DisplayNameLore: "Click to set display name of the denomination item. Optional."
@@ -255,7 +253,7 @@ Messages:
         NoDisplayMessage: "No Display"
         CustomModelLore: "Click to set custom model of the denomination item. Optional."
         CustomModelMessage: "Enter custom model of the denomination item:"
-        SetBase64TextureLore: "Click to set the base64 texture to use if the material of the denomination item is PLAYER_HEAD. Not implemented Currently."
+        SetBase64TextureLore: "Click to set the base64 texture to use if the material of the denomination item is PLAYER_HEAD."
         SetBase64TextureMessage: "Enter the base64 texture to use if the material of the denomination item is PLAYER_HEAD:"
         NoTextureMessage: "No Texture"
         LoreStringLore: "Click to set the lore string this denomination item must have in order to be considered currency."
@@ -264,6 +262,7 @@ Messages:
         SetFlagsLore: "Click to set flags of denomination item."
         SetEnchantsLore: "Click to set enchantments of denomination item."
 
+      #Messages.Menu.MyEco.
       Format:
 
         Add: "Click to add to format."
@@ -273,14 +272,14 @@ Messages:
         ResetDisplay: "Reset Format to nothing"
         Reset: "Click to reset the format to a blank string."
         Format: "This is the current format you've selected"
-        FormatNone: "Nothing Entered Yet"
+        None: "Nothing Entered Yet"
+        Space: "SPACE CHARACTER"
         Save: "Click to save the format."
 
       Account:
         Select: "Click to select account."
 
       Currencies:
-        SaveDisplay: "Save"
         Save: "Click to save the currencies."
         Edit: "Click to edit currency."
         AddDisplay: "Add Currency"

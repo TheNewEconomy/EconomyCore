@@ -18,8 +18,8 @@ package net.tnemc.core.menu.icons.myeco;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.text.Component;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.menu.icons.shared.SwitchPageIcon;
 import net.tnemc.menu.core.icon.action.ActionType;
 import net.tnemc.menu.core.icon.action.impl.DataAction;
@@ -39,7 +39,7 @@ import static net.tnemc.core.menu.MyEcoMenu.CURRENCY_EDIT_PAGE;
 public class CurrencyIcon extends SwitchPageIcon {
   public CurrencyIcon(int slot, Currency currency) {
     super(slot, PluginCore.server().stackBuilder().of(currency.getIconMaterial(), 1)
-            .display(currency.getIdentifier()).lore(Collections.singletonList("Click to edit currency")),
+            .display(Component.text(currency.getIdentifier())).lore(Collections.singletonList(Component.text("Click to edit currency"))),
             "my_eco", CURRENCY_EDIT_PAGE, ActionType.ANY, false);
 
     actions.add(new DataAction(ACTIVE_CURRENCY, currency));

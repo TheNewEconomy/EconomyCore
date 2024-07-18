@@ -18,6 +18,7 @@ package net.tnemc.core.currency.item;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.text.Component;
 import net.tnemc.core.currency.Denomination;
 
 import java.math.BigDecimal;
@@ -35,13 +36,13 @@ public class ItemDenomination extends Denomination {
 
   private final List<String> enchantments = new ArrayList<>();
   private final List<String> flags = new ArrayList<>();
-  private final List<String> lore = new ArrayList<>();
+  private final List<Component> lore = new ArrayList<>();
 
   private String material = "PAPER";
   private short damage = 0;
-  private String name = null;
+  private String name = "";
   private Integer customModel = -1;
-  private String texture = null;
+  private String texture = "";
 
   public ItemDenomination(BigDecimal weight, String material) {
     this(weight, material, (short)0);
@@ -99,11 +100,11 @@ public class ItemDenomination extends Denomination {
     this.name = name;
   }
 
-  public List<String> getLore() {
+  public List<Component> getLore() {
     return lore;
   }
 
-  public void setLore(List<String> lore) {
+  public void setLore(List<Component> lore) {
     this.lore.clear();
     this.lore.addAll(lore);
   }

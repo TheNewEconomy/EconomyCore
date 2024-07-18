@@ -241,6 +241,10 @@ public class YAMLReceipt implements Datable<Receipt> {
 
   public void loadParticipant(YamlDocument yaml, Receipt receipt, String type) {
 
+    if(!yaml.contains(type + ".id")) {
+      return;
+    }
+
     final TransactionParticipant participant = new TransactionParticipant(UUID.fromString(yaml.getString(type + ".id")), new ArrayList<>());
 
     if(yaml.contains(type + ".tax")) {
