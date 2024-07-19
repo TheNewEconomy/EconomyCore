@@ -36,6 +36,12 @@ public class RegionHoldings {
 
   private final Map<UUID, CurrencyHoldings> holdings = new ConcurrentHashMap<>();
 
+  /**
+   * Sets the holdings entry for a specific type in the currency holdings map.
+   *
+   * @param entry The holdings entry to set.
+   * @param type The type of identifier to associate the entry with.
+   */
   public void setHoldingsEntry(final HoldingsEntry entry, final Identifier type) {
     final CurrencyHoldings currencyHoldings =
         holdings.getOrDefault(entry.getCurrency(), new CurrencyHoldings());
@@ -45,10 +51,23 @@ public class RegionHoldings {
     holdings.put(entry.getCurrency(), currencyHoldings);
   }
 
+  /**
+   * Retrieves the holdings entry for the specified currency.
+   *
+   * @param currency The identifier of the currency for which to retrieve the holdings entry.
+   * @return An Optional object containing the holdings entry if it exists, or an empty Optional if it does not exist.
+   */
   public Optional<HoldingsEntry> getHoldingsEntry(final UUID currency) {
     return getHoldingsEntry(currency, EconomyManager.NORMAL);
   }
 
+  /**
+   * Retrieves the holdings entry for the specified currency and type.
+   *
+   * @param currency The identifier of the currency for which to retrieve the holdings entry.
+   * @param type The type identifier associated with the holdings entry.
+   * @return An Optional object containing the holdings entry if it exists, or an empty Optional if it does not exist.
+   */
   public Optional<HoldingsEntry> getHoldingsEntry(final UUID currency, final Identifier type) {
     if(holdings.containsKey(currency)) {
       return holdings.get(currency).getHoldingsEntry(type);
@@ -56,7 +75,25 @@ public class RegionHoldings {
     return Optional.empty();
   }
 
+  /**
+   * Returns the holdings map which keeps track of regional holdings for an account.
+   * The map is structured as follows:
+   * - Key: UUID of the currency
+   * - Value: CurrencyHoldings object that represents the holdings for that currency
+   *
+   * @return Returns a map of UUIDs to CurrencyHoldings objects representing the holdings for each currency.
+   */
   public Map<UUID, CurrencyHoldings> getHoldings() {
     return holdings;
+  }
+
+  /**
+   * Determines if the specified currency is contained in the holdings map.
+   *
+   * @param currency The identifier of the currency to check.
+   * @return {@code true} if the currency is contained in the holdings map, {@code false} otherwise.
+   */
+  public boolean containsCurrency(final UUID currency) {
+    return holdings.containsKey(currency);
   }
 }

@@ -27,6 +27,7 @@ import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.channel.SyncHandler;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.transaction.history.AwayHistory;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;
@@ -131,11 +132,24 @@ public class PlayerJoinHandler {
         final String region = TNECore.eco().region().getMode().region(provider);
         for(Currency currency : TNECore.eco().currency().getCurrencies(region)) {
 
-          if(currency.type().supportsItems()) {
+          if(currency instanceof ItemCurrency itemCurrency) {
 
-            for(HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
+            if(itemCurrency.isImportItem() && !acc.get().getWallet().contains(region, currency.getUid())) {
 
-              acc.get().setHoldings(entry, entry.getHandler());
+              TNECore.eco().account().getImporting().add(id);
+
+              for(HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
+
+                acc.get().setHoldings(entry, entry.getHandler());
+              }
+
+              TNECore.eco().account().getImporting().remove(id);
+            } else {
+
+              for(HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
+
+                acc.get().setHoldings(entry, entry.getHandler());
+              }
             }
           }
         }

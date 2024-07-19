@@ -34,12 +34,14 @@ public class ItemCurrency extends Currency {
 
   protected boolean enderChest;
   protected boolean enderFill;
+  protected boolean importItem;
 
   public ItemCurrency(String identifier) {
     super(identifier);
 
     this.enderChest = true;
     this.enderFill = true;
+    this.importItem = true;
   }
 
   public Optional<ItemDenomination> getDenominationByMaterial(final String material) {
@@ -67,5 +69,13 @@ public class ItemCurrency extends Currency {
 
   public void setEnderFill(boolean enderFill) {
     this.enderFill = enderFill;
+  }
+
+  public boolean isImportItem() {
+    return importItem;
+  }
+
+  public void setImportItem(boolean importItem) {
+    this.importItem = importItem;
   }
 }

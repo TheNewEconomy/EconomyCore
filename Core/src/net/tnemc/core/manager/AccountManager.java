@@ -113,8 +113,8 @@ public class AccountManager {
     if(name.contains("§")) {
       PluginCore.log().debug("==== AccountAPIResponse with color code! ====", DebugLevel.DEVELOPER);
 
-      StackTraceElement[] elements = Thread.currentThread().getStackTrace();
-      for (int i = 0; i < elements.length; i++) {
+      final StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+      for(int i = 0; i < elements.length; i++) {
         final StackTraceElement s = elements[i];
         PluginCore.log().debug("\tat " + s.getClassName() + "." + s.getMethodName() + "(" + s.getFileName() + ":" + s.getLineNumber() + ")", DebugLevel.DEVELOPER);
       }

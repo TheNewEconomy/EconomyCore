@@ -90,6 +90,9 @@ Item:
   #Would you like your item currency items to go into the ender chest before dropping on the ground if inventory is full?
   EnderFill: true
 
+  #Whether to import exist item currencies into a player's balance with the first balance check for this currency.
+  ImportItems: true
+
 #All configurations related to formatting.
 Formatting:
 
