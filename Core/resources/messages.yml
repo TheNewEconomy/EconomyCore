@@ -4,7 +4,7 @@
 # All configurable messages in TNE
 Messages:
 
-  config-version: 2
+  config-version: 3
 
   General:
     Version: "<white>TNE Version: <green>$version <white>- Build: <green>$build"
@@ -133,6 +133,8 @@ Messages:
       Enabled: "Enabled"
       Disabled: "Disabled"
       EnterDisplay: "Enter Your Own"
+      FlagsDisplay: "Item Flags"
+      EnchantsDisplay: "Enchantments"
 
     AmountSelect:
       Save: "Click save the amount."
@@ -263,8 +265,8 @@ Messages:
         LoreStringLore: "Click to set the lore string this denomination item must have in order to be considered currency."
         LoreStringMessage: "Enter the lore string this denomination item must have in order to be considered currency. Use newline for a different line:"
         NoLoreMessage: "No Lore"
-        SetFlagsLore: "Click to set flags of denomination item."
-        SetEnchantsLore: "Click to set enchantments of denomination item."
+        FlagsLore: "Click to set flags of denomination item."
+        EnchantsLore: "Click to set enchantments of denomination item."
 
       #Messages.Menu.MyEco.
       Format:

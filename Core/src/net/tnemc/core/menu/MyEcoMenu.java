@@ -344,7 +344,7 @@ public class MyEcoMenu extends Menu {
 
         if(click.player().viewer().isPresent()) {
 
-          Optional<Object> currencyOpt = click.player().viewer().get().findData(ACTIVE_CURRENCY);
+          final Optional<Object> currencyOpt = click.player().viewer().get().findData(ACTIVE_CURRENCY);
           if(currencyOpt.isPresent()) {
 
             Currency currencyObject = (Currency)currencyOpt.get();
@@ -956,12 +956,14 @@ public class MyEcoMenu extends Menu {
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                  .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.FlagsDisplay"), id))
                   .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteFlagsLore"), id))))
                   .withSlot(11)
                   .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_FLAGS_PAGE))
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                  .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EnchantsDisplay"), id))
                   .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteEnchantsLore"), id))))
                   .withSlot(12)
                   .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_ENCHANTS_PAGE))
@@ -1232,13 +1234,15 @@ public class MyEcoMenu extends Menu {
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetFlagsLore"), id))))
+                  .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.FlagsDisplay"), id))
+                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.FlagsLore"), id))))
                   .withSlot(18)
                   .withActions(new SwitchPageAction(this.name, DENOMINATION_FLAGS_PAGE))
                   .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetEnchantsLore"), id))))
+                  .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EnchantsDisplay"), id))
+                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.EnchantsLore"), id))))
                   .withSlot(19)
                   .withActions(new SwitchPageAction(this.name, DENOMINATION_ENCHANTS_PAGE))
                   .build());
