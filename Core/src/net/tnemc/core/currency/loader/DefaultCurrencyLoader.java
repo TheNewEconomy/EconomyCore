@@ -228,6 +228,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     if(currency instanceof ItemCurrency item) {
       item.setEnderChest(cur.getBoolean("Item.EnderChest", true));
       item.setEnderFill(cur.getBoolean("Item.EnderFill", true));
+      item.setImportItem(cur.getBoolean("Item.ImportItems", true));
     }
 
     //Load our note configurations.

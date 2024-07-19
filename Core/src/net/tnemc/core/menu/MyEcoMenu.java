@@ -569,6 +569,7 @@ public class MyEcoMenu extends Menu {
    * Item Type:
    * Ender Chest
    * Ender Fill
+   * Import Items
    */
   private void handleCurrencyEditInfoOpen(final PageOpenCallback callback) {
 
@@ -681,6 +682,28 @@ public class MyEcoMenu extends Menu {
                           .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.EnderFillEnabledDisplay"), id))
                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.EnderFillEnabledLore"), id))));
           callback.getPage().addIcon(enderFill);
+
+          //import item icon
+          final String importState = (itemCurrency.isImportItem())? "ENABLED" : "DISABLED";
+          final StateIcon importFill = new StateIcon(disabledStack, null, "CURRENCY_ENDER_FILL", importState, (currentState)->{
+            if(currentState.toUpperCase(Locale.ROOT).equals("ENABLED")) {
+              itemCurrency.setImportItem(false);
+              return "DISABLED";
+            }
+            itemCurrency.setImportItem(true);
+            return "ENABLED";
+          });
+          importFill.setSlot(25);
+          importFill.addState("DISABLED",
+                  disabledStack
+                          .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.ImportDisabledDisplay"), id))
+                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.ImportDisabledLore"), id))));
+
+          importFill.addState("ENABLED",
+                  enabledStack
+                          .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.ImportEnabledDisplay"), id))
+                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.ImportEnabledLore"), id))));
+          callback.getPage().addIcon(importFill);
         }
       }
     }

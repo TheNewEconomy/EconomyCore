@@ -198,6 +198,10 @@ Messages:
         EnderFillDisabledLore: "Click to Enable Filling the ender chest when player inventory is full."
         EnderFillEnabledDisplay: "EnderChest Fill(Enabled)"
         EnderFillEnabledLore: "Click to Disable Filling the ender chest when player inventory is full."
+        ImportDisabledDisplay: "Import Items(Disabled)"
+        ImportDisabledLore: "Click to Enable importing existing items into balance when player hasn't used this currency before."
+        ImportEnabledDisplay: "Import Items(Enabled)"
+        ImportEnabledLore: "Click to Disable importing existing items into balance when player hasn't used this currency before."
 
       EditFormat:
         BalanceFormatDisplay: "Click to Set Balance Format"

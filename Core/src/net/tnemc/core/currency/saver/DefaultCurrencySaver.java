@@ -176,6 +176,9 @@ public class DefaultCurrencySaver implements CurrencySaver {
 
       MISCUtils.setComment(cur, "Item.EnderFill", "Would you like your item currency items to go into the ender chest before dropping on the ground if inventory is full?");
       cur.set("Item.EnderFill", item.isEnderFill());
+
+      MISCUtils.setComment(cur, "Item.ImportItems", "Whether to import exist item currencies into a player's balance with the first balance check for this currency.");
+      cur.set("Item.ImportItems", item.isImportItem());
     }
 
     //Formatting Configurations

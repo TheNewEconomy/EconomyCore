@@ -116,8 +116,7 @@ public class Wallet {
    */
   public void setHoldings(final @NotNull HoldingsEntry entry) {
 
-    final RegionHoldings regionHoldings =
-        holdings.getOrDefault(entry.getRegion(), new RegionHoldings());
+    final RegionHoldings regionHoldings = holdings.getOrDefault(entry.getRegion(), new RegionHoldings());
 
     regionHoldings.setHoldingsEntry(entry, entry.getHandler());
 
@@ -143,7 +142,7 @@ public class Wallet {
    */
   public void modifyHoldings(final @NotNull HoldingsModifier modifier, Identifier type) {
 
-    Optional<HoldingsEntry> entry = getHoldings(modifier.getRegion(), modifier.getCurrency(), type);
+    final Optional<HoldingsEntry> entry = getHoldings(modifier.getRegion(), modifier.getCurrency(), type);
 
     if(entry.isPresent()) {
       entry.get().modify(modifier);
@@ -209,6 +208,22 @@ public class Wallet {
     wallet.deleteAllHoldings();
   }
 
+  /**
+   * Checks if the specified region contains the given currency in the wallet.
+   *
+   * @param region The region to check.
+   * @param currency The currency to check.
+   * @return true if the region contains the currency in the wallet, false otherwise.
+   */
+  public boolean contains(final @NotNull String region, final @NotNull UUID currency) {
+    return holdings.containsKey(region) && holdings.get(region).containsCurrency(currency);
+  }
+
+  /**
+   * Returns a list of all holdings entries in the wallet.
+   *
+   * @return a list of {@code HoldingsEntry} objects representing the holdings
+   */
   public List<HoldingsEntry> entryList() {
 
     final List<HoldingsEntry> holdingsEntries = new ArrayList<>();
@@ -224,6 +239,11 @@ public class Wallet {
     return holdingsEntries;
   }
 
+  /**
+   * Retrieves the holdings map for the wallet.
+   *
+   * @return A map of region names to RegionHoldings objects representing the holdings for each region.
+   */
   public Map<String, RegionHoldings> getHoldings() {
     return holdings;
   }
