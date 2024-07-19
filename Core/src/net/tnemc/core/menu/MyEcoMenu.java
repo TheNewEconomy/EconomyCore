@@ -160,15 +160,7 @@ public class MyEcoMenu extends Menu {
                 }), new PageSwitchWithClose(this.name, -1))
                 .withSlot(6)
                 .build());
-      }
-    });
-
-
-    currency.setOpen((open)->{
-
-      if(open.getPlayer().viewer().isPresent()) {
-
-        final UUID id = open.getPlayer().identifier();
+      
         //add currency
         final SwitchPageIcon addCurrencyIcon = new SwitchPageIcon(2, PluginCore.server().stackBuilder().of("ARROW", 1)
                 .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Currency.AddCurrencyDisplay"), id))
