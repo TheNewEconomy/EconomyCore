@@ -160,6 +160,24 @@ public class MyEcoMenu extends Menu {
                 }), new PageSwitchWithClose(this.name, -1))
                 .withSlot(6)
                 .build());
+
+        open.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BLACK_WOOL", 1)
+                .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Reset"), id))
+                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Currency.ResetLore"), id))))
+                .withActions(new RunnableAction((click)->{
+
+                  final File directory = new File(PluginCore.directory(), "currency");
+
+                  try {
+
+                    TNECore.eco().currency().getCurrencies().clear();
+                    TNECore.eco().currency().getCurIDMap().clear();
+
+                    TNECore.eco().currency().getLoader().loadCurrencies(directory);
+                  } catch(NoValidCurrenciesException ignore) {}
+                }), new PageSwitchWithClose(this.name, -1))
+                .withSlot(8)
+                .build());
       
         //add currency
         final SwitchPageIcon addCurrencyIcon = new SwitchPageIcon(2, PluginCore.server().stackBuilder().of("ARROW", 1)
@@ -175,7 +193,9 @@ public class MyEcoMenu extends Menu {
               return false;
             }
 
-            message.getPlayer().viewer().get().addData(ACTIVE_CURRENCY, new Currency(message.getMessage()));
+            Currency newCurObj = new Currency(message.getMessage());
+            message.getPlayer().viewer().get().addData(ACTIVE_CURRENCY, newCurObj);
+            TNECore.eco().currency().addCurrency(newCurObj);
             return true;
           }
           message.getPlayer().message("Enter an identifier for the currency:");

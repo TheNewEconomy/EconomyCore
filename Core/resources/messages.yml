@@ -4,7 +4,7 @@
 # All configurable messages in TNE
 Messages:
 
-  config-version: 3
+  config-version: 4
 
   General:
     Version: "<white>TNE Version: <green>$version <white>- Build: <green>$build"
@@ -124,6 +124,7 @@ Messages:
 
     Shared:
       Save: "Save"
+      Reset: "Reset"
       PreviousPageDisplay: "Previous Page"
       PreviousPage: "Click to go to previous page."
       NextPageDisplay: "Next Page"
@@ -161,6 +162,7 @@ Messages:
 
       Currency:
         SaveLore: "Click to save the currencies."
+        ResetLore: "Click to clear changes, and reset to previous currencies."
         CurrencyExistsMessage: "A currency with that identifier already exists! Enter an identifier for the currency:"
         SetIdentifierMessage: "Enter an identifier for the currency:"
         AddCurrencyDisplay: "Add Currency"

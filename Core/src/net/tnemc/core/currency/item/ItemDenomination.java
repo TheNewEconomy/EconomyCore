@@ -19,10 +19,12 @@ package net.tnemc.core.currency.item;
  */
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.tnemc.core.currency.Denomination;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -102,6 +104,14 @@ public class ItemDenomination extends Denomination {
 
   public List<Component> getLore() {
     return lore;
+  }
+
+  public LinkedList<String> getLoreAsString() {
+    final LinkedList<String> loreAsString = new LinkedList<>();
+    for(Component component : lore) {
+      loreAsString.add(MiniMessage.miniMessage().serialize(component));
+    }
+    return loreAsString;
   }
 
   public void setLore(List<Component> lore) {

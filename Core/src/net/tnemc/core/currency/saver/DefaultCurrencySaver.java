@@ -342,7 +342,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
 
       if(!itemDenomination.getLore().isEmpty()) {
         MISCUtils.setComment(denom, "Options.Lore", "The lore string this item must have  in order to be considered currency.(Optional)");
-        denom.set("Options.Lore", itemDenomination.getLore());
+        denom.set("Options.Lore", itemDenomination.getLoreAsString());
       }
 
       if(itemDenomination.getCustomModel() > -1) {
