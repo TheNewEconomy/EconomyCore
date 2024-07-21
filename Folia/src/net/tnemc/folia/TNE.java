@@ -18,8 +18,8 @@ package net.tnemc.folia;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.BukkitPlugin;
 import net.tnemc.folia.impl.FoliaServerProvider;
+import net.tnemc.paper.PaperPlugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -30,20 +30,20 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class TNE extends JavaPlugin {
 
-  private final BukkitPlugin bukkit = new BukkitPlugin();
+  private final PaperPlugin paper = new PaperPlugin();
 
   @Override
   public void onLoad() {
-    this.bukkit.load(this, new FoliaServerProvider());
+    this.paper.load(this, new FoliaServerProvider());
   }
 
   @Override
   public void onEnable() {
-    this.bukkit.enable(this);
+    this.paper.enable(this);
   }
 
   @Override
   public void onDisable() {
-    this.bukkit.disable(this);
+    this.paper.disable(this);
   }
 }

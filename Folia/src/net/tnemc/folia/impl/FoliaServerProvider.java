@@ -19,22 +19,21 @@ package net.tnemc.folia.impl;
  */
 
 import com.destroystokyo.paper.profile.PlayerProfile;
-import net.tnemc.bukkit.BukkitCore;
 import net.tnemc.folia.impl.scheduler.FoliaScheduler;
 import net.tnemc.item.AbstractItemStack;
-import net.tnemc.item.bukkit.BukkitCalculationsProvider;
 import net.tnemc.item.bukkit.BukkitItemStack;
+import net.tnemc.item.paper.PaperCalculationsProvider;
+import net.tnemc.paper.PaperCore;
 import net.tnemc.plugincore.PluginCore;
-import net.tnemc.plugincore.bukkit.BukkitPluginCore;
 import net.tnemc.plugincore.bukkit.hook.PAPIParser;
 import net.tnemc.plugincore.bukkit.impl.BukkitPlayerProvider;
-import net.tnemc.plugincore.bukkit.impl.BukkitProxyProvider;
 import net.tnemc.plugincore.core.compatibility.CmdSource;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import net.tnemc.plugincore.core.compatibility.ProxyProvider;
 import net.tnemc.plugincore.core.compatibility.ServerConnector;
 import net.tnemc.plugincore.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.plugincore.core.compatibility.scheduler.SchedulerProvider;
+import net.tnemc.plugincore.paper.impl.PaperProxyProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -61,8 +60,8 @@ import java.util.UUID;
  */
 public class FoliaServerProvider implements ServerConnector {
 
-  private final BukkitCalculationsProvider calc = new BukkitCalculationsProvider();
-  private final BukkitProxyProvider proxy = new BukkitProxyProvider();
+  private final PaperCalculationsProvider calc = new PaperCalculationsProvider();
+  private final PaperProxyProvider proxy = new PaperProxyProvider();
 
   private final FoliaScheduler scheduler;
 
@@ -266,7 +265,7 @@ public class FoliaServerProvider implements ServerConnector {
 
   @Override
   public void saveResource(String path, boolean replace) {
-    BukkitCore.instance().getPlugin().saveResource(path, replace);
+    PaperCore.instance().getPlugin().saveResource(path, replace);
   }
 
   @Override
@@ -296,7 +295,7 @@ public class FoliaServerProvider implements ServerConnector {
     ShapedRecipe shaped;
 
     try {
-      shaped = new ShapedRecipe(new NamespacedKey(BukkitPluginCore.instance().getPlugin(), key), (ItemStack)recipe.getResult().locale());
+      shaped = new ShapedRecipe(new NamespacedKey(PaperCore.instance().getPlugin(), key), (ItemStack)recipe.getResult().locale());
     } catch(Exception ignore) {
       shaped = new ShapedRecipe((ItemStack)recipe.getResult().locale());
     }
@@ -311,7 +310,7 @@ public class FoliaServerProvider implements ServerConnector {
     ShapelessRecipe shapeless;
 
     try {
-      shapeless = new ShapelessRecipe(new NamespacedKey(BukkitPluginCore.instance().getPlugin(), key), (ItemStack)recipe.getResult().locale());
+      shapeless = new ShapelessRecipe(new NamespacedKey(PaperCore.instance().getPlugin(), key), (ItemStack)recipe.getResult().locale());
     } catch(Exception ignore) {
       shapeless = new ShapelessRecipe((ItemStack)recipe.getResult().locale());
     }
@@ -324,7 +323,7 @@ public class FoliaServerProvider implements ServerConnector {
   }
 
   @Override
-  public BukkitCalculationsProvider calculations() {
+  public PaperCalculationsProvider calculations() {
     return calc;
   }
 

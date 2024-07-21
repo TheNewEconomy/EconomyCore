@@ -20,7 +20,6 @@ package net.tnemc.paper.hook.economy;
 
 
 import net.milkbowl.vault.economy.Economy;
-import net.tnemc.bukkit.BukkitCore;
 import net.tnemc.core.hook.Hook;
 import net.tnemc.paper.PaperCore;
 import net.tnemc.plugincore.PluginCore;

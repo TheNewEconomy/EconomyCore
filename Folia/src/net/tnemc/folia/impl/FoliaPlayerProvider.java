@@ -19,9 +19,9 @@ package net.tnemc.folia.impl;
  */
 
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import net.tnemc.bukkit.BukkitCore;
 import net.tnemc.core.TNECore;
 import net.tnemc.menu.folia.FoliaPlayer;
+import net.tnemc.paper.PaperCore;
 import net.tnemc.plugincore.core.compatibility.Location;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import net.tnemc.plugincore.core.io.message.MessageData;
@@ -43,7 +43,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
   private final OfflinePlayer player;
 
   public FoliaPlayerProvider(OfflinePlayer player) {
-    super(player, BukkitCore.instance().getPlugin());
+    super(player, PaperCore.instance().getPlugin());
     this.player = player;
   }
 
@@ -168,7 +168,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
 
   @Override
   public FoliaInventoryProvider inventory() {
-    return new FoliaInventoryProvider(identifier(), BukkitCore.instance().getPlugin());
+    return new FoliaInventoryProvider(identifier(), PaperCore.instance().getPlugin());
   }
 
   /**
@@ -204,7 +204,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
       return;
     }
 
-    try(BukkitAudiences provider = BukkitAudiences.create(BukkitCore.instance().getPlugin())) {
+    try(BukkitAudiences provider = BukkitAudiences.create(PaperCore.instance().getPlugin())) {
       MessageHandler.translate(messageData, player.getUniqueId(), provider.sender(player.getPlayer()));
     }
   }

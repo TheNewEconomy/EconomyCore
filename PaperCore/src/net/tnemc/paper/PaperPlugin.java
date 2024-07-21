@@ -32,6 +32,7 @@ import net.tnemc.paper.hook.economy.VaultUnlockedHook;
 import net.tnemc.paper.hook.misc.PAPIHook;
 import net.tnemc.paper.listener.PlayerInteractListener;
 import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.ServerConnector;
 import net.tnemc.plugincore.paper.PaperPluginCore;
 import net.tnemc.plugincore.paper.impl.PaperServerProvider;
 import org.bstats.bukkit.Metrics;
@@ -52,15 +53,19 @@ public class PaperPlugin {
   private PaperCore core;
   private boolean papiHooked = false;
 
+  public void load(final JavaPlugin plugin) {
+    load(plugin, new PaperServerProvider(new PaperCalculationsProvider()));
+  }
+
   /**
    * Called when the plugin is loaded by the Bukkit plugin manager.
    * This method should be used to initialize any necessary resources or data.
    */
-  public void load(final JavaPlugin plugin) {
+  public void load(final JavaPlugin plugin, ServerConnector provider) {
 
     //Initialize our TNE Core Class
     this.core = new PaperCore(plugin);
-    this.pluginCore = new PaperPluginCore(plugin, core, new PaperServerProvider(new PaperCalculationsProvider()), new BaseTranslationProvider(), new TNECallbackProvider());
+    this.pluginCore = new PaperPluginCore(plugin, core, provider, new BaseTranslationProvider(), new TNECallbackProvider());
 
     //Vault
     PluginCore.log().inform("Checking for VaultUnlocked");

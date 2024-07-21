@@ -26,7 +26,6 @@ import net.tnemc.item.SerialItem;
 import net.tnemc.item.data.ItemStorageData;
 import net.tnemc.item.paper.PaperCalculationsProvider;
 import net.tnemc.item.paper.PaperItemStack;
-import net.tnemc.item.providers.CalculationsProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;

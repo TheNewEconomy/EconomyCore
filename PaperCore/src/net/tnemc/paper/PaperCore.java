@@ -18,7 +18,6 @@ package net.tnemc.paper;
  */
 
 import net.tnemc.bukkit.BukkitConfig;
-import net.tnemc.bukkit.BukkitCore;
 import net.tnemc.bukkit.BukkitItemCalculations;
 import net.tnemc.bukkit.depend.faction.FactionHandler;
 import net.tnemc.bukkit.depend.towny.TownyHandler;
