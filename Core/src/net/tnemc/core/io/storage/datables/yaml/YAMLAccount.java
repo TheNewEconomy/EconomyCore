@@ -130,23 +130,6 @@ public class YAMLAccount implements Datable<Account> {
 
     if(account instanceof PlayerAccount playerAccount) {
       yaml.set("Info.LastOnline", playerAccount.getLastOnline());
-
-      final Optional<PlayerProvider> provider = PluginCore.server().findPlayer(playerAccount.getUUID());
-
-      if(provider.isPresent()) {
-        final String region = TNECore.eco().region().getMode().region(provider.get());
-        for(Currency currency : TNECore.eco().currency().getCurrencies(region)) {
-
-          if(currency.type().supportsItems()) {
-
-            for(HoldingsEntry entry : account.getHoldings(region, currency.getUid())) {
-
-              //account.get().setHoldings(entry, entry.getHandler());
-              account.getWallet().setHoldings(entry);
-            }
-          }
-        }
-      }
     }
 
     if(account instanceof SharedAccount shared) {

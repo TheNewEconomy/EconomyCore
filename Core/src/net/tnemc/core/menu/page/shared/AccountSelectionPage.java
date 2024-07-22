@@ -122,7 +122,9 @@ public class AccountSelectionPage {
           if(entry.getValue() instanceof PlayerAccount) {
             profile = new SkullProfile();
 
-            profile.setUuid(UUID.fromString(entry.getKey()));
+            if(PluginCore.server().playedBefore(UUID.fromString(entry.getKey()))) {
+              profile.setUuid(UUID.fromString(entry.getKey()));
+            }
           }
 
         } catch(Exception ignore) {}

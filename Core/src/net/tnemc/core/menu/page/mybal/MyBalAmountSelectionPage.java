@@ -72,7 +72,10 @@ public class MyBalAmountSelectionPage extends AmountSelectionPage {
 
           final UUID account = UUID.fromString((String)id.get());
           profile = new SkullProfile();
-          profile.setUuid(account);
+
+          if(PluginCore.server().playedBefore(account)) {
+            profile.setUuid(account);
+          }
 
         } catch(Exception ignore) {}
 

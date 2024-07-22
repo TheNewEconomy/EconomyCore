@@ -59,15 +59,15 @@ import java.util.UUID;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-@Command({"tne", "ecomin", "ecoadmin", "ecomanage", "theneweconomy"})
+@Command({"tne", "myeco", "ecomenu", "ecomin", "ecoadmin", "ecomanage", "theneweconomy"})
 @Description("Admin.Main.Description")
 public class AdminCommand {
 
-  @DefaultFor({"tne", "ecomin", "ecoadmin", "ecomanage", "theneweconomy"})
+  @DefaultFor({"tne", "myeco", "ecomenu", "ecomin", "ecoadmin", "ecomanage", "theneweconomy"})
   @Subcommand({"ecomenu", "menu", "myeco"})
   @Usage("Admin.MyEco.Arguments")
   @Description("Admin.MyEco.Description")
-  @CommandPermission("tne.money.myeco")
+  @CommandPermission("tne.admin.menu")
   public void onMyEco(BukkitCommandActor sender) {
     net.tnemc.core.command.AdminCommand.onMyEco(new PaperCMDSource(sender));
   }

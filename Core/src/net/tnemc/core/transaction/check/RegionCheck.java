@@ -68,15 +68,11 @@ public class RegionCheck implements TransactionCheck {
   @Override
   public EconomyResponse checkParticipant(Transaction transaction, @NotNull TransactionParticipant participant, HoldingsModifier modifier) {
 
-    System.out.println("Region Check");
-
     final Optional<Account> account = participant.asAccount();
     if(account.isPresent()) {
 
       if(account.get() instanceof PlayerAccount player) {
         if(player.isOnline() && player.getPlayer().isPresent()) {
-          System.out.println("Worlds: " + player.region());
-          System.out.println("Worlds Contains: " + TNECore.eco().region().getDisabledRegions().contains(player.region()));
           if(TNECore.eco().region().getDisabledRegions().contains(player.region())) {
             return HoldingsResponse.DISABLED_REGION;
           }
@@ -85,8 +81,6 @@ public class RegionCheck implements TransactionCheck {
     }
 
     if(modifier != null) {
-      System.out.println("Worlds: " + modifier.getRegion());
-      System.out.println("Worlds Contains: " + TNECore.eco().region().getDisabledRegions().contains(modifier.getRegion()));
       if(TNECore.eco().region().getDisabledRegions().contains(modifier.getRegion())) {
         return HoldingsResponse.DISABLED_REGION;
       }

@@ -134,16 +134,25 @@ public class PlayerJoinHandler {
 
           if(currency instanceof ItemCurrency itemCurrency) {
 
-            if(itemCurrency.isImportItem() && !acc.get().getWallet().contains(region, currency.getUid())) {
+            if(!acc.get().getWallet().contains(region, currency.getUid())) {
 
-              TNECore.eco().account().getImporting().add(id);
+              if(itemCurrency.isImportItem()) {
 
-              for(HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
+                TNECore.eco().account().getImporting().add(id);
 
-                acc.get().setHoldings(entry, entry.getHandler());
+                for(HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
+
+                  acc.get().setHoldings(entry, entry.getHandler());
+                }
+
+                TNECore.eco().account().getImporting().remove(id);
+              } else {
+                acc.get().setHoldings(new HoldingsEntry(region,
+                        currency.getUid(),
+                        currency.getStartingHoldings(),
+                        EconomyManager.NORMAL
+                ));
               }
-
-              TNECore.eco().account().getImporting().remove(id);
             } else {
 
               for(HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {

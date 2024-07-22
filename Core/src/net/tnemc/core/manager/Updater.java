@@ -43,20 +43,16 @@ public class Updater extends UpdateChecker {
 
   @Override
   public boolean isEarlyBuild() {
-    System.out.println("Ver:" + ver);
     return verStrip < pluginStrip;
-    //return ver.isLowerThan(PluginCore.engine().version());
   }
 
   @Override
   public boolean needsUpdate() {
     return verStrip > pluginStrip;
-    //return ver.isGreaterThan(PluginCore.engine().version());
   }
 
   @Override
   public String stable() {
-    System.out.println("Ver:" + ver);
     if(new Semver(PluginCore.engine().version() + "-" + PluginCore.engine().build(), Semver.SemverType.LOOSE).isStable()) {
       return "Stable";
     }
