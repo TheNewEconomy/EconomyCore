@@ -3,7 +3,7 @@
 #License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 #All configurable messages in TNE
 Messages:
-  config-version: 2
+  config-version: 5
   General:
     Version: "<white>TNE-Version: <green>$version <white>- Bau: <green>$build"
     NoPerm: "<red>Es tut mir leid, aber Sie haben keine Berechtigung für diese Aktion."
@@ -343,6 +343,7 @@ Messages:
     AwayEntry: "<green><click:run_command:/transaction info $id>$id</click> <white>|</white> $type"
     AwayNone: "<red>No transactions occured while you were offline."
     AwayJoin: "<white>You missed some transactions while you were gone. <green><click:run_command:/transaction away>View Them Now</click>!"
+    HistoryNone: "No transactions to show!"
     History: "<white>=====[<green>Transactions<white>]===== $page/$page_top<newline>ID | Type | Initiator | Recipient"
     HistoryEntry: "<green><click:run_command:/transaction info $id>$id</click> <white>| <green>$type <white>| <green>$initiator <white>| <green>$recipient"
     Info: "<white>Transaction Information:<newline><white>ID: <green>$id<newline><white>Type: <green>$type"
