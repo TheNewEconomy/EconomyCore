@@ -10,28 +10,23 @@ load: POSTWORLD
 dependencies:
   - name: Towny
     required: false
-    bootstrap: false
   - name: Multiverse-Core
     required: false
-    bootstrap: false
   - name: LuckPerms
     required: false
-    bootstrap: false
   - name: Vault
+    load: BEFORE
     required: false
-    bootstrap: true
   - name: Treasury
+    load: BEFORE
     required: false
-    bootstrap: false
   - name: mcMMO
     required: false
-    bootstrap: false
   - name: Essentials
     required: false
-    bootstrap: false
   - name: EssentialsX
     required: false
-    bootstrap: false
   - name: PlaceholderAPI
+    load: BEFORE
     required: false
-    bootstrap: true
+    join-classpath: true

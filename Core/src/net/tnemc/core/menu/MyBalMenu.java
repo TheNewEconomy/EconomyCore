@@ -368,6 +368,7 @@ public class MyBalMenu extends Menu {
       }
     }
   }
+
   protected void deposit(final AmountSelectionHandler handler) {
 
     final Optional<MenuViewer> viewer = handler.getClick().player().viewer();
@@ -518,7 +519,7 @@ public class MyBalMenu extends Menu {
         if(currencyOptional.isPresent() && player.isPresent()) {
 
           //Our receiving account
-          final Optional<Account> account = TNECore.eco().account().findAccount((UUID)receiverUUID.get());
+          final Optional<Account> account = TNECore.eco().account().findAccount(UUID.fromString((String)receiverUUID.get()));
           if(account.isPresent()) {
 
             if(EconomyManager.limitCurrency()) {

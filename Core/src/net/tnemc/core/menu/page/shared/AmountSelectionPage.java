@@ -69,7 +69,7 @@ public class AmountSelectionPage {
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
               .display(Component.text("Escape Menu"))
               .lore(Collections.singletonList(Component.text("Click to exit this menu."))))
-              .withActions(new SwitchPageAction(returnMenu, returnPage))
+              .withActions(new PageSwitchWithClose(returnMenu, returnPage))
               .withSlot(0)
               .build());
 
