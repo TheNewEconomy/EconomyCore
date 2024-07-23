@@ -18,7 +18,7 @@ package net.tnemc.bukkit.depend.faction;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.BukkitCore;
+import net.tnemc.core.TNECore;
 
 /**
  * FactionHandler
@@ -29,6 +29,6 @@ import net.tnemc.bukkit.BukkitCore;
 public class FactionHandler {
 
   public static void addTypes() {
-    BukkitCore.eco().account().addAccountType(FactionAccount.class, new FactionCheck().check());
+    TNECore.eco().account().addAccountType(FactionAccount.class, new FactionCheck().check());
   }
 }
