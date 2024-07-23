@@ -49,6 +49,7 @@ import net.tnemc.core.io.yaml.YamlStorageManager;
 import net.tnemc.core.manager.Updater;
 import net.tnemc.core.menu.MyBalMenu;
 import net.tnemc.core.menu.MyEcoMenu;
+import net.tnemc.core.menu.TransactionMenu;
 import net.tnemc.core.region.RegionGroup;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.utils.MISCUtils;
@@ -292,6 +293,7 @@ public abstract class TNECore extends PluginEngine {
   public void postEnable() {
     MenuManager.instance().addMenu(new MyEcoMenu());
     MenuManager.instance().addMenu(new MyBalMenu());
+    MenuManager.instance().addMenu(new TransactionMenu());
 
     this.storage.loadAll(Account.class, "");
 

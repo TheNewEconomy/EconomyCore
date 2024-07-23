@@ -75,6 +75,11 @@ public class TransactionCommand {
 
   //[page:#] [world:name/all] [player:name]
   public static void history(CmdSource<?> sender, int page, String region, Account account) {
+    if(sender.player().isPresent()) {
+      sender.player().get().inventory().openMenu(sender.player().get(), "transaction_menu");
+      return;
+    }
+
     region = TNECore.eco().region().resolve(region);
 
     final SortedHistory sorted = account.getSorted(account.getIdentifier());

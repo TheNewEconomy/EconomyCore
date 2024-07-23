@@ -20,6 +20,7 @@ package net.tnemc.core.menu;
 import net.kyori.adventure.text.Component;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.currency.Currency;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.history.SortedHistory;
 import net.tnemc.menu.core.Menu;
@@ -28,6 +29,7 @@ import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.builder.PageBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
 import net.tnemc.menu.core.icon.Icon;
+import net.tnemc.menu.core.icon.action.IconAction;
 import net.tnemc.menu.core.icon.action.impl.DataAction;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
 import net.tnemc.plugincore.PluginCore;
@@ -41,19 +43,20 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * BaltopMenu
+ * TransactionMenu
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class BaltopMenu extends Menu {
+public class TransactionMenu extends Menu {
 
-  public static final String TOP_PAGE_ID = "TOP_PAGE";
-  public static final int TOP_COUNT = 10;
+  public static final int TRANSACTION_VIEW = 2;
+  public static final String TRANSACTION_PAGE_ID = "TRANSACTION_HISTORY_PAGE";
+  public static final int TRANSACTION_HISTORY_COUNT = 10;
 
-  public BaltopMenu() {
+  public TransactionMenu() {
     this.name = "transaction_menu";
-    this.title = "Balance Top";
+    this.title = "Transactions";
     this.rows = 3;
 
     /*
@@ -62,6 +65,10 @@ public class BaltopMenu extends Menu {
     final Page main = new PageBuilder(1).build();
     main.setOpen(this::handleMainPage);
     addPage(main);
+
+    final Page view = new PageBuilder(TRANSACTION_VIEW).build();
+    main.setOpen(this::handleMainPage);
+    addPage(view);
   }
 
   public void handleMainPage(final PageOpenCallback callback) {
@@ -73,11 +80,11 @@ public class BaltopMenu extends Menu {
 
       final SortedHistory sorted = account.get().getSorted(account.get().getIdentifier());
 
-      final int pagesPer = TOP_COUNT / 5;
+      final int pagesPer = TRANSACTION_HISTORY_COUNT / 5;
       final int pageDiv = (sorted.maxPages() / pagesPer);
       final int maxPages = (sorted.maxPages() % pagesPer > 0)? pageDiv + 1 : pageDiv;
 
-      final int page = (callback.getPlayer().viewer().isPresent())? (Integer)callback.getPlayer().viewer().get().dataOrDefault(TOP_PAGE_ID, 1) : 1;
+      final int page = (callback.getPlayer().viewer().isPresent())? (Integer)callback.getPlayer().viewer().get().dataOrDefault(TRANSACTION_PAGE_ID, 1) : 1;
 
       final int prev = (page <= 1)? maxPages : page - 1;
       final int next = (page >= maxPages)? 1 : page + 1;
@@ -87,14 +94,14 @@ public class BaltopMenu extends Menu {
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
                 .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
                 .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))))
-                .withActions(new DataAction(TOP_PAGE_ID, prev), new SwitchPageAction(this.name, 1))
+                .withActions(new DataAction(TRANSACTION_PAGE_ID, prev), new SwitchPageAction(this.name, 1))
                 .withSlot(0)
                 .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
                 .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
                 .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPage"), id))))
-                .withActions(new DataAction(TOP_PAGE_ID, next), new SwitchPageAction(this.name, 1))
+                .withActions(new DataAction(TRANSACTION_PAGE_ID, next), new SwitchPageAction(this.name, 1))
                 .withSlot(8)
                 .build());
       }
@@ -142,6 +149,7 @@ public class BaltopMenu extends Menu {
 
     return new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
             .display(Component.text(receipt.getId().toString())).lore(lore))
-            .withSlot(slot).build();
+            .withSlot(slot)
+            .withActions(new SwitchPageAction(this.name, TRANSACTION_VIEW)).build();
   }
 }
