@@ -26,6 +26,7 @@ import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.Description;
 import revxrsal.commands.annotation.Named;
+import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
 import revxrsal.commands.bukkit.BukkitCommandActor;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
@@ -86,5 +87,13 @@ public class ShortCommands {
   @CommandPermission("tne.money.top")
   public void onTop(BukkitCommandActor sender, @Default("1") @Named("page") Integer page, @Default("") @Named("currency") Currency currency, @Default("false") Boolean refresh) {
     net.tnemc.core.command.MoneyCommand.onTop(new BukkitCMDSource(sender), page, currency, refresh);
+  }
+
+  @Command({"transactions"})
+  @Usage("Transaction.History.Arguments")
+  @Description("Transaction.History.Description")
+  @CommandPermission("tne.transaction.history")
+  public void history(BukkitCommandActor sender, @Default("1") int page, @Default("world-113") @Named("region") String region, @Default("SELF_ACCOUNT") Account account) {
+    net.tnemc.core.command.TransactionCommand.history(new BukkitCMDSource(sender), page, region, account);
   }
 }

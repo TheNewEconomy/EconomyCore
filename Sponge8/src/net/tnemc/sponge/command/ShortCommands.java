@@ -88,4 +88,12 @@ public class ShortCommands {
   public void onTop(SpongeCommandActor sender, @Default("1") @Named("page") Integer page, @Default("") @Named("currency") Currency currency, @Default("false") Boolean refresh) {
     net.tnemc.core.command.MoneyCommand.onTop(new SpongeCMDSource(sender), page, currency, refresh);
   }
+
+  @Command({"transactions"})
+  @Usage("Transaction.History.Arguments")
+  @Description("Transaction.History.Description")
+  @CommandPermission("tne.transaction.history")
+  public void history(SpongeCommandActor sender, @Default("1") int page, @Default("world-113") @Named("region") String region, @Default("SELF_ACCOUNT") Account account) {
+    net.tnemc.core.command.TransactionCommand.history(new SpongeCMDSource(sender), page, region, account);
+  }
 }
