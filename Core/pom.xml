@@ -32,13 +32,6 @@
             <version>32.1.1-jre</version>
             <scope>provided</scope>
         </dependency>
-        <!-- LuckPerms API -->
-        <dependency>
-            <groupId>net.luckperms</groupId>
-            <artifactId>api</artifactId>
-            <version>5.3</version>
-            <scope>provided</scope>
-        </dependency>
 
         <dependency>
             <groupId>net.tnemc</groupId>

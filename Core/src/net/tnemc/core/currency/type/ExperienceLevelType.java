@@ -1,4 +1,4 @@
-package net.tnemc.sponge.hook.misc;
+package net.tnemc.core.currency.type;
 
 /*
  * The New Economy
@@ -18,22 +18,37 @@ package net.tnemc.sponge.hook.misc;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.luckperms.api.LuckPerms;
-import org.spongepowered.api.Sponge;
-import org.spongepowered.api.service.ServiceRegistration;
-
-import java.util.Optional;
+import net.tnemc.core.EconomyManager;
+import net.tnemc.core.currency.CurrencyType;
+import net.tnemc.core.utils.Identifier;
 
 /**
- * LuckPermsHook
+ * ExperienceType
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class LuckPermsHook {
+public class ExperienceLevelType implements CurrencyType {
+  /**
+   * @return The name of this currency type. Examples: Virtual, Item
+   */
+  @Override
+  public String name() {
+    return "experience-level";
+  }
 
-  public static void register() {
-    final Optional<ServiceRegistration<LuckPerms>> provider = Sponge.serviceProvider().registration(LuckPerms.class);
-    //provider.ifPresent(luckPermsServiceRegistration->luckPermsServiceRegistration.service().getContextManager().registerCalculator(new LuckBalanceContext()));
+  @Override
+  public String description() {
+    return "A simple currency based on experience. Not the most accurate...";
+  }
+
+  @Override
+  public boolean supportsVirtual() {
+    return false;
+  }
+
+  @Override
+  public Identifier defaultHandler() {
+    return EconomyManager.EXPERIENCE_LEVEL;
   }
 }

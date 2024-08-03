@@ -18,7 +18,6 @@ package net.tnemc.core;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.AccountStatus;

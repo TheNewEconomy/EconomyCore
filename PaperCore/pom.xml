@@ -85,10 +85,10 @@
                             <include>org.json.simple:*</include>
                             <include>com.zaxxer:*</include>
                             <include>com.github.Revxrsal.Lamp:*</include>
-                            <!--<include>net.kyori:adventure-key</include>
+                            <include>net.kyori:adventure-key</include>
                             <include>net.kyori:adventure-text-minimessage</include>
                             <include>net.kyori:examination-api</include>
-                            <include>net.kyori:examination-string</include>-->
+                            <include>net.kyori:examination-string</include>
                             <include>redis.clients:*</include>
                             <include>org.apache:*</include>
                             <include>org.apache.commons:*</include>
@@ -97,6 +97,7 @@
                             <include>com.vdurmont:*</include>
                         </includes>
                         <excludes>
+                            <exclude>net.kyori:adventure-api</exclude>
                             <exclude>net.kyori:adventure-api</exclude>
                             <exclude>net.kyori:adventure-text-serializer-legacy</exclude>
                         </excludes>
@@ -110,16 +111,6 @@
                             <pattern>com.zaxxer</pattern>
                             <shadedPattern>${tne.relocation}.zaxxer</shadedPattern>
                         </relocation>
-                        <!--<relocation>
-                            <pattern>net.kyori</pattern>
-                            <shadedPattern>${tne.relocation}.kyori.examination</shadedPattern>
-                            <includes>
-                                <include>net.kyori.adventure.key.*</include>
-                                <include>net.kyori.adventure.text.*</include>
-                                <include>net.kyori.option.*</include>
-                                <include>net.kyori.examination.*</include>
-                            </includes>
-                        </relocation>-->
                         <relocation>
                             <pattern>org.bstats</pattern>
                             <shadedPattern>${tne.relocation}.bstats</shadedPattern>
