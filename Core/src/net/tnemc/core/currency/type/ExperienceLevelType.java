@@ -39,7 +39,7 @@ public class ExperienceLevelType implements CurrencyType {
 
   @Override
   public String description() {
-    return "A simple currency based on experience. Not the most accurate...";
+    return "A simple currency based on experience levels. Not the most accurate...";
   }
 
   @Override
