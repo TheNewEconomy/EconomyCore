@@ -202,9 +202,10 @@ public class YAMLAccount implements Datable<Account> {
     YamlDocument yaml = null;
     try {
       yaml = YamlDocument.create(accFile);
-    } catch(IOException ignore) {
+    } catch(Exception ignore) {
 
       PluginCore.log().error("Issue loading account file. Account: " + identifier);
+      return Optional.empty();
     }
 
     if(yaml != null) {
