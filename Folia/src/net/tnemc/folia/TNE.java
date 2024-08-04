@@ -19,7 +19,6 @@ package net.tnemc.folia;
  */
 
 import net.tnemc.folia.impl.FoliaServerProvider;
-import net.tnemc.menu.folia.FoliaMenuHandler;
 import net.tnemc.paper.PaperPlugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
