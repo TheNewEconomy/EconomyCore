@@ -1,5 +1,4 @@
 package net.tnemc.folia;
-
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -18,33 +17,24 @@ package net.tnemc.folia;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.folia.impl.FoliaServerProvider;
 import net.tnemc.menu.folia.FoliaMenuHandler;
-import net.tnemc.paper.PaperPlugin;
+import net.tnemc.paper.PaperCore;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * TNE
+ * FoliaCore
  *
  * @author creatorfromhell
- * @since 0.1.2.0
+ * @since 0.1.3.2
  */
-public class TNE extends JavaPlugin {
+public class FoliaCore extends PaperCore {
 
-  private final PaperPlugin paper = new PaperPlugin();
-
-  @Override
-  public void onLoad() {
-    this.paper.load(this, new FoliaCore(this), new FoliaServerProvider());
+  public FoliaCore(JavaPlugin plugin) {
+    super(plugin);
   }
 
   @Override
-  public void onEnable() {
-    this.paper.enable(this);
-  }
-
-  @Override
-  public void onDisable() {
-    this.paper.disable(this);
+  public void registerMenuHandler() {
+    this.menuHandler = new FoliaMenuHandler(plugin, true);
   }
 }
