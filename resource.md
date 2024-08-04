@@ -69,10 +69,13 @@ TNE Supports different types of currencies!
 #### Virtual: Simple currency that exists in thin air
 
 #### Item: Use minecraft items as currency.
+- Shulker Box Support
+- Bundle Support
 
 #### Mixed: This type uses both virtual and item balances, and allows players to switch their balance between items and virtual whenever!
 
 #### Experience: Use experience as currency.
+#### Experience-level: Use experience levels as currency.
 
 ## Money Notes
 Convert your virtual currency into a physical money note using the /money note command.
@@ -80,6 +83,10 @@ Convert your virtual currency into a physical money note using the /money note c
 ## Multi-platform
 Use Sponge? Sure. Paper? Why not? Both? Over Velocity? Definitely! Switch between, your TNE data works
 for you no matter your platform. More platforms soon!
+
+## Fine Tune Who Can Access What Currency
+TNE allows you to fine tune who can run commands with each currency. You're able to block players from using
+/pay for certain currencies, and even checking their balance for others!
 
 ### Supported:
 - Paper/Spigot/Purpur
