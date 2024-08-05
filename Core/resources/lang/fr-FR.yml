@@ -145,6 +145,8 @@ Messages:
     MyEco:
       Main:
         Currencies: "Currencies"
+        CloseWarn: "<red>The currencies weren't saved! Your changes will be reset on restart if you don't click the save icon."
+        Saved: "<green>Successfully saved the currencies!"
       Currency:
         SaveLore: "Click to save the currencies."
         ResetLore: "Click to clear changes, and reset to previous currencies."
