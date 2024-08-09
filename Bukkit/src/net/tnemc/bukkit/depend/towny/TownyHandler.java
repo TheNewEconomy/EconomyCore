@@ -18,7 +18,7 @@ package net.tnemc.bukkit.depend.towny;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bukkit.BukkitCore;
+import net.tnemc.core.TNECore;
 
 /**
  * TownyHandler
@@ -29,7 +29,7 @@ import net.tnemc.bukkit.BukkitCore;
 public class TownyHandler {
 
   public static void addTypes() {
-    BukkitCore.eco().account().addAccountType(TownAccount.class, new TownCheck().check());
-    BukkitCore.eco().account().addAccountType(NationAccount.class, new NationCheck().check());
+    TNECore.eco().account().addAccountType(TownAccount.class, new TownCheck().check());
+    TNECore.eco().account().addAccountType(NationAccount.class, new NationCheck().check());
   }
 }
