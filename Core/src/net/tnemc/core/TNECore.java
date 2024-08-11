@@ -23,6 +23,17 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.api.TNEAPI;
+import net.tnemc.core.api.callback.TNECallbacks;
+import net.tnemc.core.api.callback.account.AccountCreateCallback;
+import net.tnemc.core.api.callback.account.AccountDeleteCallback;
+import net.tnemc.core.api.callback.account.AccountLoadCallback;
+import net.tnemc.core.api.callback.account.AccountSaveCallback;
+import net.tnemc.core.api.callback.account.AccountTypesCallback;
+import net.tnemc.core.api.callback.currency.CurrencyDropCallback;
+import net.tnemc.core.api.callback.currency.CurrencyLoadCallback;
+import net.tnemc.core.api.callback.currency.DenominationLoadCallback;
+import net.tnemc.core.api.callback.transaction.PostTransactionCallback;
+import net.tnemc.core.api.callback.transaction.PreTransactionCallback;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.channel.BalanceHandler;
 import net.tnemc.core.channel.SyncHandler;
@@ -55,6 +66,8 @@ import net.tnemc.item.AbstractItemStack;
 import net.tnemc.menu.core.manager.MenuManager;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.PluginEngine;
+import net.tnemc.plugincore.core.api.CallbackEntry;
+import net.tnemc.plugincore.core.api.CallbackManager;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.plugincore.core.compatibility.scheduler.Chore;
 import net.tnemc.plugincore.core.compatibility.scheduler.ChoreExecution;
@@ -211,6 +224,20 @@ public abstract class TNECore extends PluginEngine {
     command.getAutoCompleter().registerParameterSuggestions(RegionGroup.class, new RegionSuggestion());
     command.getAutoCompleter().registerParameterSuggestions(Account.class, new AccountSuggestion());
     command.getAutoCompleter().registerParameterSuggestions(Currency.class, new CurrencySuggestion());
+  }
+
+  @Override
+  public void registerCallbacks(CallbackManager callbackManager) {
+    callbackManager.addCallback(TNECallbacks.ACCOUNT_TYPES.toString(), new CallbackEntry(AccountTypesCallback.class));
+    callbackManager.addCallback(TNECallbacks.ACCOUNT_LOAD.toString(), new CallbackEntry(AccountLoadCallback.class));
+    callbackManager.addCallback(TNECallbacks.ACCOUNT_SAVE.toString(), new CallbackEntry(AccountSaveCallback.class));
+    callbackManager.addCallback(TNECallbacks.ACCOUNT_CREATE.toString(), new CallbackEntry(AccountCreateCallback.class));
+    callbackManager.addCallback(TNECallbacks.ACCOUNT_DELETE.toString(), new CallbackEntry(AccountDeleteCallback.class));
+    callbackManager.addCallback(TNECallbacks.TRANSACTION_PRE.toString(), new CallbackEntry(PreTransactionCallback.class));
+    callbackManager.addCallback(TNECallbacks.TRANSACTION_POST.toString(), new CallbackEntry(PostTransactionCallback.class));
+    callbackManager.addCallback(TNECallbacks.CURRENCY_DROP.toString(), new CallbackEntry(CurrencyDropCallback.class));
+    callbackManager.addCallback(TNECallbacks.CURRENCY_LOAD.toString(), new CallbackEntry(CurrencyLoadCallback.class));
+    callbackManager.addCallback(TNECallbacks.DENOMINATION_LOAD.toString(), new CallbackEntry(DenominationLoadCallback.class));
   }
 
   @Override

@@ -162,6 +162,7 @@ public class SpongeCore extends TNECore {
 
   @Override
   public void registerCallbacks(CallbackManager callbackManager) {
+    super.registerCallbacks(callbackManager);
     //nothing to see here.
   }
 

@@ -18,6 +18,7 @@ package net.tnemc.core.api.callback.account;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.api.callback.TNECallbacks;
 import net.tnemc.plugincore.core.api.callback.Callback;
 
 /**
@@ -36,6 +37,6 @@ public class AccountTypesCallback implements Callback {
    */
   @Override
   public String name() {
-    return "account_types";
+    return TNECallbacks.ACCOUNT_TYPES.toString();
   }
 }
