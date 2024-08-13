@@ -22,9 +22,11 @@ import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
+import net.tnemc.core.account.SharedAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.account.holdings.modify.HoldingsOperation;
+import net.tnemc.core.account.shared.MemberPermissions;
 import net.tnemc.core.actions.source.PlayerSource;
 import net.tnemc.core.command.parameters.PercentBigDecimal;
 import net.tnemc.core.config.MainConfig;
@@ -82,7 +84,7 @@ public class MoneyCommand extends BaseCommand {
       }
     }
 
-    final Optional<Account> account = BaseCommand.account(sender);
+    final Optional<Account> account = BaseCommand.account(sender, "balance");
     if(account.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
       data.addReplacement("$player", sender.name());
@@ -124,7 +126,7 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    final Optional<Account> account = BaseCommand.account(sender);
+    final Optional<Account> account = BaseCommand.account(sender, "convert");
     if(account.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
       data.addReplacement("$player", sender.name());
@@ -190,7 +192,7 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    final Optional<Account> senderAccount = BaseCommand.account(sender);
+    final Optional<Account> senderAccount = BaseCommand.account(sender, "deposit");
 
     if(senderAccount.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
@@ -282,9 +284,12 @@ public class MoneyCommand extends BaseCommand {
     }
   }
 
-  public static void onGiveNote(CmdSource<?> sender, Account account, BigDecimal amount, Currency currency) {
+  public static void onGiveNote(CmdSource<?> sender, Account acc, BigDecimal amount, Currency currency) {
 
     final Optional<Note> note = currency.getNote();
+
+    final Optional<Account> accountOpt = BaseCommand.account(acc.getIdentifier(), "note");
+    final Account account = accountOpt.orElse(acc);
     if(note.isPresent() && account instanceof PlayerAccount player) {
 
       final Optional<PlayerProvider> provider = player.getPlayer();
@@ -328,7 +333,7 @@ public class MoneyCommand extends BaseCommand {
   //ArgumentsParser: <amount> [currency]
   public static void onNote(CmdSource<?> sender, PercentBigDecimal amount, Currency currency) {
 
-    final Optional<Account> account = BaseCommand.account(sender);
+    final Optional<Account> account = BaseCommand.account(sender, "note");
     final Optional<Note> note = currency.getNote();
     if(account.isPresent() && note.isPresent() && account.get() instanceof PlayerAccount player) {
 
@@ -459,7 +464,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> <amount> [currency] [from:account]
-  public static void onPay(CmdSource<?> sender, Account account, PercentBigDecimal amount, Currency currency, String from) {
+  public static void onPay(CmdSource<?> sender, Account acc, PercentBigDecimal amount, Currency currency, String from) {
 
     final Optional<PlayerProvider> player = sender.player();
     if(EconomyManager.limitCurrency() && player.isPresent()) {
@@ -477,7 +482,10 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    final Optional<Account> senderAccount = BaseCommand.account(sender);
+    final Optional<Account> senderAccount = BaseCommand.account(sender, "pay");
+
+    final Optional<Account> accountOpt = BaseCommand.account(acc.getIdentifier(), "payreceive");
+    final Account account = accountOpt.orElse(acc);
 
     if(senderAccount.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
@@ -697,6 +705,70 @@ public class MoneyCommand extends BaseCommand {
     }
   }
 
+  public static void onSwitch(CmdSource<?> sender, Account account) {
+    if(account instanceof SharedAccount shared) {
+
+      if(sender.identifier().isEmpty()) {
+
+        final MessageData data = new MessageData("Messages.Account.SwitchedFailed");
+        data.addReplacement("$account", account.getName());
+        sender.message(data);
+        return;
+      }
+
+      if(!shared.hasPermission(sender.identifier().get(), MemberPermissions.WITHDRAW)) {
+
+        final MessageData data = new MessageData("Messages.Account.SwitchedFailed");
+        data.addReplacement("$account", account.getName());
+        sender.message(data);
+        return;
+      }
+
+      doSwitch(sender.identifier().get(), account.getIdentifier());
+      final MessageData data = new MessageData("Messages.Account.Switched");
+      data.addReplacement("$account", account.getName());
+      sender.message(data);
+      return;
+    } else {
+      if(sender.identifier().isPresent() && sender.player().isPresent()) {
+
+        if(account.getIdentifier().equals(sender.identifier().get()) || sender.player().get().hasPermission("tne.money.switch.override")) {
+
+          doSwitch(sender.identifier().get(), account.getIdentifier());
+          final MessageData data = new MessageData("Messages.Account.Switched");
+          data.addReplacement("$account", account.getName());
+          sender.message(data);
+          return;
+        }
+      }
+    }
+    final MessageData data = new MessageData("Messages.Account.SwitchedFailed");
+    data.addReplacement("$account", account.getName());
+    sender.message(data);
+  }
+
+  //helper method for onSwitch
+  private static void doSwitch(final UUID account, final UUID swapAccount) {
+
+    if(swapAccount.equals(account)) {
+      TNECore.eco().account().removeSwap("balance", account);
+      TNECore.eco().account().removeSwap("convert", account);
+      TNECore.eco().account().removeSwap("deposit", account);
+      TNECore.eco().account().removeSwap("note", account);
+      TNECore.eco().account().removeSwap("pay", account);
+      TNECore.eco().account().removeSwap("payreceive", account);
+      TNECore.eco().account().removeSwap("withdraw", account);
+      return;
+    }
+    TNECore.eco().account().addSwap("balance", account, swapAccount);
+    TNECore.eco().account().addSwap("convert", account, swapAccount);
+    TNECore.eco().account().addSwap("deposit", account, swapAccount);
+    TNECore.eco().account().addSwap("note", account, swapAccount);
+    TNECore.eco().account().addSwap("pay", account, swapAccount);
+    TNECore.eco().account().addSwap("payreceive", account, swapAccount);
+    TNECore.eco().account().addSwap("withdraw", account, swapAccount);
+  }
+
   //ArgumentsParser: <player> <amount> [world] [currency]
   public static void onTake(CmdSource<?> sender, Account account, PercentBigDecimal amount, String region, Currency currency) {
 
@@ -768,7 +840,7 @@ public class MoneyCommand extends BaseCommand {
       }
     }
 
-    final Optional<Account> senderAccount = BaseCommand.account(sender);
+    final Optional<Account> senderAccount = BaseCommand.account(sender, "top");
 
     if(senderAccount.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
@@ -829,7 +901,7 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    final Optional<Account> senderAccount = BaseCommand.account(sender);
+    final Optional<Account> senderAccount = BaseCommand.account(sender, "withdraw");
     if(senderAccount.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
       data.addReplacement("$player", sender.name());

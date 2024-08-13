@@ -21,6 +21,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.command.BaseCommand;
 import net.tnemc.core.command.parameters.PercentBigDecimal;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.plugincore.bukkit.impl.BukkitCMDSource;
 import net.tnemc.plugincore.paper.impl.PaperCMDSource;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
@@ -148,6 +149,14 @@ public class MoneyCommand {
   @CommandPermission("tne.money.setall")
   public void onSetAll(BukkitCommandActor sender, @Named("amount") BigDecimal amount, @Default("") @Named("currency") Currency currency, @Default("world-113") @Named("region") String region) {
     net.tnemc.core.command.MoneyCommand.onSetAll(new PaperCMDSource(sender), amount, region, currency);
+  }
+
+  @Subcommand({"switch", "swap"})
+  @Usage("Money.Switch.Arguments")
+  @Description("Money.Switch.Description")
+  @CommandPermission("tne.money.switch")
+  public void onSwitch(BukkitCommandActor sender, @Named("switched") Account account) {
+    net.tnemc.core.command.MoneyCommand.onSwitch(new PaperCMDSource(sender), account);
   }
 
   @Subcommand({"take", "minus", "remove", "-"})

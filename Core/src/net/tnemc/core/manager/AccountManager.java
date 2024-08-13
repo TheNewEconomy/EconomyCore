@@ -44,6 +44,7 @@ import net.tnemc.plugincore.core.io.maps.EnhancedHashMap;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +60,8 @@ import java.util.function.Function;
  * @since 0.1.2.0
  */
 public class AccountManager {
+
+  protected final Map<String, UUID> accountSwaps = new HashMap<>();
 
   private final EnhancedHashMap<String, Account> accounts = new EnhancedHashMap<>();
 
@@ -344,6 +347,18 @@ public class AccountManager {
     PluginCore.callbacks().call(new AccountTypesCallback());
 
     addAccountType(NonPlayerAccount.class, (value)->true);
+  }
+
+  public void addSwap(final String swapType, final UUID account, final UUID swapAccount) {
+    accountSwaps.put(swapType + ":" + account.toString(), swapAccount);
+  }
+
+  public void removeSwap(final String swapType, final UUID account) {
+    accountSwaps.remove(swapType + ":" + account.toString());
+  }
+
+  public UUID swap(final String swapType, final UUID account) {
+    return accountSwaps.getOrDefault(swapType + ":" + account.toString(), account);
   }
 
   /**
