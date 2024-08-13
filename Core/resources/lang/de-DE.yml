@@ -3,7 +3,7 @@
 #License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 #All configurable messages in TNE
 Messages:
-  config-version: 5
+  config-version: 6
   General:
     Version: "<white>TNE-Version: <green>$version <white>- Bau: <green>$build"
     NoPerm: "<red>Es tut mir leid, aber Sie haben keine Berechtigung für diese Aktion."
@@ -38,6 +38,8 @@ Messages:
     Restoration: "<white>Extraktion gestartet. Bitte beobachte die Konsole zur Vervollständigungsbestätigung."
   Account:
     NoSuch: "<red>Dein Account konnte nicht gefunden werden!"
+    Switched: "<white>Successfully switched your holdings account to <green>$account<white>."
+    SwitchedFailed: "<red>You don't have access to switch your holdings account to <white>$account<red>."
     NoHoldings: "<red>Sie haben keine Anteile für die Währung '$currency'."
     PinSetAlready: "<red>Du hast bereits einen Pin gesetzt. Bitte gib den alten Pin an, um einen neuen Pin zu setzen."
     PinSet: "<white>Deine Pin wurde auf $pin gesetzt."
@@ -454,6 +456,9 @@ Messages:
       SetAll:
         Arguments: "<amount> [currency] [world]"
         Description: "Set the holdings of all players."
+      Switch:
+        Arguments: "<account>"
+        Description: "Switch the account you use for transactions and money commands."
       Take:
         Arguments: "<player> <amount> [currency] [world]"
         Description: "Removes money from your economy, specifically from a player's balance."
