@@ -423,39 +423,51 @@ public class MoneyCommand extends BaseCommand {
     msg.addReplacement("$player", account.getName());
     sender.message(msg);
 
-    TNECore.eco().currency().currencies().forEach((cur)->{
+    if(TNECore.instance().config().getYaml().getBoolean("Core.Commands.Balance.Restrict", false)) {
 
-      final MessageData entryMSG = new MessageData("Messages.Money.HoldingsMultiSingle");
-      entryMSG.addReplacement("$currency", cur.getIdentifier());
+      final Optional<Currency> restricted = TNECore.eco().currency().findCurrency(TNECore.instance().config().getYaml().getString("Core.Commands.Balance.Currency", "Default"));
 
-      BigDecimal amount = BigDecimal.ZERO;
-      for(HoldingsEntry entry : cur.type().getHoldings(account, resolve, cur, EconomyManager.NORMAL)) {
-        amount = amount.add(entry.getAmount());
+      printBalance(sender, account, resolve, restricted.orElse(TNECore.eco().currency().getDefaultCurrency()));
 
-        if(entry.getHandler().asID().equalsIgnoreCase(EconomyManager.INVENTORY_ONLY.asID())) {
-          if(cur.type().supportsItems()) {
-            entryMSG.addReplacement("$inventory", CurrencyFormatter.format(account, entry));
-          } else {
-            entryMSG.addReplacement("$inventory", "0");
-          }
-        }
+    } else {
 
-        if(entry.getHandler().asID().equalsIgnoreCase(EconomyManager.E_CHEST.asID())) {
-          if(cur.type().supportsItems()) {
-            entryMSG.addReplacement("$ender", CurrencyFormatter.format(account, entry));
-          } else {
-            entryMSG.addReplacement("$ender", "0");
-          }
-        }
+      TNECore.eco().currency().currencies().forEach((cur)->{
 
-        if(entry.getHandler().asID().equalsIgnoreCase(EconomyManager.VIRTUAL.asID())) {
-          entryMSG.addReplacement("$virtual", CurrencyFormatter.format(account, entry));
+        printBalance(sender, account, resolve, cur);
+      });
+    }
+  }
+
+  private static void printBalance(final CmdSource<?> sender, final Account account, final String region, final Currency currency) {
+    final MessageData entryMSG = new MessageData("Messages.Money.HoldingsMultiSingle");
+    entryMSG.addReplacement("$currency", currency.getIdentifier());
+
+    BigDecimal amount = BigDecimal.ZERO;
+    for(HoldingsEntry entry : currency.type().getHoldings(account, region, currency, EconomyManager.NORMAL)) {
+      amount = amount.add(entry.getAmount());
+
+      if(entry.getHandler().asID().equalsIgnoreCase(EconomyManager.INVENTORY_ONLY.asID())) {
+        if(currency.type().supportsItems()) {
+          entryMSG.addReplacement("$inventory", CurrencyFormatter.format(account, entry));
+        } else {
+          entryMSG.addReplacement("$inventory", "0");
         }
       }
 
-      entryMSG.addReplacement("$amount", CurrencyFormatter.format(account, new HoldingsEntry(resolve, cur.getUid(), amount, EconomyManager.NORMAL)));
-      sender.message(entryMSG);
-    });
+      if(entry.getHandler().asID().equalsIgnoreCase(EconomyManager.E_CHEST.asID())) {
+        if(currency.type().supportsItems()) {
+          entryMSG.addReplacement("$ender", CurrencyFormatter.format(account, entry));
+        } else {
+          entryMSG.addReplacement("$ender", "0");
+        }
+      }
+
+      if(entry.getHandler().asID().equalsIgnoreCase(EconomyManager.VIRTUAL.asID())) {
+        entryMSG.addReplacement("$virtual", CurrencyFormatter.format(account, entry));
+      }
+    }
+    entryMSG.addReplacement("$amount", CurrencyFormatter.format(account, new HoldingsEntry(region, currency.getUid(), amount, EconomyManager.NORMAL)));
+    sender.message(entryMSG);
   }
 
   //ArgumentsParser: <player> <amount> [currency] [from:account]

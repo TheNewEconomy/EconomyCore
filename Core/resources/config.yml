@@ -3,7 +3,7 @@
 # License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 Core:
 
-  config-version: 2
+  config-version: 3
 
   #Cracked Server? Set this to true. May cause data issues as spigot/paper UUIDs are unpredictable.
   #Do not change this unless you know what you're doing.
@@ -83,6 +83,16 @@ Core:
 
     #Configuration if money action commands, such as give/take/set require individual permissions.
     LimitCurrency: false
+
+    #Configurations relating to balance commands.
+    Balance:
+
+      #Should the /money balance command be restricted to one currency?
+      Restrict: false
+
+      #If restrict is true, only print balances for the following currency. If it can't find a currency
+      #based on the following identifier, it'll use the region default
+      Currency: "USD"
 
     #Configurations relating to the money top command.
     Top:
