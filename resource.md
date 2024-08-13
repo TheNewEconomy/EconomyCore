@@ -60,8 +60,8 @@ Download: [here](https://cdn.modrinth.com/data/bZ4eSWf0/versions/prNGjbjv/TNE-Ve
 ## Updates
 We continue to develop updates for TNE for free, and fix bugs as they're reported.
 
-## All the currencies
-TNE Allows you to create multiple currencies with ease through the currency creation GUI.
+## All the currencies - Unlimited
+TNE Allows you to create unlimited currencies with ease through the currency creation GUI.
 
 ### Types
 TNE Supports different types of currencies!
@@ -69,10 +69,30 @@ TNE Supports different types of currencies!
 #### Virtual: Simple currency that exists in thin air
 
 #### Item: Use minecraft items as currency.
+- Shulker Box Support
+- Bundle Support
+
+### Fine Tune your Currency
+Lots of per-currency configuration options.
+- Create a custom balance format for each currency
+- Set a starting amount for each currency
+- Set custom conversion rates for each currency
+- Create custom crafting recipes for item currencies
+- Block Mob drops for each currency
+- Set the max balance for each currency
+- Set enderchest balance inclusion per currency
+- Set item currencies to use MiniMessage inputs for display name and lores!
+- Set custom note items for each currency, used to have a currency voucher for each currency.
+- Allows for use of model data items as currency items
+
+### Fine Tune Who Can Access What Currency
+TNE allows you to fine tune who can run commands with each currency. You're able to block players from using
+/pay for certain currencies, and even checking their balance for others!
 
 #### Mixed: This type uses both virtual and item balances, and allows players to switch their balance between items and virtual whenever!
 
 #### Experience: Use experience as currency.
+#### Experience-level: Use experience levels as currency.
 
 ## Money Notes
 Convert your virtual currency into a physical money note using the /money note command.

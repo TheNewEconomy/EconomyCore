@@ -29,9 +29,7 @@ import net.tnemc.core.account.shared.Member;
 import net.tnemc.core.api.callback.account.AccountLoadCallback;
 import net.tnemc.core.api.callback.account.AccountSaveCallback;
 import net.tnemc.core.api.response.AccountAPIResponse;
-import net.tnemc.core.currency.Currency;
 import net.tnemc.plugincore.PluginCore;
-import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.plugincore.core.id.UUIDPair;
 import net.tnemc.plugincore.core.io.storage.Datable;
@@ -202,9 +200,10 @@ public class YAMLAccount implements Datable<Account> {
     YamlDocument yaml = null;
     try {
       yaml = YamlDocument.create(accFile);
-    } catch(IOException ignore) {
+    } catch(Exception ignore) {
 
       PluginCore.log().error("Issue loading account file. Account: " + identifier);
+      return Optional.empty();
     }
 
     if(yaml != null) {

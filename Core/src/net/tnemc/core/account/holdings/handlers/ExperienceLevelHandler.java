@@ -24,6 +24,7 @@ import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.HoldingsHandler;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
+import net.tnemc.core.currency.type.ExperienceLevelType;
 import net.tnemc.core.currency.type.ExperienceType;
 import net.tnemc.core.utils.Identifier;
 import net.tnemc.plugincore.core.utils.Experience;
@@ -32,6 +33,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 import static net.tnemc.core.EconomyManager.EXPERIENCE;
+import static net.tnemc.core.EconomyManager.EXPERIENCE_LEVEL;
 
 /**
  * ExperienceHandler
@@ -39,7 +41,7 @@ import static net.tnemc.core.EconomyManager.EXPERIENCE;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class ExperienceHandler implements HoldingsHandler {
+public class ExperienceLevelHandler implements HoldingsHandler {
   /**
    * The identifier for this handler.
    *
@@ -47,7 +49,7 @@ public class ExperienceHandler implements HoldingsHandler {
    */
   @Override
   public Identifier identifier() {
-    return EXPERIENCE;
+    return EXPERIENCE_LEVEL;
   }
 
   /**
@@ -59,7 +61,7 @@ public class ExperienceHandler implements HoldingsHandler {
    */
   @Override
   public boolean supports(CurrencyType type) {
-    return (type instanceof ExperienceType);
+    return (type instanceof ExperienceLevelType);
   }
 
   /**
@@ -77,8 +79,9 @@ public class ExperienceHandler implements HoldingsHandler {
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, CurrencyType type, BigDecimal amount) {
     account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, identifier()));
-    if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
-      Experience.setExperience(((PlayerAccount)account).getPlayer().get(), amount.intValueExact());
+
+    if(account instanceof PlayerAccount player && player.isOnline() && player.getPlayer().isPresent()) {
+      Experience.setLevel(player.getPlayer().get(), amount.intValueExact());
     }
     return true;
   }
@@ -96,24 +99,24 @@ public class ExperienceHandler implements HoldingsHandler {
    */
   @Override
   public HoldingsEntry getHoldings(Account account, String region, Currency currency, CurrencyType type) {
-    if(!account.isPlayer() || !((PlayerAccount)account).isOnline()) {
-      //Offline players/non-players have their balances saved to their wallet so check it.
-      final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
-                                                                               currency.getUid(),
-                                                                               EXPERIENCE
-      );
+    if(account instanceof PlayerAccount player && player.isOnline() && player.getPlayer().isPresent()) {
 
-      return holdings.orElseGet(()->new HoldingsEntry(region,
-                                                      currency.getUid(),
-                                                      BigDecimal.ZERO,
-                                                      EXPERIENCE
-      ));
+      final BigDecimal amount = new BigDecimal(player.getPlayer().get().getExpLevel());
+      final HoldingsEntry entry = new HoldingsEntry(region, currency.getUid(), amount, EXPERIENCE);
+
+      account.getWallet().setHoldings(entry);
+      return entry;
     }
 
-    final BigDecimal amount = Experience.getExperienceAsDecimal(((PlayerAccount)account).getPlayer().get());
-    final HoldingsEntry entry = new HoldingsEntry(region, currency.getUid(), amount, EXPERIENCE);
+    final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
+            currency.getUid(),
+            EXPERIENCE_LEVEL
+    );
 
-    account.getWallet().setHoldings(entry);
-    return entry;
+    return holdings.orElseGet(()->new HoldingsEntry(region,
+            currency.getUid(),
+            BigDecimal.ZERO,
+            EXPERIENCE_LEVEL
+    ));
   }
 }

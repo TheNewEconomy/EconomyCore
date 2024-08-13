@@ -1,4 +1,4 @@
-package net.tnemc.sponge.hook.misc;
+package net.tnemc.core.currency.type;
 
 /*
  * The New Economy
@@ -18,33 +18,37 @@ package net.tnemc.sponge.hook.misc;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.luckperms.api.context.ContextCalculator;
-import net.luckperms.api.context.ContextConsumer;
-import net.luckperms.api.context.ContextSet;
-import net.tnemc.core.hook.luckperms.BalanceContext;
-import org.jetbrains.annotations.NotNull;
-import org.spongepowered.api.entity.living.player.Player;
-import org.spongepowered.api.service.permission.Subject;
+import net.tnemc.core.EconomyManager;
+import net.tnemc.core.currency.CurrencyType;
+import net.tnemc.core.utils.Identifier;
 
 /**
- * LuckBalanceContext
+ * ExperienceType
  *
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class LuckBalanceContext implements ContextCalculator<Subject> {
-
-  final BalanceContext context = new BalanceContext();
-
+public class ExperienceLevelType implements CurrencyType {
+  /**
+   * @return The name of this currency type. Examples: Virtual, Item
+   */
   @Override
-  public void calculate(@NotNull Subject subject, @NotNull ContextConsumer contextConsumer) {
-    if(subject instanceof Player player) {
-      context.calculate(player.uniqueId(), contextConsumer);
-    }
+  public String name() {
+    return "experience-level";
   }
 
   @Override
-  public ContextSet estimatePotentialContexts() {
-    return context.estimate();
+  public String description() {
+    return "A simple currency based on experience levels. Not the most accurate...";
+  }
+
+  @Override
+  public boolean supportsVirtual() {
+    return false;
+  }
+
+  @Override
+  public Identifier defaultHandler() {
+    return EconomyManager.EXPERIENCE_LEVEL;
   }
 }

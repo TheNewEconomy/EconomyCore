@@ -52,6 +52,7 @@ import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
 import net.tnemc.menu.core.icon.impl.StateIcon;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import net.tnemc.plugincore.core.io.message.MessageData;
 import net.tnemc.plugincore.core.io.message.MessageHandler;
 
@@ -132,6 +133,22 @@ public class MyEcoMenu extends Menu {
      */
     final Page currency = new PageBuilder(CURRENCIES_PAGE).build();
     currency.addIcon(new PreviousPageIcon(0, this.name, 1, ActionType.ANY));
+    setClose((close)->{
+
+      final Optional<MenuViewer> viewer = close.getPlayer().viewer();
+      if(viewer.isPresent()) {
+
+        final Optional<Object> saved = viewer.get().findData("CURRENCY_SAVED_CONFIRM");
+        if(saved.isEmpty()) {
+
+          final Optional<PlayerProvider> provider = PluginCore.server().findPlayer(viewer.get().uuid());
+          if(provider.isPresent()) {
+            provider.get().message(new MessageData("Messages.Menu.MyEco.Main.CloseWarn"));
+          }
+        }
+      }
+
+    });
     currency.setOpen((open)->{
 
       if(open.getPlayer().viewer().isPresent()) {
@@ -156,6 +173,18 @@ public class MyEcoMenu extends Menu {
                     TNECore.eco().currency().getCurIDMap().clear();
 
                     TNECore.eco().currency().getLoader().loadCurrencies(directory);
+
+
+                    final Optional<MenuViewer> viewer = click.player().viewer();
+                    if(viewer.isPresent()) {
+                      viewer.get().addData("CURRENCY_SAVED_CONFIRM", true);
+                    }
+
+                    final Optional<PlayerProvider> provider = PluginCore.server().findPlayer(id);
+                    if(provider.isPresent()) {
+                      provider.get().message(new MessageData("Messages.Menu.MyEco.Main.Saved"));
+                    }
+
                   } catch(NoValidCurrenciesException ignore) {}
                 }), new PageSwitchWithClose(this.name, -1))
                 .withSlot(6)

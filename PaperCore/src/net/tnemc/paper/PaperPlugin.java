@@ -24,9 +24,12 @@ import net.tnemc.bukkit.listeners.player.PlayerJoinListener;
 import net.tnemc.bukkit.listeners.player.PlayerQuitListener;
 import net.tnemc.bukkit.listeners.server.PluginEnableListener;
 import net.tnemc.bukkit.listeners.world.WorldLoadListener;
+import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.TNECallbackProvider;
 import net.tnemc.core.io.message.BaseTranslationProvider;
 import net.tnemc.item.paper.PaperCalculationsProvider;
+import net.tnemc.menu.core.MenuHandler;
+import net.tnemc.menu.paper.PaperMenuHandler;
 import net.tnemc.paper.hook.economy.VaultHook;
 import net.tnemc.paper.hook.economy.VaultUnlockedHook;
 import net.tnemc.paper.hook.misc.PAPIHook;
@@ -50,21 +53,21 @@ import java.util.logging.Level;
 public class PaperPlugin {
 
   private PaperPluginCore pluginCore;
-  private PaperCore core;
+  private TNECore core;
   private boolean papiHooked = false;
 
   public void load(final JavaPlugin plugin) {
-    load(plugin, new PaperServerProvider(new PaperCalculationsProvider()));
+    load(plugin, new PaperCore(plugin), new PaperServerProvider(new PaperCalculationsProvider()));
   }
 
   /**
    * Called when the plugin is loaded by the Bukkit plugin manager.
    * This method should be used to initialize any necessary resources or data.
    */
-  public void load(final JavaPlugin plugin, ServerConnector provider) {
+  public void load(final JavaPlugin plugin, TNECore core, ServerConnector provider) {
 
     //Initialize our TNE Core Class
-    this.core = new PaperCore(plugin);
+    this.core = core;
     this.pluginCore = new PaperPluginCore(plugin, core, provider, new BaseTranslationProvider(), new TNECallbackProvider());
 
     //Vault

@@ -218,6 +218,7 @@ public class AccountManager {
   public Optional<SharedAccount> createNonPlayerAccount(final String name) {
 
     for(Map.Entry<Class<? extends SharedAccount>, Function<String, Boolean>> entry : types.entrySet()) {
+
       if(entry.getValue().apply(name)) {
         try {
           return Optional.of(entry.getKey().getDeclaredConstructor(UUID.class, String.class)

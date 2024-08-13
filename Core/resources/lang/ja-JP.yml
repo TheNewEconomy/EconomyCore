@@ -3,7 +3,7 @@
 #License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 #All configurable messages in TNE
 Messages:
-  config-version: 2
+  config-version: 5
   General:
     Version: "<white>TNE バージョン: <green>$version <white>- ビルド: <green>$build"
     NoPerm: "<red>あなたには権限がありません!"
@@ -145,6 +145,8 @@ Messages:
     MyEco:
       Main:
         Currencies: "Currencies"
+        CloseWarn: "<red>The currencies weren't saved! Your changes will be reset on restart if you don't click the save icon."
+        Saved: "<green>Successfully saved the currencies!"
       Currency:
         SaveLore: "Click to save the currencies."
         ResetLore: "Click to clear changes, and reset to previous currencies."
@@ -343,6 +345,7 @@ Messages:
     AwayEntry: "<green><click:run_command:/transaction info $id>$id</click> <white>|</white> $type"
     AwayNone: "<red>オフライン中に取引は発生しませんでした。"
     AwayJoin: "<white>オフラインの間に取引がありました! <green><click:run_command:/transaction away>クリックして確認!</click>"
+    HistoryNone: "No transactions to show!"
     History: "<white>=====[<green>取引<white>]===== $page/$page_top<newline>ID | 種類 | 送信者 | 受信者"
     HistoryEntry: "<green><click:run_command:/transaction info $id>$id</click> <white>| <green>$type <white>| <green>$initiator <white>| <green>$recipient"
     Info: "<white>取引情報:<newline><white>ID: <green>$id<newline><white>種類: <green>$type"
