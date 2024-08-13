@@ -76,10 +76,7 @@ public class SharedAccount extends Account {
    * @param value The value to set for the permission.
    */
   public void addPermission(UUID identifier, Permission permission, boolean value) {
-    Member member = members.get(identifier);
-    if(member == null) {
-      member = new Member(identifier);
-    }
+    final Member member = members.getOrDefault(identifier, new Member(identifier));
     member.addPermission(permission, value);
     members.put(identifier, member);
   }
@@ -92,10 +89,7 @@ public class SharedAccount extends Account {
    * @param value The value to set for the permission.
    */
   public void addPermission(UUID identifier, String permission, boolean value) {
-    Member member = members.get(identifier);
-    if(member == null) {
-      member = new Member(identifier);
-    }
+    final Member member = members.getOrDefault(identifier, new Member(identifier));
     member.addPermission(permission, value);
     members.put(identifier, member);
   }
@@ -128,6 +122,7 @@ public class SharedAccount extends Account {
    * @return True if the specified member has the specified permission, otherwise false.
    */
   public boolean hasPermission(UUID identifier, Permission permission) {
+    if(owner.equals(identifier)) return true;
     return findMember(identifier).map(value->value.hasPermission(permission))
         .orElseGet(permission::defaultValue);
   }
@@ -141,6 +136,7 @@ public class SharedAccount extends Account {
    * @return True if the specified member has the specified permission, otherwise false.
    */
   public boolean hasPermission(UUID identifier, String permission, boolean defaultValue) {
+    if(owner.equals(identifier)) return true;
     return findMember(identifier).map(value->value.hasPermission(permission, defaultValue)).orElse(defaultValue);
   }
 

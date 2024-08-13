@@ -25,6 +25,7 @@ import net.tnemc.plugincore.core.io.message.MessageData;
 import revxrsal.commands.help.CommandHelp;
 
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * BaseCommand is a class that contains various utility methods for our command classes.
@@ -41,11 +42,18 @@ public class BaseCommand {
     }
   }
 
-  public static Optional<Account> account(CmdSource<?> sender) {
+  public static Optional<Account> account(CmdSource<?> sender, final String type) {
     if(sender.identifier().isEmpty()) {
       return Optional.empty();
     }
-    return TNECore.eco().account().findAccount(sender.identifier().get());
+    return TNECore.eco().account().findAccount(TNECore.eco().account().swap(type, sender.identifier().get()));
+  }
+
+  public static Optional<Account> account(final UUID sender, final String type) {
+    if(sender == null) {
+      return Optional.empty();
+    }
+    return TNECore.eco().account().findAccount(TNECore.eco().account().swap(type, sender));
   }
 
   /**
