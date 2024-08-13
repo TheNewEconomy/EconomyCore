@@ -3,7 +3,7 @@
 #License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 #All configurable messages in TNE
 Messages:
-  config-version: 5
+  config-version: 6
   General:
     Version: "<white>Версия TNE: <green>$version <white>- Сборка: <green>$build"
     NoPerm: "<red>У вас недостаточно прав для этого."
@@ -38,6 +38,8 @@ Messages:
     Restoration: "<white>Восстановление запущено. Следите за консолью для подтверждения выполнения."
   Account:
     NoSuch: "<red>Не удаётся найти ваш аккаунт!"
+    Switched: "<white>Successfully switched your holdings account to <green>$account<white>."
+    SwitchedFailed: "<red>You don't have access to switch your holdings account to <white>$account<red>."
     NoHoldings: "<red>У вас нет активов для валюты '$currency'."
     PinSetAlready: "<red>Вы уже установили PIN-код, пожалуйста, используйте старый PIN-код для установки нового."
     PinSet: "<white>Вы установили PIN-код: $pin."
@@ -454,6 +456,9 @@ Messages:
       SetAll:
         Arguments: "<amount> [валюта] [мир]"
         Description: "Установить активы всех игроков."
+      Switch:
+        Arguments: "<account>"
+        Description: "Switch the account you use for transactions and money commands."
       Take:
         Arguments: "<player> <amount> [валюта] [мир]"
         Description: "Удаляет деньги из вашей экономики, в частности с баланса игрока."
