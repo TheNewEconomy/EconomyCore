@@ -3,7 +3,7 @@
 #License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 #All configurable messages in TNE
 Messages:
-  config-version: 5
+  config-version: 6
   General:
     Version: "<white>TNE版本: <green>$version <white>- 构建版本: <green>$build"
     NoPerm: "<red>抱歉，你没有权限这么做。"
@@ -38,6 +38,8 @@ Messages:
     Restoration: "<white>数据恢复已开始。请在控制台确认已经完成。"
   Account:
     NoSuch: "<red>无法找到你的账号！"
+    Switched: "<white>Successfully switched your holdings account to <green>$account<white>."
+    SwitchedFailed: "<red>You don't have access to switch your holdings account to <white>$account<red>."
     NoHoldings: "<red>你没有持有货币 \"$currency\"！"
     PinSetAlready: "<red>你已经设置过一个PIN，请提供原PIN以设置新的PIN。"
     PinSet: "<white>你的PIN已设置为 $pin。"
@@ -454,6 +456,9 @@ Messages:
       SetAll:
         Arguments: "<amount> [currency] [world]"
         Description: "Set the holdings of all players."
+      Switch:
+        Arguments: "<account>"
+        Description: "Switch the account you use for transactions and money commands."
       Take:
         Arguments: "<player> <amount> [currency] [world]"
         Description: "Removes money from your economy, specifically from a player's balance."
