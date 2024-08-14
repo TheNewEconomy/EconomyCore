@@ -952,7 +952,7 @@ public class MoneyCommand extends BaseCommand {
     }
   }
 
-  private static Optional<Receipt> processTransaction(CmdSource<?> sender, Transaction transaction, final String modifiedAccount, final BigDecimal modifier) {
+  public static Optional<Receipt> processTransaction(CmdSource<?> sender, Transaction transaction, final String modifiedAccount, final BigDecimal modifier) {
     try {
       final TransactionResult result = transaction.process();
 
