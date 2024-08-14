@@ -438,7 +438,7 @@ public class MoneyCommand extends BaseCommand {
     }
   }
 
-  private static void printBalance(final CmdSource<?> sender, final Account account, final String region, final Currency currency) {
+  public static void printBalance(final CmdSource<?> sender, final Account account, final String region, final Currency currency) {
     final MessageData entryMSG = new MessageData("Messages.Money.HoldingsMultiSingle");
     entryMSG.addReplacement("$currency", currency.getIdentifier());
 
