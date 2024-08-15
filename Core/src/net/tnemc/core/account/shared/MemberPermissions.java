@@ -182,5 +182,58 @@ public enum MemberPermissions implements Permission {
     public boolean defaultValue() {
       return false;
     }
+  },
+
+  /**
+   * Can the member delete the account?
+   */
+  DELETE_ACCOUNT {
+
+    /**
+     * The identifier of the permission.
+     *
+     * @return The identifier of the permission.
+     */
+    @Override
+    public String identifier() {
+      return "DELETE_ACCOUNT";
+    }
+
+    /**
+     * The default value of the permission.
+     *
+     * @return The default value of the permission.
+     */
+    @Override
+    public boolean defaultValue() {
+      return false;
+    }
+  },
+
+  /**
+   * Can the member transfer ownership of the account?
+   */
+  TRANSFER_OWNERSHIP {
+
+    /**
+     * The identifier of the permission.
+     *
+     * @return The identifier of the permission.
+     */
+    @Override
+    public String identifier() {
+      return "TRANSFER_OWNERSHIP";
+    }
+
+    /**
+     * The default value of the permission.
+     *
+     * @return The default value of the permission.
+     */
+    @Override
+    public boolean defaultValue() {
+      return false;
+    }
   }
+
 }
