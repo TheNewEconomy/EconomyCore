@@ -3,7 +3,7 @@
 #License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 #All configurable messages in TNE
 Messages:
-  config-version: 6
+  config-version: 7
   General:
     Version: "<white>TNE バージョン: <green>$version <white>- ビルド: <green>$build"
     NoPerm: "<red>あなたには権限がありません!"
@@ -214,6 +214,10 @@ Messages:
         SeparateMajorDisabledLore: "Click to separate the major numeric every three numbers."
         SeparateMajorEnabledDisplay: "Separate Major Amounts(Enabled)"
         SeparateMajorEnabledLore: "Click to not separate the major numeric every three numbers."
+        BalanceDisabledDisplay: "Show Balance(Disabled)"
+        BalanceDisabledLore: "Click to show this currency in the balance command."
+        BalanceEnabledDisplay: "Show Balance(Enabled)"
+        BalanceEnabledLore: "Click to not show this currency in the balance command."
         SetMajorSeparatorMessage: "Enter the major value separator for the currency:"
         SetMajorSeparatorLore: "Click to set the major value separator for the currency."
       EditNote:
