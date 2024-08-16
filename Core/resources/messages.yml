@@ -4,7 +4,7 @@
 # All configurable messages in TNE
 Messages:
 
-  config-version: 6
+  config-version: 7
 
   General:
     Version: "<white>TNE Version: <green>$version <white>- Build: <green>$build"
@@ -232,6 +232,10 @@ Messages:
         SeparateMajorDisabledLore: "Click to separate the major numeric every three numbers."
         SeparateMajorEnabledDisplay: "Separate Major Amounts(Enabled)"
         SeparateMajorEnabledLore: "Click to not separate the major numeric every three numbers."
+        BalanceDisabledDisplay: "Show Balance(Disabled)"
+        BalanceDisabledLore: "Click to show this currency in the balance command."
+        BalanceEnabledDisplay: "Show Balance(Enabled)"
+        BalanceEnabledLore: "Click to not show this currency in the balance command."
         SetMajorSeparatorMessage: "Enter the major value separator for the currency:"
         SetMajorSeparatorLore: "Click to set the major value separator for the currency."
 

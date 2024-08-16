@@ -146,6 +146,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     final String prefixes = cur.getString("Formatting.Prefixes", "kMGTPEZYXWVUN₮").trim();
     final boolean separate = cur.getBoolean("Formatting.Major_Separate", true);
     final String separator = cur.getString("Formatting.Major_Separator", ",");
+    final boolean showBalance = cur.getBoolean("Formatting.Balance", true);
 
     final CurrencyType type = TNECore.eco().currency().findTypeOrDefault(currencyType);
 
@@ -199,6 +200,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     currency.setType(type.name());
     currency.setSeparateMajor(separate);
     currency.setMajorSeparator(separator);
+    currency.setBalanceShow(showBalance);
     currency.setMinorWeight(minorWeight);
 
     final boolean global = cur.getBoolean("Options.Global.Enabled", true);

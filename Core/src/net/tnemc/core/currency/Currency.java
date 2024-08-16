@@ -67,6 +67,7 @@ public class Currency {
   private String symbol;
   private String prefixes;
   private String decimal;
+  private boolean balanceShow;
 
   private String display;
   private String displayPlural;
@@ -97,6 +98,7 @@ public class Currency {
 
     //Currency Options Configurations
     this.decimal = ".";
+    this.balanceShow = true;
     this.decimalPlaces = 2;
     this.type = "virtual";
     this.minorWeight = 100;
@@ -239,6 +241,14 @@ public class Currency {
 
   public void setDecimal(String decimal) {
     this.decimal = decimal;
+  }
+
+  public boolean isBalanceShow() {
+    return balanceShow;
+  }
+
+  public void setBalanceShow(boolean balanceShow) {
+    this.balanceShow = balanceShow;
   }
 
   public String getDisplay() {

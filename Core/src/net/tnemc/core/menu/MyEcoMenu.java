@@ -763,6 +763,7 @@ public class MyEcoMenu extends Menu {
    * Display Minor Plural
    * Separate Major
    * Major Separator
+   * Show Balance
    */
   private void handleCurrencyEditFormatOpen(final PageOpenCallback callback) {
 
@@ -944,6 +945,29 @@ public class MyEcoMenu extends Menu {
                         .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SetMajorSeparatorLore"), id)))
                         .display(Component.text(currencyObject.getMajorSeparator())))
                 .build());
+
+        //ender chest icon
+        final String balanceState = (currencyObject.isBalanceShow())? "ENABLED" : "DISABLED";
+        final StateIcon showBalance = new StateIcon(disabledStack, null, "CURRENCY_SHOW_BALANCE", balanceState, (currentState)->{
+          if(currentState.toUpperCase(Locale.ROOT).equals("ENABLED")) {
+            currencyObject.setBalanceShow(false);
+            return "DISABLED";
+          }
+          currencyObject.setBalanceShow(true);
+          return "ENABLED";
+        });
+        showBalance.setSlot(20);
+        showBalance.addState("DISABLED",
+                disabledStack
+                        .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.BalanceDisabledDisplay"), id))
+                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.BalanceDisabledLore"), id))));
+
+        showBalance.addState("ENABLED",
+                enabledStack
+                        .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.BalanceEnabledDisplay"), id))
+                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.BalanceEnabledLore"), id))));
+
+        callback.getPage().addIcon(showBalance);
       }
     }
   }
