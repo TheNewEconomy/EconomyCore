@@ -141,6 +141,9 @@ Formatting:
   #The separator to use for numeric separation.
   Major_Separator: ','
 
+  #Should this currency be shown in the balance commands.
+  Balance: true
+
 #All configurations relating to currency notes.
 Note:
 

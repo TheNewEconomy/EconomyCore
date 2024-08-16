@@ -195,6 +195,9 @@ public class DefaultCurrencySaver implements CurrencySaver {
     MISCUtils.setComment(cur, "Formatting.Major_Separator", "The separator to use for numeric separation.");
     cur.set("Formatting.Major_Separator", currency.getMajorSeparator());
 
+    MISCUtils.setComment(cur, "Formatting.Balance", "Should this currency be shown in the balance commands.");
+    cur.set("Formatting.Balance", currency.isBalanceShow());
+
     //Load our note configurations.
     final Optional<Note> note = currency.getNote();
 

@@ -428,19 +428,11 @@ public class MoneyCommand extends BaseCommand {
     msg.addReplacement("$player", account.getName());
     sender.message(msg);
 
-    if(TNECore.instance().config().getYaml().getBoolean("Core.Commands.Balance.Restrict", false)) {
-
-      final Optional<Currency> restricted = TNECore.eco().currency().findCurrency(TNECore.instance().config().getYaml().getString("Core.Commands.Balance.Currency", "Default"));
-
-      printBalance(sender, account, resolve, restricted.orElse(TNECore.eco().currency().getDefaultCurrency()));
-
-    } else {
-
-      TNECore.eco().currency().currencies().forEach((cur)->{
-
+    TNECore.eco().currency().currencies().forEach((cur)->{
+      if(cur.isBalanceShow()) {
         printBalance(sender, account, resolve, cur);
-      });
-    }
+      }
+    });
   }
 
   public static void printBalance(final CmdSource<?> sender, final Account account, final String region, final Currency currency) {
