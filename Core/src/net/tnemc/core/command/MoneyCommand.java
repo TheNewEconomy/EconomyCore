@@ -28,6 +28,7 @@ import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.account.holdings.modify.HoldingsOperation;
 import net.tnemc.core.account.shared.MemberPermissions;
 import net.tnemc.core.actions.source.PlayerSource;
+import net.tnemc.core.channel.MessageHandler;
 import net.tnemc.core.command.parameters.PercentBigDecimal;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
@@ -268,18 +269,18 @@ public class MoneyCommand extends BaseCommand {
                                                               modifier.asEntry()));
       sender.message(data);
 
+      final MessageData msgData = new MessageData("Messages.Money.Given");
+      msgData.addReplacement("$currency", currency.getIdentifier());
+      msgData.addReplacement("$player", (sender.name() == null)? MainConfig.yaml().getString("Core.Server.Account.Name") : sender.name());
+      msgData.addReplacement("$amount", CurrencyFormatter.format(account, modifier.asEntry()));
+
       if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
 
         final Optional<PlayerProvider> provider = ((PlayerAccount)account).getPlayer();
 
-        if(provider.isPresent()) {
-          final MessageData msgData = new MessageData("Messages.Money.Given");
-          msgData.addReplacement("$currency", currency.getIdentifier());
-          msgData.addReplacement("$player", (sender.name() == null)? MainConfig.yaml().getString("Core.Server.Account.Name") : sender.name());
-          msgData.addReplacement("$amount", CurrencyFormatter.format(account,
-                                                                     modifier.asEntry()));
-          provider.get().message(msgData);
-        }
+        provider.ifPresent(playerProvider->playerProvider.message(msgData));
+      } else {
+        MessageHandler.send(account.getIdentifier(), msgData.grab(account.getIdentifier()));
       }
     }
   }
@@ -558,17 +559,16 @@ public class MoneyCommand extends BaseCommand {
                                                               modifier.asEntry()));
       sender.message(data);
 
+      final MessageData msgData = new MessageData("Messages.Money.Received");
+      msgData.addReplacement("$player", (sender.name() == null)? MainConfig.yaml().getString("Core.Server.Account.Name") : sender.name());
+      msgData.addReplacement("$amount", CurrencyFormatter.format(account, modifier.asEntry()));
+
       if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
 
         final Optional<PlayerProvider> provider = PluginCore.server().findPlayer(((PlayerAccount)account).getUUID());
-        if(provider.isPresent()) {
-
-          final MessageData msgData = new MessageData("Messages.Money.Received");
-          msgData.addReplacement("$player", (sender.name() == null)? MainConfig.yaml().getString("Core.Server.Account.Name") : sender.name());
-          msgData.addReplacement("$amount", CurrencyFormatter.format(account,
-                                                                     modifier.asEntry()));
-          provider.get().message(msgData);
-        }
+        provider.ifPresent(playerProvider->playerProvider.message(msgData));
+      } else {
+        MessageHandler.send(account.getIdentifier(), msgData.grab(account.getIdentifier()));
       }
     }
   }
@@ -814,18 +814,20 @@ public class MoneyCommand extends BaseCommand {
                                                               modifier.asEntry()));
       sender.message(data);
 
+      final MessageData msgData = new MessageData("Messages.Money.Taken");
+      msgData.addReplacement("$player", (sender.name() == null)? MainConfig.yaml().getString("Core.Server.Account.Name") : sender.name());
+      msgData.addReplacement("$currency", currency.getIdentifier());
+      msgData.addReplacement("$amount", CurrencyFormatter.format(account, modifier.asEntry()));
+
       if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
 
         final Optional<PlayerProvider> provider = ((PlayerAccount)account).getPlayer();
 
         if(provider.isPresent()) {
-          final MessageData msgData = new MessageData("Messages.Money.Taken");
-          msgData.addReplacement("$player", (sender.name() == null)? MainConfig.yaml().getString("Core.Server.Account.Name") : sender.name());
-          msgData.addReplacement("$currency", currency.getIdentifier());
-          msgData.addReplacement("$amount", CurrencyFormatter.format(account,
-                                                                     modifier.asEntry()));
           provider.get().message(msgData);
         }
+      } else {
+        MessageHandler.send(account.getIdentifier(), msgData.grab(account.getIdentifier()));
       }
     }
   }
