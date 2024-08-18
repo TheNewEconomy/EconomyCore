@@ -23,6 +23,7 @@ import net.tnemc.bungee.message.backlog.BacklogEntry;
 import net.tnemc.bungee.message.backlog.ConfigEntry;
 import net.tnemc.bungee.message.backlog.MessageData;
 import net.tnemc.bungee.message.handlers.BalanceMessageHandler;
+import net.tnemc.bungee.message.handlers.MessageMessageHandler;
 import net.tnemc.bungee.message.handlers.SyncAllMessageHandler;
 
 import java.io.ByteArrayInputStream;
@@ -53,6 +54,7 @@ public class MessageManager {
     handlers.put("balance", new BalanceMessageHandler());
     //handlers.put("config", new ConfigMessageHandler());
     handlers.put("sync", new SyncAllMessageHandler());
+    handlers.put("message", new MessageMessageHandler());
   }
 
   public void onMessage(final String channel, final byte[] data) {
