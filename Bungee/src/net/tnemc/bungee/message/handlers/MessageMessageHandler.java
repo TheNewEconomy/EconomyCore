@@ -60,6 +60,6 @@ public class MessageMessageHandler extends MessageHandler {
     out.writeUTF(message);
 
 
-    sendToAll("tne:message", out);
+    sendToAll("tne:message", out, false);
   }
 }

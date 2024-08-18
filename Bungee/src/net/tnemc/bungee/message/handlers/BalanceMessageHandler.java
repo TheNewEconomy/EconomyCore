@@ -59,6 +59,6 @@ public class BalanceMessageHandler extends AccountHandler {
     out.writeUTF(currency);
     out.writeUTF(handler);
     out.writeUTF(amount);
-    sendToAll("tne:balance", out);
+    sendToAll("tne:balance", out, true);
   }
 }
