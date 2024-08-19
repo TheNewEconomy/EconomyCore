@@ -40,7 +40,7 @@ import java.util.logging.Logger;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-@Plugin(id = "tne_velocity", name = "The New Economy Velocity", version = "0.1.2.9",
+@Plugin(id = "tne_velocity", name = "The New Economy Velocity", version = "0.1.3.2",
     url = "https://tnemc.net", description = "A bridge for TheNewEconomy plugin.", authors = {"creatorfromhell"})
 public class VelocityCore {
 
@@ -68,6 +68,7 @@ public class VelocityCore {
     this.manager = new MessageManager(new VelocityProxy());
 
     server.getChannelRegistrar().register(MinecraftChannelIdentifier.from("tne:balance"));
+    server.getChannelRegistrar().register(MinecraftChannelIdentifier.from("tne:message"));
     server.getChannelRegistrar().register(MinecraftChannelIdentifier.from("tne:sync"));
     server.getEventManager().register(this, new MessageListener());
     server.getEventManager().register(this, new ServerPostConnectListener());

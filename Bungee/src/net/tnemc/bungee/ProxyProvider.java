@@ -34,7 +34,7 @@ public interface ProxyProvider {
    * @param channel The channel to use for sending the data.
    * @param out The data to send.
    */
-  void sendToAll(final String channel, byte[] out);
+  void sendToAll(final String channel, byte[] out, boolean backlog);
 
   /**
    * Used to send data to a specific server.

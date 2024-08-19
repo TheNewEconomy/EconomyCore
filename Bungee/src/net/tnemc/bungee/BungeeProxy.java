@@ -38,12 +38,15 @@ public class BungeeProxy implements ProxyProvider {
    * @param out     The data to send.
    */
   @Override
-  public void sendToAll(String channel, byte[] out) {
+  public void sendToAll(String channel, byte[] out, boolean backlog) {
     BungeeCore.instance().getProxy().getServers().values().forEach(server->{
       if(!server.getPlayers().isEmpty()) {
-        server.sendData(channel, out, false);
+        server.sendData(channel, out, true);
       } else {
-        MessageManager.instance().addData(server.getSocketAddress().toString(), new BacklogEntry(channel, out));
+
+        if(backlog) {
+          MessageManager.instance().addData(server.getSocketAddress().toString(), new BacklogEntry(channel, out));
+        }
       }
     });
   }
@@ -59,7 +62,7 @@ public class BungeeProxy implements ProxyProvider {
   public void sendTo(String serverName, String channel, byte[] out) {
     BungeeCore.instance().getProxy().getServers().values().forEach(server->{
       if(server.getName().equalsIgnoreCase(serverName)) {
-        server.sendData(channel, out, false);
+        server.sendData(channel, out, true);
       }
     });
   }
@@ -74,7 +77,7 @@ public class BungeeProxy implements ProxyProvider {
     BungeeCore.instance().getProxy().getServers().values().forEach(server->{
       if(server.getSocketAddress().toString().equalsIgnoreCase(data.getServerName())) {
         for(BacklogEntry entry : data.getBacklog()) {
-          server.sendData(entry.channel(), entry.out(), false);
+          server.sendData(entry.channel(), entry.out(), true);
         }
       }
     });

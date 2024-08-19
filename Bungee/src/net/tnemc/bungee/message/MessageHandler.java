@@ -39,12 +39,12 @@ public abstract class MessageHandler {
     this.tag = tag;
   }
 
-  public static void sendToAll(final String channel, ByteArrayDataOutput out) {
-    MessageManager.instance().proxy().sendToAll(channel, out.toByteArray());
+  public static void sendToAll(final String channel, ByteArrayDataOutput out, boolean backlog) {
+    MessageManager.instance().proxy().sendToAll(channel, out.toByteArray(), backlog);
   }
 
-  public static void sendToAll(final String channel, byte[] out) {
-    MessageManager.instance().proxy().sendToAll(channel, out);
+  public static void sendToAll(final String channel, byte[] out, boolean backlog) {
+    MessageManager.instance().proxy().sendToAll(channel, out, backlog);
   }
 
   public static void sendTo(final String serverName, final String channel, ByteArrayDataOutput out) {

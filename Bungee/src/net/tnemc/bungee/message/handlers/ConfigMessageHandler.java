@@ -57,6 +57,6 @@ public class ConfigMessageHandler extends MessageHandler {
     out.write(left);
 
 
-    sendToAll("tne:config", out);
+    sendToAll("tne:config", out, true);
   }
 }

@@ -169,6 +169,7 @@ public abstract class TNECore extends PluginEngine {
   public void registerPluginChannels() {
     PluginCore.instance().getChannelMessageManager().register(new BalanceHandler());
     PluginCore.instance().getChannelMessageManager().register(new SyncHandler());
+    PluginCore.instance().getChannelMessageManager().register(new net.tnemc.core.channel.MessageHandler());
   }
 
   @Override
