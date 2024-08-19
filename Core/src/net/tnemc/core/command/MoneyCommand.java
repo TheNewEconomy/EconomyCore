@@ -274,13 +274,12 @@ public class MoneyCommand extends BaseCommand {
       msgData.addReplacement("$player", (sender.name() == null)? MainConfig.yaml().getString("Core.Server.Account.Name") : sender.name());
       msgData.addReplacement("$amount", CurrencyFormatter.format(account, modifier.asEntry()));
 
+      MessageHandler.send(account.getIdentifier(), msgData.grab(account.getIdentifier()));
       if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
 
         final Optional<PlayerProvider> provider = ((PlayerAccount)account).getPlayer();
 
         provider.ifPresent(playerProvider->playerProvider.message(msgData));
-      } else {
-        MessageHandler.send(account.getIdentifier(), msgData.grab(account.getIdentifier()));
       }
     }
   }
@@ -562,13 +561,12 @@ public class MoneyCommand extends BaseCommand {
       final MessageData msgData = new MessageData("Messages.Money.Received");
       msgData.addReplacement("$player", (sender.name() == null)? MainConfig.yaml().getString("Core.Server.Account.Name") : sender.name());
       msgData.addReplacement("$amount", CurrencyFormatter.format(account, modifier.asEntry()));
+      MessageHandler.send(account.getIdentifier(), msgData.grab(account.getIdentifier()));
 
       if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
 
         final Optional<PlayerProvider> provider = PluginCore.server().findPlayer(((PlayerAccount)account).getUUID());
         provider.ifPresent(playerProvider->playerProvider.message(msgData));
-      } else {
-        MessageHandler.send(account.getIdentifier(), msgData.grab(account.getIdentifier()));
       }
     }
   }
@@ -818,16 +816,13 @@ public class MoneyCommand extends BaseCommand {
       msgData.addReplacement("$player", (sender.name() == null)? MainConfig.yaml().getString("Core.Server.Account.Name") : sender.name());
       msgData.addReplacement("$currency", currency.getIdentifier());
       msgData.addReplacement("$amount", CurrencyFormatter.format(account, modifier.asEntry()));
+      MessageHandler.send(account.getIdentifier(), msgData.grab(account.getIdentifier()));
 
       if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
 
         final Optional<PlayerProvider> provider = ((PlayerAccount)account).getPlayer();
 
-        if(provider.isPresent()) {
-          provider.get().message(msgData);
-        }
-      } else {
-        MessageHandler.send(account.getIdentifier(), msgData.grab(account.getIdentifier()));
+        provider.ifPresent(playerProvider->playerProvider.message(msgData));
       }
     }
   }

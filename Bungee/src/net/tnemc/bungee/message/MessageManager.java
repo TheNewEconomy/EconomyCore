@@ -61,6 +61,7 @@ public class MessageManager {
 
     final String tag = channel.replace("tne:", "").split(" ")[0];
 
+
     if(handlers.containsKey(tag)) {
       try {
 

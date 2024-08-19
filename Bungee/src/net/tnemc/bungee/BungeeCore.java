@@ -49,6 +49,7 @@ public class BungeeCore extends Plugin {
 
     getProxy().registerChannel("tne:balance");
     getProxy().registerChannel("tne:sync");
+    getProxy().registerChannel("tne:message");
     getProxy().getPluginManager().registerListener(this, new MessageListener());
     getProxy().getPluginManager().registerListener(this, new PlayerConnectListener());
   }

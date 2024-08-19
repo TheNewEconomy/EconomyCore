@@ -50,6 +50,7 @@ public class MessageHandler extends ChannelMessageHandler {
     out.writeUTF(PluginCore.instance().getServerID().toString());
     out.writeUTF(identifier.toString());
     out.writeUTF(MiniMessage.miniMessage().serialize(component));
+    PluginCore.log().debug("Sending message: " + MiniMessage.miniMessage().serialize(component));
 
     TNECore.instance().storage().sendProxyMessage("tne:message", out.toByteArray());
   }
@@ -61,6 +62,7 @@ public class MessageHandler extends ChannelMessageHandler {
 
       final String uuid = wrapper.readUTF();
       final String message = wrapper.readUTF();
+      PluginCore.log().debug("Received message: " + message);
 
       if(uuid != null && message != null) {
 

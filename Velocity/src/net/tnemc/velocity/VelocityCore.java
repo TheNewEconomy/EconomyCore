@@ -68,6 +68,7 @@ public class VelocityCore {
     this.manager = new MessageManager(new VelocityProxy());
 
     server.getChannelRegistrar().register(MinecraftChannelIdentifier.from("tne:balance"));
+    server.getChannelRegistrar().register(MinecraftChannelIdentifier.from("tne:message"));
     server.getChannelRegistrar().register(MinecraftChannelIdentifier.from("tne:sync"));
     server.getEventManager().register(this, new MessageListener());
     server.getEventManager().register(this, new ServerPostConnectListener());
