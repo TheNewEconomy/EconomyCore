@@ -23,12 +23,10 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.PlayerAccount;
-import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.channel.ChannelBytesWrapper;
 import net.tnemc.plugincore.core.channel.ChannelMessageHandler;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
-import net.tnemc.plugincore.core.io.message.MessageData;
 
 import java.util.Optional;
 import java.util.UUID;

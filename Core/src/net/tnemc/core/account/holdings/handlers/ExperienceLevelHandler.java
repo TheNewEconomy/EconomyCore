@@ -25,7 +25,6 @@ import net.tnemc.core.account.holdings.HoldingsHandler;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.currency.type.ExperienceLevelType;
-import net.tnemc.core.currency.type.ExperienceType;
 import net.tnemc.core.utils.Identifier;
 import net.tnemc.plugincore.core.utils.Experience;
 

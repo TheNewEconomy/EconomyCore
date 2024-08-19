@@ -28,8 +28,6 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.TNECallbackProvider;
 import net.tnemc.core.io.message.BaseTranslationProvider;
 import net.tnemc.item.paper.PaperCalculationsProvider;
-import net.tnemc.menu.core.MenuHandler;
-import net.tnemc.menu.paper.PaperMenuHandler;
 import net.tnemc.paper.hook.economy.VaultHook;
 import net.tnemc.paper.hook.economy.VaultUnlockedHook;
 import net.tnemc.paper.hook.misc.PAPIHook;

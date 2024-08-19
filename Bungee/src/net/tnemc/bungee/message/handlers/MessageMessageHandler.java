@@ -20,8 +20,6 @@ package net.tnemc.bungee.message.handlers;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.tnemc.bungee.message.MessageHandler;
-import net.tnemc.bungee.message.MessageManager;
-import net.tnemc.bungee.message.backlog.ConfigEntry;
 
 import java.io.DataInputStream;
 import java.io.IOException;

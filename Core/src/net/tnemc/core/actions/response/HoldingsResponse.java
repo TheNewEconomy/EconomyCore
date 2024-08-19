@@ -76,6 +76,23 @@ public enum HoldingsResponse implements EconomyResponse {
 
     @Override
     public String response() {
+      return "Messages.Money.Insufficient";
+    }
+  },
+
+  /**
+   * The action was unsuccessful due to the account not having enough funds.
+   *
+   * @since 0.1.2.0
+   */
+  INSUFFICIENT_OTHER {
+    @Override
+    public boolean success() {
+      return false;
+    }
+
+    @Override
+    public String response() {
       return "Messages.Money.InsufficientOther";
     }
   },

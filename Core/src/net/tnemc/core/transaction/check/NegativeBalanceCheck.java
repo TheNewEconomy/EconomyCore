@@ -24,6 +24,7 @@ import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.actions.response.GeneralResponse;
 import net.tnemc.core.actions.response.HoldingsResponse;
+import net.tnemc.core.actions.source.PlayerSource;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionCheck;
@@ -77,6 +78,13 @@ public class NegativeBalanceCheck implements TransactionCheck {
 
       if(currency.isPresent() && !currency.get().negativeSupport() &&
           participant.getCombinedEnding().compareTo(BigDecimal.ZERO) < 0) {
+
+        if(transaction.getSource() instanceof PlayerSource source) {
+          if(!source.id().equals(participant.getId())) {
+            return HoldingsResponse.INSUFFICIENT_OTHER;
+          }
+        }
+
         return HoldingsResponse.INSUFFICIENT;
       }
 
