@@ -141,8 +141,11 @@ public class FormatSelectionPage {
               .build());
 
       //TODO: Fix display
+      final Optional<Object> formatData = viewer.get().findData(formatID);
+      final Component display = (formatData.isPresent())? Component.text((String)formatData.get()) : MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.None"), id);
+
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-              .display((Component)viewer.get().dataOrDefault(formatID, MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.None"), id)))
+              .display(display)
               .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Format"), id))))
               .withActions(new SwitchPageAction(menuName, menuPage))
               .withSlot(4)
