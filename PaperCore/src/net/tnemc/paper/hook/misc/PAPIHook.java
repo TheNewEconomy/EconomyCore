@@ -221,7 +221,6 @@ public class PAPIHook extends PlaceholderExpansion {
           pos = Integer.parseInt(args[3]);
           return LegacyComponentSerializer.legacySection().serialize(MessageHandler.grab(TNECore.eco().getTopManager().getFor(pos, curID), player.getUniqueId()));
 
-
         } else {
 
           //%tne_toppos[0]_<currency name>[1]%
