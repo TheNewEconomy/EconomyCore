@@ -53,6 +53,10 @@ public interface ActionSource {
    */
   String type();
 
+  default String asString() {
+    return type() + " " + name();
+  }
+
   static ActionSource create(String name, String type) {
 
     if(type.toLowerCase(Locale.ROOT).equals("player")) {

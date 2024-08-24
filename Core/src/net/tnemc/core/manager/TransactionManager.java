@@ -248,4 +248,8 @@ public class TransactionManager {
   public static ReceiptManager receipts() {
     return TNECore.eco().transaction().receiptManager;
   }
+
+  public SimpleDateFormat getFormat() {
+    return format;
+  }
 }
