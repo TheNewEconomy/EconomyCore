@@ -19,6 +19,7 @@ package net.tnemc.bukkit.hook.misc;
  */
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.tnemc.core.EconomyManager;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
@@ -218,8 +219,7 @@ public class PAPIHook extends PlaceholderExpansion {
 
           //%tne_toppos[0]_<currency name>[1]_position[2]_<pos>[3]%
           pos = Integer.parseInt(args[3]);
-          return MessageHandler.grab(TNECore.eco().getTopManager().getFor(pos, curID), player.getUniqueId()).toString();
-
+          return LegacyComponentSerializer.legacySection().serialize(MessageHandler.grab(TNECore.eco().getTopManager().getFor(pos, curID), player.getUniqueId()));
 
         } else {
 
