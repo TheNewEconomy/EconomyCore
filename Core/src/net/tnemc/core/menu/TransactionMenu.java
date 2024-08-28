@@ -55,7 +55,7 @@ public class TransactionMenu extends Menu {
   public TransactionMenu() {
     this.name = "transaction_menu";
     this.title = "Transactions";
-    this.rows = 3;
+    this.rows = 4;
 
     /*
      * Main Page
@@ -118,7 +118,7 @@ public class TransactionMenu extends Menu {
           if(receipt.isEmpty()) {
             continue;
           }
-          callback.getPage().addIcon(buildTransactionIcon(slot, receipt.get()));
+          //callback.getPage().addIcon(buildTransactionIcon(slot, receipt.get()));
         }
 
         slot += 2;
@@ -126,27 +126,13 @@ public class TransactionMenu extends Menu {
     }
   }
 
-  protected Icon buildTransactionIcon(final int slot, final Receipt receipt) {
-
-    String from = "None";
-    final Optional<Account> fromACC = receipt.getFrom().asAccount();
-    if(fromACC.isPresent()) {
-      from = fromACC.get().getName();
-    }
-
-    String to = "None";
-    final Optional<Account> toACC = receipt.getTo().asAccount();
-    if(toACC.isPresent()) {
-      to = toACC.get().getName();
-    }
+  protected Icon buildTransactionIcon(final int slot, final UUID transaction) {
 
     final LinkedList<Component> lore = new LinkedList<>();
-    lore.add(Component.text("Type: " + receipt.getType()));
-    lore.add(Component.text("To: " + to));
-    lore.add(Component.text("From: " + from));
+    lore.add(Component.text("Click for information."));
 
     return new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-            .display(Component.text(receipt.getId().toString())).lore(lore))
+            .display(Component.text(transaction.toString())).lore(lore))
             .withSlot(slot)
             .withActions(new SwitchPageAction(this.name, TRANSACTION_VIEW)).build();
   }

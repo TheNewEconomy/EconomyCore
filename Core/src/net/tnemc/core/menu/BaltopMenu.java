@@ -52,7 +52,7 @@ public class BaltopMenu extends Menu {
   public static final int TOP_COUNT = 10;
 
   public BaltopMenu() {
-    this.name = "transaction_menu";
+    this.name = "baltop_menu";
     this.title = "Balance Top";
     this.rows = 3;
 
