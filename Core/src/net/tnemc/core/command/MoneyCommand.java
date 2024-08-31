@@ -56,6 +56,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+import static net.tnemc.core.EconomyManager.TOP_PER_PAGE;
+
 /**
  * MoneyCommands
  *
@@ -862,19 +864,28 @@ public class MoneyCommand extends BaseCommand {
 
       TopManager.instance().load();
     }
+    final int max = TNECore.eco().getTopManager().page(currency.getUid());
 
-    TopPage<String> pageEntry = TNECore.eco().getTopManager().page(page, currency.getUid());
+    if(page < 1) page = 1;
+    if(page > max) page = max;
+
+    final TopPage<String> pageEntry = TNECore.eco().getTopManager().page(page, currency.getUid());
     if(pageEntry != null) {
       final MessageData data = new MessageData("Messages.Money.Top");
       data.addReplacement("$page", String.valueOf(page));
-      data.addReplacement("$page_top", String.valueOf(TNECore.eco().getTopManager().page(currency.getUid())));
+      data.addReplacement("$page_top", String.valueOf(max));
       sender.message(data);
 
+      final int adjusted = (page - 1) * TOP_PER_PAGE;
+      int i = 1;
       for(Map.Entry<String, BigDecimal> entry : pageEntry.getValues().entrySet()) {
         final MessageData en = new MessageData("Messages.Money.TopEntry");
+        en.addReplacement("$pos", (adjusted + i));
         en.addReplacement("$player", entry.getKey());
         en.addReplacement("$amount", CurrencyFormatter.format(senderAccount.get(), new HoldingsEntry(TNECore.eco().region().defaultRegion(), currency.getUid(), entry.getValue(), EconomyManager.NORMAL)));
         sender.message(en);
+
+        i++;
       }
     }
   }

@@ -47,7 +47,7 @@ public class BaseTranslationProvider implements TranslationProvider {
   @Override
   public String getLang(UUID identifier) {
 
-    Optional<Account> account = TNECore.eco().account().findAccount(identifier);
+    final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
 
     if(account.isPresent() && account.get().isPlayer()) {
       return ((PlayerAccount)account.get()).getLanguage();

@@ -54,6 +54,8 @@ import java.util.stream.Collectors;
  */
 public class EconomyManager {
 
+  public static final int TOP_PER_PAGE = 5;
+
   //Our core identifiers, leave these as static final, because they shouldn't be changed.
 
   //Normal and database are used internally only and don't have an associated holdings handler.

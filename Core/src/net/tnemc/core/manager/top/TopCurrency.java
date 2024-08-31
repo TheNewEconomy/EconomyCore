@@ -26,6 +26,8 @@ import net.tnemc.core.manager.TopManager;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
+import static net.tnemc.core.EconomyManager.TOP_PER_PAGE;
+
 /**
  * TopCurrency
  *
@@ -34,7 +36,7 @@ import java.util.regex.Pattern;
  */
 public class TopCurrency {
 
-  private final MultiTreeMap<String> balances = new MultiTreeMap<>(5);
+  private final MultiTreeMap<String> balances = new MultiTreeMap<>(TOP_PER_PAGE);
 
   private final String region;
   private final UUID currency;
