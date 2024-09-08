@@ -21,6 +21,7 @@ package net.tnemc.core.command;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
+import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.history.AwayHistory;
@@ -43,6 +44,11 @@ public class TransactionCommand {
   //[page #]
   public static void away(CmdSource<?> sender, int page) {
     final Optional<Account> account = BaseCommand.account(sender, "away");
+
+    if(sender.player().isPresent() && MainConfig.yaml().getBoolean("Core.Commands.GUIAlternatives", true)) {
+      sender.player().get().inventory().openMenu(sender.player().get(), "transaction_away");
+      return;
+    }
 
     if(account.isEmpty()) {
       sender.message(new MessageData("Messages.Transaction.AwayNone"));
@@ -75,7 +81,7 @@ public class TransactionCommand {
 
   //[page:#] [world:name/all] [player:name]
   public static void history(CmdSource<?> sender, int page, String region, Account account) {
-    if(sender.player().isPresent()) {
+    if(sender.player().isPresent() && MainConfig.yaml().getBoolean("Core.Commands.GUIAlternatives", true)) {
       sender.player().get().inventory().openMenu(sender.player().get(), "transaction_menu");
       return;
     }

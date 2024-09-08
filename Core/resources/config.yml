@@ -84,6 +84,9 @@ Core:
     #Configuration if money action commands, such as give/take/set require individual permissions.
     LimitCurrency: false
 
+    #Should the commands in TNE use their GUI alternatives?
+    GUIAlternatives: true
+
     #Configurations relating to balance commands.
     Balance:
 

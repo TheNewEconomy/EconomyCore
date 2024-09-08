@@ -87,6 +87,11 @@ public class MoneyCommand extends BaseCommand {
       }
     }
 
+    if(sender.player().isPresent() && MainConfig.yaml().getBoolean("Core.Commands.GUIAlternatives", true)) {
+      sender.player().get().inventory().openMenu(sender.player().get(), "my_bal");
+      return;
+    }
+
     final Optional<Account> account = BaseCommand.account(sender, "balance");
     if(account.isEmpty()) {
       final MessageData data = new MessageData("Messages.General.NoPlayer");
