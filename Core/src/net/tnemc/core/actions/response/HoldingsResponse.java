@@ -64,6 +64,23 @@ public enum HoldingsResponse implements EconomyResponse {
   },
 
   /**
+   * The action was unsuccessful due to the amount not being a multiple of a minimum denominations
+   *
+   * @since 0.1.2.0
+   */
+  MIN_DENOM_INCAPABLE {
+    @Override
+    public boolean success() {
+      return false;
+    }
+
+    @Override
+    public String response() {
+      return "Messages.Money.MinimumDenomination";
+    }
+  },
+
+  /**
    * The action was unsuccessful due to the account not having enough funds.
    *
    * @since 0.1.2.0
