@@ -104,7 +104,7 @@ public class YAMLAccount implements Datable<Account> {
         accFile.createNewFile();
       } catch(IOException ignore) {
 
-        PluginCore.log().error("Issue creating account file. Account: " + account.getName());
+        PluginCore.log().error("Issue creating account file. Account: " + account.getName(), DebugLevel.OFF);
         return;
       }
     }
@@ -115,7 +115,7 @@ public class YAMLAccount implements Datable<Account> {
       yaml = YamlDocument.create(accFile);
     } catch(IOException ignore) {
 
-      PluginCore.log().error("Issue loading account file. Account: " + account.getName());
+      PluginCore.log().error("Issue loading account file. Account: " + account.getName(), DebugLevel.OFF);
       return;
     }
 
@@ -184,7 +184,7 @@ public class YAMLAccount implements Datable<Account> {
 
     final File accFile = new File(PluginCore.directory(), "accounts/" + identifier + ".yml");
     if(!accFile.exists()) {
-      PluginCore.log().error("Null account file passed to YAMLAccount.load. Account: " + identifier);
+      PluginCore.log().error("Null account file passed to YAMLAccount.load. Account: " + identifier, DebugLevel.OFF);
       return Optional.empty();
     }
     return load(accFile, identifier);
@@ -193,7 +193,7 @@ public class YAMLAccount implements Datable<Account> {
   public Optional<Account> load(File accFile, final String identifier) {
     if(accFile == null) {
 
-      PluginCore.log().error("Null account file passed to YAMLAccount.load. Account: " + identifier);
+      PluginCore.log().error("Null account file passed to YAMLAccount.load. Account: " + identifier, DebugLevel.OFF);
       return Optional.empty();
     }
 
@@ -202,7 +202,7 @@ public class YAMLAccount implements Datable<Account> {
       yaml = YamlDocument.create(accFile);
     } catch(Exception ignore) {
 
-      PluginCore.log().error("Issue loading account file. Account: " + identifier);
+      PluginCore.log().error("Issue loading account file. Account: " + identifier + ". You may need to remove this account file! This is due to a previous server crash or improper shutdown and not a bug.", DebugLevel.OFF);
       return Optional.empty();
     }
 
@@ -213,7 +213,7 @@ public class YAMLAccount implements Datable<Account> {
       //Validate account file
       if(!yaml.contains("Info.Name") || !yaml.contains("Info.Type")) {
 
-        PluginCore.log().error("Invalid account file. Account: " + identifier, DebugLevel.OFF);
+        PluginCore.log().error("Invalid account file. Account: " + identifier + ". You may need to remove this account file! This is due to a previous server crash or improper shutdown and not a bug.", DebugLevel.OFF);
         return Optional.empty();
       }
 
@@ -283,10 +283,14 @@ public class YAMLAccount implements Datable<Account> {
 
     for(File file : IOUtil.getYAMLs(new File(PluginCore.directory(), "accounts"))) {
 
-      final Optional<Account> loaded = load(file, file.getName().replace(".yml", ""));
-      if(loaded.isPresent()) {
-        accounts.add(loaded.get());
-        TNECore.eco().account().uuidProvider().store(new UUIDPair(loaded.get().getIdentifier(), loaded.get().getName()));
+      try {
+        final Optional<Account> loaded = load(file, file.getName().replace(".yml", ""));
+        if(loaded.isPresent()) {
+          accounts.add(loaded.get());
+          TNECore.eco().account().uuidProvider().store(new UUIDPair(loaded.get().getIdentifier(), loaded.get().getName()));
+        }
+      } catch(Exception ignore) {
+        PluginCore.log().error("Issue loading account file. File: " + file.getName() + ". You may need to remove this account file! This is due to a previous server crash or improper shutdown and not a bug.", DebugLevel.OFF);
       }
     }
     return accounts;
