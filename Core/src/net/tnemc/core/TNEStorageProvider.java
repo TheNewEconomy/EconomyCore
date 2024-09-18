@@ -48,6 +48,7 @@ import net.tnemc.plugincore.core.io.storage.connect.SQLConnector;
 import net.tnemc.plugincore.core.io.storage.connect.YAMLConnector;
 import net.tnemc.plugincore.core.io.storage.engine.StandardSQL;
 import net.tnemc.plugincore.core.io.storage.engine.flat.YAML;
+import net.tnemc.plugincore.core.io.storage.engine.sql.MariaDB;
 import net.tnemc.plugincore.core.io.storage.engine.sql.MySQL;
 import net.tnemc.plugincore.core.io.storage.engine.sql.PostgreSQL;
 import org.jetbrains.annotations.NotNull;
@@ -69,23 +70,24 @@ public class TNEStorageProvider implements StorageProvider {
   public void initialize(String engine) {
 
     final String prefix = DataConfig.yaml().getString("Data.Database.Prefix");
+
+    boolean maria = false;
+
+    try {
+      Class.forName("org.mariadb.jdbc.Driver");
+      maria = true;
+    } catch(Exception ignore) {}
+
+    try {
+      Class.forName("org.mariadb.jdbc.MariaDbDataSource");
+      maria = true;
+    } catch(Exception ignore) {}
+
     switch(engine.toLowerCase()) {
       case "mysql" -> {
 
-        boolean maria = false;
-
-        try {
-          Class.forName("org.mariadb.jdbc.Driver");
-          maria = true;
-        } catch(Exception ignore) {}
-
-        try {
-          Class.forName("org.mariadb.jdbc.MariaDbDataSource");
-          maria = true;
-        } catch(Exception ignore) {}
-
         if(maria) {
-          this.engine = new MySQL(prefix, new MariaDialect(prefix));
+          this.engine = new MariaDB(prefix, new MariaDialect(prefix));
           this.connector = new SQLConnector();
           break;
         }
@@ -94,12 +96,24 @@ public class TNEStorageProvider implements StorageProvider {
       }
       case "maria", "mariadb" -> {
 
+        if(maria) {
+          this.engine = new MariaDB(prefix, new MariaDialect(prefix));
+          this.connector = new SQLConnector();
+          break;
+        }
+
         this.engine = new MySQL(prefix, new MariaDialect(prefix));
         this.connector = new SQLConnector();
       }
       case "maria-outdated" -> {
-
         PluginCore.log().warning("Using outdated database! Please note: Official Support for this version of TNE is limited.", DebugLevel.OFF);
+
+        if(maria) {
+          this.engine = new MariaDB(prefix, new MariaDialect(prefix));
+          this.connector = new SQLConnector();
+          break;
+        }
+
         this.engine = new MySQL(prefix, new MariaOutdatedDialect(prefix));
         this.connector = new SQLConnector();
       }

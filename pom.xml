@@ -21,7 +21,7 @@
 
     <properties>
         <tnml.version>1.5.0.1-SNAPSHOT-19</tnml.version>
-        <tnpc.version>1.0.0.2-Pre-11</tnpc.version>
+        <tnpc.version>1.0.0.2-Pre-12</tnpc.version>
         <tne.relocation>net.tnemc.libs</tne.relocation>
         <tne.java>17</tne.java>
         <maven.compiler.target>17</maven.compiler.target>
