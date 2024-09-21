@@ -3,7 +3,7 @@
 # License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 Core:
 
-  config-version: 3
+  config-version: 4
 
   #Cracked Server? Set this to true. May cause data issues as spigot/paper UUIDs are unpredictable.
   #Do not change this unless you know what you're doing.
