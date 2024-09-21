@@ -35,6 +35,8 @@ import java.util.Optional;
  */
 public class ShortenJRule implements FormatRule {
 
+  private final BigInteger threshold = new BigInteger("9999");
+
   @Override
   public String name() {
     return "<shortenj>";
@@ -65,21 +67,32 @@ public class ShortenJRule implements FormatRule {
       return format.replace("<short.amount>", monetaryMajor);
     }
 
-    final int strLength = monetaryMajor.length() - 1;
+    String working = monetaryMajor;
+    final StringBuilder builder = new StringBuilder();
+    while(!working.isBlank() && new BigInteger(working).compareTo(new BigInteger("9999")) > 0) {
+
+      working = build(currency.get(), working, builder);
+    }
+    builder.append(working);
+
+    return format.replace("<short.amount>", builder.toString());
+  }
+
+  private String build(final Currency currency, String working, final StringBuilder builder) {
+    final int strLength = working.length() - 1;
     final int multiple = (strLength / 4) * 4;
     final int majorKeep = strLength % 4;
     final int symbol = multiple / 4;
-
+    final StringBuilder workingBuilder = new StringBuilder();
 
     char pre;
-    if(currency.get().getPrefixesj().length() < (symbol)) {
+    if(currency.getPrefixesj().length() < (symbol)) {
       pre = '^';
     } else {
-      pre = currency.get().getPrefixesj().charAt(symbol - 1);
+      pre = currency.getPrefixesj().charAt(symbol - 1);
     }
 
-    final StringBuilder builder = new StringBuilder();
-    for(int i = 0; i < monetaryMajor.length(); i++) {
+    for(int i = 0; i < working.length(); i++) {
 
       if(i > majorKeep) {
 
@@ -87,15 +100,33 @@ public class ShortenJRule implements FormatRule {
           builder.append(pre);
         }
 
-        if(monetaryMajor.charAt(i) != '0') {
-          builder.append(monetaryMajor.substring(i));
+        if(working.charAt(i) != '0') {
+
+          workingBuilder.append(working.substring(i));
           break;
         }
         continue;
       }
-      builder.append(monetaryMajor.charAt(i));
 
+      builder.append(working.charAt(i));
     }
-    return format.replace("<short.amount>", builder.toString());
+    return workingBuilder.toString();
+
+    /*for(int i = 0; i < working.length(); i++) {
+
+      if(i > majorKeep) {
+
+        if(i == majorKeep + 1) {
+          builder.append(pre);
+        }
+
+        if(working.charAt(i) != '0') {
+          builder.append(working.substring(i));
+          break;
+        }
+        continue;
+      }
+      builder.append(working.charAt(i));
+    }*/
   }
 }
