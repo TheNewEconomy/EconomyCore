@@ -59,14 +59,16 @@ public class ShortenJRule implements FormatRule {
 
     final Optional<Currency> currency = entry.currency();
 
+    final String monetaryMajor = monetary.major().toString();
+
     if(currency.isEmpty() || monetary.major().compareTo(new BigInteger("9999")) <= 0) {
-      return format.replace("<short.amount>", monetary.major().toString());
+      return format.replace("<short.amount>", monetaryMajor);
     }
 
-    final int zeros = countZeros(monetary.major().toString());
-    final int multiple = closestMultiple(zeros);
+    final int strLength = monetaryMajor.length() - 1;
+    final int multiple = (strLength / 4) * 4;
+    final int majorKeep = strLength % 4;
     final int symbol = multiple / 4;
-    final String replacement = generateZeros(multiple);
 
 
     char pre;
@@ -76,7 +78,29 @@ public class ShortenJRule implements FormatRule {
       pre = currency.get().getPrefixesj().charAt(symbol - 1);
     }
 
-    return format.replace("<short.amount>", monetary.major().toString().replace(replacement, "") + pre);
+    final StringBuilder builder = new StringBuilder();
+    for(int i = 0; i < monetaryMajor.length(); i++) {
+
+      if(i > majorKeep) {
+
+        if(i == majorKeep + 1) {
+          builder.append(pre);
+        }
+
+        if(monetaryMajor.charAt(i) != '0') {
+          builder.append(monetaryMajor.substring(i));
+          break;
+        }
+        continue;
+      }
+      builder.append(monetaryMajor.charAt(i));
+
+    }
+    return format.replace("<short.amount>", builder.toString());
+  }
+
+  private int countCharacter(final String numStr) {
+    return numStr.length() - 1;
   }
 
   private int countZeros(final String numStr) {
