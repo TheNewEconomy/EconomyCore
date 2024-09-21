@@ -98,32 +98,4 @@ public class ShortenJRule implements FormatRule {
     }
     return format.replace("<short.amount>", builder.toString());
   }
-
-  private int countCharacter(final String numStr) {
-    return numStr.length() - 1;
-  }
-
-  private int countZeros(final String numStr) {
-    int zeroCount = 0;
-
-    for(char c : numStr.toCharArray()) {
-      if(c == '0') {
-        zeroCount++;
-      }
-    }
-    return zeroCount;
-  }
-
-  private int closestMultiple(final int zeroCount) {
-    return (zeroCount / 4) * 4;
-  }
-
-  private String generateZeros(final int multiple) {
-    final StringBuilder zeros = new StringBuilder();
-
-    for(int i = 0; i < multiple; i++) {
-      zeros.append("0");
-    }
-    return zeros.toString();
-  }
 }
