@@ -135,6 +135,23 @@ Formatting:
   #Nonvigintillion - ₮
   Prefixes: 'kMGTPEZYXWVUN₮'
 
+  #The prefixes for japanese power of 10 <shortenj> format.
+  #The order based on https://en.wikipedia.org/wiki/Japanese_numerals#Powers_of_10
+  #Requested by okarradon from discord.
+  #Instead of doing every thousand swap, it's every ^4 powers of 10, starting at 10000.
+  #10^4 - 万
+  #10^8 - 億
+  #10^{12} - 兆
+  #10^{16} - 京
+  #10^{20} - 垓
+  #10^{24} - 𥝱
+  #10^{28} - 穣
+  #10^{32} - 溝
+  #10^{36} - 澗
+  #10^{40} - 正
+  #10^{44} - 載
+  JPrefixes: '万億兆京垓𥝱穣溝澗正載'
+
   #Whether the major value should be separated every three numeric places.
   Major_Separate: true
 

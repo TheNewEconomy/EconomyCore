@@ -30,6 +30,7 @@ import net.tnemc.core.currency.format.impl.MajorRule;
 import net.tnemc.core.currency.format.impl.MaterialRule;
 import net.tnemc.core.currency.format.impl.MinorAmountRule;
 import net.tnemc.core.currency.format.impl.MinorRule;
+import net.tnemc.core.currency.format.impl.ShortenJRule;
 import net.tnemc.core.currency.format.impl.ShortenRule;
 import net.tnemc.core.currency.format.impl.SymbolRule;
 import net.tnemc.plugincore.PluginCore;
@@ -51,6 +52,7 @@ public class CurrencyFormatter {
 
   static {
     addRule(new ShortenRule());
+    addRule(new ShortenJRule());
 
     addRule(new DecimalRule());
     addRule(new MajorAmountRule());

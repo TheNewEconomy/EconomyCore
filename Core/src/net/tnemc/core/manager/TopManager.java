@@ -101,6 +101,7 @@ public class TopManager {
     final MessageData data = new MessageData("Messages.Money.PlaceholderTopEntry");
     data.addReplacement("$toppos", String.valueOf(position));
     data.addReplacement("$account", "no one");
+    data.addReplacement("$balance", "0");
     return data;
   }
 

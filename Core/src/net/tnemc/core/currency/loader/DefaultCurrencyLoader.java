@@ -144,6 +144,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     //Formatting Configurations
     final String format = cur.getString("Formatting.Format", "<symbol><major.amount><decimal><minor.amount>").trim();
     final String prefixes = cur.getString("Formatting.Prefixes", "kMGTPEZYXWVUN₮").trim();
+    final String prefixesj = cur.getString("Formatting.JPrefixes", "万億兆京垓\uD855\uDF71穣溝澗正載").trim();
     final boolean separate = cur.getBoolean("Formatting.Major_Separate", true);
     final String separator = cur.getString("Formatting.Major_Separator", ",");
     final boolean showBalance = cur.getBoolean("Formatting.Balance", true);
@@ -192,6 +193,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     currency.setDecimalPlaces(decimalPlaces);
     currency.setFormat(format);
     currency.setPrefixes(prefixes);
+    currency.setPrefixesj(prefixesj);
     currency.setDisplay(single);
     currency.setDisplayPlural(plural);
     currency.setDisplayMinor(singleMinor);

@@ -67,6 +67,7 @@ public class TopPage<V> {
     final MessageData data = new MessageData("Messages.Money.PlaceholderTopEntry");
     data.addReplacement("$toppos", String.valueOf(pos));
     data.addReplacement("$account", "no one");
+    data.addReplacement("$balance", "0");
 
     if(pos > values.size()) {
       return data;

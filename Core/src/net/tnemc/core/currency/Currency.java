@@ -66,6 +66,7 @@ public class Currency {
   private String format;
   private String symbol;
   private String prefixes;
+  private String prefixesj;
   private String decimal;
   private boolean balanceShow;
 
@@ -106,6 +107,7 @@ public class Currency {
     //Formatting Configurations
     this.format = "<symbol><major.amount><decimal><minor.amount>";
     this.prefixes = "kMGTPEZYXWVUN₮";
+    this.prefixesj = "万億兆京垓\uD855\uDF71穣溝澗正載";
     this.separateMajor = true;
     this.majorSeparator = ",";
 
@@ -233,6 +235,14 @@ public class Currency {
 
   public void setPrefixes(String prefixes) {
     this.prefixes = prefixes;
+  }
+
+  public String getPrefixesj() {
+    return prefixesj;
+  }
+
+  public void setPrefixesj(String prefixesj) {
+    this.prefixesj = prefixesj;
   }
 
   public String getDecimal() {
@@ -367,6 +377,7 @@ public class Currency {
     cloned.format = original.format;
     cloned.symbol = original.symbol;
     cloned.prefixes = original.prefixes;
+    cloned.prefixesj = original.prefixesj;
     cloned.decimal = original.decimal;
     cloned.display = original.display;
     cloned.displayPlural = original.displayPlural;
