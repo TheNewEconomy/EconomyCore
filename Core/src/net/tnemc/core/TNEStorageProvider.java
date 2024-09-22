@@ -109,7 +109,7 @@ public class TNEStorageProvider implements StorageProvider {
         PluginCore.log().warning("Using outdated database! Please note: Official Support for this version of TNE is limited.", DebugLevel.OFF);
 
         if(maria) {
-          this.engine = new MariaDB(prefix, new MariaDialect(prefix));
+          this.engine = new MariaDB(prefix, new MariaOutdatedDialect(prefix));
           this.connector = new SQLConnector();
           break;
         }
