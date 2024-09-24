@@ -321,7 +321,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     MISCUtils.setComment(denom, "Options", "Various options for this currency tier.");
 
     MISCUtils.setComment(denom, "Options.Weight", "The weight of the tier. E.X. 20USD would equal 20");
-    denom.set("Options.Weight", denomination.weight());
+    denom.set("Options.Weight", denomination.weight().doubleValue());
 
     if(denomination instanceof ItemDenomination itemDenomination) {
 
