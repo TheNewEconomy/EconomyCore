@@ -31,11 +31,13 @@ public enum TNEStringConstraints implements StringConstraint {
   CURRENCY_UUID {
     @Override
     public String identifier() {
+
       return "CURRENCY_UUID";
     }
 
     @Override
     public String defaultValue() {
+
       return "----";
     }
   }

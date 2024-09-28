@@ -30,6 +30,7 @@ public class PaperServerProvider extends BukkitServerProvider {
 
   @Override
   public String name() {
+
     return "paper";
   }
 }

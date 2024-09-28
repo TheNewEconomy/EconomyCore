@@ -57,16 +57,19 @@ public class SpongeVirtualAccount implements VirtualAccount {
   protected final Account account;
 
   public SpongeVirtualAccount(Account account) {
+
     this.account = account;
   }
 
   @Override
   public Component displayName() {
+
     return Component.text(account.getName());
   }
 
   @Override
   public BigDecimal defaultBalance(Currency currency) {
+
     PluginCore.log().warning("WARNING: One of your plugins is using the built-in Sponge API. Please note that this doesn't provide multi-currency support. Refer them to the TNE API: https://github.com/TheNewEconomy/EconomyCore/wiki/API#tne-api", DebugLevel.OFF);
     return TNECore.eco().currency().getDefaultCurrency().getStartingHoldings();
   }
@@ -74,19 +77,21 @@ public class SpongeVirtualAccount implements VirtualAccount {
   @Override
   public boolean hasBalance(Currency currency, Set<Context> contexts) { //Context: WORLD_KEY
     PluginCore.log().warning("WARNING: One of your plugins is using the built-in Sponge API. Please note that this doesn't provide multi-currency support. Refer them to the TNE API: https://github.com/TheNewEconomy/EconomyCore/wiki/API#tne-api", DebugLevel.OFF);
-    return account.getWallet().getHoldings(resolveRegion(contexts),  TNECore.eco().currency().getDefaultCurrency().getUid()).isPresent();
+    return account.getWallet().getHoldings(resolveRegion(contexts), TNECore.eco().currency().getDefaultCurrency().getUid()).isPresent();
   }
 
   @Override
   public boolean hasBalance(Currency currency, Cause cause) {
+
     PluginCore.log().warning("WARNING: One of your plugins is using the built-in Sponge API. Please note that this doesn't provide multi-currency support. Refer them to the TNE API: https://github.com/TheNewEconomy/EconomyCore/wiki/API#tne-api", DebugLevel.OFF);
-    return account.getWallet().getHoldings(PluginCore.server().defaultWorld(),  TNECore.eco().currency().getDefaultCurrency().getUid()).isPresent();
+    return account.getWallet().getHoldings(PluginCore.server().defaultWorld(), TNECore.eco().currency().getDefaultCurrency().getUid()).isPresent();
   }
 
   @Override
   public BigDecimal balance(Currency currency, Set<Context> contexts) {
+
     PluginCore.log().warning("WARNING: One of your plugins is using the built-in Sponge API. Please note that this doesn't provide multi-currency support. Refer them to the TNE API: https://github.com/TheNewEconomy/EconomyCore/wiki/API#tne-api", DebugLevel.OFF);
-    final Optional<HoldingsEntry> entry = account.getWallet().getHoldings(resolveRegion(contexts),  TNECore.eco().currency().getDefaultCurrency().getUid());
+    final Optional<HoldingsEntry> entry = account.getWallet().getHoldings(resolveRegion(contexts), TNECore.eco().currency().getDefaultCurrency().getUid());
     if(entry.isPresent()) {
       return entry.get().getAmount();
     }
@@ -95,8 +100,9 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
   @Override
   public BigDecimal balance(Currency currency, Cause cause) {
+
     PluginCore.log().warning("WARNING: One of your plugins is using the built-in Sponge API. Please note that this doesn't provide multi-currency support. Refer them to the TNE API: https://github.com/TheNewEconomy/EconomyCore/wiki/API#tne-api", DebugLevel.OFF);
-    final Optional<HoldingsEntry> entry = account.getWallet().getHoldings(PluginCore.server().defaultWorld(),  TNECore.eco().currency().getDefaultCurrency().getUid());
+    final Optional<HoldingsEntry> entry = account.getWallet().getHoldings(PluginCore.server().defaultWorld(), TNECore.eco().currency().getDefaultCurrency().getUid());
     if(entry.isPresent()) {
       return entry.get().getAmount();
     }
@@ -105,11 +111,13 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
   @Override
   public Map<Currency, BigDecimal> balances(Set<Context> contexts) {
+
     return balances(resolveRegion(contexts));
   }
 
   @Override
   public Map<Currency, BigDecimal> balances(Cause cause) {
+
     return balances(PluginCore.server().defaultWorld());
   }
 
@@ -119,20 +127,21 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
     for(net.tnemc.core.currency.Currency cur : TNECore.eco().currency().getCurrencies(region)) {
 
-      final Optional<HoldingsEntry> entry = account.getWallet().getHoldings(region,  cur.getUid());
-      entry.ifPresent(holdingsEntry -> balances.put(new SpongeCurrency(cur), holdingsEntry.getAmount()));
+      final Optional<HoldingsEntry> entry = account.getWallet().getHoldings(region, cur.getUid());
+      entry.ifPresent(holdingsEntry->balances.put(new SpongeCurrency(cur), holdingsEntry.getAmount()));
     }
     return balances;
   }
 
   @Override
   public TransactionResult setBalance(Currency currency, BigDecimal amount, Set<Context> contexts) {
+
     PluginCore.log().warning("WARNING: One of your plugins is using the built-in Sponge API. Please note that this doesn't provide multi-currency support. Refer them to the TNE API: https://github.com/TheNewEconomy/EconomyCore/wiki/API#tne-api", DebugLevel.OFF);
 
     final HoldingsModifier modifier = new HoldingsModifier(resolveRegion(contexts),
-            TNECore.eco().currency().getDefaultCurrency().getUid(),
-            amount,
-            HoldingsOperation.SET);
+                                                           TNECore.eco().currency().getDefaultCurrency().getUid(),
+                                                           amount,
+                                                           HoldingsOperation.SET);
 
     final Transaction transaction = new Transaction("set")
             .to(account, modifier)
@@ -143,12 +152,13 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
   @Override
   public TransactionResult setBalance(Currency currency, BigDecimal amount, Cause cause) {
+
     PluginCore.log().warning("WARNING: One of your plugins is using the built-in Sponge API. Please note that this doesn't provide multi-currency support. Refer them to the TNE API: https://github.com/TheNewEconomy/EconomyCore/wiki/API#tne-api", DebugLevel.OFF);
 
     final HoldingsModifier modifier = new HoldingsModifier(PluginCore.server().defaultWorld(),
-            TNECore.eco().currency().getDefaultCurrency().getUid(),
-            amount,
-            HoldingsOperation.SET);
+                                                           TNECore.eco().currency().getDefaultCurrency().getUid(),
+                                                           amount,
+                                                           HoldingsOperation.SET);
 
     final Transaction transaction = new Transaction("set")
             .to(account, modifier)
@@ -159,11 +169,13 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
   @Override
   public Map<Currency, TransactionResult> resetBalances(Set<Context> contexts) {
+
     return resetBalances(resolveRegion(contexts));
   }
 
   @Override
   public Map<Currency, TransactionResult> resetBalances(Cause cause) {
+
     return resetBalances(PluginCore.server().defaultWorld());
   }
 
@@ -173,9 +185,9 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
     for(net.tnemc.core.currency.Currency cur : TNECore.eco().currency().getCurrencies(region)) {
       final HoldingsModifier modifier = new HoldingsModifier(PluginCore.server().defaultWorld(),
-              TNECore.eco().currency().getDefaultCurrency().getUid(),
-              cur.getStartingHoldings(),
-              HoldingsOperation.SET);
+                                                             TNECore.eco().currency().getDefaultCurrency().getUid(),
+                                                             cur.getStartingHoldings(),
+                                                             HoldingsOperation.SET);
 
       final Transaction transaction = new Transaction("set")
               .to(account, modifier)
@@ -188,22 +200,25 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
   @Override
   public TransactionResult resetBalance(Currency currency, Set<Context> contexts) {
+
     PluginCore.log().warning("WARNING: One of your plugins is using the built-in Sponge API. Please note that this doesn't provide multi-currency support. Refer them to the TNE API: https://github.com/TheNewEconomy/EconomyCore/wiki/API#tne-api", DebugLevel.OFF);
     return setBalance(currency, defaultBalance(currency), contexts);
   }
 
   @Override
   public TransactionResult resetBalance(Currency currency, Cause cause) {
+
     PluginCore.log().warning("WARNING: One of your plugins is using the built-in Sponge API. Please note that this doesn't provide multi-currency support. Refer them to the TNE API: https://github.com/TheNewEconomy/EconomyCore/wiki/API#tne-api", DebugLevel.OFF);
     return setBalance(currency, defaultBalance(currency), cause);
   }
 
   @Override
   public TransactionResult deposit(Currency currency, BigDecimal amount, Set<Context> contexts) {
+
     PluginCore.log().warning("WARNING: One of your plugins is using the built-in Sponge API. Please note that this doesn't provide multi-currency support. Refer them to the TNE API: https://github.com/TheNewEconomy/EconomyCore/wiki/API#tne-api", DebugLevel.OFF);
     final HoldingsModifier modifier = new HoldingsModifier(resolveRegion(contexts),
-            TNECore.eco().currency().getDefaultCurrency().getUid(),
-            amount);
+                                                           TNECore.eco().currency().getDefaultCurrency().getUid(),
+                                                           amount);
 
     final Transaction transaction = new Transaction("give")
             .to(account, modifier)
@@ -213,10 +228,11 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
   @Override
   public TransactionResult deposit(Currency currency, BigDecimal amount, Cause cause) {
+
     PluginCore.log().warning("WARNING: One of your plugins is using the built-in Sponge API. Please note that this doesn't provide multi-currency support. Refer them to the TNE API: https://github.com/TheNewEconomy/EconomyCore/wiki/API#tne-api", DebugLevel.OFF);
     final HoldingsModifier modifier = new HoldingsModifier(PluginCore.server().defaultWorld(),
-            TNECore.eco().currency().getDefaultCurrency().getUid(),
-            amount);
+                                                           TNECore.eco().currency().getDefaultCurrency().getUid(),
+                                                           amount);
 
     final Transaction transaction = new Transaction("give")
             .to(account, modifier)
@@ -226,10 +242,11 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
   @Override
   public TransactionResult withdraw(Currency currency, BigDecimal amount, Set<Context> contexts) {
+
     PluginCore.log().warning("WARNING: One of your plugins is using the built-in Sponge API. Please note that this doesn't provide multi-currency support. Refer them to the TNE API: https://github.com/TheNewEconomy/EconomyCore/wiki/API#tne-api", DebugLevel.OFF);
     final HoldingsModifier modifier = new HoldingsModifier(resolveRegion(contexts),
-            TNECore.eco().currency().getDefaultCurrency().getUid(),
-            amount
+                                                           TNECore.eco().currency().getDefaultCurrency().getUid(),
+                                                           amount
     );
 
     final Transaction transaction = new Transaction("take")
@@ -241,10 +258,11 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
   @Override
   public TransactionResult withdraw(Currency currency, BigDecimal amount, Cause cause) {
+
     PluginCore.log().warning("WARNING: One of your plugins is using the built-in Sponge API. Please note that this doesn't provide multi-currency support. Refer them to the TNE API: https://github.com/TheNewEconomy/EconomyCore/wiki/API#tne-api", DebugLevel.OFF);
     final HoldingsModifier modifier = new HoldingsModifier(PluginCore.server().defaultWorld(),
-            TNECore.eco().currency().getDefaultCurrency().getUid(),
-            amount
+                                                           TNECore.eco().currency().getDefaultCurrency().getUid(),
+                                                           amount
     );
 
     final Transaction transaction = new Transaction("take")
@@ -256,14 +274,15 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
   @Override
   public TransferResult transfer(org.spongepowered.api.service.economy.account.Account to, Currency currency, BigDecimal amount, Set<Context> contexts) {
+
     PluginCore.log().warning("WARNING: One of your plugins is using the built-in Sponge API. Please note that this doesn't provide multi-currency support. Refer them to the TNE API: https://github.com/TheNewEconomy/EconomyCore/wiki/API#tne-api", DebugLevel.OFF);
 
     final Optional<Account> toAccount = TNECore.eco().account().findAccount(to.identifier());
     if(toAccount.isEmpty()) return null;
 
     final HoldingsModifier modifier = new HoldingsModifier(resolveRegion(contexts),
-            TNECore.eco().currency().getDefaultCurrency().getUid(),
-            amount
+                                                           TNECore.eco().currency().getDefaultCurrency().getUid(),
+                                                           amount
     );
 
     final Transaction transaction = new Transaction("transfer")
@@ -276,13 +295,14 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
   @Override
   public TransferResult transfer(org.spongepowered.api.service.economy.account.Account to, Currency currency, BigDecimal amount, Cause cause) {
+
     PluginCore.log().warning("WARNING: One of your plugins is using the built-in Sponge API. Please note that this doesn't provide multi-currency support. Refer them to the TNE API: https://github.com/TheNewEconomy/EconomyCore/wiki/API#tne-api", DebugLevel.OFF);
     final Optional<Account> toAccount = TNECore.eco().account().findAccount(to.identifier());
     if(toAccount.isEmpty()) return null;
 
     final HoldingsModifier modifier = new HoldingsModifier(PluginCore.server().defaultWorld(),
-            TNECore.eco().currency().getDefaultCurrency().getUid(),
-            amount
+                                                           TNECore.eco().currency().getDefaultCurrency().getUid(),
+                                                           amount
     );
 
     final Transaction transaction = new Transaction("transfer")
@@ -295,20 +315,23 @@ public class SpongeVirtualAccount implements VirtualAccount {
 
   @Override
   public String identifier() {
+
     return account.getIdentifier().toString();
   }
 
   public Account getAccount() {
+
     return account;
   }
 
   private String resolveRegion(final Set<Context> context) {
 
     final Optional<String> conResolve = contextRegion(context);
-    return conResolve.map(s -> TNECore.eco().region().resolve(s)).orElseGet(() -> PluginCore.server().defaultWorld());
+    return conResolve.map(s->TNECore.eco().region().resolve(s)).orElseGet(()->PluginCore.server().defaultWorld());
   }
 
   protected SpongeTransferReceipt transaction(final org.spongepowered.api.service.economy.account.Account to, final Transaction transaction, final BigDecimal amount, final Set<Context> context, TransactionType type) {
+
     SpongeTransferReceipt receipt;
 
     try {
@@ -324,6 +347,7 @@ public class SpongeVirtualAccount implements VirtualAccount {
   }
 
   protected SpongeReceipt transaction(final Transaction transaction, final BigDecimal amount, final Set<Context> context, TransactionType type) {
+
     SpongeReceipt receipt;
 
     try {
@@ -339,6 +363,7 @@ public class SpongeVirtualAccount implements VirtualAccount {
   }
 
   private Optional<String> contextRegion(final Set<Context> context) {
+
     for(Context con : context) {
       if(con.getKey().equalsIgnoreCase(Context.WORLD_KEY)) {
         return Optional.of(con.getValue());

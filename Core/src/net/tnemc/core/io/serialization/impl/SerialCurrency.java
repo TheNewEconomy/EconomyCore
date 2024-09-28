@@ -38,6 +38,7 @@ import java.util.UUID;
  * @since 0.1.2.0
  */
 public class SerialCurrency implements JSONAble<Currency> {
+
   /**
    * Used to serialize this object to a JSON-valid string.
    *
@@ -47,6 +48,7 @@ public class SerialCurrency implements JSONAble<Currency> {
    */
   @Override
   public JSONObject toJSON(Currency currency) {
+
     final JSONObject json = new JSONObject();
 
     json.put("startingHoldings", currency.getStartingHoldings().toString());
@@ -113,10 +115,11 @@ public class SerialCurrency implements JSONAble<Currency> {
    */
   @Override
   public Currency fromJSON(String serialized) {
+
     final JSONParser parser = new JSONParser();
 
     try {
-      final JSONObject jsonObject = (JSONObject) parser.parse(serialized);
+      final JSONObject jsonObject = (JSONObject)parser.parse(serialized);
 
       final Currency currency = (jsonObject.containsKey("ender"))? new ItemCurrency("USD") : new Currency("USD");
 
@@ -175,7 +178,7 @@ public class SerialCurrency implements JSONAble<Currency> {
       }
 
       return currency;
-    } catch (ParseException e) {
+    } catch(ParseException e) {
 
       e.printStackTrace();
       return null;

@@ -27,8 +27,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Locale;
 
 public class MajorAmountRule implements FormatRule {
+
   @Override
   public String name() {
+
     return "<major.amount>";
   }
 
@@ -44,7 +46,7 @@ public class MajorAmountRule implements FormatRule {
                                   "%,d",
                                   monetary.major()).replace(",",
                                                             entry.currency()
-                                                                 .get().getMajorSeparator());
+                                                                    .get().getMajorSeparator());
     }
     return format.replace("<major.amount>", replacement);
   }

@@ -34,34 +34,36 @@ import java.util.concurrent.TimeUnit;
  * @since 0.1.2.0
  */
 public class FoliaScheduler extends SchedulerProvider<FoliaChore> {
+
   /**
    * Used to create a task, which will execute after the specified delay.
    *
-   * @param task  The task to run.
-   * @param delay The delay, in ticks.
+   * @param task        The task to run.
+   * @param delay       The delay, in ticks.
    * @param environment The execution environment for the task.
    */
   @Override
   public void createDelayedTask(Runnable task, ChoreTime delay, ChoreExecution environment) {
     //we divide the delay by 20 because Folia uses seconds, and the delay is sent in ticks.
-    Bukkit.getAsyncScheduler().runDelayed(PaperCore.instance().getPlugin(), (scheduledTask) -> task.run(), delay.asSeconds(), TimeUnit.SECONDS);
+    Bukkit.getAsyncScheduler().runDelayed(PaperCore.instance().getPlugin(), (scheduledTask)->task.run(), delay.asSeconds(), TimeUnit.SECONDS);
   }
 
   /**
    * Used to create a task, which repeats after a specified period.
    *
-   * @param task The task to run.
-   * @param delay The delay to run the task, in ticks.
-   * @param period The period to run the task.
+   * @param task        The task to run.
+   * @param delay       The delay to run the task, in ticks.
+   * @param period      The period to run the task.
    * @param environment The execution environment for the task.
    *
    * @return The associated {@link Chore} with this task.
    */
   @Override
   public FoliaChore createRepeatingTask(Runnable task, ChoreTime delay, ChoreTime period, ChoreExecution environment) {
+
     return new FoliaChore(Bukkit.getAsyncScheduler()
-                                .runAtFixedRate(PaperCore.instance().getPlugin(), (scheduledTask)->task.run(),
-                                                delay.asSeconds(), period.asSeconds(), TimeUnit.SECONDS),
-                                                environment);
+                                  .runAtFixedRate(PaperCore.instance().getPlugin(), (scheduledTask)->task.run(),
+                                                  delay.asSeconds(), period.asSeconds(), TimeUnit.SECONDS),
+                          environment);
   }
 }

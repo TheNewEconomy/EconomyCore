@@ -32,6 +32,7 @@ public class MessageListener {
 
   @Subscribe
   public void handle(PluginMessageEvent event) {
+
     final String id = event.getIdentifier().toString();
 
     if(!id.startsWith("tne:")) {

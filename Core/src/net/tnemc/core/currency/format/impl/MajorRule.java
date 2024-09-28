@@ -28,19 +28,22 @@ import java.math.BigInteger;
 import java.util.Optional;
 
 public class MajorRule implements FormatRule {
+
   @Override
   public String name() {
+
     return "<major>";
   }
 
   @Override
   public String format(@Nullable Account account, HoldingsEntry entry, String format) {
+
     final BigInteger major = entry.asMonetary().major();
 
     final Optional<Currency> currency = entry.currency();
     return currency.map(value->format.replace("<major>", major.toString()
-        + " " + ((major.compareTo(BigInteger.ONE) == 0)?
-        value.getDisplay() :
-        value.getDisplayPlural()))).orElse(format);
+                                                         + " " + ((major.compareTo(BigInteger.ONE) == 0)?
+                                                                  value.getDisplay() :
+                                                                  value.getDisplayPlural()))).orElse(format);
   }
 }

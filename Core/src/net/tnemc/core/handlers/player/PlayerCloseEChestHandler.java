@@ -32,14 +32,17 @@ import java.util.Optional;
 /**
  * Represents an event where a player is closing an ender chest.
  *
- * @since 0.1.2
  * @author creatorfromhell
+ * @since 0.1.2
  */
 public class PlayerCloseEChestHandler {
 
   /**
-   * Used to handle a Player closing an ender chest using the specified {@link PlayerProvider} class.
+   * Used to handle a Player closing an ender chest using the specified {@link PlayerProvider}
+   * class.
+   *
    * @param provider The {@link PlayerProvider} associated with the platform event.
+   *
    * @return True if the event should be cancelled, otherwise false.
    */
   public HandlerResponse handle(PlayerProvider provider) {

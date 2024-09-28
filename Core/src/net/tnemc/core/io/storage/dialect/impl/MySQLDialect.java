@@ -95,6 +95,7 @@ public class MySQLDialect implements TNEDialect {
   protected final String prefix;
 
   public MySQLDialect(final String prefix) {
+
     this.prefix = prefix;
 
     this.saveName = "INSERT INTO " + prefix + "player_names (uid, username) VALUES (UUID_TO_BIN(?), ?) ON DUPLICATE KEY UPDATE username = ?";
@@ -149,7 +150,7 @@ public class MySQLDialect implements TNEDialect {
                            "VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?), ?, ?) ON DUPLICATE KEY UPDATE uid=uid";
 
     this.loadModifiers = "SELECT BIN_TO_UUID(participant) AS participant, participant_type, operation, region, " +
-                          "BIN_TO_UUID(currency) AS currency, modifier FROM " + prefix + "receipts_modifiers WHERE uid = UUID_TO_BIN(?) AND participant = UUID_TO_BIN(?) AND participant_type = ?";
+                         "BIN_TO_UUID(currency) AS currency, modifier FROM " + prefix + "receipts_modifiers WHERE uid = UUID_TO_BIN(?) AND participant = UUID_TO_BIN(?) AND participant_type = ?";
 
     this.saveModifier = "INSERT INTO " + prefix + "receipts_modifiers (uid, participant, participant_type, operation, region, currency, modifier) " +
                         "VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?), ?, ?, ?, UUID_TO_BIN(?), ?) ON DUPLICATE KEY UPDATE uid = uid";
@@ -158,240 +159,272 @@ public class MySQLDialect implements TNEDialect {
 
   @Override
   public String accountsTable() {
+
     return "CREATE TABLE IF NOT EXISTS " + prefix + "accounts (\n" +
-        "    uid BINARY(16) NOT NULL PRIMARY KEY,\n" +
-        "    username VARCHAR(50) NOT NULL UNIQUE,\n" +
-        "    account_type VARCHAR(30) NOT NULL,\n" +
-        "    created DATETIME NOT NULL,\n" +
-        "    pin VARCHAR(16),\n" +
-        "    status VARCHAR(36)\n" +
-        "    );";
+           "    uid BINARY(16) NOT NULL PRIMARY KEY,\n" +
+           "    username VARCHAR(50) NOT NULL UNIQUE,\n" +
+           "    account_type VARCHAR(30) NOT NULL,\n" +
+           "    created DATETIME NOT NULL,\n" +
+           "    pin VARCHAR(16),\n" +
+           "    status VARCHAR(36)\n" +
+           "    );";
   }
 
   @Override
   public String accountsNonPlayerTable() {
+
     return "CREATE TABLE IF NOT EXISTS " + prefix + "non_players_accounts (\n" +
-        "    uid BINARY(16) NOT NULL UNIQUE,\n" +
-        "    owner BINARY(16) NOT NULL,\n" +
-        "    FOREIGN KEY(uid) REFERENCES " + prefix + "accounts(uid) ON DELETE CASCADE,\n" +
-        "    FOREIGN KEY(owner) REFERENCES " + prefix + "accounts(uid) ON DELETE CASCADE\n" +
-        "    );";
+           "    uid BINARY(16) NOT NULL UNIQUE,\n" +
+           "    owner BINARY(16) NOT NULL,\n" +
+           "    FOREIGN KEY(uid) REFERENCES " + prefix + "accounts(uid) ON DELETE CASCADE,\n" +
+           "    FOREIGN KEY(owner) REFERENCES " + prefix + "accounts(uid) ON DELETE CASCADE\n" +
+           "    );";
   }
 
   @Override
   public String accountsPlayerTable() {
+
     return "CREATE TABLE IF NOT EXISTS " + prefix + "players_accounts (\n" +
-        "    uid BINARY(16) NOT NULL UNIQUE,\n" +
-        "    last_online DATETIME NOT NULL,\n" +
-        "    FOREIGN KEY(uid) REFERENCES " + prefix + "accounts(uid) ON DELETE CASCADE\n" +
-        "    );";
+           "    uid BINARY(16) NOT NULL UNIQUE,\n" +
+           "    last_online DATETIME NOT NULL,\n" +
+           "    FOREIGN KEY(uid) REFERENCES " + prefix + "accounts(uid) ON DELETE CASCADE\n" +
+           "    );";
   }
 
   @Override
   public String accountMembersTable() {
+
     return "CREATE TABLE IF NOT EXISTS " + prefix + "account_members (\n" +
-        "    uid BINARY(16) NOT NULL,\n" +
-        "    account BINARY(16) NOT NULL,\n" +
-        "    perm VARCHAR(36) NOT NULL,\n" +
-        "    perm_value TINYINT(1) NOT NULL,\n" +
-        "    FOREIGN KEY(uid) REFERENCES " + prefix + "accounts(uid) ON DELETE CASCADE,\n" +
-        "    FOREIGN KEY(account) REFERENCES " + prefix + "accounts(uid) ON DELETE CASCADE\n" +
-        "    );";
+           "    uid BINARY(16) NOT NULL,\n" +
+           "    account BINARY(16) NOT NULL,\n" +
+           "    perm VARCHAR(36) NOT NULL,\n" +
+           "    perm_value TINYINT(1) NOT NULL,\n" +
+           "    FOREIGN KEY(uid) REFERENCES " + prefix + "accounts(uid) ON DELETE CASCADE,\n" +
+           "    FOREIGN KEY(account) REFERENCES " + prefix + "accounts(uid) ON DELETE CASCADE\n" +
+           "    );";
   }
 
   @Override
   public String holdingsTable() {
+
     return "CREATE TABLE IF NOT EXISTS " + prefix + "holdings (\n" +
-        "    uid BINARY(16) NOT NULL,\n" +
-        "    server VARCHAR(40) NOT NULL,\n" +
-        "    region VARCHAR(40) NOT NULL,\n" +
-        "    currency BINARY(16) NOT NULL,\n" +
-        "    holdings_type VARCHAR(30) NOT NULL,\n" +
-        "    holdings DECIMAL(49, 4) NOT NULL,\n" +
-        "    UNIQUE(`uid`, `server`, `region`, `currency`, `holdings_type`),\n" +
-        "    FOREIGN KEY(uid) REFERENCES " + prefix + "accounts(uid) ON DELETE CASCADE\n" +
-        "    );";
+           "    uid BINARY(16) NOT NULL,\n" +
+           "    server VARCHAR(40) NOT NULL,\n" +
+           "    region VARCHAR(40) NOT NULL,\n" +
+           "    currency BINARY(16) NOT NULL,\n" +
+           "    holdings_type VARCHAR(30) NOT NULL,\n" +
+           "    holdings DECIMAL(49, 4) NOT NULL,\n" +
+           "    UNIQUE(`uid`, `server`, `region`, `currency`, `holdings_type`),\n" +
+           "    FOREIGN KEY(uid) REFERENCES " + prefix + "accounts(uid) ON DELETE CASCADE\n" +
+           "    );";
   }
 
   @Override
   public String receiptsTable() {
+
     return "CREATE TABLE IF NOT EXISTS " + prefix + "receipts (\n" +
-        "    uid BINARY(16) NOT NULL UNIQUE,\n" +
-        "    performed DATETIME NOT NULL,\n" +
-        "    receipt_type VARCHAR(30) NOT NULL,\n" +
-        "    receipt_source VARCHAR(60) NOT NULL,\n" +
-        "    receipt_source_type VARCHAR(30) NOT NULL,\n" +
-        "    archive TINYINT(1) NOT NULL,\n" +
-        "    voided TINYINT(1) NOT NULL\n" +
-        "    );";
+           "    uid BINARY(16) NOT NULL UNIQUE,\n" +
+           "    performed DATETIME NOT NULL,\n" +
+           "    receipt_type VARCHAR(30) NOT NULL,\n" +
+           "    receipt_source VARCHAR(60) NOT NULL,\n" +
+           "    receipt_source_type VARCHAR(30) NOT NULL,\n" +
+           "    archive TINYINT(1) NOT NULL,\n" +
+           "    voided TINYINT(1) NOT NULL\n" +
+           "    );";
   }
 
   @Override
   public String receiptsHoldingsTable() {
+
     return "CREATE TABLE IF NOT EXISTS " + prefix + "receipts_holdings (\n" +
-        "    uid BINARY(16) NOT NULL UNIQUE,\n" +
-        "    participant BINARY(16) NOT NULL,\n" +
-        "    ending TINYINT(1) NOT NULL,\n" +
-        "    server VARCHAR(40) NOT NULL,\n" +
-        "    region VARCHAR(40) NOT NULL,\n" +
-        "    currency BINARY(16) NOT NULL,\n" +
-        "    holdings_type VARCHAR(30) NOT NULL,\n" +
-        "    holdings DECIMAL(49, 4) NOT NULL,\n" +
-        "    FOREIGN KEY(uid) REFERENCES " + prefix + "receipts(uid) ON DELETE CASCADE\n" +
-        "    );";
+           "    uid BINARY(16) NOT NULL UNIQUE,\n" +
+           "    participant BINARY(16) NOT NULL,\n" +
+           "    ending TINYINT(1) NOT NULL,\n" +
+           "    server VARCHAR(40) NOT NULL,\n" +
+           "    region VARCHAR(40) NOT NULL,\n" +
+           "    currency BINARY(16) NOT NULL,\n" +
+           "    holdings_type VARCHAR(30) NOT NULL,\n" +
+           "    holdings DECIMAL(49, 4) NOT NULL,\n" +
+           "    FOREIGN KEY(uid) REFERENCES " + prefix + "receipts(uid) ON DELETE CASCADE\n" +
+           "    );";
   }
 
   @Override
   public String receiptsParticipantsTable() {
+
     return "CREATE TABLE IF NOT EXISTS " + prefix + "receipts_participants (\n" +
-        "    uid BINARY(16) NOT NULL PRIMARY KEY,\n" +
-        "    participant BINARY(16) NOT NULL,\n" +
-        "    participant_type VARCHAR(10) NOT NULL,\n" +
-        "    tax DECIMAL(49, 4) NOT NULL,\n" +
-        "    FOREIGN KEY(uid) REFERENCES " + prefix + "receipts(uid) ON DELETE CASCADE\n" +
-        "    );";
+           "    uid BINARY(16) NOT NULL PRIMARY KEY,\n" +
+           "    participant BINARY(16) NOT NULL,\n" +
+           "    participant_type VARCHAR(10) NOT NULL,\n" +
+           "    tax DECIMAL(49, 4) NOT NULL,\n" +
+           "    FOREIGN KEY(uid) REFERENCES " + prefix + "receipts(uid) ON DELETE CASCADE\n" +
+           "    );";
   }
 
 
   @Override
   public String receiptsModifiersTable() {
+
     return "CREATE TABLE IF NOT EXISTS " + prefix + "receipts_modifiers (\n" +
-        "    uid BINARY(16) NOT NULL PRIMARY KEY,\n" +
-        "    participant BINARY(16) NOT NULL,\n" +
-        "    participant_type VARCHAR(10) NOT NULL,\n" +
-        "    operation VARCHAR(10) NOT NULL,\n" +
-        "    region VARCHAR(40) NOT NULL,\n" +
-        "    currency BINARY(16) NOT NULL,\n" +
-        "    modifier DECIMAL(49, 4) NOT NULL," +
-        "    FOREIGN KEY(uid) REFERENCES " + prefix + "receipts(uid) ON DELETE CASCADE" +
-        "    );";
+           "    uid BINARY(16) NOT NULL PRIMARY KEY,\n" +
+           "    participant BINARY(16) NOT NULL,\n" +
+           "    participant_type VARCHAR(10) NOT NULL,\n" +
+           "    operation VARCHAR(10) NOT NULL,\n" +
+           "    region VARCHAR(40) NOT NULL,\n" +
+           "    currency BINARY(16) NOT NULL,\n" +
+           "    modifier DECIMAL(49, 4) NOT NULL," +
+           "    FOREIGN KEY(uid) REFERENCES " + prefix + "receipts(uid) ON DELETE CASCADE" +
+           "    );";
   }
 
   @Override
   public @Language("SQL") String accountPurge(final int days) {
+
     final String acc = prefix + "accounts";
     final String players = prefix + "players_accounts";
 
     return "DELETE FROM " + acc +
-        "WHERE uid IN (" +
-        "  SELECT uid FROM " + players +
-        "  WHERE EXISTS (" +
-        "    SELECT *" +
-        "    FROM " + acc +
-        "    WHERE " + acc + ".uid = " + players + ".uid" +
-        "    AND DATEDIFF(DAY, " + players + ".last_online, NOW()) >= " + days +
-        "  )" +
-        ");";
+           "WHERE uid IN (" +
+           "  SELECT uid FROM " + players +
+           "  WHERE EXISTS (" +
+           "    SELECT *" +
+           "    FROM " + acc +
+           "    WHERE " + acc + ".uid = " + players + ".uid" +
+           "    AND DATEDIFF(DAY, " + players + ".last_online, NOW()) >= " + days +
+           "  )" +
+           ");";
   }
 
   @Override
   public @Language("SQL") String receiptPurge(final int days) {
+
     return "DELETE FROM " + prefix + "receipts WHERE archived = false" +
            "AND DATEDIFF(CURDATE(), performed) >= " + days;
   }
 
   @Override
   public @Language("SQL") String saveName() {
+
     return saveName;
   }
 
   @Override
   public @Language("SQL") String loadAccounts() {
+
     return loadAccounts;
   }
 
   @Override
   public @Language("SQL") String loadAccount() {
+
     return loadAccount;
   }
 
   @Override
   public @Language("SQL") String saveAccount() {
+
     return saveAccount;
   }
 
   @Override
   public @Language("SQL") String loadNonPlayer() {
+
     return loadNonPlayer;
   }
 
   @Override
   public @Language("SQL") String saveNonPlayer() {
+
     return saveNonPlayer;
   }
 
   @Override
   public @Language("SQL") String loadPlayer() {
+
     return loadPlayer;
   }
 
   @Override
   public @Language("SQL") String savePlayer() {
+
     return savePlayer;
   }
 
   @Override
   public @Language("SQL") String loadMembers() {
+
     return loadMembers;
   }
 
   @Override
   public @Language("SQL") String saveMembers() {
+
     return saveMember;
   }
 
   @Override
   public @Language("SQL") String loadHoldings() {
+
     return loadHoldings;
   }
 
   @Override
   public @Language("SQL") String saveHoldings() {
+
     return saveHolding;
   }
 
   @Override
   public @Language("SQL") String loadReceipts() {
+
     return loadReceipts;
   }
 
   @Override
   public @Language("SQL") String saveReceipt() {
+
     return saveReceipt;
   }
 
   @Override
   public @Language("SQL") String loadReceiptHolding() {
+
     return loadReceiptHolding;
   }
 
   @Override
   public @Language("SQL") String saveReceiptHolding() {
+
     return saveReceiptHolding;
   }
 
   @Override
   public @Language("SQL") String loadParticipants() {
+
     return loadParticipants;
   }
 
   @Override
   public @Language("SQL") String saveParticipant() {
+
     return saveParticipant;
   }
 
   @Override
   public @Language("SQL") String loadModifiers() {
+
     return loadModifiers;
   }
 
   @Override
   public @Language("SQL") String saveModifier() {
+
     return saveModifier;
   }
 
   @Override
   public String requirement() {
+
     return requirement;
   }
 }

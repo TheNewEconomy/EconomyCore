@@ -93,8 +93,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * The core class of TNE which should be used within each implementation's class.
  *
- * @since 0.1.1.17
  * @author creatorfromhell
+ * @since 0.1.1.17
  */
 public abstract class TNECore extends PluginEngine {
 
@@ -126,21 +126,25 @@ public abstract class TNECore extends PluginEngine {
   protected UUID serverAccount;
 
   public TNECore() {
+
     instance = this;
   }
 
   @Override
   public String versionCheckSite() {
+
     return "https://tnemc.net/files/tnebuild.txt";
   }
 
   @Override
   public String version() {
+
     return version;
   }
 
   @Override
   public String build() {
+
     return build;
   }
 
@@ -167,6 +171,7 @@ public abstract class TNECore extends PluginEngine {
 
   @Override
   public void registerPluginChannels() {
+
     PluginCore.instance().getChannelMessageManager().register(new BalanceHandler());
     PluginCore.instance().getChannelMessageManager().register(new SyncHandler());
     PluginCore.instance().getChannelMessageManager().register(new net.tnemc.core.channel.MessageHandler());
@@ -174,6 +179,7 @@ public abstract class TNECore extends PluginEngine {
 
   @Override
   public void registerStorage() {
+
     final StorageSettings settings = new StorageSettings(
             DataConfig.yaml().getString("Data.Database.File"),
             DataConfig.yaml().getString("Data.Database.SQL.Host"),
@@ -189,7 +195,7 @@ public abstract class TNECore extends PluginEngine {
             DataConfig.yaml().getLong("Data.Pool.MaxLife"),
             DataConfig.yaml().getLong("Data.Pool.Timeout"),
             DataConfig.yaml().getString("Data.Sync.Type")
-            );
+    );
 
     final JedisPoolConfig config = new JedisPoolConfig();
     config.setMaxTotal(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.MaxSize", 10));
@@ -197,13 +203,13 @@ public abstract class TNECore extends PluginEngine {
     config.setMinIdle(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.MinIdle", 1));
 
     this.storage = new StorageManager(DataConfig.yaml().getString("Data.Database.Type"),
-            new TNEStorageProvider(), settings, new JedisPool(config, DataConfig.yaml().getString("Data.Sync.Redis.Host"),
-            DataConfig.yaml().getInt("Data.Sync.Redis.Port"),
-            DataConfig.yaml().getInt("Data.Sync.Redis.Timeout"),
-            DataConfig.yaml().getString("Data.Sync.Redis.User"),
-            DataConfig.yaml().getString("Data.Sync.Redis.Password"),
-            DataConfig.yaml().getInt("Data.Sync.Redis.Index"),
-            DataConfig.yaml().getBoolean("Data.Sync.Redis.SSL")));
+                                      new TNEStorageProvider(), settings, new JedisPool(config, DataConfig.yaml().getString("Data.Sync.Redis.Host"),
+                                                                                        DataConfig.yaml().getInt("Data.Sync.Redis.Port"),
+                                                                                        DataConfig.yaml().getInt("Data.Sync.Redis.Timeout"),
+                                                                                        DataConfig.yaml().getString("Data.Sync.Redis.User"),
+                                                                                        DataConfig.yaml().getString("Data.Sync.Redis.Password"),
+                                                                                        DataConfig.yaml().getInt("Data.Sync.Redis.Index"),
+                                                                                        DataConfig.yaml().getBoolean("Data.Sync.Redis.SSL")));
   }
 
   @Override
@@ -230,6 +236,7 @@ public abstract class TNECore extends PluginEngine {
 
   @Override
   public void registerCallbacks(CallbackManager callbackManager) {
+
     callbackManager.addCallback(TNECallbacks.ACCOUNT_TYPES.toString(), new CallbackEntry(AccountTypesCallback.class));
     callbackManager.addCallback(TNECallbacks.ACCOUNT_LOAD.toString(), new CallbackEntry(AccountLoadCallback.class));
     callbackManager.addCallback(TNECallbacks.ACCOUNT_SAVE.toString(), new CallbackEntry(AccountSaveCallback.class));
@@ -244,6 +251,7 @@ public abstract class TNECore extends PluginEngine {
 
   @Override
   public String commandHelpWriter(ExecutableCommand command, CommandActor actor) {
+
     final MessageData data = new MessageData("Messages.Commands.Help.Entry");
     data.addReplacement("$command", command.getPath().toRealString());
     data.addReplacement("$arguments", MessageHandler.getInstance().getTranslator().translateNode(new MessageData("Messages.Commands." + command.getUsage()), "default"));
@@ -254,6 +262,7 @@ public abstract class TNECore extends PluginEngine {
 
   @Override
   public void registerUpdateChecker() {
+
     if(MainConfig.yaml().getBoolean("Core.Update.Check")) {
       this.updateChecker = new Updater();
 
@@ -314,10 +323,12 @@ public abstract class TNECore extends PluginEngine {
 
   @Override
   public void postStorage() {
+
   }
 
   @Override
   public void postEnable() {
+
     MenuManager.instance().addMenu(new MyEcoMenu());
     MenuManager.instance().addMenu(new MyBalMenu());
     MenuManager.instance().addMenu(new TransactionMenu());
@@ -345,9 +356,9 @@ public abstract class TNECore extends PluginEngine {
           final BigDecimal defaultBalance = new BigDecimal(MainConfig.yaml().getString("Core.Server.Account.Balance"));
           if(defaultBalance.compareTo(BigDecimal.ZERO) > 0) {
             response.getAccount().ifPresent(value->value.setHoldings(new HoldingsEntry(economyManager.region().defaultRegion(),
-                    economyManager.currency().getDefaultCurrency().getUid(),
-                    defaultBalance,
-                    EconomyManager.NORMAL
+                                                                                       economyManager.currency().getDefaultCurrency().getUid(),
+                                                                                       defaultBalance,
+                                                                                       EconomyManager.NORMAL
             )));
           }
         } else {
@@ -360,21 +371,22 @@ public abstract class TNECore extends PluginEngine {
     if(DataConfig.yaml().getBoolean("Data.AutoSaver.Enabled")) {
 
       this.autoSaver = PluginCore.server().scheduler().createRepeatingTask(()->{
-                storage.storeAll();
-              }, new ChoreTime(0),
-              new ChoreTime(DataConfig.yaml().getInt("Data.AutoSaver.Interval"), TimeUnit.SECONDS),
-              ChoreExecution.SECONDARY);
+                                                                             storage.storeAll();
+                                                                           }, new ChoreTime(0),
+                                                                           new ChoreTime(DataConfig.yaml().getInt("Data.AutoSaver.Interval"), TimeUnit.SECONDS),
+                                                                           ChoreExecution.SECONDARY);
     }
 
 
     economyManager.printInvalid();
 
-    PluginCore.server().scheduler().createDelayedTask(()-> economyManager.getTopManager().load(), new ChoreTime(2), ChoreExecution.SECONDARY);
-    PluginCore.server().scheduler().createRepeatingTask(()-> economyManager.getTopManager().load(), new ChoreTime(2), new ChoreTime(MainConfig.yaml().getInt("Core.Commands.Top.Refresh"), TimeUnit.SECONDS), ChoreExecution.SECONDARY);
+    PluginCore.server().scheduler().createDelayedTask(()->economyManager.getTopManager().load(), new ChoreTime(2), ChoreExecution.SECONDARY);
+    PluginCore.server().scheduler().createRepeatingTask(()->economyManager.getTopManager().load(), new ChoreTime(2), new ChoreTime(MainConfig.yaml().getInt("Core.Commands.Top.Refresh"), TimeUnit.SECONDS), ChoreExecution.SECONDARY);
   }
 
   @Override
   public void postDisable() {
+
     if(autoSaver != null) {
       autoSaver.cancel();
     }
@@ -388,47 +400,58 @@ public abstract class TNECore extends PluginEngine {
   /**
    * The implementation's {@link EconomyManager}, which is used to manage everything economy related
    * in TNE.
+   *
    * @return The {@link EconomyManager Economy Manager}.
    */
   public static EconomyManager eco() {
+
     return instance.economyManager;
   }
 
   public static YamlStorageManager yaml() {
+
     return instance.yamlManager;
   }
 
   public MainConfig config() {
+
     return config;
   }
 
   public DataConfig data() {
+
     return data;
   }
 
   public MessageConfig message() {
+
     return messageConfig;
   }
 
   public static TNECore instance() {
+
     return instance;
   }
 
   public static TNEAPI api() {
+
     return instance.api;
   }
 
   public UUID getServerAccount() {
+
     return serverAccount;
   }
 
   public abstract <INV> ItemCalculations<INV> itemCalculations();
 
   public AbstractItemStack<?> denominationToStack(final ItemDenomination denomination) {
+
     return denominationToStack(denomination, 1);
   }
 
   public AbstractItemStack<?> denominationToStack(final ItemDenomination denomination, int amount) {
+
     return PluginCore.server().stackBuilder().of(denomination.getMaterial(), amount)
             .enchant(denomination.getEnchantments())
             .lore(denomination.getLore())

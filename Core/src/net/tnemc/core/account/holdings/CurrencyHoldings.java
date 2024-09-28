@@ -37,23 +37,29 @@ public class CurrencyHoldings {
 
   /**
    * Used to add {@link HoldingsEntry holdings} for a specific {@link Identifier}.
-   * @param type The type to add the holdings to.
+   *
+   * @param type  The type to add the holdings to.
    * @param entry The holdings to add to the type.
    */
   public void setHoldingsEntry(final @NotNull HoldingsEntry entry, final @NotNull Identifier type) {
+
     holdings.put(type.asID(), entry);
   }
 
   /**
    * Used to get the {@link HoldingsEntry holdings} for a specific {@link Identifier}.
+   *
    * @param type The type to add the holdings to.
+   *
    * @return The {@link HoldingsEntry} if it belongs, or an empty optional if it doesn't.
    */
   public Optional<HoldingsEntry> getHoldingsEntry(final @NotNull Identifier type) {
+
     return Optional.ofNullable(holdings.get(type.asID()));
   }
 
   public Map<String, HoldingsEntry> getHoldings() {
+
     return holdings;
   }
 }

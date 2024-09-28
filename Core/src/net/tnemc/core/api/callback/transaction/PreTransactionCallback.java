@@ -23,8 +23,8 @@ import net.tnemc.core.transaction.Transaction;
 import net.tnemc.plugincore.core.api.callback.Callback;
 
 /**
- * PreTransactionCallback represents a callback that is called before a transaction is performed. This
- * makes it cancellable.
+ * PreTransactionCallback represents a callback that is called before a transaction is performed.
+ * This makes it cancellable.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
@@ -34,6 +34,7 @@ public class PreTransactionCallback implements Callback {
   protected Transaction transaction;
 
   public PreTransactionCallback(Transaction transaction) {
+
     this.transaction = transaction;
   }
 
@@ -44,14 +45,17 @@ public class PreTransactionCallback implements Callback {
    */
   @Override
   public String name() {
+
     return TNECallbacks.TRANSACTION_PRE.id();
   }
 
   public Transaction getTransaction() {
+
     return transaction;
   }
 
   public void setTransaction(Transaction transaction) {
+
     this.transaction = transaction;
   }
 }

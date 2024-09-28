@@ -31,6 +31,7 @@ import java.util.Optional;
 public record Identifier(String plugin, String id) {
 
   public String asID() {
+
     return plugin + ":" + id;
   }
 
@@ -58,6 +59,7 @@ public record Identifier(String plugin, String id) {
    */
   @Override
   public boolean equals(Object obj) {
+
     if(obj instanceof Identifier) {
       return ((Identifier)obj).asID().equalsIgnoreCase(asID());
     }

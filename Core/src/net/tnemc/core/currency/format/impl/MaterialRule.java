@@ -35,8 +35,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class MaterialRule implements FormatRule {
+
   @Override
   public String name() {
+
     return "material";
   }
 
@@ -48,11 +50,13 @@ public class MaterialRule implements FormatRule {
    */
   @Override
   public boolean includeInMenu() {
+
     return false;
   }
 
   @Override
   public String format(@Nullable Account account, HoldingsEntry entry, String format) {
+
     String formatted = format;
 
 

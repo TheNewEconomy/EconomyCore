@@ -29,12 +29,14 @@ import org.jetbrains.annotations.NotNull;
  * @since 0.1.2.0
  */
 public class AccountNormalStatus implements AccountStatus {
+
   /**
    * @return The identifier of this account status.
    */
   @Override
   @MapKey
   public @NotNull String identifier() {
+
     return "normal";
   }
 
@@ -45,6 +47,7 @@ public class AccountNormalStatus implements AccountStatus {
    */
   @Override
   public boolean unlockable() {
+
     return false;
   }
 
@@ -55,6 +58,7 @@ public class AccountNormalStatus implements AccountStatus {
    */
   @Override
   public boolean use() {
+
     return true;
   }
 
@@ -65,6 +69,7 @@ public class AccountNormalStatus implements AccountStatus {
    */
   @Override
   public boolean receive() {
+
     return true;
   }
 }

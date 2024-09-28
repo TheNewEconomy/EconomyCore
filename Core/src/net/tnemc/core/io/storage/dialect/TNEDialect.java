@@ -29,85 +29,116 @@ import org.intellij.lang.annotations.Language;
  */
 public interface TNEDialect extends Dialect {
 
-  @Language("SQL") String accountsTable();
+  @Language("SQL")
+  String accountsTable();
 
-  @Language("SQL") String accountsNonPlayerTable();
+  @Language("SQL")
+  String accountsNonPlayerTable();
 
-  @Language("SQL") String accountsPlayerTable();
+  @Language("SQL")
+  String accountsPlayerTable();
 
-  @Language("SQL") String accountMembersTable();
+  @Language("SQL")
+  String accountMembersTable();
 
-  @Language("SQL") String holdingsTable();
+  @Language("SQL")
+  String holdingsTable();
 
-  @Language("SQL") String receiptsTable();
+  @Language("SQL")
+  String receiptsTable();
 
-  @Language("SQL") String receiptsHoldingsTable();
+  @Language("SQL")
+  String receiptsHoldingsTable();
 
-  @Language("SQL") String receiptsParticipantsTable();
+  @Language("SQL")
+  String receiptsParticipantsTable();
 
-  @Language("SQL") String receiptsModifiersTable();
+  @Language("SQL")
+  String receiptsModifiersTable();
 
-  @Language("SQL") String accountPurge(final int days);
+  @Language("SQL")
+  String accountPurge(final int days);
 
-  @Language("SQL") String receiptPurge(final int days);
+  @Language("SQL")
+  String receiptPurge(final int days);
 
   //player name save
-  @Language("SQL") String saveName();
+  @Language("SQL")
+  String saveName();
 
   //load accounts
-  @Language("SQL") String loadAccounts();
+  @Language("SQL")
+  String loadAccounts();
 
   //account load
-  @Language("SQL") String loadAccount();
+  @Language("SQL")
+  String loadAccount();
 
   //account save
-  @Language("SQL") String saveAccount();
+  @Language("SQL")
+  String saveAccount();
 
   //non player load
-  @Language("SQL") String loadNonPlayer();
+  @Language("SQL")
+  String loadNonPlayer();
 
   //non player save
-  @Language("SQL") String saveNonPlayer();
+  @Language("SQL")
+  String saveNonPlayer();
 
   //player load
-  @Language("SQL") String loadPlayer();
+  @Language("SQL")
+  String loadPlayer();
 
   //player save
-  @Language("SQL") String savePlayer();
+  @Language("SQL")
+  String savePlayer();
 
   //members load
-  @Language("SQL") String loadMembers();
+  @Language("SQL")
+  String loadMembers();
 
   //members save
-  @Language("SQL") String saveMembers();
+  @Language("SQL")
+  String saveMembers();
 
   //holdings load
-  @Language("SQL") String loadHoldings();
+  @Language("SQL")
+  String loadHoldings();
 
   //holdings save
-  @Language("SQL") String saveHoldings();
+  @Language("SQL")
+  String saveHoldings();
 
   //receipts load
-  @Language("SQL") String loadReceipts();
+  @Language("SQL")
+  String loadReceipts();
 
   //receipt save
-  @Language("SQL") String saveReceipt();
+  @Language("SQL")
+  String saveReceipt();
 
   //receipts load
-  @Language("SQL") String loadReceiptHolding();
+  @Language("SQL")
+  String loadReceiptHolding();
 
   //receipt holding save
-  @Language("SQL") String saveReceiptHolding();
+  @Language("SQL")
+  String saveReceiptHolding();
 
   //receipt participants load
-  @Language("SQL") String loadParticipants();
+  @Language("SQL")
+  String loadParticipants();
 
   //receipt participant save
-  @Language("SQL") String saveParticipant();
+  @Language("SQL")
+  String saveParticipant();
 
   //receipt modifiers load
-  @Language("SQL") String loadModifiers();
+  @Language("SQL")
+  String loadModifiers();
 
   //receipt modifier save
-  @Language("SQL") String saveModifier();
+  @Language("SQL")
+  String saveModifier();
 }

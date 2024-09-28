@@ -43,6 +43,7 @@ public class BungeeCore extends Plugin {
 
   @Override
   public void onEnable() {
+
     instance = this;
 
     this.manager = new MessageManager(new BungeeProxy());
@@ -55,14 +56,17 @@ public class BungeeCore extends Plugin {
   }
 
   public static BungeeCore instance() {
+
     return instance;
   }
 
   public Map<UUID, MessageData> getBacklog() {
+
     return backlog;
   }
 
   public void remove(final UUID server) {
+
     backlog.remove(server);
   }
 }

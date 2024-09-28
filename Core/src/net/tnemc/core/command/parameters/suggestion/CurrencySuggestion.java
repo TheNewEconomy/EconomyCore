@@ -39,6 +39,7 @@ public class CurrencySuggestion implements SuggestionProvider {
 
   @Override
   public @NotNull Collection<String> getSuggestions(@NotNull List<String> list, @NotNull CommandActor commandActor, @NotNull ExecutableCommand executableCommand) throws Throwable {
+
     return TNECore.eco().currency().currencies().stream().map(Currency::getIdentifier).collect(Collectors.toList());
   }
 }

@@ -40,6 +40,7 @@ public record ModifiedBukkitLogger(Logger logger) implements LogProvider {
    */
   @Override
   public void inform(String message, DebugLevel level) {
+
     if(level.compare(PluginCore.instance().getLevel())) {
       logger.info(message);
     }
@@ -53,6 +54,7 @@ public record ModifiedBukkitLogger(Logger logger) implements LogProvider {
    */
   @Override
   public void debug(String message, DebugLevel level) {
+
     if(level.compare(PluginCore.instance().getLevel())) {
       logger.warning("[DEBUG]: " + message);
     }
@@ -66,6 +68,7 @@ public record ModifiedBukkitLogger(Logger logger) implements LogProvider {
    */
   @Override
   public void warning(String message, DebugLevel level) {
+
     if(level.compare(PluginCore.instance().getLevel())) {
       logger.warning(message);
     }
@@ -79,6 +82,7 @@ public record ModifiedBukkitLogger(Logger logger) implements LogProvider {
    */
   @Override
   public void error(String message, DebugLevel level) {
+
     if(level.compare(PluginCore.instance().getLevel())) {
       logger.warning(message);
     }
@@ -93,6 +97,7 @@ public record ModifiedBukkitLogger(Logger logger) implements LogProvider {
    */
   @Override
   public void error(String message, Exception exception, DebugLevel level) {
+
     if(level.compare(PluginCore.instance().getLevel())) {
       logger.warning("====== Exception Occurred ======");
       exception.printStackTrace();

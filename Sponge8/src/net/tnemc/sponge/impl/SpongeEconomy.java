@@ -46,16 +46,19 @@ public class SpongeEconomy implements EconomyService {
 
   @Override
   public Currency defaultCurrency() {
+
     return new SpongeCurrency(TNECore.eco().currency().getDefaultCurrency());
   }
 
   @Override
   public boolean hasAccount(UUID identifier) {
+
     return TNECore.eco().account().findAccount(identifier).isPresent();
   }
 
   @Override
   public boolean hasAccount(String identifier) {
+
     return TNECore.eco().account().findAccount(identifier).isPresent();
   }
 
@@ -80,36 +83,43 @@ public class SpongeEconomy implements EconomyService {
 
   @Override
   public Optional<Account> findOrCreateAccount(String identifier) {
+
     return Optional.empty();
   }
 
   @Override
   public Stream<UniqueAccount> streamUniqueAccounts() {
+
     return uniqueAccounts().stream();
   }
 
   @Override
   public Collection<UniqueAccount> uniqueAccounts() {
+
     return new ArrayList<>();
   }
 
   @Override
   public Stream<VirtualAccount> streamVirtualAccounts() {
+
     return virtualAccounts().stream();
   }
 
   @Override
   public Collection<VirtualAccount> virtualAccounts() {
+
     return new ArrayList<>();
   }
 
   @Override
   public AccountDeletionResultType deleteAccount(UUID identifier) {
+
     return new SpongeDeletionResult(TNECore.eco().account().deleteAccount(identifier));
   }
 
   @Override
   public AccountDeletionResultType deleteAccount(String identifier) {
+
     final Optional<net.tnemc.core.account.Account> account = TNECore.eco().account().findAccount(identifier);
 
     return new SpongeDeletionResult(TNECore.eco().account().deleteAccount(account.get().getIdentifier()));

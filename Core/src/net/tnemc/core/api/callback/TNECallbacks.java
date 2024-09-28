@@ -41,10 +41,12 @@ public enum TNECallbacks {
   final String identifier;
 
   TNECallbacks(String identifier) {
+
     this.identifier = identifier;
   }
 
   public String id() {
+
     return identifier;
   }
 }

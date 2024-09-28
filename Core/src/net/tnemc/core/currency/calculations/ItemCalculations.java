@@ -33,9 +33,11 @@ public class ItemCalculations<I> {
 
   /**
    * Used to calculate the holdings of the inventory materials present.
+   *
    * @return The {@link BigDecimal} representation of the inventory materials balance value.
    */
   public BigDecimal calculateHoldings(CalculationData<I> data) {
+
     BigDecimal holdings = BigDecimal.ZERO;
 
     for(Map.Entry<BigDecimal, Denomination> entry : data.getDenominations().entrySet()) {
@@ -49,6 +51,7 @@ public class ItemCalculations<I> {
   }
 
   public void setItems(CalculationData<I> data, BigDecimal amount) {
+
     final BigDecimal holdings = calculateHoldings(data);
 
     if(holdings.compareTo(amount) == 0) return;
@@ -88,8 +91,8 @@ public class ItemCalculations<I> {
   }
 
   /**
-   * Used to exchange an amount to inventory items. This is mostly used for when a larger denomination
-   * needs to be broken into smaller denominations for calculation purposes.
+   * Used to exchange an amount to inventory items. This is mostly used for when a larger
+   * denomination needs to be broken into smaller denominations for calculation purposes.
    *
    * @param amount The amount that the items should add up to.
    */
@@ -107,10 +110,12 @@ public class ItemCalculations<I> {
 
   /**
    * Used to remove tiers from the {@link CalculationData} being worked with.
-   * @param denom The denom name in String form.
+   *
+   * @param denom  The denom name in String form.
    * @param amount The amount of the material to remove from working materials.
    */
   public void removeMaterials(CalculationData<I> data, Denomination denom, Integer amount) {
+
     data.removeMaterials(denom, amount);
   }
 }

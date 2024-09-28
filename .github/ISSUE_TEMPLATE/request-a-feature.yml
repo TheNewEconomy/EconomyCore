@@ -1,7 +1,7 @@
 name: Feature Request
 description: Suggest a feature to be added in order to help TNE improve.
 title: "[FEAT]: "
-labels: ["feature"]
+labels: [ "feature" ]
 assignees:
   - creatorfromhell
 

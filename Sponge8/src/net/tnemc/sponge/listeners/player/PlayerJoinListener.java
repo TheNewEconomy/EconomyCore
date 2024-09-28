@@ -37,13 +37,15 @@ public class PlayerJoinListener {
   private final PluginContainer plugin;
 
   public PlayerJoinListener(PluginContainer plugin) {
+
     this.plugin = plugin;
   }
 
   @Listener
   public void listen(ServerSideConnectionEvent.Join event) {
+
     final HandlerResponse handle = new PlayerJoinHandler()
-                                   .handle(new SpongePlayerProvider(event.player().user(), plugin));
+            .handle(new SpongePlayerProvider(event.player().user(), plugin));
 
 
     if(handle.isCancelled()) {

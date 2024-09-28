@@ -64,13 +64,14 @@ public class HoldingsEntry {
   /**
    * Constructs an object that represents a holding's entry.
    *
-   * @param region The name of the region involved. This is usually a world, but could be something
-   *               else such as a world guard region name/identifier.
+   * @param region   The name of the region involved. This is usually a world, but could be
+   *                 something else such as a world guard region name/identifier.
    * @param currency The identifier of the currency involved.
-   * @param amount The {@link BigDecimal amount} that this charge is for.
+   * @param amount   The {@link BigDecimal amount} that this charge is for.
    */
   public HoldingsEntry(final @NotNull String region, final @NotNull UUID currency,
                        final @NotNull BigDecimal amount, final @NotNull Identifier handler) {
+
     this.region = region;
     this.currency = currency;
     this.amount = amount;
@@ -83,52 +84,63 @@ public class HoldingsEntry {
    * @param modifier The modifier to build this entry from.
    */
   public HoldingsEntry(final @NotNull HoldingsModifier modifier) {
+
     this.region = modifier.getRegion();
     this.currency = modifier.getCurrency();
     this.amount = modifier.getModifier();
   }
 
   public void modify(final HoldingsModifier modifier) {
+
     amount = modifier.modify(amount);
   }
 
   public HoldingsEntry modifyGrab(final BigDecimal modifier) {
+
     HoldingsEntry entry = new HoldingsEntry(region, currency, amount, handler);
     entry.modify(new HoldingsModifier(region, currency, modifier));
     return entry;
   }
 
   public HoldingsEntry modifyGrab(final HoldingsModifier modifier) {
+
     HoldingsEntry entry = new HoldingsEntry(region, currency, amount, handler);
     entry.modify(modifier);
     return entry;
   }
 
   public Optional<Currency> currency() {
+
     return TNECore.eco().currency().findCurrency(currency);
   }
 
   public UUID getCurrency() {
+
     return currency;
   }
 
   public void setCurrency(UUID currency) {
+
     this.currency = currency;
   }
 
   public String getRegion() {
+
     return region;
   }
 
   public void setRegion(String region) {
+
     this.region = region;
   }
 
   public BigDecimal getAmount() {
+
     return amount;
   }
 
   public Monetary asMonetary() {
+
     if(monetary != null) {
       return monetary;
     }
@@ -138,16 +150,19 @@ public class HoldingsEntry {
   }
 
   public void setAmount(BigDecimal amount) {
+
     this.amount = amount;
     final Optional<Currency> cur = currency();
     monetary = new Monetary(amount, cur.map(Currency::getDecimalPlaces).orElse(2));
   }
 
   public Identifier getHandler() {
+
     return handler;
   }
 
   public void setHandler(Identifier handler) {
+
     this.handler = handler;
   }
 }

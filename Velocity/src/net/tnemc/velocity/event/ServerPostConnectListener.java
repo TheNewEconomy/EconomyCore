@@ -32,6 +32,7 @@ import java.util.Optional;
  * @since 0.1.2.0
  */
 public class ServerPostConnectListener {
+
   @Subscribe
   public void handle(ServerPostConnectEvent event) {
 

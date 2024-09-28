@@ -49,18 +49,21 @@ public class MessageConfig extends Config {
   private final Map<String, Language> languages = new HashMap<>();
 
   public MessageConfig() {
+
     super("messages.yml", "messages.yml", Collections.singletonList("Messages"),
-            LoaderSettings.builder().setAutoUpdate(true).build(),
-            UpdaterSettings.builder().setAutoSave(true).setVersioning(new BasicVersioning("Messages.config-version")).build());
+          LoaderSettings.builder().setAutoUpdate(true).build(),
+          UpdaterSettings.builder().setAutoSave(true).setVersioning(new BasicVersioning("Messages.config-version")).build());
 
     instance = this;
   }
 
   public static YamlDocument yaml() {
+
     return instance.getYaml();
   }
 
   public String getString(final String node, final UUID player) {
+
     final Optional<Account> account = TNECore.eco().account().findAccount(player);
 
     if(account.isPresent() && account.get() instanceof PlayerAccount) {
@@ -75,6 +78,7 @@ public class MessageConfig extends Config {
   }
 
   public String getString(final String node, final String lang) {
+
     if(languages.containsKey(lang) && languages.get(lang).hasTranslation(node)) {
       return languages.get(lang).getTranslation(node);
     }
@@ -87,17 +91,18 @@ public class MessageConfig extends Config {
   }
 
   public void loadLanguages() {
-   final File directory = new File(PluginCore.directory(), "languages");
+
+    final File directory = new File(PluginCore.directory(), "languages");
     if(!directory.exists()) {
       directory.mkdir();
       return;
     }
 
-    final File[] langFiles = directory.listFiles((dir, name) -> name.endsWith(".yml"));
+    final File[] langFiles = directory.listFiles((dir, name)->name.endsWith(".yml"));
 
     if(langFiles != null) {
 
-      for (File langFile : langFiles) {
+      for(File langFile : langFiles) {
 
         final String name = langFile.getName().replace(".yml", "");
 

@@ -34,24 +34,28 @@ import java.util.Optional;
  * @since 0.1.2.0
  */
 public class VirtualType implements CurrencyType {
+
   /**
    * @return The name of this currency type. Examples: Virtual, Item
    */
   @Override
   public String name() {
+
     return "virtual";
   }
 
   @Override
   public String description() {
+
     return "A simple currency type that is strictly virtual, which is imaginary money used in commands.";
   }
 
   protected HoldingsEntry virtual(Account account, String region, Currency currency) {
+
     final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
                                                                              currency.getUid(),
                                                                              EconomyManager.VIRTUAL
-    );
+                                                                            );
 
 
     if(holdings.isPresent()) {

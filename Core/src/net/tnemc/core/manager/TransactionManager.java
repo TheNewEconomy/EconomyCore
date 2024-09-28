@@ -52,9 +52,9 @@ import java.util.TimeZone;
  * Manages everything related to the transaction system. This is usually just keeping track of the
  * various check types and other systems.
  *
+ * @author creatorfromhell
  * @see Transaction
  * @see TransactionCheck
- * @author creatorfromhell
  * @since 0.1.2.0
  */
 public class TransactionManager {
@@ -118,78 +118,94 @@ public class TransactionManager {
 
   /**
    * Attempts to find a {@link TransactionType type}.
+   *
    * @param identifier The identifier of the type to use in the search.
    *
    * @return An Optional containing the type if it exists based on the identifier, otherwise an
    * empty Optional.
    */
   public Optional<TransactionType> findType(final String identifier) {
+
     return Optional.ofNullable(types.get(identifier));
   }
 
   /**
    * Adds a {@link TransactionType type}.
+   *
    * @param type The type to add.
    */
   public void addType(final TransactionType type) {
+
     types.put(type);
   }
 
   /**
    * Attempts to find a {@link TaxType type}.
+   *
    * @param identifier The identifier of the type to use in the search.
    *
    * @return An Optional containing the type if it exists based on the identifier, otherwise an
    * empty Optional.
    */
   public Optional<TaxType> findTax(final String identifier) {
+
     return Optional.ofNullable(tax.get(identifier));
   }
 
   /**
    * Adds a {@link TaxType type}.
+   *
    * @param type The type to add.
    */
   public void addTax(final TaxType type) {
+
     tax.put(type);
   }
 
   /**
    * Adds a {@link TransactionCheck check}.
+   *
    * @param check The check to add.
    */
   public void addCheck(final TransactionCheck check) {
+
     checks.put(check);
   }
 
   /**
    * Adds a {@link TransactionCheck check}.
+   *
    * @param check The check to add.
    * @param group The {@link TransactionCheckGroup group} to add this check to.
    */
   public void addCheck(final TransactionCheck check, final String group) {
+
     checks.put(check);
     addCheckToGroup(check.identifier(), group);
   }
 
   /**
    * Attempts to find a {@link TransactionCheck check}.
+   *
    * @param identifier The identifier of the check to use in the search.
    *
    * @return An Optional containing the check if it exists based on the identifier, otherwise an
    * empty Optional.
    */
   public Optional<TransactionCheck> findCheck(final String identifier) {
+
     return Optional.ofNullable(checks.get(identifier));
   }
 
   /**
    * Adds a {@link TransactionCheck check} to a {@link TransactionCheckGroup group} if it exists,
    * otherwise it'll create a new group and add it to that.
+   *
    * @param check The check to add.
    * @param group The group to add the check to.
    */
   public void addCheckToGroup(final String check, final String group) {
+
     Optional<TransactionCheckGroup> groupOptional = findGroup(group);
     groupOptional.ifPresentOrElse(transactionCheckGroup->{
       transactionCheckGroup.addCheck(check);
@@ -204,52 +220,64 @@ public class TransactionManager {
 
   /**
    * Adds a {@link TransactionCheckGroup group}.
+   *
    * @param group The group to add.
    */
   public void addGroup(final TransactionCheckGroup group) {
+
     checkGroups.put(group);
   }
 
   /**
    * Attempts to find a {@link TransactionCheckGroup group}.
+   *
    * @param identifier The identifier of the group to use in the search.
    *
    * @return An Optional containing the group if it exists based on the identifier, otherwise an
    * empty Optional.
    */
   public Optional<TransactionCheckGroup> findGroup(final String identifier) {
+
     return Optional.ofNullable(checkGroups.get(identifier));
   }
 
   public boolean isTrack() {
+
     return track;
   }
 
   public void setTrack(boolean track) {
+
     this.track = track;
   }
 
   public BigDecimal getAmount() {
+
     return amount;
   }
 
   public void setAmount(BigDecimal amount) {
+
     this.amount = amount;
   }
 
   public TransactionProcessor getProcessor() {
+
     return processor;
   }
 
   public void setProcessor(TransactionProcessor processor) {
+
     this.processor = processor;
   }
 
   public static ReceiptManager receipts() {
+
     return TNECore.eco().transaction().receiptManager;
   }
 
   public SimpleDateFormat getFormat() {
+
     return format;
   }
 }

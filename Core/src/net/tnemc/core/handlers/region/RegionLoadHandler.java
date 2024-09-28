@@ -32,6 +32,7 @@ import net.tnemc.plugincore.core.utils.HandlerResponse;
 public class RegionLoadHandler {
 
   public HandlerResponse handle(final String region, final RegionType type) {
+
     TNECore.eco().region().initializeRegion(region, type);
 
     return new HandlerResponse("", false);

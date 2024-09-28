@@ -29,8 +29,10 @@ import java.math.BigInteger;
 import java.util.Optional;
 
 public class MajorNameRule implements FormatRule {
+
   @Override
   public String name() {
+
     return "<major.name>";
   }
 
@@ -42,7 +44,7 @@ public class MajorNameRule implements FormatRule {
     final Optional<Currency> currency = entry.currency();
     return currency.map(value->format.replace("<major.name>",
                                               ((monetary.major().compareTo(BigInteger.ONE) == 0)?
-                                                  value.getDisplay() :
-                                                  value.getDisplayPlural()))).orElse(format);
+                                               value.getDisplay() :
+                                               value.getDisplayPlural()))).orElse(format);
   }
 }

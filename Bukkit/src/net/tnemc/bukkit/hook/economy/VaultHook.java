@@ -38,6 +38,7 @@ public class VaultHook implements Hook {
    */
   @Override
   public boolean enabled() {
+
     return false;
   }
 
@@ -46,8 +47,9 @@ public class VaultHook implements Hook {
    */
   @Override
   public void register() {
+
     BukkitCore.instance().getPlugin().getServer().getServicesManager().register(Economy.class, new TNEVault(),
-                                                             BukkitCore.instance().getPlugin(), ServicePriority.Highest);
+                                                                                BukkitCore.instance().getPlugin(), ServicePriority.Highest);
 
     PluginCore.log().inform("Hooked into Vault");
   }

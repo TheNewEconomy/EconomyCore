@@ -39,8 +39,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * ReceiptBox represents an object that can hold receipts.
  *
  * @author creatorfromhell
- * @since 0.1.2.0
  * @see Receipt
+ * @since 0.1.2.0
  */
 public class ReceiptBox {
 
@@ -53,12 +53,15 @@ public class ReceiptBox {
   private final UUID owner;
 
   public ReceiptBox(UUID owner) {
+
     this.owner = owner;
   }
 
   /**
    * Used to calculate transactions that happened while an account owner was away.
+   *
    * @param account The identifier of the account.
+   *
    * @return An Optional containing the account history if applicable, otherwise an empty Optional.
    */
   public Optional<AwayHistory> away(final UUID account) {
@@ -87,7 +90,7 @@ public class ReceiptBox {
       final Receipt receipt = entry.getValue();
 
       if(receipt.getFrom() != null && receipt.getFrom().getId().equals(account)
-          || receipt.getTo() != null && receipt.getTo().getId().equals(account)) {
+         || receipt.getTo() != null && receipt.getTo().getId().equals(account)) {
         history.getReceipts().put(receipt.getTime(), receipt.getId());
         i++;
       }
@@ -102,6 +105,7 @@ public class ReceiptBox {
   }
 
   public SortedHistory getSorted(final UUID identifier) {
+
     if(sorted == null) {
       sorted = new SortedHistory(identifier);
     }
@@ -112,37 +116,46 @@ public class ReceiptBox {
    * Used to clear the AwayHistory instance.
    */
   public void clearAwayReceipts() {
+
     away = null;
     checked = false;
   }
 
   /**
    * Logs a receipt reference to this receipt box.
+   *
    * @param receipt The {@link Receipt} to log.
    */
   public void logReference(final Receipt receipt) {
+
     receipts.add(receipt.getId());
   }
 
   /**
    * Used to destroy a receipt based on the time it occurred.
+   *
    * @param time The time to use for the destruction.
    */
   public void destroy(final long time) {
+
     TransactionManager.receipts().removeReceiptsByTimeAndParticipant(time, owner);
   }
 
   /**
    * Used to destroy a receipt based on the {@link UUID} it occurred.
+   *
    * @param identifier The identifier to use for the destruction.
    */
   public void destroy(final UUID identifier) {
+
     receipts.remove(identifier);
   }
 
   /**
    * Used to find a receipt based on the time it occurred.
+   *
    * @param time The time to use for the search.
+   *
    * @return An optional with the {@link Receipt} if it exists, otherwise an empty Optional.
    */
   public List<Receipt> findReceipts(final long time) {
@@ -152,17 +165,22 @@ public class ReceiptBox {
 
   /**
    * Used to find a receipt based on the {@link UUID} it occurred.
+   *
    * @param identifier The {@link UUID} to use for the search.
+   *
    * @return An optional with the {@link Receipt} if it exists, otherwise an empty Optional.
    */
   public Optional<Receipt> findReceipt(final UUID identifier) {
+
     return TransactionManager.receipts().getReceiptByUUID(identifier);
   }
 
   /**
    * This is used to return a range of {@link Receipt receipts}, based on a time range.
+   *
    * @param start The start of the time to use for the range.
-   * @param end The end of the time to use for the range.
+   * @param end   The end of the time to use for the range.
+   *
    * @return A {@link TreeMap} of the receipts that occurred during the time range.
    */
   public TreeMap<Long, Receipt> range(final long start, final long end) {
@@ -171,6 +189,7 @@ public class ReceiptBox {
   }
 
   public Queue<UUID> getReceipts() {
+
     return receipts;
   }
 }

@@ -50,6 +50,7 @@ public class InventoryHandler implements HoldingsHandler {
    */
   @Override
   public Identifier identifier() {
+
     return EconomyManager.INVENTORY_ONLY;
   }
 
@@ -62,6 +63,7 @@ public class InventoryHandler implements HoldingsHandler {
    */
   @Override
   public boolean supports(CurrencyType type) {
+
     return type.supportsItems();
   }
 
@@ -69,8 +71,8 @@ public class InventoryHandler implements HoldingsHandler {
    * Used to set the holdings for a specific account.
    *
    * @param account  The account.
-   * @param region   The name of the region involved. This is usually a world, but could be something
-   *                 else such as a world guard region name/identifier.
+   * @param region   The name of the region involved. This is usually a world, but could be
+   *                 something else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
    * @param type     The currency type.
    * @param amount   The amount to set the player's holdings to.
@@ -79,12 +81,13 @@ public class InventoryHandler implements HoldingsHandler {
    */
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, CurrencyType type, BigDecimal amount) {
+
     account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, identifier()));
 
     if(account.isPlayer() && PluginCore.server().online(account.getIdentifier().toString()) && !TNECore.eco().account().getImporting().contains(account.getIdentifier())) {
       final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
                                                                  ((PlayerAccount)account).getPlayer()
-                                                                     .get().inventory().getInventory(false),
+                                                                         .get().inventory().getInventory(false),
                                                                  ((PlayerAccount)account).getUUID());
       TNECore.instance().itemCalculations().setItems(data, amount);
       return true;
@@ -96,8 +99,8 @@ public class InventoryHandler implements HoldingsHandler {
    * Used to get the holdings for a specific account from this handler.
    *
    * @param account  The Account.
-   * @param region   The name of the region involved. This is usually a world, but could be something
-   *                 else such as a world guard region name/identifier.
+   * @param region   The name of the region involved. This is usually a world, but could be
+   *                 something else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
    * @param type     The currency type.
    *
@@ -105,17 +108,18 @@ public class InventoryHandler implements HoldingsHandler {
    */
   @Override
   public HoldingsEntry getHoldings(Account account, String region, Currency currency, CurrencyType type) {
+
     if((currency instanceof ItemCurrency)) {
 
       if(!account.isPlayer() || !PluginCore.server().online(account.getIdentifier().toString()) ||
-          TNECore.eco().account().getLoading().contains(account.getIdentifier())
-                  && !TNECore.eco().account().getImporting().contains(account.getIdentifier())) {
+         TNECore.eco().account().getLoading().contains(account.getIdentifier())
+         && !TNECore.eco().account().getImporting().contains(account.getIdentifier())) {
 
         //Offline players have their balances saved to their wallet so check it.
         final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
                                                                                  currency.getUid(),
                                                                                  identifier()
-        );
+                                                                                );
         PluginCore.log().debug("Getting holdings from Inventory DB", DebugLevel.DEVELOPER);
 
         if(holdings.isPresent()) {
@@ -129,7 +133,7 @@ public class InventoryHandler implements HoldingsHandler {
       PluginCore.log().debug("Getting holdings from Inventory", DebugLevel.DEVELOPER);
       final CalculationData<Object> data = new CalculationData<>((ItemCurrency)currency,
                                                                  ((PlayerAccount)account).getPlayer()
-                                                                     .get().inventory().getInventory(false),
+                                                                         .get().inventory().getInventory(false),
                                                                  ((PlayerAccount)account).getUUID());
 
       return new HoldingsEntry(region, currency.getUid(),

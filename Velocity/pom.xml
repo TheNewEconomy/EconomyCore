@@ -21,7 +21,6 @@
     </repositories>
 
 
-
     <build>
         <defaultGoal>clean package</defaultGoal>
         <directory>target</directory>
@@ -78,7 +77,9 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
+                    <dependencyReducedPomLocation>
+                        ${project.build.directory}/dependency-reduced-pom.xml
+                    </dependencyReducedPomLocation>
                     <artifactSet>
                         <includes>
                             <include>net.tnemc:*</include>

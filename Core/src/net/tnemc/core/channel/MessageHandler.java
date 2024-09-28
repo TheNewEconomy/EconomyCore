@@ -40,10 +40,12 @@ import java.util.UUID;
 public class MessageHandler extends ChannelMessageHandler {
 
   public MessageHandler() {
+
     super("message");
   }
 
   public static void send(final UUID identifier, final Component component) {
+
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
     out.writeUTF(PluginCore.instance().getServerID().toString());
     out.writeUTF(identifier.toString());

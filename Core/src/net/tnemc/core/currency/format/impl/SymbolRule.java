@@ -27,8 +27,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class SymbolRule implements FormatRule {
+
   @Override
   public String name() {
+
     return "<symbol>";
   }
 

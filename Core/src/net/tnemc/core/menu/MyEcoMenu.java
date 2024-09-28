@@ -123,7 +123,7 @@ public class MyEcoMenu extends Menu {
       final UUID id = open.getPlayer().identifier();
       open.getPage().addIcon(new SwitchPageIcon(2, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
               .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Main.Currencies"), id)), this.name, CURRENCIES_PAGE, ActionType.ANY));
-            });
+    });
     addPage(main);
 
     //Currency Page
@@ -156,58 +156,58 @@ public class MyEcoMenu extends Menu {
         final UUID id = open.getPlayer().identifier();
 
         open.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-                .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Save"), id))
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Currency.SaveLore"), id))))
-                .withActions(new RunnableAction((click)->{
+                                                       .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Save"), id))
+                                                       .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Currency.SaveLore"), id))))
+                                       .withActions(new RunnableAction((click)->{
 
-                  final File directory = new File(PluginCore.directory(), "currency");
-                  TNECore.eco().currency().getSaver().backupCurrency(directory);
+                                         final File directory = new File(PluginCore.directory(), "currency");
+                                         TNECore.eco().currency().getSaver().backupCurrency(directory);
 
-                  MISCUtils.deleteFolder(directory);
+                                         MISCUtils.deleteFolder(directory);
 
-                  TNECore.eco().currency().getSaver().saveCurrencies(directory);
+                                         TNECore.eco().currency().getSaver().saveCurrencies(directory);
 
-                  try {
+                                         try {
 
-                    TNECore.eco().currency().getCurrencies().clear();
-                    TNECore.eco().currency().getCurIDMap().clear();
+                                           TNECore.eco().currency().getCurrencies().clear();
+                                           TNECore.eco().currency().getCurIDMap().clear();
 
-                    TNECore.eco().currency().getLoader().loadCurrencies(directory);
+                                           TNECore.eco().currency().getLoader().loadCurrencies(directory);
 
 
-                    final Optional<MenuViewer> viewer = click.player().viewer();
-                    if(viewer.isPresent()) {
-                      viewer.get().addData("CURRENCY_SAVED_CONFIRM", true);
-                    }
+                                           final Optional<MenuViewer> viewer = click.player().viewer();
+                                           if(viewer.isPresent()) {
+                                             viewer.get().addData("CURRENCY_SAVED_CONFIRM", true);
+                                           }
 
-                    final Optional<PlayerProvider> provider = PluginCore.server().findPlayer(id);
-                    if(provider.isPresent()) {
-                      provider.get().message(new MessageData("Messages.Menu.MyEco.Main.Saved"));
-                    }
+                                           final Optional<PlayerProvider> provider = PluginCore.server().findPlayer(id);
+                                           if(provider.isPresent()) {
+                                             provider.get().message(new MessageData("Messages.Menu.MyEco.Main.Saved"));
+                                           }
 
-                  } catch(NoValidCurrenciesException ignore) {}
-                }), new PageSwitchWithClose(this.name, -1))
-                .withSlot(6)
-                .build());
+                                         } catch(NoValidCurrenciesException ignore) { }
+                                       }), new PageSwitchWithClose(this.name, -1))
+                                       .withSlot(6)
+                                       .build());
 
         open.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BLACK_WOOL", 1)
-                .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Reset"), id))
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Currency.ResetLore"), id))))
-                .withActions(new RunnableAction((click)->{
+                                                       .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Reset"), id))
+                                                       .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Currency.ResetLore"), id))))
+                                       .withActions(new RunnableAction((click)->{
 
-                  final File directory = new File(PluginCore.directory(), "currency");
+                                         final File directory = new File(PluginCore.directory(), "currency");
 
-                  try {
+                                         try {
 
-                    TNECore.eco().currency().getCurrencies().clear();
-                    TNECore.eco().currency().getCurIDMap().clear();
+                                           TNECore.eco().currency().getCurrencies().clear();
+                                           TNECore.eco().currency().getCurIDMap().clear();
 
-                    TNECore.eco().currency().getLoader().loadCurrencies(directory);
-                  } catch(NoValidCurrenciesException ignore) {}
-                }), new PageSwitchWithClose(this.name, -1))
-                .withSlot(8)
-                .build());
-      
+                                           TNECore.eco().currency().getLoader().loadCurrencies(directory);
+                                         } catch(NoValidCurrenciesException ignore) { }
+                                       }), new PageSwitchWithClose(this.name, -1))
+                                       .withSlot(8)
+                                       .build());
+
         //add currency
         final SwitchPageIcon addCurrencyIcon = new SwitchPageIcon(2, PluginCore.server().stackBuilder().of("ARROW", 1)
                 .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Currency.AddCurrencyDisplay"), id))
@@ -625,54 +625,54 @@ public class MyEcoMenu extends Menu {
 
         //currency name icon
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.SetIdentifierLore"), id))))
-                .withSlot(18)
-                .withActions(new ChatAction((message)->{
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.SetIdentifierLore"), id))))
+                                           .withSlot(18)
+                                           .withActions(new ChatAction((message)->{
 
-                  if(message.getPlayer().viewer().isPresent()) {
+                                             if(message.getPlayer().viewer().isPresent()) {
 
-                    if(TNECore.eco().currency().findCurrency(message.getMessage()).isPresent()) {
-                      message.getPlayer().message("A currency with that identifier already exists! Enter an identifier for the currency:");
-                      return false;
-                    }
+                                               if(TNECore.eco().currency().findCurrency(message.getMessage()).isPresent()) {
+                                                 message.getPlayer().message("A currency with that identifier already exists! Enter an identifier for the currency:");
+                                                 return false;
+                                               }
 
-                    currencyObject.setIdentifier(message.getMessage());
-                    return true;
-                  }
-                  message.getPlayer().message("Enter an identifier for the currency:");
-                  return false;
-                }), new RunnableAction((run)->run.player().message("Enter a identifier for the currency:")))
-                .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.SetIdentifierLore"), id)))
-                        .display(Component.text(currencyObject.getIdentifier())))
-                .build());
+                                               currencyObject.setIdentifier(message.getMessage());
+                                               return true;
+                                             }
+                                             message.getPlayer().message("Enter an identifier for the currency:");
+                                             return false;
+                                           }), new RunnableAction((run)->run.player().message("Enter a identifier for the currency:")))
+                                           .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                   .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.SetIdentifierLore"), id)))
+                                                   .display(Component.text(currencyObject.getIdentifier())))
+                                           .build());
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.StartingBalanceDisplay"), id))
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.StartingBalanceLore"), id))))
-                .withSlot(19)
-                .withActions(new SwitchPageAction(this.name, CURRENCY_INFO_STARTING_SELECTION_PAGE))
-                .build());
-
-        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.MaximumBalanceDisplay"), id))
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.MaximumBalanceLore"), id))))
-                .withSlot(20)
-                .withActions(new SwitchPageAction(this.name, CURRENCY_INFO_MAX_SELECTION_PAGE))
-                .build());
+                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.StartingBalanceDisplay"), id))
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.StartingBalanceLore"), id))))
+                                           .withSlot(19)
+                                           .withActions(new SwitchPageAction(this.name, CURRENCY_INFO_STARTING_SELECTION_PAGE))
+                                           .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.MinimumBalanceDisplay"), id))
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.MinimumBalanceLore"), id))))
-                .withSlot(21)
-                .withActions(new SwitchPageAction(this.name, CURRENCY_INFO_MIN_SELECTION_PAGE))
-                .build());
+                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.MaximumBalanceDisplay"), id))
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.MaximumBalanceLore"), id))))
+                                           .withSlot(20)
+                                           .withActions(new SwitchPageAction(this.name, CURRENCY_INFO_MAX_SELECTION_PAGE))
+                                           .build());
+
+        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.MinimumBalanceDisplay"), id))
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.MinimumBalanceLore"), id))))
+                                           .withSlot(21)
+                                           .withActions(new SwitchPageAction(this.name, CURRENCY_INFO_MIN_SELECTION_PAGE))
+                                           .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(currencyObject.getIconMaterial(), 1)
-                .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.SetIconMaterialDisplay"), id))
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.SetIconMaterialLore"), id))))
-                .withSlot(22)
-                .withActions(new SwitchPageAction(this.name, CURRENCY_ICON_MATERIAL_PAGE))
-                .build());
+                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.SetIconMaterialDisplay"), id))
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.SetIconMaterialLore"), id))))
+                                           .withSlot(22)
+                                           .withActions(new SwitchPageAction(this.name, CURRENCY_ICON_MATERIAL_PAGE))
+                                           .build());
 
         if(currencyObject instanceof ItemCurrency itemCurrency) {
 
@@ -691,14 +691,14 @@ public class MyEcoMenu extends Menu {
           });
           enderchest.setSlot(23);
           enderchest.addState("DISABLED",
-                  disabledStack
-                          .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.EnderChestDisabledDisplay"), id))
-                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.EnderChestDisabledLore"), id))));
+                              disabledStack
+                                      .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.EnderChestDisabledDisplay"), id))
+                                      .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.EnderChestDisabledLore"), id))));
 
           enderchest.addState("ENABLED",
-                  enabledStack
-                          .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.EnderChestEnabledDisplay"), id))
-                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.EnderChestEnabledLore"), id))));
+                              enabledStack
+                                      .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.EnderChestEnabledDisplay"), id))
+                                      .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.EnderChestEnabledLore"), id))));
 
           callback.getPage().addIcon(enderchest);
 
@@ -714,14 +714,14 @@ public class MyEcoMenu extends Menu {
           });
           enderFill.setSlot(24);
           enderFill.addState("DISABLED",
-                  disabledStack
-                          .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.EnderFillDisabledDisplay"), id))
-                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.EnderFillDisabledLore"), id))));
+                             disabledStack
+                                     .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.EnderFillDisabledDisplay"), id))
+                                     .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.EnderFillDisabledLore"), id))));
 
           enderFill.addState("ENABLED",
-                  enabledStack
-                          .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.EnderFillEnabledDisplay"), id))
-                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.EnderFillEnabledLore"), id))));
+                             enabledStack
+                                     .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.EnderFillEnabledDisplay"), id))
+                                     .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.EnderFillEnabledLore"), id))));
           callback.getPage().addIcon(enderFill);
 
           //import item icon
@@ -736,14 +736,14 @@ public class MyEcoMenu extends Menu {
           });
           importFill.setSlot(25);
           importFill.addState("DISABLED",
-                  disabledStack
-                          .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.ImportDisabledDisplay"), id))
-                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.ImportDisabledLore"), id))));
+                              disabledStack
+                                      .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.ImportDisabledDisplay"), id))
+                                      .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.ImportDisabledLore"), id))));
 
           importFill.addState("ENABLED",
-                  enabledStack
-                          .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.ImportEnabledDisplay"), id))
-                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.ImportEnabledLore"), id))));
+                              enabledStack
+                                      .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.ImportEnabledDisplay"), id))
+                                      .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditInfo.ImportEnabledLore"), id))));
           callback.getPage().addIcon(importFill);
         }
       }
@@ -777,131 +777,131 @@ public class MyEcoMenu extends Menu {
         final Currency currencyObject = (Currency)currencyOpt.get();
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.BalanceFormatDisplay"), id))
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.BalanceFormatLore"), id))))
-                .withSlot(10)
-                .withActions(new SwitchPageAction(this.name, CURRENCY_FORMAT_SELECTION_PAGE))
-                .build());
+                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.BalanceFormatDisplay"), id))
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.BalanceFormatLore"), id))))
+                                           .withSlot(10)
+                                           .withActions(new SwitchPageAction(this.name, CURRENCY_FORMAT_SELECTION_PAGE))
+                                           .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1))
-                .withSlot(11)
-                .withActions(new ChatAction((message)->{
+                                           .withSlot(11)
+                                           .withActions(new ChatAction((message)->{
 
-                  if(message.getPlayer().viewer().isPresent()) {
+                                             if(message.getPlayer().viewer().isPresent()) {
 
-                    currencyObject.setSymbol(message.getMessage());
-                    return true;
-                  }
-                  message.getPlayer().message("Enter the symbol for the currency:");
-                  return false;
-                }), new RunnableAction((run)->run.player().message("Enter the symbol for the currency:")))
-                .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SetSymbolLore"), id)))
-                        .display(Component.text(currencyObject.getSymbol())))
-                .build());
-
-        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1))
-                .withSlot(12)
-                .withActions(new ChatAction((message)->{
-
-                  if(message.getPlayer().viewer().isPresent()) {
-
-                    currencyObject.setPrefixes(message.getMessage());
-                    return true;
-                  }
-                  message.getPlayer().message("Enter the prefixes for the currency:");
-                  return false;
-                }), new RunnableAction((run)->run.player().message("Enter the prefixes for the currency:")))
-                .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SetPrefixesLore"), id)))
-                        .display(Component.text(currencyObject.getPrefixes())))
-                .build());
+                                               currencyObject.setSymbol(message.getMessage());
+                                               return true;
+                                             }
+                                             message.getPlayer().message("Enter the symbol for the currency:");
+                                             return false;
+                                           }), new RunnableAction((run)->run.player().message("Enter the symbol for the currency:")))
+                                           .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                   .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SetSymbolLore"), id)))
+                                                   .display(Component.text(currencyObject.getSymbol())))
+                                           .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1))
-                .withSlot(13)
-                .withActions(new ChatAction((message)->{
+                                           .withSlot(12)
+                                           .withActions(new ChatAction((message)->{
 
-                  if(message.getPlayer().viewer().isPresent()) {
+                                             if(message.getPlayer().viewer().isPresent()) {
 
-                    currencyObject.setDecimal(message.getMessage());
-                    return true;
-                  }
-                  message.getPlayer().message("Enter the decimal for the currency:");
-                  return false;
-                }), new RunnableAction((run)->run.player().message("Enter the decimal for the currency:")))
-                .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SetDecimalLore"), id)))
-                        .display(Component.text(currencyObject.getDecimal())))
-                .build());
-
-        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1))
-                .withSlot(14)
-                .withActions(new ChatAction((message)->{
-
-                  if(message.getPlayer().viewer().isPresent()) {
-
-                    currencyObject.setDisplay(message.getMessage());
-                    return true;
-                  }
-                  message.getPlayer().message("Enter the major singular display for the currency:");
-                  return false;
-                }), new RunnableAction((run)->run.player().message("Enter the major singular display for the currency:")))
-                .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SetMajorSingularDisplayLore"), id)))
-                        .display(Component.text(currencyObject.getDisplay())))
-                .build());
+                                               currencyObject.setPrefixes(message.getMessage());
+                                               return true;
+                                             }
+                                             message.getPlayer().message("Enter the prefixes for the currency:");
+                                             return false;
+                                           }), new RunnableAction((run)->run.player().message("Enter the prefixes for the currency:")))
+                                           .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                   .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SetPrefixesLore"), id)))
+                                                   .display(Component.text(currencyObject.getPrefixes())))
+                                           .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1))
-                .withSlot(15)
-                .withActions(new ChatAction((message)->{
+                                           .withSlot(13)
+                                           .withActions(new ChatAction((message)->{
 
-                  if(message.getPlayer().viewer().isPresent()) {
+                                             if(message.getPlayer().viewer().isPresent()) {
 
-                    currencyObject.setDisplayPlural(message.getMessage());
-                    return true;
-                  }
-                  message.getPlayer().message("Enter the major plural display for the currency:");
-                  return false;
-                }), new RunnableAction((run)->run.player().message("Enter the major plural display for the currency:")))
-                .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SetMajorPluralDisplayLore"), id)))
-                        .display(Component.text(currencyObject.getDisplayPlural())))
-                .build());
-
-        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1))
-                .withSlot(16)
-                .withActions(new ChatAction((message)->{
-
-                  if(message.getPlayer().viewer().isPresent()) {
-
-                    currencyObject.setDisplayMinor(message.getMessage());
-                    return true;
-                  }
-
-                  message.getPlayer().message("Enter the minor singular display for the currency:");
-                  return false;
-                }), new RunnableAction((run)->run.player().message("Enter the minor singular display for the currency:")))
-                .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SetMinorSingularDisplayLore"), id)))
-                        .display(Component.text(currencyObject.getDisplayMinor())))
-                .build());
+                                               currencyObject.setDecimal(message.getMessage());
+                                               return true;
+                                             }
+                                             message.getPlayer().message("Enter the decimal for the currency:");
+                                             return false;
+                                           }), new RunnableAction((run)->run.player().message("Enter the decimal for the currency:")))
+                                           .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                   .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SetDecimalLore"), id)))
+                                                   .display(Component.text(currencyObject.getDecimal())))
+                                           .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1))
-                .withSlot(17)
-                .withActions(new ChatAction((message)->{
+                                           .withSlot(14)
+                                           .withActions(new ChatAction((message)->{
 
-                  if(message.getPlayer().viewer().isPresent()) {
+                                             if(message.getPlayer().viewer().isPresent()) {
 
-                    currencyObject.setDisplayMinorPlural(message.getMessage());
-                    return true;
-                  }
-                  message.getPlayer().message("Enter the minor plural display for the currency:");
-                  return false;
-                }), new RunnableAction((run)->run.player().message("Enter the minor plural display for the currency:")))
-                .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SetMinorPluralDisplayLore"), id)))
-                        .display(Component.text(currencyObject.getDisplayMinorPlural())))
-                .build());
+                                               currencyObject.setDisplay(message.getMessage());
+                                               return true;
+                                             }
+                                             message.getPlayer().message("Enter the major singular display for the currency:");
+                                             return false;
+                                           }), new RunnableAction((run)->run.player().message("Enter the major singular display for the currency:")))
+                                           .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                   .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SetMajorSingularDisplayLore"), id)))
+                                                   .display(Component.text(currencyObject.getDisplay())))
+                                           .build());
+
+        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1))
+                                           .withSlot(15)
+                                           .withActions(new ChatAction((message)->{
+
+                                             if(message.getPlayer().viewer().isPresent()) {
+
+                                               currencyObject.setDisplayPlural(message.getMessage());
+                                               return true;
+                                             }
+                                             message.getPlayer().message("Enter the major plural display for the currency:");
+                                             return false;
+                                           }), new RunnableAction((run)->run.player().message("Enter the major plural display for the currency:")))
+                                           .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                   .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SetMajorPluralDisplayLore"), id)))
+                                                   .display(Component.text(currencyObject.getDisplayPlural())))
+                                           .build());
+
+        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1))
+                                           .withSlot(16)
+                                           .withActions(new ChatAction((message)->{
+
+                                             if(message.getPlayer().viewer().isPresent()) {
+
+                                               currencyObject.setDisplayMinor(message.getMessage());
+                                               return true;
+                                             }
+
+                                             message.getPlayer().message("Enter the minor singular display for the currency:");
+                                             return false;
+                                           }), new RunnableAction((run)->run.player().message("Enter the minor singular display for the currency:")))
+                                           .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                   .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SetMinorSingularDisplayLore"), id)))
+                                                   .display(Component.text(currencyObject.getDisplayMinor())))
+                                           .build());
+
+        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1))
+                                           .withSlot(17)
+                                           .withActions(new ChatAction((message)->{
+
+                                             if(message.getPlayer().viewer().isPresent()) {
+
+                                               currencyObject.setDisplayMinorPlural(message.getMessage());
+                                               return true;
+                                             }
+                                             message.getPlayer().message("Enter the minor plural display for the currency:");
+                                             return false;
+                                           }), new RunnableAction((run)->run.player().message("Enter the minor plural display for the currency:")))
+                                           .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                   .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SetMinorPluralDisplayLore"), id)))
+                                                   .display(Component.text(currencyObject.getDisplayMinorPlural())))
+                                           .build());
 
         final AbstractItemStack<?> disabledStack = PluginCore.server().stackBuilder().display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Disabled"), id)).of("RED_WOOL", 1);
         final AbstractItemStack<?> enabledStack = PluginCore.server().stackBuilder().display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Enabled"), id)).of("GREEN_WOOL", 1);
@@ -918,33 +918,33 @@ public class MyEcoMenu extends Menu {
         });
         majorSeparate.setSlot(18);
         majorSeparate.addState("DISABLED",
-                disabledStack
-                        .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SeparateMajorDisabledDisplay"), id))
-                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SeparateMajorDisabledLore"), id))));
+                               disabledStack
+                                       .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SeparateMajorDisabledDisplay"), id))
+                                       .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SeparateMajorDisabledLore"), id))));
 
         majorSeparate.addState("ENABLED",
-                enabledStack
-                        .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SeparateMajorEnabledDisplay"), id))
-                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SeparateMajorEnabledLore"), id))));
+                               enabledStack
+                                       .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SeparateMajorEnabledDisplay"), id))
+                                       .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SeparateMajorEnabledLore"), id))));
 
         callback.getPage().addIcon(majorSeparate);
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1))
-                .withSlot(19)
-                .withActions(new ChatAction((message)->{
+                                           .withSlot(19)
+                                           .withActions(new ChatAction((message)->{
 
-                  if(message.getPlayer().viewer().isPresent()) {
+                                             if(message.getPlayer().viewer().isPresent()) {
 
-                    currencyObject.setMajorSeparator(message.getMessage());
-                    return true;
-                  }
-                  message.getPlayer().message("Enter the major value separator for the currency:");
-                  return false;
-                }), new RunnableAction((run)->run.player().message("Enter the major value separator for the currency:")))
-                .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SetMajorSeparatorLore"), id)))
-                        .display(Component.text(currencyObject.getMajorSeparator())))
-                .build());
+                                               currencyObject.setMajorSeparator(message.getMessage());
+                                               return true;
+                                             }
+                                             message.getPlayer().message("Enter the major value separator for the currency:");
+                                             return false;
+                                           }), new RunnableAction((run)->run.player().message("Enter the major value separator for the currency:")))
+                                           .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                   .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.SetMajorSeparatorLore"), id)))
+                                                   .display(Component.text(currencyObject.getMajorSeparator())))
+                                           .build());
 
         //ender chest icon
         final String balanceState = (currencyObject.isBalanceShow())? "ENABLED" : "DISABLED";
@@ -958,14 +958,14 @@ public class MyEcoMenu extends Menu {
         });
         showBalance.setSlot(20);
         showBalance.addState("DISABLED",
-                disabledStack
-                        .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.BalanceDisabledDisplay"), id))
-                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.BalanceDisabledLore"), id))));
+                             disabledStack
+                                     .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.BalanceDisabledDisplay"), id))
+                                     .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.BalanceDisabledLore"), id))));
 
         showBalance.addState("ENABLED",
-                enabledStack
-                        .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.BalanceEnabledDisplay"), id))
-                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.BalanceEnabledLore"), id))));
+                             enabledStack
+                                     .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.BalanceEnabledDisplay"), id))
+                                     .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditFormat.BalanceEnabledLore"), id))));
 
         callback.getPage().addIcon(showBalance);
       }
@@ -1008,75 +1008,75 @@ public class MyEcoMenu extends Menu {
         });
         notableIcon.setSlot(23);
         notableIcon.addState("DISABLED",
-                disabledStack
-                .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NotableDisabledDisplay"), id))
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NotableDisabledLore"), id))));
+                             disabledStack
+                                     .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NotableDisabledDisplay"), id))
+                                     .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NotableDisabledLore"), id))));
 
         notableIcon.addState("ENABLED",
-                enabledStack
-                .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NotableEnabledDisplay"), id))
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NotableEnabledLore"), id))));
+                             enabledStack
+                                     .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NotableEnabledDisplay"), id))
+                                     .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NotableEnabledLore"), id))));
         callback.getPage().addIcon(notableIcon);
 
         if(currency.getNote().isPresent()) {
 
           final String material = (currency.getNote().isPresent())? currency.getNote().get().getMaterial() : "PAPER";
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(material, 1)
-                  .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteMaterialDisplay"), id))
-                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteMaterialLore"), id))))
-                  .withSlot(10)
-                  .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_MATERIAL_PAGE))
-                  .build());
+                                                             .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteMaterialDisplay"), id))
+                                                             .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteMaterialLore"), id))))
+                                             .withSlot(10)
+                                             .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_MATERIAL_PAGE))
+                                             .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.FlagsDisplay"), id))
-                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteFlagsLore"), id))))
-                  .withSlot(11)
-                  .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_FLAGS_PAGE))
-                  .build());
+                                                             .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.FlagsDisplay"), id))
+                                                             .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteFlagsLore"), id))))
+                                             .withSlot(11)
+                                             .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_FLAGS_PAGE))
+                                             .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EnchantsDisplay"), id))
-                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteEnchantsLore"), id))))
-                  .withSlot(12)
-                  .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_ENCHANTS_PAGE))
-                  .build());
+                                                             .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EnchantsDisplay"), id))
+                                                             .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteEnchantsLore"), id))))
+                                             .withSlot(12)
+                                             .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_ENCHANTS_PAGE))
+                                             .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteMinDisplay"), id))
-                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.MinLore"), id))))
-                  .withSlot(13)
-                  .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_MIN_SELECTION_PAGE))
-                  .build());
+                                                             .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteMinDisplay"), id))
+                                                             .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.MinLore"), id))))
+                                             .withSlot(13)
+                                             .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_MIN_SELECTION_PAGE))
+                                             .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.CustomModelLore"), id))))
-                  .withSlot(14)
-                  .withActions(new ChatAction((message)->{
+                                                             .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.CustomModelLore"), id))))
+                                             .withSlot(14)
+                                             .withActions(new ChatAction((message)->{
 
-                    if(message.getPlayer().viewer().isPresent()) {
+                                               if(message.getPlayer().viewer().isPresent()) {
 
-                      try {
+                                                 try {
 
-                        currency.getNote().get().setCustomModelData(Integer.parseInt(message.getMessage()));
+                                                   currency.getNote().get().setCustomModelData(Integer.parseInt(message.getMessage()));
 
-                        return true;
-                      } catch(NumberFormatException ignore) {}
-                    }
-                    message.getPlayer().message("Enter custom model of the note item:");
-                    return false;
-                  }), new RunnableAction((run)->run.player().message("Enter custom model of the note item:")))
-                  .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.CustomModelLore"), id)))
-                          .display(Component.text(String.valueOf(currency.getNote().get().getCustomModelData()))))
-                  .build());
+                                                   return true;
+                                                 } catch(NumberFormatException ignore) { }
+                                               }
+                                               message.getPlayer().message("Enter custom model of the note item:");
+                                               return false;
+                                             }), new RunnableAction((run)->run.player().message("Enter custom model of the note item:")))
+                                             .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                     .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.CustomModelLore"), id)))
+                                                     .display(Component.text(String.valueOf(currency.getNote().get().getCustomModelData()))))
+                                             .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteFeeDisplay"), id))
-                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteFeeLore"), id))))
-                  .withSlot(19)
-                  .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_FEE_MAIN_PAGE))
-                  .build());
+                                                             .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteFeeDisplay"), id))
+                                                             .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.EditNote.NoteFeeLore"), id))))
+                                             .withSlot(19)
+                                             .withActions(new SwitchPageAction(this.name, CURRENCY_NOTE_FEE_MAIN_PAGE))
+                                             .build());
         }
       }
     }
@@ -1112,7 +1112,7 @@ public class MyEcoMenu extends Menu {
 
               message.getPlayer().viewer().get().addData(ACTIVE_DENOMINATION, denomObj);
               return true;
-            } catch(NumberFormatException ignore) {}
+            } catch(NumberFormatException ignore) { }
           }
           message.getPlayer().message("Enter a valid decimal for the weight of the denomination:");
           return false;
@@ -1126,7 +1126,7 @@ public class MyEcoMenu extends Menu {
 
           callback.getPage().addIcon(new DenominationIcon(i, denomObj));
 
-          i+= 2;
+          i += 2;
         }
       }
     }
@@ -1161,164 +1161,164 @@ public class MyEcoMenu extends Menu {
         final Denomination denomination = (Denomination)denomOpt.get();
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SingularNameLore"), id))))
-                .withSlot(10)
-                .withActions(new ChatAction((message)->{
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SingularNameLore"), id))))
+                                           .withSlot(10)
+                                           .withActions(new ChatAction((message)->{
 
-                  if(message.getPlayer().viewer().isPresent()) {
+                                             if(message.getPlayer().viewer().isPresent()) {
 
-                    denomination.setSingle(message.getMessage());
-                    viewer.get().addData(ACTIVE_DENOMINATION, denomination);
-                    return true;
-                  }
-                  message.getPlayer().message("Enter a singular name for the denomination:");
-                  return false;
+                                               denomination.setSingle(message.getMessage());
+                                               viewer.get().addData(ACTIVE_DENOMINATION, denomination);
+                                               return true;
+                                             }
+                                             message.getPlayer().message("Enter a singular name for the denomination:");
+                                             return false;
 
-                }), new RunnableAction((run)->run.player().message("Enter a singular name for the denomination:")))
-                .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SingularNameLore"), id)))
-                        .display(Component.text(denomination.singular())))
-                .build());
-
-        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.PluralNameLore"), id))))
-                .withSlot(11)
-                .withActions(new ChatAction((message)->{
-
-                  if(message.getPlayer().viewer().isPresent()) {
-
-                    denomination.setPlural(message.getMessage());
-                    viewer.get().addData(ACTIVE_DENOMINATION, denomination);
-                    return true;
-                  }
-                  message.getPlayer().message("Enter a plural name for the denomination:");
-                  return false;
-
-                }), new RunnableAction((run)->run.player().message("Enter a plural name for the denomination:")))
-                .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.PluralNameLore"), id)))
-                        .display(Component.text(denomination.plural())))
-                .build());
+                                           }), new RunnableAction((run)->run.player().message("Enter a singular name for the denomination:")))
+                                           .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                   .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SingularNameLore"), id)))
+                                                   .display(Component.text(denomination.singular())))
+                                           .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetWeightDisplay"), id))
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetWeightLore"), id))))
-                .withSlot(12)
-                .withActions(new SwitchPageAction(this.name, DENOMINATION_WEIGHT_SELECTION_PAGE))
-                .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetWeightLore"), id)))
-                        .display(Component.text(denomination.weight().toString())))
-                .build());
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.PluralNameLore"), id))))
+                                           .withSlot(11)
+                                           .withActions(new ChatAction((message)->{
+
+                                             if(message.getPlayer().viewer().isPresent()) {
+
+                                               denomination.setPlural(message.getMessage());
+                                               viewer.get().addData(ACTIVE_DENOMINATION, denomination);
+                                               return true;
+                                             }
+                                             message.getPlayer().message("Enter a plural name for the denomination:");
+                                             return false;
+
+                                           }), new RunnableAction((run)->run.player().message("Enter a plural name for the denomination:")))
+                                           .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                   .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.PluralNameLore"), id)))
+                                                   .display(Component.text(denomination.plural())))
+                                           .build());
+
+        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetWeightDisplay"), id))
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetWeightLore"), id))))
+                                           .withSlot(12)
+                                           .withActions(new SwitchPageAction(this.name, DENOMINATION_WEIGHT_SELECTION_PAGE))
+                                           .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                   .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetWeightLore"), id)))
+                                                   .display(Component.text(denomination.weight().toString())))
+                                           .build());
 
         if(denomination instanceof ItemDenomination itemDenomination) {
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(itemDenomination.getMaterial(), 1)
-                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetMaterialLore"), id))))
-                  .withSlot(13)
-                  .withActions(new SwitchPageAction(this.name, DENOMINATION_MATERIAL_PAGE))
-                  .build());
+                                                             .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetMaterialLore"), id))))
+                                             .withSlot(13)
+                                             .withActions(new SwitchPageAction(this.name, DENOMINATION_MATERIAL_PAGE))
+                                             .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.DisplayNameLore"), id))))
-                  .withSlot(14)
-                  .withActions(new ChatAction((message)->{
+                                                             .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.DisplayNameLore"), id))))
+                                             .withSlot(14)
+                                             .withActions(new ChatAction((message)->{
 
-                    if(message.getPlayer().viewer().isPresent()) {
+                                               if(message.getPlayer().viewer().isPresent()) {
 
-                      itemDenomination.setName(message.getMessage());
-                      return true;
-                    }
-                    message.getPlayer().message("Enter display name of the denomination item:");
-                    return false;
-                  }), new RunnableAction((run)->run.player().message("Enter display name of the denomination item:")))
-                  .withItemProvider((provider)->{
+                                                 itemDenomination.setName(message.getMessage());
+                                                 return true;
+                                               }
+                                               message.getPlayer().message("Enter display name of the denomination item:");
+                                               return false;
+                                             }), new RunnableAction((run)->run.player().message("Enter display name of the denomination item:")))
+                                             .withItemProvider((provider)->{
 
-                    final String message = (itemDenomination.getName() != null)? itemDenomination.getName() : "No Display";
+                                               final String message = (itemDenomination.getName() != null)? itemDenomination.getName() : "No Display";
 
-                    return PluginCore.server().stackBuilder().of("PAPER", 1)
-                            .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.DisplayNameLore"), id)))
-                            .display(Component.text(message));
-                  })
-                  .build());
-
-          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.CustomModelLore"), id))))
-                  .withSlot(15)
-                  .withActions(new ChatAction((message)->{
-
-                    if(message.getPlayer().viewer().isPresent()) {
-
-                      try {
-
-                        itemDenomination.setCustomModel(Integer.parseInt(message.getMessage()));
-                        return true;
-                      } catch(NumberFormatException ignore) {}
-                    }
-                    message.getPlayer().message("Enter custom model of the denomination item:");
-                    return false;
-                  }), new RunnableAction((run)->run.player().message("Enter custom model of the denomination item:")))
-                  .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
-                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.CustomModelLore"), id)))
-                          .display(Component.text(String.valueOf(itemDenomination.getCustomModel()))))
-                  .build());
+                                               return PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                       .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.DisplayNameLore"), id)))
+                                                       .display(Component.text(message));
+                                             })
+                                             .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetBase64TextureLore"), id))))
-                  .withSlot(16)
-                  .withActions(new ChatAction((message)->{
+                                                             .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.CustomModelLore"), id))))
+                                             .withSlot(15)
+                                             .withActions(new ChatAction((message)->{
 
-                    if(message.getPlayer().viewer().isPresent()) {
-                      itemDenomination.setTexture(message.getMessage());
-                      return true;
-                    }
-                    message.getPlayer().message("Enter the base64 texture to use if the material of the denomination item is PLAYER_HEAD:");
-                    return false;
-                  }), new RunnableAction((run)->run.player().message("Enter the base64 texture to use if the material of the denomination item is PLAYER_HEAD:")))
-                  .withItemProvider((provider)->{
+                                               if(message.getPlayer().viewer().isPresent()) {
 
-                    final String message = (itemDenomination.getTexture() != null)? itemDenomination.getTexture() : "No Texture";
+                                                 try {
 
-                    return PluginCore.server().stackBuilder().of("PAPER", 1)
-                            .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetBase64TextureLore"), id)))
-                            .display(Component.text(message));
-                  })
-                  .build());
-
-          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.LoreStringLore"), id))))
-                  .withSlot(17)
-                  .withActions(new ChatAction((message)->{
-
-                    if(message.getPlayer().viewer().isPresent()) {
-                      message.getPlayer().viewer().get().addData("DENOMINATION_LORE", message.getMessage());
-                      return true;
-                    }
-                    message.getPlayer().message("Enter the lore string this denomination item must have in order to be considered currency. Use newline for a different line:");
-                    return false;
-                  }), new RunnableAction((run)->run.player().message("Enter the lore string this denomination item must have in order to be considered currency. Use newline for a different line:")))
-                  .withItemProvider((provider)->{
-
-                    final String message = (provider.viewer().isPresent())? (String)provider.viewer().get().dataOrDefault("DENOMINATION_LORE", "No Lore") : "No Lore";
-
-                    return PluginCore.server().stackBuilder().of("PAPER", 1)
-                            .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.LoreStringLore"), id)))
-                            .display(Component.text(message));
-                  })
-                  .build());
+                                                   itemDenomination.setCustomModel(Integer.parseInt(message.getMessage()));
+                                                   return true;
+                                                 } catch(NumberFormatException ignore) { }
+                                               }
+                                               message.getPlayer().message("Enter custom model of the denomination item:");
+                                               return false;
+                                             }), new RunnableAction((run)->run.player().message("Enter custom model of the denomination item:")))
+                                             .withItemProvider((provider)->PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                     .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.CustomModelLore"), id)))
+                                                     .display(Component.text(String.valueOf(itemDenomination.getCustomModel()))))
+                                             .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.FlagsDisplay"), id))
-                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.FlagsLore"), id))))
-                  .withSlot(18)
-                  .withActions(new SwitchPageAction(this.name, DENOMINATION_FLAGS_PAGE))
-                  .build());
+                                                             .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetBase64TextureLore"), id))))
+                                             .withSlot(16)
+                                             .withActions(new ChatAction((message)->{
+
+                                               if(message.getPlayer().viewer().isPresent()) {
+                                                 itemDenomination.setTexture(message.getMessage());
+                                                 return true;
+                                               }
+                                               message.getPlayer().message("Enter the base64 texture to use if the material of the denomination item is PLAYER_HEAD:");
+                                               return false;
+                                             }), new RunnableAction((run)->run.player().message("Enter the base64 texture to use if the material of the denomination item is PLAYER_HEAD:")))
+                                             .withItemProvider((provider)->{
+
+                                               final String message = (itemDenomination.getTexture() != null)? itemDenomination.getTexture() : "No Texture";
+
+                                               return PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                       .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetBase64TextureLore"), id)))
+                                                       .display(Component.text(message));
+                                             })
+                                             .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EnchantsDisplay"), id))
-                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.EnchantsLore"), id))))
-                  .withSlot(19)
-                  .withActions(new SwitchPageAction(this.name, DENOMINATION_ENCHANTS_PAGE))
-                  .build());
+                                                             .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.LoreStringLore"), id))))
+                                             .withSlot(17)
+                                             .withActions(new ChatAction((message)->{
+
+                                               if(message.getPlayer().viewer().isPresent()) {
+                                                 message.getPlayer().viewer().get().addData("DENOMINATION_LORE", message.getMessage());
+                                                 return true;
+                                               }
+                                               message.getPlayer().message("Enter the lore string this denomination item must have in order to be considered currency. Use newline for a different line:");
+                                               return false;
+                                             }), new RunnableAction((run)->run.player().message("Enter the lore string this denomination item must have in order to be considered currency. Use newline for a different line:")))
+                                             .withItemProvider((provider)->{
+
+                                               final String message = (provider.viewer().isPresent())? (String)provider.viewer().get().dataOrDefault("DENOMINATION_LORE", "No Lore") : "No Lore";
+
+                                               return PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                       .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.LoreStringLore"), id)))
+                                                       .display(Component.text(message));
+                                             })
+                                             .build());
+
+          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                             .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.FlagsDisplay"), id))
+                                                             .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.FlagsLore"), id))))
+                                             .withSlot(18)
+                                             .withActions(new SwitchPageAction(this.name, DENOMINATION_FLAGS_PAGE))
+                                             .build());
+
+          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                             .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EnchantsDisplay"), id))
+                                                             .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.EnchantsLore"), id))))
+                                             .withSlot(19)
+                                             .withActions(new SwitchPageAction(this.name, DENOMINATION_ENCHANTS_PAGE))
+                                             .build());
         }
       }
     }

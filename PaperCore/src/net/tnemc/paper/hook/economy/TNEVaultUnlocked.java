@@ -50,6 +50,7 @@ import java.util.UUID;
  * @since 0.1.2.0
  */
 public class TNEVaultUnlocked implements Economy {
+
   /**
    * Checks if economy plugin is enabled.
    *
@@ -57,6 +58,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean isEnabled() {
+
     return true;
   }
 
@@ -67,6 +69,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public String getName() {
+
     return "TheNewEconomy";
   }
 
@@ -77,6 +80,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean hasBankSupport() {
+
     return false;
   }
 
@@ -87,6 +91,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean hasMultiCurrencySupport() {
+
     return true;
   }
 
@@ -99,6 +104,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public int fractionalDigits() {
+
     return TNECore.eco().currency().getDefaultCurrency().getDecimalPlaces();
   }
 
@@ -112,10 +118,11 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public String format(BigDecimal amount) {
+
     return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
-            TNECore.eco().currency().getDefaultCurrency().getUid(),
-            amount,
-            EconomyManager.NORMAL
+                                                            TNECore.eco().currency().getDefaultCurrency().getUid(),
+                                                            amount,
+                                                            EconomyManager.NORMAL
     ));
   }
 
@@ -130,10 +137,11 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public String format(BigDecimal amount, String currency) {
+
     return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
-            TNECore.eco().currency().getDefaultCurrency().getUid(),
-            amount,
-            EconomyManager.NORMAL
+                                                            TNECore.eco().currency().getDefaultCurrency().getUid(),
+                                                            amount,
+                                                            EconomyManager.NORMAL
     ));
   }
 
@@ -146,6 +154,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean hasCurrency(String currency) {
+
     return TNECore.eco().currency().findCurrency(currency).isPresent();
   }
 
@@ -157,6 +166,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public String defaultCurrency() {
+
     return TNECore.eco().currency().getDefaultCurrency().getIdentifier();
   }
 
@@ -168,6 +178,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public String defaultCurrencyNamePlural() {
+
     return TNECore.eco().currency().getDefaultCurrency().getDisplayPlural();
   }
 
@@ -179,6 +190,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public String defaultCurrencyNameSingular() {
+
     return TNECore.eco().currency().getDefaultCurrency().getDisplay();
   }
 
@@ -191,6 +203,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public Collection<String> currencies() {
+
     return TNECore.eco().currency().getCurIDMap().keySet();
   }
 
@@ -204,6 +217,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean createAccount(UUID uuid, String name) {
+
     return TNECore.eco().account().createAccount(uuid.toString(), name).getResponse().success();
   }
 
@@ -219,6 +233,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean createAccount(UUID uuid, String name, String worldName) {
+
     return createAccount(uuid, name);
   }
 
@@ -232,6 +247,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public Map<UUID, String> getUUIDNameMap() {
+
     return Map.of();
   }
 
@@ -245,6 +261,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public Optional<String> getAccountName(UUID uuid) {
+
     final Optional<Account> accountOpt = TNECore.eco().account().findAccount(uuid);
     return accountOpt.map(Account::getName);
   }
@@ -258,6 +275,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean hasAccount(UUID uuid) {
+
     return TNECore.eco().account().findAccount(uuid.toString()).isPresent();
   }
 
@@ -271,6 +289,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean hasAccount(UUID uuid, String worldName) {
+
     return hasAccount(uuid);
   }
 
@@ -285,6 +304,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean renameAccount(UUID uuid, String name) {
+
     return false;
   }
 
@@ -298,6 +318,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public BigDecimal getBalance(String pluginName, UUID uuid) {
+
     return getBalance(pluginName, uuid, TNECore.eco().region().defaultRegion(), defaultCurrency());
   }
 
@@ -313,6 +334,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public BigDecimal getBalance(String pluginName, UUID uuid, String world) {
+
     return getBalance(pluginName, uuid, world, defaultCurrency());
   }
 
@@ -329,6 +351,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public BigDecimal getBalance(String pluginName, UUID uuid, String world, String currency) {
+
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
     final Optional<Currency> currencyOpt = TNECore.eco().currency().findCurrency(currency);
 
@@ -353,6 +376,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean has(String pluginName, UUID uuid, BigDecimal amount) {
+
     return has(pluginName, uuid, TNECore.eco().region().defaultRegion(), defaultCurrency(), amount);
   }
 
@@ -370,6 +394,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean has(String pluginName, UUID uuid, String worldName, BigDecimal amount) {
+
     return has(pluginName, uuid, worldName, defaultCurrency(), amount);
   }
 
@@ -388,11 +413,12 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean has(String pluginName, UUID uuid, String worldName, String currency, BigDecimal amount) {
+
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
     final Optional<Currency> currencyOpt = TNECore.eco().currency().findCurrency(currency);
 
     return currencyOpt.filter(currency1->account.filter(value->value.getHoldingsTotal(worldName, currency1.getUid())
-            .compareTo(amount) >= 0).isPresent()).isPresent();
+                                                                       .compareTo(amount) >= 0).isPresent()).isPresent();
 
   }
 
@@ -403,11 +429,13 @@ public class TNEVaultUnlocked implements Economy {
    * @param uuid       the UUID associated with the account to withdraw from.
    * @param amount     Amount to withdraw.
    *
-   * @return {@link EconomyResponse} which includes the Economy plugin's {@link EconomyResponse.ResponseType} as to
-   * whether the transaction was a Success, Failure, Unsupported.
+   * @return {@link EconomyResponse} which includes the Economy plugin's
+   * {@link EconomyResponse.ResponseType} as to whether the transaction was a Success, Failure,
+   * Unsupported.
    */
   @Override
   public EconomyResponse withdraw(String pluginName, UUID uuid, BigDecimal amount) {
+
     return withdraw(pluginName, uuid, TNECore.eco().region().defaultRegion(), defaultCurrency(), amount);
   }
 
@@ -426,6 +454,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public EconomyResponse withdraw(String pluginName, UUID uuid, String worldName, BigDecimal amount) {
+
     return withdraw(pluginName, uuid, worldName, defaultCurrency(), amount);
   }
 
@@ -445,16 +474,17 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public EconomyResponse withdraw(String pluginName, UUID uuid, String worldName, String currency, BigDecimal amount) {
+
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
 
     if(account.isEmpty()) {
       return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO,
-              EconomyResponse.ResponseType.FAILURE, "Unable to locate associated account.");
+                                 EconomyResponse.ResponseType.FAILURE, "Unable to locate associated account.");
     }
 
     final HoldingsModifier modifier = new HoldingsModifier(worldName,
-            TNECore.eco().currency().getDefaultCurrency(worldName).getUid(),
-            amount);
+                                                           TNECore.eco().currency().getDefaultCurrency(worldName).getUid(),
+                                                           amount);
 
     final Transaction transaction = new Transaction("take")
             .to(account.get(), modifier.counter())
@@ -464,12 +494,12 @@ public class TNEVaultUnlocked implements Economy {
     try {
       TransactionResult result = transaction.process();
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding(),
-              fromResult(result),
-              result.getMessage());
+                                 fromResult(result),
+                                 result.getMessage());
     } catch(InvalidTransactionException e) {
 
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding(),
-              EconomyResponse.ResponseType.FAILURE, e.getMessage());
+                                 EconomyResponse.ResponseType.FAILURE, e.getMessage());
     }
   }
 
@@ -485,6 +515,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public EconomyResponse deposit(String pluginName, UUID uuid, BigDecimal amount) {
+
     return deposit(pluginName, uuid, TNECore.eco().region().defaultRegion(), defaultCurrency(), amount);
   }
 
@@ -503,6 +534,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public EconomyResponse deposit(String pluginName, UUID uuid, String worldName, BigDecimal amount) {
+
     return deposit(pluginName, uuid, worldName, defaultCurrency(), amount);
   }
 
@@ -522,6 +554,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public EconomyResponse deposit(String pluginName, UUID uuid, String worldName, String currency, BigDecimal amount) {
+
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
 
     if(account.isEmpty()) {
@@ -529,8 +562,8 @@ public class TNEVaultUnlocked implements Economy {
     }
 
     final HoldingsModifier modifier = new HoldingsModifier(worldName,
-            TNECore.eco().currency().getDefaultCurrency(worldName).getUid(),
-            amount);
+                                                           TNECore.eco().currency().getDefaultCurrency(worldName).getUid(),
+                                                           amount);
 
 
     final Transaction transaction = new Transaction("give")
@@ -541,11 +574,11 @@ public class TNEVaultUnlocked implements Economy {
     try {
       TransactionResult result = transaction.process();
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding(), fromResult(result),
-              result.getMessage());
+                                 result.getMessage());
     } catch(InvalidTransactionException e) {
 
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding(),
-              ResponseType.FAILURE, e.getMessage());
+                                 ResponseType.FAILURE, e.getMessage());
     }
   }
 
@@ -560,6 +593,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean createBank(String pluginName, String name, UUID uuid) {
+
     return false;
   }
 
@@ -573,6 +607,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean deleteBank(String pluginName, UUID uuid) {
+
     return false;
   }
 
@@ -586,6 +621,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public Map<UUID, String> getBankUUIDNameMap() {
+
     return Map.of();
   }
 
@@ -599,6 +635,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public String getBankAccountName(UUID uuid) {
+
     return "";
   }
 
@@ -611,6 +648,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean hasBankAccount(UUID uuid) {
+
     return false;
   }
 
@@ -624,6 +662,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean bankSupportsCurrency(UUID uuid, String currency) {
+
     return false;
   }
 
@@ -639,6 +678,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean renameBankAccount(String pluginName, UUID uuid, String name) {
+
     return false;
   }
 
@@ -652,6 +692,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public BigDecimal bankBalance(String pluginName, UUID uuid) {
+
     return BigDecimal.ZERO;
   }
 
@@ -666,6 +707,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public BigDecimal bankBalance(String pluginName, UUID uuid, String currency) {
+
     return BigDecimal.ZERO;
   }
 
@@ -680,6 +722,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean bankHas(String pluginName, UUID uuid, BigDecimal amount) {
+
     return false;
   }
 
@@ -695,6 +738,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean bankHas(String pluginName, UUID uuid, String currency, BigDecimal amount) {
+
     return false;
   }
 
@@ -710,6 +754,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public EconomyResponse bankWithdraw(String pluginName, UUID uuid, BigDecimal amount) {
+
     return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO, ResponseType.NOT_IMPLEMENTED, "");
   }
 
@@ -726,6 +771,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public EconomyResponse bankWithdraw(String pluginName, UUID uuid, String currency, BigDecimal amount) {
+
     return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO, ResponseType.NOT_IMPLEMENTED, "");
   }
 
@@ -741,6 +787,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public EconomyResponse bankDeposit(String pluginName, UUID uuid, BigDecimal amount) {
+
     return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO, ResponseType.NOT_IMPLEMENTED, "");
   }
 
@@ -752,11 +799,13 @@ public class TNEVaultUnlocked implements Economy {
    * @param currency   the currency to use.
    * @param amount     to deposit.
    *
-   * @return {@link EconomyResponse} which includes the Economy plugin's {@link EconomyResponse.ResponseType} as to
-   * whether the transaction was a Success, Failure, Unsupported.
+   * @return {@link EconomyResponse} which includes the Economy plugin's
+   * {@link EconomyResponse.ResponseType} as to whether the transaction was a Success, Failure,
+   * Unsupported.
    */
   @Override
   public EconomyResponse bankDeposit(String pluginName, UUID uuid, String currency, BigDecimal amount) {
+
     return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO, ResponseType.NOT_IMPLEMENTED, "");
   }
 
@@ -770,6 +819,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean isBankOwner(UUID uuid, UUID bankUUID) {
+
     return false;
   }
 
@@ -783,6 +833,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public boolean isBankMember(UUID uuid, UUID bankUUID) {
+
     return false;
   }
 
@@ -793,10 +844,12 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public Collection<UUID> getBanks() {
+
     return List.of();
   }
 
   private EconomyResponse.ResponseType fromResult(@Nullable TransactionResult result) {
+
     if(result != null && result.isSuccessful()) {
       return EconomyResponse.ResponseType.SUCCESS;
     }

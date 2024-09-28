@@ -29,8 +29,8 @@ import java.util.function.Function;
 public interface AccountTypeCheck {
 
   /**
-   * Returns our check function that should be used to check if a given String identifier, usually name,
-   * is valid for this account type.
+   * Returns our check function that should be used to check if a given String identifier, usually
+   * name, is valid for this account type.
    *
    * @return Our function that should be used to check if a given String identifier, usually name,
    * is valid for this account type.

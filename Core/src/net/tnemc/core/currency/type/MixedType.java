@@ -32,21 +32,25 @@ import java.math.BigDecimal;
  * @since 0.1.2.0
  */
 public class MixedType extends ItemType {
+
   /**
    * @return The name of this currency type. Examples: Virtual, Item
    */
   @Override
   public String name() {
+
     return "mixed";
   }
 
   @Override
   public String description() {
+
     return "A currency that is a mixture of item and virtual types.";
   }
 
   @Override
   public boolean supportsVirtual() {
+
     return true;
   }
 
@@ -56,6 +60,7 @@ public class MixedType extends ItemType {
    */
   @Override
   public boolean supportsExchange() {
+
     return true;
   }
 
@@ -63,10 +68,10 @@ public class MixedType extends ItemType {
    * Used to set the holdings for a specific account.
    *
    * @param account  The Account to set the holdings for.
-   * @param region   The name of the region involved. This is usually a world, but could be something
-   *                 else such as a world guard region name/identifier.
+   * @param region   The name of the region involved. This is usually a world, but could be
+   *                 something else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
-   * @param type The {@link Identifier} of the holdings handler to use.
+   * @param type     The {@link Identifier} of the holdings handler to use.
    * @param amount   The amount to set the player's holdings to.
    *
    * @return True if the holdings have been set, otherwise false.

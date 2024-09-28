@@ -28,6 +28,7 @@ import net.tnemc.plugincore.core.api.CallbackProvider;
  * @since 0.1.2.0
  */
 public class TNECallbackProvider implements CallbackProvider {
+
   @Override
   public void init(CallbackManager callbackManager) {
 

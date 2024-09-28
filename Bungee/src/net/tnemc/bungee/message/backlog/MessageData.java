@@ -34,14 +34,17 @@ public class MessageData {
   private final String serverName;
 
   public MessageData(String serverName) {
+
     this.serverName = serverName;
   }
 
   public String getServerName() {
+
     return serverName;
   }
 
   public List<BacklogEntry> getBacklog() {
+
     return backlog;
   }
 }

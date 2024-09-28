@@ -32,11 +32,13 @@ public class SpongeDeletionResult implements AccountDeletionResultType {
   private final EconomyResponse response;
 
   public SpongeDeletionResult(EconomyResponse response) {
+
     this.response = response;
   }
 
   @Override
   public boolean isSuccess() {
+
     return response.success();
   }
 }

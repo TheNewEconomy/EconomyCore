@@ -61,6 +61,7 @@ public class YAMLAccount implements Datable<Account> {
    */
   @Override
   public Class<? extends Account> clazz() {
+
     return Account.class;
   }
 
@@ -78,7 +79,7 @@ public class YAMLAccount implements Datable<Account> {
    * Used to store this object.
    *
    * @param connector The storage connector to use for this transaction.
-   * @param account    The object to be stored.
+   * @param account   The object to be stored.
    */
   @Override
   public void store(StorageConnector<?> connector, @NotNull Account account, @Nullable String identifier) {
@@ -132,7 +133,7 @@ public class YAMLAccount implements Datable<Account> {
 
     if(account instanceof SharedAccount shared) {
       final String owner = (shared.getOwner() == null)? account.getIdentifier().toString() :
-          shared.getOwner().toString();
+                           shared.getOwner().toString();
 
       yaml.set("Info.Owner", owner);
 
@@ -166,6 +167,7 @@ public class YAMLAccount implements Datable<Account> {
    */
   @Override
   public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
+
     for(Account account : TNECore.eco().account().getAccounts().values()) {
       store(connector, account, account.getIdentifier().toString());
     }
@@ -191,6 +193,7 @@ public class YAMLAccount implements Datable<Account> {
   }
 
   public Optional<Account> load(File accFile, final String identifier) {
+
     if(accFile == null) {
 
       PluginCore.log().error("Null account file passed to YAMLAccount.load. Account: " + identifier, DebugLevel.OFF);
@@ -223,7 +226,7 @@ public class YAMLAccount implements Datable<Account> {
       final AccountAPIResponse response = TNECore.eco().account().createAccount(identifier,
                                                                                 yaml.getString("Info.Name"),
                                                                                 !(type.equalsIgnoreCase("player") ||
-                                                                                    type.equalsIgnoreCase("bedrock")));
+                                                                                  type.equalsIgnoreCase("bedrock")));
       if(response.getResponse().success() && response.getAccount().isPresent()) {
 
         //load our basic account information
@@ -250,8 +253,8 @@ public class YAMLAccount implements Datable<Account> {
 
               final String permission = (String)permissionObj;
               shared.addPermission(UUID.fromString(member), permission,
-                                                     yaml.getBoolean("Members." + member +
-                                                                         "." + permission));
+                                   yaml.getBoolean("Members." + member +
+                                                   "." + permission));
             }
           }
         }
@@ -279,6 +282,7 @@ public class YAMLAccount implements Datable<Account> {
    */
   @Override
   public Collection<Account> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
+
     final Collection<Account> accounts = new ArrayList<>();
 
     for(File file : IOUtil.getYAMLs(new File(PluginCore.directory(), "accounts"))) {

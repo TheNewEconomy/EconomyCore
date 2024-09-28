@@ -40,6 +40,7 @@ import static net.tnemc.core.EconomyManager.EXPERIENCE;
  * @since 0.1.2.0
  */
 public class ExperienceHandler implements HoldingsHandler {
+
   /**
    * The identifier for this handler.
    *
@@ -47,6 +48,7 @@ public class ExperienceHandler implements HoldingsHandler {
    */
   @Override
   public Identifier identifier() {
+
     return EXPERIENCE;
   }
 
@@ -59,6 +61,7 @@ public class ExperienceHandler implements HoldingsHandler {
    */
   @Override
   public boolean supports(CurrencyType type) {
+
     return (type instanceof ExperienceType);
   }
 
@@ -66,8 +69,8 @@ public class ExperienceHandler implements HoldingsHandler {
    * Used to set the holdings for a specific account.
    *
    * @param account  The account.
-   * @param region   The name of the region involved. This is usually a world, but could be something
-   *                 else such as a world guard region name/identifier.
+   * @param region   The name of the region involved. This is usually a world, but could be
+   *                 something else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
    * @param type     The currency type.
    * @param amount   The amount to set the player's holdings to.
@@ -76,6 +79,7 @@ public class ExperienceHandler implements HoldingsHandler {
    */
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, CurrencyType type, BigDecimal amount) {
+
     account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, identifier()));
     if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
       Experience.setExperience(((PlayerAccount)account).getPlayer().get(), amount.intValueExact());
@@ -87,8 +91,8 @@ public class ExperienceHandler implements HoldingsHandler {
    * Used to get the holdings for a specific account from this handler.
    *
    * @param account  The Account.
-   * @param region   The name of the region involved. This is usually a world, but could be something
-   *                 else such as a world guard region name/identifier.
+   * @param region   The name of the region involved. This is usually a world, but could be
+   *                 something else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
    * @param type     The currency type.
    *
@@ -96,12 +100,13 @@ public class ExperienceHandler implements HoldingsHandler {
    */
   @Override
   public HoldingsEntry getHoldings(Account account, String region, Currency currency, CurrencyType type) {
+
     if(!account.isPlayer() || !((PlayerAccount)account).isOnline()) {
       //Offline players/non-players have their balances saved to their wallet so check it.
       final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
                                                                                currency.getUid(),
                                                                                EXPERIENCE
-      );
+                                                                              );
 
       return holdings.orElseGet(()->new HoldingsEntry(region,
                                                       currency.getUid(),

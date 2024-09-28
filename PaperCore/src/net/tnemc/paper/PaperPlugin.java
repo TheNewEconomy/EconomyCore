@@ -55,12 +55,13 @@ public class PaperPlugin {
   private boolean papiHooked = false;
 
   public void load(final JavaPlugin plugin) {
+
     load(plugin, new PaperCore(plugin), new PaperServerProvider(new PaperCalculationsProvider()));
   }
 
   /**
-   * Called when the plugin is loaded by the Bukkit plugin manager.
-   * This method should be used to initialize any necessary resources or data.
+   * Called when the plugin is loaded by the Bukkit plugin manager. This method should be used to
+   * initialize any necessary resources or data.
    */
   public void load(final JavaPlugin plugin, TNECore core, ServerConnector provider) {
 
@@ -87,8 +88,8 @@ public class PaperPlugin {
   }
 
   /**
-   * Called by the Bukkit plugin manager when the plugin is enabled.
-   * This method should be used to enable the functionality provided by this class.
+   * Called by the Bukkit plugin manager when the plugin is enabled. This method should be used to
+   * enable the functionality provided by this class.
    */
   public void enable(final JavaPlugin plugin) {
 
@@ -124,18 +125,21 @@ public class PaperPlugin {
   }
 
   /**
-   * Called by the Bukkit plugin manager when the plugin is disabled.
-   * This method should be used to disable the functionality provided by this class.
+   * Called by the Bukkit plugin manager when the plugin is disabled. This method should be used to
+   * disable the functionality provided by this class.
    */
   public void disable(final JavaPlugin plugin) {
+
     this.pluginCore.onDisable();
   }
 
   public boolean isPapiHooked() {
+
     return papiHooked;
   }
 
   public void setPapiHooked(boolean papiHooked) {
+
     this.papiHooked = papiHooked;
   }
 }

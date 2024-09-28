@@ -54,8 +54,8 @@ public class BukkitPlugin {
   private boolean papiHooked = false;
 
   /**
-   * Called when the plugin is loaded by the Bukkit plugin manager.
-   * This method should be used to initialize any necessary resources or data.
+   * Called when the plugin is loaded by the Bukkit plugin manager. This method should be used to
+   * initialize any necessary resources or data.
    */
   public void load(final JavaPlugin plugin, ServerConnector server) {
 
@@ -82,8 +82,8 @@ public class BukkitPlugin {
   }
 
   /**
-   * Called by the Bukkit plugin manager when the plugin is enabled.
-   * This method should be used to enable the functionality provided by this class.
+   * Called by the Bukkit plugin manager when the plugin is enabled. This method should be used to
+   * enable the functionality provided by this class.
    */
   public void enable(final JavaPlugin plugin) {
 
@@ -119,18 +119,21 @@ public class BukkitPlugin {
   }
 
   /**
-   * Called by the Bukkit plugin manager when the plugin is disabled.
-   * This method should be used to disable the functionality provided by this class.
+   * Called by the Bukkit plugin manager when the plugin is disabled. This method should be used to
+   * disable the functionality provided by this class.
    */
   public void disable(final JavaPlugin plugin) {
+
     this.pluginCore.onDisable();
   }
 
   public boolean isPapiHooked() {
+
     return papiHooked;
   }
 
   public void setPapiHooked(boolean papiHooked) {
+
     this.papiHooked = papiHooked;
   }
 }

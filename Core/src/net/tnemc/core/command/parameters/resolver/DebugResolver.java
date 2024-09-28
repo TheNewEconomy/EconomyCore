@@ -32,6 +32,7 @@ public class DebugResolver implements ValueResolver<DebugLevel> {
 
   @Override
   public DebugLevel resolve(@NotNull ValueResolverContext context) throws Throwable {
+
     final String value = context.arguments().pop();
 
     return DebugLevel.fromID(value);

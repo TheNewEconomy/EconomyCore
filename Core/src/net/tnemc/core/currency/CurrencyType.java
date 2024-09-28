@@ -36,8 +36,8 @@ import static net.tnemc.core.EconomyManager.VIRTUAL;
 /**
  * Represents a type of currency.
  *
- * @see Currency
  * @author creatorfromhell
+ * @see Currency
  * @since 0.1.2.0
  */
 public interface CurrencyType {
@@ -53,6 +53,7 @@ public interface CurrencyType {
    * @return True if this currency type supports offline players, otherwise false.
    */
   default boolean offline() {
+
     return true;
   }
 
@@ -61,6 +62,7 @@ public interface CurrencyType {
    * should be true for currency types like item currency.
    */
   default boolean loginCalculation() {
+
     return false;
   }
 
@@ -69,10 +71,12 @@ public interface CurrencyType {
    * your own data handling.
    */
   default boolean database() {
+
     return true;
   }
 
   default boolean supportsVirtual() {
+
     return true;
   }
 
@@ -80,6 +84,7 @@ public interface CurrencyType {
    * @return True if this currency type is based on physical items.
    */
   default boolean supportsItems() {
+
     return (this instanceof ItemType);
   }
 
@@ -87,6 +92,7 @@ public interface CurrencyType {
    * @return The {@link Identifier} of the default handler.
    */
   default Identifier defaultHandler() {
+
     return VIRTUAL;
   }
 
@@ -95,17 +101,19 @@ public interface CurrencyType {
    * from items to/from virtual.
    */
   default boolean supportsExchange() {
+
     return false;
   }
 
   /**
    * Used to get the holdings for a specific account from this currency type.
    *
-   * @param account The uuid of the account.
-   * @param region The name of the region involved. This is usually a world, but could be something
-   *               else such as a world guard region name/identifier.
+   * @param account  The uuid of the account.
+   * @param region   The name of the region involved. This is usually a world, but could be
+   *                 something else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
-   * @param type The {@link Identifier} of the holdings handler to use.
+   * @param type     The {@link Identifier} of the holdings handler to use.
+   *
    * @return The holdings for the specific account.
    */
   default List<HoldingsEntry> getHoldings(Account account, String region, Currency currency, Identifier type) {
@@ -120,7 +128,7 @@ public interface CurrencyType {
     } else if(type.equals(EconomyManager.ITEM_ONLY)) {
 
       final Optional<CurrencyType> curType = EconomyManager.instance().currency().findType("item");
-      curType.ifPresent(currencyType -> handlers.addAll(EconomyManager.instance().getFor(account, currencyType)));
+      curType.ifPresent(currencyType->handlers.addAll(EconomyManager.instance().getFor(account, currencyType)));
 
     } else {
 
@@ -137,12 +145,12 @@ public interface CurrencyType {
   /**
    * Used to set the holdings for a specific account.
    *
-   * @param account The uuid of the account.
-   * @param region The name of the region involved. This is usually a world, but could be something
-   *               else such as a world guard region name/identifier.
+   * @param account  The uuid of the account.
+   * @param region   The name of the region involved. This is usually a world, but could be
+   *                 something else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
-   * @param type The {@link Identifier} of the holdings handler to use.
-   * @param amount The amount to set the player's holdings to.
+   * @param type     The {@link Identifier} of the holdings handler to use.
+   * @param amount   The amount to set the player's holdings to.
    *
    * @return True if the holdings have been set, otherwise false.
    */
@@ -173,6 +181,7 @@ public interface CurrencyType {
   }
 
   default void addDatabase(Account account, String region, Currency currency, Identifier type, BigDecimal amount) {
+
     final HoldingsEntry entry = new HoldingsEntry(region, currency.getUid(), amount, type);
     account.getWallet().setHoldings(entry);
 

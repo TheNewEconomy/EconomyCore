@@ -32,18 +32,22 @@ public class YamlStorageManager {
   private final Map<String, Boolean> inUsage = new ConcurrentHashMap<>();
 
   public Map<String, Boolean> getInUsage() {
+
     return inUsage;
   }
 
   public void add(final String file) {
+
     inUsage.put(file, true);
   }
 
   public boolean inUse(final String file) {
+
     return inUsage.containsKey(file);
   }
 
   public void remove(final String file) {
+
     inUsage.remove(file);
   }
 }

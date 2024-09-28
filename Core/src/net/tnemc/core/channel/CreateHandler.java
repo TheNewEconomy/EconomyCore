@@ -36,10 +36,12 @@ import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 public class CreateHandler extends ChannelMessageHandler {
 
   public CreateHandler() {
+
     super("create");
   }
 
   public static void send(final String identifier, final String name) {
+
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
     out.writeUTF(PluginCore.instance().getServerID().toString());
     out.writeUTF(identifier);

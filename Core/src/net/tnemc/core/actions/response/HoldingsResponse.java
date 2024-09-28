@@ -37,11 +37,13 @@ public enum HoldingsResponse implements EconomyResponse {
   MAX_HOLDINGS {
     @Override
     public boolean success() {
+
       return false;
     }
 
     @Override
     public String response() {
+
       return "Messages.Money.ExceedsOtherPlayerMaximum";
     }
   },
@@ -54,11 +56,13 @@ public enum HoldingsResponse implements EconomyResponse {
   MIN_HOLDINGS {
     @Override
     public boolean success() {
+
       return false;
     }
 
     @Override
     public String response() {
+
       return "Messages.Money.ExceedsOtherPlayerMinimum";
     }
   },
@@ -71,11 +75,13 @@ public enum HoldingsResponse implements EconomyResponse {
   MIN_DENOM_INCAPABLE {
     @Override
     public boolean success() {
+
       return false;
     }
 
     @Override
     public String response() {
+
       return "Messages.Money.MinimumDenomination";
     }
   },
@@ -88,11 +94,13 @@ public enum HoldingsResponse implements EconomyResponse {
   INSUFFICIENT {
     @Override
     public boolean success() {
+
       return false;
     }
 
     @Override
     public String response() {
+
       return "Messages.Money.Insufficient";
     }
   },
@@ -105,11 +113,13 @@ public enum HoldingsResponse implements EconomyResponse {
   INSUFFICIENT_OTHER {
     @Override
     public boolean success() {
+
       return false;
     }
 
     @Override
     public String response() {
+
       return "Messages.Money.InsufficientOther";
     }
   },
@@ -122,11 +132,13 @@ public enum HoldingsResponse implements EconomyResponse {
   RESTRICTED {
     @Override
     public boolean success() {
+
       return false;
     }
 
     @Override
     public String response() {
+
       return "Messages.Money.Restricted";
     }
   },
@@ -139,11 +151,13 @@ public enum HoldingsResponse implements EconomyResponse {
   RECEIVE_LOCK {
     @Override
     public boolean success() {
+
       return false;
     }
 
     @Override
     public String response() {
+
       return "Messages.Account.ReceiveLock";
     }
   },
@@ -156,11 +170,13 @@ public enum HoldingsResponse implements EconomyResponse {
   USE_LOCK {
     @Override
     public boolean success() {
+
       return false;
     }
 
     @Override
     public String response() {
+
       return "Messages.Account.UseLock";
     }
   },
@@ -173,11 +189,13 @@ public enum HoldingsResponse implements EconomyResponse {
      */
     @Override
     public boolean success() {
+
       return false;
     }
 
     @Override
     public String response() {
+
       return "Messages.General.Disabled";
     }
   }

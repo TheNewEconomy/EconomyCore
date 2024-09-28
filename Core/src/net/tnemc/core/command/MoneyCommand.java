@@ -68,6 +68,7 @@ public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: [currency]
   public static void onMyBal(CmdSource<?> sender) {
+
     if(sender.player().isPresent()) {
       sender.player().get().inventory().openMenu(sender.player().get(), "my_bal");
     }
@@ -162,13 +163,13 @@ public class MoneyCommand extends BaseCommand {
 
     final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
     final Transaction transaction = new Transaction("convert")
-        .from(account.get(), modifierFrom)
-        .to(account.get(), modifier)
-        .processor(EconomyManager.baseProcessor())
-        .source(new PlayerSource(sourceID));
+            .from(account.get(), modifierFrom)
+            .to(account.get(), modifier)
+            .processor(EconomyManager.baseProcessor())
+            .source(new PlayerSource(sourceID));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction, account.get().getName(), amount.value());
-    if(receipt.isPresent()){
+    if(receipt.isPresent()) {
       final MessageData data = new MessageData("Messages.Money.Converted");
       data.addReplacement("$from_amount", amount.value().toPlainString());
       data.addReplacement("$amount", CurrencyFormatter.format(account.get(),
@@ -217,9 +218,9 @@ public class MoneyCommand extends BaseCommand {
     }
 
     final HoldingsModifier modifier = new HoldingsModifier(region,
-            currency.getUid(),
-            amount,
-            EconomyManager.VIRTUAL
+                                                           currency.getUid(),
+                                                           amount,
+                                                           EconomyManager.VIRTUAL
     );
 
     final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
@@ -233,7 +234,7 @@ public class MoneyCommand extends BaseCommand {
     if(receipt.isPresent()) {
       final MessageData data = new MessageData("Messages.Money.Deposit");
       data.addReplacement("$amount", CurrencyFormatter.format(senderAccount.get(),
-              modifier.asEntry()));
+                                                              modifier.asEntry()));
       sender.message(data);
     }
   }
@@ -264,8 +265,8 @@ public class MoneyCommand extends BaseCommand {
 
     final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
     final Transaction transaction = new Transaction("give")
-        .to(account, modifier)
-        .source(new PlayerSource(sourceID));
+            .to(account, modifier)
+            .source(new PlayerSource(sourceID));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction, account.getName(), amount.value());
     if(receipt.isPresent()) {
@@ -318,7 +319,7 @@ public class MoneyCommand extends BaseCommand {
       final Collection<AbstractItemStack<Object>> left = PluginCore.server().calculations().giveItems(Collections.singletonList(note.get().stack(currency.getIdentifier(), BaseCommand.region(sender), rounded)), provider.get().inventory().getInventory(false));
 
       final MessageData entryMSG = new MessageData("Messages.Note.Given");
-      entryMSG.addReplacement("$currency",currency.getIdentifier());
+      entryMSG.addReplacement("$currency", currency.getIdentifier());
       entryMSG.addReplacement("$amount", CurrencyFormatter.format(account, rounded));
       provider.get().message(entryMSG);
 
@@ -370,14 +371,14 @@ public class MoneyCommand extends BaseCommand {
 
       final HoldingsModifier modifier = new HoldingsModifier(BaseCommand.region(sender),
                                                              currency.getUid(),
-              amt
+                                                             amt
       );
 
       final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
       final Transaction transaction = new Transaction("note")
-          .from(account.get(), modifier.counter())
-          .processor(EconomyManager.baseProcessor())
-          .source(new PlayerSource(sourceID));
+              .from(account.get(), modifier.counter())
+              .processor(EconomyManager.baseProcessor())
+              .source(new PlayerSource(sourceID));
 
 
       final Optional<Receipt> receipt = processTransaction(sender, transaction, account.get().getName(), amount.value());
@@ -385,7 +386,7 @@ public class MoneyCommand extends BaseCommand {
         final Collection<AbstractItemStack<Object>> left = PluginCore.server().calculations().giveItems(Collections.singletonList(note.get().stack(currency.getIdentifier(), BaseCommand.region(sender), rounded)), provider.get().inventory().getInventory(false));
 
         final MessageData entryMSG = new MessageData("Messages.Note.Given");
-        entryMSG.addReplacement("$currency",currency.getIdentifier());
+        entryMSG.addReplacement("$currency", currency.getIdentifier());
         entryMSG.addReplacement("$amount", CurrencyFormatter.format(account.get(), modifier.asEntry()));
         sender.message(entryMSG);
 
@@ -443,6 +444,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   public static void printBalance(final CmdSource<?> sender, final Account account, final String region, final Currency currency) {
+
     final MessageData entryMSG = new MessageData("Messages.Money.HoldingsMultiSingle");
     entryMSG.addReplacement("$currency", currency.getIdentifier());
 
@@ -525,7 +527,7 @@ public class MoneyCommand extends BaseCommand {
       data.addReplacement("$distance", String.valueOf(MainConfig.yaml().getInt("Core.Commands.Pay.Radius")));
 
       if(!(senderAccount.get() instanceof PlayerAccount) || !((PlayerAccount)senderAccount.get()).isOnline()
-          || !(account instanceof PlayerAccount) || !((PlayerAccount)account).isOnline()) {
+         || !(account instanceof PlayerAccount) || !((PlayerAccount)account).isOnline()) {
         sender.message(data);
         return;
       }
@@ -533,7 +535,7 @@ public class MoneyCommand extends BaseCommand {
       final Optional<PlayerProvider> senderPlayer = ((PlayerAccount)senderAccount.get()).getPlayer();
       final Optional<PlayerProvider> playerPlayer = ((PlayerAccount)account).getPlayer();
       if(senderPlayer.isEmpty() || playerPlayer.isEmpty()
-          || senderPlayer.get().getLocation().isEmpty() || playerPlayer.get().getLocation().isEmpty()) {
+         || senderPlayer.get().getLocation().isEmpty() || playerPlayer.get().getLocation().isEmpty()) {
         sender.message(data);
         return;
       }
@@ -546,15 +548,15 @@ public class MoneyCommand extends BaseCommand {
 
     final HoldingsModifier modifier = new HoldingsModifier(BaseCommand.region(sender),
                                                            currency.getUid(),
-            amount
+                                                           amount
     );
 
     final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
     final Transaction transaction = new Transaction("pay")
-        .to(account, modifier)
-        .from(senderAccount.get(), modifier.counter())
-        .processor(EconomyManager.baseProcessor())
-        .source(new PlayerSource(sourceID));
+            .to(account, modifier)
+            .from(senderAccount.get(), modifier.counter())
+            .processor(EconomyManager.baseProcessor())
+            .source(new PlayerSource(sourceID));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction, account.getName(), amount.value());
     if(receipt.isPresent()) {
@@ -639,14 +641,14 @@ public class MoneyCommand extends BaseCommand {
 
     final HoldingsModifier modifier = new HoldingsModifier(region,
                                                            currency.getUid(),
-            amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN),
+                                                           amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN),
                                                            HoldingsOperation.SET);
 
     final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
     final Transaction transaction = new Transaction("set")
-        .to(account, modifier)
-        .processor(EconomyManager.baseProcessor())
-        .source(new PlayerSource(sourceID));
+            .to(account, modifier)
+            .processor(EconomyManager.baseProcessor())
+            .source(new PlayerSource(sourceID));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction, account.getName(), amount);
 
@@ -656,7 +658,7 @@ public class MoneyCommand extends BaseCommand {
       msg.addReplacement("$currency", currency.getIdentifier());
       msg.addReplacement("$amount", CurrencyFormatter.format(account,
                                                              modifier.asEntry())
-      );
+                        );
       sender.message(msg);
     }
   }
@@ -683,15 +685,15 @@ public class MoneyCommand extends BaseCommand {
 
     final HoldingsModifier modifier = new HoldingsModifier(region,
                                                            currency.getUid(),
-            amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN),
+                                                           amount.setScale(currency.getDecimalPlaces(), RoundingMode.DOWN),
                                                            HoldingsOperation.SET);
 
     final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
     for(Account account : TNECore.eco().account().getAccounts().values()) {
       final Transaction transaction = new Transaction("set")
-          .to(account, modifier)
-          .processor(EconomyManager.baseProcessor())
-          .source(new PlayerSource(sourceID));
+              .to(account, modifier)
+              .processor(EconomyManager.baseProcessor())
+              .source(new PlayerSource(sourceID));
 
       final Optional<Receipt> receipt = processTransaction(sender, transaction, account.getName(), amount);
 
@@ -701,11 +703,11 @@ public class MoneyCommand extends BaseCommand {
         msg.addReplacement("$currency", currency.getIdentifier());
         msg.addReplacement("$amount", CurrencyFormatter.format(account,
                                                                modifier.asEntry())
-        );
+                          );
 
-        msg.addReplacements(new String[] {
+        msg.addReplacements(new String[]{
                 ""
-        }, new String[] {
+        }, new String[]{
 
         });
         sender.message(msg);
@@ -715,6 +717,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   public static void onSwitch(CmdSource<?> sender, Account account) {
+
     if(account instanceof SharedAccount shared) {
 
       if(sender.identifier().isEmpty()) {
@@ -806,9 +809,9 @@ public class MoneyCommand extends BaseCommand {
 
     final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
     final Transaction transaction = new Transaction("take")
-        .to(account, modifier.counter())
-        .processor(EconomyManager.baseProcessor())
-        .source(new PlayerSource(sourceID));
+            .to(account, modifier.counter())
+            .processor(EconomyManager.baseProcessor())
+            .source(new PlayerSource(sourceID));
 
     final Optional<Receipt> receipt = processTransaction(sender, transaction, account.getName(), amount.value());
     if(receipt.isPresent()) {
@@ -865,7 +868,7 @@ public class MoneyCommand extends BaseCommand {
     }
 
     if(refresh && !senderAccount.get().isPlayer() || refresh && senderAccount.get().isPlayer() && ((PlayerAccount)senderAccount.get()).getPlayer().isPresent()
-            && ((PlayerAccount)senderAccount.get()).getPlayer().get().hasPermission("tne.money.top.refresh")) {
+                                                     && ((PlayerAccount)senderAccount.get()).getPlayer().get().hasPermission("tne.money.top.refresh")) {
 
       TopManager.instance().load();
     }
@@ -934,9 +937,9 @@ public class MoneyCommand extends BaseCommand {
     }
 
     final HoldingsModifier modifier = new HoldingsModifier(BaseCommand.region(sender),
-            currency.getUid(),
-            amount,
-            EconomyManager.ITEM_ONLY
+                                                           currency.getUid(),
+                                                           amount,
+                                                           EconomyManager.ITEM_ONLY
     );
 
     final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
@@ -952,12 +955,13 @@ public class MoneyCommand extends BaseCommand {
       final MessageData data = new MessageData("Messages.Money.Withdrawn");
       data.addReplacement("$currency", currency.getIdentifier());
       data.addReplacement("$amount", CurrencyFormatter.format(senderAccount.get(),
-              modifier.asEntry()));
+                                                              modifier.asEntry()));
       sender.message(data);
     }
   }
 
   public static Optional<Receipt> processTransaction(CmdSource<?> sender, Transaction transaction, final String modifiedAccount, final BigDecimal modifier) {
+
     try {
       final TransactionResult result = transaction.process();
 

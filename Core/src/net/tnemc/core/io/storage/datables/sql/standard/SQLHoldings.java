@@ -57,6 +57,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    */
   @Override
   public Class<? extends HoldingsEntry> clazz() {
+
     return HoldingsEntry.class;
   }
 
@@ -78,20 +79,21 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    */
   @Override
   public void store(StorageConnector<?> connector, @NotNull HoldingsEntry object, @Nullable String identifier) {
+
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne && identifier != null) {
 
       PluginCore.log().debug("Storing holdings for Identifier: " + identifier);
 
       sql.executeUpdate(tne.saveHoldings(),
-                                              new Object[] {
-                                                  identifier,
-                                                  MainConfig.yaml().getString("Core.Server.Name"),
-                                                  object.getRegion(),
-                                                  object.getCurrency().toString(),
-                                                  object.getHandler().asID(),
-                                                  object.getAmount(),
-                                                  object.getAmount()
-                                              });
+                        new Object[]{
+                                identifier,
+                                MainConfig.yaml().getString("Core.Server.Name"),
+                                object.getRegion(),
+                                object.getCurrency().toString(),
+                                object.getHandler().asID(),
+                                object.getAmount(),
+                                object.getAmount()
+                        });
     }
   }
 
@@ -102,6 +104,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    */
   @Override
   public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
+
     if(connector instanceof SQLConnector sql && identifier != null) {
 
       final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
@@ -124,11 +127,13 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    * @param connector  The storage connector to use for this transaction.
    * @param identifier The identifier used to identify the object to load.
    *
-   * @throws UnsupportedOperationException as this method is not valid for holdings.
    * @return The object to load.
+   *
+   * @throws UnsupportedOperationException as this method is not valid for holdings.
    */
   @Override
   public Optional<HoldingsEntry> load(StorageConnector<?> connector, @NotNull String identifier) {
+
     throw new UnsupportedOperationException("load for HoldingsEntry is not a supported operation.");
   }
 
@@ -141,15 +146,16 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    */
   @Override
   public Collection<HoldingsEntry> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
+
     final Collection<HoldingsEntry> holdings = new ArrayList<>();
 
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne && identifier != null) {
       PluginCore.log().debug("SQLHoldings-loadAll-Account ID:" + identifier, DebugLevel.DEVELOPER);
       try(ResultSet result = sql.executeQuery(tne.loadHoldings(),
-                                                                    new Object[] {
-                                                                        identifier,
-                                                                        MainConfig.yaml().getString("Core.Server.Name")
-                                                                    })) {
+                                              new Object[]{
+                                                      identifier,
+                                                      MainConfig.yaml().getString("Core.Server.Name")
+                                              })) {
         while(result.next()) {
 
           final String currency = result.getString("currency");

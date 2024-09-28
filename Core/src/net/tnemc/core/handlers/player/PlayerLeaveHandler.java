@@ -40,10 +40,13 @@ public class PlayerLeaveHandler {
 
   /**
    * Used to handle a PlayerLeaveEvent using the specified {@link PlayerProvider} class.
+   *
    * @param provider The {@link PlayerProvider} associated with the platform event.
+   *
    * @return True if the event should be cancelled, otherwise false.
    */
   public HandlerResponse handle(PlayerProvider provider) {
+
     final HandlerResponse response = new HandlerResponse("", false);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(provider.identifier());

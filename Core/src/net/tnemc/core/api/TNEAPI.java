@@ -65,6 +65,7 @@ public class TNEAPI {
    * @return The callback manager that is being used.
    */
   public CallbackManager callbacks() {
+
     return PluginCore.callbacks();
   }
 
@@ -72,11 +73,13 @@ public class TNEAPI {
    * Used to add a new {@link HoldingsHandler} to the {@link net.tnemc.core.EconomyManager}. These
    * handlers are able to add additional holdings sources for accounts.
    *
-   * @see <a href="https://github.com/TheNewEconomy/EconomyCore/wiki/API#holdings-handlers">Handlers Wiki</a>
-   *
    * @param handler The handler to add.
+   *
+   * @see <a href="https://github.com/TheNewEconomy/EconomyCore/wiki/API#holdings-handlers">Handlers
+   * Wiki</a>
    */
   public void addHandler(HoldingsHandler handler) {
+
     EconomyManager.instance().addHandler(handler);
   }
 
@@ -98,6 +101,7 @@ public class TNEAPI {
    * @param status The {@code AccountStatus} to be added.
    */
   public void addAccountStatus(AccountStatus status) {
+
     TNECore.eco().account().addAccountStatus(status);
   }
 
@@ -109,9 +113,11 @@ public class TNEAPI {
    * @param identifier The string identifier for the account that is being looked for.
    *
    * @return True if an account with the specified identifier exists, otherwise false.
+   *
    * @since 0.1.2.0
    */
   public boolean hasAccount(@NotNull String identifier) {
+
     return TNECore.eco().account().findAccount(identifier).isPresent();
   }
 
@@ -123,28 +129,31 @@ public class TNEAPI {
    * @param identifier The {@link UUID identifier} for the account that is being looked for.
    *
    * @return True if an account with the specified identifier exists, otherwise false.
+   *
    * @since 0.1.2.0
    */
   public boolean hasPlayerAccount(@NotNull UUID identifier) {
+
     return TNECore.eco().account().findAccount(identifier).isPresent();
   }
 
   /**
    * Looks for an account based on the provided identifier and if none is found, creates it.
    * <p>
-   * This method could return any of the following account types:
-   * - {@link NonPlayerAccount}
-   * - {@link SharedAccount}
+   * This method could return any of the following account types: - {@link NonPlayerAccount} -
+   * {@link SharedAccount}
    * <p>
    * This method is safe to search for non-player accounts.
    *
    * @param identifier The string identifier for the account that is being looked for.
-   * @param name The string name for the account that is being looked for.
+   * @param name       The string name for the account that is being looked for.
    *
    * @return The correlating {@link Account account} object if found, otherwise the one created.
+   *
    * @since 0.1.2.0
    */
   public AccountAPIResponse getOrCreateAccount(@NotNull String identifier, @NotNull String name) {
+
     AccountAPIResponse response = TNECore.eco().account().createAccount(identifier, name);
 
     return response;
@@ -158,64 +167,70 @@ public class TNEAPI {
    * This method is not safe to search for non-player accounts.
    *
    * @param identifier The {@link UUID} identifier for the account that is being looked for.
-   * @param name The string name for the account that is being looked for.
+   * @param name       The string name for the account that is being looked for.
    *
    * @return The correlating {@link AccountAPIResponse response}.
+   *
    * @since 0.1.2.0
    */
   public AccountAPIResponse getOrCreatePlayerAccount(@NotNull UUID identifier, @NotNull String name) {
+
     return getOrCreateAccount(identifier.toString(), name);
   }
 
   /**
-   * Attempts to create an account with the given identifier. This method returns true if the account
-   * was created, otherwise false.
+   * Attempts to create an account with the given identifier. This method returns true if the
+   * account was created, otherwise false.
    * <p>
    * This method is intended for non-player accounts.
    *
    * @param identifier The String identifier for the account that is being created.
    *
    * @return If the account is created an Optional containing the {@link SharedAccount account}, or
-   *         an empty Optional.
+   * an empty Optional.
+   *
    * @since 0.1.2.0
    */
   public Optional<SharedAccount> createAccount(@NotNull String identifier) {
+
     return TNECore.eco().account().createNonPlayerAccount(identifier);
   }
 
   /**
-   * Attempts to create an account with the given identifier. This method returns true if the account
-   * was created, otherwise false.
+   * Attempts to create an account with the given identifier. This method returns true if the
+   * account was created, otherwise false.
    * <p>
    * This method is not intended for non-player accounts.
    *
    * @param identifier The {@link UUID} identifier for the account that is being created.
-   * @param name       The String representation of the name for the account being created, usually the username
-   *                   of the player.
+   * @param name       The String representation of the name for the account being created, usually
+   *                   the username of the player.
    *
    * @return The correlating {@link AccountAPIResponse response}.
+   *
    * @since 0.1.2.0
    */
   public AccountAPIResponse createPlayerAccount(@NotNull UUID identifier, @NotNull String name) {
+
     return TNECore.eco().account().createAccount(identifier.toString(), name);
   }
 
   /**
    * Looks for an account based on the provided identifier.
    * <p>
-   * This method could return any of the following account types:
-   * - {@link PlayerAccount}
-   * - {@link NonPlayerAccount}
-   * - {@link SharedAccount}
+   * This method could return any of the following account types: - {@link PlayerAccount} -
+   * {@link NonPlayerAccount} - {@link SharedAccount}
    * <p>
    * This method is safe to search for non-player accounts.
    *
    * @param identifier The string identifier for the account that is being looked for.
    *
    * @return An optional containing the {@link Account} if found, otherwise an empty optional.
+   *
    * @since 0.1.2.0
    */
   public Optional<Account> getAccount(@NotNull String identifier) {
+
     return TNECore.eco().account().findAccount(identifier);
   }
 
@@ -226,11 +241,12 @@ public class TNEAPI {
    *
    * @param identifier The {@link UUID identifier} for the account that is being looked for.
    *
-   * @return An optional containing the {@link PlayerAccount}
-   * if found, otherwise an empty optional.
+   * @return An optional containing the {@link PlayerAccount} if found, otherwise an empty optional.
+   *
    * @since 0.1.2.0
    */
   public Optional<PlayerAccount> getPlayerAccount(@NotNull UUID identifier) {
+
     return TNECore.eco().account().findPlayerAccount(identifier);
   }
 
@@ -242,10 +258,13 @@ public class TNEAPI {
    * @param identifier The identifier associated with the account that you wish to delete.
    * @param source     The {@link ActionSource source} response for this deletion call.
    *
-   * @return The {@link EconomyResponse response} that should be returned based on the deletion action.
+   * @return The {@link EconomyResponse response} that should be returned based on the deletion
+   * action.
+   *
    * @since 0.1.2.0
    */
   public EconomyResponse deleteAccount(@NotNull String identifier, @NotNull ActionSource source) {
+
     return TNECore.eco().account().deleteAccount(identifier);
   }
 
@@ -257,10 +276,13 @@ public class TNEAPI {
    * @param identifier The identifier associated with the account that you wish to delete.
    * @param source     The {@link ActionSource source} response for this deletion call.
    *
-   * @return The {@link EconomyResponse response} that should be returned based on the deletion action.
+   * @return The {@link EconomyResponse response} that should be returned based on the deletion
+   * action.
+   *
    * @since 0.1.2.0
    **/
   public EconomyResponse deleteAccount(@NotNull UUID identifier, @NotNull ActionSource source) {
+
     return TNECore.eco().account().deleteAccount(identifier);
   }
 
@@ -270,6 +292,7 @@ public class TNEAPI {
    * @param type The {@link CurrencyType} to be added.
    */
   public void addCurrencyType(CurrencyType type) {
+
     TNECore.eco().currency().addType(type);
   }
 
@@ -279,6 +302,7 @@ public class TNEAPI {
    * @param currency The {@link Currency} to be added.
    */
   public void addCurrency(Currency currency) {
+
     TNECore.eco().currency().addCurrency(currency);
   }
 
@@ -288,6 +312,7 @@ public class TNEAPI {
    * @param rule The {@link FormatRule} to be added for balance formatting.
    */
   public void addBalanceFormatRule(FormatRule rule) {
+
     CurrencyFormatter.addRule(rule);
   }
 
@@ -297,9 +322,11 @@ public class TNEAPI {
    *
    * @return The currency that is the default for the server if multi-world support is not available
    * otherwise the default for the default world.
+   *
    * @since 0.1.2.0
    */
   public @NotNull Currency getDefaultCurrency() {
+
     return TNECore.api().getDefaultCurrency();
   }
 
@@ -312,9 +339,11 @@ public class TNEAPI {
    *
    * @return The default currency for the specified world if this implementation has multi-world
    * support, otherwise the default currency for the server.
+   *
    * @since 0.1.2.0
    */
   public @NotNull Currency getDefaultCurrency(@NotNull String region) {
+
     return TNECore.eco().currency().getDefaultCurrency(region);
   }
 
@@ -322,24 +351,29 @@ public class TNEAPI {
    * Used to get a set of every  {@link Currency} object for the server.
    *
    * @return A set of every {@link Currency} object that is available for the server.
+   *
    * @since 0.1.2.0
    */
   public Collection<Currency> getCurrencies() {
+
     return TNECore.eco().currency().currencies();
   }
 
   /**
    * Used to get a set of every {@link Currency} object that is available in the specified world if
-   * this implementation has multi-world support, otherwise all {@link Currency} objects for the server.
+   * this implementation has multi-world support, otherwise all {@link Currency} objects for the
+   * server.
    *
-   * @param region The region to get the currencies for. This could be a world, biomes, or a
-   *               third party based region.
+   * @param region The region to get the currencies for. This could be a world, biomes, or a third
+   *               party based region.
    *
-   * @return A set of every {@link Currency} object that is available in the specified world if
-   * this implementation has multi-world support, otherwise all {@link Currency} objects for the server.
+   * @return A set of every {@link Currency} object that is available in the specified world if this
+   * implementation has multi-world support, otherwise all {@link Currency} objects for the server.
+   *
    * @since 0.1.2.0
    */
   public Collection<Currency> getCurrencies(@NotNull String region) {
+
     return TNECore.api().getCurrencies(region);
   }
 
@@ -353,6 +387,7 @@ public class TNEAPI {
    * @return The holdings in {@link BigDecimal} format.
    */
   public BigDecimal getHoldings(String identifier, String world, String currency) {
+
     final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
     final Optional<Currency> currency1 = TNECore.eco().currency().findCurrency(currency);
 
@@ -373,6 +408,7 @@ public class TNEAPI {
    * @return True if the specified identifier has the holdings, otherwise false.
    */
   public boolean hasHoldings(String identifier, String world, String currency, BigDecimal amount) {
+
     return getHoldings(identifier, world, currency).compareTo(amount) >= 0;
   }
 
@@ -388,14 +424,15 @@ public class TNEAPI {
    * @return The associated {@link TransactionResult result} from the transaction.
    */
   public TransactionResult removeHoldings(String identifier, String world, String currency, BigDecimal amount, String pluginName) {
+
     final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
     final Optional<Currency> currencyObject = TNECore.eco().currency().findCurrency(currency);
 
     if(account.isPresent() && currencyObject.isPresent()) {
 
       final HoldingsModifier modifier = new HoldingsModifier(world,
-              currencyObject.get().getUid(),
-              amount);
+                                                             currencyObject.get().getUid(),
+                                                             amount);
 
       final Transaction transaction = new Transaction("take")
               .to(account.get(), modifier)
@@ -423,14 +460,15 @@ public class TNEAPI {
    * @return The associated {@link TransactionResult result} from the transaction.
    */
   public TransactionResult addHoldings(String identifier, String world, String currency, BigDecimal amount, String pluginName) {
+
     final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
     final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency(currency);
 
     if(account.isPresent() && currencyOptional.isPresent()) {
 
       final HoldingsModifier modifier = new HoldingsModifier(world,
-              currencyOptional.get().getUid(),
-              amount);
+                                                             currencyOptional.get().getUid(),
+                                                             amount);
 
       final Transaction transaction = new Transaction("give")
               .to(account.get(), modifier)
@@ -456,6 +494,7 @@ public class TNEAPI {
    * @return True if the transactions was successful, otherwise false.
    */
   public boolean setHoldings(String identifier, String world, String currency, BigDecimal amount) {
+
     final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
     final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency(currency);
 

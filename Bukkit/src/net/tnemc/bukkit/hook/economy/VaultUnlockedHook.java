@@ -37,6 +37,7 @@ public class VaultUnlockedHook implements Hook {
    */
   @Override
   public boolean enabled() {
+
     return false;
   }
 
@@ -45,8 +46,9 @@ public class VaultUnlockedHook implements Hook {
    */
   @Override
   public void register() {
+
     BukkitCore.instance().getPlugin().getServer().getServicesManager().register(Economy.class, new TNEVaultUnlocked(),
-            BukkitCore.instance().getPlugin(), ServicePriority.Highest);
+                                                                                BukkitCore.instance().getPlugin(), ServicePriority.Highest);
 
     PluginCore.log().inform("Hooked into VaultUnlocked");
   }

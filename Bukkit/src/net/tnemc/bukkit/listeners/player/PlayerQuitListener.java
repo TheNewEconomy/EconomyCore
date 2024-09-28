@@ -35,6 +35,7 @@ public class PlayerQuitListener implements Listener {
 
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onQuit(final PlayerQuitEvent event) {
+
     new PlayerLeaveHandler().handle(PluginCore.server().initializePlayer(event.getPlayer()));
   }
 }

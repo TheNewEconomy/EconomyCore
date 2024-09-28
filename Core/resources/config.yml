@@ -109,10 +109,10 @@ Core:
 
       #A list of values to use to exclude certain users from baltop if the username contains these values.
       Exclusions:
-      - "^town-.*"
-      - "^nation-.*"
-      - "^faction-.*"
-      - "^towny-.*"
+        - "^town-.*"
+        - "^nation-.*"
+        - "^faction-.*"
+        - "^towny-.*"
 
     #Extra configurations regarding the pay command
     Pay:
@@ -125,7 +125,7 @@ Core:
   
   #All configurations relating to update checking
   Update:
-  
+
     #Should TNE check for updates?
     Check: true
     

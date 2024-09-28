@@ -33,6 +33,7 @@ import java.util.UUID;
 public class NationAccount extends NonPlayerAccount {
 
   public NationAccount(UUID identifier, String name) {
+
     super(identifier, name);
     //this.owner = Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getKing().getUUID();
   }
@@ -44,6 +45,7 @@ public class NationAccount extends NonPlayerAccount {
    */
   @Override
   public String type() {
+
     return "nation";
   }
 

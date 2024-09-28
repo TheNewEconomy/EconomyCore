@@ -33,6 +33,7 @@ public class PluginEnableListener implements Listener {
 
   @EventHandler
   public void onEvent(PluginEnableEvent event) {
+
     if(event.getPlugin().getName().equalsIgnoreCase("placeholderapi")) {
       new PAPIHook().register();
     }

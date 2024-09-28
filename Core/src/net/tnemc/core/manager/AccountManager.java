@@ -55,8 +55,8 @@ import java.util.function.Function;
 /**
  * Manages everything related to accounts.
  *
- * @see Account
  * @author creatorfromhell
+ * @see Account
  * @since 0.1.2.0
  */
 public class AccountManager {
@@ -85,33 +85,42 @@ public class AccountManager {
 
   /**
    * Used to create a new non-player account based on the provided name.
+   *
    * @param name The name to use for this account.
+   *
    * @return A correlating {@link AccountAPIResponse response} containing the results.
    */
   public AccountAPIResponse createAccount(final String name) {
+
     return createAccount(name, name, true);
   }
 
   /**
    * Used to create a new account based on the provided identifier and name.
+   *
    * @param identifier The identifier to use for the creation, if this is a player then this should
    *                   be the String value of the UUID for that player.
-   * @param name The name to use for this account.
+   * @param name       The name to use for this account.
+   *
    * @return A correlating {@link AccountAPIResponse response} containing the results.
    */
   public AccountAPIResponse createAccount(final String identifier, final String name) {
+
     return createAccount(identifier, name, false);
   }
 
   /**
    * Used to create a new account based on the provided identifier and name.
+   *
    * @param identifier The identifier to use for the creation, if this is a player then this should
    *                   be the String value of the UUID for that player.
-   * @param name The name to use for this account.
-   * @param nonPlayer True if the new account should be a non-player account.
+   * @param name       The name to use for this account.
+   * @param nonPlayer  True if the new account should be a non-player account.
+   *
    * @return A correlating {@link AccountAPIResponse response} containing the results.
    */
   public AccountAPIResponse createAccount(final String identifier, final String name, boolean nonPlayer) {
+
     PluginCore.log().debug("Create Account Called! ID: " + identifier + " Name: " + name);
     if(name.contains("§")) {
       PluginCore.log().debug("==== AccountAPIResponse with color code! ====", DebugLevel.DEVELOPER);
@@ -215,6 +224,7 @@ public class AccountManager {
    * {@link #types} map for a suitable alternative.
    *
    * @param name The name to use for the creation.
+   *
    * @return An Optional containing the new account class if it was able to be created, otherwise an
    * empty Optional.
    */
@@ -225,10 +235,10 @@ public class AccountManager {
       if(entry.getValue().apply(name)) {
         try {
           return Optional.of(entry.getKey().getDeclaredConstructor(UUID.class, String.class)
-                                  .newInstance(UUID.randomUUID(), name));
+                                     .newInstance(UUID.randomUUID(), name));
         } catch(Exception e) {
           PluginCore.log().error("An error occured while trying to create a new NonPlayer Account" +
-                                  "for : " + name, e, DebugLevel.STANDARD);
+                                 "for : " + name, e, DebugLevel.STANDARD);
         }
       }
     }
@@ -241,9 +251,11 @@ public class AccountManager {
    * Used to delete an {@link Account account} from an identifier.
    *
    * @param identifier The identifier to use for the search.
+   *
    * @return The corresponding {@link EconomyResponse response}.
    */
   public EconomyResponse deleteAccount(@NotNull final UUID identifier) {
+
     return deleteAccount(identifier.toString());
   }
 
@@ -251,9 +263,11 @@ public class AccountManager {
    * Used to delete an {@link Account account} from an identifier.
    *
    * @param identifier The identifier to use for the search.
+   *
    * @return The corresponding {@link EconomyResponse response}.
    */
   public EconomyResponse deleteAccount(@NotNull final String identifier) {
+
     if(!accounts.containsKey(identifier)) {
       return AccountResponse.DOESNT_EXIST;
     }
@@ -267,21 +281,27 @@ public class AccountManager {
 
   /**
    * Used to find an {@link Account account} from a {@link UUID unique identifier}.
+   *
    * @param id The id to use in the search.
+   *
    * @return An optional containing the {@link Account account} if it exists, otherwise an empty
    * optional.
    */
   public Optional<Account> findAccount(final UUID id) {
+
     return Optional.ofNullable(accounts.get(id.toString()));
   }
 
   /**
    * Used to find an {@link PlayerAccount account} from a {@link UUID unique identifier}.
+   *
    * @param id The id to use in the search.
-   * @return An optional containing the {@link PlayerAccount account} if it exists, otherwise an empty
-   * optional.
+   *
+   * @return An optional containing the {@link PlayerAccount account} if it exists, otherwise an
+   * empty optional.
    */
   public Optional<PlayerAccount> findPlayerAccount(final UUID id) {
+
     final Account account = accounts.get(id.toString());
 
     if((account instanceof PlayerAccount)) {
@@ -293,7 +313,9 @@ public class AccountManager {
   /**
    * Used to find an {@link Account account} from a string identifier, this could be a name or a
    * different identifier.
+   *
    * @param identifier The identifier to use in the search.
+   *
    * @return An optional containing the {@link Account account} if it exists, otherwise an empty
    * optional.
    */
@@ -315,6 +337,7 @@ public class AccountManager {
   }
 
   public AccountStatus findStatus(final String identifier) {
+
     if(statuses.containsKey(identifier)) {
       return statuses.get(identifier);
     }
@@ -323,19 +346,23 @@ public class AccountManager {
 
   /**
    * Adds a new {@link AccountStatus} status.
+   *
    * @param status The account status to add
    */
   public void addAccountStatus(final AccountStatus status) {
+
     statuses.put(status);
   }
 
   /**
    * Adds a new {@link Account} type. These should extend the {@link SharedAccount}.
-   * @param type The class for this type.
-   * @param check The function that should be used to check if a given String identifier, usually name,
-   *              is valid for this account type.
+   *
+   * @param type  The class for this type.
+   * @param check The function that should be used to check if a given String identifier, usually
+   *              name, is valid for this account type.
    */
   public void addAccountType(final Class<? extends NonPlayerAccount> type, Function<String, Boolean> check) {
+
     types.put(type, check);
   }
 
@@ -350,14 +377,17 @@ public class AccountManager {
   }
 
   public void addSwap(final String swapType, final UUID account, final UUID swapAccount) {
+
     accountSwaps.put(swapType + ":" + account.toString(), swapAccount);
   }
 
   public void removeSwap(final String swapType, final UUID account) {
+
     accountSwaps.remove(swapType + ":" + account.toString());
   }
 
   public UUID swap(final String swapType, final UUID account) {
+
     return accountSwaps.getOrDefault(swapType + ":" + account.toString(), account);
   }
 
@@ -372,22 +402,27 @@ public class AccountManager {
   }
 
   public EnhancedHashMap<String, AccountStatus> getStatuses() {
+
     return statuses;
   }
 
   public EnhancedHashMap<String, Account> getAccounts() {
+
     return accounts;
   }
 
   public UUIDProvider uuidProvider() {
+
     return uuidProvider;
   }
 
   public List<UUID> getLoading() {
+
     return loading;
   }
 
   public List<UUID> getImporting() {
+
     return importing;
   }
 }

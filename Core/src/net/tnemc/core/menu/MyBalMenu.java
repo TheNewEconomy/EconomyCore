@@ -91,6 +91,7 @@ public class MyBalMenu extends Menu {
   public static final String ACTION_HOLDINGS = "ACTION_HOLDINGS";
 
   public MyBalMenu() {
+
     this.name = "my_bal";
     this.title = "My Bal";
     this.rows = 6;
@@ -173,27 +174,27 @@ public class MyBalMenu extends Menu {
           if(currencyOptional.isPresent()) {
 
             callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                    .display(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.ConvertDisplay"), id))
-                    .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.Convert"), id))))
-                    .withSlot(10)
-                    .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_CONVERT_CURRENCY_PAGE))
-                    .build());
+                                                               .display(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.ConvertDisplay"), id))
+                                                               .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.Convert"), id))))
+                                               .withSlot(10)
+                                               .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_CONVERT_CURRENCY_PAGE))
+                                               .build());
 
             if(currencyOptional.get().type().supportsExchange()) {
 
               callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                      .display(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.DepositDisplay"), id))
-                      .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.Deposit"), id))))
-                      .withSlot(12)
-                      .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_DEPOSIT_AMOUNT_PAGE))
-                      .build());
+                                                                 .display(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.DepositDisplay"), id))
+                                                                 .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.Deposit"), id))))
+                                                 .withSlot(12)
+                                                 .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_DEPOSIT_AMOUNT_PAGE))
+                                                 .build());
 
               callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                      .display(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.WithdrawDisplay"), id))
-                      .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.Withdraw"), id))))
-                      .withSlot(14)
-                      .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_WITHDRAW_AMOUNT_PAGE))
-                      .build());
+                                                                 .display(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.WithdrawDisplay"), id))
+                                                                 .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.Withdraw"), id))))
+                                                 .withSlot(14)
+                                                 .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_WITHDRAW_AMOUNT_PAGE))
+                                                 .build());
             }
           }
         }
@@ -223,9 +224,9 @@ public class MyBalMenu extends Menu {
               balMessage.addReplacement("$balance", entry.getAmount());
 
               callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                      .display(Component.text(entry.getHandler().id()))
-                      .lore(Collections.singletonList(MessageHandler.grab(balMessage, id))))
-                      .withSlot(i).build());
+                                                                 .display(Component.text(entry.getHandler().id()))
+                                                                 .lore(Collections.singletonList(MessageHandler.grab(balMessage, id))))
+                                                 .withSlot(i).build());
               i += 2;
             }
           }
@@ -270,7 +271,7 @@ public class MyBalMenu extends Menu {
     }
 
     return new IconBuilder(PluginCore.server().stackBuilder().of(currency.getIconMaterial(), 1)
-            .display(Component.text(currency.getIdentifier())).lore(lore))
+                                   .display(Component.text(currency.getIdentifier())).lore(lore))
             .withSlot(slot)
             .withActions(actions.toArray(new IconAction[actions.size()])).build();
   }
@@ -341,13 +342,13 @@ public class MyBalMenu extends Menu {
 
           final String region = "";
           final HoldingsModifier modifier = new HoldingsModifier(region,
-                  currencyOptional.get().getUid(),
-                  converted.get().setScale(currencyOptional.get().getDecimalPlaces(), RoundingMode.DOWN)
+                                                                 currencyOptional.get().getUid(),
+                                                                 converted.get().setScale(currencyOptional.get().getDecimalPlaces(), RoundingMode.DOWN)
           );
 
           final HoldingsModifier modifierFrom = new HoldingsModifier(region,
-                  fromCurrency.get().getUid(),
-                  handler.getAmount().setScale(currencyOptional.get().getDecimalPlaces(), RoundingMode.DOWN).negate()
+                                                                     fromCurrency.get().getUid(),
+                                                                     handler.getAmount().setScale(currencyOptional.get().getDecimalPlaces(), RoundingMode.DOWN).negate()
           );
 
           final Transaction transaction = new Transaction("convert")
@@ -357,11 +358,11 @@ public class MyBalMenu extends Menu {
                   .source(new PlayerSource(playerUUID));
 
           final Optional<Receipt> receipt = processTransaction(player.get(), transaction, senderAccount.get().getName(), handler.getAmount());
-          if(receipt.isPresent()){
+          if(receipt.isPresent()) {
             final MessageData data = new MessageData("Messages.Money.Converted");
             data.addReplacement("$from_amount", handler.getAmount().toPlainString());
             data.addReplacement("$amount", CurrencyFormatter.format(senderAccount.get(),
-                    modifierFrom.asEntry()));
+                                                                    modifierFrom.asEntry()));
             player.get().message(data);
           }
         }
@@ -412,9 +413,9 @@ public class MyBalMenu extends Menu {
           }
 
           final HoldingsModifier modifier = new HoldingsModifier(TNECore.eco().region().getMode().region(player.get()),
-                  currencyOptional.get().getUid(),
-                  handler.getAmount(),
-                  EconomyManager.VIRTUAL
+                                                                 currencyOptional.get().getUid(),
+                                                                 handler.getAmount(),
+                                                                 EconomyManager.VIRTUAL
           );
 
           final Transaction transaction = new Transaction("deposit")
@@ -427,13 +428,14 @@ public class MyBalMenu extends Menu {
           if(receipt.isPresent()) {
             final MessageData data = new MessageData("Messages.Money.Deposit");
             data.addReplacement("$amount", CurrencyFormatter.format(senderAccount.get(),
-                    modifier.asEntry()));
+                                                                    modifier.asEntry()));
             player.get().message(data);
           }
         }
       }
     }
   }
+
   protected void note(final AmountSelectionHandler handler) {
 
     final Optional<MenuViewer> viewer = handler.getClick().player().viewer();
@@ -474,8 +476,8 @@ public class MyBalMenu extends Menu {
             final BigDecimal amt = rounded.add(note.get().getFee().calculateTax(rounded)).setScale(currencyOptional.get().getDecimalPlaces(), RoundingMode.DOWN);
 
             final HoldingsModifier modifier = new HoldingsModifier(region,
-                    currencyOptional.get().getUid(),
-                    amt
+                                                                   currencyOptional.get().getUid(),
+                                                                   amt
             );
 
             final Transaction transaction = new Transaction("note")
@@ -487,7 +489,7 @@ public class MyBalMenu extends Menu {
             final Optional<Receipt> receipt = processTransaction(player.get(), transaction, account.get().getName(), handler.getAmount());
             if(receipt.isPresent()) {
               final Collection<AbstractItemStack<Object>> left = PluginCore.server().calculations().giveItems(Collections.singletonList(note.get().stack(currencyOptional.get().getIdentifier(), region, rounded)),
-                      player.get().inventory().getInventory(false));
+                                                                                                              player.get().inventory().getInventory(false));
 
               if(!left.isEmpty()) {
                 PluginCore.server().calculations().drop(left, ((PlayerAccount)account.get()).getUUID());
@@ -565,7 +567,7 @@ public class MyBalMenu extends Menu {
               data.addReplacement("$distance", String.valueOf(MainConfig.yaml().getInt("Core.Commands.Pay.Radius")));
 
               if(!(senderAccount.get() instanceof PlayerAccount) || !((PlayerAccount)senderAccount.get()).isOnline()
-                      || !(account.get() instanceof PlayerAccount) || !((PlayerAccount)account.get()).isOnline()) {
+                 || !(account.get() instanceof PlayerAccount) || !((PlayerAccount)account.get()).isOnline()) {
                 player.get().message(data);
                 return;
               }
@@ -573,7 +575,7 @@ public class MyBalMenu extends Menu {
               final Optional<PlayerProvider> senderPlayer = ((PlayerAccount)senderAccount.get()).getPlayer();
               final Optional<PlayerProvider> playerPlayer = ((PlayerAccount)account.get()).getPlayer();
               if(senderPlayer.isEmpty() || playerPlayer.isEmpty()
-                      || senderPlayer.get().getLocation().isEmpty() || playerPlayer.get().getLocation().isEmpty()) {
+                 || senderPlayer.get().getLocation().isEmpty() || playerPlayer.get().getLocation().isEmpty()) {
                 player.get().message(data);
                 return;
               }
@@ -585,8 +587,8 @@ public class MyBalMenu extends Menu {
             }
 
             final HoldingsModifier modifier = new HoldingsModifier(TNECore.eco().region().getMode().region(player.get()),
-                    currencyOptional.get().getUid(),
-                    handler.getAmount()
+                                                                   currencyOptional.get().getUid(),
+                                                                   handler.getAmount()
             );
             final Transaction transaction = new Transaction("pay")
                     .to(account.get(), modifier)
@@ -600,7 +602,7 @@ public class MyBalMenu extends Menu {
               data.addReplacement("$player", account.get().getName());
               data.addReplacement("$currency", currencyOptional.get().getIdentifier());
               data.addReplacement("$amount", CurrencyFormatter.format(account.get(),
-                      modifier.asEntry()));
+                                                                      modifier.asEntry()));
               player.get().message(data);
 
               if(account.get().isPlayer() && ((PlayerAccount)account.get()).isOnline()) {
@@ -611,7 +613,7 @@ public class MyBalMenu extends Menu {
                   final MessageData msgData = new MessageData("Messages.Money.Received");
                   msgData.addReplacement("$player", (player.get().getName() == null)? MainConfig.yaml().getString("Core.Server.Account.Name") : player.get().getName());
                   msgData.addReplacement("$amount", CurrencyFormatter.format(account.get(),
-                          modifier.asEntry()));
+                                                                             modifier.asEntry()));
                   provider.get().message(msgData);
                 }
               }
@@ -634,7 +636,7 @@ public class MyBalMenu extends Menu {
         final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((UUID)currencyUUID.get());
         final Optional<PlayerProvider> player = PluginCore.server().findPlayer(handler.getClick().player().identifier());
         if(currencyOptional.isPresent() && player.isPresent()) {
-          
+
           if(EconomyManager.limitCurrency()) {
             if(!player.get().hasPermission("tne.money.withdraw." + currencyOptional.get().getIdentifier())) {
               final MessageData data = new MessageData("Messages.Account.BlockedAction");
@@ -664,9 +666,9 @@ public class MyBalMenu extends Menu {
           }
 
           final HoldingsModifier modifier = new HoldingsModifier(TNECore.eco().region().getMode().region(player.get()),
-                  currencyOptional.get().getUid(),
-                  handler.getAmount(),
-                  EconomyManager.ITEM_ONLY
+                                                                 currencyOptional.get().getUid(),
+                                                                 handler.getAmount(),
+                                                                 EconomyManager.ITEM_ONLY
           );
 
           final Transaction transaction = new Transaction("withdraw")
@@ -681,14 +683,17 @@ public class MyBalMenu extends Menu {
             final MessageData data = new MessageData("Messages.Money.Withdrawn");
             data.addReplacement("$currency", currencyOptional.get().getIdentifier());
             data.addReplacement("$amount", CurrencyFormatter.format(senderAccount.get(),
-                    modifier.asEntry()));
+                                                                    modifier.asEntry()));
             player.get().message(data);
             return;
           }
         }
       }
     }
-  }private static Optional<Receipt> processTransaction(final PlayerProvider player, final Transaction transaction, final String modifiedAccount, final BigDecimal modifier) {
+  }
+
+  private static Optional<Receipt> processTransaction(final PlayerProvider player, final Transaction transaction, final String modifiedAccount, final BigDecimal modifier) {
+
     try {
       final TransactionResult result = transaction.process();
 

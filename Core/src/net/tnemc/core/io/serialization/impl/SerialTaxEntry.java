@@ -41,6 +41,7 @@ public class SerialTaxEntry implements JSONAble<TaxEntry> {
    */
   @Override
   public JSONObject toJSON(TaxEntry entry) {
+
     final JSONObject json = new JSONObject();
     json.put("type", entry.type());
     json.put("amount", entry.amount());
@@ -56,6 +57,7 @@ public class SerialTaxEntry implements JSONAble<TaxEntry> {
    */
   @Override
   public TaxEntry fromJSON(String serialized) {
+
     final JSONParser parser = new JSONParser();
 
     try {

@@ -40,7 +40,9 @@ import java.util.UUID;
  * @since 0.1.2.0
  */
 public class ConfigHandler extends ChannelMessageHandler {
+
   public ConfigHandler() {
+
     super("config");
   }
 

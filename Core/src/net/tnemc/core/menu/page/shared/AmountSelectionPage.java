@@ -53,6 +53,7 @@ public class AmountSelectionPage {
 
   public AmountSelectionPage(String amtID, String returnMenu, String menuName,
                              final int menuPage, final int returnPage, Consumer<AmountSelectionHandler> selectionListener) {
+
     this.returnMenu = returnMenu;
     this.menuName = menuName;
     this.menuPage = menuPage;
@@ -67,144 +68,144 @@ public class AmountSelectionPage {
     if(viewer.isPresent()) {
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
-              .display(Component.text("Escape Menu"))
-              .lore(Collections.singletonList(Component.text("Click to exit this menu."))))
-              .withActions(new PageSwitchWithClose(returnMenu, returnPage))
-              .withSlot(0)
-              .build());
+                                                         .display(Component.text("Escape Menu"))
+                                                         .lore(Collections.singletonList(Component.text("Click to exit this menu."))))
+                                         .withActions(new PageSwitchWithClose(returnMenu, returnPage))
+                                         .withSlot(0)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-              .display(Component.text("Save."))
-              .lore(Collections.singletonList(Component.text("Click save the amount."))))
-              .withActions(new RunnableAction((click)->{
-                        if(selectionListener != null) {
+                                                         .display(Component.text("Save."))
+                                                         .lore(Collections.singletonList(Component.text("Click save the amount."))))
+                                         .withActions(new RunnableAction((click)->{
+                                           if(selectionListener != null) {
 
-                          selectionListener.accept(new AmountSelectionHandler(click, ((BigDecimal)viewer.get().dataOrDefault(amtID, BigDecimal.ZERO))));
-                        }
-                      }), new PageSwitchWithClose(returnMenu, returnPage))
-              .withSlot(8)
-              .build());
+                                             selectionListener.accept(new AmountSelectionHandler(click, ((BigDecimal)viewer.get().dataOrDefault(amtID, BigDecimal.ZERO))));
+                                           }
+                                         }), new PageSwitchWithClose(returnMenu, returnPage))
+                                         .withSlot(8)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-              .display(Component.text("Enter your own"))
-              .lore(Collections.singletonList(Component.text("Click to enter a custom amount."))))
-              .withActions(new ChatAction((message)->{
+                                                         .display(Component.text("Enter your own"))
+                                                         .lore(Collections.singletonList(Component.text("Click to enter a custom amount."))))
+                                         .withActions(new ChatAction((message)->{
 
 
-                        if(message.getPlayer().viewer().isPresent() && !message.getMessage().isEmpty()) {
+                                           if(message.getPlayer().viewer().isPresent() && !message.getMessage().isEmpty()) {
 
-                          try {
+                                             try {
 
-                            message.getPlayer().viewer().get().addData(amtID, new BigDecimal(message.getMessage()));
-                            return true;
-                          } catch(NumberFormatException ignore) {}
-                        }
+                                               message.getPlayer().viewer().get().addData(amtID, new BigDecimal(message.getMessage()));
+                                               return true;
+                                             } catch(NumberFormatException ignore) { }
+                                           }
 
-                        message.getPlayer().message("Enter a valid decimal value:");
-                        return false;
+                                           message.getPlayer().message("Enter a valid decimal value:");
+                                           return false;
 
-                      }), new RunnableAction((run)->run.player().message("Enter a valid decimal value:")))
-              .withSlot(2)
-              .build());
+                                         }), new RunnableAction((run)->run.player().message("Enter a valid decimal value:")))
+                                         .withSlot(2)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-              .display(Component.text(((BigDecimal)viewer.get().dataOrDefault(amtID, BigDecimal.ZERO)).toPlainString()))
-              .lore(Collections.singletonList(Component.text("The amount"))))
-              .withActions(new SwitchPageAction(menuName, menuPage))
-              .withSlot(4)
-              .build());
+                                                         .display(Component.text(((BigDecimal)viewer.get().dataOrDefault(amtID, BigDecimal.ZERO)).toPlainString()))
+                                                         .lore(Collections.singletonList(Component.text("The amount"))))
+                                         .withActions(new SwitchPageAction(menuName, menuPage))
+                                         .withSlot(4)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BLACK_WOOL", 1)
-              .display(Component.text("Reset To Zero"))
-              .lore(Collections.singletonList(Component.text("Click to reset the amount to zero."))))
-              .withClick((click)->click.player().viewer().ifPresent(menuViewer->menuViewer.addData(amtID, BigDecimal.ZERO)))
-              .withActions(new SwitchPageAction(menuName, menuPage))
-              .withSlot(6)
-              .build());
+                                                         .display(Component.text("Reset To Zero"))
+                                                         .lore(Collections.singletonList(Component.text("Click to reset the amount to zero."))))
+                                         .withClick((click)->click.player().viewer().ifPresent(menuViewer->menuViewer.addData(amtID, BigDecimal.ZERO)))
+                                         .withActions(new SwitchPageAction(menuName, menuPage))
+                                         .withSlot(6)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display(Component.text("Add 100")))
-              .withActions(new SwitchPageAction(menuName, menuPage))
-              .withClick((click)->balAddClick(click, new BigDecimal("100")))
-              .withSlot(15)
-              .build());
+                                                         .display(Component.text("Add 100")))
+                                         .withActions(new SwitchPageAction(menuName, menuPage))
+                                         .withClick((click)->balAddClick(click, new BigDecimal("100")))
+                                         .withSlot(15)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display(Component.text("Add 50")))
-              .withActions(new SwitchPageAction(menuName, menuPage))
-              .withClick((click)->balAddClick(click, new BigDecimal("50")))
-              .withSlot(17)
-              .build());
+                                                         .display(Component.text("Add 50")))
+                                         .withActions(new SwitchPageAction(menuName, menuPage))
+                                         .withClick((click)->balAddClick(click, new BigDecimal("50")))
+                                         .withSlot(17)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display(Component.text("Add 10")))
-              .withActions(new SwitchPageAction(menuName, menuPage))
-              .withClick((click)->balAddClick(click, new BigDecimal("10")))
-              .withSlot(33)
-              .build());
+                                                         .display(Component.text("Add 10")))
+                                         .withActions(new SwitchPageAction(menuName, menuPage))
+                                         .withClick((click)->balAddClick(click, new BigDecimal("10")))
+                                         .withSlot(33)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display(Component.text("Add 1")))
-              .withActions(new SwitchPageAction(menuName, menuPage))
-              .withClick((click)->balAddClick(click, new BigDecimal("1")))
-              .withSlot(35)
-              .build());
+                                                         .display(Component.text("Add 1")))
+                                         .withActions(new SwitchPageAction(menuName, menuPage))
+                                         .withClick((click)->balAddClick(click, new BigDecimal("1")))
+                                         .withSlot(35)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display(Component.text("Add .10")))
-              .withActions(new SwitchPageAction(menuName, menuPage))
-              .withClick((click)->balAddClick(click, new BigDecimal(".10")))
-              .withSlot(51)
-              .build());
+                                                         .display(Component.text("Add .10")))
+                                         .withActions(new SwitchPageAction(menuName, menuPage))
+                                         .withClick((click)->balAddClick(click, new BigDecimal(".10")))
+                                         .withSlot(51)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display(Component.text("Add .01")))
-              .withActions(new SwitchPageAction(menuName, menuPage))
-              .withClick((click)->balAddClick(click, new BigDecimal(".01")))
-              .withSlot(53)
-              .build());
+                                                         .display(Component.text("Add .01")))
+                                         .withActions(new SwitchPageAction(menuName, menuPage))
+                                         .withClick((click)->balAddClick(click, new BigDecimal(".01")))
+                                         .withSlot(53)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display(Component.text("Remove 100")))
-              .withActions(new SwitchPageAction(menuName, menuPage))
-              .withClick((click)->balAddClick(click, new BigDecimal("-100")))
-              .withSlot(11)
-              .build());
+                                                         .display(Component.text("Remove 100")))
+                                         .withActions(new SwitchPageAction(menuName, menuPage))
+                                         .withClick((click)->balAddClick(click, new BigDecimal("-100")))
+                                         .withSlot(11)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display(Component.text("Remove 50")))
-              .withActions(new SwitchPageAction(menuName, menuPage))
-              .withClick((click)->balAddClick(click, new BigDecimal("-50")))
-              .withSlot(9)
-              .build());
+                                                         .display(Component.text("Remove 50")))
+                                         .withActions(new SwitchPageAction(menuName, menuPage))
+                                         .withClick((click)->balAddClick(click, new BigDecimal("-50")))
+                                         .withSlot(9)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display(Component.text("Remove 10")))
-              .withActions(new SwitchPageAction(menuName, menuPage))
-              .withClick((click)->balAddClick(click, new BigDecimal("-10")))
-              .withSlot(29)
-              .build());
+                                                         .display(Component.text("Remove 10")))
+                                         .withActions(new SwitchPageAction(menuName, menuPage))
+                                         .withClick((click)->balAddClick(click, new BigDecimal("-10")))
+                                         .withSlot(29)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display(Component.text("Remove 1")))
-              .withActions(new SwitchPageAction(menuName, menuPage))
-              .withClick((click)->balAddClick(click, new BigDecimal("-1")))
-              .withSlot(27)
-              .build());
+                                                         .display(Component.text("Remove 1")))
+                                         .withActions(new SwitchPageAction(menuName, menuPage))
+                                         .withClick((click)->balAddClick(click, new BigDecimal("-1")))
+                                         .withSlot(27)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display(Component.text("Remove .10")))
-              .withActions(new SwitchPageAction(menuName, menuPage))
-              .withClick((click)->balAddClick(click, new BigDecimal("-.10")))
-              .withSlot(47)
-              .build());
+                                                         .display(Component.text("Remove .10")))
+                                         .withActions(new SwitchPageAction(menuName, menuPage))
+                                         .withClick((click)->balAddClick(click, new BigDecimal("-.10")))
+                                         .withSlot(47)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display(Component.text("Remove .01")))
-              .withActions(new SwitchPageAction(menuName, menuPage))
-              .withClick((click)->balAddClick(click, new BigDecimal("-.01")))
-              .withSlot(45)
-              .build());
+                                                         .display(Component.text("Remove .01")))
+                                         .withActions(new SwitchPageAction(menuName, menuPage))
+                                         .withClick((click)->balAddClick(click, new BigDecimal("-.01")))
+                                         .withSlot(45)
+                                         .build());
     }
   }
 

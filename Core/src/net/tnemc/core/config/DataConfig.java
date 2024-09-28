@@ -37,14 +37,16 @@ public class DataConfig extends Config {
   private static DataConfig instance;
 
   public DataConfig() {
+
     super("data.yml", "data.yml", Collections.singletonList("Data"),
-            LoaderSettings.builder().setAutoUpdate(true).build(),
-            UpdaterSettings.builder().setAutoSave(true).setVersioning(new BasicVersioning("Data.config-version")).build());
+          LoaderSettings.builder().setAutoUpdate(true).build(),
+          UpdaterSettings.builder().setAutoSave(true).setVersioning(new BasicVersioning("Data.config-version")).build());
 
     instance = this;
   }
 
   public static YamlDocument yaml() {
+
     return instance.getYaml();
   }
 }

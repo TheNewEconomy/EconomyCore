@@ -30,6 +30,7 @@ import net.tnemc.core.api.callback.TNECallbacks;
 public class AccountSaveCallback extends AccountCallback {
 
   public AccountSaveCallback(Account account) {
+
     super(account);
   }
 
@@ -40,6 +41,7 @@ public class AccountSaveCallback extends AccountCallback {
    */
   @Override
   public String name() {
+
     return TNECallbacks.ACCOUNT_SAVE.id();
   }
 }

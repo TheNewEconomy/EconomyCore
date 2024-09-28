@@ -66,14 +66,17 @@ public class CurrencyFormatter {
   }
 
   public static void addRule(FormatRule rule) {
+
     rulesMap.put(rule.name(), rule);
   }
 
   public static String format(@Nullable Account account, final BigDecimal amount) {
+
     return format(account, new HoldingsEntry(PluginCore.server().defaultWorld(), TNECore.eco().currency().getDefaultCurrency().getUid(), amount, EconomyManager.NORMAL));
   }
 
   public static String format(@Nullable Account account, HoldingsEntry entry) {
+
     String format = "";
 
     final Optional<Currency> currency = TNECore.eco().currency().findCurrency(entry.getCurrency());
@@ -90,6 +93,7 @@ public class CurrencyFormatter {
   }
 
   public static LinkedHashMap<String, FormatRule> rules() {
+
     return rulesMap;
   }
 }

@@ -33,6 +33,7 @@ import net.tnemc.plugincore.PluginCore;
 public class PreviousPageIcon extends Icon {
 
   public PreviousPageIcon(int slot, final String menu, final int page, final ActionType type) {
+
     super(PluginCore.server().stackBuilder().of("RED_WOOL", 1).display(Component.text("Previous Page")), null);
 
     this.slot = slot;

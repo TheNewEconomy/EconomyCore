@@ -36,18 +36,21 @@ public enum HoldingsOperation {
   ADD {
     @Override
     public BigDecimal perform(final BigDecimal value, final BigDecimal modifier) {
+
       return super.perform(value, modifier);
     }
   },
   SUBTRACT {
     @Override
     public BigDecimal perform(final BigDecimal value, final BigDecimal modifier) {
+
       return value.subtract(modifier);
     }
   },
   MULTIPLY {
     @Override
     public BigDecimal perform(final BigDecimal value, final BigDecimal modifier) {
+
       return value.multiply(modifier);
     }
   },
@@ -65,24 +68,28 @@ public enum HoldingsOperation {
   PERCENT_SUBTRACT {
     @Override
     public BigDecimal perform(final BigDecimal value, final BigDecimal modifier) {
+
       return value.subtract(value.multiply(modifier.divide(new BigDecimal(100), new MathContext(2, RoundingMode.DOWN))));
     }
   },
   SET {
     @Override
     public BigDecimal perform(final BigDecimal value, final BigDecimal modifier) {
+
       return modifier;
     }
   },
   DIVIDE {
     @Override
     public BigDecimal perform(final BigDecimal value, final BigDecimal modifier) {
+
       return value.divide(modifier, RoundingMode.valueOf(9));
     }
   };
 
 
   public BigDecimal perform(final BigDecimal value, final BigDecimal modifier) {
+
     return value.add(modifier);
   }
 }

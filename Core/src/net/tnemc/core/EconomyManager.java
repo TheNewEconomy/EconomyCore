@@ -89,6 +89,7 @@ public class EconomyManager {
   private static EconomyManager instance;
 
   public EconomyManager() {
+
     instance = this;
 
     this.accountManager = new AccountManager();
@@ -123,78 +124,96 @@ public class EconomyManager {
   }
 
   public Optional<Identifier> findID(String id) {
+
     return Optional.ofNullable(ids.get(id));
   }
 
   public Optional<HoldingsHandler> findHandler(final Identifier identifier) {
+
     return Optional.ofNullable(handlers.get(identifier.asID()));
   }
 
   public void addHandler(final HoldingsHandler handler) {
+
     handlers.put(handler.identifier().asID(), handler);
   }
 
   public void addIdentifier(final Identifier id) {
+
     ids.put(id.asID(), id);
   }
 
   public LinkedList<HoldingsHandler> getFor(final Account account) {
+
     return handlers.values().stream()
-        .filter(handler->handler.appliesTo(account)).collect(Collectors.toCollection(LinkedList::new));
+            .filter(handler->handler.appliesTo(account)).collect(Collectors.toCollection(LinkedList::new));
   }
 
   public LinkedList<HoldingsHandler> getFor(final CurrencyType type) {
+
     return handlers.values().stream()
-        .filter(handler->handler.supports(type)).collect(Collectors.toCollection(LinkedList::new));
+            .filter(handler->handler.supports(type)).collect(Collectors.toCollection(LinkedList::new));
   }
 
   public LinkedList<HoldingsHandler> getFor(final Account account, final CurrencyType type) {
+
     return handlers.values().stream()
-        .filter(handler->handler.appliesTo(account) && handler.supports(type))
-        .collect(Collectors.toCollection(LinkedList::new));
+            .filter(handler->handler.appliesTo(account) && handler.supports(type))
+            .collect(Collectors.toCollection(LinkedList::new));
   }
 
   public void clearCache() {
+
     accountManager.getAccounts().clear();
   }
 
   public AccountManager account() {
+
     return accountManager;
   }
 
   public CurrencyManager currency() {
+
     return currencyManager;
   }
 
   public TransactionManager transaction() {
+
     return transactionManager;
   }
 
   public RegionProvider region() {
+
     return regionProvider;
   }
 
   public TopManager getTopManager() {
+
     return topManager;
   }
 
   public static EconomyManager instance() {
+
     return instance;
   }
 
   public static List<String> invalidCurrencies() {
+
     return instance.invalidCurrencies;
   }
 
   public static boolean limitCurrency() {
+
     return instance.limitCurrency;
   }
 
   public static TransactionProcessor baseProcessor() {
+
     return instance.transactionManager.getProcessor();
   }
 
   public void printInvalid() {
+
     if(!invalidCurrencies.isEmpty()) {
       for(final String currency : invalidCurrencies) {
         PluginCore.log().inform("Account Balances found for non existent currency ID: " + currency);

@@ -26,8 +26,8 @@ import java.util.ArrayList;
 /**
  * Represents a denomination for an {@link Currency currency}.
  *
- * @see Currency
  * @author creatorfromhell
+ * @see Currency
  * @since 0.1.2.0
  */
 public class Denomination {
@@ -37,12 +37,14 @@ public class Denomination {
   private BigDecimal weight;
 
   public Denomination(BigDecimal weight) {
+
     this.weight = weight;
     this.single = "Singular";
     this.plural = "Plural";
   }
 
   public static Denomination clone(final Denomination original, boolean item) {
+
     Denomination cloned = (item)? new ItemDenomination(original.weight()) : new Denomination(original.weight());
 
     cloned.setSingle(original.singular());
@@ -65,30 +67,37 @@ public class Denomination {
   }
 
   public boolean isItem() {
+
     return (this instanceof ItemDenomination);
   }
 
   public void setSingle(String single) {
+
     this.single = single;
   }
 
   public void setPlural(String plural) {
+
     this.plural = plural;
   }
 
   public String singular() {
+
     return single;
   }
 
   public String plural() {
+
     return plural;
   }
 
   public BigDecimal weight() {
+
     return weight;
   }
 
   public void setWeight(BigDecimal weight) {
+
     this.weight = weight;
   }
 }

@@ -34,7 +34,9 @@ import java.util.UUID;
  * @since 0.1.2.0
  */
 public class ConfigMessageHandler extends MessageHandler {
+
   public ConfigMessageHandler() {
+
     super("config");
   }
 
@@ -50,6 +52,7 @@ public class ConfigMessageHandler extends MessageHandler {
   }
 
   public static void send(UUID server, byte[] left) {
+
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
 
 

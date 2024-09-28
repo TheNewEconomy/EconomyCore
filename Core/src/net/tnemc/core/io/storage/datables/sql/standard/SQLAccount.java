@@ -62,6 +62,7 @@ public class SQLAccount implements Datable<Account> {
    */
   @Override
   public Class<? extends Account> clazz() {
+
     return Account.class;
   }
 
@@ -72,11 +73,12 @@ public class SQLAccount implements Datable<Account> {
    */
   @Override
   public void purge(StorageConnector<?> connector) {
+
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
       sql.executeUpdate(tne.accountPurge(
-                                                  DataConfig.yaml().getInt("Data.Purge.Accounts.Days")
-                                              ),
-                                              new Object[] {});
+                                DataConfig.yaml().getInt("Data.Purge.Accounts.Days")
+                                        ),
+                        new Object[]{});
     }
   }
 
@@ -84,27 +86,28 @@ public class SQLAccount implements Datable<Account> {
    * Used to store this object.
    *
    * @param connector The storage connector to use for this transaction.
-   * @param account    The object to be stored.
+   * @param account   The object to be stored.
    */
   @Override
   public void store(StorageConnector<?> connector, @NotNull Account account, @Nullable String identifier) {
+
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
 
       PluginCore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.STANDARD);
 
       //store the basic account information(accounts table)
       final int test = sql.executeUpdate(tne.saveAccount(),
-                                              new Object[] {
-                                                  account.getIdentifier().toString(),
-                                                  account.getName(),
-                                                  (account.type()),
-                                                  new java.sql.Timestamp(account.getCreationDate()),
-                                                  account.getPin(),
-                                                  account.getStatus().identifier(),
-                                                  account.getName(),
-                                                  account.getPin(),
-                                                  account.getStatus().identifier(),
-                                              });
+                                         new Object[]{
+                                                 account.getIdentifier().toString(),
+                                                 account.getName(),
+                                                 (account.type()),
+                                                 new java.sql.Timestamp(account.getCreationDate()),
+                                                 account.getPin(),
+                                                 account.getStatus().identifier(),
+                                                 account.getName(),
+                                                 account.getPin(),
+                                                 account.getStatus().identifier(),
+                                                 });
 
       PluginCore.log().debug("Account Insert Executed correctly: " + test + " - " + identifier, DebugLevel.DETAILED);
 
@@ -112,11 +115,11 @@ public class SQLAccount implements Datable<Account> {
 
         //Player account storage.(players_accounts table)
         final int test2 = sql.executeUpdate(tne.savePlayer(),
-                                                new Object[]{
+                                            new Object[]{
                                                     account.getIdentifier().toString(),
                                                     new java.sql.Timestamp(playerAccount.getLastOnline()),
                                                     new java.sql.Timestamp(playerAccount.getLastOnline())
-                                                });
+                                            });
         PluginCore.log().debug("Player Account Insert Executed correctly: " + test2 + " - " + identifier, DebugLevel.DETAILED);
 
       }
@@ -125,26 +128,26 @@ public class SQLAccount implements Datable<Account> {
 
         //Non-player accounts.(non_players_accounts table)
         final String owner = (shared.getOwner() == null)? account.getIdentifier().toString() :
-                                                       shared.getOwner().toString();
+                             shared.getOwner().toString();
         sql.executeUpdate(tne.saveNonPlayer(),
-                                                new Object[]{
-                                                    account.getIdentifier().toString(),
-                                                    owner,
-                                                    owner
-                                                });
+                          new Object[]{
+                                  account.getIdentifier().toString(),
+                                  owner,
+                                  owner
+                          });
 
         //Account members(account_members table)
         for(Member member : shared.getMembers().values()) {
           for(Map.Entry<String, Boolean> entry : member.getPermissions().entrySet()) {
             sql.executeUpdate(tne.saveMembers(),
-                                                    new Object[]{
-                                                        member.getId().toString(),
-                                                        account.getIdentifier().toString(),
-                                                        entry.getKey(),
-                                                        entry.getValue(),
-                                                        entry.getValue()
-                                                    }
-            );
+                              new Object[]{
+                                      member.getId().toString(),
+                                      account.getIdentifier().toString(),
+                                      entry.getKey(),
+                                      entry.getValue(),
+                                      entry.getValue()
+                              }
+                             );
           }
         }
       }
@@ -163,6 +166,7 @@ public class SQLAccount implements Datable<Account> {
    */
   @Override
   public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
+
     if(connector instanceof SQLConnector) {
       for(Account account : TNECore.eco().account().getAccounts().values()) {
         store(connector, account, account.getIdentifier().toString());
@@ -180,15 +184,16 @@ public class SQLAccount implements Datable<Account> {
    */
   @Override
   public Optional<Account> load(StorageConnector<?> connector, @NotNull String identifier) {
+
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
 
       Account account = null;
 
       //Loading/creating our account object.
       try(ResultSet result = sql.executeQuery(tne.loadAccount(),
-                                                                    new Object[] {
-                                                                        identifier
-                                                                    })) {
+                                              new Object[]{
+                                                      identifier
+                                              })) {
         if(result.next()) {
           final String type = result.getString("account_type");
 
@@ -196,7 +201,7 @@ public class SQLAccount implements Datable<Account> {
           final AccountAPIResponse response = TNECore.eco().account().createAccount(identifier,
                                                                                     result.getString("username"),
                                                                                     !(type.equalsIgnoreCase("player") ||
-                                                                                     type.equalsIgnoreCase("bedrock")));
+                                                                                      type.equalsIgnoreCase("bedrock")));
           if(response.getResponse().success()) {
 
             //load our basic account information
@@ -219,9 +224,9 @@ public class SQLAccount implements Datable<Account> {
         //Load our player account info
         if(account instanceof PlayerAccount playerAccount) {
           try(ResultSet result = sql.executeQuery(tne.loadPlayer(),
-                                                                        new Object[] {
-                                                                            identifier
-                                                                        })) {
+                                                  new Object[]{
+                                                          identifier
+                                                  })) {
             if(result.next()) {
               playerAccount.setLastOnline(result.getTimestamp("last_online").getTime());
             }
@@ -233,9 +238,9 @@ public class SQLAccount implements Datable<Account> {
         //load our shared account info
         if(account instanceof SharedAccount shared) {
           try(ResultSet result = sql.executeQuery(tne.loadNonPlayer(),
-                                                                        new Object[] {
-                                                                            identifier
-                                                                        })) {
+                                                  new Object[]{
+                                                          identifier
+                                                  })) {
             if(result.next()) {
               shared.setOwner(UUID.fromString(result.getString("owner")));
             }
@@ -245,14 +250,14 @@ public class SQLAccount implements Datable<Account> {
 
           //Load our members for shared accounts
           try(ResultSet result = sql.executeQuery(tne.loadMembers(),
-                                                                        new Object[] {
-                                                                            identifier
-                                                                        })) {
+                                                  new Object[]{
+                                                          identifier
+                                                  })) {
             while(result.next()) {
               shared.addPermission(UUID.fromString(result.getString("uid")),
-                                                     result.getString("perm"),
-                                                     result.getBoolean("perm_value")
-              );
+                                   result.getString("perm"),
+                                   result.getBoolean("perm_value")
+                                  );
             }
           } catch(SQLException e) {
             e.printStackTrace();
@@ -283,13 +288,14 @@ public class SQLAccount implements Datable<Account> {
    */
   @Override
   public Collection<Account> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
+
     final Collection<Account> accounts = new ArrayList<>(); // is this required? Not entirely sure it is - seems maybe a waste
 
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
 
       final List<String> ids = new ArrayList<>();
       try(ResultSet result = sql.executeQuery(tne.loadAccounts(),
-                                                          new Object[]{})) {
+                                              new Object[]{})) {
         while(result.next()) {
           ids.add(result.getString("uid"));
         }

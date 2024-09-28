@@ -37,6 +37,7 @@ import java.util.UUID;
  * @since 0.1.2.0
  */
 public class BaseTranslationProvider implements TranslationProvider {
+
   /**
    * Used to get the language of a player with the associated identifier.
    *
@@ -60,13 +61,14 @@ public class BaseTranslationProvider implements TranslationProvider {
    * specified language doesn't exist.
    *
    * @param messageData The message data to utilize for this translation.
-   * @param language The language to translate the node to.
+   * @param language    The language to translate the node to.
    *
    * @return The translated message represented by the node, or the default for if the node doesn't
    * exist.
    */
   @Override
   public String translateNode(final MessageData messageData, String language) {
+
     String string = TNECore.instance().message().getString(messageData.getNode(), language);
 
     for(Map.Entry<String, String> replacement : messageData.getReplacements().entrySet()) {

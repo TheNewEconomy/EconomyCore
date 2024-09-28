@@ -41,15 +41,16 @@ public class PluginSource implements ActionSource {
    * @since 0.1.2.0
    */
   public PluginSource(String plugin) {
+
     this.plugin = plugin;
   }
 
   /**
    * Used to get the name of the source of the action.
    *
-   * @return The name of the source for a specific action. This could be user-friendly
-   * or not. This should be the name of the implementation that has caused this action to occur. For
-   * instance, a plugin name.
+   * @return The name of the source for a specific action. This could be user-friendly or not. This
+   * should be the name of the implementation that has caused this action to occur. For instance, a
+   * plugin name.
    * <p>
    * Please note: There is no guarantee of uniqueness.
    *
@@ -57,6 +58,7 @@ public class PluginSource implements ActionSource {
    */
   @Override
   public String name() {
+
     return plugin;
   }
 
@@ -67,6 +69,7 @@ public class PluginSource implements ActionSource {
    */
   @Override
   public String type() {
+
     return "plugin";
   }
 }

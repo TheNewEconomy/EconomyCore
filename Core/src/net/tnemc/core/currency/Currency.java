@@ -85,6 +85,7 @@ public class Currency {
   private Note note;
 
   public Currency(final String identifier) {
+
     this.file = identifier + ".yml";
 
     //Currency Info Configurations
@@ -121,23 +122,28 @@ public class Currency {
   }
 
   public Denomination getDenominationByWeight(final BigDecimal weight) {
+
     return denominations.get(weight);
   }
 
   public boolean isNotable() {
+
     return note != null;
   }
 
   public Optional<Note> getNote() {
+
     return Optional.ofNullable(note);
   }
 
   public CurrencyType type() {
+
     final Optional<CurrencyType> type = TNECore.eco().currency().findType(this.type);
     return type.orElseGet(()->TNECore.eco().currency().findType("virtual").get());
   }
 
   public Optional<BigDecimal> convertValue(final String currency, final BigDecimal amount) {
+
     if(conversion.containsKey(currency)) {
       return Optional.of(amount.multiply(BigDecimal.valueOf(conversion.get(currency))));
     }
@@ -145,203 +151,253 @@ public class Currency {
   }
 
   public Map<String, Double> getConversion() {
+
     return conversion;
   }
 
   public BigDecimal getStartingHoldings() {
+
     return startingHoldings;
   }
 
   public void setStartingHoldings(BigDecimal startingHoldings) {
+
     this.startingHoldings = startingHoldings;
   }
 
   public BigDecimal getMaxBalance() {
+
     return maxBalance;
   }
 
   public void setMaxBalance(BigDecimal maxBalance) {
+
     this.maxBalance = maxBalance;
   }
 
   public BigDecimal getMinBalance() {
+
     return minBalance;
   }
 
   public void setMinBalance(BigDecimal minBalance) {
+
     this.minBalance = minBalance;
   }
 
   public String getFile() {
+
     return file;
   }
 
   public void setFile(String file) {
+
     this.file = file;
   }
 
   public UUID getUid() {
+
     return uid;
   }
 
   public void setUid(UUID uid) {
+
     this.uid = uid;
   }
 
   public String getIdentifier() {
+
     return identifier;
   }
 
   public void setIdentifier(String identifier) {
+
     this.identifier = identifier;
     this.file = identifier + ".yml";
   }
 
   public String getIconMaterial() {
+
     return iconMaterial;
   }
 
   public void setIconMaterial(String iconMaterial) {
+
     this.iconMaterial = iconMaterial;
   }
 
   public String getType() {
+
     return type;
   }
 
   public void setType(String type) {
+
     this.type = type;
   }
 
   public String getFormat() {
+
     return format;
   }
 
   public void setFormat(String format) {
+
     this.format = format;
   }
 
   public String getSymbol() {
+
     return symbol;
   }
 
   public void setSymbol(String symbol) {
+
     this.symbol = symbol;
   }
 
   public String getPrefixes() {
+
     return prefixes;
   }
 
   public void setPrefixes(String prefixes) {
+
     this.prefixes = prefixes;
   }
 
   public String getPrefixesj() {
+
     return prefixesj;
   }
 
   public void setPrefixesj(String prefixesj) {
+
     this.prefixesj = prefixesj;
   }
 
   public String getDecimal() {
+
     return decimal;
   }
 
   public void setDecimal(String decimal) {
+
     this.decimal = decimal;
   }
 
   public boolean isBalanceShow() {
+
     return balanceShow;
   }
 
   public void setBalanceShow(boolean balanceShow) {
+
     this.balanceShow = balanceShow;
   }
 
   public String getDisplay() {
+
     return display;
   }
 
   public void setDisplay(String display) {
+
     this.display = display;
   }
 
   public String getDisplayPlural() {
+
     return displayPlural;
   }
 
   public void setDisplayPlural(String displayPlural) {
+
     this.displayPlural = displayPlural;
   }
 
   public String getDisplayMinor() {
+
     return displayMinor;
   }
 
   public void setDisplayMinor(String displayMinor) {
+
     this.displayMinor = displayMinor;
   }
 
   public String getDisplayMinorPlural() {
+
     return displayMinorPlural;
   }
 
   public void setDisplayMinorPlural(String displayMinorPlural) {
+
     this.displayMinorPlural = displayMinorPlural;
   }
 
   public boolean isSeparateMajor() {
+
     return separateMajor;
   }
 
   public void setSeparateMajor(boolean separateMajor) {
+
     this.separateMajor = separateMajor;
   }
 
   public String getMajorSeparator() {
+
     return majorSeparator;
   }
 
   public void setMajorSeparator(String majorSeparator) {
+
     this.majorSeparator = majorSeparator;
   }
 
   public int getDecimalPlaces() {
+
     return decimalPlaces;
   }
 
   public void setDecimalPlaces(int decimalPlaces) {
+
     this.decimalPlaces = decimalPlaces;
   }
 
   public int getMinorWeight() {
+
     return minorWeight;
   }
 
   public void setMinorWeight(int minorWeight) {
+
     this.minorWeight = minorWeight;
   }
 
   public boolean negativeSupport() {
+
     return negativeSupport;
   }
 
   public void setNote(Note note) {
+
     this.note = note;
   }
 
   public TreeMap<BigDecimal, Denomination> getDenominations() {
+
     return denominations;
   }
 
   public boolean isGlobal() {
+
     return (regions.containsKey("global") && regions.get("global").isEnabled());
   }
 
   public boolean isGlobalDefault() {
+
     if(isGlobal()) {
       return regions.get("global").isDefault();
     }
@@ -349,10 +405,12 @@ public class Currency {
   }
 
   public boolean regionEnabled(final String region) {
-    return  isGlobal() || (regions.containsKey(region) && regions.get(region).isEnabled());
+
+    return isGlobal() || (regions.containsKey(region) && regions.get(region).isEnabled());
   }
 
   public boolean isRegionDefault(final String region) {
+
     if(regions.containsKey(region)) {
       return regions.get(region).isDefault();
     }
@@ -360,10 +418,12 @@ public class Currency {
   }
 
   public Map<String, CurrencyRegion> getRegions() {
+
     return regions;
   }
 
   public static Currency clone(final Currency original, final boolean item) {
+
     Currency cloned = (item)? new ItemCurrency(original.identifier) : new Currency(original.identifier);
 
     cloned.file = original.file;
@@ -405,7 +465,7 @@ public class Currency {
     }
 
     cloned.conversion.putAll(original.conversion);
-    original.regions.forEach((key, value) -> cloned.regions.put(key, new CurrencyRegion(value.region(), value.isEnabled(), value.isDefault())));
+    original.regions.forEach((key, value)->cloned.regions.put(key, new CurrencyRegion(value.region(), value.isEnabled(), value.isDefault())));
 
     return cloned;
   }

@@ -29,26 +29,31 @@ import net.tnemc.core.utils.Identifier;
  * @since 0.1.2.0
  */
 public class ExperienceLevelType implements CurrencyType {
+
   /**
    * @return The name of this currency type. Examples: Virtual, Item
    */
   @Override
   public String name() {
+
     return "experience-level";
   }
 
   @Override
   public String description() {
+
     return "A simple currency based on experience levels. Not the most accurate...";
   }
 
   @Override
   public boolean supportsVirtual() {
+
     return false;
   }
 
   @Override
   public Identifier defaultHandler() {
+
     return EconomyManager.EXPERIENCE_LEVEL;
   }
 }

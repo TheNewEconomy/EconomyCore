@@ -54,13 +54,14 @@ public class PaperDebugCalculations extends PaperCalculationsProvider {
   /**
    * Used to drop items near a player.
    *
-   * @param left A Collection containing the items to drop.
+   * @param left   A Collection containing the items to drop.
    * @param player The UUID of the player to drop the items near.
    *
    * @return True if the items were successfully dropped, otherwise false.
    */
   @Override
   public boolean drop(Collection<PaperItemStack> left, UUID player) {
+
     final Player playerObj = Bukkit.getPlayer(player);
 
     if(playerObj != null) {
@@ -79,6 +80,7 @@ public class PaperDebugCalculations extends PaperCalculationsProvider {
    */
   @Override
   public int removeAll(PaperItemStack stack, Inventory inventory) {
+
     final ItemStack compare = stack.locale().clone();
     compare.setAmount(1);
 
@@ -123,6 +125,7 @@ public class PaperDebugCalculations extends PaperCalculationsProvider {
    */
   @Override
   public int count(PaperItemStack stack, Inventory inventory) {
+
     final ItemStack compare = stack.locale().clone();
     compare.setAmount(1);
 
@@ -185,19 +188,24 @@ public class PaperDebugCalculations extends PaperCalculationsProvider {
 
   /**
    * Takes a collection of items from an inventory.
-   * @param items The collection of items to remove.
+   *
+   * @param items     The collection of items to remove.
    * @param inventory The inventory to remove the items from.
    */
   public void takeItems(Collection<PaperItemStack> items, Inventory inventory) {
-    items.forEach(itemStack -> removeItem(itemStack, inventory));
+
+    items.forEach(itemStack->removeItem(itemStack, inventory));
   }
 
   /**
-   * Adds a collection of net.tnemc.item stacks to an inventory, dropping them on the ground if it's a player inventory and overflow exists.
-   * @param items The collection of items to add to the inventory.
+   * Adds a collection of net.tnemc.item stacks to an inventory, dropping them on the ground if it's
+   * a player inventory and overflow exists.
+   *
+   * @param items     The collection of items to add to the inventory.
    * @param inventory The inventory to add the collection of items to.
    */
   public Collection<PaperItemStack> giveItems(Collection<PaperItemStack> items, Inventory inventory) {
+
     final Collection<PaperItemStack> leftOver = new ArrayList<>();
 
     for(PaperItemStack item : items) {
@@ -218,12 +226,15 @@ public class PaperDebugCalculations extends PaperCalculationsProvider {
 
   /**
    * Removes an ItemStack with a specific amount from an inventory.
-   * @param stack The stack, with the correct amount, to remove.
+   *
+   * @param stack     The stack, with the correct amount, to remove.
    * @param inventory The inventory to return the net.tnemc.item stack from.
+   *
    * @return The remaining amount of items to remove.
    */
   @Override
   public int removeItem(PaperItemStack stack, Inventory inventory) {
+
     int left = stack.locale().clone().getAmount();
 
     final ItemStack compare = stack.locale().clone();
@@ -283,6 +294,7 @@ public class PaperDebugCalculations extends PaperCalculationsProvider {
    */
   @Override
   public Optional<Inventory> getInventory(UUID identifier, InventoryType type) {
+
     final OfflinePlayer player = Bukkit.getOfflinePlayer(identifier);
     if(player.isOnline() && player.getPlayer() != null) {
 

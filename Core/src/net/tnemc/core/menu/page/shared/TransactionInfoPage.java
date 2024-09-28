@@ -50,6 +50,7 @@ public class TransactionInfoPage {
   private final String transactionID;
 
   public TransactionInfoPage(String returnMenu, int returnPage, String transactionID) {
+
     this.returnMenu = returnMenu;
     this.returnPage = returnPage;
     this.transactionID = transactionID;
@@ -61,11 +62,11 @@ public class TransactionInfoPage {
     if(viewer.isPresent()) {
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
-              .display(Component.text("Escape Menu"))
-              .lore(Collections.singletonList(Component.text("Click to exit this menu."))))
-              .withActions(new PageSwitchWithClose(returnMenu, returnPage))
-              .withSlot(0)
-              .build());
+                                                         .display(Component.text("Escape Menu"))
+                                                         .lore(Collections.singletonList(Component.text("Click to exit this menu."))))
+                                         .withActions(new PageSwitchWithClose(returnMenu, returnPage))
+                                         .withSlot(0)
+                                         .build());
 
       final Optional<Object> transactionObj = viewer.get().findData(transactionID);
       if(transactionObj.isEmpty()) {
@@ -79,29 +80,29 @@ public class TransactionInfoPage {
         if(receipt.isPresent()) {
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("CLOCK", 1)
-                  .display(Component.text(TNECore.eco().transaction().getFormat().format(new Date(receipt.get().getTime()))))
-                  .lore(Collections.singletonList(Component.text("Time of Transaction"))))
-                  .withSlot(2)
-                  .build());
+                                                             .display(Component.text(TNECore.eco().transaction().getFormat().format(new Date(receipt.get().getTime()))))
+                                                             .lore(Collections.singletonList(Component.text("Time of Transaction"))))
+                                             .withSlot(2)
+                                             .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("NAME_TAG", 1)
-                  .display(Component.text(id.toString()))
-                  .lore(Collections.singletonList(Component.text("UUID of Transaction"))))
-                  .withSlot(4)
-                  .build());
+                                                             .display(Component.text(id.toString()))
+                                                             .lore(Collections.singletonList(Component.text("UUID of Transaction"))))
+                                             .withSlot(4)
+                                             .build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .display(Component.text(receipt.get().getType()))
-                  .lore(Collections.singletonList(Component.text("Type of Transaction"))))
-                  .withSlot(6)
-                  .build());
+                                                             .display(Component.text(receipt.get().getType()))
+                                                             .lore(Collections.singletonList(Component.text("Type of Transaction"))))
+                                             .withSlot(6)
+                                             .build());
 
           final String source = (receipt.get().getSource() != null)? receipt.get().getSource().asString() : "No Source Logged";
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                  .display(Component.text(source))
-                  .lore(Collections.singletonList(Component.text("Source of Transaction"))))
-                  .withSlot(8)
-                  .build());
+                                                             .display(Component.text(source))
+                                                             .lore(Collections.singletonList(Component.text("Source of Transaction"))))
+                                             .withSlot(8)
+                                             .build());
 
           if(receipt.get().getModifierTo() != null && receipt.get().getTo() != null) {
 
@@ -120,39 +121,39 @@ public class TransactionInfoPage {
                 }
               }
 
-            } catch(Exception ignore) {}
+            } catch(Exception ignore) { }
 
             callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PLAYER_HEAD", 1)
-                    .profile(profile)
-                    .display(Component.text(name))
-                    .lore(Collections.singletonList(Component.text("To Account"))))
-                    .withSlot(24)
-                    .build());
+                                                               .profile(profile)
+                                                               .display(Component.text(name))
+                                                               .lore(Collections.singletonList(Component.text("To Account"))))
+                                               .withSlot(24)
+                                               .build());
 
             final Currency cur = TNECore.eco().currency().findOrDefault(modifier.getCurrency());
             callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(cur.getIconMaterial(), 1)
-                    .display(Component.text(cur.getIdentifier()))
-                    .lore(Collections.singletonList(Component.text("Modifier Currency"))))
-                    .withSlot(27)
-                    .build());
+                                                               .display(Component.text(cur.getIdentifier()))
+                                                               .lore(Collections.singletonList(Component.text("Modifier Currency"))))
+                                               .withSlot(27)
+                                               .build());
 
             callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("MAP", 1)
-                    .display(Component.text(modifier.getRegion()))
-                    .lore(Collections.singletonList(Component.text("Modifier Region"))))
-                    .withSlot(28)
-                    .build());
+                                                               .display(Component.text(modifier.getRegion()))
+                                                               .lore(Collections.singletonList(Component.text("Modifier Region"))))
+                                               .withSlot(28)
+                                               .build());
 
             callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
-                    .display(Component.text(modifier.getModifier().toPlainString()))
-                    .lore(Collections.singletonList(Component.text("Modifier Amount"))))
-                    .withSlot(29)
-                    .build());
+                                                               .display(Component.text(modifier.getModifier().toPlainString()))
+                                                               .lore(Collections.singletonList(Component.text("Modifier Amount"))))
+                                               .withSlot(29)
+                                               .build());
 
             callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("REDSTONE_TORCH", 1)
-                    .display(Component.text(modifier.getOperation().name()))
-                    .lore(Collections.singletonList(Component.text("Modifier Operation"))))
-                    .withSlot(30)
-                    .build());
+                                                               .display(Component.text(modifier.getOperation().name()))
+                                                               .lore(Collections.singletonList(Component.text("Modifier Operation"))))
+                                               .withSlot(30)
+                                               .build());
           }
 
           if(receipt.get().getModifierFrom() != null && receipt.get().getFrom() != null) {
@@ -172,73 +173,73 @@ public class TransactionInfoPage {
                 }
               }
 
-            } catch(Exception ignore) {}
+            } catch(Exception ignore) { }
 
             callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PLAYER_HEAD", 1)
-                    .profile(profile)
-                    .display(Component.text(name))
-                    .lore(Collections.singletonList(Component.text("From Account"))))
-                    .withSlot(19)
-                    .build());
+                                                               .profile(profile)
+                                                               .display(Component.text(name))
+                                                               .lore(Collections.singletonList(Component.text("From Account"))))
+                                               .withSlot(19)
+                                               .build());
 
             final Currency cur = TNECore.eco().currency().findOrDefault(modifier.getCurrency());
             callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(cur.getIconMaterial(), 1)
-                    .display(Component.text(cur.getIdentifier()))
-                    .lore(Collections.singletonList(Component.text("Modifier Currency"))))
-                    .withSlot(32)
-                    .build());
+                                                               .display(Component.text(cur.getIdentifier()))
+                                                               .lore(Collections.singletonList(Component.text("Modifier Currency"))))
+                                               .withSlot(32)
+                                               .build());
 
             callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("MAP", 1)
-                    .display(Component.text(modifier.getRegion()))
-                    .lore(Collections.singletonList(Component.text("Modifier Region"))))
-                    .withSlot(33)
-                    .build());
+                                                               .display(Component.text(modifier.getRegion()))
+                                                               .lore(Collections.singletonList(Component.text("Modifier Region"))))
+                                               .withSlot(33)
+                                               .build());
 
             callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
-                    .display(Component.text(modifier.getModifier().toPlainString()))
-                    .lore(Collections.singletonList(Component.text("Modifier Amount"))))
-                    .withSlot(34)
-                    .build());
+                                                               .display(Component.text(modifier.getModifier().toPlainString()))
+                                                               .lore(Collections.singletonList(Component.text("Modifier Amount"))))
+                                               .withSlot(34)
+                                               .build());
 
             callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("REDSTONE_TORCH", 1)
-                    .display(Component.text(modifier.getOperation().name()))
-                    .lore(Collections.singletonList(Component.text("Modifier Operation"))))
-                    .withSlot(35)
-                    .build());
+                                                               .display(Component.text(modifier.getOperation().name()))
+                                                               .lore(Collections.singletonList(Component.text("Modifier Operation"))))
+                                               .withSlot(35)
+                                               .build());
           }
 
           //barrier icons
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("WHITE_GLASS_PANE", 1)
-                  .display(Component.text("")))
-                  .withSlot(18).build());
+                                                             .display(Component.text("")))
+                                             .withSlot(18).build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("WHITE_GLASS_PANE", 1)
-                  .display(Component.text("")))
-                  .withSlot(20).build());
+                                                             .display(Component.text("")))
+                                             .withSlot(20).build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("WHITE_GLASS_PANE", 1)
-                  .display(Component.text("")))
-                  .withSlot(21).build());
+                                                             .display(Component.text("")))
+                                             .withSlot(21).build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("WHITE_GLASS_PANE", 1)
-                  .display(Component.text("")))
-                  .withSlot(22).build());
+                                                             .display(Component.text("")))
+                                             .withSlot(22).build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("WHITE_GLASS_PANE", 1)
-                  .display(Component.text("")))
-                  .withSlot(31).build());
+                                                             .display(Component.text("")))
+                                             .withSlot(31).build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("WHITE_GLASS_PANE", 1)
-                  .display(Component.text("")))
-                  .withSlot(23).build());
+                                                             .display(Component.text("")))
+                                             .withSlot(23).build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("WHITE_GLASS_PANE", 1)
-                  .display(Component.text("")))
-                  .withSlot(25).build());
+                                                             .display(Component.text("")))
+                                             .withSlot(25).build());
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("WHITE_GLASS_PANE", 1)
-                  .display(Component.text("")))
-                  .withSlot(26).build());
+                                                             .display(Component.text("")))
+                                             .withSlot(26).build());
         }
 
       } catch(Exception ignore) {

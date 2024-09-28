@@ -29,6 +29,7 @@ import net.tnemc.core.TNECore;
 public class TNKHandler {
 
   public static void addTypes() {
+
     TNECore.eco().account().addAccountType(PactAccount.class, new PactCheck().check());
     TNECore.eco().account().addAccountType(KingdomAccount.class, new KingdomCheck().check());
     TNECore.eco().account().addAccountType(VillageAccount.class, new VillageCheck().check());

@@ -34,10 +34,12 @@ import net.tnemc.plugincore.core.channel.ChannelMessageHandler;
 public class SyncHandler extends ChannelMessageHandler {
 
   public SyncHandler() {
+
     super("sync");
   }
 
   public static void send(String account) {
+
     ByteArrayDataOutput out = ByteStreams.newDataOutput();
     out.writeUTF(PluginCore.instance().getServerID().toString());
     out.writeUTF(account);

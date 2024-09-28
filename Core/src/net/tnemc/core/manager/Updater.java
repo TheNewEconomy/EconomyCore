@@ -36,6 +36,7 @@ public class Updater extends UpdateChecker {
   final int pluginStrip;
 
   public Updater() {
+
     ver = IOUtil.readVersion().orElse("0.0.0.0");
     verStrip = Integer.parseInt(ver.replaceAll("\\.", ""));
     pluginStrip = Integer.parseInt(PluginCore.engine().version().replaceAll("\\.", ""));
@@ -43,16 +44,19 @@ public class Updater extends UpdateChecker {
 
   @Override
   public boolean isEarlyBuild() {
+
     return verStrip < pluginStrip;
   }
 
   @Override
   public boolean needsUpdate() {
+
     return verStrip > pluginStrip;
   }
 
   @Override
   public String stable() {
+
     if(new Semver(PluginCore.engine().version() + "-" + PluginCore.engine().build(), Semver.SemverType.LOOSE).isStable()) {
       return "Stable";
     }
@@ -61,6 +65,7 @@ public class Updater extends UpdateChecker {
 
   @Override
   public String getBuild() {
+
     return ver;
   }
 }

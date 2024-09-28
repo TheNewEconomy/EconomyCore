@@ -43,6 +43,7 @@ public class BaseCommand {
   }
 
   public static Optional<Account> account(CmdSource<?> sender, final String type) {
+
     if(sender.identifier().isEmpty()) {
       return Optional.empty();
     }
@@ -50,6 +51,7 @@ public class BaseCommand {
   }
 
   public static Optional<Account> account(final UUID sender, final String type) {
+
     if(sender == null) {
       return Optional.empty();
     }
@@ -58,9 +60,11 @@ public class BaseCommand {
 
   /**
    * Used to get the world for this command source.
+   *
    * @return The name of the world that this command source is in.
    */
   public static String region(CmdSource<?> sender) {
+
     if(sender.player().isPresent()) {
       return TNECore.eco().region().getMode().region(sender.player().get());
     }

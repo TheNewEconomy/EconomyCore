@@ -62,7 +62,9 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
   /**
    * Loads all currencies.
+   *
    * @param directory The directory to load the currencies from.
+   *
    * @throws NoValidCurrenciesException When no valid currencies can be loaded.
    */
   @Override
@@ -91,17 +93,18 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
    * Loads a specific currency.
    *
    * @param directory The directory to load the currency from.
-   * @param name The name of the currency to load.
+   * @param name      The name of the currency to load.
    */
   @Override
   public boolean loadCurrency(final File directory, String name) {
+
     return loadCurrency(directory, new File(directory, name + ".yml"));
   }
 
   /**
    * Loads a specific currency.
    *
-   * @param directory The directory to load the currency from.
+   * @param directory    The directory to load the currency from.
    * @param curDirectory The file of the currency
    */
   @Override
@@ -281,8 +284,9 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
   /**
    * Loads all denominations for a currency.
+   *
    * @param directory The directory to load the denominations from.
-   * @param currency The currency of the denomination.
+   * @param currency  The currency of the denomination.
    */
   @Override
   public boolean loadDenominations(final File directory, Currency currency) {
@@ -291,7 +295,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       final File[] denominations = IOUtil.getYAMLs(directory);
 
       if(denominations.length > 0) {
-        for (File denomination : denominations) {
+        for(File denomination : denominations) {
 
           final boolean loaded = loadDenomination(currency, denomination);
 
@@ -312,22 +316,24 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
    * Loads all denominations for a currency.
    *
    * @param directory The directory to load the denomination from.
-   * @param currency     The currency of the denomination.
-   * @param name The name of the denomination to load.
+   * @param currency  The currency of the denomination.
+   * @param name      The name of the denomination to load.
    */
   @Override
   public boolean loadDenomination(final File directory, Currency currency, String name) {
+
     return loadDenomination(currency, new File(directory, name + ".yml"));
   }
 
   /**
    * Loads all denominations for a currency.
    *
-   * @param currency     The currency of the denomination.
+   * @param currency  The currency of the denomination.
    * @param denomFile The file of the denomination to load.
    */
   @Override
   public boolean loadDenomination(Currency currency, File denomFile) {
+
     YamlDocument denom = null;
     try {
       denom = YamlDocument.create(denomFile);
@@ -349,7 +355,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     final String material = denom.getString("Options.Material", "PAPER");
 
     Denomination denomination = (currency instanceof ItemCurrency)?
-        new ItemDenomination(weight, material) : new Denomination(weight);
+                                new ItemDenomination(weight, material) : new Denomination(weight);
 
     denomination.setSingle(single);
     denomination.setPlural(plural);

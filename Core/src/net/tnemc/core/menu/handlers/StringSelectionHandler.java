@@ -32,15 +32,18 @@ public class StringSelectionHandler {
   private final String value;
 
   public StringSelectionHandler(MenuClickHandler click, String value) {
+
     this.click = click;
     this.value = value;
   }
 
   public MenuClickHandler getClick() {
+
     return click;
   }
 
   public String getValue() {
+
     return value;
   }
 }

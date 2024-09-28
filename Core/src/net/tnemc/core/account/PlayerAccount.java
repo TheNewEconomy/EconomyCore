@@ -29,8 +29,8 @@ import java.util.UUID;
 /**
  * Represents an account that is associated with a player.
  *
- * @see Account
  * @author creatorfromhell
+ * @see Account
  * @since 0.1.2.0
  */
 public class PlayerAccount extends Account {
@@ -40,6 +40,7 @@ public class PlayerAccount extends Account {
   protected String language;
 
   public PlayerAccount(UUID identifier, String name) {
+
     super(identifier, name);
 
     this.uuid = identifier;
@@ -50,6 +51,7 @@ public class PlayerAccount extends Account {
   }
 
   public String region() {
+
     String region = TNECore.eco().region().defaultRegion();
     final Optional<PlayerProvider> player = getPlayer();
 
@@ -62,10 +64,11 @@ public class PlayerAccount extends Account {
   /**
    * Attempts to find a {@link PlayerProvider player} based on an {@link UUID identifier}.
    *
-   * @return An Optional containing the located {@link PlayerProvider player}, or an empty
-   *         Optional if no player is located.
+   * @return An Optional containing the located {@link PlayerProvider player}, or an empty Optional
+   * if no player is located.
    */
   public Optional<PlayerProvider> getPlayer() {
+
     return PluginCore.server().findPlayer(uuid);
   }
 
@@ -77,6 +80,7 @@ public class PlayerAccount extends Account {
    * holder is offline.
    */
   public Optional<Location> location() {
+
     if(getPlayer().isEmpty()) {
       return Optional.empty();
     }
@@ -90,30 +94,37 @@ public class PlayerAccount extends Account {
    */
   @Override
   public String type() {
+
     return "player";
   }
 
   public boolean isOnline() {
+
     return getPlayer().isPresent();
   }
 
   public UUID getUUID() {
+
     return uuid;
   }
 
   public long getLastOnline() {
+
     return lastOnline;
   }
 
   public void setLastOnline(long lastOnline) {
+
     this.lastOnline = lastOnline;
   }
 
   public String getLanguage() {
+
     return language;
   }
 
   public void setLanguage(String language) {
+
     this.language = language;
   }
 }

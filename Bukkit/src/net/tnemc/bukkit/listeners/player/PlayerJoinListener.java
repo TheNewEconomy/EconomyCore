@@ -37,9 +37,10 @@ public class PlayerJoinListener implements Listener {
 
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onJoin(final PlayerJoinEvent event) {
+
     final PlayerProvider provider = PluginCore.server().initializePlayer(event.getPlayer());
     final HandlerResponse handle = new PlayerJoinHandler()
-        .handle(provider);
+            .handle(provider);
 
     if(handle.isCancelled()) {
       event.getPlayer().kickPlayer(handle.getResponse());

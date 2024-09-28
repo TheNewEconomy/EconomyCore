@@ -33,6 +33,7 @@ import net.tnemc.plugincore.PluginCore;
 public class PreviousMenuIcon extends Icon {
 
   public PreviousMenuIcon(int slot, final String menu, final ActionType type) {
+
     super(PluginCore.server().stackBuilder().of("RED_WOOL", 1).display(Component.text("Previous Menu")), null);
 
     this.slot = slot;

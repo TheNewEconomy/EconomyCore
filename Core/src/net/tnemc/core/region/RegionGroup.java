@@ -31,19 +31,23 @@ import java.util.UUID;
  * @since 0.1.2.0
  */
 public class RegionGroup {
+
   private final Map<UUID, Boolean> currencies = new HashMap<>();
 
   private String name;
 
   public RegionGroup(final String name) {
+
     this.name = name;
   }
 
   public Map<UUID, Boolean> getCurrencies() {
+
     return currencies;
   }
 
   public void setName(String name) {
+
     this.name = name;
   }
 
@@ -52,6 +56,7 @@ public class RegionGroup {
    */
   @NotNull
   public String name() {
+
     return name;
   }
 }

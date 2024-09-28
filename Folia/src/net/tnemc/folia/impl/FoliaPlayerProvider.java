@@ -43,6 +43,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
   private final OfflinePlayer player;
 
   public FoliaPlayerProvider(OfflinePlayer player) {
+
     super(player, PaperCore.instance().getPlugin());
     this.player = player;
   }
@@ -54,6 +55,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
    */
   @Override
   public UUID identifier() {
+
     return player.getUniqueId();
   }
 
@@ -64,6 +66,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
    */
   @Override
   public String getName() {
+
     return player.getName();
   }
 
@@ -74,6 +77,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
    */
   @Override
   public Optional<Location> getLocation() {
+
     if(player.getPlayer() == null) {
       return Optional.empty();
     }
@@ -93,6 +97,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
    */
   @Override
   public String world() {
+
     String world = TNECore.eco().region().defaultRegion();
 
     if(player.getPlayer() != null) {
@@ -108,6 +113,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
    */
   @Override
   public String biome() {
+
     String biome = TNECore.eco().region().defaultRegion();
 
     if(player.getPlayer() != null) {
@@ -123,6 +129,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
    */
   @Override
   public int getExp() {
+
     if(player.getPlayer() == null) {
       return 0;
     }
@@ -136,6 +143,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
    */
   @Override
   public void setExp(int exp) {
+
     if(player.getPlayer() != null) {
       player.getPlayer().setTotalExperience(exp);
     }
@@ -148,6 +156,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
    */
   @Override
   public int getExpLevel() {
+
     if(player.getPlayer() == null) {
       return 0;
     }
@@ -161,6 +170,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
    */
   @Override
   public void setExpLevel(int level) {
+
     if(player.getPlayer() != null) {
       player.getPlayer().setLevel(level);
     }
@@ -168,6 +178,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
 
   @Override
   public FoliaInventoryProvider inventory() {
+
     return new FoliaInventoryProvider(identifier(), PaperCore.instance().getPlugin());
   }
 
@@ -180,6 +191,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
    */
   @Override
   public boolean hasPermission(String permission) {
+
     if(player.getPlayer() == null) {
       return false;
     }
@@ -188,6 +200,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
 
   @Override
   public void message(String message) {
+
     if(player.getPlayer() != null) {
       message(new MessageData(message));
     }
@@ -200,6 +213,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
    */
   @Override
   public void message(final MessageData messageData) {
+
     if(player.getPlayer() == null) {
       return;
     }
@@ -210,13 +224,15 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
   }
 
   public OfflinePlayer getPlayer() {
+
     return player;
   }
 
   public static FoliaPlayerProvider find(final String identifier) {
+
     try {
       return new FoliaPlayerProvider(Bukkit.getOfflinePlayer(UUID.fromString(identifier)));
-    } catch (Exception ignore) {
+    } catch(Exception ignore) {
       return new FoliaPlayerProvider(Bukkit.getOfflinePlayer(identifier));
     }
   }

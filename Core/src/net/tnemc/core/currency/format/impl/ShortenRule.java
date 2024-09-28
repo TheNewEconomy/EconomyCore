@@ -29,8 +29,10 @@ import java.math.BigInteger;
 import java.util.Optional;
 
 public class ShortenRule implements FormatRule {
+
   @Override
   public String name() {
+
     return "<shorten>";
   }
 
@@ -51,7 +53,7 @@ public class ShortenRule implements FormatRule {
 
     final String whole = monetary.major().toString();
     final int pos = ((whole.length() - 1) / 3) - 1;
-    final int posInclude = ((whole.length() % 3) == 0) ? 3 : whole.length() % 3;
+    final int posInclude = ((whole.length() % 3) == 0)? 3 : whole.length() % 3;
     String wholeSub = whole.substring(0, posInclude);
 
     if(whole.length() > 3) {

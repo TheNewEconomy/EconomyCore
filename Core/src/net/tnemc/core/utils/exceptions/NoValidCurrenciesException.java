@@ -27,11 +27,11 @@ package net.tnemc.core.utils.exceptions;
 public class NoValidCurrenciesException extends Exception {
 
   /**
-   * Constructs a new exception with {@code null} as its detail message.
-   * The cause is not initialized, and may subsequently be initialized by a
-   * call to {@link #initCause}.
+   * Constructs a new exception with {@code null} as its detail message. The cause is not
+   * initialized, and may subsequently be initialized by a call to {@link #initCause}.
    */
   public NoValidCurrenciesException() {
+
     super("No valid currencies could be found!");
   }
 }

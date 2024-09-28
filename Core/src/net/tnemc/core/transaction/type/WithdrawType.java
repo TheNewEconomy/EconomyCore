@@ -32,48 +32,52 @@ import java.util.Optional;
  * @since 0.1.2.0
  */
 public class WithdrawType implements TransactionType {
-    /**
-     * The identifier of this transaction type.
-     *
-     * @return The unique identifier for this transaction type. Should be human-friendly.
-     */
-    @Override
-    @MapKey
-    public String identifier() {
-        return "withdraw";
-    }
 
-    /**
-     * The taxation amount to be assessed on the recipient of the transaction. This will take the amount
-     * from the amount being sent to the account, and send it to the server account.
-     *
-     * @return The {@link TaxEntry} related to the taxation amount for the recipient, if applicable,
-     * otherwise an empty optional.
-     */
-    @Override
-    public Optional<TaxEntry> toTax() {
-        return Optional.empty();
-    }
+  /**
+   * The identifier of this transaction type.
+   *
+   * @return The unique identifier for this transaction type. Should be human-friendly.
+   */
+  @Override
+  @MapKey
+  public String identifier() {
 
-    /**
-     * The taxation amount to be assessed on the sender of the transaction. This will add the amount
-     * to the amount being sent to the account, and send it to the server account.
-     *
-     * @return The {@link TaxEntry} related to the taxation amount for the sender, if applicable,
-     * otherwise an empty optional.
-     */
-    @Override
-    public Optional<TaxEntry> fromTax() {
-        if(MainConfig.yaml().getBoolean("Core.Transactions.Withdraw.Tax.Enabled", false)) {
-            final String tax = MainConfig.yaml().getString("Core.Transactions.Withdraw.Tax.Rate");
-            TaxEntry entry;
-            if(tax.contains("%")) {
-                entry = new TaxEntry("percent", Double.parseDouble(tax.replace("%", "")) / 100);
-            } else {
-                entry = new TaxEntry("flat", Double.parseDouble(tax));
-            }
-            return Optional.of(entry);
-        }
-        return Optional.empty();
+    return "withdraw";
+  }
+
+  /**
+   * The taxation amount to be assessed on the recipient of the transaction. This will take the
+   * amount from the amount being sent to the account, and send it to the server account.
+   *
+   * @return The {@link TaxEntry} related to the taxation amount for the recipient, if applicable,
+   * otherwise an empty optional.
+   */
+  @Override
+  public Optional<TaxEntry> toTax() {
+
+    return Optional.empty();
+  }
+
+  /**
+   * The taxation amount to be assessed on the sender of the transaction. This will add the amount
+   * to the amount being sent to the account, and send it to the server account.
+   *
+   * @return The {@link TaxEntry} related to the taxation amount for the sender, if applicable,
+   * otherwise an empty optional.
+   */
+  @Override
+  public Optional<TaxEntry> fromTax() {
+
+    if(MainConfig.yaml().getBoolean("Core.Transactions.Withdraw.Tax.Enabled", false)) {
+      final String tax = MainConfig.yaml().getString("Core.Transactions.Withdraw.Tax.Rate");
+      TaxEntry entry;
+      if(tax.contains("%")) {
+        entry = new TaxEntry("percent", Double.parseDouble(tax.replace("%", "")) / 100);
+      } else {
+        entry = new TaxEntry("flat", Double.parseDouble(tax));
+      }
+      return Optional.of(entry);
     }
+    return Optional.empty();
+  }
 }

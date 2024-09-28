@@ -71,10 +71,12 @@ public class TopManager {
   }
 
   public Map<UUID, TopCurrency> getTopMap() {
+
     return topMap;
   }
 
   public int position(final UUID currency, final String account) {
+
     if(topMap.containsKey(currency)) {
       return topMap.get(currency).getBalances().position(account);
     }
@@ -82,6 +84,7 @@ public class TopManager {
   }
 
   public String getAt(final int position, final UUID currency) {
+
     if(topMap.containsKey(currency)) {
       final int internalPos = (position % 5 == 0)? 5 : position % 5;
 
@@ -92,6 +95,7 @@ public class TopManager {
   }
 
   public MessageData getFor(final int position, final UUID currency) {
+
     if(topMap.containsKey(currency)) {
       final int internalPos = (position % 5 == 0)? 5 : position % 5;
 
@@ -106,6 +110,7 @@ public class TopManager {
   }
 
   public int positionToPage(final int position) {
+
     int page = position / 5;
 
     if(position % 5 != 0) page++;
@@ -114,6 +119,7 @@ public class TopManager {
   }
 
   public TopPage<String> page(final int page, final UUID currency) {
+
     if(topMap.containsKey(currency)) {
       return topMap.get(currency).getBalances().getValues(page);
     }
@@ -121,6 +127,7 @@ public class TopManager {
   }
 
   public int page(final UUID currency) {
+
     if(topMap.containsKey(currency)) {
       return topMap.get(currency).getBalances().pages();
     }
@@ -128,14 +135,17 @@ public class TopManager {
   }
 
   public static TopManager instance() {
+
     return instance;
   }
 
   public List<Pattern> getRegexExclusions() {
+
     return regexExclusions;
   }
 
   public List<String> getExclusions() {
+
     return exclusions;
   }
 }

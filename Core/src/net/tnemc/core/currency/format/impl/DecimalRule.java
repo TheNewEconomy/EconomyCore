@@ -24,13 +24,16 @@ import net.tnemc.core.currency.format.FormatRule;
 import org.jetbrains.annotations.Nullable;
 
 public class DecimalRule implements FormatRule {
+
   @Override
   public String name() {
+
     return "<decimal>";
   }
 
   @Override
   public String format(@Nullable Account account, HoldingsEntry entry, String format) {
+
     if(entry.currency().isPresent()) {
       if(entry.asMonetary().scale() == 0) {
         return format.replace("<decimal>", "");

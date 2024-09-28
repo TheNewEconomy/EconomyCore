@@ -80,6 +80,7 @@ public class SpongeCore extends TNECore {
 
   @Inject
   SpongeCore(final PluginContainer container, final Logger log, final Metrics.Factory metricsFactory) {
+
     this.pluginCore = new SpongePluginCore(container, this, log, new BaseTranslationProvider(), new TNECallbackProvider());
     this.container = container;
 
@@ -90,12 +91,14 @@ public class SpongeCore extends TNECore {
 
   @Override
   public void registerMenuHandler() {
+
     this.menuHandler = new Sponge8MenuHandler(container, true);
   }
 
 
   @Listener
   public void onConstruct(final ConstructPluginEvent event) {
+
     if(hasConsent()) {
       metrics.startup(event);
     }
@@ -103,6 +106,7 @@ public class SpongeCore extends TNECore {
 
   @Listener
   public void onEngineStart(final StartingEngineEvent<Server> event) {
+
     PluginCore.log().inform("Starting up The New Economy.");
 
     //Register our event listeners
@@ -120,26 +124,31 @@ public class SpongeCore extends TNECore {
 
   @Listener
   public void onServerStop(final StoppingEngineEvent<Server> event) {
+
     pluginCore.onDisable();
     PluginCore.log().inform("The New Economy has been disabled.");
   }
 
   @Listener
   public void provideEconomy(final ProvideServiceEvent.EngineScoped<EconomyService> event) {
+
     event.suggest(SpongeEconomy::new);
   }
 
   public PluginContainer getContainer() {
+
     return container;
   }
 
   @Override
   public void registerCommandHandler() {
+
     command = SpongeCommandHandler.create(container);
   }
 
   @Override
   public String commandHelpWriter(ExecutableCommand executableCommand, CommandActor commandActor) {
+
     return "";
   }
 
@@ -162,20 +171,24 @@ public class SpongeCore extends TNECore {
 
   @Override
   public void registerCallbacks(CallbackManager callbackManager) {
+
     super.registerCallbacks(callbackManager);
     //nothing to see here.
   }
 
   @Override
   public SpongeItemCalculations itemCalculations() {
+
     return new SpongeItemCalculations();
   }
 
   public boolean hasConsent() {
+
     return this.metricsConfigManager.collectionState(this.container).asBoolean();
   }
 
   public static ResourceKey key(final String key) {
+
     final String[] split = key.split(":");
 
     final String namespace = (split.length >= 2)? split[0] : "minecraft";

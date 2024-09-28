@@ -27,16 +27,19 @@ package net.tnemc.core.actions;
 public interface EconomyResponse {
 
   /**
-   * @since 0.1.2.0
    * @return True if the associated action was performed correctly.
+   *
+   * @since 0.1.2.0
    */
   boolean success();
 
   /**
-   * @since 0.1.2.0
    * @return The string to return to the performer of the action.
+   *
+   * @since 0.1.2.0
    */
   default String response() {
+
     return "Default response string";
   }
 }

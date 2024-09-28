@@ -43,10 +43,12 @@ import java.util.UUID;
 public class BalanceHandler extends ChannelMessageHandler {
 
   public BalanceHandler() {
+
     super("balance");
   }
 
   public static void send(final String identifier, final String name, String region, UUID currency, Identifier handler, BigDecimal amount) {
+
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
     out.writeUTF(PluginCore.instance().getServerID().toString());
     out.writeUTF(identifier);

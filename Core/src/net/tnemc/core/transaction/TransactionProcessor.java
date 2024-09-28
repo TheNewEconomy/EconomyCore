@@ -33,18 +33,21 @@ import java.util.UUID;
 /**
  * This is a class that handles the actual processing of a transaction.
  *
- * @see Transaction
  * @author creatorfromhell
+ * @see Transaction
  * @since 0.1.2.0
  */
 public interface TransactionProcessor {
 
   /**
    * Processes a transaction.
+   *
    * @param transaction The {@link Transaction transaction} to handle.
+   *
    * @return The {@link TransactionResult result} from performing the transaction.
    */
   default TransactionResult process(Transaction transaction) {
+
     final Optional<EconomyResponse> response = processChecks(transaction);
 
     if(response.isPresent() && !response.get().success()) {
@@ -81,6 +84,7 @@ public interface TransactionProcessor {
   }
 
   default Optional<EconomyResponse> processChecks(Transaction transaction) {
+
     EconomyResponse response = null;
     for(final String str : getChecks()) {
 
@@ -90,8 +94,7 @@ public interface TransactionProcessor {
 
         PluginCore.log().debug("Check: " + check.get().identifier() + " Result: " + response.success(), DebugLevel.DEVELOPER);
 
-        if(!response.success())
-          break;
+        if(!response.success()) { break; }
       }
     }
 
@@ -100,18 +103,21 @@ public interface TransactionProcessor {
 
   /**
    * Used to get the checks for this processor.
+   *
    * @return The checks for this processor.
    */
   LinkedList<String> getChecks();
 
   /**
    * Used to add {@link TransactionCheck check} to this processor.
+   *
    * @param check The check to add.
    */
   void addCheck(final TransactionCheck check);
 
   /**
    * Used to add {@link TransactionCheck checks} from a group to this processor.
+   *
    * @param group The group to add.
    */
   void addGroup(final TransactionCheckGroup group);

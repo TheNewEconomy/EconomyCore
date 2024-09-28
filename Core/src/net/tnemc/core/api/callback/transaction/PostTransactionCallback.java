@@ -23,8 +23,8 @@ import net.tnemc.core.transaction.TransactionResult;
 import net.tnemc.plugincore.core.api.callback.Callback;
 
 /**
- * PostTransactionCallback called after a transaction has been processed. Can't cancel the transaction at
- * this point. This should be used for logging/tracking purposes.
+ * PostTransactionCallback called after a transaction has been processed. Can't cancel the
+ * transaction at this point. This should be used for logging/tracking purposes.
  * <p>
  * Please note: This doesn't mean the transaction is successful.
  *
@@ -40,6 +40,7 @@ public record PostTransactionCallback(TransactionResult result) implements Callb
    */
   @Override
   public String name() {
+
     return TNECallbacks.TRANSACTION_POST.id();
   }
 }

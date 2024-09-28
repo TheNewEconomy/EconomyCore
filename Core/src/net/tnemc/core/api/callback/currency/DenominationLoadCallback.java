@@ -34,6 +34,7 @@ public class DenominationLoadCallback implements Callback {
   private Denomination denomination;
 
   public DenominationLoadCallback(Currency currency, Denomination denomination) {
+
     this.currency = currency;
     this.denomination = denomination;
   }
@@ -45,22 +46,27 @@ public class DenominationLoadCallback implements Callback {
    */
   @Override
   public String name() {
+
     return "denomination_load";
   }
 
   public Currency getCurrency() {
+
     return currency;
   }
 
   public void setCurrency(Currency currency) {
+
     this.currency = currency;
   }
 
   public Denomination getDenomination() {
+
     return denomination;
   }
 
   public void setDenomination(Denomination denomination) {
+
     this.denomination = denomination;
   }
 }

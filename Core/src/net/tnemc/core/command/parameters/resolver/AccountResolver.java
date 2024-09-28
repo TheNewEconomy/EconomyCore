@@ -36,6 +36,7 @@ public class AccountResolver implements ValueResolver<Account> {
 
   @Override
   public Account resolve(@NotNull ValueResolverContext context) throws Throwable {
+
     String value = context.arguments().pop();
 
     if(value.equalsIgnoreCase("SELF_ACCOUNT")) {

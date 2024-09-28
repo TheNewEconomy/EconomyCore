@@ -29,6 +29,7 @@ import java.math.BigDecimal;
 public record PercentBigDecimal(boolean isPercent, BigDecimal value) {
 
   public PercentBigDecimal negate() {
+
     return new PercentBigDecimal(isPercent, value.negate());
   }
 }

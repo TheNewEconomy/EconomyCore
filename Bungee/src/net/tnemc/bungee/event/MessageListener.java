@@ -34,6 +34,7 @@ public class MessageListener implements Listener {
 
   @EventHandler
   public void onMessage(PluginMessageEvent event) {
+
     if(!event.getTag().startsWith("tne:")) {
       return;
     }

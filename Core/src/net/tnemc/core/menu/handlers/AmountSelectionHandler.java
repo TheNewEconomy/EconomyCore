@@ -34,15 +34,18 @@ public class AmountSelectionHandler {
   private final BigDecimal amount;
 
   public AmountSelectionHandler(MenuClickHandler click, BigDecimal amount) {
+
     this.click = click;
     this.amount = amount;
   }
 
   public MenuClickHandler getClick() {
+
     return click;
   }
 
   public BigDecimal getAmount() {
+
     return amount;
   }
 }

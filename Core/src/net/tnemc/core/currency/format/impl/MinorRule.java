@@ -29,19 +29,22 @@ import java.math.BigInteger;
 import java.util.Optional;
 
 public class MinorRule implements FormatRule {
+
   @Override
   public String name() {
+
     return "<minor>";
   }
 
   @Override
   public String format(@Nullable Account account, HoldingsEntry entry, String format) {
+
     final Monetary monetary = entry.asMonetary();
 
     final Optional<Currency> currency = entry.currency();
     return currency.map(value->format.replace("<minor>", monetary.minor()
-        + " " + ((monetary.minorAsInt().compareTo(BigInteger.ONE) == 0)?
-        value.getDisplayMinor() :
-        value.getDisplayMinorPlural()))).orElse(format);
+                                                         + " " + ((monetary.minorAsInt().compareTo(BigInteger.ONE) == 0)?
+                                                                  value.getDisplayMinor() :
+                                                                  value.getDisplayMinorPlural()))).orElse(format);
   }
 }

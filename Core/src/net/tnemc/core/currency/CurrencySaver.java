@@ -28,40 +28,45 @@ import static net.tnemc.core.utils.MISCUtils.zipFolder;
 /**
  * Used to load currencies.
  *
- * @see Currency
  * @author creatorfromhell
+ * @see Currency
  * @since 0.1.2.0
  */
 public interface CurrencySaver {
 
   /**
    * Saves all currencies.
+   *
    * @param directory The directory used for saving.
    */
   void saveCurrencies(final File directory);
 
   /**
    * Saves all currency UUIDs only.
+   *
    * @param directory The directory used for saving.
    */
   void saveCurrenciesUUID(final File directory);
 
   /**
    * Saves a specific currency
+   *
    * @param directory The directory used for saving.
-   * @param currency The currency to save.
+   * @param currency  The currency to save.
    */
   void saveCurrency(final File directory, Currency currency);
 
   /**
    * Saves a specific currency denomination
-   * @param directory The directory used for saving.
-   * @param currency The currency of the denomination.
+   *
+   * @param directory    The directory used for saving.
+   * @param currency     The currency of the denomination.
    * @param denomination The denomination to save.
    */
   void saveDenomination(final File directory, Currency currency, Denomination denomination);
 
   default void backupCurrency(final File directory) {
+
     try {
       final File currencyBackupFolder = new File(PluginCore.directory(), "currency-backups");
       currencyBackupFolder.mkdir();
@@ -71,7 +76,7 @@ public interface CurrencySaver {
       zipFolder(directory, zipFilePath);
 
       PluginCore.log().inform("Currency folder backed up to: " + currencyBackupFolder.getPath());
-    } catch (IOException e) {
+    } catch(IOException e) {
       e.printStackTrace();
     }
   }

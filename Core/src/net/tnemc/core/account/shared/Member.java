@@ -27,86 +27,105 @@ import java.util.UUID;
 /**
  * Represents a player that has access to an account.
  *
+ * @author creatorfromhell
  * @see Account
  * @since 0.1.1.17
- * @author creatorfromhell
  */
 public class Member {
 
   private final Map<String, Boolean> permissions = new HashMap<>();
 
   /**
-   * The {@link UUID identifier} associated with the player that is
-   * represented by this member object.
+   * The {@link UUID identifier} associated with the player that is represented by this member
+   * object.
    */
   private final UUID id;
 
   /**
    * Construct a new member using an {@link UUID identifier}.
+   *
    * @param id The {@link UUID identifier} of this member.
    */
   public Member(final UUID id) {
+
     this.id = id;
   }
 
   public UUID getId() {
+
     return id;
   }
 
   /**
    * Sets the permission specified to the specified value for this member.
+   *
    * @param permission The permission to set.
-   * @param value The value to set for the permission.
+   * @param value      The value to set for the permission.
    */
   public void addPermission(Permission permission, boolean value) {
+
     permissions.put(permission.identifier(), value);
   }
 
   /**
    * Sets the permission specified to the specified value for this member.
+   *
    * @param permission The permission to set.
-   * @param value The value to set for the permission.
+   * @param value      The value to set for the permission.
    */
   public void addPermission(String permission, boolean value) {
+
     permissions.put(permission, value);
   }
 
   /**
    * Removes the permission specified from this member.
+   *
    * @param permission The permission to set.
    */
   public void removePermission(Permission permission) {
+
     permissions.remove(permission.identifier());
   }
 
   /**
    * Removes the permission specified from this member.
+   *
    * @param permission The permission to set.
    */
   public void removePermission(String permission) {
+
     permissions.remove(permission);
   }
 
   /**
    * Checks if this member has the specified permission.
+   *
    * @param permission The permission to we are checking for.
+   *
    * @return True if this member has the specified permission, otherwise false.
    */
   public boolean hasPermission(Permission permission) {
+
     return permissions.getOrDefault(permission.identifier(), permission.defaultValue());
   }
 
   /**
    * Checks if this member has the specified permission.
-   * @param permission The permission to we are checking for.
-   * @param defaultValue The default value to return if this account doesn't contain the permission.
+   *
+   * @param permission   The permission to we are checking for.
+   * @param defaultValue The default value to return if this account doesn't contain the
+   *                     permission.
+   *
    * @return True if this member has the specified permission, otherwise false.
    */
   public boolean hasPermission(String permission, final boolean defaultValue) {
+
     return permissions.getOrDefault(permission, defaultValue);
   }
 
   public Map<String, Boolean> getPermissions() {
+
     return permissions;
   }
 }

@@ -38,6 +38,7 @@ import java.util.Optional;
  * @since 0.1.2.0
  */
 public class VirtualHandler implements HoldingsHandler {
+
   /**
    * The identifier for this handler.
    *
@@ -45,6 +46,7 @@ public class VirtualHandler implements HoldingsHandler {
    */
   @Override
   public Identifier identifier() {
+
     return EconomyManager.VIRTUAL;
   }
 
@@ -57,6 +59,7 @@ public class VirtualHandler implements HoldingsHandler {
    */
   @Override
   public boolean supports(CurrencyType type) {
+
     return type.supportsVirtual();
   }
 
@@ -64,8 +67,8 @@ public class VirtualHandler implements HoldingsHandler {
    * Used to set the holdings for a specific account.
    *
    * @param account  The account.
-   * @param region   The name of the region involved. This is usually a world, but could be something
-   *                 else such as a world guard region name/identifier.
+   * @param region   The name of the region involved. This is usually a world, but could be
+   *                 something else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
    * @param type     The currency type.
    * @param amount   The amount to set the player's holdings to.
@@ -74,6 +77,7 @@ public class VirtualHandler implements HoldingsHandler {
    */
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, CurrencyType type, BigDecimal amount) {
+
     return true;
   }
 
@@ -81,8 +85,8 @@ public class VirtualHandler implements HoldingsHandler {
    * Used to get the holdings for a specific account from this handler.
    *
    * @param account  The Account.
-   * @param region   The name of the region involved. This is usually a world, but could be something
-   *                 else such as a world guard region name/identifier.
+   * @param region   The name of the region involved. This is usually a world, but could be
+   *                 something else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
    * @param type     The currency type.
    *
@@ -94,7 +98,7 @@ public class VirtualHandler implements HoldingsHandler {
     final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
                                                                              currency.getUid(),
                                                                              EconomyManager.VIRTUAL
-    );
+                                                                            );
 
     PluginCore.log().debug("Getting holdings from Virtual", DebugLevel.DEVELOPER);
 

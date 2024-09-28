@@ -39,6 +39,7 @@ public class ShortenJRule implements FormatRule {
 
   @Override
   public String name() {
+
     return "<shortenj>";
   }
 
@@ -53,6 +54,7 @@ public class ShortenJRule implements FormatRule {
    */
   @Override
   public String format(@Nullable Account account, HoldingsEntry entry, String format) {
+
     final Monetary monetary = entry.asMonetary();
 
     if(format.contains("<shortenj>")) {
@@ -79,6 +81,7 @@ public class ShortenJRule implements FormatRule {
   }
 
   private String build(final Currency currency, String working, final StringBuilder builder) {
+
     final int strLength = working.length() - 1;
     final int multiple = (strLength / 4) * 4;
     final int majorKeep = strLength % 4;

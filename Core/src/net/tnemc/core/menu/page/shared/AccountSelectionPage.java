@@ -55,6 +55,7 @@ public class AccountSelectionPage {
 
   public AccountSelectionPage(String accountDataID, String returnMenu, String menuName,
                               final int menuPage, final int returnPage, String accountPageID, final int menuRows) {
+
     this.returnMenu = returnMenu;
     this.menuName = menuName;
     this.menuPage = menuPage;
@@ -84,26 +85,26 @@ public class AccountSelectionPage {
       if(maxPages > 1) {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
-                .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))))
-                .withActions(new DataAction(accountPageID, prev), new SwitchPageAction(menuName, menuPage))
-                .withSlot(0)
-                .build());
+                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))))
+                                           .withActions(new DataAction(accountPageID, prev), new SwitchPageAction(menuName, menuPage))
+                                           .withSlot(0)
+                                           .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPage"), id))))
-                .withActions(new DataAction(accountPageID, next), new SwitchPageAction(menuName, menuPage))
-                .withSlot(8)
-                .build());
+                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPage"), id))))
+                                           .withActions(new DataAction(accountPageID, next), new SwitchPageAction(menuName, menuPage))
+                                           .withSlot(8)
+                                           .build());
       }
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
-              .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EscapeDisplay"), id))
-              .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Escape"), id))))
-              .withActions(new SwitchPageAction(returnMenu, returnPage))
-              .withSlot(4)
-              .build());
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EscapeDisplay"), id))
+                                                         .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Escape"), id))))
+                                         .withActions(new SwitchPageAction(returnMenu, returnPage))
+                                         .withSlot(4)
+                                         .build());
 
       int i = 0;
       for(Map.Entry<String, Account> entry : TNECore.eco().account().getAccounts().entrySet()) {
@@ -127,18 +128,18 @@ public class AccountSelectionPage {
             }
           }
 
-        } catch(Exception ignore) {}
+        } catch(Exception ignore) { }
 
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PLAYER_HEAD", 1)
-                .display(Component.text(entry.getValue().getName()))
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Account.Select"), id)))
-                .profile(profile))
-                .withActions(new DataAction(accountDataID + "_ID", entry.getKey()),
-                             new DataAction(accountDataID + "_NAME", entry.getValue().getName()),
-                             new SwitchPageAction(returnMenu, returnPage))
-                .withSlot(9 + (i - start))
-                .build());
+                                                           .display(Component.text(entry.getValue().getName()))
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Account.Select"), id)))
+                                                           .profile(profile))
+                                           .withActions(new DataAction(accountDataID + "_ID", entry.getKey()),
+                                                        new DataAction(accountDataID + "_NAME", entry.getValue().getName()),
+                                                        new SwitchPageAction(returnMenu, returnPage))
+                                           .withSlot(9 + (i - start))
+                                           .build());
 
         i++;
       }

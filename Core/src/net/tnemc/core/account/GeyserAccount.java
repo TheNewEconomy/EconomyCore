@@ -29,6 +29,7 @@ import java.util.UUID;
 public class GeyserAccount extends PlayerAccount {
 
   public GeyserAccount(UUID identifier, String name) {
+
     super(identifier, name);
   }
 
@@ -39,6 +40,7 @@ public class GeyserAccount extends PlayerAccount {
    */
   @Override
   public String type() {
+
     return "bedrock";
   }
 }

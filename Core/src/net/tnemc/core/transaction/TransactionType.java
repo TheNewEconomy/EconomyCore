@@ -27,22 +27,24 @@ import java.util.Optional;
  * Represents a type of {@link Transaction}. This is used to hold basic options surrounding
  * transaction types.
  *
- * @see Transaction
  * @author creatorfromhell
+ * @see Transaction
  * @since 0.1.2.0
  */
 public interface TransactionType {
 
   /**
    * The identifier of this transaction type.
+   *
    * @return The unique identifier for this transaction type. Should be human-friendly.
    */
   @MapKey
   String identifier();
 
   /**
-   * The taxation amount to be assessed on the recipient of the transaction. This will take the amount
-   * from the amount being sent to the account, and send it to the server account.
+   * The taxation amount to be assessed on the recipient of the transaction. This will take the
+   * amount from the amount being sent to the account, and send it to the server account.
+   *
    * @return The {@link TaxEntry} related to the taxation amount for the recipient, if applicable,
    * otherwise an empty optional.
    */
@@ -51,6 +53,7 @@ public interface TransactionType {
   /**
    * The taxation amount to be assessed on the sender of the transaction. This will add the amount
    * to the amount being sent to the account, and send it to the server account.
+   *
    * @return The {@link TaxEntry} related to the taxation amount for the sender, if applicable,
    * otherwise an empty optional.
    */

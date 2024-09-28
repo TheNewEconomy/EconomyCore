@@ -57,6 +57,7 @@ public class FlagSelectionPage {
   public FlagSelectionPage(String flagsID, String returnMenu, String menuName,
                            final int menuPage, final int returnPage, String flagPageID,
                            final int menuRows, Consumer<StringSelectionHandler> selectionListener) {
+
     this.flagsID = flagsID;
     this.returnMenu = returnMenu;
     this.menuName = menuName;
@@ -85,52 +86,52 @@ public class FlagSelectionPage {
       if(maxPages > 1) {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
-                .display(Component.text("Previous Page"))
-                .lore(Collections.singletonList(Component.text("Click to go to previous page."))))
-                .withActions(new DataAction(flagPageID, prev), new SwitchPageAction(menuName, menuPage))
-                .withSlot(0)
-                .build());
+                                                           .display(Component.text("Previous Page"))
+                                                           .lore(Collections.singletonList(Component.text("Click to go to previous page."))))
+                                           .withActions(new DataAction(flagPageID, prev), new SwitchPageAction(menuName, menuPage))
+                                           .withSlot(0)
+                                           .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                .display(Component.text("Next Page"))
-                .lore(Collections.singletonList(Component.text("Click to go to next page."))))
-                .withActions(new DataAction(flagPageID, next), new SwitchPageAction(menuName, menuPage))
-                .withSlot(8)
-                .build());
+                                                           .display(Component.text("Next Page"))
+                                                           .lore(Collections.singletonList(Component.text("Click to go to next page."))))
+                                           .withActions(new DataAction(flagPageID, next), new SwitchPageAction(menuName, menuPage))
+                                           .withSlot(8)
+                                           .build());
       }
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
-              .display(Component.text("Escape Menu"))
-              .lore(Collections.singletonList(Component.text("Click to exit this menu."))))
-              .withActions(new SwitchPageAction(returnMenu, returnPage))
-              .withSlot(4)
-              .build());
+                                                         .display(Component.text("Escape Menu"))
+                                                         .lore(Collections.singletonList(Component.text("Click to exit this menu."))))
+                                         .withActions(new SwitchPageAction(returnMenu, returnPage))
+                                         .withSlot(4)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-              .display(Component.text("Save"))
-              .lore(Collections.singletonList(Component.text("Click to save the flags."))))
-              .withActions(new RunnableAction((click)->{
+                                                         .display(Component.text("Save"))
+                                                         .lore(Collections.singletonList(Component.text("Click to save the flags."))))
+                                         .withActions(new RunnableAction((click)->{
 
-                        if(selectionListener != null) {
+                                           if(selectionListener != null) {
 
-                          final StringBuilder builder = new StringBuilder();
-                          for(final String flag : MenuManager.instance().getHelper().flags()) {
+                                             final StringBuilder builder = new StringBuilder();
+                                             for(final String flag : MenuManager.instance().getHelper().flags()) {
 
-                            final String value = (String)viewer.get().dataOrDefault(menuName + "_" + flag, "Disabled");
-                            final boolean enabled = value.equalsIgnoreCase("enabled");
-                            if(enabled) {
+                                               final String value = (String)viewer.get().dataOrDefault(menuName + "_" + flag, "Disabled");
+                                               final boolean enabled = value.equalsIgnoreCase("enabled");
+                                               if(enabled) {
 
-                              if(!builder.isEmpty()) {
-                                builder.append(",");
-                              }
-                              builder.append(flag);
-                            }
-                          }
-                          selectionListener.accept(new StringSelectionHandler(click, builder.toString()));
-                        }
-                      }), new SwitchPageAction(returnMenu, returnPage))
-              .withSlot(6)
-              .build());
+                                                 if(!builder.isEmpty()) {
+                                                   builder.append(",");
+                                                 }
+                                                 builder.append(flag);
+                                               }
+                                             }
+                                             selectionListener.accept(new StringSelectionHandler(click, builder.toString()));
+                                           }
+                                         }), new SwitchPageAction(returnMenu, returnPage))
+                                         .withSlot(6)
+                                         .build());
 
 
       for(int i = start; i < start + items; i++) {

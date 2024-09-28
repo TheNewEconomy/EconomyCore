@@ -38,39 +38,43 @@ import java.util.UUID;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-@Command({"transaction", "trans", "receipt"})
+@Command({ "transaction", "trans", "receipt" })
 public class TransactionCommand {
 
-  @Subcommand({"away", "gone", "afk", "afg"})
+  @Subcommand({ "away", "gone", "afk", "afg" })
   @Usage("Transaction.Away.Arguments")
   @Description("Transaction.Away.Description")
   @CommandPermission("tne.transaction.away")
   public void away(SpongeCommandActor sender, @Default("1") int page) {
+
     net.tnemc.core.command.TransactionCommand.away(new SpongeCMDSource(sender), page);
   }
 
-  @DefaultFor({"transaction", "trans", "receipt"})
-  @Subcommand({"history", "list", "hist", "archive"})
+  @DefaultFor({ "transaction", "trans", "receipt" })
+  @Subcommand({ "history", "list", "hist", "archive" })
   @Usage("Transaction.History.Arguments")
   @Description("Transaction.History.Description")
   @CommandPermission("tne.transaction.history")
   public void history(SpongeCommandActor sender, @Default("1") int page, String region, @Default("SELF_ACCOUNT") Account account) {
+
     net.tnemc.core.command.TransactionCommand.history(new SpongeCMDSource(sender), page, region, account);
   }
 
-  @Subcommand({"info", "i", "about", "brief"})
+  @Subcommand({ "info", "i", "about", "brief" })
   @Usage("Transaction.Info.Arguments")
   @Description("Transaction.Info.Description")
   @CommandPermission("tne.info.history")
   public void info(SpongeCommandActor sender, UUID uuid) {
+
     net.tnemc.core.command.TransactionCommand.info(new SpongeCMDSource(sender), uuid);
   }
 
-  @Subcommand({"void", "retract", "undo"})
+  @Subcommand({ "void", "retract", "undo" })
   @Usage("Transaction.Void.Arguments")
   @Description("Transaction.Void.Description")
   @CommandPermission("tne.void.history")
   public void voidT(SpongeCommandActor sender, Account account, UUID uuid) {
+
     net.tnemc.core.command.TransactionCommand.voidT(new SpongeCMDSource(sender), account, uuid);
   }
 }

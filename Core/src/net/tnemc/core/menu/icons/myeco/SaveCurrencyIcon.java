@@ -36,13 +36,14 @@ import static net.tnemc.core.menu.MyEcoMenu.CURRENCIES_PAGE;
  * @since 0.1.3.0
  */
 public class SaveCurrencyIcon extends SwitchPageIcon {
+
   public SaveCurrencyIcon(int slot, final Currency currency) {
+
     super(slot, PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                    .display(Component.text(currency.getIdentifier())).lore(Collections.singletonList(Component.text("Click to Save Currency"))),
-            "my_eco", CURRENCIES_PAGE, ActionType.ANY, false);
+                  .display(Component.text(currency.getIdentifier())).lore(Collections.singletonList(Component.text("Click to Save Currency"))),
+          "my_eco", CURRENCIES_PAGE, ActionType.ANY, false);
 
     addAction(new RunnableAction((click->{
-
 
 
     })));

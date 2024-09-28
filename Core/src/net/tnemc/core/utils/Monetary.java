@@ -38,6 +38,7 @@ public class Monetary {
   String minor = "0";
 
   public Monetary(final BigDecimal decimal, final int scale) {
+
     this.scale = scale;
     calculate(decimal, scale);
   }
@@ -58,18 +59,22 @@ public class Monetary {
   }
 
   public BigInteger major() {
+
     return major;
   }
 
   public String minor() {
+
     return minor;
   }
 
   public BigInteger minorAsInt() {
+
     return new BigInteger(minor);
   }
 
   public int scale() {
+
     return scale;
   }
 }

@@ -49,6 +49,7 @@ import java.util.UUID;
  *
  */
 public class SQLReceipt implements Datable<Receipt> {
+
   /**
    * The class that is represented by the O parameter.
    *
@@ -56,6 +57,7 @@ public class SQLReceipt implements Datable<Receipt> {
    */
   @Override
   public Class<? extends Receipt> clazz() {
+
     return Receipt.class;
   }
 
@@ -66,9 +68,10 @@ public class SQLReceipt implements Datable<Receipt> {
    */
   @Override
   public void purge(StorageConnector<?> connector) {
+
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
       sql.executeUpdate(tne.receiptPurge(DataConfig.yaml().getInt("Data.Purge.Transaction.Days")),
-                                              new Object[] {});
+                        new Object[]{});
     }
   }
 
@@ -76,25 +79,26 @@ public class SQLReceipt implements Datable<Receipt> {
    * Used to store this object.
    *
    * @param connector The storage connector to use for this transaction.
-   * @param receipt    The object to be stored.
+   * @param receipt   The object to be stored.
    */
   @Override
   public void store(StorageConnector<?> connector, @NotNull Receipt receipt, @Nullable String identifier) {
+
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
 
       //Store the receipt info
       sql.executeUpdate(tne.saveReceipt(),
-                                              new Object[]{
-                                                  receipt.getId().toString(),
-                                                  new java.sql.Timestamp(receipt.getTime()),
-                                                  receipt.getType(),
-                                                  receipt.getSource().name(),
-                                                  receipt.getSource().type(),
-                                                  receipt.isArchive(),
-                                                  receipt.isVoided(),
-                                                  receipt.isArchive(),
-                                                  receipt.isVoided()
-                                              });
+                        new Object[]{
+                                receipt.getId().toString(),
+                                new java.sql.Timestamp(receipt.getTime()),
+                                receipt.getType(),
+                                receipt.getSource().name(),
+                                receipt.getSource().type(),
+                                receipt.isArchive(),
+                                receipt.isVoided(),
+                                receipt.isArchive(),
+                                receipt.isVoided()
+                        });
 
       storeParticipant(connector, receipt.getFrom(), receipt.getModifierFrom(), "from", receipt.getId().toString());
       storeParticipant(connector, receipt.getTo(), receipt.getModifierTo(), "to", receipt.getId().toString());
@@ -105,16 +109,16 @@ public class SQLReceipt implements Datable<Receipt> {
                                 @Nullable HoldingsModifier modifier, final String type, @NotNull String identifier) {
 
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne
-            && participant != null && modifier != null) {
+       && participant != null && modifier != null) {
 
       //store participant info
       sql.executeUpdate(tne.saveParticipant(),
-                                              new Object[]{
-                                                  identifier,
-                                                  participant.getId(),
-                                                      type,
-                                                  participant.getTax()
-                                              });
+                        new Object[]{
+                                identifier,
+                                participant.getId(),
+                                type,
+                                participant.getTax()
+                        });
 
       //store holdings
       for(HoldingsEntry entry : participant.getStartingBalances()) {
@@ -127,15 +131,15 @@ public class SQLReceipt implements Datable<Receipt> {
 
       //store modifier
       sql.executeUpdate(tne.saveModifier(),
-                                              new Object[]{
-                                                  identifier,
-                                                  participant.getId(),
-                                                  type,
-                                                  modifier.getOperation().name(),
-                                                  modifier.getRegion(),
-                                                  modifier.getCurrency().toString(),
-                                                  modifier.getModifier()
-                                              });
+                        new Object[]{
+                                identifier,
+                                participant.getId(),
+                                type,
+                                modifier.getOperation().name(),
+                                modifier.getRegion(),
+                                modifier.getCurrency().toString(),
+                                modifier.getModifier()
+                        });
     }
   }
 
@@ -144,16 +148,16 @@ public class SQLReceipt implements Datable<Receipt> {
 
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
       sql.executeUpdate(tne.saveReceiptHolding(),
-              new Object[]{
-                      receipt,
-                      participant,
-                      ending,
-                      MainConfig.yaml().getString("Core.Server.Name"),
-                      entry.getRegion(),
-                      entry.getCurrency().toString(),
-                      entry.getHandler().asID(),
-                      entry.getAmount()
-              });
+                        new Object[]{
+                                receipt,
+                                participant,
+                                ending,
+                                MainConfig.yaml().getString("Core.Server.Name"),
+                                entry.getRegion(),
+                                entry.getCurrency().toString(),
+                                entry.getHandler().asID(),
+                                entry.getAmount()
+                        });
     }
   }
 
@@ -162,8 +166,9 @@ public class SQLReceipt implements Datable<Receipt> {
    *
    * @param connector The storage connector to use for this transaction.
    */
-                                @Override
+  @Override
   public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
+
     if(connector instanceof SQLConnector && identifier != null) {
 
       for(Receipt receipt : TransactionManager.receipts().getReceipts().values()) {
@@ -191,7 +196,10 @@ public class SQLReceipt implements Datable<Receipt> {
    * Loads a Receipt object from a ResultSet.
    *
    * @param result The ResultSet containing the data to load into a Receipt object.
-   * @return An Optional containing the loaded Receipt object. Returns an empty Optional if the ResultSet is empty.
+   *
+   * @return An Optional containing the loaded Receipt object. Returns an empty Optional if the
+   * ResultSet is empty.
+   *
    * @throws SQLException if an error occurs while accessing the ResultSet data.
    */
   public Receipt load(ResultSet result, SQLConnector sql, TNEDialect dialect) throws SQLException {
@@ -210,8 +218,9 @@ public class SQLReceipt implements Datable<Receipt> {
   }
 
   public void loadParticipants(Receipt receipt, SQLConnector sql, TNEDialect dialect) {
+
     try(ResultSet result = sql.executeQuery(dialect.loadParticipants(), new Object[]{
-            receipt.getId().toString()})) {
+            receipt.getId().toString() })) {
       while(result.next()) {
 
         final String type = result.getString("participant_type").toLowerCase(Locale.ROOT);
@@ -233,15 +242,15 @@ public class SQLReceipt implements Datable<Receipt> {
           modifier.ifPresent(receipt::setModifierTo);
         }
       }
-    } catch(Exception ignore) {}
+    } catch(Exception ignore) { }
   }
 
   public Optional<HoldingsModifier> loadModifier(final UUID receiptID, final UUID participant,
-                                       final String type, SQLConnector sql, TNEDialect dialect) {
+                                                 final String type, SQLConnector sql, TNEDialect dialect) {
 
     HoldingsModifier modifier = null;
     //participant, participant_type, operation, region, currency AS currency, modifier  - uid/participant
-    try(ResultSet result = sql.executeQuery(dialect.loadReceiptHolding(), new Object[] {
+    try(ResultSet result = sql.executeQuery(dialect.loadReceiptHolding(), new Object[]{
             receiptID.toString(), participant, type })) {
 
       if(result.next()) {
@@ -252,7 +261,7 @@ public class SQLReceipt implements Datable<Receipt> {
                 result.getBigDecimal("modifier"),
                 HoldingsOperation.valueOf(result.getString("operation")));
       }
-    } catch(Exception ignore) {}
+    } catch(Exception ignore) { }
     return Optional.ofNullable(modifier);
   }
 
@@ -262,7 +271,7 @@ public class SQLReceipt implements Datable<Receipt> {
     final List<HoldingsEntry> holdings = new ArrayList<>();
 
     //participant, ending, server, region, currency AS currency, holdings_type, holdings - uid/participant
-    try(ResultSet result = sql.executeQuery(dialect.loadReceiptHolding(), new Object[] {
+    try(ResultSet result = sql.executeQuery(dialect.loadReceiptHolding(), new Object[]{
             receiptID.toString(), participant, ending })) {
 
       while(result.next()) {
@@ -275,7 +284,7 @@ public class SQLReceipt implements Datable<Receipt> {
         );
         holdings.add(entry);
       }
-    } catch(Exception ignore) {}
+    } catch(Exception ignore) { }
 
     return holdings;
   }
@@ -289,6 +298,7 @@ public class SQLReceipt implements Datable<Receipt> {
    */
   @Override
   public Collection<Receipt> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
+
     final Collection<Receipt> receipts = new ArrayList<>(); // is this required? Not entirely sure it is - seems maybe a waste
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
 
@@ -299,7 +309,7 @@ public class SQLReceipt implements Datable<Receipt> {
           receipts.add(load(result, sql, tne));
         }
 
-      } catch(Exception ignore) {}
+      } catch(Exception ignore) { }
     }
     return receipts;
   }

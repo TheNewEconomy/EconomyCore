@@ -32,7 +32,9 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @since 0.1.2.0
  */
 public class ModifiedBukkitPluginCore extends BukkitPluginCore {
+
   public ModifiedBukkitPluginCore(JavaPlugin plugin, PluginEngine engine, ServerConnector connector, TranslationProvider provider, CallbackProvider callbackProvider) {
+
     super(plugin, engine, connector, provider, callbackProvider);
 
     this.logger = new ModifiedBukkitLogger(plugin.getLogger());

@@ -42,6 +42,7 @@ import java.util.Optional;
  * @since 0.1.2.9
  */
 public class NegativeBalanceCheck implements TransactionCheck {
+
   /**
    * The unique string-based identifier for this check in order to be able to allow control over
    * what checks are running, and which ones may not have to be utilized. For instance, we don't
@@ -53,20 +54,22 @@ public class NegativeBalanceCheck implements TransactionCheck {
   @Override
   @MapKey
   public String identifier() {
+
     return "negbal";
   }
 
   /**
-   * This method is utilized to run the check on specific {@link TransactionParticipant participants}.
-   * This should return an {@link EconomyResponse response}.
+   * This method is utilized to run the check on specific
+   * {@link TransactionParticipant participants}. This should return an
+   * {@link EconomyResponse response}.
    *
    * @param transaction The {@link Transaction transaction} to perform the check on.
    * @param participant The {@link TransactionParticipant participant} to perform the check on.
    * @param modifier    The {@link HoldingsModifier modifier} related to the specific participant.
    *
    * @return The {@link EconomyResponse response} for this check. This should include a success or
-   * failure boolean along with a message for why it failed if it did. The messages for this response
-   * are ignored if the check was successful.
+   * failure boolean along with a message for why it failed if it did. The messages for this
+   * response are ignored if the check was successful.
    */
   @Override
   public EconomyResponse checkParticipant(Transaction transaction, @NotNull TransactionParticipant participant, HoldingsModifier modifier) {
@@ -77,7 +80,7 @@ public class NegativeBalanceCheck implements TransactionCheck {
       final Optional<Currency> currency = TNECore.eco().currency().findCurrency(modifier.getCurrency());
 
       if(currency.isPresent() && !currency.get().negativeSupport() &&
-          participant.getCombinedEnding().compareTo(BigDecimal.ZERO) < 0) {
+         participant.getCombinedEnding().compareTo(BigDecimal.ZERO) < 0) {
 
         if(transaction.getSource() instanceof PlayerSource source) {
           if(!source.id().equals(participant.getId())) {

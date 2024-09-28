@@ -29,8 +29,10 @@ import java.math.BigInteger;
 import java.util.Optional;
 
 public class MinorNameRule implements FormatRule {
+
   @Override
   public String name() {
+
     return "<minor.name>";
   }
 
@@ -53,7 +55,7 @@ public class MinorNameRule implements FormatRule {
     final Optional<Currency> currency = entry.currency();
     return currency.map(value->format.replace("<minor.name>",
                                               (monetary.minorAsInt().compareTo(BigInteger.ONE) == 0)?
-                                                  value.getDisplayMinor() :
-                                                  value.getDisplayMinorPlural())).orElse(format);
+                                              value.getDisplayMinor() :
+                                              value.getDisplayMinorPlural())).orElse(format);
   }
 }

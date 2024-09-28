@@ -26,8 +26,8 @@ import java.util.Optional;
 /**
  * Represents a {@link Currency currency} that is represented by physical items in game.
  *
- * @see Currency
  * @author creatorfromhell
+ * @see Currency
  * @since 0.1.2.0
  */
 public class ItemCurrency extends Currency {
@@ -37,6 +37,7 @@ public class ItemCurrency extends Currency {
   protected boolean importItem;
 
   public ItemCurrency(String identifier) {
+
     super(identifier);
 
     this.enderChest = true;
@@ -45,6 +46,7 @@ public class ItemCurrency extends Currency {
   }
 
   public Optional<ItemDenomination> getDenominationByMaterial(final String material) {
+
     for(Denomination denom : getDenominations().values()) {
       final ItemDenomination item = (ItemDenomination)denom;
 
@@ -56,26 +58,32 @@ public class ItemCurrency extends Currency {
   }
 
   public boolean canEnderChest() {
+
     return enderChest;
   }
 
   public void setEnderChest(boolean enderChest) {
+
     this.enderChest = enderChest;
   }
 
   public boolean isEnderFill() {
+
     return enderFill;
   }
 
   public void setEnderFill(boolean enderFill) {
+
     this.enderFill = enderFill;
   }
 
   public boolean isImportItem() {
+
     return importItem;
   }
 
   public void setImportItem(boolean importItem) {
+
     this.importItem = importItem;
   }
 }

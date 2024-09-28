@@ -46,6 +46,7 @@ public class SerialNote implements JSONAble<Note> {
    */
   @Override
   public JSONObject toJSON(Note note) {
+
     final JSONObject json = new JSONObject();
     json.put("material", note.getMaterial());
     json.put("minimum", note.getMinimum().toPlainString());
@@ -74,6 +75,7 @@ public class SerialNote implements JSONAble<Note> {
    */
   @Override
   public Note fromJSON(String serialized) {
+
     final JSONParser parser = new JSONParser();
 
     try {

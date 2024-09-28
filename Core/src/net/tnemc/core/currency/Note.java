@@ -33,8 +33,8 @@ import java.util.List;
  * Represents a currency note object, which is a way to make virtual balances into a physical note
  * to be traded or stored in a chest.
  *
- * @since 0.1.2.0
  * @author creatorfromhell
+ * @since 0.1.2.0
  */
 public class Note {
 
@@ -50,6 +50,7 @@ public class Note {
   final TaxEntry fee;
 
   public Note(String material, BigDecimal minimum, String fee) {
+
     this.material = material;
     this.minimum = minimum;
 
@@ -61,28 +62,34 @@ public class Note {
   }
 
   public Note(String material, BigDecimal minimum, TaxEntry fee) {
+
     this.material = material;
     this.minimum = minimum;
     this.fee = fee;
   }
 
   public BigDecimal getMinimum() {
+
     return minimum;
   }
 
   public void setMinimum(BigDecimal minimum) {
+
     this.minimum = minimum;
   }
 
   public TaxEntry getFee() {
+
     return fee;
   }
 
   public List<String> getFlags() {
+
     return flags;
   }
 
   public void setFlags(List<String> flags) {
+
     this.flags.clear();
     for(String str : flags) {
       if(!str.isEmpty()) {
@@ -92,10 +99,12 @@ public class Note {
   }
 
   public List<String> getEnchantments() {
+
     return enchantments;
   }
 
   public void setEnchantments(List<String> enchantments) {
+
     this.enchantments.clear();
     for(String str : enchantments) {
       if(!str.isEmpty()) {
@@ -105,30 +114,37 @@ public class Note {
   }
 
   public String getMaterial() {
+
     return material;
   }
 
   public void setMaterial(String material) {
+
     this.material = material;
   }
 
   public int getCustomModelData() {
+
     return customModelData;
   }
 
   public void setCustomModelData(int customModelData) {
+
     this.customModelData = customModelData;
   }
 
   public String getTexture() {
+
     return texture;
   }
 
   public void setTexture(String texture) {
+
     this.texture = texture;
   }
 
   public AbstractItemStack<Object> stack(final String currency, final String region, final BigDecimal amount) {
+
     final LinkedList<Component> lore = new LinkedList<>();
     lore.add(Component.text(MessageConfig.yaml().getString("Messages.Note.Currency").replace("$currency", currency)));
     lore.add(Component.text(MessageConfig.yaml().getString("Messages.Note.Region").replace("$region", region)));
@@ -136,10 +152,10 @@ public class Note {
     lore.add(Component.text(MessageConfig.yaml().getString("Messages.Note.Action")));
 
     return (AbstractItemStack<Object>)PluginCore.server().stackBuilder().of(material, 1)
-        .display(Component.text(MessageConfig.yaml().getString("Messages.Note.Name")))
-        .enchant(enchantments)
-        .flags(flags)
-        .modelData(customModelData)
-        .lore(lore);
+            .display(Component.text(MessageConfig.yaml().getString("Messages.Note.Name")))
+            .enchant(enchantments)
+            .flags(flags)
+            .modelData(customModelData)
+            .lore(lore);
   }
 }

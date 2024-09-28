@@ -40,10 +40,12 @@ import java.util.zip.ZipOutputStream;
 public class MISCUtils {
 
   public static String worldFormatted(final String world) {
+
     return MessageConfig.yaml().getString("Messages.Worlds." + world, world);
   }
 
   public static void setComment(YamlDocument yaml, String route, String comment) {
+
     setComment(yaml, route, Collections.singletonList(comment));
   }
 
@@ -55,6 +57,7 @@ public class MISCUtils {
   }
 
   public static String randomString(final int length) {
+
     final Random rand = new Random();
     final StringBuilder identifierBuilder = new StringBuilder();
     for(int i = 0; i < length; i++) {
@@ -65,9 +68,10 @@ public class MISCUtils {
   }
 
   public static void deleteFolder(File folder) {
+
     File[] files = folder.listFiles();
-    if(files!=null) { //some JVMs return null for empty dirs
-      for(File f: files) {
+    if(files != null) { //some JVMs return null for empty dirs
+      for(File f : files) {
         if(f.isDirectory()) {
           deleteFolder(f);
         } else {
@@ -79,6 +83,7 @@ public class MISCUtils {
   }
 
   public static void zipFolder(File sourceFolder, String destinationZipFile) throws IOException {
+
     try(FileOutputStream fos = new FileOutputStream(destinationZipFile);
         ZipOutputStream zos = new ZipOutputStream(fos)) {
 
@@ -95,6 +100,7 @@ public class MISCUtils {
   }
 
   public static void zipFile(File fileToZip, String fileName, ZipOutputStream zipOut) throws IOException {
+
     if(fileToZip.isHidden()) {
       return;
     }
@@ -146,8 +152,8 @@ public class MISCUtils {
       return;
     }
 
-    for (File file : files) {
-      if (file.isDirectory()) {
+    for(File file : files) {
+      if(file.isDirectory()) {
         zipFolder(file, parentFolder + File.separator + file.getName(), zos);
         continue;
       }
@@ -155,10 +161,10 @@ public class MISCUtils {
       final ZipEntry zipEntry = new ZipEntry(parentFolder + File.separator + file.getName());
       zos.putNextEntry(zipEntry);
 
-      try (FileInputStream fis = new FileInputStream(file)) {
+      try(FileInputStream fis = new FileInputStream(file)) {
         final byte[] buffer = new byte[1024];
         int length;
-        while ((length = fis.read(buffer)) > 0) {
+        while((length = fis.read(buffer)) > 0) {
           zos.write(buffer, 0, length);
         }
       }

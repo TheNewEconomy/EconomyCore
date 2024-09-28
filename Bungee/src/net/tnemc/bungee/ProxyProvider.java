@@ -31,21 +31,24 @@ public interface ProxyProvider {
 
   /**
    * Used to send data to every server that is not this server.
+   *
    * @param channel The channel to use for sending the data.
-   * @param out The data to send.
+   * @param out     The data to send.
    */
   void sendToAll(final String channel, byte[] out, boolean backlog);
 
   /**
    * Used to send data to a specific server.
+   *
    * @param serverName The server name.
-   * @param channel The channel to use for sending the data.
-   * @param out The data to send.
+   * @param channel    The channel to use for sending the data.
+   * @param out        The data to send.
    */
   void sendTo(final String serverName, final String channel, byte[] out);
 
   /**
    * Used to send any backlog data to a server.
+   *
    * @param data The {@link MessageData} to use for determining the server, and backlog to send.
    */
   void sendBacklog(@NotNull final MessageData data);

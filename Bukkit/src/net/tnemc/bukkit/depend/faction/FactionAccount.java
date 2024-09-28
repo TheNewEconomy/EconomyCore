@@ -32,6 +32,7 @@ import java.util.UUID;
 public class FactionAccount extends NonPlayerAccount {
 
   public FactionAccount(UUID identifier, String name) {
+
     super(identifier, name);
   }
 
@@ -42,6 +43,7 @@ public class FactionAccount extends NonPlayerAccount {
    */
   @Override
   public String type() {
+
     return "faction";
   }
 }

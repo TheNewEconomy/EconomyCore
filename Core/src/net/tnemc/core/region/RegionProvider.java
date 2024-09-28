@@ -49,6 +49,7 @@ public class RegionProvider {
   private RegionMode mode;
 
   public RegionProvider(boolean realmSharing, final String mode) {
+
     this.realmSharing = realmSharing;
 
     //add modes
@@ -62,6 +63,7 @@ public class RegionProvider {
   }
 
   public void initializeRegion(final String name, final RegionType type) {
+
     if(this.mode.accepted().contains(type)) {
 
       if(type.equals(RegionType.WORLD) && MainConfig.yaml().getBoolean("Core.Region.GroupRealms", true)) {
@@ -86,23 +88,30 @@ public class RegionProvider {
 
   /**
    * Used to add a region group to our existing map of groups.
-   * @param name The name of the group
+   *
+   * @param name  The name of the group
    * @param group The group instance.
    */
   public void addGroup(final String name, final RegionGroup group) {
+
     regions.put(name, group);
   }
 
   /**
    * Used to find a region group based on its name.
+   *
    * @param name The name of the group to find.
-   * @return An optional containing the {@link RegionGroup} if it exists, otherwise an empty optional.
+   *
+   * @return An optional containing the {@link RegionGroup} if it exists, otherwise an empty
+   * optional.
    */
   public Optional<RegionGroup> retrieve(final String name) {
+
     return Optional.ofNullable(regions.get(name));
   }
 
   public boolean multiRegion() {
+
     return MainConfig.yaml().getBoolean("Core.Region.MultiRegion");
   }
 
@@ -128,6 +137,7 @@ public class RegionProvider {
   }
 
   public String defaultRegion() {
+
     final String configDefault = MainConfig.yaml().getString("Core.Region.DefaultRegion");
     if(configDefault.equalsIgnoreCase("TNE_SYSTEM")) {
       return PluginCore.server().defaultWorld();
@@ -136,26 +146,32 @@ public class RegionProvider {
   }
 
   public boolean isSharing() {
+
     return realmSharing;
   }
 
   public void setRealmSharing(boolean realmSharing) {
+
     this.realmSharing = realmSharing;
   }
 
   public RegionMode getMode() {
+
     return mode;
   }
 
   public void setMode(final String mode) {
+
     this.mode = modes.getOrDefault(mode, modes.get("world"));
   }
 
   public Map<String, RegionGroup> getRegions() {
+
     return regions;
   }
 
   public List<String> getDisabledRegions() {
+
     return disabledRegions;
   }
 }

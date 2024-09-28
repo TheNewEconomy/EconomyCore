@@ -30,11 +30,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class FoliaCore extends PaperCore {
 
   public FoliaCore(JavaPlugin plugin) {
+
     super(plugin);
   }
 
   @Override
   public void registerMenuHandler() {
+
     this.menuHandler = new FoliaMenuHandler(plugin, true);
   }
 }

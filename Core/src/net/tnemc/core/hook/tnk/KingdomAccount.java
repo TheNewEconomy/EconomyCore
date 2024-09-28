@@ -31,6 +31,7 @@ import java.util.UUID;
 public class KingdomAccount extends NonPlayerAccount {
 
   public KingdomAccount(UUID identifier, String name) {
+
     super(identifier, name);
     //this.owner = Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getKing().getUUID();
   }
@@ -42,11 +43,13 @@ public class KingdomAccount extends NonPlayerAccount {
    */
   @Override
   public String type() {
+
     return "kingdom";
   }
 
   @Override
   public UUID generateIdentifier(String name) {
+
     return super.generateIdentifier(name);
   }
 }

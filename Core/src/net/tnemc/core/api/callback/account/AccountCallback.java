@@ -32,6 +32,7 @@ public abstract class AccountCallback implements Callback {
   protected final Account account;
 
   public AccountCallback(Account account) {
+
     this.account = account;
   }
 }

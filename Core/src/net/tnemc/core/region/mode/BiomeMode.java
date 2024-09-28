@@ -32,18 +32,20 @@ import java.util.List;
  * BiomeMode represents a {@link RegionMode} based on biomes.
  *
  * @author creatorfromhell
- * @since 0.1.2.0
- *
  * @see RegionMode
+ * @since 0.1.2.0
  */
 public class BiomeMode implements RegionMode {
+
   @Override
   public String name() {
+
     return "biome";
   }
 
   @Override
   public List<RegionType> accepted() {
+
     return Collections.singletonList(RegionType.BIOME);
   }
 

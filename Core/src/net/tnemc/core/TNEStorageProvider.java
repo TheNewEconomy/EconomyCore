@@ -76,12 +76,12 @@ public class TNEStorageProvider implements StorageProvider {
     try {
       Class.forName("org.mariadb.jdbc.Driver");
       maria = true;
-    } catch(Exception ignore) {}
+    } catch(Exception ignore) { }
 
     try {
       Class.forName("org.mariadb.jdbc.MariaDbDataSource");
       maria = true;
-    } catch(Exception ignore) {}
+    } catch(Exception ignore) { }
 
     switch(engine.toLowerCase()) {
       case "mysql" -> {
@@ -128,8 +128,8 @@ public class TNEStorageProvider implements StorageProvider {
     }
 
     final Datable<Account> account = (this.engine instanceof StandardSQL)? new SQLAccount() : new YAMLAccount();
-    final Datable<HoldingsEntry> entry  = (this.engine instanceof StandardSQL)? new SQLHoldings() : new YAMLHoldings();
-    final Datable<Receipt> receipt  = (this.engine instanceof StandardSQL)? new SQLReceipt() : new YAMLReceipt();
+    final Datable<HoldingsEntry> entry = (this.engine instanceof StandardSQL)? new SQLHoldings() : new YAMLHoldings();
+    final Datable<Receipt> receipt = (this.engine instanceof StandardSQL)? new SQLReceipt() : new YAMLReceipt();
 
     this.engine.datables().put(Account.class, account);
     this.engine.datables().put(NonPlayerAccount.class, account);
@@ -143,19 +143,22 @@ public class TNEStorageProvider implements StorageProvider {
 
   @Override
   public StorageConnector<?> connector() {
+
     return this.connector;
   }
 
   @Override
   public StorageEngine engine() {
+
     return this.engine;
   }
 
   @Override
   public void initialize() {
+
     if(connector instanceof SQLConnector sql
-            && this.engine instanceof StandardSQL sqlEngine
-            && sqlEngine.dialect() instanceof TNEDialect tneDialect) {
+       && this.engine instanceof StandardSQL sqlEngine
+       && sqlEngine.dialect() instanceof TNEDialect tneDialect) {
 
       sql.executeUpdate(tneDialect.accountsTable(), new Object[]{});
       sql.executeUpdate(tneDialect.accountsNonPlayerTable(), new Object[]{});
@@ -171,6 +174,7 @@ public class TNEStorageProvider implements StorageProvider {
 
   @Override
   public void storeAll(@NotNull String identifier) {
+
     final Optional<Datable<?>> data = Optional.ofNullable(engine.datables().get(HoldingsEntry.class));
 
     //Our account storeAll requires no identifier, so we set it to null
@@ -179,6 +183,7 @@ public class TNEStorageProvider implements StorageProvider {
 
   @Override
   public void storeAll() {
+
     final Optional<Datable<?>> data = Optional.ofNullable(engine.datables().get(Account.class));
 
     //Our account storeAll requires no identifier, so we set it to null
@@ -200,6 +205,7 @@ public class TNEStorageProvider implements StorageProvider {
 
   @Override
   public void reset() {
+
     TNECore.eco().clearCache();
   }
 

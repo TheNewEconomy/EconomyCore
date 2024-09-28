@@ -31,8 +31,8 @@ import java.util.UUID;
 /**
  * Represents a participant in a {@link Transaction transaction}.
  *
- * @see Transaction
  * @author creatorfromhell
+ * @see Transaction
  * @since 0.1.2.0
  */
 public class TransactionParticipant {
@@ -44,36 +44,44 @@ public class TransactionParticipant {
   private BigDecimal tax;
 
   public TransactionParticipant(final UUID id, List<HoldingsEntry> startBalances) {
+
     this.id = id;
     this.startingBalances.addAll(startBalances);
     this.tax = BigDecimal.ZERO;
   }
 
   public Optional<Account> asAccount() {
+
     return TNECore.eco().account().findAccount(id);
   }
 
   public UUID getId() {
+
     return id;
   }
 
   public BigDecimal getTax() {
+
     return tax;
   }
 
   public void setTax(BigDecimal tax) {
+
     this.tax = tax;
   }
 
   public List<HoldingsEntry> getStartingBalances() {
+
     return startingBalances;
   }
 
   public List<HoldingsEntry> getEndingBalances() {
+
     return endingBalances;
   }
 
   public BigDecimal getCombinedEnding() {
+
     BigDecimal combined = BigDecimal.ZERO;
 
     for(HoldingsEntry entry : getEndingBalances()) {

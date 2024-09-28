@@ -26,24 +26,28 @@ import java.math.BigDecimal;
 /**
  * Represents a flat taxation type. This is simply the taxation amount taken as is.
  *
- * @see TaxType
  * @author creatorfromhell
+ * @see TaxType
  * @since 0.1.2.0
  */
 public class FlatType implements TaxType {
+
   @Override
   @MapKey
   public String name() {
+
     return "flat";
   }
 
   @Override
   public String asString(final BigDecimal tax) {
+
     return "" + tax;
   }
 
   @Override
   public BigDecimal handleTaxation(final BigDecimal amount, final BigDecimal tax) {
+
     return tax;
   }
 }

@@ -45,6 +45,7 @@ import java.util.UUID;
 public class Extractor {
 
   public static boolean extract() {
+
     final File file = new File(PluginCore.directory(), "extracted.yml");
 
     //check to see if file exists, if it does we are going to move it to the extracts directory.
@@ -86,10 +87,10 @@ public class Extractor {
 
         String username = account.getName();
         username = username.replaceAll("\\.", "!").replaceAll("\\-", "@")
-                           .replaceAll("\\_", "%");
+                .replaceAll("\\_", "%");
 
         yaml.set("Accounts." + username + ".Balances." + entry.getRegion() + "."
-                     + entry.getCurrency() + "." + entry.getHandler().asID(), entry.getAmount().toPlainString());
+                 + entry.getCurrency() + "." + entry.getHandler().asID(), entry.getAmount().toPlainString());
 
         yaml.set("Accounts." + username + ".id", account.getIdentifier());
       }
@@ -97,11 +98,11 @@ public class Extractor {
       try {
         final boolean message = (number % frequency == 0);
 
-        if (message) {
+        if(message) {
           final int progress = (number * 100) / total;
           PluginCore.log().inform("Extraction Progress: " + progress);
         }
-      } catch(Exception ignore) {}
+      } catch(Exception ignore) { }
     }
 
     try {
@@ -115,6 +116,7 @@ public class Extractor {
   }
 
   public static boolean restore(@Nullable final Integer extraction) {
+
     File file;
 
     if(extraction != null && extraction > 0) {
@@ -168,7 +170,7 @@ public class Extractor {
 
             final String currency = (String)currencyObj;
             if(!recode) {
-              final String finalCurrency = (currency.equalsIgnoreCase("default")) ? TNECore.eco().currency().getDefaultCurrency(region).getIdentifier() : currency;
+              final String finalCurrency = (currency.equalsIgnoreCase("default"))? TNECore.eco().currency().getDefaultCurrency(region).getIdentifier() : currency;
               Optional<Currency> cur = TNECore.eco().currency().findCurrency(finalCurrency);
 
               PluginCore.log().inform("Currency avail: " + cur.isPresent());
@@ -184,7 +186,7 @@ public class Extractor {
                 PluginCore.log().inform("Use default currency");
                 PluginCore.log().inform("Set Balance to: " + amount.toPlainString());
                 response.getAccount().get().setHoldings(new HoldingsEntry(region, TNECore.eco().currency().getDefaultCurrency(region).getUid(),
-                        amount, EconomyManager.NORMAL));
+                                                                          amount, EconomyManager.NORMAL));
               }
             } else {
 
@@ -193,9 +195,9 @@ public class Extractor {
 
                 final String type = (String)typeObj;
                 final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name
-                                                                                 + ".Balances." + region
-                                                                                 + "." + currency + "."
-                                                                                 + type));
+                                                                             + ".Balances." + region
+                                                                             + "." + currency + "."
+                                                                             + type));
 
                 response.getAccount().get().setHoldings(new HoldingsEntry(region, UUID.fromString(currency),
                                                                           amount, Identifier.fromID(type)));
@@ -205,11 +207,11 @@ public class Extractor {
             try {
               final boolean message = (number % frequency == 0);
 
-              if (message) {
+              if(message) {
                 final int progress = (number * 100) / accounts.size();
                 PluginCore.log().inform("Restoration Progress: " + progress);
               }
-            } catch(Exception ignore) {}
+            } catch(Exception ignore) { }
           }
         }
       }

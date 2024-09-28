@@ -34,16 +34,19 @@ import static net.tnemc.core.EconomyManager.INVENTORY_ONLY;
  * @since 0.1.2.0
  */
 public class ItemType extends VirtualType {
+
   /**
    * @return The name of this currency type. Examples: Virtual, Item
    */
   @Override
   public String name() {
+
     return "item";
   }
 
   @Override
   public String description() {
+
     return "A currency based solely on physical items.";
   }
 
@@ -52,16 +55,19 @@ public class ItemType extends VirtualType {
    */
   @Override
   public boolean supportsItems() {
+
     return true;
   }
 
   @Override
   public boolean supportsVirtual() {
+
     return false;
   }
 
   @Override
   public Identifier defaultHandler() {
+
     return INVENTORY_ONLY;
   }
 
@@ -69,16 +75,17 @@ public class ItemType extends VirtualType {
    * Used to set the holdings for a specific account.
    *
    * @param account  The Account to set the holdings for.
-   * @param region   The name of the region involved. This is usually a world, but could be something
-   *                 else such as a world guard region name/identifier.
+   * @param region   The name of the region involved. This is usually a world, but could be
+   *                 something else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
-   * @param type The {@link Identifier} of the holdings handler to use.
+   * @param type     The {@link Identifier} of the holdings handler to use.
    * @param amount   The amount to set the player's holdings to.
    *
    * @return True if the holdings have been set, otherwise false.
    */
   @Override
   public boolean setHoldings(Account account, String region, Currency currency, Identifier type, BigDecimal amount) {
+
     if(type.equals(EconomyManager.NORMAL)) type = INVENTORY_ONLY;
 
     return super.setHoldings(account, region, currency, type, amount);

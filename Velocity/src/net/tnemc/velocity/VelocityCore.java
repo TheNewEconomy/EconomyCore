@@ -41,7 +41,7 @@ import java.util.logging.Logger;
  * @since 0.1.2.0
  */
 @Plugin(id = "tne_velocity", name = "The New Economy Velocity", version = "0.1.3.2",
-    url = "https://tnemc.net", description = "A bridge for TheNewEconomy plugin.", authors = {"creatorfromhell"})
+        url = "https://tnemc.net", description = "A bridge for TheNewEconomy plugin.", authors = { "creatorfromhell" })
 public class VelocityCore {
 
   private final Map<UUID, MessageData> backlog = new HashMap<>();
@@ -55,6 +55,7 @@ public class VelocityCore {
 
   @Inject
   public VelocityCore(ProxyServer server, Logger logger) {
+
     this.server = server;
     this.logger = logger;
     instance = this;
@@ -75,18 +76,22 @@ public class VelocityCore {
   }
 
   public static VelocityCore instance() {
+
     return instance;
   }
 
   public ProxyServer getServer() {
+
     return server;
   }
 
   public Map<UUID, MessageData> getBacklog() {
+
     return backlog;
   }
 
   public void remove(final UUID server) {
+
     backlog.remove(server);
   }
 }

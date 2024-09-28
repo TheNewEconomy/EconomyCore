@@ -30,7 +30,9 @@ import java.util.UUID;
  * @since 0.1.2.0
  */
 public class SyncAllMessageHandler extends AccountHandler {
+
   public SyncAllMessageHandler() {
+
     super("sync");
   }
 

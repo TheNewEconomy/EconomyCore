@@ -37,10 +37,12 @@ import static net.tnemc.core.menu.MyEcoMenu.CURRENCY_EDIT_PAGE;
  * @since 0.1.3.0
  */
 public class CurrencyIcon extends SwitchPageIcon {
+
   public CurrencyIcon(int slot, Currency currency) {
+
     super(slot, PluginCore.server().stackBuilder().of(currency.getIconMaterial(), 1)
-            .display(Component.text(currency.getIdentifier())).lore(Collections.singletonList(Component.text("Click to edit currency"))),
-            "my_eco", CURRENCY_EDIT_PAGE, ActionType.ANY, false);
+                  .display(Component.text(currency.getIdentifier())).lore(Collections.singletonList(Component.text("Click to edit currency"))),
+          "my_eco", CURRENCY_EDIT_PAGE, ActionType.ANY, false);
 
     actions.add(new DataAction(ACTIVE_CURRENCY, currency));
 

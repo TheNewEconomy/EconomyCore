@@ -26,24 +26,28 @@ import java.math.BigDecimal;
 /**
  * Represents a percentile taxation type. This is taken as a percentage of the total amount.
  *
- * @see TaxType
  * @author creatorfromhell
+ * @see TaxType
  * @since 0.1.2.0
  */
 public class PercentileType implements TaxType {
+
   @Override
   @MapKey
   public String name() {
+
     return "percent";
   }
 
   @Override
   public String asString(final BigDecimal tax) {
+
     return tax.multiply(new BigDecimal(100)).toPlainString() + "%";
   }
 
   @Override
   public BigDecimal handleTaxation(final BigDecimal amount, final BigDecimal tax) {
+
     return amount.multiply(tax);
   }
 }

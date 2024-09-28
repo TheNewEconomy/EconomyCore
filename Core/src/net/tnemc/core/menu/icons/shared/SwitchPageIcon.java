@@ -37,9 +37,12 @@ public class SwitchPageIcon extends Icon {
   private final ActionType actionType;
 
   public SwitchPageIcon(int slot, @NotNull AbstractItemStack<?> item, final String menu, final int page, final ActionType type) {
+
     this(slot, item, menu, page, type, true);
   }
+
   public SwitchPageIcon(int slot, @NotNull AbstractItemStack<?> item, final String menu, final int page, final ActionType type, boolean registerAction) {
+
     super(item, null);
 
     this.slot = slot;
@@ -53,6 +56,7 @@ public class SwitchPageIcon extends Icon {
   }
 
   public void addActions() {
+
     actions.add(new SwitchPageAction(menu, page, actionType));
   }
 }

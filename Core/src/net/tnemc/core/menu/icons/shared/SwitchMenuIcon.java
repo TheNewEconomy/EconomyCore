@@ -31,7 +31,9 @@ import org.jetbrains.annotations.NotNull;
  * @since 0.1.3.0
  */
 public class SwitchMenuIcon extends Icon {
+
   public SwitchMenuIcon(int slot, @NotNull AbstractItemStack<?> item, final String menu, final ActionType type) {
+
     super(item, null);
 
     this.slot = slot;

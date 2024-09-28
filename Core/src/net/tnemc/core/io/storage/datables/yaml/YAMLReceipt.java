@@ -53,6 +53,7 @@ import java.util.UUID;
  * @since 0.1.2.0
  */
 public class YAMLReceipt implements Datable<Receipt> {
+
   /**
    * The class that is represented by the O parameter.
    *
@@ -60,6 +61,7 @@ public class YAMLReceipt implements Datable<Receipt> {
    */
   @Override
   public Class<? extends Receipt> clazz() {
+
     return Receipt.class;
   }
 
@@ -76,10 +78,10 @@ public class YAMLReceipt implements Datable<Receipt> {
   /**
    * Used to store this object.
    *
-   * @param connector The storage connector to use for this transaction.
-   * @param receipt The object to be stored.
+   * @param connector  The storage connector to use for this transaction.
+   * @param receipt    The object to be stored.
    * @param identifier An optional identifier for loading this object. Note: some Datables may
-   * require this identifier.
+   *                   require this identifier.
    */
   @Override
   public void store(StorageConnector<?> connector, @NotNull Receipt receipt, @Nullable String identifier) {
@@ -170,9 +172,9 @@ public class YAMLReceipt implements Datable<Receipt> {
   /**
    * Used to store all objects of this type.
    *
-   * @param connector The storage connector to use for this transaction.
+   * @param connector  The storage connector to use for this transaction.
    * @param identifier The identifier used to load objects, if they relate to a specific identifier,
-   * otherwise this will be null.
+   *                   otherwise this will be null.
    */
   @Override
   public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
@@ -185,7 +187,7 @@ public class YAMLReceipt implements Datable<Receipt> {
   /**
    * Used to load this object.
    *
-   * @param connector The storage connector to use for this transaction.
+   * @param connector  The storage connector to use for this transaction.
    * @param identifier The identifier used to identify the object to load.
    *
    * @return The object to load.
@@ -203,6 +205,7 @@ public class YAMLReceipt implements Datable<Receipt> {
   }
 
   public Optional<Receipt> load(File file, final String identifier) {
+
     if(file == null) {
 
       PluginCore.log().error("Null account file passed to YAMLReceipt.load. Receipt: " + identifier);
@@ -262,16 +265,18 @@ public class YAMLReceipt implements Datable<Receipt> {
       receipt.setModifierTo(loadModifier(yaml, type));
     }
   }
+
   public HoldingsModifier loadModifier(YamlDocument yaml, String type) {
 
     return new HoldingsModifier(yaml.getString(type + ".modifier.region"),
-            UUID.fromString(yaml.getString(type + ".modifier.currency")),
-            new BigDecimal(yaml.getString(type + ".modifier.modifier")),
-            HoldingsOperation.valueOf(yaml.getString(type + ".modifier.operation")));
+                                UUID.fromString(yaml.getString(type + ".modifier.currency")),
+                                new BigDecimal(yaml.getString(type + ".modifier.modifier")),
+                                HoldingsOperation.valueOf(yaml.getString(type + ".modifier.operation")));
 
   }
 
   public List<HoldingsEntry> loadHoldings(YamlDocument yaml, String type, String holdingsType) {
+
     final List<HoldingsEntry> holdings = new ArrayList<>();
 
 
@@ -309,14 +314,15 @@ public class YAMLReceipt implements Datable<Receipt> {
   /**
    * Used to load all objects of this type.
    *
-   * @param connector The storage connector to use for this transaction.
+   * @param connector  The storage connector to use for this transaction.
    * @param identifier The identifier used to load objects, if they relate to a specific identifier,
-   * otherwise this will be null.
+   *                   otherwise this will be null.
    *
    * @return A collection containing the objects loaded.
    */
   @Override
   public Collection<Receipt> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
+
     final Collection<Receipt> receipts = new ArrayList<>();
 
     for(File file : IOUtil.getYAMLs(new File(PluginCore.directory(), "transactions"))) {

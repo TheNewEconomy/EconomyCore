@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>Sponge8Core</artifactId>
     <packaging>jar</packaging>
@@ -27,7 +29,6 @@
             <url>https://repo.lucko.me/</url>
         </repository>
     </repositories>
-
 
 
     <build>
@@ -86,7 +87,9 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
+                    <dependencyReducedPomLocation>
+                        ${project.build.directory}/dependency-reduced-pom.xml
+                    </dependencyReducedPomLocation>
                     <artifactSet>
                         <includes>
                             <include>net.tnemc:*</include>

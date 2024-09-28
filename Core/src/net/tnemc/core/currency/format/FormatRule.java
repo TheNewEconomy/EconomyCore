@@ -32,6 +32,7 @@ public interface FormatRule {
 
   /**
    * The identifier for this rule.
+   *
    * @return The human-friendly identifier for this rule.
    */
   String name();
@@ -42,24 +43,28 @@ public interface FormatRule {
    * @return The description of the format rule as a String.
    */
   default String description() {
+
     return "";
   }
 
   /**
-   * Determines whether this format rule should be included in the menu.
-   * By default, it is set to true.
+   * Determines whether this format rule should be included in the menu. By default, it is set to
+   * true.
    *
    * @return true if this format rule should be included in the menu, false otherwise.
    */
   default boolean includeInMenu() {
+
     return true;
   }
 
   /**
    * Used to format a TNE format string based on the provided holdings and account information.
+   *
    * @param account The account to use for this formatting.
-   * @param entry The holdings entry to use for formatting.
-   * @param format The format string that these should be provided for.
+   * @param entry   The holdings entry to use for formatting.
+   * @param format  The format string that these should be provided for.
+   *
    * @return The formatted string.
    */
   String format(@Nullable Account account, HoldingsEntry entry, String format);

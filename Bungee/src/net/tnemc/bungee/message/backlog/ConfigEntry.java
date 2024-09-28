@@ -45,26 +45,32 @@ public class ConfigEntry {
   private final String pin;
 
   public ConfigEntry(String pin) {
+
     this.pin = pin;
   }
 
   public List<String> getConfigs() {
+
     return configs;
   }
 
   public List<String> getCurrencies() {
+
     return currencies;
   }
 
   public List<String> getSynced() {
+
     return synced;
   }
 
   public String getPin() {
+
     return pin;
   }
 
   public byte[] getBytes() {
+
     return bytes;
   }
 

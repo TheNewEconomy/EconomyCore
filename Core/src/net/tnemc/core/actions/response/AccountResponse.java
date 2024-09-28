@@ -24,8 +24,8 @@ import net.tnemc.core.actions.EconomyResponse;
 /**
  * Contains some default responses that relate to {@link Account account} operations.
  *
- * @see Account
  * @author creatorfromhell
+ * @see Account
  * @since 0.1.2.0
  */
 public enum AccountResponse implements EconomyResponse {
@@ -38,11 +38,13 @@ public enum AccountResponse implements EconomyResponse {
   CREATED {
     @Override
     public boolean success() {
+
       return true;
     }
 
     @Override
     public String response() {
+
       return "Messages.Admin.Created";
     }
   },
@@ -55,29 +57,33 @@ public enum AccountResponse implements EconomyResponse {
   CREATION_FAILED {
     @Override
     public boolean success() {
+
       return false;
     }
 
     @Override
     public String response() {
+
       return "Messages.Admin.CreationFailed";
     }
   },
 
   /**
-   * The action failed, and during it an account was not created. This is because a plugin has blocked
-   * the account creation.
+   * The action failed, and during it an account was not created. This is because a plugin has
+   * blocked the account creation.
    *
    * @since 0.1.2.0
    */
   CREATION_FAILED_PLUGIN {
     @Override
     public boolean success() {
+
       return false;
     }
 
     @Override
     public String response() {
+
       return "Messages.Admin.CreationFailed";
     }
   },
@@ -90,11 +96,13 @@ public enum AccountResponse implements EconomyResponse {
   ALREADY_EXISTS {
     @Override
     public boolean success() {
+
       return false;
     }
 
     @Override
     public String response() {
+
       return "Messages.Admin.Exists";
     }
   },
@@ -107,11 +115,13 @@ public enum AccountResponse implements EconomyResponse {
   DELETED {
     @Override
     public boolean success() {
+
       return true;
     }
 
     @Override
     public String response() {
+
       return "Messages.Admin.Deleted";
     }
   },
@@ -124,11 +134,13 @@ public enum AccountResponse implements EconomyResponse {
   DOESNT_EXIST {
     @Override
     public boolean success() {
+
       return false;
     }
 
     @Override
     public String response() {
+
       return "Messages.Account.NoSuch";
     }
   },

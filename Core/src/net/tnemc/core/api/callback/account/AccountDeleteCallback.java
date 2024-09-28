@@ -36,6 +36,7 @@ public record AccountDeleteCallback(String identifier) implements Callback {
    */
   @Override
   public String name() {
+
     return TNECallbacks.ACCOUNT_DELETE.id();
   }
 }

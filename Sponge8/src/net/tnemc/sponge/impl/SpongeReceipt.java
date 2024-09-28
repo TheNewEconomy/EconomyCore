@@ -46,6 +46,7 @@ public class SpongeReceipt implements TransactionResult {
   public SpongeReceipt(net.tnemc.core.transaction.TransactionResult result, Account account,
                        SpongeCurrency currency, BigDecimal amount, Set<Context> contexts,
                        TransactionType type) {
+
     this.result = result;
     this.account = account;
     this.currency = currency;
@@ -56,26 +57,31 @@ public class SpongeReceipt implements TransactionResult {
 
   @Override
   public Account account() {
+
     return account;
   }
 
   @Override
   public Currency currency() {
+
     return currency;
   }
 
   @Override
   public BigDecimal amount() {
+
     return amount;
   }
 
   @Override
   public Set<Context> contexts() {
+
     return contexts;
   }
 
   @Override
   public ResultType result() {
+
     if(result.isSuccessful()) {
       return ResultType.SUCCESS;
     }
@@ -84,6 +90,7 @@ public class SpongeReceipt implements TransactionResult {
 
   @Override
   public TransactionType type() {
+
     return type;
   }
 }

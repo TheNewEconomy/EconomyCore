@@ -32,7 +32,9 @@ import java.util.UUID;
  * @since 0.1.2.0
  */
 public class MessageMessageHandler extends MessageHandler {
+
   public MessageMessageHandler() {
+
     super("message");
   }
 
@@ -44,12 +46,13 @@ public class MessageMessageHandler extends MessageHandler {
       final String message = stream.readUTF();
 
       send(server, identifier, message);
-    } catch (IOException e) {
+    } catch(IOException e) {
       e.printStackTrace();
     }
   }
 
   public static void send(UUID server, String identifier, String message) {
+
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
 
 

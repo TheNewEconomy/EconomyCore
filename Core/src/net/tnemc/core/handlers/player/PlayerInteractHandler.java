@@ -50,15 +50,18 @@ public class PlayerInteractHandler {
 
   /**
    * Used to handle a PlayerInteractEvent using the specified {@link PlayerProvider} class.
+   *
    * @param provider The {@link PlayerProvider} associated with the platform event.
+   *
    * @return True if the event should be cancelled, otherwise false.
    */
   public HandlerResponse handle(PlayerProvider provider, final AbstractItemStack<?> item) {
+
     final HandlerResponse response = new HandlerResponse("", false);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(provider.identifier());
     if(account.isPresent() && (account.get() instanceof PlayerAccount) && item.display() != null
-    && Component.EQUALS.test(item.display(), Component.text(MessageConfig.yaml().getString("Messages.Note.Name")))) {
+       && Component.EQUALS.test(item.display(), Component.text(MessageConfig.yaml().getString("Messages.Note.Name")))) {
 
       String currency = null;
       String region = null;
@@ -96,9 +99,9 @@ public class PlayerInteractHandler {
       final HoldingsModifier modifier = new HoldingsModifier(region, curObj.get().getUid(), value);
 
       final Transaction transaction = new Transaction("note")
-          .from(account.get(), modifier)
-          .processor(EconomyManager.baseProcessor())
-          .source(new PlayerSource(provider.identifier()));
+              .from(account.get(), modifier)
+              .processor(EconomyManager.baseProcessor())
+              .source(new PlayerSource(provider.identifier()));
 
       try {
         final TransactionResult result = transaction.process();

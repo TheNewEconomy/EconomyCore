@@ -29,6 +29,7 @@ import net.tnemc.plugincore.PluginCore;
 public class ChannelHandler {
 
   public void handler(final String channel, final byte[] bytes) {
+
     if(channel.startsWith("tne:")) {
       PluginCore.instance().getChannelMessageManager().handle(channel, bytes);
     }

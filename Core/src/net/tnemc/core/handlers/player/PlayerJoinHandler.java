@@ -43,17 +43,20 @@ import java.util.UUID;
 /**
  * Represents an event where a player is joining.
  *
- * @since 0.1.2
  * @author creatorfromhell
+ * @since 0.1.2
  */
 public class PlayerJoinHandler {
 
   /**
    * Used to handle a PlayerJoinEvent using the specified {@link PlayerProvider} class.
+   *
    * @param provider The {@link PlayerProvider} associated with the platform event.
+   *
    * @return True if the event should be cancelled, otherwise false.
    */
   public HandlerResponse handle(PlayerProvider provider) {
+
     final HandlerResponse response = new HandlerResponse("", false);
 
     PluginCore.log().debug("Player Join ID: " + provider.identifier());
@@ -87,7 +90,7 @@ public class PlayerJoinHandler {
     PluginCore.log().debug("First Join: " + firstJoin);
 
     final Optional<Account> acc = (apiResponse == null)? account :
-                                                   apiResponse.getAccount();
+                                  apiResponse.getAccount();
 
     final UUID id = provider.identifier();
     if(acc.isPresent()) {
@@ -120,9 +123,9 @@ public class PlayerJoinHandler {
 
           if(firstJoin) {
             acc.get().setHoldings(new HoldingsEntry(region,
-                    currency.getUid(),
-                    currency.getStartingHoldings(),
-                    EconomyManager.NORMAL
+                                                    currency.getUid(),
+                                                    currency.getStartingHoldings(),
+                                                    EconomyManager.NORMAL
             ));
           }
         }
@@ -148,9 +151,9 @@ public class PlayerJoinHandler {
                 TNECore.eco().account().getImporting().remove(id);
               } else {
                 acc.get().setHoldings(new HoldingsEntry(region,
-                        currency.getUid(),
-                        currency.getStartingHoldings(),
-                        EconomyManager.NORMAL
+                                                        currency.getUid(),
+                                                        currency.getStartingHoldings(),
+                                                        EconomyManager.NORMAL
                 ));
               }
             } else {

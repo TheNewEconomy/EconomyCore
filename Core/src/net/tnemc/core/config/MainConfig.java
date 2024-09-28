@@ -35,15 +35,18 @@ import java.util.Collections;
 public class MainConfig extends Config {
 
   private static MainConfig instance;
+
   public MainConfig() {
+
     super("config.yml", "config.yml", Collections.singletonList("Core"),
-            LoaderSettings.builder().setAutoUpdate(true).build(),
-            UpdaterSettings.builder().setAutoSave(true).setVersioning(new BasicVersioning("Core.config-version")).build());
+          LoaderSettings.builder().setAutoUpdate(true).build(),
+          UpdaterSettings.builder().setAutoSave(true).setVersioning(new BasicVersioning("Core.config-version")).build());
 
     instance = this;
   }
 
   public static YamlDocument yaml() {
+
     return instance.getYaml();
   }
 }

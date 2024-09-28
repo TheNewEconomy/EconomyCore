@@ -38,14 +38,17 @@ public class TopPage<V> {
   private final int page;
 
   public TopPage(int page) {
+
     this.page = page;
   }
 
   public LinkedHashMap<V, BigDecimal> getValues() {
+
     return values;
   }
 
   public V getAt(final int pos) {
+
     if(pos > values.size()) return (V)"no one";
 
     final Iterator<Map.Entry<V, BigDecimal>> it = values.entrySet().iterator();
@@ -89,6 +92,7 @@ public class TopPage<V> {
   }
 
   public int getPage() {
+
     return page;
   }
 }

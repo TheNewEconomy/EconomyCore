@@ -36,6 +36,7 @@ public class PercentDecimalResolver implements ValueResolver<PercentBigDecimal> 
 
   @Override
   public PercentBigDecimal resolve(@NotNull ValueResolverContext context) {
+
     final String value = context.arguments().pop();
 
     final boolean percent = value.contains("%");

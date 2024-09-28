@@ -33,20 +33,24 @@ public class TNE extends JavaPlugin {
 
   @Override
   public void onLoad() {
+
     this.bukkit.load(this, new BukkitServerProvider());
   }
 
   @Override
   public void onEnable() {
+
     this.bukkit.enable(this);
   }
 
   @Override
   public void onDisable() {
+
     this.bukkit.disable(this);
   }
 
   public BukkitPlugin getBukkit() {
+
     return bukkit;
   }
 }

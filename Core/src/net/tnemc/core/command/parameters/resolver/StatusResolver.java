@@ -36,6 +36,7 @@ public class StatusResolver implements ValueResolver<AccountStatus> {
 
   @Override
   public AccountStatus resolve(@NotNull ValueResolverContext context) throws Throwable {
+
     final String value = context.arguments().pop();
 
     final Optional<AccountStatus> status = Optional.ofNullable(TNECore.eco().account().getStatuses().get(value));

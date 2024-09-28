@@ -22,8 +22,8 @@ import net.tnemc.core.actions.EconomyResponse;
 
 /**
  * Represents general responses that may be utilized for multiple reasons.
- * 
- * @author creatorfromhell 
+ *
+ * @author creatorfromhell
  * @since 0.1.2.0
  */
 public enum GeneralResponse implements EconomyResponse {
@@ -36,11 +36,13 @@ public enum GeneralResponse implements EconomyResponse {
   SUCCESS {
     @Override
     public boolean success() {
+
       return true;
     }
 
     @Override
     public String response() {
+
       return "The action was successful.";
     }
   },
@@ -53,11 +55,13 @@ public enum GeneralResponse implements EconomyResponse {
   FAILED {
     @Override
     public boolean success() {
+
       return false;
     }
 
     @Override
     public String response() {
+
       return "The action was unsuccessful.";
     }
   },
@@ -70,11 +74,13 @@ public enum GeneralResponse implements EconomyResponse {
   FAILED_PLUGIN {
     @Override
     public boolean success() {
+
       return false;
     }
 
     @Override
     public String response() {
+
       return "The action was unsuccessful, because it was blocked by a plugin.";
     }
   },
@@ -87,11 +93,13 @@ public enum GeneralResponse implements EconomyResponse {
   UNSUPPORTED {
     @Override
     public boolean success() {
+
       return false;
     }
 
     @Override
     public String response() {
+
       return "This action is not supported by this version of TNE.";
     }
   }

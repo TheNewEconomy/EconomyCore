@@ -33,16 +33,19 @@ public class SpongeTransactionEvent implements EconomyTransactionEvent {
   private final SpongeReceipt receipt;
 
   public SpongeTransactionEvent(SpongeReceipt receipt) {
+
     this.receipt = receipt;
   }
 
   @Override
   public TransactionResult transactionResult() {
+
     return receipt;
   }
 
   @Override
   public Cause cause() {
+
     return null;
   }
 }

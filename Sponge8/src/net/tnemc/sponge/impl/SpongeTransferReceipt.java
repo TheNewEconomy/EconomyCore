@@ -38,12 +38,14 @@ public class SpongeTransferReceipt extends SpongeReceipt implements TransferResu
   private final Account accountTo;
 
   public SpongeTransferReceipt(TransactionResult result, Account account, SpongeCurrency currency, BigDecimal amount, Set<Context> contexts, TransactionType type, Account accountTo) {
+
     super(result, account, currency, amount, contexts, type);
     this.accountTo = accountTo;
   }
 
   @Override
   public Account accountTo() {
+
     return accountTo;
   }
 }

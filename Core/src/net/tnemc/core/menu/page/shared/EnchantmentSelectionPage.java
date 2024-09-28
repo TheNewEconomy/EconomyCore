@@ -60,6 +60,7 @@ public class EnchantmentSelectionPage {
   public EnchantmentSelectionPage(String enchantsID, String returnMenu, String menuName,
                                   final int menuPage, final int returnPage, String enchantPageID,
                                   final int menuRows, Consumer<StringSelectionHandler> selectionListener) {
+
     this.enchantsID = enchantsID;
     this.returnMenu = returnMenu;
     this.menuName = menuName;
@@ -89,52 +90,52 @@ public class EnchantmentSelectionPage {
       if(maxPages > 1) {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
-                .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))))
-                .withActions(new DataAction(menuName + "_ENCHANTMENT_SELECTION_PAGE", prev), new SwitchPageAction(menuName, menuPage))
-                .withSlot(0)
-                .build());
+                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))))
+                                           .withActions(new DataAction(menuName + "_ENCHANTMENT_SELECTION_PAGE", prev), new SwitchPageAction(menuName, menuPage))
+                                           .withSlot(0)
+                                           .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPage"), id))))
-                .withActions(new DataAction(menuName + "_ENCHANTMENT_SELECTION_PAGE", next), new SwitchPageAction(menuName, menuPage))
-                .withSlot(8)
-                .build());
+                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPage"), id))))
+                                           .withActions(new DataAction(menuName + "_ENCHANTMENT_SELECTION_PAGE", next), new SwitchPageAction(menuName, menuPage))
+                                           .withSlot(8)
+                                           .build());
       }
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
-              .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EscapeDisplay"), id))
-              .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Escape"), id))))
-              .withActions(new SwitchPageAction(returnMenu, returnPage))
-              .withSlot(3)
-              .build());
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EscapeDisplay"), id))
+                                                         .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Escape"), id))))
+                                         .withActions(new SwitchPageAction(returnMenu, returnPage))
+                                         .withSlot(3)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-              .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Save"), id))
-              .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Enchants.Save"), id))))
-              .withActions(new RunnableAction((click)->{
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Save"), id))
+                                                         .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Enchants.Save"), id))))
+                                         .withActions(new RunnableAction((click)->{
 
-                        if(selectionListener != null) {
+                                           if(selectionListener != null) {
 
-                          final StringBuilder builder = new StringBuilder();
-                          for(final String enchant : MenuManager.instance().getHelper().enchantments()) {
+                                             final StringBuilder builder = new StringBuilder();
+                                             for(final String enchant : MenuManager.instance().getHelper().enchantments()) {
 
-                            final String value = (String)viewer.get().dataOrDefault(menuName + "_" + enchant, "Disabled");
-                            final boolean enabled = value.equalsIgnoreCase("enabled");
-                            if(enabled) {
+                                               final String value = (String)viewer.get().dataOrDefault(menuName + "_" + enchant, "Disabled");
+                                               final boolean enabled = value.equalsIgnoreCase("enabled");
+                                               if(enabled) {
 
-                              if(!builder.isEmpty()) {
-                                builder.append(",");
-                              }
-                              builder.append(enchant);
-                            }
-                          }
-                          selectionListener.accept(new StringSelectionHandler(click, builder.toString()));
-                        }
-                      }), new SwitchPageAction(returnMenu, returnPage))
-              .withSlot(6)
-              .build());
+                                                 if(!builder.isEmpty()) {
+                                                   builder.append(",");
+                                                 }
+                                                 builder.append(enchant);
+                                               }
+                                             }
+                                             selectionListener.accept(new StringSelectionHandler(click, builder.toString()));
+                                           }
+                                         }), new SwitchPageAction(returnMenu, returnPage))
+                                         .withSlot(6)
+                                         .build());
 
       for(int i = start; i < start + items; i++) {
         if(MenuManager.instance().getHelper().enchantments().size() <= i) {

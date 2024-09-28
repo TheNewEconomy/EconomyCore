@@ -31,20 +31,24 @@ public class CurrencyRegion {
   private final boolean regionDefault;
 
   public CurrencyRegion(String region, boolean enabled, boolean regionDefault) {
+
     this.region = region;
     this.enabled = enabled;
     this.regionDefault = regionDefault;
   }
 
   public String region() {
+
     return region;
   }
 
   public boolean isEnabled() {
+
     return enabled;
   }
 
   public boolean isDefault() {
+
     return regionDefault;
   }
 }

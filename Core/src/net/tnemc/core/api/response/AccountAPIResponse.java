@@ -30,8 +30,8 @@ import java.util.Optional;
  * AccountAPIResponse represents an API response that is related to an account.
  *
  * @author creatorfromhell
- * @since 0.1.2.0
  * @see TNEAPI,Account,EconomyResponse
+ * @since 0.1.2.0
  */
 public class AccountAPIResponse {
 
@@ -39,15 +39,18 @@ public class AccountAPIResponse {
   private final EconomyResponse response;
 
   public AccountAPIResponse(@Nullable Account account, EconomyResponse response) {
+
     this.account = account;
     this.response = response;
   }
 
   public Optional<Account> getAccount() {
+
     return Optional.ofNullable(account);
   }
 
   public Optional<PlayerAccount> getPlayerAccount() {
+
     if(account != null && (account instanceof PlayerAccount)) {
       return Optional.of((PlayerAccount)account);
     }
@@ -55,6 +58,7 @@ public class AccountAPIResponse {
   }
 
   public EconomyResponse getResponse() {
+
     return response;
   }
 }

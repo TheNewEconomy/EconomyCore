@@ -53,6 +53,7 @@ public class MaterialSelectionPageCallback {
   public MaterialSelectionPageCallback(String materialDataID, String returnMenu, String menuName,
                                        final int menuPage, final int returnPage, String materialPageID,
                                        final int menuRows, Consumer<StringSelectionHandler> selectionListener) {
+
     this.returnMenu = returnMenu;
     this.menuName = menuName;
     this.menuPage = menuPage;
@@ -82,26 +83,26 @@ public class MaterialSelectionPageCallback {
       if(maxPages > 1) {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
-                .display(Component.text("Previous Page"))
-                .lore(Collections.singletonList(Component.text("Click to go to previous page."))))
-                .withActions(new DataAction(materialPageID, prev), new SwitchPageAction(menuName, menuPage))
-                .withSlot(0)
-                .build());
+                                                           .display(Component.text("Previous Page"))
+                                                           .lore(Collections.singletonList(Component.text("Click to go to previous page."))))
+                                           .withActions(new DataAction(materialPageID, prev), new SwitchPageAction(menuName, menuPage))
+                                           .withSlot(0)
+                                           .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                .display(Component.text("Next Page"))
-                .lore(Collections.singletonList(Component.text("Click to go to next page."))))
-                .withActions(new DataAction(materialPageID, next), new SwitchPageAction(menuName, menuPage))
-                .withSlot(8)
-                .build());
+                                                           .display(Component.text("Next Page"))
+                                                           .lore(Collections.singletonList(Component.text("Click to go to next page."))))
+                                           .withActions(new DataAction(materialPageID, next), new SwitchPageAction(menuName, menuPage))
+                                           .withSlot(8)
+                                           .build());
       }
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
-              .display(Component.text("Escape Menu"))
-              .lore(Collections.singletonList(Component.text("Click to exit this menu."))))
-              .withActions(new SwitchPageAction(returnMenu, returnPage))
-              .withSlot(4)
-              .build());
+                                                         .display(Component.text("Escape Menu"))
+                                                         .lore(Collections.singletonList(Component.text("Click to exit this menu."))))
+                                         .withActions(new SwitchPageAction(returnMenu, returnPage))
+                                         .withSlot(4)
+                                         .build());
 
       for(int i = start; i < start + items; i++) {
         if(MenuManager.instance().getHelper().materials().size() <= i) {
@@ -111,17 +112,17 @@ public class MaterialSelectionPageCallback {
         final String material = MenuManager.instance().getHelper().materials().get(i);
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(material, 1)
-                .lore(Collections.singletonList(Component.text("Click to select material."))))
-                .withActions(new DataAction(materialDataID, material),
-                        new RunnableAction((click)->{
+                                                           .lore(Collections.singletonList(Component.text("Click to select material."))))
+                                           .withActions(new DataAction(materialDataID, material),
+                                                        new RunnableAction((click)->{
 
-                          if(selectionListener != null) {
+                                                          if(selectionListener != null) {
 
-                            selectionListener.accept(new StringSelectionHandler(click, material));
-                          }
-                        }), new SwitchPageAction(returnMenu, returnPage))
-                .withSlot(9 + (i - start))
-                .build());
+                                                            selectionListener.accept(new StringSelectionHandler(click, material));
+                                                          }
+                                                        }), new SwitchPageAction(returnMenu, returnPage))
+                                           .withSlot(9 + (i - start))
+                                           .build());
       }
     }
   }

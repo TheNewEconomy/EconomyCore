@@ -17,6 +17,7 @@ package net.tnemc.paper.command;
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 import net.tnemc.core.account.Account;
 import net.tnemc.core.command.BaseCommand;
 import net.tnemc.plugincore.paper.impl.PaperCMDSource;
@@ -39,46 +40,51 @@ import java.util.UUID;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-@Command({"transaction", "trans", "receipt"})
+@Command({ "transaction", "trans", "receipt" })
 public class TransactionCommand {
 
-  @Subcommand({"help", "?"})
-  @DefaultFor({"transaction", "trans", "receipt"})
+  @Subcommand({ "help", "?" })
+  @DefaultFor({ "transaction", "trans", "receipt" })
   @Usage("Help.Arguments")
   @Description("Help.Description")
   public void help(BukkitCommandActor actor, CommandHelp<String> helpEntries, @Default("1") int page) {
+
     BaseCommand.help(new PaperCMDSource(actor), helpEntries, page);
   }
 
-  @Subcommand({"away", "gone", "afk", "afg"})
+  @Subcommand({ "away", "gone", "afk", "afg" })
   @Usage("Transaction.Away.Arguments")
   @Description("Transaction.Away.Description")
   @CommandPermission("tne.transaction.away")
   public void away(BukkitCommandActor sender, @Default("1") int page) {
+
     net.tnemc.core.command.TransactionCommand.away(new PaperCMDSource(sender), page);
   }
 
-  @Subcommand({"history", "list", "hist", "archive"})
+  @Subcommand({ "history", "list", "hist", "archive" })
   @Usage("Transaction.History.Arguments")
   @Description("Transaction.History.Description")
   @CommandPermission("tne.transaction.history")
   public void history(BukkitCommandActor sender, @Default("1") int page, @Default("world-113") @Named("region") String region, @Default("SELF_ACCOUNT") Account account) {
+
     net.tnemc.core.command.TransactionCommand.history(new PaperCMDSource(sender), page, region, account);
   }
 
-  @Subcommand({"info", "i", "about", "brief"})
+  @Subcommand({ "info", "i", "about", "brief" })
   @Usage("Transaction.Info.Arguments")
   @Description("Transaction.Info.Description")
   @CommandPermission("tne.info.history")
   public void info(BukkitCommandActor sender, UUID uuid) {
+
     net.tnemc.core.command.TransactionCommand.info(new PaperCMDSource(sender), uuid);
   }
 
-  @Subcommand({"void", "retract", "undo"})
+  @Subcommand({ "void", "retract", "undo" })
   @Usage("Transaction.Void.Arguments")
   @Description("Transaction.Void.Description")
   @CommandPermission("tne.void.history")
   public void voidT(BukkitCommandActor sender, Account account, UUID uuid) {
+
     net.tnemc.core.command.TransactionCommand.voidT(new PaperCMDSource(sender), account, uuid);
   }
 }

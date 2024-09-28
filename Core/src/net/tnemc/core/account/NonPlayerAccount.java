@@ -24,13 +24,14 @@ import java.util.UUID;
 /**
  * Represents an account that is not associated with a player.
  *
- * @see Account
  * @author creatorfromhell
+ * @see Account
  * @since 0.1.2.0
  */
 public class NonPlayerAccount extends SharedAccount {
 
   public NonPlayerAccount(UUID identifier, String name) {
+
     super(identifier, name, null);
 
     this.identifier = generateIdentifier(name);
@@ -43,10 +44,12 @@ public class NonPlayerAccount extends SharedAccount {
    */
   @Override
   public String type() {
+
     return "non-player";
   }
 
   public UUID generateIdentifier(final String name) {
+
     return UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8));
   }
 }

@@ -1,7 +1,7 @@
 name: Bug Report
 description: File a bug report for TNE to help us improve your experience
 title: "[BUG]: "
-labels: ["bug"]
+labels: [ "bug" ]
 assignees:
   - creatorfromhell
 

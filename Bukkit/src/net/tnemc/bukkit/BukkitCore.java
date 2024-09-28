@@ -49,26 +49,31 @@ public class BukkitCore extends TNECore {
   private BukkitConfig bukkitConfig;
 
   public BukkitCore(JavaPlugin plugin) {
+
     this.plugin = plugin;
   }
 
   @Override
   public void registerMenuHandler() {
+
     this.menuHandler = new BukkitMenuHandler(plugin, true);
   }
 
   @Override
   public void registerCommandHandler() {
+
     command = BukkitCommandHandler.create(plugin);
   }
 
   @Override
   public String commandHelpWriter(ExecutableCommand executableCommand, CommandActor commandActor) {
+
     return "";
   }
 
   @Override
   public void registerConfigs() {
+
     super.registerConfigs();
 
     this.bukkitConfig = new BukkitConfig();
@@ -79,6 +84,7 @@ public class BukkitCore extends TNECore {
 
   @Override
   public void registerCommands() {
+
     super.registerCommands();
 
     //Register our commands
@@ -91,6 +97,7 @@ public class BukkitCore extends TNECore {
 
   @Override
   public void registerCallbacks(CallbackManager callbackManager) {
+
     super.registerCallbacks(callbackManager);
     callbackManager.addConsumer(TNECallbacks.ACCOUNT_TYPES.toString(), (callback->{
 
@@ -111,14 +118,17 @@ public class BukkitCore extends TNECore {
 
   @Override
   public BukkitItemCalculations itemCalculations() {
+
     return new BukkitItemCalculations();
   }
 
   public static BukkitCore instance() {
+
     return (BukkitCore)TNECore.instance();
   }
 
   public JavaPlugin getPlugin() {
+
     return plugin;
   }
 }

@@ -30,16 +30,18 @@ import java.util.function.Function;
  * @since 0.1.2.0
  */
 public class NationCheck implements AccountTypeCheck {
+
   /**
-   * Returns our check function that should be used to check if a given String identifier, usually name,
-   * is valid for this account type.
+   * Returns our check function that should be used to check if a given String identifier, usually
+   * name, is valid for this account type.
    *
    * @return Our function that should be used to check if a given String identifier, usually name,
    * is valid for this account type.
    */
   @Override
   public Function<String, Boolean> check() {
-    return value -> {
+
+    return value->{
       try {
         return value.contains(TownySettings.getNationAccountPrefix());
       } catch(Exception e) {

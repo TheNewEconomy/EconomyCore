@@ -36,6 +36,7 @@ import java.util.UUID;
 public class FoliaInventoryProvider extends FoliaInventory implements InventoryProvider<Inventory> {
 
   public FoliaInventoryProvider(UUID id, JavaPlugin plugin) {
+
     super(id, plugin);
   }
 
@@ -48,6 +49,7 @@ public class FoliaInventoryProvider extends FoliaInventory implements InventoryP
    */
   @Override
   public Inventory getInventory(boolean ender) {
+
     final OfflinePlayer player = Bukkit.getOfflinePlayer(player());
     if(player.getPlayer() == null) return null;
 

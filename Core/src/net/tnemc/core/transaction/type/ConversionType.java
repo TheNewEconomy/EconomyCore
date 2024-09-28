@@ -32,6 +32,7 @@ import java.util.Optional;
  * @since 0.1.2.0
  */
 public class ConversionType implements TransactionType {
+
   /**
    * The identifier of this transaction type.
    *
@@ -40,18 +41,20 @@ public class ConversionType implements TransactionType {
   @Override
   @MapKey
   public String identifier() {
+
     return "conversion";
   }
 
   /**
-   * The taxation amount to be assessed on the recipient of the transaction. This will take the amount
-   * from the amount being sent to the account, and send it to the server account.
+   * The taxation amount to be assessed on the recipient of the transaction. This will take the
+   * amount from the amount being sent to the account, and send it to the server account.
    *
    * @return The {@link TaxEntry} related to the taxation amount for the recipient, if applicable,
    * otherwise an empty optional.
    */
   @Override
   public Optional<TaxEntry> toTax() {
+
     return Optional.empty();
   }
 
@@ -64,6 +67,7 @@ public class ConversionType implements TransactionType {
    */
   @Override
   public Optional<TaxEntry> fromTax() {
+
     if(MainConfig.yaml().getBoolean("Core.Transactions.Conversion.Tax.Enabled")) {
       final String tax = MainConfig.yaml().getString("Core.Transactions.Conversion.Tax.Rate");
       TaxEntry entry;

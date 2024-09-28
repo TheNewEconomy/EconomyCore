@@ -35,13 +35,15 @@ public record PlayerSource(UUID id) implements ActionSource {
    * <p>
    * Please note: There is no guarantee of uniqueness.
    *
-   * @return The name of the source for a specific action. This could be user-friendly
-   * or not. This should be the name of the source that has caused this action to occur. For
-   * instance, a plugin name.
+   * @return The name of the source for a specific action. This could be user-friendly or not. This
+   * should be the name of the source that has caused this action to occur. For instance, a plugin
+   * name.
+   *
    * @since 0.1.2.0
    */
   @Override
   public String name() {
+
     return id.toString();
   }
 
@@ -52,6 +54,7 @@ public record PlayerSource(UUID id) implements ActionSource {
    */
   @Override
   public String type() {
+
     return "player";
   }
 }

@@ -56,7 +56,8 @@ import java.util.UUID;
  * @since 0.1.2.0
  */
 public class CurrencyManager {
-  public static final BigDecimal largestSupported= new BigDecimal("900000000000000000000000000000000000000000000");
+
+  public static final BigDecimal largestSupported = new BigDecimal("900000000000000000000000000000000000000000000");
 
   private final Map<UUID, Currency> currencies = new HashMap<>();
   private final Map<String, UUID> curIDMap = new HashMap<>();
@@ -68,6 +69,7 @@ public class CurrencyManager {
   private boolean retry = false;
 
   public CurrencyManager() {
+
     addType(new ExperienceType());
     addType(new ExperienceLevelType());
     addType(new ItemType());
@@ -76,10 +78,12 @@ public class CurrencyManager {
   }
 
   public boolean load(final File parent) {
+
     return load(parent, true);
   }
 
   public boolean load(final File parent, boolean reset) {
+
     saver.saveCurrenciesUUID(new File(parent, "currency"));
     if(reset) {
       currencies.clear();
@@ -129,30 +133,37 @@ public class CurrencyManager {
 
   /**
    * Saves all currency UUIDs only.
+   *
    * @param parent The directory used for saving.
    */
   public void saveCurrenciesUUID(final File parent) {
+
     saver.saveCurrenciesUUID(new File(parent, "currency"));
   }
 
   public CurrencyLoader getLoader() {
+
     return loader;
   }
 
   public void setLoader(CurrencyLoader loader) {
+
     this.loader = loader;
   }
 
   public CurrencySaver getSaver() {
+
     return saver;
   }
 
   public void setSaver(CurrencySaver saver) {
+
     this.saver = saver;
   }
 
   /**
    * Used to add a currency.
+   *
    * @param currency The currency to add.
    */
   public void addCurrency(final Currency currency) {
@@ -164,6 +175,7 @@ public class CurrencyManager {
   /**
    * Used to get the default currency. This could be the default currency for the server globally or
    * for the default world if the implementation supports multi-world.
+   *
    * @return The currency that is the default for the server if multi-world support is not available
    * otherwise the default for the default world.
    *
@@ -183,8 +195,10 @@ public class CurrencyManager {
   /**
    * Used to get the default currency for the specified world if this implementation has multi-world
    * support, otherwise the default currency for the server.
+   *
    * @param region The region to get the default currency for. This could be a world, biomes, or a
    *               third party based region.
+   *
    * @return The default currency for the specified world if this implementation has multi-world
    * support, otherwise the default currency for the server.
    *
@@ -203,11 +217,14 @@ public class CurrencyManager {
 
   /**
    * Used to get a set of every {@link Currency} object that is available in the specified world if
-   * this implementation has multi-world support, otherwise all {@link Currency} objects for the server.
-   * @param region The region to get the currencies for. This could be a world, biomes, or a
-   *               third party based region.
-   * @return A set of every {@link Currency} object that is available in the specified world if
-   * this implementation has multi-world support, otherwise all {@link Currency} objects for the server.
+   * this implementation has multi-world support, otherwise all {@link Currency} objects for the
+   * server.
+   *
+   * @param region The region to get the currencies for. This could be a world, biomes, or a third
+   *               party based region.
+   *
+   * @return A set of every {@link Currency} object that is available in the specified world if this
+   * implementation has multi-world support, otherwise all {@link Currency} objects for the server.
    *
    * @since 0.1.2.0
    */
@@ -225,20 +242,26 @@ public class CurrencyManager {
 
   /**
    * Used to find a {@link Currency currency} based on its unique identifier.
+   *
    * @param identifier The identifier to look for.
+   *
    * @return An Optional containing the currency if it exists, otherwise an empty Optional.
    */
   public Optional<Currency> findCurrency(final UUID identifier) {
+
     return Optional.ofNullable(currencies.get(identifier));
   }
 
   /**
    * Used to find a {@link Currency currency} based on an item.
+   *
    * @param item The item to use for this search.
+   *
    * @return An Optional containing the currency if this item is a valid currency item, otherwise an
    * empty Optional.
    */
   public Optional<Currency> findCurrencyByItem(final AbstractItemStack<?> item) {
+
     for(Currency currency : currencies.values()) {
 
       if(currency instanceof ItemCurrency) {
@@ -254,11 +277,14 @@ public class CurrencyManager {
 
   /**
    * Used to find a {@link Currency currency} based on a material.
+   *
    * @param material The material to use for this search.
+   *
    * @return An Optional containing the currency if this item is a valid currency item, otherwise an
    * empty Optional.
    */
   public Optional<Currency> findCurrencyByMaterial(final String material) {
+
     for(Currency currency : currencies.values()) {
 
       if(currency instanceof ItemCurrency) {
@@ -274,10 +300,13 @@ public class CurrencyManager {
 
   /**
    * Used to find a {@link Currency currency} based on its user-friendly identifier.
+   *
    * @param identifier The identifier to look for.
+   *
    * @return An Optional containing the currency if it exists, otherwise an empty Optional.
    */
   public Optional<Currency> findCurrency(final String identifier) {
+
     try {
 
       return Optional.ofNullable(currencies.get(UUID.fromString(identifier)));
@@ -295,24 +324,30 @@ public class CurrencyManager {
   }
 
   /**
-   * Used to find a {@link Currency currency} based on its {@link UUID identifier}, or a new Currency
-   * object if the specified identifier doesn't exist.
+   * Used to find a {@link Currency currency} based on its {@link UUID identifier}, or a new
+   * Currency object if the specified identifier doesn't exist.
+   *
    * @param identifier The identifier to look for.
+   *
    * @return The currency object if found; Otherwise a new currency object.
    */
   public Currency findOrDefault(final UUID identifier) {
+
     return findOrDefault(identifier, false);
   }
 
   /**
-   * Used to find a {@link Currency currency} based on its {@link UUID identifier}, or a new Currency
-   * object if the specified identifier doesn't exist.
+   * Used to find a {@link Currency currency} based on its {@link UUID identifier}, or a new
+   * Currency object if the specified identifier doesn't exist.
+   *
    * @param identifier The identifier to look for.
-   * @param item True if this should return an {@link ItemCurrency} object if the specified identifier
-   *             doesn't exist.
+   * @param item       True if this should return an {@link ItemCurrency} object if the specified
+   *                   identifier doesn't exist.
+   *
    * @return The currency object if found; Otherwise a new currency object.
    */
   public Currency findOrDefault(final UUID identifier, final boolean item) {
+
     if(identifier != null && currencies.containsKey(identifier)) {
       return currencies.get(identifier);
     }
@@ -323,39 +358,49 @@ public class CurrencyManager {
   }
 
   public LinkedList<Currency> currencies() {
+
     return new LinkedList<>(currencies.values());
   }
 
   public Map<String, CurrencyType> getTypes() {
+
     return types;
   }
 
   /**
    * Used to add a currency type.
+   *
    * @param type The currency type to add.
    */
   public void addType(final CurrencyType type) {
+
     types.put(type.name(), type);
   }
 
   /**
    * Used to find a currency type based on its identifier.
+   *
    * @param identifier The identifier to look for.
+   *
    * @return An Optional containing the currency type if it exists, otherwise an empty Optional.
    */
   public Optional<CurrencyType> findType(final String identifier) {
+
     return Optional.ofNullable(types.get(identifier));
   }
 
   public CurrencyType findTypeOrDefault(final String identifier) {
+
     return types.getOrDefault(identifier, types.get("virtual"));
   }
 
   public Map<String, UUID> getCurIDMap() {
+
     return curIDMap;
   }
 
   public Map<UUID, Currency> getCurrencies() {
+
     return currencies;
   }
 

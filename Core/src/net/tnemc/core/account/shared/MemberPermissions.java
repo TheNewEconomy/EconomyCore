@@ -21,10 +21,10 @@ package net.tnemc.core.account.shared;
 /**
  * Represents the {@link Permission permissions} for {@link Member members}.
  *
+ * @author creatorfromhell
  * @see Member
  * @see Permission
  * @since 0.1.1.17
- * @author creatorfromhell
  */
 public enum MemberPermissions implements Permission {
 
@@ -32,7 +32,6 @@ public enum MemberPermissions implements Permission {
    * Can the member check the balance?
    */
   BALANCE {
-
     /**
      * The identifier of the permission.
      *
@@ -40,6 +39,7 @@ public enum MemberPermissions implements Permission {
      */
     @Override
     public String identifier() {
+
       return "BALANCE";
     }
 
@@ -50,6 +50,7 @@ public enum MemberPermissions implements Permission {
      */
     @Override
     public boolean defaultValue() {
+
       return true;
     }
   },
@@ -58,7 +59,6 @@ public enum MemberPermissions implements Permission {
    * Can the member withdraw from the account?
    */
   WITHDRAW {
-
     /**
      * The identifier of the permission.
      *
@@ -66,6 +66,7 @@ public enum MemberPermissions implements Permission {
      */
     @Override
     public String identifier() {
+
       return "WITHDRAW";
     }
 
@@ -76,6 +77,7 @@ public enum MemberPermissions implements Permission {
      */
     @Override
     public boolean defaultValue() {
+
       return false;
     }
   },
@@ -84,7 +86,6 @@ public enum MemberPermissions implements Permission {
    * Can the member deposit to the account?
    */
   DEPOSIT {
-
     /**
      * The identifier of the permission.
      *
@@ -92,6 +93,7 @@ public enum MemberPermissions implements Permission {
      */
     @Override
     public String identifier() {
+
       return "DEPOSIT";
     }
 
@@ -102,6 +104,7 @@ public enum MemberPermissions implements Permission {
      */
     @Override
     public boolean defaultValue() {
+
       return false;
     }
   },
@@ -110,7 +113,6 @@ public enum MemberPermissions implements Permission {
    * Can the member add other members?
    */
   ADD_MEMBER {
-
     /**
      * The identifier of the permission.
      *
@@ -118,6 +120,7 @@ public enum MemberPermissions implements Permission {
      */
     @Override
     public String identifier() {
+
       return "ADD_MEMBER";
     }
 
@@ -128,6 +131,7 @@ public enum MemberPermissions implements Permission {
      */
     @Override
     public boolean defaultValue() {
+
       return false;
     }
   },
@@ -136,7 +140,6 @@ public enum MemberPermissions implements Permission {
    * Can the member modify the permissions of other members?
    */
   MODIFY_MEMBER {
-
     /**
      * The identifier of the permission.
      *
@@ -144,6 +147,7 @@ public enum MemberPermissions implements Permission {
      */
     @Override
     public String identifier() {
+
       return "MODIFY_MEMBER";
     }
 
@@ -154,6 +158,7 @@ public enum MemberPermissions implements Permission {
      */
     @Override
     public boolean defaultValue() {
+
       return false;
     }
   },
@@ -162,7 +167,6 @@ public enum MemberPermissions implements Permission {
    * Can the member remove other members?
    */
   REMOVE_MEMBER {
-
     /**
      * The identifier of the permission.
      *
@@ -170,6 +174,7 @@ public enum MemberPermissions implements Permission {
      */
     @Override
     public String identifier() {
+
       return "REMOVE_MEMBER";
     }
 
@@ -180,6 +185,7 @@ public enum MemberPermissions implements Permission {
      */
     @Override
     public boolean defaultValue() {
+
       return false;
     }
   },
@@ -188,7 +194,6 @@ public enum MemberPermissions implements Permission {
    * Can the member delete the account?
    */
   DELETE_ACCOUNT {
-
     /**
      * The identifier of the permission.
      *
@@ -196,6 +201,7 @@ public enum MemberPermissions implements Permission {
      */
     @Override
     public String identifier() {
+
       return "DELETE_ACCOUNT";
     }
 
@@ -206,6 +212,7 @@ public enum MemberPermissions implements Permission {
      */
     @Override
     public boolean defaultValue() {
+
       return false;
     }
   },
@@ -214,7 +221,6 @@ public enum MemberPermissions implements Permission {
    * Can the member transfer ownership of the account?
    */
   TRANSFER_OWNERSHIP {
-
     /**
      * The identifier of the permission.
      *
@@ -222,6 +228,7 @@ public enum MemberPermissions implements Permission {
      */
     @Override
     public String identifier() {
+
       return "TRANSFER_OWNERSHIP";
     }
 
@@ -232,6 +239,7 @@ public enum MemberPermissions implements Permission {
      */
     @Override
     public boolean defaultValue() {
+
       return false;
     }
   }

@@ -29,6 +29,7 @@ import net.tnemc.core.TNECore;
 public class TownyHandler {
 
   public static void addTypes() {
+
     TNECore.eco().account().addAccountType(TownAccount.class, new TownCheck().check());
     TNECore.eco().account().addAccountType(NationAccount.class, new NationCheck().check());
   }

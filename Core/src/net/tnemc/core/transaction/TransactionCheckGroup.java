@@ -26,8 +26,8 @@ import java.util.LinkedList;
  * Represents a group of transaction checks. This is used for easily adding multiple checks to a
  * transaction without needing to list them all individually.
  *
- * @see TransactionCheck
  * @author creatorfromhell
+ * @see TransactionCheck
  * @since 0.1.2.0
  */
 public class TransactionCheckGroup {
@@ -37,27 +37,33 @@ public class TransactionCheckGroup {
   private final String identifier;
 
   public TransactionCheckGroup(String identifier) {
+
     this.identifier = identifier;
   }
 
   public void addCheck(final String identifier) {
+
     checks.add(identifier);
   }
 
   public void removeCheck(final String identifier) {
+
     checks.remove(identifier);
   }
 
   @MapKey
   public String getIdentifier() {
+
     return identifier;
   }
 
   public LinkedList<String> getChecks() {
+
     return checks;
   }
 
   public void setChecks(final LinkedList<String> replacements) {
+
     checks.clear();
     checks.addAll(replacements);
   }

@@ -49,6 +49,7 @@ public class MessageManager {
   private static MessageManager instance;
 
   public MessageManager(final ProxyProvider proxy) {
+
     instance = this;
     this.proxy = proxy;
     handlers.put("balance", new BalanceMessageHandler());
@@ -82,18 +83,22 @@ public class MessageManager {
   }
 
   public ProxyProvider proxy() {
+
     return proxy;
   }
 
   public Map<String, ConfigEntry> getHubs() {
+
     return hubs;
   }
 
   public static MessageManager instance() {
+
     return instance;
   }
 
   public void backlog(final String server) {
+
     if(data.containsKey(server)) {
       proxy.sendBacklog(data.get(server));
       data.remove(server);
@@ -101,6 +106,7 @@ public class MessageManager {
   }
 
   public void addData(final String server, BacklogEntry entry) {
+
     if(data.containsKey(server)) {
       data.get(server).getBacklog().add(entry);
       return;

@@ -32,11 +32,13 @@ import java.util.UUID;
 public class SpongeUniqueAccount extends SpongeVirtualAccount implements UniqueAccount {
 
   public SpongeUniqueAccount(PlayerAccount account) {
+
     super(account);
   }
 
   @Override
   public UUID uniqueId() {
+
     if(account instanceof PlayerAccount) {
       return ((PlayerAccount)account).getUUID();
     }

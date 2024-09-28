@@ -32,6 +32,7 @@ public class CurrencyLoadCallback implements Callback {
   private Currency currency;
 
   public CurrencyLoadCallback(Currency currency) {
+
     this.currency = currency;
   }
 
@@ -42,14 +43,17 @@ public class CurrencyLoadCallback implements Callback {
    */
   @Override
   public String name() {
+
     return "currency_load";
   }
 
   public Currency getCurrency() {
+
     return currency;
   }
 
   public void setCurrency(Currency currency) {
+
     this.currency = currency;
   }
 }

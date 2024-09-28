@@ -52,6 +52,7 @@ public class SerialAccount implements JSONAble<Account> {
    */
   @Override
   public JSONObject toJSON(Account account) {
+
     final JSONObject json = new JSONObject();
 
     json.put("identifier", account.getIdentifier());
@@ -62,7 +63,7 @@ public class SerialAccount implements JSONAble<Account> {
     json.put("type", account.type());
 
     final JSONArray holdingsArray = new JSONArray();
-    for (HoldingsEntry entry : account.getWallet().entryList()) {
+    for(HoldingsEntry entry : account.getWallet().entryList()) {
       holdingsArray.add(new SerialHoldings().toJSON(entry));
     }
     json.put("holdings", holdingsArray);
@@ -71,7 +72,7 @@ public class SerialAccount implements JSONAble<Account> {
       json.put("owner", shared.getOwner());
 
       final JSONArray membersArray = new JSONArray();
-      for (Member member : shared.getMembers().values()) {
+      for(Member member : shared.getMembers().values()) {
         membersArray.add(new SerialMember().toJSON(member));
       }
       json.put("members", membersArray);
@@ -94,6 +95,7 @@ public class SerialAccount implements JSONAble<Account> {
    */
   @Override
   public Account fromJSON(String serialized) {
+
     try {
       final JSONParser parser = new JSONParser();
       final JSONObject json = (JSONObject)parser.parse(serialized);
@@ -103,9 +105,9 @@ public class SerialAccount implements JSONAble<Account> {
       final String type = (String)json.get("type");
 
       final AccountAPIResponse response = TNECore.eco().account().createAccount(identifier,
-              name,
-              !(type.equalsIgnoreCase("player") ||
-                      type.equalsIgnoreCase("bedrock")));
+                                                                                name,
+                                                                                !(type.equalsIgnoreCase("player") ||
+                                                                                  type.equalsIgnoreCase("bedrock")));
       if(response.getResponse().success()) {
 
         final Optional<Account> account = response.getAccount();
@@ -116,7 +118,7 @@ public class SerialAccount implements JSONAble<Account> {
           account.get().setCreationDate((Long)json.get("creationDate"));
           account.get().setStatus(TNECore.eco().account().findStatus((String)json.get("status")));
 
-          final JSONArray holdingsArray = (JSONArray) json.get("holdings");
+          final JSONArray holdingsArray = (JSONArray)json.get("holdings");
           final Wallet wallet = new Wallet();
           for(Object entryObj : holdingsArray) {
             final JSONObject entryJson = (JSONObject)entryObj;
@@ -131,10 +133,10 @@ public class SerialAccount implements JSONAble<Account> {
 
             if(json.containsKey("members")) {
 
-              final JSONArray membersArray = (JSONArray) json.get("members");
+              final JSONArray membersArray = (JSONArray)json.get("members");
               for(Object memberObj : membersArray) {
 
-                final JSONObject memberJson = (JSONObject) memberObj;
+                final JSONObject memberJson = (JSONObject)memberObj;
                 final Member member = new SerialMember().fromJSON(memberJson.toJSONString());
                 shared.getMembers().put(member.getId(), member);
               }
@@ -150,7 +152,7 @@ public class SerialAccount implements JSONAble<Account> {
           return account.get();
         }
       }
-    } catch (ParseException | NumberFormatException | ClassCastException e) {
+    } catch(ParseException | NumberFormatException | ClassCastException e) {
       e.printStackTrace();
       return null;
     }

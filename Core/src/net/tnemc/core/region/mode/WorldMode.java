@@ -32,18 +32,20 @@ import java.util.List;
  * WorldMode represents a {@link RegionMode} based on worlds.
  *
  * @author creatorfromhell
- * @since 0.1.2.0
- *
  * @see RegionMode
+ * @since 0.1.2.0
  */
 public class WorldMode implements RegionMode {
+
   @Override
   public String name() {
+
     return "world";
   }
 
   @Override
   public List<RegionType> accepted() {
+
     return Collections.singletonList(RegionType.WORLD);
   }
 

@@ -37,54 +37,60 @@ import revxrsal.commands.help.CommandHelp;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-@Command({"module", "mod"})
+@Command({ "module", "mod" })
 public class ModuleCommand {
 
-  @Subcommand({"help", "?"})
+  @Subcommand({ "help", "?" })
   @Usage("Help.Arguments")
   @Description("Help.Description")
   public void help(BukkitCommandActor actor, CommandHelp<String> helpEntries, @Default("1") int page) {
+
     BaseCommand.help(new PaperCMDSource(actor), helpEntries, page);
   }
 
-  @Subcommand({"avail", "available"})
+  @Subcommand({ "avail", "available" })
   @Usage("Module.Available.Arguments")
   @Description("Module.Available.Description")
   @CommandPermission("tne.module.available")
   public void onAvailable(BukkitCommandActor sender, @Default(TNECore.coreURL) String url) {
+
     net.tnemc.core.command.ModuleCommand.onAvailable(new PaperCMDSource(sender), url);
   }
 
-  @Subcommand({"download", "dl"})
+  @Subcommand({ "download", "dl" })
   @Usage("Module.Download.Arguments")
   @Description("Module.Download.Description")
   @CommandPermission("tne.module.download")
   public void onDownload(BukkitCommandActor sender, String moduleName, @Default(TNECore.coreURL) String url) {
+
     net.tnemc.core.command.ModuleCommand.onDownload(new PaperCMDSource(sender), moduleName, url);
   }
 
-  @Subcommand({"info", "i"})
+  @Subcommand({ "info", "i" })
   @Usage("Module.Info.Arguments")
   @Description("Module.Info.Description")
   @CommandPermission("tne.module.info")
   public void onInfo(BukkitCommandActor sender, String moduleName) {
+
     net.tnemc.core.command.ModuleCommand.onInfo(new PaperCMDSource(sender), moduleName);
   }
 
-  @Subcommand({"list", "l"})
+  @Subcommand({ "list", "l" })
   @Usage("Module.List.Arguments")
-  @DefaultFor({"module", "mod"})
+  @DefaultFor({ "module", "mod" })
   @Description("Module.List.Description")
   @CommandPermission("tne.list.available")
   public void onList(BukkitCommandActor sender) {
+
     net.tnemc.core.command.ModuleCommand.onList(new PaperCMDSource(sender));
   }
 
-  @Subcommand({"load"})
+  @Subcommand({ "load" })
   @Usage("Module.Load.Arguments")
   @Description("Module.Load.Description")
   @CommandPermission("tne.module.load")
   public void onLoad(BukkitCommandActor sender, String moduleName) {
+
     net.tnemc.core.command.ModuleCommand.onLoad(new PaperCMDSource(sender), moduleName);
   }
 }

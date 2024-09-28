@@ -39,6 +39,7 @@ public class CurrencyDropCallback implements Callback {
   private final Collection<AbstractItemStack<Object>> drops;
 
   public CurrencyDropCallback(UUID player, Currency currency, Collection<AbstractItemStack<Object>> drops) {
+
     this.player = player;
     this.currency = currency;
     this.drops = drops;
@@ -51,22 +52,27 @@ public class CurrencyDropCallback implements Callback {
    */
   @Override
   public String name() {
+
     return "currency_drop";
   }
 
   public Collection<AbstractItemStack<Object>> getDrops() {
+
     return drops;
   }
 
   public Currency getCurrency() {
+
     return currency;
   }
 
   public UUID getPlayer() {
+
     return player;
   }
 
   public void setCurrency(Currency currency) {
+
     this.currency = currency;
   }
 }

@@ -58,6 +58,7 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
    */
   @Override
   public Class<? extends HoldingsEntry> clazz() {
+
     return HoldingsEntry.class;
   }
 
@@ -113,8 +114,8 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
     }
 
     yaml.set("Holdings." + MainConfig.yaml().getString("Core.Server.Name")
-            + "." + object.getRegion() + "." + object.getCurrency().toString() + "."
-            + object.getHandler().asID(), object.getAmount().toPlainString());
+             + "." + object.getRegion() + "." + object.getCurrency().toString() + "."
+             + object.getHandler().asID(), object.getAmount().toPlainString());
 
     PluginCore.log().debug("YAMLHoldings-store-Entry ID:" + identifier, DebugLevel.DEVELOPER);
     PluginCore.log().debug("YAMLHoldings-store-Entry Currency:" + object.getCurrency().toString(), DebugLevel.DEVELOPER);
@@ -176,8 +177,8 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
           for(HoldingsEntry entry : currency.getHoldings().values()) {
 
             yaml.set("Holdings." + MainConfig.yaml().getString("Core.Server.Name")
-                    + "." + entry.getRegion() + "." + entry.getCurrency().toString() + "."
-                    + entry.getHandler().asID(), entry.getAmount().toPlainString());
+                     + "." + entry.getRegion() + "." + entry.getCurrency().toString() + "."
+                     + entry.getHandler().asID(), entry.getAmount().toPlainString());
           }
         }
       }
@@ -200,10 +201,12 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
    * @param identifier The identifier used to identify the object to load.
    *
    * @return The object to load.
+   *
    * @throws UnsupportedOperationException as this method is not valid for holdings.
    */
   @Override
   public Optional<HoldingsEntry> load(StorageConnector<?> connector, @NotNull String identifier) {
+
     throw new UnsupportedOperationException("load for HoldingsEntry is not a supported operation.");
   }
 
@@ -216,6 +219,7 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
    */
   @Override
   public Collection<HoldingsEntry> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
+
     final Collection<HoldingsEntry> holdings = new ArrayList<>();
 
     if(identifier != null) {
@@ -276,9 +280,9 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
 
                     //region, currency, amount, type
                     final HoldingsEntry entry = new HoldingsEntry(region,
-                            UUID.fromString(currency),
-                            new BigDecimal(amount),
-                            Identifier.fromID(handler)
+                                                                  UUID.fromString(currency),
+                                                                  new BigDecimal(amount),
+                                                                  Identifier.fromID(handler)
                     );
 
                     PluginCore.log().debug("YAMLHoldings-loadAll-Entry ID:" + entry.getHandler(), DebugLevel.DEVELOPER);

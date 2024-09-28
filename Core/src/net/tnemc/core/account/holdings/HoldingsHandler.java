@@ -29,22 +29,25 @@ import java.math.BigDecimal;
  * HoldingsHandler represents a handler that could provide additional holding types.
  *
  * @author creatorfromhell
- * @since 0.1.2.0
  * @see Account
  * @see CurrencyType
  * @see Identifier
+ * @since 0.1.2.0
  */
 public interface HoldingsHandler {
 
   /**
    * The identifier for this handler.
+   *
    * @return The identifier that represents this handler.
    */
   Identifier identifier();
 
   /**
    * Used to determine if this handler may be used for the specified {@link CurrencyType}.
+   *
    * @param type The currency type.
+   *
    * @return True if it supports the currency type, otherwise false.
    */
   boolean supports(CurrencyType type);
@@ -52,18 +55,22 @@ public interface HoldingsHandler {
   /**
    * Used to determine if this handler may be used for the specified {@link Account}. This defaults
    * to true for all accounts.
+   *
    * @param account The account.
+   *
    * @return True if it supports the account, otherwise false.
    */
   default boolean appliesTo(Account account) {
+
     return true;
   }
 
   /**
-   * @return If balances of this handler should be saved to the database. Return false to do
-   * your own data handling.
+   * @return If balances of this handler should be saved to the database. Return false to do your
+   * own data handling.
    */
   default boolean database() {
+
     return true;
   }
 
@@ -71,11 +78,11 @@ public interface HoldingsHandler {
    * Used to set the holdings for a specific account.
    *
    * @param account  The account.
-   * @param region The name of the region involved. This is usually a world, but could be something
-   *               else such as a world guard region name/identifier.
+   * @param region   The name of the region involved. This is usually a world, but could be
+   *                 something else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
-   * @param type The currency type.
-   * @param amount The amount to set the player's holdings to.
+   * @param type     The currency type.
+   * @param amount   The amount to set the player's holdings to.
    *
    * @return True if the holdings have been set, otherwise false.
    */
@@ -84,11 +91,12 @@ public interface HoldingsHandler {
   /**
    * Used to get the holdings for a specific account from this handler.
    *
-   * @param account The Account.
-   * @param region The name of the region involved. This is usually a world, but could be something
-   *               else such as a world guard region name/identifier.
+   * @param account  The Account.
+   * @param region   The name of the region involved. This is usually a world, but could be
+   *                 something else such as a world guard region name/identifier.
    * @param currency The instance of the currency to use.
-   * @param type The currency type.
+   * @param type     The currency type.
+   *
    * @return The holdings for the specific account.
    */
   HoldingsEntry getHoldings(Account account, String region, Currency currency, CurrencyType type);

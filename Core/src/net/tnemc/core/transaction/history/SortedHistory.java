@@ -45,6 +45,7 @@ public class SortedHistory {
   private long lastSort;
 
   public SortedHistory(UUID account) {
+
     this.account = account;
     this.lastSort = -1;
 
@@ -77,13 +78,14 @@ public class SortedHistory {
   }
 
   public NavigableMap<Long, UUID> getPage(int page) {
+
     sort();
 
     if(page > maxPages()) page = 1;
 
     final NavigableMap<Long, UUID> values = new TreeMap<>();
     final int start = ((page * 5) - 5) + 1;
-    final int end =  start + 5;
+    final int end = start + 5;
 
     int i = 1;
     for(Map.Entry<Long, UUID> entry : receipts.entrySet()) {
@@ -97,6 +99,7 @@ public class SortedHistory {
   }
 
   public int maxPages() {
+
     int max = receipts.size() / 5;
 
     if((receipts.size() % 5) > 0) {
@@ -106,6 +109,7 @@ public class SortedHistory {
   }
 
   public NavigableMap<Long, UUID> getReceipts() {
+
     return receipts;
   }
 }

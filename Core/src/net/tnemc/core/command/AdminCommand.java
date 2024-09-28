@@ -43,6 +43,7 @@ import java.util.Optional;
 public class AdminCommand extends BaseCommand {
 
   public static void onMyEco(CmdSource<?> sender) {
+
     if(sender.player().isPresent()) {
 
       sender.player().get().inventory().openMenu(sender.player().get(), "my_eco");
@@ -50,6 +51,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   public static void onBackup(CmdSource<?> sender) {
+
     if(StorageManager.instance().backup()) {
 
       sender.message(new MessageData("Messages.Data.Backup"));
@@ -127,10 +129,12 @@ public class AdminCommand extends BaseCommand {
   }
 
   public static void onPurge(CmdSource<?> sender) {
+
     TNECore.instance().storage().purge();
   }
 
   public static void onReload(CmdSource<?> sender, String type) {
+
     String formattedType = type;
     switch(type.toLowerCase()) {
       case "config" -> {
@@ -155,6 +159,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   public static void onReset(CmdSource<?> sender) {
+
     StorageManager.instance().reset();
   }
 
@@ -166,6 +171,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   public static void onSave(CmdSource<?> sender) {
+
     StorageManager.instance().storeAll();
     sender.message(new MessageData("Messages.Data.Save"));
   }
@@ -183,6 +189,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   public static void onVersion(CmdSource<?> sender) {
+
     final MessageData data = new MessageData("Messages.General.Version");
     data.addReplacement("$version", TNECore.version);
     data.addReplacement("$build", TNECore.build);

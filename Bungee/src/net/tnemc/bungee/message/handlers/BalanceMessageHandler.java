@@ -32,7 +32,9 @@ import java.util.UUID;
  * @since 0.1.2.0
  */
 public class BalanceMessageHandler extends AccountHandler {
+
   public BalanceMessageHandler() {
+
     super("balance");
   }
 
@@ -45,12 +47,13 @@ public class BalanceMessageHandler extends AccountHandler {
       final String handler = stream.readUTF();
       final String amount = stream.readUTF();
       send(server, account, accountName, region, currency, handler, amount);
-    } catch (IOException e) {
+    } catch(IOException e) {
       e.printStackTrace();
     }
   }
 
   public static void send(UUID server, String account, String accountName, String region, String currency, String handler, String amount) {
+
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
     out.writeUTF(server.toString());
     out.writeUTF(account);

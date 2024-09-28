@@ -47,21 +47,25 @@ public class PAPIHook extends PlaceholderExpansion {
 
   @Override
   public String getAuthor() {
+
     return "creatorfromhell";
   }
 
   @Override
   public String getIdentifier() {
+
     return "TNE";
   }
 
   @Override
   public String getVersion() {
+
     return "0.1.2.8";
   }
 
   @Override
   public boolean persist() {
+
     return true;
   }
 
@@ -109,9 +113,9 @@ public class PAPIHook extends PlaceholderExpansion {
         }
 
         final HoldingsEntry entry = new HoldingsEntry(TNECore.eco().region().defaultRegion(),
-                curID,
-                amount,
-                EconomyManager.NORMAL);
+                                                      curID,
+                                                      amount,
+                                                      EconomyManager.NORMAL);
         return CurrencyFormatter.format(account.get(), entry);
       } else {
         return amount.toPlainString();
@@ -233,10 +237,12 @@ public class PAPIHook extends PlaceholderExpansion {
   }
 
   public boolean formatted(final String parameter) {
+
     return parameter.contains("formatted");
   }
 
   public Optional<Account> findFromArgs(final String parameter) {
+
     return TNECore.eco().account().findAccount(parameter);
   }
 }

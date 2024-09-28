@@ -39,8 +39,9 @@ import java.util.TreeMap;
 import java.util.UUID;
 
 /**
- * CalculationData is used to take the information for an {@link net.tnemc.core.currency.item.ItemCurrency}
- * and break it down in order to perform Item-based calculations.
+ * CalculationData is used to take the information for an
+ * {@link net.tnemc.core.currency.item.ItemCurrency} and break it down in order to perform
+ * Item-based calculations.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
@@ -59,6 +60,7 @@ public class CalculationData<I> {
   private boolean failedDrop = false;
 
   public CalculationData(final ItemCurrency currency, I inventory, final UUID player) {
+
     this.currency = currency;
     this.inventory = inventory;
     this.player = player;
@@ -67,22 +69,27 @@ public class CalculationData<I> {
   }
 
   public Map<BigDecimal, Integer> getInventoryMaterials() {
+
     return inventoryMaterials;
   }
 
   public TreeMap<BigDecimal, Denomination> getDenominations() {
+
     return currency.getDenominations();
   }
 
   public MonetaryCalculation getCalculator() {
+
     return calculator;
   }
 
   public ItemCurrency getCurrency() {
+
     return currency;
   }
 
   public void inventoryCounts() {
+
     for(Map.Entry<BigDecimal, Denomination> entry : currency.getDenominations().entrySet()) {
       if(entry.getValue() instanceof final ItemDenomination denomination) {
 
@@ -116,6 +123,7 @@ public class CalculationData<I> {
   }
 
   public void provideMaterials(final Denomination denomination, Integer amount) {
+
     int contains = (inventoryMaterials.getOrDefault(denomination.weight(), amount));
 
     final AbstractItemStack<?> stack = TNECore.instance().denominationToStack((ItemDenomination)denomination).amount(amount);
@@ -152,6 +160,7 @@ public class CalculationData<I> {
   }
 
   public void drop(final Collection<AbstractItemStack<Object>> toDrop, PlayerAccount account) {
+
     final CurrencyDropCallback currencyDrop = new CurrencyDropCallback(player, currency, toDrop);
     if(PluginCore.callbacks().call(currencyDrop)) {
       PluginCore.log().error("Cancelled currency drop through callback.", DebugLevel.STANDARD);
@@ -168,10 +177,12 @@ public class CalculationData<I> {
   }
 
   public boolean isDropped() {
+
     return dropped;
   }
 
   public boolean isFailedDrop() {
+
     return failedDrop;
   }
 }

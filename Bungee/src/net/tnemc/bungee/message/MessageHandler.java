@@ -36,26 +36,32 @@ public abstract class MessageHandler {
   private final String tag;
 
   public MessageHandler(String tag) {
+
     this.tag = tag;
   }
 
   public static void sendToAll(final String channel, ByteArrayDataOutput out, boolean backlog) {
+
     MessageManager.instance().proxy().sendToAll(channel, out.toByteArray(), backlog);
   }
 
   public static void sendToAll(final String channel, byte[] out, boolean backlog) {
+
     MessageManager.instance().proxy().sendToAll(channel, out, backlog);
   }
 
   public static void sendTo(final String serverName, final String channel, ByteArrayDataOutput out) {
+
     MessageManager.instance().proxy().sendTo(serverName, channel, out.toByteArray());
   }
 
   public static void sendTo(final String serverName, final String channel, byte[] out) {
+
     MessageManager.instance().proxy().sendTo(serverName, channel, out);
   }
 
   public static void sendBacklog(@NotNull final MessageData data) {
+
     MessageManager.instance().proxy().sendBacklog(data);
   }
 

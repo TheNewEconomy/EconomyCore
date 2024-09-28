@@ -32,16 +32,19 @@ public class TNE extends JavaPlugin {
 
   @Override
   public void onLoad() {
+
     this.paper.load(this);
   }
 
   @Override
   public void onEnable() {
+
     this.paper.enable(this);
   }
 
   @Override
   public void onDisable() {
+
     this.paper.disable(this);
   }
 }

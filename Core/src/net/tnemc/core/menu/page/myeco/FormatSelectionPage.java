@@ -61,6 +61,7 @@ public class FormatSelectionPage {
   public FormatSelectionPage(String formatID, String returnMenu, String menuName,
                              final int menuPage, final int returnPage, String formatPageID,
                              final int menuRows, Consumer<StringSelectionHandler> selectionListener) {
+
     this.returnMenu = returnMenu;
     this.menuName = menuName;
     this.menuPage = menuPage;
@@ -90,86 +91,86 @@ public class FormatSelectionPage {
       if(maxPages > 1) {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
-                .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))))
-                .withActions(new DataAction(formatPageID, prev), new SwitchPageAction(menuName, menuPage))
-                .withSlot(0)
-                .build());
+                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))))
+                                           .withActions(new DataAction(formatPageID, prev), new SwitchPageAction(menuName, menuPage))
+                                           .withSlot(0)
+                                           .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPage"), id))))
-                .withActions(new DataAction(formatPageID, next), new SwitchPageAction(menuName, menuPage))
-                .withSlot(8)
-                .build());
+                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPage"), id))))
+                                           .withActions(new DataAction(formatPageID, next), new SwitchPageAction(menuName, menuPage))
+                                           .withSlot(8)
+                                           .build());
       }
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-              .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Space"), id))
-              .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Add"), id))))
-              .withActions(new SwitchPageAction(menuName, menuPage))
-              .withClick((click)->formatAddClick(click, " "))
-              .withSlot(2)
-              .build());
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Space"), id))
+                                                         .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Add"), id))))
+                                         .withActions(new SwitchPageAction(menuName, menuPage))
+                                         .withClick((click)->formatAddClick(click, " "))
+                                         .withSlot(2)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-              .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.OwnDisplay"), id))
-              .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Own"), id))))
-              .withActions(new ChatAction((message)->{
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.OwnDisplay"), id))
+                                                         .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Own"), id))))
+                                         .withActions(new ChatAction((message)->{
 
 
-                if(message.getPlayer().viewer().isPresent() && !message.getMessage().isEmpty()) {
+                                                        if(message.getPlayer().viewer().isPresent() && !message.getMessage().isEmpty()) {
 
-                  addToClickData(message.getPlayer().viewer().get(), message.getMessage());
-                  return true;
-                }
+                                                          addToClickData(message.getPlayer().viewer().get(), message.getMessage());
+                                                          return true;
+                                                        }
 
-                message.getPlayer().message("Enter your own text to add to the format:");
-                return false;
+                                                        message.getPlayer().message("Enter your own text to add to the format:");
+                                                        return false;
 
-              }), new RunnableAction((run)->run.player().message("Enter your own text to add to the format:")),
-                      new SwitchPageAction(menuName, menuPage))
-              .withSlot(5)
-              .build());
+                                                      }), new RunnableAction((run)->run.player().message("Enter your own text to add to the format:")),
+                                                      new SwitchPageAction(menuName, menuPage))
+                                         .withSlot(5)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BLACK_WOOL", 1)
-              .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.ResetDisplay"), id))
-              .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Reset"), id))))
-              .withClick((click)->click.player().viewer().ifPresent(menuViewer->menuViewer.addData(formatID, "")))
-              .withActions(new SwitchPageAction(menuName, menuPage))
-              .withSlot(6)
-              .build());
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.ResetDisplay"), id))
+                                                         .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Reset"), id))))
+                                         .withClick((click)->click.player().viewer().ifPresent(menuViewer->menuViewer.addData(formatID, "")))
+                                         .withActions(new SwitchPageAction(menuName, menuPage))
+                                         .withSlot(6)
+                                         .build());
 
       //TODO: Fix display
       final Optional<Object> formatData = viewer.get().findData(formatID);
       final Component display = (formatData.isPresent())? Component.text((String)formatData.get()) : MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.None"), id);
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-              .display(display)
-              .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Format"), id))))
-              .withActions(new SwitchPageAction(menuName, menuPage))
-              .withSlot(4)
-              .build());
+                                                         .display(display)
+                                                         .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Format"), id))))
+                                         .withActions(new SwitchPageAction(menuName, menuPage))
+                                         .withSlot(4)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
-              .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EscapeDisplay"), id))
-              .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Escape"), id))))
-              .withActions(new SwitchPageAction(returnMenu, returnPage))
-              .withSlot(1)
-              .build());
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EscapeDisplay"), id))
+                                                         .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Escape"), id))))
+                                         .withActions(new SwitchPageAction(returnMenu, returnPage))
+                                         .withSlot(1)
+                                         .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-              .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Save"), id))
-              .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Save"), id))))
-              .withActions(new RunnableAction((click)->{
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Save"), id))
+                                                         .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Save"), id))))
+                                         .withActions(new RunnableAction((click)->{
 
-                if(selectionListener != null) {
+                                           if(selectionListener != null) {
 
-                  selectionListener.accept(new StringSelectionHandler(click, (String)viewer.get().dataOrDefault(formatID, "<symbol><major.amount><decimal><minor.amount>")));
-                }
-              }), new SwitchPageAction(returnMenu, returnPage))
-              .withSlot(7)
-              .build());
+                                             selectionListener.accept(new StringSelectionHandler(click, (String)viewer.get().dataOrDefault(formatID, "<symbol><major.amount><decimal><minor.amount>")));
+                                           }
+                                         }), new SwitchPageAction(returnMenu, returnPage))
+                                         .withSlot(7)
+                                         .build());
 
 
       final String[] stringSet = CurrencyFormatter.rules().keySet().toArray(new String[CurrencyFormatter.rules().size()]);
@@ -194,12 +195,12 @@ public class FormatSelectionPage {
         lore.set(1, Component.text(rule.description()));
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                .display(Component.text(rule.name()))
-                .lore(lore))
-                .withActions(new SwitchPageAction(menuName, menuPage))
-                .withClick((click)->formatAddClick(click, rule.name()))
-                .withSlot(slot)
-                .build());
+                                                           .display(Component.text(rule.name()))
+                                                           .lore(lore))
+                                           .withActions(new SwitchPageAction(menuName, menuPage))
+                                           .withClick((click)->formatAddClick(click, rule.name()))
+                                           .withSlot(slot)
+                                           .build());
 
         slot++;
       }

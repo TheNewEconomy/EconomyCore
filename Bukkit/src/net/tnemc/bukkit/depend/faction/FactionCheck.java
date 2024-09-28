@@ -32,14 +32,15 @@ import java.util.function.Function;
 public class FactionCheck implements AccountTypeCheck {
 
   /**
-   * Returns our check function that should be used to check if a given String identifier, usually name,
-   * is valid for this account type.
+   * Returns our check function that should be used to check if a given String identifier, usually
+   * name, is valid for this account type.
    *
    * @return Our function that should be used to check if a given String identifier, usually name,
    * is valid for this account type.
    */
   @Override
   public Function<String, Boolean> check() {
-    return value -> value.toLowerCase().contains(BukkitConfig.yaml().getString("Bukkit.Faction"));
+
+    return value->value.toLowerCase().contains(BukkitConfig.yaml().getString("Bukkit.Faction"));
   }
 }

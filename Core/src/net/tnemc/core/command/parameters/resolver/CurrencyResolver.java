@@ -35,6 +35,7 @@ public class CurrencyResolver implements ValueResolver<Currency> {
 
   @Override
   public Currency resolve(@NotNull ValueResolverContext context) {
+
     final String value = context.arguments().pop();
 
     final Optional<Currency> currency = TNECore.eco().currency().findCurrency(value);

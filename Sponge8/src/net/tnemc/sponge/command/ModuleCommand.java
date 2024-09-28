@@ -34,23 +34,25 @@ import revxrsal.commands.sponge.annotation.CommandPermission;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-@Command({"module", "mod"})
+@Command({ "module", "mod" })
 public class ModuleCommand {
 
-  @Subcommand({"info", "i"})
+  @Subcommand({ "info", "i" })
   @Usage("#{Module.Info.Arguments}")
   @Description("#{Module.Info.Description}")
   @CommandPermission("tne.module.info")
   public void onInfo(SpongeCommandActor sender, String moduleName) {
+
     net.tnemc.core.command.ModuleCommand.onInfo(new SpongeCMDSource(sender), moduleName);
   }
 
-  @Subcommand({"list", "l"})
+  @Subcommand({ "list", "l" })
   @Usage("#{Module.List.Arguments}")
-  @DefaultFor({"module", "mod"})
+  @DefaultFor({ "module", "mod" })
   @Description("#{Module.List.Description}")
   @CommandPermission("tne.list.available")
   public void onList(SpongeCommandActor sender) {
+
     net.tnemc.core.command.ModuleCommand.onList(new SpongeCMDSource(sender));
   }
 }

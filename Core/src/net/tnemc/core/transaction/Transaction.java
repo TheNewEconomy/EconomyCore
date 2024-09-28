@@ -60,6 +60,7 @@ public class Transaction {
   private Consumer<TransactionResult> resultConsumer;
 
   public Transaction(String type) {
+
     this.type = type;
 
     this.processor = EconomyManager.baseProcessor();
@@ -67,17 +68,21 @@ public class Transaction {
 
   /**
    * Used to determine if the "to" participant is losing funds in this transaction.
+   *
    * @return True if the "to" participant is losing funds, otherwise false.
    */
   public boolean isToLosing() {
+
     return to != null && modifierTo != null && modifierTo.isRemoval();
   }
 
   /**
    * Used to determine if the "from" participant is losing funds in this transaction.
+   *
    * @return True if the "from" participant is losing funds, otherwise false.
    */
   public boolean isFromLosing() {
+
     return from != null && modifierFrom.isRemoval();
   }
 
@@ -85,19 +90,21 @@ public class Transaction {
    * Used to create a new Transaction object from the specified transaction type.
    *
    * @param type The identifier of the transaction type.
+   *
    * @return An instance of the Transaction object created with the specified type.
    */
   public static Transaction of(final String type) {
+
     return new Transaction(type);
   }
 
   /**
    * Used to set the {@link TransactionParticipant from} participant.
    *
-   * @param id The identifier of this participant.
+   * @param id       The identifier of this participant.
    * @param modifier The {@link HoldingsModifier modifier} associated with this participant.
-   * @return An instance of the Transaction object with the new
-   * participant.
+   *
+   * @return An instance of the Transaction object with the new participant.
    */
   public Transaction from(final UUID id, final HoldingsModifier modifier) {
 
@@ -109,10 +116,10 @@ public class Transaction {
   /**
    * Used to set the {@link TransactionParticipant from} participant.
    *
-   * @param account The account reference of this participant.
+   * @param account  The account reference of this participant.
    * @param modifier The {@link HoldingsModifier modifier} associated with this participant.
-   * @return An instance of the Transaction object with the new
-   * participant.
+   *
+   * @return An instance of the Transaction object with the new participant.
    */
   public Transaction from(final Account account, final HoldingsModifier modifier) {
 
@@ -120,7 +127,7 @@ public class Transaction {
 
     if(balances.isEmpty()) {
       balances.add(new HoldingsEntry(modifier.getRegion(), modifier.getCurrency(),
-              BigDecimal.ZERO, EconomyManager.NORMAL));
+                                     BigDecimal.ZERO, EconomyManager.NORMAL));
     }
 
     this.from = new TransactionParticipant(account.getIdentifier(), balances);
@@ -143,7 +150,7 @@ public class Transaction {
         working = modifier.modify(total);
         total = null;
       } else {
-        working = modifier.getModifier().multiply(new BigDecimal(- 1));
+        working = modifier.getModifier().multiply(new BigDecimal(-1));
       }
     }
 
@@ -203,10 +210,10 @@ public class Transaction {
   /**
    * Used to set the {@link TransactionParticipant to} participant.
    *
-   * @param id The identifier of this participant.
+   * @param id       The identifier of this participant.
    * @param modifier The {@link HoldingsModifier modifier} associated with this participant.
-   * @return An instance of the Transaction object with the new
-   * participant.
+   *
+   * @return An instance of the Transaction object with the new participant.
    */
   public Transaction to(final UUID id, final HoldingsModifier modifier) {
 
@@ -218,11 +225,10 @@ public class Transaction {
   /**
    * Used to set the {@link TransactionParticipant to} participant.
    *
-   *
-   * @param account The account reference of this participant.
+   * @param account  The account reference of this participant.
    * @param modifier The {@link HoldingsModifier modifier} associated with this participant.
-   * @return An instance of the Transaction object with the new
-   * participant.
+   *
+   * @return An instance of the Transaction object with the new participant.
    */
   public Transaction to(final Account account, final HoldingsModifier modifier) {
 
@@ -238,7 +244,7 @@ public class Transaction {
     final Optional<TransactionType> type = TNECore.eco().transaction().findType(this.type);
 
     final BigDecimal tax = (type.isPresent() && type.get().toTax().isPresent())? type.get().toTax().get()
-                           .calculateTax(modifier.getModifier()) : BigDecimal.ZERO;
+            .calculateTax(modifier.getModifier()) : BigDecimal.ZERO;
 
     BigDecimal working = null;
     final boolean take = (modifier.getModifier().compareTo(BigDecimal.ZERO) < 0);
@@ -253,7 +259,7 @@ public class Transaction {
         working = modifier.modify(total);
         total = null;
       } else {
-        working = modifier.getModifier().multiply(new BigDecimal(- 1));
+        working = modifier.getModifier().multiply(new BigDecimal(-1));
       }
     }
 
@@ -315,10 +321,13 @@ public class Transaction {
 
   /**
    * Used to set {@link ActionSource source} of this transaction.
+   *
    * @param source The {@link ActionSource source} of this transaction.
+   *
    * @return An instance of the Transaction object with the new {@link ActionSource source}.
    */
   public Transaction source(final ActionSource source) {
+
     this.source = source;
     return this;
   }
@@ -328,42 +337,52 @@ public class Transaction {
    * things such as account statuses.
    *
    * @param admin If this transaction is an administrator transaction or not.
+   *
    * @return An instance of the Transaction object with the new {@link ActionSource source}.
    */
   public Transaction admin(final boolean admin) {
+
     this.admin = admin;
     return this;
   }
 
   /**
    * Used to set {@link TransactionProcessor processor} of this transaction.
+   *
    * @param processor The {@link TransactionProcessor processor} of this transaction.
-   * @return An instance of the Transaction object with the new {@link TransactionProcessor processor}.
+   *
+   * @return An instance of the Transaction object with the new
+   * {@link TransactionProcessor processor}.
    */
   public Transaction processor(final TransactionProcessor processor) {
+
     this.processor = processor;
     return this;
   }
 
   /**
-   * Processes the transaction and sends the result to the {@link Transaction#resultConsumer Result
-   * Handler}.
+   * Processes the transaction and sends the result to the
+   * {@link Transaction#resultConsumer Result Handler}.
    *
-   * @throws InvalidTransactionException If all required aspects of the transaction are not present.
+   * @throws InvalidTransactionException If all required aspects of the transaction are not
+   *                                     present.
    */
   public void process(Consumer<TransactionResult> resultConsumer) throws InvalidTransactionException {
+
     this.resultConsumer = resultConsumer;
 
     process();
   }
 
   /**
-   * Processes the transaction and sends the result to the {@link Transaction#resultConsumer Result
-   * Handler}.
+   * Processes the transaction and sends the result to the
+   * {@link Transaction#resultConsumer Result Handler}.
    *
-   * @throws InvalidTransactionException If all required aspects of the transaction are not present.
+   * @throws InvalidTransactionException If all required aspects of the transaction are not
+   *                                     present.
    */
   public TransactionResult process() throws InvalidTransactionException {
+
     String missing = null;
 
     if(this.type == null) {
@@ -409,6 +428,7 @@ public class Transaction {
   }
 
   public Optional<Account> getFromAccount() {
+
     if(from != null) {
       return TNECore.eco().account().findAccount(from.getId());
     }
@@ -417,6 +437,7 @@ public class Transaction {
   }
 
   public Optional<Account> getToAccount() {
+
     if(to != null) {
       return TNECore.eco().account().findAccount(to.getId());
     }
@@ -425,46 +446,57 @@ public class Transaction {
   }
 
   public TransactionProcessor getProcessor() {
+
     return processor;
   }
 
   public String getType() {
+
     return type;
   }
 
   public ActionSource getSource() {
+
     return source;
   }
 
   public TransactionParticipant getFrom() {
+
     return from;
   }
 
   public TransactionParticipant getTo() {
+
     return to;
   }
 
   public HoldingsModifier getModifierTo() {
+
     return modifierTo;
   }
 
   public HoldingsModifier getModifierFrom() {
+
     return modifierFrom;
   }
 
   public boolean isAdmin() {
+
     return admin;
   }
 
   public boolean isTrack() {
+
     return track;
   }
 
   public void setTrack(boolean track) {
+
     this.track = track;
   }
 
   public Consumer<TransactionResult> getResultConsumer() {
+
     return resultConsumer;
   }
 }

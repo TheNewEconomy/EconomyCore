@@ -43,8 +43,8 @@ import java.util.UUID;
  * An object that is used to represent an Account within the economy plugin.
  *
  * @author creatorfromhell
- * @since 0.1.2.0
  * @see ReceiptBox
+ * @since 0.1.2.0
  */
 public class Account extends ReceiptBox {
 
@@ -58,6 +58,7 @@ public class Account extends ReceiptBox {
   protected AccountStatus status;
 
   public Account(UUID identifier, String name) {
+
     super(identifier);
     this.identifier = identifier;
     this.name = name;
@@ -74,9 +75,11 @@ public class Account extends ReceiptBox {
 
   /**
    * Used to get the type of account that this is. This is for data-purposes only.
+   *
    * @return The account type.
    */
   public String type() {
+
     return "account";
   }
 
@@ -86,24 +89,26 @@ public class Account extends ReceiptBox {
    * @return True if this {@link Account account} represents a Player, otherwise false.
    */
   public boolean isPlayer() {
+
     return (this instanceof PlayerAccount);
   }
 
   /**
-   * Used to determine if this {@link Account account} supports balances based on inventories.
-   * This is usually item-based currencies, or experience-based currencies. This should only return
-   * true if the account is a {@link PlayerAccount player}.
+   * Used to determine if this {@link Account account} supports balances based on inventories. This
+   * is usually item-based currencies, or experience-based currencies. This should only return true
+   * if the account is a {@link PlayerAccount player}.
    *
    * @return True if this {@link Account account} supports balances based on inventories.
    */
   public boolean supportsInventoryBalances() {
+
     return isPlayer();
   }
 
   /**
    * Used to get the BigDecimal value of this account's holding based on the specifications.
    *
-   * @param region The region to use
+   * @param region   The region to use
    * @param currency The currency to use.
    *
    * @return The total of every {@link HoldingsEntry} for the specifications.
@@ -120,34 +125,35 @@ public class Account extends ReceiptBox {
   }
 
   /**
-   * Used to get the holdings based on specific specifications, or returns an empty optional
-   * if no holdings for the specifications exists.
+   * Used to get the holdings based on specific specifications, or returns an empty optional if no
+   * holdings for the specifications exists.
    *
-   * @param region The region to use
+   * @param region   The region to use
    * @param currency The currency to use.
    *
-   * @return The holdings based on specific specifications, or an empty optional if no
-   * holdings for the specifications exists.
+   * @return The holdings based on specific specifications, or an empty optional if no holdings for
+   * the specifications exists.
    */
   public List<HoldingsEntry> getHoldings(final @NotNull String region,
-                                             final @NotNull UUID currency) {
+                                         final @NotNull UUID currency) {
+
     return getHoldings(region, currency, EconomyManager.NORMAL);
   }
 
   /**
-   * Used to get the holdings based on specific specifications, or returns an empty optional
-   * if no holdings for the specifications exists.
-   *
-   * @param region The region to use
-   * @param currency The currency to use.
-   * @param type The {@link Identifier identifier} of the holdings handler to use.
-   *
-   * @return The holdings based on specific specifications, or an empty optional if no
+   * Used to get the holdings based on specific specifications, or returns an empty optional if no
    * holdings for the specifications exists.
+   *
+   * @param region   The region to use
+   * @param currency The currency to use.
+   * @param type     The {@link Identifier identifier} of the holdings handler to use.
+   *
+   * @return The holdings based on specific specifications, or an empty optional if no holdings for
+   * the specifications exists.
    */
   public List<HoldingsEntry> getHoldings(final @NotNull String region,
-                                             final @NotNull UUID currency,
-                                             final @NotNull Identifier type) {
+                                         final @NotNull UUID currency,
+                                         final @NotNull Identifier type) {
 
     final Optional<Currency> currencyObject = TNECore.eco().currency().findCurrency(currency);
 
@@ -159,14 +165,14 @@ public class Account extends ReceiptBox {
   }
 
   /**
-   * Used to get the holdings based on specific specifications, or returns an empty optional
-   * if no holdings for the specifications exists.
+   * Used to get the holdings based on specific specifications, or returns an empty optional if no
+   * holdings for the specifications exists.
    *
    * @param region The region to use
-   * @param type The {@link Identifier identifier} of the holdings handler to use.
+   * @param type   The {@link Identifier identifier} of the holdings handler to use.
    *
-   * @return The holdings based on specific specifications, or an empty optional if no
-   * holdings for the specifications exists.
+   * @return The holdings based on specific specifications, or an empty optional if no holdings for
+   * the specifications exists.
    */
   public List<HoldingsEntry> getAllHoldings(final @NotNull String region,
                                             final @NotNull Identifier type) {
@@ -186,16 +192,19 @@ public class Account extends ReceiptBox {
 
   /**
    * Sets the holdings for the specified entry in this wallet.
+   *
    * @param entry The entry to set in this wallet.
    */
   public boolean setHoldings(final @NotNull HoldingsEntry entry) {
+
     return setHoldings(entry, EconomyManager.NORMAL);
   }
 
   /**
    * Sets the holdings for the specified entry and in this wallet.
+   *
    * @param entry The entry to set in this wallet.
-   * @param type The {@link Identifier identifier} of the holdings handler to use.
+   * @param type  The {@link Identifier identifier} of the holdings handler to use.
    */
   public boolean setHoldings(final @NotNull HoldingsEntry entry, final @NotNull Identifier type) {
 
@@ -207,10 +216,10 @@ public class Account extends ReceiptBox {
 
     if(currencyObject.isPresent()) {
       result = currencyObject.get().type().setHoldings(this,
-              region,
-              currencyObject.get(),
-              type,
-              entry.getAmount());
+                                                       region,
+                                                       currencyObject.get(),
+                                                       type,
+                                                       entry.getAmount());
     }
 
     if(result) {
@@ -231,46 +240,57 @@ public class Account extends ReceiptBox {
 
   @MapKey
   public UUID getIdentifier() {
+
     return identifier;
   }
 
   public String getName() {
+
     return name;
   }
 
   public void setName(String name) {
+
     this.name = name;
   }
 
   public long getCreationDate() {
+
     return creationDate;
   }
 
   public void setCreationDate(long creationDate) {
+
     this.creationDate = creationDate;
   }
 
   public String getPin() {
+
     return pin;
   }
 
   public void setPin(String pin) {
+
     this.pin = pin;
   }
 
   public AccountStatus getStatus() {
+
     return status;
   }
 
   public void setStatus(AccountStatus status) {
+
     this.status = status;
   }
 
   public Wallet getWallet() {
+
     return wallet;
   }
 
   public void setWallet(Wallet wallet) {
+
     this.wallet = wallet;
   }
 }

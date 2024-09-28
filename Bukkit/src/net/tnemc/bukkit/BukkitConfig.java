@@ -35,15 +35,18 @@ import java.util.Collections;
 public class BukkitConfig extends Config {
 
   private static BukkitConfig instance;
+
   public BukkitConfig() {
+
     super("bukkit.yml", "bukkit.yml", Collections.singletonList("Bukkit"),
-            LoaderSettings.builder().setAutoUpdate(true).build(),
-            UpdaterSettings.builder().setAutoSave(true).setVersioning(new BasicVersioning("Bukkit.config-version")).build());
+          LoaderSettings.builder().setAutoUpdate(true).build(),
+          UpdaterSettings.builder().setAutoSave(true).setVersioning(new BasicVersioning("Bukkit.config-version")).build());
 
     instance = this;
   }
 
   public static YamlDocument yaml() {
+
     return instance.getYaml();
   }
 }

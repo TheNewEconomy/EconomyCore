@@ -33,6 +33,7 @@ import java.util.UUID;
 public abstract class AccountHandler extends MessageHandler {
 
   public AccountHandler(String tag) {
+
     super(tag);
   }
 
@@ -46,7 +47,7 @@ public abstract class AccountHandler extends MessageHandler {
       final String accountName = in.readUTF();
 
       handle(account, accountName, server, in);
-    } catch (IOException e) {
+    } catch(IOException e) {
       e.printStackTrace();
     }
   }

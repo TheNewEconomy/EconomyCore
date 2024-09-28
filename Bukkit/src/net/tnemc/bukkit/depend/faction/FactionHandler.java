@@ -29,6 +29,7 @@ import net.tnemc.core.TNECore;
 public class FactionHandler {
 
   public static void addTypes() {
+
     TNECore.eco().account().addAccountType(FactionAccount.class, new FactionCheck().check());
   }
 }

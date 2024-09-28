@@ -43,11 +43,12 @@ public class SerialMember implements JSONAble<Member> {
    */
   @Override
   public JSONObject toJSON(Member member) {
+
     final JSONObject json = new JSONObject();
     json.put("id", member.getId().toString());
 
     JSONObject permissionsJson = new JSONObject();
-    member.getPermissions().forEach((permission, value) -> permissionsJson.put(permission, value));
+    member.getPermissions().forEach((permission, value)->permissionsJson.put(permission, value));
     json.put("permissions", permissionsJson);
 
     return json;
@@ -62,21 +63,22 @@ public class SerialMember implements JSONAble<Member> {
    */
   @Override
   public Member fromJSON(String serialized) {
+
     try {
       final JSONParser parser = new JSONParser();
       final JSONObject json = (JSONObject)parser.parse(serialized);
 
       final Member member = new Member(UUID.fromString((String)json.get("id")));
 
-      final JSONObject permissionsJson = (JSONObject) json.get("permissions");
-      permissionsJson.forEach((permission, value) -> {
+      final JSONObject permissionsJson = (JSONObject)json.get("permissions");
+      permissionsJson.forEach((permission, value)->{
         if(value instanceof Boolean) {
-          member.addPermission((String) permission, (Boolean) value);
+          member.addPermission((String)permission, (Boolean)value);
         }
       });
 
       return member;
-    } catch (ParseException | NumberFormatException | ClassCastException e) {
+    } catch(ParseException | NumberFormatException | ClassCastException e) {
       e.printStackTrace();
       return null;
     }

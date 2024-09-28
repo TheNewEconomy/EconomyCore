@@ -45,6 +45,7 @@ public class SerialHoldings implements JSONAble<HoldingsEntry> {
    */
   @Override
   public JSONObject toJSON(HoldingsEntry holdings) {
+
     final JSONObject json = new JSONObject();
 
     json.put("region", holdings.getRegion());
@@ -63,15 +64,16 @@ public class SerialHoldings implements JSONAble<HoldingsEntry> {
    */
   @Override
   public HoldingsEntry fromJSON(String serialized) {
+
     try {
       final JSONParser parser = new JSONParser();
       final JSONObject json = (JSONObject)parser.parse(serialized);
 
       return new HoldingsEntry((String)json.get("region"),
-              UUID.fromString((String)json.get("currency")),
-              new BigDecimal((String)json.get("amount")),
-              Identifier.fromID((String)json.get("handler")));
-    } catch (ParseException | NumberFormatException | ClassCastException e) {
+                               UUID.fromString((String)json.get("currency")),
+                               new BigDecimal((String)json.get("amount")),
+                               Identifier.fromID((String)json.get("handler")));
+    } catch(ParseException | NumberFormatException | ClassCastException e) {
       e.printStackTrace();
       return null;
     }

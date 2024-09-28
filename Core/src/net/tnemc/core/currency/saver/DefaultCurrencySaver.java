@@ -47,6 +47,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
 
   /**
    * Saves all currencies.
+   *
    * @param directory The directory used for saving.
    */
   @Override
@@ -64,6 +65,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
    */
   @Override
   public void saveCurrenciesUUID(File directory) {
+
     for(final Currency currency : TNECore.eco().currency().currencies()) {
       saveID(directory, currency);
     }
@@ -73,7 +75,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
    * Saves a specific currency
    *
    * @param directory The directory used for saving.
-   * @param currency The currency to save.
+   * @param currency  The currency to save.
    */
   @Override
   public void saveCurrency(final File directory, Currency currency) {
@@ -293,12 +295,13 @@ public class DefaultCurrencySaver implements CurrencySaver {
   /**
    * Saves a specific currency denomination
    *
-   * @param directory The directory used for saving.
+   * @param directory    The directory used for saving.
    * @param currency     The currency of the denomination.
    * @param denomination The denomination to save.
    */
   @Override
   public void saveDenomination(final File directory, Currency currency, Denomination denomination) {
+
     YamlDocument denom = null;
     try {
 

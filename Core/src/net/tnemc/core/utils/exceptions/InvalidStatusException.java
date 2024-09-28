@@ -27,11 +27,11 @@ package net.tnemc.core.utils.exceptions;
 public class InvalidStatusException extends Exception {
 
   /**
-   * Constructs a new exception with {@code null} as its detail message.
-   * The cause is not initialized, and may subsequently be initialized by a
-   * call to {@link #initCause}.
+   * Constructs a new exception with {@code null} as its detail message. The cause is not
+   * initialized, and may subsequently be initialized by a call to {@link #initCause}.
    */
   public InvalidStatusException(String missing) {
+
     super("The account status specified does not exist. Status: " + missing);
   }
 }

@@ -32,6 +32,7 @@ public class ReceiptTimeComparator implements Comparator<Receipt> {
 
   @Override
   public int compare(Receipt firstReceipt, Receipt secondReceipt) {
+
     return Long.compare(firstReceipt.getTime(), secondReceipt.getTime());
   }
 }

@@ -42,6 +42,7 @@ public class PlayerCloseInventoryListener {
   private final PluginContainer plugin;
 
   public PlayerCloseInventoryListener(PluginContainer plugin) {
+
     this.plugin = plugin;
   }
 
@@ -54,7 +55,8 @@ public class PlayerCloseInventoryListener {
   }
 
   public boolean isEnderChest(Container container) {
-    if (container instanceof BlockCarrier) {
+
+    if(container instanceof BlockCarrier) {
       Location<?, ?> location = ((BlockCarrier)container).location();
       return location.blockEntity().isPresent() && (location.blockEntity().get() instanceof EnderChest);
     }

@@ -29,8 +29,8 @@ import java.util.UUID;
  * Represents a record of a successful {@link Transaction transaction}. Similar to how in the real
  * world we get receipts for completed transactions, these are the same.
  *
- * @see Transaction
  * @author creatorfromhell
+ * @see Transaction
  * @since 0.1.2.0
  */
 public class Receipt {
@@ -51,12 +51,14 @@ public class Receipt {
   private boolean voided = false;
 
   public Receipt(final UUID id, final long time, final String type) {
+
     this.id = id;
     this.time = time;
     this.type = type;
   }
 
   public Receipt(final UUID id, final long time, final Transaction transaction) {
+
     this.id = id;
     this.time = time;
     this.type = transaction.getType();
@@ -69,6 +71,7 @@ public class Receipt {
   }
 
   public boolean voidTransaction() {
+
     if(voided) return false;
 
     Transaction transaction = new Transaction("void").source(source);
@@ -77,7 +80,7 @@ public class Receipt {
 
       final HoldingsModifier modifier = modifierFrom.counter();
       final BigDecimal tax = (modifier.isRemoval())? from.getTax()
-          : from.getTax().negate();
+                                                   : from.getTax().negate();
       modifier.modifier(tax);
 
       transaction = transaction.from(from.getId(), modifier);
@@ -87,16 +90,16 @@ public class Receipt {
 
       final HoldingsModifier modifier = modifierTo.counter();
       final BigDecimal tax = (modifier.isRemoval())? to.getTax()
-          : to.getTax().negate();
+                                                   : to.getTax().negate();
       modifier.modifier(tax);
 
       transaction = transaction.to(to.getId(), modifier);
     }
 
     try {
-      transaction.process((transactionResult -> {
+      transaction.process((transactionResult->{
         if(transactionResult.isSuccessful()) {
-              this.voided = true;
+          this.voided = true;
         }
       }));
     } catch(InvalidTransactionException e) {
@@ -106,70 +109,87 @@ public class Receipt {
   }
 
   public UUID getId() {
+
     return id;
   }
 
   public long getTime() {
+
     return time;
   }
 
   public String getType() {
+
     return type;
   }
 
   public ActionSource getSource() {
+
     return source;
   }
 
   public void setSource(final ActionSource source) {
+
     this.source = source;
   }
 
   public TransactionParticipant getFrom() {
+
     return from;
   }
 
   public void setFrom(TransactionParticipant from) {
+
     this.from = from;
   }
 
   public TransactionParticipant getTo() {
+
     return to;
   }
 
   public void setTo(TransactionParticipant to) {
+
     this.to = to;
   }
 
   public HoldingsModifier getModifierTo() {
+
     return modifierTo;
   }
 
   public void setModifierTo(HoldingsModifier modifierTo) {
+
     this.modifierTo = modifierTo;
   }
 
   public HoldingsModifier getModifierFrom() {
+
     return modifierFrom;
   }
 
   public void setModifierFrom(HoldingsModifier modifierFrom) {
+
     this.modifierFrom = modifierFrom;
   }
 
   public boolean isArchive() {
+
     return archive;
   }
 
   public void setArchive(boolean archive) {
+
     this.archive = archive;
   }
 
   public boolean isVoided() {
+
     return voided;
   }
 
   public void setVoided(boolean voided) {
+
     this.voided = voided;
   }
 }

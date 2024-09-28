@@ -53,6 +53,7 @@ public class TransactionMenu extends Menu {
   public static final int TRANSACTION_HISTORY_COUNT = 10;
 
   public TransactionMenu() {
+
     this.name = "transaction_menu";
     this.title = "Transactions";
     this.rows = 4;
@@ -90,18 +91,18 @@ public class TransactionMenu extends Menu {
       if(maxPages > 1) {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
-                .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))))
-                .withActions(new DataAction(TRANSACTION_PAGE_ID, prev), new SwitchPageAction(this.name, 1))
-                .withSlot(0)
-                .build());
+                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))))
+                                           .withActions(new DataAction(TRANSACTION_PAGE_ID, prev), new SwitchPageAction(this.name, 1))
+                                           .withSlot(0)
+                                           .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
-                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPage"), id))))
-                .withActions(new DataAction(TRANSACTION_PAGE_ID, next), new SwitchPageAction(this.name, 1))
-                .withSlot(8)
-                .build());
+                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPage"), id))))
+                                           .withActions(new DataAction(TRANSACTION_PAGE_ID, next), new SwitchPageAction(this.name, 1))
+                                           .withSlot(8)
+                                           .build());
       }
 
       int slot = 9;
@@ -132,7 +133,7 @@ public class TransactionMenu extends Menu {
     lore.add(Component.text("Click for information."));
 
     return new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-            .display(Component.text(transaction.toString())).lore(lore))
+                                   .display(Component.text(transaction.toString())).lore(lore))
             .withSlot(slot)
             .withActions(new SwitchPageAction(this.name, TRANSACTION_VIEW)).build();
   }

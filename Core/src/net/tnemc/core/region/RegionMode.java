@@ -40,10 +40,12 @@ public interface RegionMode {
   List<RegionType> accepted();
 
   default String defaultRegion() {
+
     return TNECore.eco().region().defaultRegion();
   }
 
   default String region(@NotNull final UUID player) {
+
     final Optional<PlayerProvider> provider = PluginCore.server().findPlayer(player);
     if(provider.isPresent()) {
       return region(provider.get());

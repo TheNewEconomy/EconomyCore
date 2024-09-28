@@ -35,6 +35,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 0.1.2.0
  */
 public class TrackingCheck implements TransactionCheck {
+
   /**
    * The unique string-based identifier for this check in order to be able to allow control over
    * what checks are running, and which ones may not have to be utilized. For instance, we don't
@@ -46,26 +47,28 @@ public class TrackingCheck implements TransactionCheck {
   @Override
   @MapKey
   public String identifier() {
+
     return "track";
   }
 
   /**
-   * This method is utilized to run the check on specific {@link TransactionParticipant participants}.
-   * This should return an {@link EconomyResponse response}.
+   * This method is utilized to run the check on specific
+   * {@link TransactionParticipant participants}. This should return an
+   * {@link EconomyResponse response}.
    *
    * @param transaction The {@link Transaction transaction} to perform the check on.
    * @param participant The {@link TransactionParticipant participant} to perform the check on.
    * @param modifier    The {@link HoldingsModifier modifier} related to the specific participant.
    *
    * @return The {@link EconomyResponse response} for this check. This should include a success or
-   * failure boolean along with a message for why it failed if it did. The messages for this response
-   * are ignored if the check was successful.
+   * failure boolean along with a message for why it failed if it did. The messages for this
+   * response are ignored if the check was successful.
    */
   @Override
   public EconomyResponse checkParticipant(Transaction transaction, @NotNull TransactionParticipant participant, HoldingsModifier modifier) {
 
     if(TNECore.eco().transaction().isTrack() &&
-        modifier.getModifier().compareTo(TNECore.eco().transaction().getAmount()) >= 0) {
+       modifier.getModifier().compareTo(TNECore.eco().transaction().getAmount()) >= 0) {
       transaction.setTrack(true);
     }
 

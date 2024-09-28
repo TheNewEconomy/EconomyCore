@@ -35,12 +35,14 @@ public class PageSwitchWithClose extends IconAction {
   private final int page;
 
   public PageSwitchWithClose(String menu, int page) {
+
     super(ActionType.ANY);
     this.menu = menu;
     this.page = page;
   }
 
   public PageSwitchWithClose(String menu, int page, ActionType type) {
+
     super(type);
     this.menu = menu;
     this.page = page;

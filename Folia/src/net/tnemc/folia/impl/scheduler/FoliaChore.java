@@ -31,6 +31,7 @@ import net.tnemc.plugincore.core.compatibility.scheduler.ChoreExecution;
 public class FoliaChore extends Chore<ScheduledTask> {
 
   public FoliaChore(ScheduledTask task, ChoreExecution execution) {
+
     super(task, execution);
   }
 
@@ -39,6 +40,7 @@ public class FoliaChore extends Chore<ScheduledTask> {
    */
   @Override
   public void cancel() {
+
     task.cancel();
   }
 }

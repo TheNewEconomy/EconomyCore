@@ -43,6 +43,7 @@ public class TransactionCommand {
 
   //[page #]
   public static void away(CmdSource<?> sender, int page) {
+
     final Optional<Account> account = BaseCommand.account(sender, "away");
 
     if(sender.player().isPresent() && MainConfig.yaml().getBoolean("Core.Commands.GUIAlternatives", true)) {
@@ -81,6 +82,7 @@ public class TransactionCommand {
 
   //[page:#] [world:name/all] [player:name]
   public static void history(CmdSource<?> sender, int page, String region, Account account) {
+
     if(sender.player().isPresent() && MainConfig.yaml().getBoolean("Core.Commands.GUIAlternatives", true)) {
       sender.player().get().inventory().openMenu(sender.player().get(), "transaction_menu");
       return;
@@ -105,17 +107,17 @@ public class TransactionCommand {
       final Optional<Receipt> receipt = account.findReceipt(entry.getValue());
       if(receipt.isPresent()) {
 
-         String from = "None";
-         final Optional<Account> fromACC = receipt.get().getFrom().asAccount();
-         if(fromACC.isPresent()) {
-           from = fromACC.get().getName();
-         }
+        String from = "None";
+        final Optional<Account> fromACC = receipt.get().getFrom().asAccount();
+        if(fromACC.isPresent()) {
+          from = fromACC.get().getName();
+        }
 
-         String to = "None";
-         final Optional<Account> toACC = receipt.get().getTo().asAccount();
-         if(toACC.isPresent()) {
-           to = toACC.get().getName();
-         }
+        String to = "None";
+        final Optional<Account> toACC = receipt.get().getTo().asAccount();
+        if(toACC.isPresent()) {
+          to = toACC.get().getName();
+        }
 
         final MessageData awayEntry = new MessageData("Messages.Transaction.HistoryEntry");
         awayEntry.addReplacement("$id", entry.getValue().toString());
@@ -129,6 +131,7 @@ public class TransactionCommand {
 
   //<uuid>
   public static void info(CmdSource<?> sender, UUID uuid) {
+
     final Optional<Receipt> receipt = TransactionManager.receipts().getReceiptByUUID(uuid);
 
     if(receipt.isEmpty()) {
@@ -146,6 +149,7 @@ public class TransactionCommand {
 
   //<uuid>
   public static void voidT(CmdSource<?> sender, Account account, UUID uuid) {
+
     final Optional<Receipt> receipt = account.findReceipt(uuid);
 
     if(receipt.isEmpty()) {

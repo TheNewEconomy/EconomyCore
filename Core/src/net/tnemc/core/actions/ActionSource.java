@@ -25,8 +25,8 @@ import java.util.Locale;
 import java.util.UUID;
 
 /**
- * Represents the source of an action that was performed. This could be anything from balance changes
- * in the economy API to other API-related actions.
+ * Represents the source of an action that was performed. This could be anything from balance
+ * changes in the economy API to other API-related actions.
  *
  * @author creatorfromhell
  * @since 0.1.2.0
@@ -34,14 +34,13 @@ import java.util.UUID;
 public interface ActionSource {
 
   /**
-   *
    * Used to get the name of the source of the action.
    *
    * Please note: There is no guarantee of uniqueness.
    *
-   * @return The name of the source for a specific action. This could be user-friendly
-   * or not. This should be the name of the source that has caused this action to occur. For
-   * instance, a plugin name.
+   * @return The name of the source for a specific action. This could be user-friendly or not. This
+   * should be the name of the source that has caused this action to occur. For instance, a plugin
+   * name.
    *
    * @since 0.1.2.0
    */
@@ -49,11 +48,13 @@ public interface ActionSource {
 
   /**
    * Used to get the type of action source.
+   *
    * @return The name of the type of action source.
    */
   String type();
 
   default String asString() {
+
     return type() + " " + name();
   }
 
@@ -62,7 +63,7 @@ public interface ActionSource {
     if(type.toLowerCase(Locale.ROOT).equals("player")) {
       try {
         return new PlayerSource(UUID.fromString(name));
-      } catch(Exception ignore) {}
+      } catch(Exception ignore) { }
     } else {
       return new PluginSource(name);
     }

@@ -39,6 +39,7 @@ public class PlayerInteractListener implements Listener {
 
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onInteract(final PlayerInteractEvent event) {
+
     final PlayerProvider provider = PluginCore.server().initializePlayer(event.getPlayer());
 
     final ItemStack stack = event.getItem();
@@ -46,7 +47,7 @@ public class PlayerInteractListener implements Listener {
     if(stack == null) return;
 
     if(event.getAction().equals(Action.RIGHT_CLICK_AIR) ||
-    event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+       event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 
       new PlayerInteractHandler().handle(provider, BukkitItemStack.locale(stack));
     }

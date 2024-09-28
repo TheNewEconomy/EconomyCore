@@ -41,10 +41,12 @@ public class SerialDenomination implements JSONAble<Denomination> {
    * Used to serialize this object to a JSON-valid string.
    *
    * @param denom The object to serialize.
+   *
    * @return The {@link JSONObject} associated with the JSON-valid String.
    */
   @Override
   public JSONObject toJSON(Denomination denom) {
+
     final JSONObject json = new JSONObject();
     json.put("single", denom.singular());
     json.put("plural", denom.plural());
@@ -66,35 +68,38 @@ public class SerialDenomination implements JSONAble<Denomination> {
 
   /**
    * Used to generate information for this object from
+   *
    * @param serialized The JSON-valid String that we are going to deserialize.
+   *
    * @return The object that was deserialized from the JSON string.
    */
   @Override
   public Denomination fromJSON(String serialized) {
+
     final JSONParser parser = new JSONParser();
     JSONObject jsonObject = null;
     try {
-      jsonObject = (JSONObject) parser.parse(serialized);
+      jsonObject = (JSONObject)parser.parse(serialized);
 
       final BigDecimal weight = new BigDecimal(jsonObject.get("weight").toString());
 
       final Denomination denomination = (jsonObject.containsKey("item"))?
-              new ItemDenomination(weight) :
-              new Denomination(weight);
+                                        new ItemDenomination(weight) :
+                                        new Denomination(weight);
 
       denomination.setSingle((String)jsonObject.get("single"));
       denomination.setPlural((String)jsonObject.get("plural"));
 
       if(denomination instanceof ItemDenomination itemDenomination) {
 
-        itemDenomination.setEnchantments((List<String>) jsonObject.get("enchantments"));
-        itemDenomination.setFlags((List<String>) jsonObject.get("flags"));
-        itemDenomination.setLore((List<Component>) jsonObject.get("lore"));
-        itemDenomination.setMaterial((String) jsonObject.get("material"));
-        itemDenomination.setDamage(((Long) jsonObject.get("damage")).shortValue());
-        itemDenomination.setName((String) jsonObject.get("name"));
-        itemDenomination.setCustomModel((Integer) jsonObject.get("customModel"));
-        itemDenomination.setTexture((String) jsonObject.get("texture"));
+        itemDenomination.setEnchantments((List<String>)jsonObject.get("enchantments"));
+        itemDenomination.setFlags((List<String>)jsonObject.get("flags"));
+        itemDenomination.setLore((List<Component>)jsonObject.get("lore"));
+        itemDenomination.setMaterial((String)jsonObject.get("material"));
+        itemDenomination.setDamage(((Long)jsonObject.get("damage")).shortValue());
+        itemDenomination.setName((String)jsonObject.get("name"));
+        itemDenomination.setCustomModel((Integer)jsonObject.get("customModel"));
+        itemDenomination.setTexture((String)jsonObject.get("texture"));
 
         return itemDenomination;
       }

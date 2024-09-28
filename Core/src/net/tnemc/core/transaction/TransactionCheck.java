@@ -25,11 +25,11 @@ import net.tnemc.plugincore.core.io.maps.MapKey;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents a check that happens during the processing of a {@link Transaction transaction}.
- * These could be anything from validating balances, to validating inventory space if required.
+ * Represents a check that happens during the processing of a {@link Transaction transaction}. These
+ * could be anything from validating balances, to validating inventory space if required.
  *
- * @see Transaction
  * @author creatorfromhell
+ * @see Transaction
  * @since 0.1.2.0
  */
 public interface TransactionCheck {
@@ -50,9 +50,10 @@ public interface TransactionCheck {
    * {@link EconomyResponse response}.
    *
    * @param transaction The {@link Transaction transaction} to perform the check on.
+   *
    * @return The {@link EconomyResponse response} for this check. This should include a success or
-   * failure boolean along with a message for why it failed if it did. The messages for this response
-   * are ignored if the check was successful.
+   * failure boolean along with a message for why it failed if it did. The messages for this
+   * response are ignored if the check was successful.
    */
   default EconomyResponse process(final Transaction transaction) {
 
@@ -80,15 +81,17 @@ public interface TransactionCheck {
   }
 
   /**
-   * This method is utilized to run the check on specific {@link TransactionParticipant participants}.
-   * This should return an {@link EconomyResponse response}.
+   * This method is utilized to run the check on specific
+   * {@link TransactionParticipant participants}. This should return an
+   * {@link EconomyResponse response}.
    *
    * @param transaction The {@link Transaction transaction} to perform the check on.
    * @param participant The {@link TransactionParticipant participant} to perform the check on.
-   * @param modifier The {@link HoldingsModifier modifier} related to the specific participant.
+   * @param modifier    The {@link HoldingsModifier modifier} related to the specific participant.
+   *
    * @return The {@link EconomyResponse response} for this check. This should include a success or
-   * failure boolean along with a message for why it failed if it did. The messages for this response
-   * are ignored if the check was successful.
+   * failure boolean along with a message for why it failed if it did. The messages for this
+   * response are ignored if the check was successful.
    */
   EconomyResponse checkParticipant(Transaction transaction,
                                    @NotNull TransactionParticipant participant,

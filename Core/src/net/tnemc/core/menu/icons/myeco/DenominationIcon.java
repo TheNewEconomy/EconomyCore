@@ -39,9 +39,10 @@ import static net.tnemc.core.menu.MyEcoMenu.DENOMINATION_EDIT_PAGE;
 public class DenominationIcon extends SwitchPageIcon {
 
   public DenominationIcon(int slot, final Denomination denomination) {
+
     super(slot, PluginCore.server().stackBuilder().of((denomination instanceof ItemDenomination)? ((ItemDenomination)denomination).getMaterial() : "PAPER", 1)
-                    .display(Component.text(denomination.weight().toString())).lore(Collections.singletonList(Component.text("Click to edit denomination"))),
-            "my_eco", DENOMINATION_EDIT_PAGE, ActionType.ANY, false);
+                  .display(Component.text(denomination.weight().toString())).lore(Collections.singletonList(Component.text("Click to edit denomination"))),
+          "my_eco", DENOMINATION_EDIT_PAGE, ActionType.ANY, false);
 
 
     actions.add(new DataAction("ACTIVE_DENOMINATION", denomination));

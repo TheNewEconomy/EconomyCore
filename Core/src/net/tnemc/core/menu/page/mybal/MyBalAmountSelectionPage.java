@@ -45,23 +45,25 @@ public class MyBalAmountSelectionPage extends AmountSelectionPage {
 
   public MyBalAmountSelectionPage(String amtID, String returnMenu, String menuName, int menuPage,
                                   int returnPage, final Consumer<AmountSelectionHandler> selectionListener) {
+
     super(amtID, returnMenu, menuName, menuPage, returnPage, selectionListener);
   }
 
   @Override
   public void handle(PageOpenCallback callback) {
+
     super.handle(callback);
 
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-              .display(Component.text("Add Max"))
-              .lore(Collections.singletonList(Component.text("Adds your entire balance."))))
-              .withActions(new SwitchPageAction(menuName, menuPage))
-              .withClick((click)->balAddClick(click, ((BigDecimal)viewer.get().dataOrDefault(MyBalMenu.ACTION_MAX_HOLDINGS, BigDecimal.ZERO))))
-              .withSlot(31)
-              .build());
+                                                         .display(Component.text("Add Max"))
+                                                         .lore(Collections.singletonList(Component.text("Adds your entire balance."))))
+                                         .withActions(new SwitchPageAction(menuName, menuPage))
+                                         .withClick((click)->balAddClick(click, ((BigDecimal)viewer.get().dataOrDefault(MyBalMenu.ACTION_MAX_HOLDINGS, BigDecimal.ZERO))))
+                                         .withSlot(31)
+                                         .build());
 
       final Optional<Object> name = viewer.get().findData(MyBalMenu.ACTION_ACCOUNT_ID + "_NAME");
       final Optional<Object> id = viewer.get().findData(MyBalMenu.ACTION_ACCOUNT_ID + "_ID");
@@ -77,15 +79,15 @@ public class MyBalAmountSelectionPage extends AmountSelectionPage {
             profile.setUuid(account);
           }
 
-        } catch(Exception ignore) {}
+        } catch(Exception ignore) { }
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PLAYER_HEAD", 1)
-                .display(Component.text((String)name.get()))
-                .lore(Collections.singletonList(Component.text("Player action will be performed on.")))
-                .profile(profile))
-                .withActions(new SwitchPageAction(menuName, menuPage))
-                .withSlot(13)
-                .build());
+                                                           .display(Component.text((String)name.get()))
+                                                           .lore(Collections.singletonList(Component.text("Player action will be performed on.")))
+                                                           .profile(profile))
+                                           .withActions(new SwitchPageAction(menuName, menuPage))
+                                           .withSlot(13)
+                                           .build());
       }
     }
   }

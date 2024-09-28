@@ -29,7 +29,7 @@ import net.tnemc.plugincore.core.api.callback.Callback;
  */
 public class AccountTypesCallback implements Callback {
 
-  
+
   /**
    * The name of this callback.
    *
@@ -37,6 +37,7 @@ public class AccountTypesCallback implements Callback {
    */
   @Override
   public String name() {
+
     return TNECallbacks.ACCOUNT_TYPES.toString();
   }
 }

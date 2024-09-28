@@ -28,7 +28,9 @@ import net.tnemc.core.api.callback.TNECallbacks;
  * @since 0.1.2.0
  */
 public class AccountLoadCallback extends AccountCallback {
+
   public AccountLoadCallback(Account account) {
+
     super(account);
   }
 
@@ -39,6 +41,7 @@ public class AccountLoadCallback extends AccountCallback {
    */
   @Override
   public String name() {
+
     return TNECallbacks.ACCOUNT_LOAD.id();
   }
 }

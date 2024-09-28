@@ -30,8 +30,8 @@ import java.util.List;
 /**
  * Represents a denomination for an {@link ItemCurrency currency}.
  *
- * @see ItemCurrency
  * @author creatorfromhell
+ * @see ItemCurrency
  * @since 0.1.2.0
  */
 public class ItemDenomination extends Denomination {
@@ -47,66 +47,81 @@ public class ItemDenomination extends Denomination {
   private String texture = "";
 
   public ItemDenomination(BigDecimal weight, String material) {
+
     this(weight, material, (short)0);
   }
 
   public ItemDenomination(BigDecimal weight, String material, short damage) {
+
     super(weight);
     this.material = material;
     this.damage = damage;
   }
 
   public ItemDenomination(BigDecimal weight) {
+
     super(weight);
   }
 
   public List<String> getEnchantments() {
+
     return enchantments;
   }
 
   public void setEnchantments(List<String> enchantments) {
+
     this.enchantments.clear();
     this.enchantments.addAll(enchantments);
   }
 
   public List<String> getFlags() {
+
     return flags;
   }
 
   public void setFlags(List<String> flags) {
+
     this.flags.clear();
     this.flags.addAll(flags);
   }
 
   public String getMaterial() {
+
     return material;
   }
 
   public void setMaterial(String material) {
+
     this.material = material;
   }
 
   public short getDamage() {
+
     return damage;
   }
 
   public void setDamage(short damage) {
+
     this.damage = damage;
   }
 
   public String getName() {
+
     return name;
   }
 
   public void setName(String name) {
+
     this.name = name;
   }
 
   public List<Component> getLore() {
+
     return lore;
   }
 
   public LinkedList<String> getLoreAsString() {
+
     final LinkedList<String> loreAsString = new LinkedList<>();
     for(Component component : lore) {
       loreAsString.add(MiniMessage.miniMessage().serialize(component));
@@ -115,23 +130,28 @@ public class ItemDenomination extends Denomination {
   }
 
   public void setLore(List<Component> lore) {
+
     this.lore.clear();
     this.lore.addAll(lore);
   }
 
   public int getCustomModel() {
+
     return customModel;
   }
 
   public void setCustomModel(int customModel) {
+
     this.customModel = customModel;
   }
 
   public String getTexture() {
+
     return texture;
   }
 
   public void setTexture(String texture) {
+
     this.texture = texture;
   }
 }

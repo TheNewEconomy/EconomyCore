@@ -39,6 +39,7 @@ public class StatusSuggestion implements SuggestionProvider {
 
   @Override
   public @NotNull Collection<String> getSuggestions(@NotNull List<String> list, @NotNull CommandActor commandActor, @NotNull ExecutableCommand executableCommand) throws Throwable {
+
     return TNECore.eco().account().getStatuses().values().stream().map(AccountStatus::identifier).collect(Collectors.toList());
   }
 }

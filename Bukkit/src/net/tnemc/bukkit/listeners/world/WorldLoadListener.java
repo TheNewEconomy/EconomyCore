@@ -35,6 +35,7 @@ public class WorldLoadListener implements Listener {
 
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onLoad(final WorldLoadEvent event) {
+
     new RegionLoadHandler().handle(event.getWorld().getName(), RegionType.WORLD);
   }
 }

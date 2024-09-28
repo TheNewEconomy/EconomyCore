@@ -32,6 +32,7 @@ public class ReceiptVoidComparator implements Comparator<Receipt> {
 
   @Override
   public int compare(Receipt firstReceipt, Receipt secondReceipt) {
+
     return Boolean.compare(firstReceipt.isVoided(), secondReceipt.isVoided());
   }
 }

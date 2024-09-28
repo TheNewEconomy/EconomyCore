@@ -41,47 +41,50 @@ public class Wallet {
   private final Map<String, RegionHoldings> holdings = new ConcurrentHashMap<>();
 
   /**
-   * Used to get the holdings based on specific specifications, or returns an empty optional
-   * if no holdings for the specifications exists.
+   * Used to get the holdings based on specific specifications, or returns an empty optional if no
+   * holdings for the specifications exists.
    *
    * @param region The region to use
    *
-   * @return The holdings based on specific specifications, or an empty optional if no
-   * holdings for the specifications exists.
+   * @return The holdings based on specific specifications, or an empty optional if no holdings for
+   * the specifications exists.
    */
   public Optional<RegionHoldings> getHoldings(final @NotNull String region) {
+
     return Optional.ofNullable(holdings.get(region));
   }
 
   /**
-   * Used to get the holdings based on specific specifications, or returns an empty optional
-   * if no holdings for the specifications exists.
+   * Used to get the holdings based on specific specifications, or returns an empty optional if no
+   * holdings for the specifications exists.
    *
-   * @param region The region to use
+   * @param region   The region to use
    * @param currency The currency to use.
    *
-   * @return The holdings based on specific specifications, or an empty optional if no
-   * holdings for the specifications exists.
+   * @return The holdings based on specific specifications, or an empty optional if no holdings for
+   * the specifications exists.
    */
   public Optional<HoldingsEntry> getHoldings(final @NotNull String region,
                                              final @NotNull UUID currency) {
+
     return getHoldings(region, currency, EconomyManager.NORMAL);
   }
 
   /**
-   * Used to get the holdings based on specific specifications, or returns an empty optional
-   * if no holdings for the specifications exists.
-   *
-   * @param region The region to use
-   * @param currency The currency to use.
-   * @param type The {@link Identifier type} to use.
-   *
-   * @return The holdings based on specific specifications, or an empty optional if no
+   * Used to get the holdings based on specific specifications, or returns an empty optional if no
    * holdings for the specifications exists.
+   *
+   * @param region   The region to use
+   * @param currency The currency to use.
+   * @param type     The {@link Identifier type} to use.
+   *
+   * @return The holdings based on specific specifications, or an empty optional if no holdings for
+   * the specifications exists.
    */
   public Optional<HoldingsEntry> getHoldings(final @NotNull String region,
                                              final @NotNull UUID currency,
                                              final @NotNull Identifier type) {
+
     if(holdings.containsKey(region)) {
       return holdings.get(region).getHoldingsEntry(currency, type);
     }
@@ -92,18 +95,19 @@ public class Wallet {
    * Used to get the holdings based on specific specifications, or returns the specified default
    * value if no holdings for the specifications exists.
    *
-   * @param region The region to use
-   * @param currency The currency to use.
-   * @param type The {@link Identifier type} to use.
+   * @param region       The region to use
+   * @param currency     The currency to use.
+   * @param type         The {@link Identifier type} to use.
    * @param defaultValue The default value to return if nothing exists.
    *
    * @return The holdings based on specific specifications, or the specified default value if no
    * holdings for the specifications exists.
    */
   public HoldingsEntry getHoldings(final @NotNull String region,
-                                             final @NotNull UUID currency,
-                                             final @NotNull Identifier type,
-                                             final @NotNull HoldingsEntry defaultValue) {
+                                   final @NotNull UUID currency,
+                                   final @NotNull Identifier type,
+                                   final @NotNull HoldingsEntry defaultValue) {
+
     if(holdings.containsKey(region)) {
       return holdings.get(region).getHoldingsEntry(currency, type).orElse(defaultValue);
     }
@@ -112,6 +116,7 @@ public class Wallet {
 
   /**
    * Sets the holdings for the specified entry and in this wallet.
+   *
    * @param entry The entry to set in this wallet.
    */
   public void setHoldings(final @NotNull HoldingsEntry entry) {
@@ -130,6 +135,7 @@ public class Wallet {
    * @param modifier The modifier to use
    */
   public void modifyHoldings(final @NotNull HoldingsModifier modifier) {
+
     modifyHoldings(modifier, EconomyManager.NORMAL);
   }
 
@@ -138,7 +144,7 @@ public class Wallet {
    * currency and type it will set the holdings to the modifier.
    *
    * @param modifier The modifier to use
-   * @param type The type to use.
+   * @param type     The type to use.
    */
   public void modifyHoldings(final @NotNull HoldingsModifier modifier, Identifier type) {
 
@@ -154,18 +160,22 @@ public class Wallet {
 
   /**
    * Used to delete specific holdings from this wallet holder.
+   *
    * @param region The region from which to delete the holdings
    */
   public void deleteHoldings(final @NotNull String region) {
+
     holdings.remove(region);
   }
 
   /**
    * Used to delete specific holdings from this wallet holder.
-   * @param region The region from which to delete the holdings
+   *
+   * @param region   The region from which to delete the holdings
    * @param currency The currency from which to delete the holdings
    */
   public void deleteHoldings(final @NotNull String region, final @NotNull UUID currency) {
+
     if(holdings.containsKey(region)) {
       holdings.get(region).getHoldings().remove(currency);
     }
@@ -173,9 +183,10 @@ public class Wallet {
 
   /**
    * Used to delete specific holdings from this wallet holder.
-   * @param region The region from which to delete the holdings
+   *
+   * @param region   The region from which to delete the holdings
    * @param currency The currency from which to delete the holdings
-   * @param type The {@link Identifier type} from which to delete the holdings.
+   * @param type     The {@link Identifier type} from which to delete the holdings.
    */
   public void deleteHoldings(final @NotNull String region,
                              final @NotNull UUID currency,
@@ -188,15 +199,18 @@ public class Wallet {
 
   //delete all holdings
   public void deleteAllHoldings() {
+
     holdings.clear();
   }
 
   /**
    * Used to merge another {@link Wallet wallet} into this one. After it has been merged, the old
    * wallet will have all of its holdings cleared.
+   *
    * @param wallet The other wallet to merge.
    */
   public void merge(@NotNull Wallet wallet) {
+
     for(RegionHoldings region : wallet.getHoldings().values()) {
       for(CurrencyHoldings currency : region.getHoldings().values()) {
         for(Map.Entry<String, HoldingsEntry> entry : currency.getHoldings().entrySet()) {
@@ -211,11 +225,13 @@ public class Wallet {
   /**
    * Checks if the specified region contains the given currency in the wallet.
    *
-   * @param region The region to check.
+   * @param region   The region to check.
    * @param currency The currency to check.
+   *
    * @return true if the region contains the currency in the wallet, false otherwise.
    */
   public boolean contains(final @NotNull String region, final @NotNull UUID currency) {
+
     return holdings.containsKey(region) && holdings.get(region).containsCurrency(currency);
   }
 
@@ -242,9 +258,11 @@ public class Wallet {
   /**
    * Retrieves the holdings map for the wallet.
    *
-   * @return A map of region names to RegionHoldings objects representing the holdings for each region.
+   * @return A map of region names to RegionHoldings objects representing the holdings for each
+   * region.
    */
   public Map<String, RegionHoldings> getHoldings() {
+
     return holdings;
   }
 }

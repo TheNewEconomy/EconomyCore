@@ -50,26 +50,31 @@ public class PaperCore extends TNECore {
   private BukkitConfig bukkitConfig;
 
   public PaperCore(JavaPlugin plugin) {
+
     this.plugin = plugin;
   }
 
   @Override
   public void registerMenuHandler() {
+
     this.menuHandler = new PaperMenuHandler(plugin, true);
   }
 
   @Override
   public void registerCommandHandler() {
+
     command = BukkitCommandHandler.create(plugin);
   }
 
   @Override
   public String commandHelpWriter(ExecutableCommand executableCommand, CommandActor commandActor) {
+
     return "";
   }
 
   @Override
   public void registerConfigs() {
+
     super.registerConfigs();
 
     this.bukkitConfig = new BukkitConfig();
@@ -80,6 +85,7 @@ public class PaperCore extends TNECore {
 
   @Override
   public void registerCommands() {
+
     super.registerCommands();
 
     //Register our commands
@@ -92,6 +98,7 @@ public class PaperCore extends TNECore {
 
   @Override
   public void registerCallbacks(CallbackManager callbackManager) {
+
     super.registerCallbacks(callbackManager);
     callbackManager.addConsumer(TNECallbacks.ACCOUNT_TYPES.toString(), (callback->{
 
@@ -112,14 +119,17 @@ public class PaperCore extends TNECore {
 
   @Override
   public BukkitItemCalculations itemCalculations() {
+
     return new BukkitItemCalculations();
   }
 
   public static PaperCore instance() {
+
     return (PaperCore)TNECore.instance();
   }
 
   public JavaPlugin getPlugin() {
+
     return plugin;
   }
 }
