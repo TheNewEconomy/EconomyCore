@@ -90,6 +90,20 @@ TNE has some minimum requirements that should be followed.
 - MariaDB 10.7.0+
 - Java 17+
 
+## Contributing
+
+Contributions to TheNewEconomy are welcome and encouraged! Whether you're fixing a bug, adding a new feature, or improving documentation, we would love your help.
+
+However, to ensure the project stays consistent and manageable, we ask that you follow our [contributing guidelines](.contributing/contributing.md) before submitting a pull request.
+
+Please make sure to:
+
+- Sign the Contributor License Agreement (CLA) if this is your first contribution when it appears in the Pull Request.
+- Follow the coding standards and branch naming conventions outlined in the guidelines.
+- Use the required IntelliJ plugin **Final Obsession** for code quality and consistency.
+
+Thank you for your contributions!
+
 ## Project Support
 
 We have some organizations that provide open-source licenses to help support this project.
