@@ -49,7 +49,7 @@ public class TransactionInfoPage {
   private final int returnPage;
   private final String transactionID;
 
-  public TransactionInfoPage(String returnMenu, int returnPage, String transactionID) {
+  public TransactionInfoPage(final String returnMenu, final int returnPage, final String transactionID) {
 
     this.returnMenu = returnMenu;
     this.returnPage = returnPage;

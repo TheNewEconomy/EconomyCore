@@ -32,7 +32,7 @@ import net.tnemc.bungee.message.MessageManager;
 public class PlayerConnectListener implements Listener {
 
   @EventHandler
-  public void onMessage(ServerSwitchEvent event) {
+  public void onMessage(final ServerSwitchEvent event) {
 
     if(event.getPlayer().getServer().getInfo().getPlayers().size() <= 1) {
       MessageManager.instance().backlog(event.getPlayer().getServer().getInfo().getSocketAddress().toString());

@@ -41,7 +41,7 @@ public class TopCurrency {
   private final String region;
   private final UUID currency;
 
-  public TopCurrency(String region, UUID currency) {
+  public TopCurrency(final String region, final UUID currency) {
 
     this.region = region;
     this.currency = currency;
@@ -57,7 +57,7 @@ public class TopCurrency {
 
   public void load() {
 
-    for(Account account : TNECore.eco().account().getAccounts().values()) {
+    for(final Account account : TNECore.eco().account().getAccounts().values()) {
       if(excluded(account.getName())) continue;
 
       balances.put(account.getHoldingsTotal(region, currency), account.getName());
@@ -66,11 +66,11 @@ public class TopCurrency {
 
   public boolean excluded(final String name) {
 
-    for(Pattern pattern : TopManager.instance().getRegexExclusions()) {
+    for(final Pattern pattern : TopManager.instance().getRegexExclusions()) {
       if(pattern.matcher(name).matches()) return true;
     }
 
-    for(String str : TopManager.instance().getExclusions()) {
+    for(final String str : TopManager.instance().getExclusions()) {
       if(name.contains(str)) return true;
     }
     return false;

@@ -44,7 +44,7 @@ public class SortedHistory {
   private final UUID account;
   private long lastSort;
 
-  public SortedHistory(UUID account) {
+  public SortedHistory(final UUID account) {
 
     this.account = account;
     this.lastSort = -1;
@@ -64,7 +64,7 @@ public class SortedHistory {
 
     if(acc.isPresent()) {
       int i = 0;
-      for(Receipt receipt : TransactionManager.receipts().getReceiptsByParticipant(acc.get().getIdentifier())) {
+      for(final Receipt receipt : TransactionManager.receipts().getReceiptsByParticipant(acc.get().getIdentifier())) {
         receipts.put(receipt.getTime(), receipt.getId());
 
         if(i >= 200) {
@@ -87,8 +87,8 @@ public class SortedHistory {
     final int start = ((page * 5) - 5) + 1;
     final int end = start + 5;
 
-    int i = 1;
-    for(Map.Entry<Long, UUID> entry : receipts.entrySet()) {
+    final int i = 1;
+    for(final Map.Entry<Long, UUID> entry : receipts.entrySet()) {
       if(i < start) continue;
 
       values.put(entry.getKey(), entry.getValue());

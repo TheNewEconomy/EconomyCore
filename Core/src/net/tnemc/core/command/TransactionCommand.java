@@ -42,7 +42,7 @@ import java.util.UUID;
 public class TransactionCommand {
 
   //[page #]
-  public static void away(CmdSource<?> sender, int page) {
+  public static void away(final CmdSource<?> sender, final int page) {
 
     final Optional<Account> account = BaseCommand.account(sender, "away");
 
@@ -67,7 +67,7 @@ public class TransactionCommand {
     heading.addReplacement("$page_top", String.valueOf(away.get().maxPages()));
     sender.message(heading);
 
-    for(Map.Entry<Long, UUID> entry : away.get().getPage(page).entrySet()) {
+    for(final Map.Entry<Long, UUID> entry : away.get().getPage(page).entrySet()) {
 
       final Optional<Receipt> receipt = account.get().findReceipt(entry.getValue());
       if(receipt.isPresent()) {
@@ -81,7 +81,7 @@ public class TransactionCommand {
   }
 
   //[page:#] [world:name/all] [player:name]
-  public static void history(CmdSource<?> sender, int page, String region, Account account) {
+  public static void history(final CmdSource<?> sender, final int page, String region, final Account account) {
 
     if(sender.player().isPresent() && MainConfig.yaml().getBoolean("Core.Commands.GUIAlternatives", true)) {
       sender.player().get().inventory().openMenu(sender.player().get(), "transaction_menu");
@@ -102,7 +102,7 @@ public class TransactionCommand {
     heading.addReplacement("$page_top", String.valueOf(sorted.maxPages()));
     sender.message(heading);
 
-    for(Map.Entry<Long, UUID> entry : sorted.getPage(page).entrySet()) {
+    for(final Map.Entry<Long, UUID> entry : sorted.getPage(page).entrySet()) {
 
       final Optional<Receipt> receipt = account.findReceipt(entry.getValue());
       if(receipt.isPresent()) {
@@ -130,7 +130,7 @@ public class TransactionCommand {
   }
 
   //<uuid>
-  public static void info(CmdSource<?> sender, UUID uuid) {
+  public static void info(final CmdSource<?> sender, final UUID uuid) {
 
     final Optional<Receipt> receipt = TransactionManager.receipts().getReceiptByUUID(uuid);
 
@@ -148,7 +148,7 @@ public class TransactionCommand {
   }
 
   //<uuid>
-  public static void voidT(CmdSource<?> sender, Account account, UUID uuid) {
+  public static void voidT(final CmdSource<?> sender, final Account account, final UUID uuid) {
 
     final Optional<Receipt> receipt = account.findReceipt(uuid);
 

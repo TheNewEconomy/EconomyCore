@@ -53,7 +53,7 @@ public class ShortenJRule implements FormatRule {
    * @return The formatted string.
    */
   @Override
-  public String format(@Nullable Account account, HoldingsEntry entry, String format) {
+  public String format(@Nullable final Account account, final HoldingsEntry entry, String format) {
 
     final Monetary monetary = entry.asMonetary();
 
@@ -80,7 +80,7 @@ public class ShortenJRule implements FormatRule {
     return format.replace("<short.amount>", builder.toString());
   }
 
-  private String build(final Currency currency, String working, final StringBuilder builder) {
+  private String build(final Currency currency, final String working, final StringBuilder builder) {
 
     final int strLength = working.length() - 1;
     final int multiple = (strLength / 4) * 4;
@@ -88,7 +88,7 @@ public class ShortenJRule implements FormatRule {
     final int symbol = multiple / 4;
     final StringBuilder workingBuilder = new StringBuilder();
 
-    char pre;
+    final char pre;
     if(currency.getPrefixesj().length() < (symbol)) {
       pre = '^';
     } else {

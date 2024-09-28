@@ -35,7 +35,7 @@ import java.math.BigDecimal;
 public class PercentDecimalResolver implements ValueResolver<PercentBigDecimal> {
 
   @Override
-  public PercentBigDecimal resolve(@NotNull ValueResolverContext context) {
+  public PercentBigDecimal resolve(@NotNull final ValueResolverContext context) {
 
     final String value = context.arguments().pop();
 
@@ -49,7 +49,7 @@ public class PercentDecimalResolver implements ValueResolver<PercentBigDecimal> 
 
     String toReturn = toReplace;
 
-    for(Currency cur : TNECore.eco().currency().currencies()) {
+    for(final Currency cur : TNECore.eco().currency().currencies()) {
       if(!cur.getDecimal().equalsIgnoreCase(".")) {
         toReturn = toReturn.replace(cur.getDecimal(), ".");
       }

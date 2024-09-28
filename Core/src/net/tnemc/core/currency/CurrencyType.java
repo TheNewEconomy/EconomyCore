@@ -116,7 +116,7 @@ public interface CurrencyType {
    *
    * @return The holdings for the specific account.
    */
-  default List<HoldingsEntry> getHoldings(Account account, String region, Currency currency, Identifier type) {
+  default List<HoldingsEntry> getHoldings(final Account account, final String region, final Currency currency, final Identifier type) {
 
     final LinkedList<HoldingsEntry> holdings = new LinkedList<>();
     final List<HoldingsHandler> handlers = new ArrayList<>();
@@ -136,7 +136,7 @@ public interface CurrencyType {
       handler.ifPresent(handlers::add);
     }
 
-    for(HoldingsHandler handler : handlers) {
+    for(final HoldingsHandler handler : handlers) {
       holdings.add(handler.getHoldings(account, region, currency, this));
     }
     return holdings;
@@ -154,7 +154,7 @@ public interface CurrencyType {
    *
    * @return True if the holdings have been set, otherwise false.
    */
-  default boolean setHoldings(Account account, String region, Currency currency, Identifier type, BigDecimal amount) {
+  default boolean setHoldings(final Account account, final String region, final Currency currency, final Identifier type, final BigDecimal amount) {
 
 
     final Optional<HoldingsHandler> handler = EconomyManager.instance().findHandler(type);
@@ -180,7 +180,7 @@ public interface CurrencyType {
     return false;
   }
 
-  default void addDatabase(Account account, String region, Currency currency, Identifier type, BigDecimal amount) {
+  default void addDatabase(final Account account, final String region, final Currency currency, final Identifier type, final BigDecimal amount) {
 
     final HoldingsEntry entry = new HoldingsEntry(region, currency.getUid(), amount, type);
     account.getWallet().setHoldings(entry);

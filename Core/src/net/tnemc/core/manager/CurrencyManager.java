@@ -82,7 +82,7 @@ public class CurrencyManager {
     return load(parent, true);
   }
 
-  public boolean load(final File parent, boolean reset) {
+  public boolean load(final File parent, final boolean reset) {
 
     saver.saveCurrenciesUUID(new File(parent, "currency"));
     if(reset) {
@@ -146,7 +146,7 @@ public class CurrencyManager {
     return loader;
   }
 
-  public void setLoader(CurrencyLoader loader) {
+  public void setLoader(final CurrencyLoader loader) {
 
     this.loader = loader;
   }
@@ -156,7 +156,7 @@ public class CurrencyManager {
     return saver;
   }
 
-  public void setSaver(CurrencySaver saver) {
+  public void setSaver(final CurrencySaver saver) {
 
     this.saver = saver;
   }
@@ -184,7 +184,7 @@ public class CurrencyManager {
   @NotNull
   public Currency getDefaultCurrency() {
 
-    for(Currency currency : currencies.values()) {
+    for(final Currency currency : currencies.values()) {
       if(currency.isGlobalDefault()) {
         return currency;
       }
@@ -205,9 +205,9 @@ public class CurrencyManager {
    * @since 0.1.2.0
    */
   @NotNull
-  public Currency getDefaultCurrency(@NotNull String region) {
+  public Currency getDefaultCurrency(@NotNull final String region) {
 
-    for(Currency currency : currencies.values()) {
+    for(final Currency currency : currencies.values()) {
       if(currency.isRegionDefault(region)) {
         return currency;
       }
@@ -228,11 +228,11 @@ public class CurrencyManager {
    *
    * @since 0.1.2.0
    */
-  public Collection<Currency> getCurrencies(@NotNull String region) {
+  public Collection<Currency> getCurrencies(@NotNull final String region) {
 
-    Collection<Currency> regionCurrencies = new ArrayList<>();
+    final Collection<Currency> regionCurrencies = new ArrayList<>();
 
-    for(Currency currency : currencies.values()) {
+    for(final Currency currency : currencies.values()) {
       if(currency.regionEnabled(region)) {
         regionCurrencies.add(currency);
       }
@@ -262,11 +262,11 @@ public class CurrencyManager {
    */
   public Optional<Currency> findCurrencyByItem(final AbstractItemStack<?> item) {
 
-    for(Currency currency : currencies.values()) {
+    for(final Currency currency : currencies.values()) {
 
       if(currency instanceof ItemCurrency) {
 
-        Optional<ItemDenomination> denom = ((ItemCurrency)currency).getDenominationByMaterial(item.material());
+        final Optional<ItemDenomination> denom = ((ItemCurrency)currency).getDenominationByMaterial(item.material());
         if(denom.isPresent()) {
           return Optional.of(currency);
         }
@@ -285,11 +285,11 @@ public class CurrencyManager {
    */
   public Optional<Currency> findCurrencyByMaterial(final String material) {
 
-    for(Currency currency : currencies.values()) {
+    for(final Currency currency : currencies.values()) {
 
       if(currency instanceof ItemCurrency) {
 
-        Optional<ItemDenomination> denom = ((ItemCurrency)currency).getDenominationByMaterial(material);
+        final Optional<ItemDenomination> denom = ((ItemCurrency)currency).getDenominationByMaterial(material);
         if(denom.isPresent()) {
           return Optional.of(currency);
         }
@@ -312,7 +312,7 @@ public class CurrencyManager {
       return Optional.ofNullable(currencies.get(UUID.fromString(identifier)));
     } catch(Exception ignore) {
 
-      for(Map.Entry<String, UUID> entry : curIDMap.entrySet()) {
+      for(final Map.Entry<String, UUID> entry : curIDMap.entrySet()) {
 
         if(entry.getKey().equalsIgnoreCase(identifier)) {
 

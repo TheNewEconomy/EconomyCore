@@ -71,7 +71,7 @@ public class YAMLAccount implements Datable<Account> {
    * @param connector The storage connector to use for this transaction.
    */
   @Override
-  public void purge(StorageConnector<?> connector) {
+  public void purge(final StorageConnector<?> connector) {
     //TODO: Yaml Purge
   }
 
@@ -82,7 +82,7 @@ public class YAMLAccount implements Datable<Account> {
    * @param account   The object to be stored.
    */
   @Override
-  public void store(StorageConnector<?> connector, @NotNull Account account, @Nullable String identifier) {
+  public void store(final StorageConnector<?> connector, @NotNull final Account account, @Nullable final String identifier) {
 
     PluginCore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.STANDARD);
 
@@ -137,8 +137,8 @@ public class YAMLAccount implements Datable<Account> {
 
       yaml.set("Info.Owner", owner);
 
-      for(Member member : shared.getMembers().values()) {
-        for(Map.Entry<String, Boolean> entry : member.getPermissions().entrySet()) {
+      for(final Member member : shared.getMembers().values()) {
+        for(final Map.Entry<String, Boolean> entry : member.getPermissions().entrySet()) {
 
           yaml.set("Members." + member.getId().toString() + "." + entry.getKey(), entry.getValue());
         }
@@ -166,9 +166,9 @@ public class YAMLAccount implements Datable<Account> {
    * @param connector The storage connector to use for this transaction.
    */
   @Override
-  public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
+  public void storeAll(final StorageConnector<?> connector, @Nullable final String identifier) {
 
-    for(Account account : TNECore.eco().account().getAccounts().values()) {
+    for(final Account account : TNECore.eco().account().getAccounts().values()) {
       store(connector, account, account.getIdentifier().toString());
     }
   }
@@ -182,7 +182,7 @@ public class YAMLAccount implements Datable<Account> {
    * @return The object to load.
    */
   @Override
-  public Optional<Account> load(StorageConnector<?> connector, @NotNull String identifier) {
+  public Optional<Account> load(final StorageConnector<?> connector, @NotNull final String identifier) {
 
     final File accFile = new File(PluginCore.directory(), "accounts/" + identifier + ".yml");
     if(!accFile.exists()) {
@@ -192,7 +192,7 @@ public class YAMLAccount implements Datable<Account> {
     return load(accFile, identifier);
   }
 
-  public Optional<Account> load(File accFile, final String identifier) {
+  public Optional<Account> load(final File accFile, final String identifier) {
 
     if(accFile == null) {
 
@@ -246,10 +246,10 @@ public class YAMLAccount implements Datable<Account> {
         if(account instanceof SharedAccount shared && yaml.contains("Members")) {
 
           final Section section = yaml.getSection("Members");
-          for(Object memberObj : section.getKeys()) {
+          for(final Object memberObj : section.getKeys()) {
 
             final String member = (String)memberObj;
-            for(Object permissionObj : section.getSection(member).getKeys()) {
+            for(final Object permissionObj : section.getSection(member).getKeys()) {
 
               final String permission = (String)permissionObj;
               shared.addPermission(UUID.fromString(member), permission,
@@ -260,7 +260,7 @@ public class YAMLAccount implements Datable<Account> {
         }
 
         final Collection<HoldingsEntry> holdings = TNECore.instance().storage().loadAll(HoldingsEntry.class, identifier);
-        for(HoldingsEntry entry : holdings) {
+        for(final HoldingsEntry entry : holdings) {
           account.getWallet().setHoldings(entry);
         }
 
@@ -281,11 +281,11 @@ public class YAMLAccount implements Datable<Account> {
    * @return A collection containing the objects loaded.
    */
   @Override
-  public Collection<Account> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
+  public Collection<Account> loadAll(final StorageConnector<?> connector, @Nullable final String identifier) {
 
     final Collection<Account> accounts = new ArrayList<>();
 
-    for(File file : IOUtil.getYAMLs(new File(PluginCore.directory(), "accounts"))) {
+    for(final File file : IOUtil.getYAMLs(new File(PluginCore.directory(), "accounts"))) {
 
       try {
         final Optional<Account> loaded = load(file, file.getName().replace(".yml", ""));

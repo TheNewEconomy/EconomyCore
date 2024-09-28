@@ -46,19 +46,19 @@ public class ItemDenomination extends Denomination {
   private Integer customModel = -1;
   private String texture = "";
 
-  public ItemDenomination(BigDecimal weight, String material) {
+  public ItemDenomination(final BigDecimal weight, final String material) {
 
     this(weight, material, (short)0);
   }
 
-  public ItemDenomination(BigDecimal weight, String material, short damage) {
+  public ItemDenomination(final BigDecimal weight, final String material, final short damage) {
 
     super(weight);
     this.material = material;
     this.damage = damage;
   }
 
-  public ItemDenomination(BigDecimal weight) {
+  public ItemDenomination(final BigDecimal weight) {
 
     super(weight);
   }
@@ -68,7 +68,7 @@ public class ItemDenomination extends Denomination {
     return enchantments;
   }
 
-  public void setEnchantments(List<String> enchantments) {
+  public void setEnchantments(final List<String> enchantments) {
 
     this.enchantments.clear();
     this.enchantments.addAll(enchantments);
@@ -79,7 +79,7 @@ public class ItemDenomination extends Denomination {
     return flags;
   }
 
-  public void setFlags(List<String> flags) {
+  public void setFlags(final List<String> flags) {
 
     this.flags.clear();
     this.flags.addAll(flags);
@@ -90,7 +90,7 @@ public class ItemDenomination extends Denomination {
     return material;
   }
 
-  public void setMaterial(String material) {
+  public void setMaterial(final String material) {
 
     this.material = material;
   }
@@ -100,7 +100,7 @@ public class ItemDenomination extends Denomination {
     return damage;
   }
 
-  public void setDamage(short damage) {
+  public void setDamage(final short damage) {
 
     this.damage = damage;
   }
@@ -110,7 +110,7 @@ public class ItemDenomination extends Denomination {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(final String name) {
 
     this.name = name;
   }
@@ -123,13 +123,13 @@ public class ItemDenomination extends Denomination {
   public LinkedList<String> getLoreAsString() {
 
     final LinkedList<String> loreAsString = new LinkedList<>();
-    for(Component component : lore) {
+    for(final Component component : lore) {
       loreAsString.add(MiniMessage.miniMessage().serialize(component));
     }
     return loreAsString;
   }
 
-  public void setLore(List<Component> lore) {
+  public void setLore(final List<Component> lore) {
 
     this.lore.clear();
     this.lore.addAll(lore);
@@ -140,7 +140,7 @@ public class ItemDenomination extends Denomination {
     return customModel;
   }
 
-  public void setCustomModel(int customModel) {
+  public void setCustomModel(final int customModel) {
 
     this.customModel = customModel;
   }
@@ -150,7 +150,7 @@ public class ItemDenomination extends Denomination {
     return texture;
   }
 
-  public void setTexture(String texture) {
+  public void setTexture(final String texture) {
 
     this.texture = texture;
   }

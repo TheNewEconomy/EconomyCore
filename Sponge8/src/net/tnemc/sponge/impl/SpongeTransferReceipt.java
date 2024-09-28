@@ -37,7 +37,7 @@ public class SpongeTransferReceipt extends SpongeReceipt implements TransferResu
 
   private final Account accountTo;
 
-  public SpongeTransferReceipt(TransactionResult result, Account account, SpongeCurrency currency, BigDecimal amount, Set<Context> contexts, TransactionType type, Account accountTo) {
+  public SpongeTransferReceipt(final TransactionResult result, final Account account, final SpongeCurrency currency, final BigDecimal amount, final Set<Context> contexts, final TransactionType type, final Account accountTo) {
 
     super(result, account, currency, amount, contexts, type);
     this.accountTo = accountTo;

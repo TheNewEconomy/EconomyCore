@@ -47,7 +47,7 @@ public class BalanceHandler extends ChannelMessageHandler {
     super("balance");
   }
 
-  public static void send(final String identifier, final String name, String region, UUID currency, Identifier handler, BigDecimal amount) {
+  public static void send(final String identifier, final String name, final String region, final UUID currency, final Identifier handler, final BigDecimal amount) {
 
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
     out.writeUTF(PluginCore.instance().getServerID().toString());
@@ -62,7 +62,7 @@ public class BalanceHandler extends ChannelMessageHandler {
   }
 
   @Override
-  public void handle(ChannelBytesWrapper wrapper) {
+  public void handle(final ChannelBytesWrapper wrapper) {
 
     try {
 

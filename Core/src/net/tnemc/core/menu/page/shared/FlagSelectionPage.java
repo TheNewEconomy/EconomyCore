@@ -54,9 +54,9 @@ public class FlagSelectionPage {
 
   protected final Consumer<StringSelectionHandler> selectionListener;
 
-  public FlagSelectionPage(String flagsID, String returnMenu, String menuName,
-                           final int menuPage, final int returnPage, String flagPageID,
-                           final int menuRows, Consumer<StringSelectionHandler> selectionListener) {
+  public FlagSelectionPage(final String flagsID, final String returnMenu, final String menuName,
+                           final int menuPage, final int returnPage, final String flagPageID,
+                           final int menuRows, final Consumer<StringSelectionHandler> selectionListener) {
 
     this.flagsID = flagsID;
     this.returnMenu = returnMenu;

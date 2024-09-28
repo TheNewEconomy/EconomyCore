@@ -44,7 +44,7 @@ public class ConfigEntry {
 
   private final String pin;
 
-  public ConfigEntry(String pin) {
+  public ConfigEntry(final String pin) {
 
     this.pin = pin;
   }
@@ -90,7 +90,7 @@ public class ConfigEntry {
     bytes = out.toByteArray();
   }
 
-  public static ConfigEntry fromBytes(DataInputStream stream) {
+  public static ConfigEntry fromBytes(final DataInputStream stream) {
 
     //hub string
     //currency size short

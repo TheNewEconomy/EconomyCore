@@ -123,7 +123,7 @@ public class EconomyManager {
     addHandler(new EnderChestHandler());
   }
 
-  public Optional<Identifier> findID(String id) {
+  public Optional<Identifier> findID(final String id) {
 
     return Optional.ofNullable(ids.get(id));
   }

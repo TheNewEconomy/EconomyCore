@@ -39,7 +39,7 @@ public class BalanceMessageHandler extends AccountHandler {
   }
 
   @Override
-  public void handle(String account, String accountName, UUID server, DataInputStream stream) {
+  public void handle(final String account, final String accountName, final UUID server, final DataInputStream stream) {
 
     try {
       final String region = stream.readUTF();
@@ -52,7 +52,7 @@ public class BalanceMessageHandler extends AccountHandler {
     }
   }
 
-  public static void send(UUID server, String account, String accountName, String region, String currency, String handler, String amount) {
+  public static void send(final UUID server, final String account, final String accountName, final String region, final String currency, final String handler, final String amount) {
 
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
     out.writeUTF(server.toString());

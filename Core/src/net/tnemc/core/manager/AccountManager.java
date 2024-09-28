@@ -119,7 +119,7 @@ public class AccountManager {
    *
    * @return A correlating {@link AccountAPIResponse response} containing the results.
    */
-  public AccountAPIResponse createAccount(final String identifier, final String name, boolean nonPlayer) {
+  public AccountAPIResponse createAccount(final String identifier, final String name, final boolean nonPlayer) {
 
     PluginCore.log().debug("Create Account Called! ID: " + identifier + " Name: " + name);
     if(name.contains("§")) {
@@ -230,7 +230,7 @@ public class AccountManager {
    */
   public Optional<SharedAccount> createNonPlayerAccount(final String name) {
 
-    for(Map.Entry<Class<? extends SharedAccount>, Function<String, Boolean>> entry : types.entrySet()) {
+    for(final Map.Entry<Class<? extends SharedAccount>, Function<String, Boolean>> entry : types.entrySet()) {
 
       if(entry.getValue().apply(name)) {
         try {
@@ -361,7 +361,7 @@ public class AccountManager {
    * @param check The function that should be used to check if a given String identifier, usually
    *              name, is valid for this account type.
    */
-  public void addAccountType(final Class<? extends NonPlayerAccount> type, Function<String, Boolean> check) {
+  public void addAccountType(final Class<? extends NonPlayerAccount> type, final Function<String, Boolean> check) {
 
     types.put(type, check);
   }

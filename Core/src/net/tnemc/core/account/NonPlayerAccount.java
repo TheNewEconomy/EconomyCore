@@ -30,7 +30,7 @@ import java.util.UUID;
  */
 public class NonPlayerAccount extends SharedAccount {
 
-  public NonPlayerAccount(UUID identifier, String name) {
+  public NonPlayerAccount(final UUID identifier, final String name) {
 
     super(identifier, name, null);
 

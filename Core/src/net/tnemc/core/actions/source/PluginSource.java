@@ -40,7 +40,7 @@ public class PluginSource implements ActionSource {
    *
    * @since 0.1.2.0
    */
-  public PluginSource(String plugin) {
+  public PluginSource(final String plugin) {
 
     this.plugin = plugin;
   }

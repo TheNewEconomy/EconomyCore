@@ -39,7 +39,7 @@ public class MessageMessageHandler extends MessageHandler {
   }
 
   @Override
-  public void handle(UUID server, DataInputStream stream) {
+  public void handle(final UUID server, final DataInputStream stream) {
 
     try {
       final String identifier = stream.readUTF();
@@ -51,7 +51,7 @@ public class MessageMessageHandler extends MessageHandler {
     }
   }
 
-  public static void send(UUID server, String identifier, String message) {
+  public static void send(final UUID server, final String identifier, final String message) {
 
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
 

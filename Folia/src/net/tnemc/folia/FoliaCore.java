@@ -29,7 +29,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class FoliaCore extends PaperCore {
 
-  public FoliaCore(JavaPlugin plugin) {
+  public FoliaCore(final JavaPlugin plugin) {
 
     super(plugin);
   }

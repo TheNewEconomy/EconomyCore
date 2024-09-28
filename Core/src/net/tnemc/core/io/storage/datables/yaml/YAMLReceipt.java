@@ -71,7 +71,7 @@ public class YAMLReceipt implements Datable<Receipt> {
    * @param connector The storage connector to use for this transaction.
    */
   @Override
-  public void purge(StorageConnector<?> connector) {
+  public void purge(final StorageConnector<?> connector) {
 
   }
 
@@ -84,7 +84,7 @@ public class YAMLReceipt implements Datable<Receipt> {
    *                   require this identifier.
    */
   @Override
-  public void store(StorageConnector<?> connector, @NotNull Receipt receipt, @Nullable String identifier) {
+  public void store(final StorageConnector<?> connector, @NotNull final Receipt receipt, @Nullable final String identifier) {
 
 
     final String fileSrc = "transactions/" + receipt.getId().toString() + ".yml";
@@ -177,9 +177,9 @@ public class YAMLReceipt implements Datable<Receipt> {
    *                   otherwise this will be null.
    */
   @Override
-  public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
+  public void storeAll(final StorageConnector<?> connector, @Nullable final String identifier) {
 
-    for(Receipt receipt : TransactionManager.receipts().getReceipts().values()) {
+    for(final Receipt receipt : TransactionManager.receipts().getReceipts().values()) {
       store(connector, receipt, identifier);
     }
   }
@@ -193,7 +193,7 @@ public class YAMLReceipt implements Datable<Receipt> {
    * @return The object to load.
    */
   @Override
-  public Optional<Receipt> load(StorageConnector<?> connector, @NotNull String identifier) {
+  public Optional<Receipt> load(final StorageConnector<?> connector, @NotNull final String identifier) {
 
     final File file = new File(PluginCore.directory(), "transactions/" + identifier + ".yml");
     if(!file.exists()) {
@@ -204,7 +204,7 @@ public class YAMLReceipt implements Datable<Receipt> {
     return load(file, identifier);
   }
 
-  public Optional<Receipt> load(File file, final String identifier) {
+  public Optional<Receipt> load(final File file, final String identifier) {
 
     if(file == null) {
 
@@ -242,7 +242,7 @@ public class YAMLReceipt implements Datable<Receipt> {
     return Optional.empty();
   }
 
-  public void loadParticipant(YamlDocument yaml, Receipt receipt, String type) {
+  public void loadParticipant(final YamlDocument yaml, final Receipt receipt, final String type) {
 
     if(!yaml.contains(type + ".id")) {
       return;
@@ -266,7 +266,7 @@ public class YAMLReceipt implements Datable<Receipt> {
     }
   }
 
-  public HoldingsModifier loadModifier(YamlDocument yaml, String type) {
+  public HoldingsModifier loadModifier(final YamlDocument yaml, final String type) {
 
     return new HoldingsModifier(yaml.getString(type + ".modifier.region"),
                                 UUID.fromString(yaml.getString(type + ".modifier.currency")),
@@ -275,7 +275,7 @@ public class YAMLReceipt implements Datable<Receipt> {
 
   }
 
-  public List<HoldingsEntry> loadHoldings(YamlDocument yaml, String type, String holdingsType) {
+  public List<HoldingsEntry> loadHoldings(final YamlDocument yaml, final String type, final String holdingsType) {
 
     final List<HoldingsEntry> holdings = new ArrayList<>();
 
@@ -321,11 +321,11 @@ public class YAMLReceipt implements Datable<Receipt> {
    * @return A collection containing the objects loaded.
    */
   @Override
-  public Collection<Receipt> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
+  public Collection<Receipt> loadAll(final StorageConnector<?> connector, @Nullable final String identifier) {
 
     final Collection<Receipt> receipts = new ArrayList<>();
 
-    for(File file : IOUtil.getYAMLs(new File(PluginCore.directory(), "transactions"))) {
+    for(final File file : IOUtil.getYAMLs(new File(PluginCore.directory(), "transactions"))) {
 
       final Optional<Receipt> loaded = load(file, file.getName().replace(".yml", ""));
       if(loaded.isPresent()) {

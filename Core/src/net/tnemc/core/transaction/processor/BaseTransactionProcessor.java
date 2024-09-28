@@ -34,7 +34,7 @@ public class BaseTransactionProcessor implements TransactionProcessor {
 
   private final LinkedList<String> checks = new LinkedList<>();
 
-  public BaseTransactionProcessor(LinkedList<String> checks) {
+  public BaseTransactionProcessor(final LinkedList<String> checks) {
 
     this.checks.addAll(checks);
   }
@@ -56,7 +56,7 @@ public class BaseTransactionProcessor implements TransactionProcessor {
    * @param check The check to add.
    */
   @Override
-  public void addCheck(TransactionCheck check) {
+  public void addCheck(final TransactionCheck check) {
 
     checks.add(check.identifier());
   }
@@ -67,7 +67,7 @@ public class BaseTransactionProcessor implements TransactionProcessor {
    * @param group The group to add.
    */
   @Override
-  public void addGroup(TransactionCheckGroup group) {
+  public void addGroup(final TransactionCheckGroup group) {
 
     checks.addAll(group.getChecks());
   }

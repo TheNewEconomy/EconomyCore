@@ -40,7 +40,7 @@ import java.util.Optional;
  */
 public class ModuleCommand extends BaseCommand {
 
-  public static void onAvailable(CmdSource<?> sender, String url) {
+  public static void onAvailable(final CmdSource<?> sender, final String url) {
 
     PluginCore.server().scheduler().createDelayedTask(()->{
 
@@ -50,7 +50,7 @@ public class ModuleCommand extends BaseCommand {
       msg.addReplacement("$url", url);
       sender.message(msg);
 
-      for(ModuleFile file : available) {
+      for(final ModuleFile file : available) {
 
         final MessageData entry = new MessageData("Messages.Module.AvailableEntry");
         entry.addReplacement("$module", file.getName());
@@ -61,7 +61,7 @@ public class ModuleCommand extends BaseCommand {
     }, new ChoreTime(0), ChoreExecution.SECONDARY);
   }
 
-  public static void onDownload(CmdSource<?> sender, String moduleName, String url) {
+  public static void onDownload(final CmdSource<?> sender, final String moduleName, final String url) {
 
     PluginCore.server().scheduler().createDelayedTask(()->{
       PluginCore.instance().moduleCache().getModules(url);
@@ -88,7 +88,7 @@ public class ModuleCommand extends BaseCommand {
     }, new ChoreTime(0), ChoreExecution.SECONDARY);
   }
 
-  public static void onInfo(CmdSource<?> sender, String moduleName) {
+  public static void onInfo(final CmdSource<?> sender, final String moduleName) {
 
     final ModuleWrapper module = PluginCore.loader().getModule(moduleName);
     if(module == null) {
@@ -106,7 +106,7 @@ public class ModuleCommand extends BaseCommand {
     sender.message(entry);
   }
 
-  public static void onList(CmdSource<?> sender) {
+  public static void onList(final CmdSource<?> sender) {
 
     final StringBuilder modules = new StringBuilder();
     PluginCore.loader().getModules().forEach((key, value)->{
@@ -119,7 +119,7 @@ public class ModuleCommand extends BaseCommand {
     sender.message(entry);
   }
 
-  public static void onLoad(CmdSource<?> sender, String moduleName) {
+  public static void onLoad(final CmdSource<?> sender, final String moduleName) {
 
     final boolean loaded = PluginCore.loader().load(moduleName);
 

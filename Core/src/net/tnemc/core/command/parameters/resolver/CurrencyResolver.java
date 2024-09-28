@@ -34,7 +34,7 @@ import java.util.Optional;
 public class CurrencyResolver implements ValueResolver<Currency> {
 
   @Override
-  public Currency resolve(@NotNull ValueResolverContext context) {
+  public Currency resolve(@NotNull final ValueResolverContext context) {
 
     final String value = context.arguments().pop();
 

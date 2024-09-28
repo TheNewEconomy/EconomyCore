@@ -47,7 +47,7 @@ public class SerialCurrency implements JSONAble<Currency> {
    * @return The {@link JSONObject} associated with the JSON-valid String.
    */
   @Override
-  public JSONObject toJSON(Currency currency) {
+  public JSONObject toJSON(final Currency currency) {
 
     final JSONObject json = new JSONObject();
 
@@ -114,7 +114,7 @@ public class SerialCurrency implements JSONAble<Currency> {
    * @return The object that was deserialized from the JSON string.
    */
   @Override
-  public Currency fromJSON(String serialized) {
+  public Currency fromJSON(final String serialized) {
 
     final JSONParser parser = new JSONParser();
 

@@ -41,7 +41,7 @@ public class ConfigMessageHandler extends MessageHandler {
   }
 
   @Override
-  public void handle(UUID server, DataInputStream stream) {
+  public void handle(final UUID server, final DataInputStream stream) {
 
     final ConfigEntry entry = ConfigEntry.fromBytes(stream);
     if(entry != null) {
@@ -51,7 +51,7 @@ public class ConfigMessageHandler extends MessageHandler {
 
   }
 
-  public static void send(UUID server, byte[] left) {
+  public static void send(final UUID server, final byte[] left) {
 
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
 

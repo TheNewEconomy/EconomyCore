@@ -36,16 +36,16 @@ public class Denomination {
   private String plural;
   private BigDecimal weight;
 
-  public Denomination(BigDecimal weight) {
+  public Denomination(final BigDecimal weight) {
 
     this.weight = weight;
     this.single = "Singular";
     this.plural = "Plural";
   }
 
-  public static Denomination clone(final Denomination original, boolean item) {
+  public static Denomination clone(final Denomination original, final boolean item) {
 
-    Denomination cloned = (item)? new ItemDenomination(original.weight()) : new Denomination(original.weight());
+    final Denomination cloned = (item)? new ItemDenomination(original.weight()) : new Denomination(original.weight());
 
     cloned.setSingle(original.singular());
     cloned.setPlural(original.plural());
@@ -71,12 +71,12 @@ public class Denomination {
     return (this instanceof ItemDenomination);
   }
 
-  public void setSingle(String single) {
+  public void setSingle(final String single) {
 
     this.single = single;
   }
 
-  public void setPlural(String plural) {
+  public void setPlural(final String plural) {
 
     this.plural = plural;
   }
@@ -96,7 +96,7 @@ public class Denomination {
     return weight;
   }
 
-  public void setWeight(BigDecimal weight) {
+  public void setWeight(final BigDecimal weight) {
 
     this.weight = weight;
   }

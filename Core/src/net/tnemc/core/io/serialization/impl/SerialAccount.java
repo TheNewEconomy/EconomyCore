@@ -51,7 +51,7 @@ public class SerialAccount implements JSONAble<Account> {
    * @return The {@link JSONObject} associated with the JSON-valid String.
    */
   @Override
-  public JSONObject toJSON(Account account) {
+  public JSONObject toJSON(final Account account) {
 
     final JSONObject json = new JSONObject();
 
@@ -63,7 +63,7 @@ public class SerialAccount implements JSONAble<Account> {
     json.put("type", account.type());
 
     final JSONArray holdingsArray = new JSONArray();
-    for(HoldingsEntry entry : account.getWallet().entryList()) {
+    for(final HoldingsEntry entry : account.getWallet().entryList()) {
       holdingsArray.add(new SerialHoldings().toJSON(entry));
     }
     json.put("holdings", holdingsArray);
@@ -72,7 +72,7 @@ public class SerialAccount implements JSONAble<Account> {
       json.put("owner", shared.getOwner());
 
       final JSONArray membersArray = new JSONArray();
-      for(Member member : shared.getMembers().values()) {
+      for(final Member member : shared.getMembers().values()) {
         membersArray.add(new SerialMember().toJSON(member));
       }
       json.put("members", membersArray);
@@ -94,7 +94,7 @@ public class SerialAccount implements JSONAble<Account> {
    * @return The object that was deserialized from the JSON string.
    */
   @Override
-  public Account fromJSON(String serialized) {
+  public Account fromJSON(final String serialized) {
 
     try {
       final JSONParser parser = new JSONParser();
@@ -120,7 +120,7 @@ public class SerialAccount implements JSONAble<Account> {
 
           final JSONArray holdingsArray = (JSONArray)json.get("holdings");
           final Wallet wallet = new Wallet();
-          for(Object entryObj : holdingsArray) {
+          for(final Object entryObj : holdingsArray) {
             final JSONObject entryJson = (JSONObject)entryObj;
             final HoldingsEntry entry = new SerialHoldings().fromJSON(entryJson.toJSONString());
             wallet.setHoldings(entry);
@@ -134,7 +134,7 @@ public class SerialAccount implements JSONAble<Account> {
             if(json.containsKey("members")) {
 
               final JSONArray membersArray = (JSONArray)json.get("members");
-              for(Object memberObj : membersArray) {
+              for(final Object memberObj : membersArray) {
 
                 final JSONObject memberJson = (JSONObject)memberObj;
                 final Member member = new SerialMember().fromJSON(memberJson.toJSONString());

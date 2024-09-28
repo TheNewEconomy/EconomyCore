@@ -147,7 +147,7 @@ public class SpongeCore extends TNECore {
   }
 
   @Override
-  public String commandHelpWriter(ExecutableCommand executableCommand, CommandActor commandActor) {
+  public String commandHelpWriter(final ExecutableCommand executableCommand, final CommandActor commandActor) {
 
     return "";
   }
@@ -170,7 +170,7 @@ public class SpongeCore extends TNECore {
   }
 
   @Override
-  public void registerCallbacks(CallbackManager callbackManager) {
+  public void registerCallbacks(final CallbackManager callbackManager) {
 
     super.registerCallbacks(callbackManager);
     //nothing to see here.

@@ -206,12 +206,12 @@ public class TransactionManager {
    */
   public void addCheckToGroup(final String check, final String group) {
 
-    Optional<TransactionCheckGroup> groupOptional = findGroup(group);
+    final Optional<TransactionCheckGroup> groupOptional = findGroup(group);
     groupOptional.ifPresentOrElse(transactionCheckGroup->{
       transactionCheckGroup.addCheck(check);
       addGroup(groupOptional.get());
     }, ()->{
-      TransactionCheckGroup groupObj = new TransactionCheckGroup(group);
+      final TransactionCheckGroup groupObj = new TransactionCheckGroup(group);
       groupObj.addCheck(check);
       addGroup(groupObj);
     });
@@ -246,7 +246,7 @@ public class TransactionManager {
     return track;
   }
 
-  public void setTrack(boolean track) {
+  public void setTrack(final boolean track) {
 
     this.track = track;
   }
@@ -256,7 +256,7 @@ public class TransactionManager {
     return amount;
   }
 
-  public void setAmount(BigDecimal amount) {
+  public void setAmount(final BigDecimal amount) {
 
     this.amount = amount;
   }
@@ -266,7 +266,7 @@ public class TransactionManager {
     return processor;
   }
 
-  public void setProcessor(TransactionProcessor processor) {
+  public void setProcessor(final TransactionProcessor processor) {
 
     this.processor = processor;
   }

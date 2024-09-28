@@ -49,7 +49,7 @@ public class Note {
 
   final TaxEntry fee;
 
-  public Note(String material, BigDecimal minimum, String fee) {
+  public Note(final String material, final BigDecimal minimum, final String fee) {
 
     this.material = material;
     this.minimum = minimum;
@@ -61,7 +61,7 @@ public class Note {
     }
   }
 
-  public Note(String material, BigDecimal minimum, TaxEntry fee) {
+  public Note(final String material, final BigDecimal minimum, final TaxEntry fee) {
 
     this.material = material;
     this.minimum = minimum;
@@ -73,7 +73,7 @@ public class Note {
     return minimum;
   }
 
-  public void setMinimum(BigDecimal minimum) {
+  public void setMinimum(final BigDecimal minimum) {
 
     this.minimum = minimum;
   }
@@ -88,10 +88,10 @@ public class Note {
     return flags;
   }
 
-  public void setFlags(List<String> flags) {
+  public void setFlags(final List<String> flags) {
 
     this.flags.clear();
-    for(String str : flags) {
+    for(final String str : flags) {
       if(!str.isEmpty()) {
         this.flags.add(str);
       }
@@ -103,10 +103,10 @@ public class Note {
     return enchantments;
   }
 
-  public void setEnchantments(List<String> enchantments) {
+  public void setEnchantments(final List<String> enchantments) {
 
     this.enchantments.clear();
-    for(String str : enchantments) {
+    for(final String str : enchantments) {
       if(!str.isEmpty()) {
         this.enchantments.add(str);
       }
@@ -118,7 +118,7 @@ public class Note {
     return material;
   }
 
-  public void setMaterial(String material) {
+  public void setMaterial(final String material) {
 
     this.material = material;
   }
@@ -128,7 +128,7 @@ public class Note {
     return customModelData;
   }
 
-  public void setCustomModelData(int customModelData) {
+  public void setCustomModelData(final int customModelData) {
 
     this.customModelData = customModelData;
   }
@@ -138,7 +138,7 @@ public class Note {
     return texture;
   }
 
-  public void setTexture(String texture) {
+  public void setTexture(final String texture) {
 
     this.texture = texture;
   }

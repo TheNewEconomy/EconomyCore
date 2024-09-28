@@ -52,7 +52,7 @@ public class ReceiptBox {
 
   private final UUID owner;
 
-  public ReceiptBox(UUID owner) {
+  public ReceiptBox(final UUID owner) {
 
     this.owner = owner;
   }
@@ -85,7 +85,7 @@ public class ReceiptBox {
 
     int i = 0;
 
-    for(Map.Entry<Long, Receipt> entry : range(((PlayerAccount)acc.get()).getLastOnline(), time).entrySet()) {
+    for(final Map.Entry<Long, Receipt> entry : range(((PlayerAccount)acc.get()).getLastOnline(), time).entrySet()) {
 
       final Receipt receipt = entry.getValue();
 

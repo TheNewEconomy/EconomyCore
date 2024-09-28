@@ -33,7 +33,7 @@ import net.tnemc.bungee.message.MessageManager;
 public class MessageListener implements Listener {
 
   @EventHandler
-  public void onMessage(PluginMessageEvent event) {
+  public void onMessage(final PluginMessageEvent event) {
 
     if(!event.getTag().startsWith("tne:")) {
       return;

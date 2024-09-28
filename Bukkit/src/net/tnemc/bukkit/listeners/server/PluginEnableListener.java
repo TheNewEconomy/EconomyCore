@@ -32,7 +32,7 @@ import org.bukkit.event.server.PluginEnableEvent;
 public class PluginEnableListener implements Listener {
 
   @EventHandler
-  public void onEvent(PluginEnableEvent event) {
+  public void onEvent(final PluginEnableEvent event) {
 
     if(event.getPlugin().getName().equalsIgnoreCase("placeholderapi")) {
       new PAPIHook().register();

@@ -32,7 +32,7 @@ import java.util.UUID;
  */
 public abstract class AccountHandler extends MessageHandler {
 
-  public AccountHandler(String tag) {
+  public AccountHandler(final String tag) {
 
     super(tag);
   }
@@ -40,7 +40,7 @@ public abstract class AccountHandler extends MessageHandler {
   public abstract void handle(String account, String accountName, UUID server, DataInputStream stream);
 
   @Override
-  public void handle(UUID server, DataInputStream in) {
+  public void handle(final UUID server, final DataInputStream in) {
 
     try {
       final String account = in.readUTF();

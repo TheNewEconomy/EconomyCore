@@ -60,12 +60,12 @@ public class PaperDebugCalculations extends PaperCalculationsProvider {
    * @return True if the items were successfully dropped, otherwise false.
    */
   @Override
-  public boolean drop(Collection<PaperItemStack> left, UUID player) {
+  public boolean drop(final Collection<PaperItemStack> left, final UUID player) {
 
     final Player playerObj = Bukkit.getPlayer(player);
 
     if(playerObj != null) {
-      for(PaperItemStack stack : left) {
+      for(final PaperItemStack stack : left) {
         Objects.requireNonNull(playerObj.getWorld()).dropItemNaturally(playerObj.getLocation(), stack.locale());
       }
     }
@@ -79,7 +79,7 @@ public class PaperDebugCalculations extends PaperCalculationsProvider {
    * @param inventory The inventory to remove the items from.
    */
   @Override
-  public int removeAll(PaperItemStack stack, Inventory inventory) {
+  public int removeAll(final PaperItemStack stack, final Inventory inventory) {
 
     final ItemStack compare = stack.locale().clone();
     compare.setAmount(1);
@@ -88,7 +88,7 @@ public class PaperDebugCalculations extends PaperCalculationsProvider {
     final PaperItemStack comp = PaperItemStack.locale(compare);
 
     for(int i = 0; i < inventory.getStorageContents().length; i++) {
-      ItemStack item = inventory.getItem(i);
+      final ItemStack item = inventory.getItem(i);
       if(item != null) {
         final PaperItemStack locale = PaperItemStack.locale(item);
         final boolean equal = itemsEqual(comp, locale);
@@ -124,7 +124,7 @@ public class PaperDebugCalculations extends PaperCalculationsProvider {
    * @return The total count of items in the inventory.
    */
   @Override
-  public int count(PaperItemStack stack, Inventory inventory) {
+  public int count(final PaperItemStack stack, final Inventory inventory) {
 
     final ItemStack compare = stack.locale().clone();
     compare.setAmount(1);
@@ -132,7 +132,7 @@ public class PaperDebugCalculations extends PaperCalculationsProvider {
     final PaperItemStack comp = PaperItemStack.locale(compare).debug(true);
     int amount = 0;
 
-    for(ItemStack itemStack : inventory.getStorageContents()) {
+    for(final ItemStack itemStack : inventory.getStorageContents()) {
       if(itemStack != null) {
         final PaperItemStack locale = PaperItemStack.locale(itemStack).debug(true);
 
@@ -151,14 +151,14 @@ public class PaperDebugCalculations extends PaperCalculationsProvider {
 
 
           System.out.println("Lore List");
-          for(Component compObj : comp.lore()) {
+          for(final Component compObj : comp.lore()) {
             System.out.println("Lore Legacy: " + LegacyComponentSerializer.legacySection().serialize(compObj));
             System.out.println("Lore JSON: " + JSONComponentSerializer.json().serialize(compObj));
             System.out.println("Lore Plain: " + PlainTextComponentSerializer.plainText().serialize(compObj));
           }
 
           System.out.println("Locale Lore List");
-          for(Component compObj : locale.lore()) {
+          for(final Component compObj : locale.lore()) {
             System.out.println("Lore Legacy: " + LegacyComponentSerializer.legacySection().serialize(compObj));
             System.out.println("Lore JSON: " + JSONComponentSerializer.json().serialize(compObj));
             System.out.println("Lore Plain: " + PlainTextComponentSerializer.plainText().serialize(compObj));
@@ -169,7 +169,7 @@ public class PaperDebugCalculations extends PaperCalculationsProvider {
 
         if(locale.data().isPresent()) {
           if(locale.data().get() instanceof ItemStorageData) {
-            for(Object obj : ((ItemStorageData)locale.data().get()).getItems().entrySet()) {
+            for(final Object obj : ((ItemStorageData)locale.data().get()).getItems().entrySet()) {
               final Map.Entry<Integer, SerialItem> entry = ((Map.Entry<Integer, SerialItem>)obj);
               if(itemsEqual(comp, new PaperItemStack().of(entry.getValue()))) {
                 amount += entry.getValue().getStack().amount();
@@ -192,7 +192,7 @@ public class PaperDebugCalculations extends PaperCalculationsProvider {
    * @param items     The collection of items to remove.
    * @param inventory The inventory to remove the items from.
    */
-  public void takeItems(Collection<PaperItemStack> items, Inventory inventory) {
+  public void takeItems(final Collection<PaperItemStack> items, final Inventory inventory) {
 
     items.forEach(itemStack->removeItem(itemStack, inventory));
   }
@@ -204,15 +204,15 @@ public class PaperDebugCalculations extends PaperCalculationsProvider {
    * @param items     The collection of items to add to the inventory.
    * @param inventory The inventory to add the collection of items to.
    */
-  public Collection<PaperItemStack> giveItems(Collection<PaperItemStack> items, Inventory inventory) {
+  public Collection<PaperItemStack> giveItems(final Collection<PaperItemStack> items, final Inventory inventory) {
 
     final Collection<PaperItemStack> leftOver = new ArrayList<>();
 
-    for(PaperItemStack item : items) {
+    for(final PaperItemStack item : items) {
       final Map<Integer, ItemStack> left = inventory.addItem(item.locale());
 
       if(!left.isEmpty()) {
-        for(Map.Entry<Integer, ItemStack> entry : left.entrySet()) {
+        for(final Map.Entry<Integer, ItemStack> entry : left.entrySet()) {
           final ItemStack i = entry.getValue();
           if(i == null || i.getType() == Material.AIR) {
             continue;
@@ -233,7 +233,7 @@ public class PaperDebugCalculations extends PaperCalculationsProvider {
    * @return The remaining amount of items to remove.
    */
   @Override
-  public int removeItem(PaperItemStack stack, Inventory inventory) {
+  public int removeItem(final PaperItemStack stack, final Inventory inventory) {
 
     int left = stack.locale().clone().getAmount();
 
@@ -293,7 +293,7 @@ public class PaperDebugCalculations extends PaperCalculationsProvider {
    * @return An optional containing the inventory if it works, otherwise false.
    */
   @Override
-  public Optional<Inventory> getInventory(UUID identifier, InventoryType type) {
+  public Optional<Inventory> getInventory(final UUID identifier, final InventoryType type) {
 
     final OfflinePlayer player = Bukkit.getOfflinePlayer(identifier);
     if(player.isOnline() && player.getPlayer() != null) {

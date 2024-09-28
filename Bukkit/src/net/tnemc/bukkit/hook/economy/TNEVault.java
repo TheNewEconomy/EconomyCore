@@ -97,7 +97,7 @@ public class TNEVault implements Economy {
    *
    * @return Human-readable string describing amount
    */
-  public String format(double amount) {
+  public String format(final double amount) {
 
     return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
                                                             TNECore.eco().currency().getDefaultCurrency().getUid(),
@@ -133,7 +133,7 @@ public class TNEVault implements Economy {
    * @deprecated As of VaultAPI 1.4 use {@link #hasAccount(OfflinePlayer)} instead.
    */
   @Deprecated
-  public boolean hasAccount(String name) {
+  public boolean hasAccount(final String name) {
 
     return hasAccount(name, "ahoy matey");
   }
@@ -147,7 +147,7 @@ public class TNEVault implements Economy {
    *
    * @return if the player has an account
    */
-  public boolean hasAccount(OfflinePlayer player) {
+  public boolean hasAccount(final OfflinePlayer player) {
 
     return hasAccount(player, "woah");
   }
@@ -156,7 +156,7 @@ public class TNEVault implements Economy {
    * @deprecated As of VaultAPI 1.4 use {@link #hasAccount(OfflinePlayer, String)} instead.
    */
   @Deprecated
-  public boolean hasAccount(String name, String world) {
+  public boolean hasAccount(final String name, final String world) {
 
     return TNECore.eco().account().findAccount(name).isPresent();
   }
@@ -171,7 +171,7 @@ public class TNEVault implements Economy {
    *
    * @return if the player has an account
    */
-  public boolean hasAccount(OfflinePlayer player, String world) {
+  public boolean hasAccount(final OfflinePlayer player, final String world) {
 
     return hasAccount(player.getUniqueId().toString(), world);
   }
@@ -180,7 +180,7 @@ public class TNEVault implements Economy {
    * @deprecated As of VaultAPI 1.4 use {@link #getBalance(OfflinePlayer)} instead.
    */
   @Deprecated
-  public double getBalance(String name) {
+  public double getBalance(final String name) {
 
     return getBalance(name, TNECore.eco().region().defaultRegion());
   }
@@ -192,7 +192,7 @@ public class TNEVault implements Economy {
    *
    * @return Amount currently held in players account
    */
-  public double getBalance(OfflinePlayer player) {
+  public double getBalance(final OfflinePlayer player) {
 
     return getBalance(player.getUniqueId().toString(), TNECore.eco().region().defaultRegion());
   }
@@ -201,7 +201,7 @@ public class TNEVault implements Economy {
    * @deprecated As of VaultAPI 1.4 use {@link #getBalance(OfflinePlayer, String)} instead.
    */
   @Deprecated
-  public double getBalance(String name, String world) {
+  public double getBalance(final String name, final String world) {
 
     PluginCore.log().debug("Vault Balance call. Name: " + name + " World: " + world, DebugLevel.STANDARD);
 
@@ -238,7 +238,7 @@ public class TNEVault implements Economy {
    *
    * @return Amount currently held in players account
    */
-  public double getBalance(OfflinePlayer player, String world) {
+  public double getBalance(final OfflinePlayer player, final String world) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(player.getUniqueId().toString());
     if(player.getName() != null && account.isEmpty()) {
@@ -251,7 +251,7 @@ public class TNEVault implements Economy {
    * @deprecated As of VaultAPI 1.4 use {@link #has(OfflinePlayer, double)} instead.
    */
   @Deprecated
-  public boolean has(String name, double amount) {
+  public boolean has(final String name, final double amount) {
 
     return has(name, TNECore.eco().region().defaultRegion(), amount);
   }
@@ -264,7 +264,7 @@ public class TNEVault implements Economy {
    *
    * @return True if <b>player</b> has <b>amount</b>, False else wise
    */
-  public boolean has(OfflinePlayer player, double amount) {
+  public boolean has(final OfflinePlayer player, final double amount) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(player.getUniqueId().toString());
     if(player.getName() != null && account.isEmpty()) {
@@ -277,7 +277,7 @@ public class TNEVault implements Economy {
    * @deprecated As of VaultAPI 1.4 use @{link {@link #has(OfflinePlayer, String, double)} instead.
    */
   @Deprecated
-  public boolean has(String name, String world, double amount) {
+  public boolean has(final String name, final String world, final double amount) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(name);
     return account.filter(value->value.getHoldingsTotal(world, TNECore.eco().currency().getDefaultCurrency(world).getUid())
@@ -295,7 +295,7 @@ public class TNEVault implements Economy {
    *
    * @return True if <b>player</b> has <b>amount</b>, False else wise
    */
-  public boolean has(OfflinePlayer player, String world, double amount) {
+  public boolean has(final OfflinePlayer player, final String world, final double amount) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(player.getUniqueId().toString());
     if(player.getName() != null && account.isEmpty()) {
@@ -308,7 +308,7 @@ public class TNEVault implements Economy {
    * @deprecated As of VaultAPI 1.4 use {@link #withdrawPlayer(OfflinePlayer, double)} instead.
    */
   @Deprecated
-  public EconomyResponse withdrawPlayer(String name, double amount) {
+  public EconomyResponse withdrawPlayer(final String name, final double amount) {
 
     return withdrawPlayer(name, TNECore.eco().region().defaultRegion(), amount);
   }
@@ -321,7 +321,7 @@ public class TNEVault implements Economy {
    *
    * @return Detailed response of transaction
    */
-  public EconomyResponse withdrawPlayer(OfflinePlayer player, double amount) {
+  public EconomyResponse withdrawPlayer(final OfflinePlayer player, final double amount) {
 
     final EconomyResponse response = withdrawPlayer(player.getUniqueId().toString(), TNECore.eco().region().defaultRegion(), amount);
 
@@ -340,7 +340,7 @@ public class TNEVault implements Economy {
    * instead.
    */
   @Deprecated
-  public EconomyResponse withdrawPlayer(String name, String world, double amount) {
+  public EconomyResponse withdrawPlayer(final String name, final String world, final double amount) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(name);
 
@@ -359,7 +359,7 @@ public class TNEVault implements Economy {
             .source(new PluginSource("Vault"));
 
     try {
-      TransactionResult result = transaction.process();
+      final TransactionResult result = transaction.process();
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding().doubleValue(),
                                  fromResult(result),
                                  result.getMessage());
@@ -380,7 +380,7 @@ public class TNEVault implements Economy {
    *
    * @return Detailed response of transaction
    */
-  public EconomyResponse withdrawPlayer(OfflinePlayer player, String world, double amount) {
+  public EconomyResponse withdrawPlayer(final OfflinePlayer player, final String world, final double amount) {
 
     final EconomyResponse response = withdrawPlayer(player.getUniqueId().toString(), world, amount);
     if(response.transactionSuccess() || player.getName() == null) {
@@ -393,7 +393,7 @@ public class TNEVault implements Economy {
    * @deprecated As of VaultAPI 1.4 use {@link #depositPlayer(OfflinePlayer, double)} instead.
    */
   @Deprecated
-  public EconomyResponse depositPlayer(String name, double amount) {
+  public EconomyResponse depositPlayer(final String name, final double amount) {
 
     return depositPlayer(name, TNECore.eco().region().defaultRegion(), amount);
   }
@@ -406,7 +406,7 @@ public class TNEVault implements Economy {
    *
    * @return Detailed response of transaction
    */
-  public EconomyResponse depositPlayer(OfflinePlayer player, double amount) {
+  public EconomyResponse depositPlayer(final OfflinePlayer player, final double amount) {
 
     final EconomyResponse response = depositPlayer(player.getUniqueId().toString(), TNECore.eco().region().defaultRegion(), amount);
     if(response.transactionSuccess() || player.getName() == null) {
@@ -420,7 +420,7 @@ public class TNEVault implements Economy {
    * instead.
    */
   @Deprecated
-  public EconomyResponse depositPlayer(String name, String world, double amount) {
+  public EconomyResponse depositPlayer(final String name, final String world, final double amount) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(name);
 
@@ -440,7 +440,7 @@ public class TNEVault implements Economy {
             .source(new PluginSource("Vault"));
 
     try {
-      TransactionResult result = transaction.process();
+      final TransactionResult result = transaction.process();
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding().doubleValue(),
                                  fromResult(result),
                                  result.getMessage());
@@ -461,7 +461,7 @@ public class TNEVault implements Economy {
    *
    * @return Detailed response of transaction
    */
-  public EconomyResponse depositPlayer(OfflinePlayer player, String world, double amount) {
+  public EconomyResponse depositPlayer(final OfflinePlayer player, final String world, final double amount) {
 
     final EconomyResponse response = depositPlayer(player.getUniqueId().toString(), world, amount);
     if(response.transactionSuccess() || player.getName() == null) {
@@ -474,7 +474,7 @@ public class TNEVault implements Economy {
    * @deprecated As of VaultAPI 1.4 use {{@link #createBank(String, OfflinePlayer)} instead.
    */
   @Deprecated
-  public EconomyResponse createBank(String name, String player) {
+  public EconomyResponse createBank(final String name, final String player) {
 
     return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
@@ -487,7 +487,7 @@ public class TNEVault implements Economy {
    *
    * @return EconomyResponse Object
    */
-  public EconomyResponse createBank(String name, OfflinePlayer player) {
+  public EconomyResponse createBank(final String name, final OfflinePlayer player) {
 
     return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
@@ -499,7 +499,7 @@ public class TNEVault implements Economy {
    *
    * @return if the operation completed successfully
    */
-  public EconomyResponse deleteBank(String name) {
+  public EconomyResponse deleteBank(final String name) {
 
     return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
@@ -511,7 +511,7 @@ public class TNEVault implements Economy {
    *
    * @return EconomyResponse Object
    */
-  public EconomyResponse bankBalance(String name) {
+  public EconomyResponse bankBalance(final String name) {
 
     return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
@@ -524,7 +524,7 @@ public class TNEVault implements Economy {
    *
    * @return EconomyResponse Object
    */
-  public EconomyResponse bankHas(String name, double amount) {
+  public EconomyResponse bankHas(final String name, final double amount) {
 
     return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
@@ -537,7 +537,7 @@ public class TNEVault implements Economy {
    *
    * @return EconomyResponse Object
    */
-  public EconomyResponse bankWithdraw(String name, double amount) {
+  public EconomyResponse bankWithdraw(final String name, final double amount) {
 
     return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
@@ -550,7 +550,7 @@ public class TNEVault implements Economy {
    *
    * @return EconomyResponse Object
    */
-  public EconomyResponse bankDeposit(String name, double amount) {
+  public EconomyResponse bankDeposit(final String name, final double amount) {
 
     return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
@@ -559,7 +559,7 @@ public class TNEVault implements Economy {
    * @deprecated As of VaultAPI 1.4 use {{@link #isBankOwner(String, OfflinePlayer)} instead.
    */
   @Deprecated
-  public EconomyResponse isBankOwner(String name, String playerName) {
+  public EconomyResponse isBankOwner(final String name, final String playerName) {
 
     return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
@@ -572,7 +572,7 @@ public class TNEVault implements Economy {
    *
    * @return EconomyResponse Object
    */
-  public EconomyResponse isBankOwner(String name, OfflinePlayer player) {
+  public EconomyResponse isBankOwner(final String name, final OfflinePlayer player) {
 
     return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
@@ -581,7 +581,7 @@ public class TNEVault implements Economy {
    * @deprecated As of VaultAPI 1.4 use {{@link #isBankMember(String, OfflinePlayer)} instead.
    */
   @Deprecated
-  public EconomyResponse isBankMember(String name, String playerName) {
+  public EconomyResponse isBankMember(final String name, final String playerName) {
 
     return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
@@ -594,7 +594,7 @@ public class TNEVault implements Economy {
    *
    * @return EconomyResponse Object
    */
-  public EconomyResponse isBankMember(String name, OfflinePlayer player) {
+  public EconomyResponse isBankMember(final String name, final OfflinePlayer player) {
 
     return new EconomyResponse(0.0, 0.0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "");
   }
@@ -613,7 +613,7 @@ public class TNEVault implements Economy {
    * @deprecated As of VaultAPI 1.4 use {{@link #createPlayerAccount(OfflinePlayer)} instead.
    */
   @Deprecated
-  public boolean createPlayerAccount(String name) {
+  public boolean createPlayerAccount(final String name) {
 
     return createPlayerAccount(name, "this doesn't matter.");
   }
@@ -625,7 +625,7 @@ public class TNEVault implements Economy {
    *
    * @return if the account creation was successful
    */
-  public boolean createPlayerAccount(OfflinePlayer player) {
+  public boolean createPlayerAccount(final OfflinePlayer player) {
 
     return createPlayerAccount(player, "this doesn't matter.");
   }
@@ -635,7 +635,7 @@ public class TNEVault implements Economy {
    * instead.
    */
   @Deprecated
-  public boolean createPlayerAccount(String name, String world) {
+  public boolean createPlayerAccount(final String name, final String world) {
 
     PluginCore.log().debug("Vault Method: Create Player Account!", DebugLevel.STANDARD);
     return TNECore.eco().account().createAccount(name, name).getResponse().success();
@@ -650,7 +650,7 @@ public class TNEVault implements Economy {
    *
    * @return if the account creation was successful
    */
-  public boolean createPlayerAccount(OfflinePlayer player, String world) {
+  public boolean createPlayerAccount(final OfflinePlayer player, final String world) {
 
     PluginCore.log().debug("Vault Method: Create Player Account!", DebugLevel.STANDARD);
     if(player.getName() == null) {
@@ -675,7 +675,7 @@ public class TNEVault implements Economy {
     return TNECore.eco().account().createAccount(player.getUniqueId().toString(), player.getName()).getResponse().success();
   }
 
-  private EconomyResponse.ResponseType fromResult(@Nullable TransactionResult result) {
+  private EconomyResponse.ResponseType fromResult(@Nullable final TransactionResult result) {
 
     if(result != null && result.isSuccessful()) {
       return EconomyResponse.ResponseType.SUCCESS;

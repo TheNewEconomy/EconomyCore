@@ -422,7 +422,7 @@ public class MariaOutdatedDialect implements TNEDialect {
   }
 
   @Override
-  public String parseVersion(String version) {
+  public String parseVersion(final String version) {
 
     return version.split("-")[1];
   }

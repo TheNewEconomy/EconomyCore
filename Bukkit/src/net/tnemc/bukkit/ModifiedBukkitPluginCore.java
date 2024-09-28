@@ -33,7 +33,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class ModifiedBukkitPluginCore extends BukkitPluginCore {
 
-  public ModifiedBukkitPluginCore(JavaPlugin plugin, PluginEngine engine, ServerConnector connector, TranslationProvider provider, CallbackProvider callbackProvider) {
+  public ModifiedBukkitPluginCore(final JavaPlugin plugin, final PluginEngine engine, final ServerConnector connector, final TranslationProvider provider, final CallbackProvider callbackProvider) {
 
     super(plugin, engine, connector, provider, callbackProvider);
 

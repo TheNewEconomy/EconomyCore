@@ -50,9 +50,9 @@ public class MaterialSelectionPageCallback {
 
   protected final Consumer<StringSelectionHandler> selectionListener;
 
-  public MaterialSelectionPageCallback(String materialDataID, String returnMenu, String menuName,
-                                       final int menuPage, final int returnPage, String materialPageID,
-                                       final int menuRows, Consumer<StringSelectionHandler> selectionListener) {
+  public MaterialSelectionPageCallback(final String materialDataID, final String returnMenu, final String menuName,
+                                       final int menuPage, final int returnPage, final String materialPageID,
+                                       final int menuRows, final Consumer<StringSelectionHandler> selectionListener) {
 
     this.returnMenu = returnMenu;
     this.menuName = menuName;

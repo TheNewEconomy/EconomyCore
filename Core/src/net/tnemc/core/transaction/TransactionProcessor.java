@@ -46,7 +46,7 @@ public interface TransactionProcessor {
    *
    * @return The {@link TransactionResult result} from performing the transaction.
    */
-  default TransactionResult process(Transaction transaction) {
+  default TransactionResult process(final Transaction transaction) {
 
     final Optional<EconomyResponse> response = processChecks(transaction);
 
@@ -58,7 +58,7 @@ public interface TransactionProcessor {
 
       final Optional<Account> from = TNECore.eco().account().findAccount(transaction.getFrom().getId());
       if(from.isPresent()) {
-        for(HoldingsEntry entry : transaction.getFrom().getEndingBalances()) {
+        for(final HoldingsEntry entry : transaction.getFrom().getEndingBalances()) {
           from.get().setHoldings(entry, entry.getHandler());
         }
       }
@@ -68,7 +68,7 @@ public interface TransactionProcessor {
 
       final Optional<Account> to = TNECore.eco().account().findAccount(transaction.getTo().getId());
       if(to.isPresent()) {
-        for(HoldingsEntry entry : transaction.getTo().getEndingBalances()) {
+        for(final HoldingsEntry entry : transaction.getTo().getEndingBalances()) {
           to.get().setHoldings(entry, entry.getHandler());
         }
       }
@@ -83,7 +83,7 @@ public interface TransactionProcessor {
     return result;
   }
 
-  default Optional<EconomyResponse> processChecks(Transaction transaction) {
+  default Optional<EconomyResponse> processChecks(final Transaction transaction) {
 
     EconomyResponse response = null;
     for(final String str : getChecks()) {

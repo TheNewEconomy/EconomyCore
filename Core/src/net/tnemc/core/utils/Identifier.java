@@ -37,7 +37,7 @@ public record Identifier(String plugin, String id) {
 
   public static Identifier fromID(final String id) {
 
-    Optional<Identifier> idObj = EconomyManager.instance().findID(id);
+    final Optional<Identifier> idObj = EconomyManager.instance().findID(id);
     if(idObj.isPresent()) {
       return idObj.get();
     }
@@ -58,7 +58,7 @@ public record Identifier(String plugin, String id) {
    * @return True if the ids match.
    */
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(final Object obj) {
 
     if(obj instanceof Identifier) {
       return ((Identifier)obj).asID().equalsIgnoreCase(asID());

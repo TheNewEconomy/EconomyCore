@@ -67,7 +67,7 @@ public class TNEStorageProvider implements StorageProvider {
   private StorageConnector<?> connector;
 
   @Override
-  public void initialize(String engine) {
+  public void initialize(final String engine) {
 
     final String prefix = DataConfig.yaml().getString("Data.Database.Prefix");
 
@@ -173,7 +173,7 @@ public class TNEStorageProvider implements StorageProvider {
   }
 
   @Override
-  public void storeAll(@NotNull String identifier) {
+  public void storeAll(@NotNull final String identifier) {
 
     final Optional<Datable<?>> data = Optional.ofNullable(engine.datables().get(HoldingsEntry.class));
 

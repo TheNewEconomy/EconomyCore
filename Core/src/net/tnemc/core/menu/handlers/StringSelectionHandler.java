@@ -31,7 +31,7 @@ public class StringSelectionHandler {
   private final MenuClickHandler click;
   private final String value;
 
-  public StringSelectionHandler(MenuClickHandler click, String value) {
+  public StringSelectionHandler(final MenuClickHandler click, final String value) {
 
     this.click = click;
     this.value = value;

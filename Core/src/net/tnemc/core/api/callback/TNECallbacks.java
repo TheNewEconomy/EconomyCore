@@ -40,7 +40,7 @@ public enum TNECallbacks {
 
   final String identifier;
 
-  TNECallbacks(String identifier) {
+  TNECallbacks(final String identifier) {
 
     this.identifier = identifier;
   }

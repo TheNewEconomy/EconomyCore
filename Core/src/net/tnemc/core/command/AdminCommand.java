@@ -42,7 +42,7 @@ import java.util.Optional;
  */
 public class AdminCommand extends BaseCommand {
 
-  public static void onMyEco(CmdSource<?> sender) {
+  public static void onMyEco(final CmdSource<?> sender) {
 
     if(sender.player().isPresent()) {
 
@@ -50,7 +50,7 @@ public class AdminCommand extends BaseCommand {
     }
   }
 
-  public static void onBackup(CmdSource<?> sender) {
+  public static void onBackup(final CmdSource<?> sender) {
 
     if(StorageManager.instance().backup()) {
 
@@ -61,7 +61,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   //<player> [balance]
-  public static void onCreate(CmdSource<?> sender, String name) {
+  public static void onCreate(final CmdSource<?> sender, final String name) {
 
     if(TNECore.eco().account().findAccount(name).isPresent()) {
 
@@ -85,7 +85,7 @@ public class AdminCommand extends BaseCommand {
   }
 
   //<standard/detailed/developer>
-  public static void onDebug(CmdSource<?> sender, DebugLevel level) {
+  public static void onDebug(final CmdSource<?> sender, final DebugLevel level) {
 
     PluginCore.instance().setLevel(level);
     final MessageData data = new MessageData("Messages.Data.Debug");
@@ -93,7 +93,7 @@ public class AdminCommand extends BaseCommand {
     sender.message(data);
   }
 
-  public static void onDelete(CmdSource<?> sender, String name) {
+  public static void onDelete(final CmdSource<?> sender, final String name) {
 
     final Optional<Account> acc = TNECore.eco().account().findAccount(name);
     if(acc.isEmpty()) {
@@ -121,19 +121,19 @@ public class AdminCommand extends BaseCommand {
     sender.message(data);
   }
 
-  public static void onExtract(CmdSource<?> sender) {
+  public static void onExtract(final CmdSource<?> sender) {
 
 
     PluginCore.server().scheduler().createDelayedTask(Extractor::extract, new ChoreTime(0), ChoreExecution.SECONDARY);
     sender.message(new MessageData("Messages.Admin.Extraction"));
   }
 
-  public static void onPurge(CmdSource<?> sender) {
+  public static void onPurge(final CmdSource<?> sender) {
 
     TNECore.instance().storage().purge();
   }
 
-  public static void onReload(CmdSource<?> sender, String type) {
+  public static void onReload(final CmdSource<?> sender, final String type) {
 
     String formattedType = type;
     switch(type.toLowerCase()) {
@@ -158,26 +158,26 @@ public class AdminCommand extends BaseCommand {
     sender.message(data);
   }
 
-  public static void onReset(CmdSource<?> sender) {
+  public static void onReset(final CmdSource<?> sender) {
 
     StorageManager.instance().reset();
   }
 
-  public static void onRestore(CmdSource<?> sender, int extraction) {
+  public static void onRestore(final CmdSource<?> sender, final int extraction) {
 
 
     PluginCore.server().scheduler().createDelayedTask(()->Extractor.restore(extraction), new ChoreTime(0), ChoreExecution.SECONDARY);
     sender.message(new MessageData("Messages.Admin.Restoration"));
   }
 
-  public static void onSave(CmdSource<?> sender) {
+  public static void onSave(final CmdSource<?> sender) {
 
     StorageManager.instance().storeAll();
     sender.message(new MessageData("Messages.Data.Save"));
   }
 
   //<account> [status]
-  public static void onStatus(CmdSource<?> sender, Account account, AccountStatus status) {
+  public static void onStatus(final CmdSource<?> sender, final Account account, final AccountStatus status) {
 
     //Set the account's status to the new one.
     account.setStatus(status);
@@ -188,7 +188,7 @@ public class AdminCommand extends BaseCommand {
     sender.message(data);
   }
 
-  public static void onVersion(CmdSource<?> sender) {
+  public static void onVersion(final CmdSource<?> sender) {
 
     final MessageData data = new MessageData("Messages.General.Version");
     data.addReplacement("$version", TNECore.version);

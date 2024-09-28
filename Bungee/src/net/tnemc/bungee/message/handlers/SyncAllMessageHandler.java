@@ -37,7 +37,7 @@ public class SyncAllMessageHandler extends AccountHandler {
   }
 
   @Override
-  public void handle(String player, String accountName, UUID server, DataInputStream stream) {
+  public void handle(final String player, final String accountName, final UUID server, final DataInputStream stream) {
 
     if(BungeeCore.instance().getBacklog().containsKey(server)) {
       sendBacklog(BungeeCore.instance().getBacklog().get(server));

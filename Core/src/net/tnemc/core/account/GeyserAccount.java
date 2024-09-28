@@ -28,7 +28,7 @@ import java.util.UUID;
  */
 public class GeyserAccount extends PlayerAccount {
 
-  public GeyserAccount(UUID identifier, String name) {
+  public GeyserAccount(final UUID identifier, final String name) {
 
     super(identifier, name);
   }

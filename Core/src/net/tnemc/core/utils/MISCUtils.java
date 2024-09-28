@@ -44,12 +44,12 @@ public class MISCUtils {
     return MessageConfig.yaml().getString("Messages.Worlds." + world, world);
   }
 
-  public static void setComment(YamlDocument yaml, String route, String comment) {
+  public static void setComment(final YamlDocument yaml, final String route, final String comment) {
 
     setComment(yaml, route, Collections.singletonList(comment));
   }
 
-  public static void setComment(YamlDocument yaml, String route, List<String> comments) {
+  public static void setComment(final YamlDocument yaml, final String route, final List<String> comments) {
 
     if(yaml.contains(route)) {
       yaml.getBlock(route).setComments(comments);
@@ -61,17 +61,17 @@ public class MISCUtils {
     final Random rand = new Random();
     final StringBuilder identifierBuilder = new StringBuilder();
     for(int i = 0; i < length; i++) {
-      char c = (char)('A' + rand.nextInt(26));
+      final char c = (char)('A' + rand.nextInt(26));
       identifierBuilder.append(c);
     }
     return identifierBuilder.toString();
   }
 
-  public static void deleteFolder(File folder) {
+  public static void deleteFolder(final File folder) {
 
-    File[] files = folder.listFiles();
+    final File[] files = folder.listFiles();
     if(files != null) { //some JVMs return null for empty dirs
-      for(File f : files) {
+      for(final File f : files) {
         if(f.isDirectory()) {
           deleteFolder(f);
         } else {
@@ -82,7 +82,7 @@ public class MISCUtils {
     folder.delete();
   }
 
-  public static void zipFolder(File sourceFolder, String destinationZipFile) throws IOException {
+  public static void zipFolder(final File sourceFolder, final String destinationZipFile) throws IOException {
 
     try(FileOutputStream fos = new FileOutputStream(destinationZipFile);
         ZipOutputStream zos = new ZipOutputStream(fos)) {
@@ -99,7 +99,7 @@ public class MISCUtils {
     }
   }
 
-  public static void zipFile(File fileToZip, String fileName, ZipOutputStream zipOut) throws IOException {
+  public static void zipFile(final File fileToZip, final String fileName, final ZipOutputStream zipOut) throws IOException {
 
     if(fileToZip.isHidden()) {
       return;
@@ -117,22 +117,22 @@ public class MISCUtils {
         zipOut.closeEntry();
       }
 
-      File[] children = fileToZip.listFiles();
+      final File[] children = fileToZip.listFiles();
       if(children == null) {
         return;
       }
 
-      for(File childFile : children) {
+      for(final File childFile : children) {
         zipFile(childFile, fileName + "/" + childFile.getName(), zipOut);
       }
       return;
     }
 
-    FileInputStream fis = new FileInputStream(fileToZip);
-    ZipEntry zipEntry = new ZipEntry(fileName);
+    final FileInputStream fis = new FileInputStream(fileToZip);
+    final ZipEntry zipEntry = new ZipEntry(fileName);
     zipOut.putNextEntry(zipEntry);
 
-    byte[] bytes = new byte[1024];
+    final byte[] bytes = new byte[1024];
     int length;
 
     while((length = fis.read(bytes)) >= 0) {
@@ -152,7 +152,7 @@ public class MISCUtils {
       return;
     }
 
-    for(File file : files) {
+    for(final File file : files) {
       if(file.isDirectory()) {
         zipFolder(file, parentFolder + File.separator + file.getName(), zos);
         continue;

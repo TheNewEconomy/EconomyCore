@@ -70,7 +70,7 @@ public class PAPIHook extends PlaceholderExpansion {
   }
 
   @Override
-  public String onPlaceholderRequest(Player player, @NotNull String identifier) {
+  public String onPlaceholderRequest(final Player player, @NotNull final String identifier) {
 
     if(player == null) {
       return null;

@@ -43,9 +43,9 @@ public class SpongeReceipt implements TransactionResult {
   private final Set<Context> contexts;
   private final TransactionType type;
 
-  public SpongeReceipt(net.tnemc.core.transaction.TransactionResult result, Account account,
-                       SpongeCurrency currency, BigDecimal amount, Set<Context> contexts,
-                       TransactionType type) {
+  public SpongeReceipt(final net.tnemc.core.transaction.TransactionResult result, final Account account,
+                       final SpongeCurrency currency, final BigDecimal amount, final Set<Context> contexts,
+                       final TransactionType type) {
 
     this.result = result;
     this.account = account;

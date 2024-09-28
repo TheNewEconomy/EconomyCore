@@ -43,7 +43,7 @@ public class ModuleCommand {
   @Subcommand({ "help", "?" })
   @Usage("Help.Arguments")
   @Description("Help.Description")
-  public void help(BukkitCommandActor actor, CommandHelp<String> helpEntries, @Default("1") int page) {
+  public void help(final BukkitCommandActor actor, final CommandHelp<String> helpEntries, @Default("1") final int page) {
 
     BaseCommand.help(new BukkitCMDSource(actor), helpEntries, page);
   }
@@ -52,7 +52,7 @@ public class ModuleCommand {
   @Usage("Module.Available.Arguments")
   @Description("Module.Available.Description")
   @CommandPermission("tne.module.available")
-  public void onAvailable(BukkitCommandActor sender, @Default(TNECore.coreURL) String url) {
+  public void onAvailable(final BukkitCommandActor sender, @Default(TNECore.coreURL) final String url) {
 
     net.tnemc.core.command.ModuleCommand.onAvailable(new BukkitCMDSource(sender), url);
   }
@@ -61,7 +61,7 @@ public class ModuleCommand {
   @Usage("Module.Download.Arguments")
   @Description("Module.Download.Description")
   @CommandPermission("tne.module.download")
-  public void onDownload(BukkitCommandActor sender, String moduleName, @Default(TNECore.coreURL) String url) {
+  public void onDownload(final BukkitCommandActor sender, final String moduleName, @Default(TNECore.coreURL) final String url) {
 
     net.tnemc.core.command.ModuleCommand.onDownload(new BukkitCMDSource(sender), moduleName, url);
   }
@@ -70,7 +70,7 @@ public class ModuleCommand {
   @Usage("Module.Info.Arguments")
   @Description("Module.Info.Description")
   @CommandPermission("tne.module.info")
-  public void onInfo(BukkitCommandActor sender, String moduleName) {
+  public void onInfo(final BukkitCommandActor sender, final String moduleName) {
 
     net.tnemc.core.command.ModuleCommand.onInfo(new BukkitCMDSource(sender), moduleName);
   }
@@ -80,7 +80,7 @@ public class ModuleCommand {
   @DefaultFor({ "module", "mod" })
   @Description("Module.List.Description")
   @CommandPermission("tne.list.available")
-  public void onList(BukkitCommandActor sender) {
+  public void onList(final BukkitCommandActor sender) {
 
     net.tnemc.core.command.ModuleCommand.onList(new BukkitCMDSource(sender));
   }
@@ -89,7 +89,7 @@ public class ModuleCommand {
   @Usage("Module.Load.Arguments")
   @Description("Module.Load.Description")
   @CommandPermission("tne.module.load")
-  public void onLoad(BukkitCommandActor sender, String moduleName) {
+  public void onLoad(final BukkitCommandActor sender, final String moduleName) {
 
     net.tnemc.core.command.ModuleCommand.onLoad(new BukkitCMDSource(sender), moduleName);
   }

@@ -37,7 +37,7 @@ public class TopPage<V> {
 
   private final int page;
 
-  public TopPage(int page) {
+  public TopPage(final int page) {
 
     this.page = page;
   }

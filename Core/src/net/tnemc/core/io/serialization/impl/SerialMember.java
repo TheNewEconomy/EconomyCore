@@ -42,12 +42,12 @@ public class SerialMember implements JSONAble<Member> {
    * @return The {@link JSONObject} associated with the JSON-valid String.
    */
   @Override
-  public JSONObject toJSON(Member member) {
+  public JSONObject toJSON(final Member member) {
 
     final JSONObject json = new JSONObject();
     json.put("id", member.getId().toString());
 
-    JSONObject permissionsJson = new JSONObject();
+    final JSONObject permissionsJson = new JSONObject();
     member.getPermissions().forEach((permission, value)->permissionsJson.put(permission, value));
     json.put("permissions", permissionsJson);
 
@@ -62,7 +62,7 @@ public class SerialMember implements JSONAble<Member> {
    * @return The object that was deserialized from the JSON string.
    */
   @Override
-  public Member fromJSON(String serialized) {
+  public Member fromJSON(final String serialized) {
 
     try {
       final JSONParser parser = new JSONParser();

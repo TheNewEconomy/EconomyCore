@@ -47,7 +47,7 @@ public class MonetaryCalculation {
 
   int attempt = 1;
 
-  public void initialize(Currency currency, Map<BigDecimal, Integer> inventoryMaterials) {
+  public void initialize(final Currency currency, final Map<BigDecimal, Integer> inventoryMaterials) {
 
     reset();
 
@@ -72,24 +72,24 @@ public class MonetaryCalculation {
    *
    * @param amount The amount to attempt to pay for.
    */
-  public void calculateDenominationCounts(BigDecimal amount) {
+  public void calculateDenominationCounts(final BigDecimal amount) {
 
-    Map<BigDecimal, Integer> result = new HashMap<>();
+    final Map<BigDecimal, Integer> result = new HashMap<>();
 
     BigDecimal workingAmount = amount;
 
     // Make a copy of the available denominations counts
-    TreeMap<BigDecimal, Integer> counts = new TreeMap<>(inventoryMaterials);
+    final TreeMap<BigDecimal, Integer> counts = new TreeMap<>(inventoryMaterials);
 
     final SortedMap<BigDecimal, Integer> lowerThanAmount = counts.headMap(amount, true);
 
     // Iterate over denominations in descending order
-    for(Map.Entry<BigDecimal, Integer> entry : new TreeMap<>(lowerThanAmount).descendingMap().entrySet()) {
+    for(final Map.Entry<BigDecimal, Integer> entry : new TreeMap<>(lowerThanAmount).descendingMap().entrySet()) {
 
       final BigDecimal denomination = entry.getKey();
 
       // Calculate the maximum number of this denomination that can be used
-      int maxCount = lowerThanAmount.get(denomination);
+      final int maxCount = lowerThanAmount.get(denomination);
       int count = workingAmount.divide(denomination, 0, RoundingMode.DOWN).intValue();
       if(count > maxCount) {
         count = maxCount;
@@ -145,7 +145,7 @@ public class MonetaryCalculation {
   }
 
 
-  public Map<BigDecimal, Integer> calculateBreakdowns(BigDecimal amount) {
+  public Map<BigDecimal, Integer> calculateBreakdowns(final BigDecimal amount) {
 
     PluginCore.log().debug("calculateBreakdowns Amount:" + amount.toPlainString(), DebugLevel.DEVELOPER);
 
@@ -185,7 +185,7 @@ public class MonetaryCalculation {
    * @return a map of BigDecimal denominations and the number of each denomination required to make
    * up the amount
    */
-  public Map<BigDecimal, Integer> breakdown(BigDecimal amount) {
+  public Map<BigDecimal, Integer> breakdown(final BigDecimal amount) {
 
     // Create a new map to store the breakdown counts
     final Map<BigDecimal, Integer> counts = new HashMap<>();
@@ -194,7 +194,7 @@ public class MonetaryCalculation {
     BigDecimal workingAmount = amount;
 
     // Iterate through the available denominations in the denominationTypes list
-    for(BigDecimal denomination : denominationTypes) {
+    for(final BigDecimal denomination : denominationTypes) {
 
       // Calculate the number of this denomination required to make up the remaining amount
       final int count = workingAmount.divide(denomination, 0, RoundingMode.DOWN).intValue();
@@ -220,11 +220,11 @@ public class MonetaryCalculation {
    * @param exist the map to add values to
    * @param toAdd the map containing the values to add
    */
-  private void combineMaps(Map<BigDecimal, Integer> exist, Map<BigDecimal, Integer> toAdd) {
+  private void combineMaps(final Map<BigDecimal, Integer> exist, final Map<BigDecimal, Integer> toAdd) {
 
 
     // Iterate through the toAdd map
-    for(Map.Entry<BigDecimal, Integer> entry : toAdd.entrySet()) {
+    for(final Map.Entry<BigDecimal, Integer> entry : toAdd.entrySet()) {
 
       // If the exist map already contains the key from the current toAdd entry,
       // add the value from the toAdd entry to the value in the exist map

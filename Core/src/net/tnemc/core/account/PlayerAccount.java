@@ -39,7 +39,7 @@ public class PlayerAccount extends Account {
   protected long lastOnline;
   protected String language;
 
-  public PlayerAccount(UUID identifier, String name) {
+  public PlayerAccount(final UUID identifier, final String name) {
 
     super(identifier, name);
 
@@ -113,7 +113,7 @@ public class PlayerAccount extends Account {
     return lastOnline;
   }
 
-  public void setLastOnline(long lastOnline) {
+  public void setLastOnline(final long lastOnline) {
 
     this.lastOnline = lastOnline;
   }
@@ -123,7 +123,7 @@ public class PlayerAccount extends Account {
     return language;
   }
 
-  public void setLanguage(String language) {
+  public void setLanguage(final String language) {
 
     this.language = language;
   }

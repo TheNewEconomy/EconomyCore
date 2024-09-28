@@ -84,7 +84,7 @@ public class ItemType extends VirtualType {
    * @return True if the holdings have been set, otherwise false.
    */
   @Override
-  public boolean setHoldings(Account account, String region, Currency currency, Identifier type, BigDecimal amount) {
+  public boolean setHoldings(final Account account, final String region, final Currency currency, Identifier type, final BigDecimal amount) {
 
     if(type.equals(EconomyManager.NORMAL)) type = INVENTORY_ONLY;
 

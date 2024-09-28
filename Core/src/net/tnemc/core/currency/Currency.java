@@ -160,7 +160,7 @@ public class Currency {
     return startingHoldings;
   }
 
-  public void setStartingHoldings(BigDecimal startingHoldings) {
+  public void setStartingHoldings(final BigDecimal startingHoldings) {
 
     this.startingHoldings = startingHoldings;
   }
@@ -170,7 +170,7 @@ public class Currency {
     return maxBalance;
   }
 
-  public void setMaxBalance(BigDecimal maxBalance) {
+  public void setMaxBalance(final BigDecimal maxBalance) {
 
     this.maxBalance = maxBalance;
   }
@@ -180,7 +180,7 @@ public class Currency {
     return minBalance;
   }
 
-  public void setMinBalance(BigDecimal minBalance) {
+  public void setMinBalance(final BigDecimal minBalance) {
 
     this.minBalance = minBalance;
   }
@@ -190,7 +190,7 @@ public class Currency {
     return file;
   }
 
-  public void setFile(String file) {
+  public void setFile(final String file) {
 
     this.file = file;
   }
@@ -200,7 +200,7 @@ public class Currency {
     return uid;
   }
 
-  public void setUid(UUID uid) {
+  public void setUid(final UUID uid) {
 
     this.uid = uid;
   }
@@ -210,7 +210,7 @@ public class Currency {
     return identifier;
   }
 
-  public void setIdentifier(String identifier) {
+  public void setIdentifier(final String identifier) {
 
     this.identifier = identifier;
     this.file = identifier + ".yml";
@@ -221,7 +221,7 @@ public class Currency {
     return iconMaterial;
   }
 
-  public void setIconMaterial(String iconMaterial) {
+  public void setIconMaterial(final String iconMaterial) {
 
     this.iconMaterial = iconMaterial;
   }
@@ -231,7 +231,7 @@ public class Currency {
     return type;
   }
 
-  public void setType(String type) {
+  public void setType(final String type) {
 
     this.type = type;
   }
@@ -241,7 +241,7 @@ public class Currency {
     return format;
   }
 
-  public void setFormat(String format) {
+  public void setFormat(final String format) {
 
     this.format = format;
   }
@@ -251,7 +251,7 @@ public class Currency {
     return symbol;
   }
 
-  public void setSymbol(String symbol) {
+  public void setSymbol(final String symbol) {
 
     this.symbol = symbol;
   }
@@ -261,7 +261,7 @@ public class Currency {
     return prefixes;
   }
 
-  public void setPrefixes(String prefixes) {
+  public void setPrefixes(final String prefixes) {
 
     this.prefixes = prefixes;
   }
@@ -271,7 +271,7 @@ public class Currency {
     return prefixesj;
   }
 
-  public void setPrefixesj(String prefixesj) {
+  public void setPrefixesj(final String prefixesj) {
 
     this.prefixesj = prefixesj;
   }
@@ -281,7 +281,7 @@ public class Currency {
     return decimal;
   }
 
-  public void setDecimal(String decimal) {
+  public void setDecimal(final String decimal) {
 
     this.decimal = decimal;
   }
@@ -291,7 +291,7 @@ public class Currency {
     return balanceShow;
   }
 
-  public void setBalanceShow(boolean balanceShow) {
+  public void setBalanceShow(final boolean balanceShow) {
 
     this.balanceShow = balanceShow;
   }
@@ -301,7 +301,7 @@ public class Currency {
     return display;
   }
 
-  public void setDisplay(String display) {
+  public void setDisplay(final String display) {
 
     this.display = display;
   }
@@ -311,7 +311,7 @@ public class Currency {
     return displayPlural;
   }
 
-  public void setDisplayPlural(String displayPlural) {
+  public void setDisplayPlural(final String displayPlural) {
 
     this.displayPlural = displayPlural;
   }
@@ -321,7 +321,7 @@ public class Currency {
     return displayMinor;
   }
 
-  public void setDisplayMinor(String displayMinor) {
+  public void setDisplayMinor(final String displayMinor) {
 
     this.displayMinor = displayMinor;
   }
@@ -331,7 +331,7 @@ public class Currency {
     return displayMinorPlural;
   }
 
-  public void setDisplayMinorPlural(String displayMinorPlural) {
+  public void setDisplayMinorPlural(final String displayMinorPlural) {
 
     this.displayMinorPlural = displayMinorPlural;
   }
@@ -341,7 +341,7 @@ public class Currency {
     return separateMajor;
   }
 
-  public void setSeparateMajor(boolean separateMajor) {
+  public void setSeparateMajor(final boolean separateMajor) {
 
     this.separateMajor = separateMajor;
   }
@@ -351,7 +351,7 @@ public class Currency {
     return majorSeparator;
   }
 
-  public void setMajorSeparator(String majorSeparator) {
+  public void setMajorSeparator(final String majorSeparator) {
 
     this.majorSeparator = majorSeparator;
   }
@@ -361,7 +361,7 @@ public class Currency {
     return decimalPlaces;
   }
 
-  public void setDecimalPlaces(int decimalPlaces) {
+  public void setDecimalPlaces(final int decimalPlaces) {
 
     this.decimalPlaces = decimalPlaces;
   }
@@ -371,7 +371,7 @@ public class Currency {
     return minorWeight;
   }
 
-  public void setMinorWeight(int minorWeight) {
+  public void setMinorWeight(final int minorWeight) {
 
     this.minorWeight = minorWeight;
   }
@@ -381,7 +381,7 @@ public class Currency {
     return negativeSupport;
   }
 
-  public void setNote(Note note) {
+  public void setNote(final Note note) {
 
     this.note = note;
   }
@@ -424,7 +424,7 @@ public class Currency {
 
   public static Currency clone(final Currency original, final boolean item) {
 
-    Currency cloned = (item)? new ItemCurrency(original.identifier) : new Currency(original.identifier);
+    final Currency cloned = (item)? new ItemCurrency(original.identifier) : new Currency(original.identifier);
 
     cloned.file = original.file;
     cloned.startingHoldings = original.startingHoldings;

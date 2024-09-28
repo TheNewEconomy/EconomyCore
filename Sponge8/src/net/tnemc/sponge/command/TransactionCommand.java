@@ -45,7 +45,7 @@ public class TransactionCommand {
   @Usage("Transaction.Away.Arguments")
   @Description("Transaction.Away.Description")
   @CommandPermission("tne.transaction.away")
-  public void away(SpongeCommandActor sender, @Default("1") int page) {
+  public void away(final SpongeCommandActor sender, @Default("1") final int page) {
 
     net.tnemc.core.command.TransactionCommand.away(new SpongeCMDSource(sender), page);
   }
@@ -55,7 +55,7 @@ public class TransactionCommand {
   @Usage("Transaction.History.Arguments")
   @Description("Transaction.History.Description")
   @CommandPermission("tne.transaction.history")
-  public void history(SpongeCommandActor sender, @Default("1") int page, String region, @Default("SELF_ACCOUNT") Account account) {
+  public void history(final SpongeCommandActor sender, @Default("1") final int page, final String region, @Default("SELF_ACCOUNT") final Account account) {
 
     net.tnemc.core.command.TransactionCommand.history(new SpongeCMDSource(sender), page, region, account);
   }
@@ -64,7 +64,7 @@ public class TransactionCommand {
   @Usage("Transaction.Info.Arguments")
   @Description("Transaction.Info.Description")
   @CommandPermission("tne.info.history")
-  public void info(SpongeCommandActor sender, UUID uuid) {
+  public void info(final SpongeCommandActor sender, final UUID uuid) {
 
     net.tnemc.core.command.TransactionCommand.info(new SpongeCMDSource(sender), uuid);
   }
@@ -73,7 +73,7 @@ public class TransactionCommand {
   @Usage("Transaction.Void.Arguments")
   @Description("Transaction.Void.Description")
   @CommandPermission("tne.void.history")
-  public void voidT(SpongeCommandActor sender, Account account, UUID uuid) {
+  public void voidT(final SpongeCommandActor sender, final Account account, final UUID uuid) {
 
     net.tnemc.core.command.TransactionCommand.voidT(new SpongeCMDSource(sender), account, uuid);
   }

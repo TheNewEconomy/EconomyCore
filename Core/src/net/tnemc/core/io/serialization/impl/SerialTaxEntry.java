@@ -40,7 +40,7 @@ public class SerialTaxEntry implements JSONAble<TaxEntry> {
    * @return The {@link JSONObject} associated with the JSON-valid String.
    */
   @Override
-  public JSONObject toJSON(TaxEntry entry) {
+  public JSONObject toJSON(final TaxEntry entry) {
 
     final JSONObject json = new JSONObject();
     json.put("type", entry.type());
@@ -56,7 +56,7 @@ public class SerialTaxEntry implements JSONAble<TaxEntry> {
    * @return The object that was deserialized from the JSON string.
    */
   @Override
-  public TaxEntry fromJSON(String serialized) {
+  public TaxEntry fromJSON(final String serialized) {
 
     final JSONParser parser = new JSONParser();
 

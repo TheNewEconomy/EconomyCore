@@ -45,17 +45,17 @@ public class PlayerCloseEChestHandler {
    *
    * @return True if the event should be cancelled, otherwise false.
    */
-  public HandlerResponse handle(PlayerProvider provider) {
+  public HandlerResponse handle(final PlayerProvider provider) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(provider.identifier());
     if(account.isPresent()) {
 
       final String region = TNECore.eco().region().getMode().region(provider);
-      for(Currency currency : TNECore.eco().currency().getCurrencies(region)) {
+      for(final Currency currency : TNECore.eco().currency().getCurrencies(region)) {
 
         if(currency.type().supportsItems()) {
 
-          for(HoldingsEntry entry : account.get().getHoldings(region, currency.getUid(), EconomyManager.E_CHEST)) {
+          for(final HoldingsEntry entry : account.get().getHoldings(region, currency.getUid(), EconomyManager.E_CHEST)) {
 
             account.get().getWallet().setHoldings(entry);
           }

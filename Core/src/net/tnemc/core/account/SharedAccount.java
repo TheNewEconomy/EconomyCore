@@ -41,7 +41,7 @@ public class SharedAccount extends Account {
    */
   protected UUID owner;
 
-  public SharedAccount(UUID identifier, String name, UUID owner) {
+  public SharedAccount(final UUID identifier, final String name, final UUID owner) {
 
     super(identifier, name);
 
@@ -55,7 +55,7 @@ public class SharedAccount extends Account {
    *
    * @return True if the specified identifier is a member, otherwise false.
    */
-  public boolean isMember(UUID identifier) {
+  public boolean isMember(final UUID identifier) {
 
     return owner.equals(identifier) || members.containsKey(identifier);
   }
@@ -68,7 +68,7 @@ public class SharedAccount extends Account {
    * @return An Optional containing the {@link Member member} if exists, otherwise an empty
    * Optional.
    */
-  public Optional<Member> findMember(UUID identifier) {
+  public Optional<Member> findMember(final UUID identifier) {
 
     return Optional.ofNullable(members.get(identifier));
   }
@@ -80,7 +80,7 @@ public class SharedAccount extends Account {
    * @param permission The permission to set.
    * @param value      The value to set for the permission.
    */
-  public void addPermission(UUID identifier, Permission permission, boolean value) {
+  public void addPermission(final UUID identifier, final Permission permission, final boolean value) {
 
     final Member member = members.getOrDefault(identifier, new Member(identifier));
     member.addPermission(permission, value);
@@ -94,7 +94,7 @@ public class SharedAccount extends Account {
    * @param permission The permission to set.
    * @param value      The value to set for the permission.
    */
-  public void addPermission(UUID identifier, String permission, boolean value) {
+  public void addPermission(final UUID identifier, final String permission, final boolean value) {
 
     final Member member = members.getOrDefault(identifier, new Member(identifier));
     member.addPermission(permission, value);
@@ -107,7 +107,7 @@ public class SharedAccount extends Account {
    * @param identifier The identifier of the member to use.
    * @param permission The permission to set.
    */
-  public void removePermission(UUID identifier, Permission permission) {
+  public void removePermission(final UUID identifier, final Permission permission) {
 
     findMember(identifier).ifPresent(mem->mem.removePermission(permission));
   }
@@ -118,7 +118,7 @@ public class SharedAccount extends Account {
    * @param identifier The identifier of the member to use.
    * @param permission The permission to set.
    */
-  public void removePermission(UUID identifier, String permission) {
+  public void removePermission(final UUID identifier, final String permission) {
 
     findMember(identifier).ifPresent(mem->mem.removePermission(permission));
   }
@@ -131,7 +131,7 @@ public class SharedAccount extends Account {
    *
    * @return True if the specified member has the specified permission, otherwise false.
    */
-  public boolean hasPermission(UUID identifier, Permission permission) {
+  public boolean hasPermission(final UUID identifier, final Permission permission) {
 
     if(owner.equals(identifier)) return true;
     return findMember(identifier).map(value->value.hasPermission(permission))
@@ -148,7 +148,7 @@ public class SharedAccount extends Account {
    *
    * @return True if the specified member has the specified permission, otherwise false.
    */
-  public boolean hasPermission(UUID identifier, String permission, boolean defaultValue) {
+  public boolean hasPermission(final UUID identifier, final String permission, final boolean defaultValue) {
 
     if(owner.equals(identifier)) return true;
     return findMember(identifier).map(value->value.hasPermission(permission, defaultValue)).orElse(defaultValue);
@@ -175,7 +175,7 @@ public class SharedAccount extends Account {
     return owner;
   }
 
-  public void setOwner(UUID owner) {
+  public void setOwner(final UUID owner) {
 
     this.owner = owner;
   }

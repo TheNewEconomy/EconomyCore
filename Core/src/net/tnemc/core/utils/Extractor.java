@@ -81,9 +81,9 @@ public class Extractor {
 
     yaml.set("Version", "0.1.2.0");
 
-    for(Account account : TNECore.eco().account().getAccounts().values()) {
+    for(final Account account : TNECore.eco().account().getAccounts().values()) {
 
-      for(HoldingsEntry entry : account.getWallet().entryList()) {
+      for(final HoldingsEntry entry : account.getWallet().entryList()) {
 
         String username = account.getName();
         username = username.replaceAll("\\.", "!").replaceAll("\\-", "@")
@@ -117,7 +117,7 @@ public class Extractor {
 
   public static boolean restore(@Nullable final Integer extraction) {
 
-    File file;
+    final File file;
 
     if(extraction != null && extraction > 0) {
       file = new File(PluginCore.directory(), "extracted/extracted-" + extraction + ".yml");
@@ -148,7 +148,7 @@ public class Extractor {
 
       final boolean recode = extracted.contains("Version");
 
-      for(Object nameObj : accounts) {
+      for(final Object nameObj : accounts) {
 
         final String name = (String)nameObj;
 
@@ -162,16 +162,16 @@ public class Extractor {
         }
 
         final Set<Object> regions = extracted.getSection("Accounts." + name + ".Balances").getKeys();
-        for(Object regionObj : regions) {
+        for(final Object regionObj : regions) {
 
           final String region = (String)regionObj;
           final Set<Object> currencies = extracted.getSection("Accounts." + name + ".Balances." + region).getKeys();
-          for(Object currencyObj : currencies) {
+          for(final Object currencyObj : currencies) {
 
             final String currency = (String)currencyObj;
             if(!recode) {
               final String finalCurrency = (currency.equalsIgnoreCase("default"))? TNECore.eco().currency().getDefaultCurrency(region).getIdentifier() : currency;
-              Optional<Currency> cur = TNECore.eco().currency().findCurrency(finalCurrency);
+              final Optional<Currency> cur = TNECore.eco().currency().findCurrency(finalCurrency);
 
               PluginCore.log().inform("Currency avail: " + cur.isPresent());
               if(cur.isPresent()) {
@@ -191,7 +191,7 @@ public class Extractor {
             } else {
 
               final Set<Object> types = extracted.getSection("Accounts." + name + ".Balances." + region + "." + currency).getKeys();
-              for(Object typeObj : types) {
+              for(final Object typeObj : types) {
 
                 final String type = (String)typeObj;
                 final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name

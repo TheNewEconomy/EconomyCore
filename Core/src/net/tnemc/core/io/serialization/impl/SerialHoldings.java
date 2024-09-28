@@ -44,7 +44,7 @@ public class SerialHoldings implements JSONAble<HoldingsEntry> {
    * @return The {@link JSONObject} associated with the JSON-valid String.
    */
   @Override
-  public JSONObject toJSON(HoldingsEntry holdings) {
+  public JSONObject toJSON(final HoldingsEntry holdings) {
 
     final JSONObject json = new JSONObject();
 
@@ -63,7 +63,7 @@ public class SerialHoldings implements JSONAble<HoldingsEntry> {
    * @return The object that was deserialized from the JSON string.
    */
   @Override
-  public HoldingsEntry fromJSON(String serialized) {
+  public HoldingsEntry fromJSON(final String serialized) {
 
     try {
       final JSONParser parser = new JSONParser();

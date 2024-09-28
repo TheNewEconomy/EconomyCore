@@ -70,7 +70,7 @@ public class DepositType implements TransactionType {
 
     if(MainConfig.yaml().getBoolean("Core.Transactions.Deposit.Tax.Enabled", false)) {
       final String tax = MainConfig.yaml().getString("Core.Transactions.Deposit.Tax.Rate");
-      TaxEntry entry;
+      final TaxEntry entry;
       if(tax.contains("%")) {
         entry = new TaxEntry("percent", Double.parseDouble(tax.replace("%", "")) / 100);
       } else {

@@ -60,7 +60,7 @@ public interface HoldingsHandler {
    *
    * @return True if it supports the account, otherwise false.
    */
-  default boolean appliesTo(Account account) {
+  default boolean appliesTo(final Account account) {
 
     return true;
   }

@@ -32,7 +32,7 @@ import java.util.UUID;
  */
 public class NationAccount extends NonPlayerAccount {
 
-  public NationAccount(UUID identifier, String name) {
+  public NationAccount(final UUID identifier, final String name) {
 
     super(identifier, name);
     //this.owner = Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getKing().getUUID();
@@ -50,7 +50,7 @@ public class NationAccount extends NonPlayerAccount {
   }
 
   @Override
-  public UUID generateIdentifier(String name) {
+  public UUID generateIdentifier(final String name) {
 
     try {
       return Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getUUID();

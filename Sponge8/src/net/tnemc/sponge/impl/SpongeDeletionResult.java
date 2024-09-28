@@ -31,7 +31,7 @@ public class SpongeDeletionResult implements AccountDeletionResultType {
 
   private final EconomyResponse response;
 
-  public SpongeDeletionResult(EconomyResponse response) {
+  public SpongeDeletionResult(final EconomyResponse response) {
 
     this.response = response;
   }

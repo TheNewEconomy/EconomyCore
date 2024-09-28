@@ -36,7 +36,7 @@ public class TransactionCheckGroup {
 
   private final String identifier;
 
-  public TransactionCheckGroup(String identifier) {
+  public TransactionCheckGroup(final String identifier) {
 
     this.identifier = identifier;
   }

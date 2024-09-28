@@ -235,7 +235,7 @@ public abstract class TNECore extends PluginEngine {
   }
 
   @Override
-  public void registerCallbacks(CallbackManager callbackManager) {
+  public void registerCallbacks(final CallbackManager callbackManager) {
 
     callbackManager.addCallback(TNECallbacks.ACCOUNT_TYPES.toString(), new CallbackEntry(AccountTypesCallback.class));
     callbackManager.addCallback(TNECallbacks.ACCOUNT_LOAD.toString(), new CallbackEntry(AccountLoadCallback.class));
@@ -250,7 +250,7 @@ public abstract class TNECore extends PluginEngine {
   }
 
   @Override
-  public String commandHelpWriter(ExecutableCommand command, CommandActor actor) {
+  public String commandHelpWriter(final ExecutableCommand command, final CommandActor actor) {
 
     final MessageData data = new MessageData("Messages.Commands.Help.Entry");
     data.addReplacement("$command", command.getPath().toRealString());
@@ -296,7 +296,7 @@ public abstract class TNECore extends PluginEngine {
 
     this.economyManager.currency().saveCurrenciesUUID(PluginCore.directory());
 
-    UUID serverID;
+    final UUID serverID;
     //Set our server UUID. This is used for proxy messaging.
     final boolean randomUUID = MainConfig.yaml().getBoolean("Core.Server.RandomUUID", false);
 
@@ -450,7 +450,7 @@ public abstract class TNECore extends PluginEngine {
     return denominationToStack(denomination, 1);
   }
 
-  public AbstractItemStack<?> denominationToStack(final ItemDenomination denomination, int amount) {
+  public AbstractItemStack<?> denominationToStack(final ItemDenomination denomination, final int amount) {
 
     return PluginCore.server().stackBuilder().of(denomination.getMaterial(), amount)
             .enchant(denomination.getEnchantments())

@@ -32,7 +32,7 @@ public class DecimalRule implements FormatRule {
   }
 
   @Override
-  public String format(@Nullable Account account, HoldingsEntry entry, String format) {
+  public String format(@Nullable final Account account, final HoldingsEntry entry, final String format) {
 
     if(entry.currency().isPresent()) {
       if(entry.asMonetary().scale() == 0) {

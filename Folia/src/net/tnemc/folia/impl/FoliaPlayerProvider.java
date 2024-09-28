@@ -42,7 +42,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
 
   private final OfflinePlayer player;
 
-  public FoliaPlayerProvider(OfflinePlayer player) {
+  public FoliaPlayerProvider(final OfflinePlayer player) {
 
     super(player, PaperCore.instance().getPlugin());
     this.player = player;
@@ -142,7 +142,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
    * @param exp The amount of experience to set for this player.
    */
   @Override
-  public void setExp(int exp) {
+  public void setExp(final int exp) {
 
     if(player.getPlayer() != null) {
       player.getPlayer().setTotalExperience(exp);
@@ -169,7 +169,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
    * @param level The amount of experience levels to set for this player.
    */
   @Override
-  public void setExpLevel(int level) {
+  public void setExpLevel(final int level) {
 
     if(player.getPlayer() != null) {
       player.getPlayer().setLevel(level);
@@ -190,7 +190,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
    * @return True if the player has the permission, otherwise false.
    */
   @Override
-  public boolean hasPermission(String permission) {
+  public boolean hasPermission(final String permission) {
 
     if(player.getPlayer() == null) {
       return false;
@@ -199,7 +199,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
   }
 
   @Override
-  public void message(String message) {
+  public void message(final String message) {
 
     if(player.getPlayer() != null) {
       message(new MessageData(message));

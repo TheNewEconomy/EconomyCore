@@ -62,7 +62,7 @@ public class ConfigHandler extends ChannelMessageHandler {
 
     //write our currencies to the stream
     out.writeShort(TNECore.eco().currency().currencies().size());
-    for(Currency currency : TNECore.eco().currency().currencies()) {
+    for(final Currency currency : TNECore.eco().currency().currencies()) {
       out.writeUTF(new SerialCurrency().toJSON(currency).toJSONString());
     }
     out.writeUTF("config.yml:" + TNECore.instance().config().getYaml().dump());
@@ -72,7 +72,7 @@ public class ConfigHandler extends ChannelMessageHandler {
   }
 
   @Override
-  public void handle(ChannelBytesWrapper wrapper) {
+  public void handle(final ChannelBytesWrapper wrapper) {
 
     if(TNECore.instance().data().getYaml().getString("Data.Sync.Config.Hub", "none").equalsIgnoreCase("none") ||
        !TNECore.instance().data().getYaml().getBoolean("Data.Sync.Config.Sync", true)) {

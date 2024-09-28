@@ -36,7 +36,7 @@ public class MajorRule implements FormatRule {
   }
 
   @Override
-  public String format(@Nullable Account account, HoldingsEntry entry, String format) {
+  public String format(@Nullable final Account account, final HoldingsEntry entry, final String format) {
 
     final BigInteger major = entry.asMonetary().major();
 

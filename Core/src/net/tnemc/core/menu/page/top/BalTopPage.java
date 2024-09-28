@@ -47,8 +47,8 @@ public class BalTopPage {
   protected final String pageID;
   protected final int menuRows;
 
-  public BalTopPage(String returnMenu, String menuName,
-                    final int menuPage, final int returnPage, String pageID,
+  public BalTopPage(final String returnMenu, final String menuName,
+                    final int menuPage, final int returnPage, final String pageID,
                     final int menuRows) {
 
     this.returnMenu = returnMenu;

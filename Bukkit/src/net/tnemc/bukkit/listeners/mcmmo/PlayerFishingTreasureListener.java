@@ -34,7 +34,7 @@ public class PlayerFishingTreasureListener implements Listener {
   public void onFishReward(final McMMOPlayerFishingTreasureEvent event) {
 
     if(BukkitConfig.yaml().getBoolean("Bukkit.McMMORewards")) {
-      Optional<Currency> currency = TNECore.eco().currency().findCurrencyByMaterial(event.getTreasure().getType().name());
+      final Optional<Currency> currency = TNECore.eco().currency().findCurrencyByMaterial(event.getTreasure().getType().name());
       if(currency.isPresent()) event.setCancelled(true);
     }
   }

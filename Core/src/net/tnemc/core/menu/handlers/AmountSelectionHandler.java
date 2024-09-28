@@ -33,7 +33,7 @@ public class AmountSelectionHandler {
   private final MenuClickHandler click;
   private final BigDecimal amount;
 
-  public AmountSelectionHandler(MenuClickHandler click, BigDecimal amount) {
+  public AmountSelectionHandler(final MenuClickHandler click, final BigDecimal amount) {
 
     this.click = click;
     this.amount = amount;

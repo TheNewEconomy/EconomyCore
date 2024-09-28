@@ -30,7 +30,7 @@ import java.util.UUID;
  */
 public class VillageAccount extends NonPlayerAccount {
 
-  public VillageAccount(UUID identifier, String name) {
+  public VillageAccount(final UUID identifier, final String name) {
 
     super(identifier, name);
     //this.owner = Objects.requireNonNull(TownyAPI.getInstance().getTown(name)).getMayor().getUUID();
@@ -48,7 +48,7 @@ public class VillageAccount extends NonPlayerAccount {
   }
 
   @Override
-  public UUID generateIdentifier(String name) {
+  public UUID generateIdentifier(final String name) {
 
     return super.generateIdentifier(name);
   }

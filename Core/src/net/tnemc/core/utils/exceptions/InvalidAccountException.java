@@ -30,7 +30,7 @@ public class InvalidAccountException extends Exception {
    * Constructs a new exception with {@code null} as its detail message. The cause is not
    * initialized, and may subsequently be initialized by a call to {@link #initCause}.
    */
-  public InvalidAccountException(String missing) {
+  public InvalidAccountException(final String missing) {
 
     super("The account specified does not exist. Name: " + missing);
   }

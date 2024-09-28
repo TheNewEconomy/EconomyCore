@@ -32,7 +32,7 @@ import java.math.BigDecimal;
 public class BigDecimalResolver implements ValueResolver<BigDecimal> {
 
   @Override
-  public BigDecimal resolve(@NotNull ValueResolverContext context) {
+  public BigDecimal resolve(@NotNull final ValueResolverContext context) {
 
     final String value = context.arguments().pop();
 

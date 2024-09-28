@@ -50,7 +50,7 @@ public class BiomeMode implements RegionMode {
   }
 
   @Override
-  public String region(@NotNull PlayerProvider player) {
+  public String region(@NotNull final PlayerProvider player) {
 
     if(!MainConfig.yaml().getBoolean("Core.Region.MultiRegion")) {
       return TNECore.eco().region().resolve(TNECore.eco().region().defaultRegion());

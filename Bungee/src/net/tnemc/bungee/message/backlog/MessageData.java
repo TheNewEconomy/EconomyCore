@@ -33,7 +33,7 @@ public class MessageData {
 
   private final String serverName;
 
-  public MessageData(String serverName) {
+  public MessageData(final String serverName) {
 
     this.serverName = serverName;
   }

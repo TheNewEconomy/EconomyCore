@@ -55,7 +55,7 @@ public class PlayerJoinHandler {
    *
    * @return True if the event should be cancelled, otherwise false.
    */
-  public HandlerResponse handle(PlayerProvider provider) {
+  public HandlerResponse handle(final PlayerProvider provider) {
 
     final HandlerResponse response = new HandlerResponse("", false);
 
@@ -104,13 +104,13 @@ public class PlayerJoinHandler {
       if(firstJoin || acc.get().getCreationDate() == ((PlayerAccount)acc.get()).getLastOnline()) {
 
         final String region = TNECore.eco().region().getMode().region(provider);
-        for(Currency currency : TNECore.eco().currency().currencies()) {
+        for(final Currency currency : TNECore.eco().currency().currencies()) {
 
           if(currency.type().supportsItems() && MainConfig.yaml().getBoolean("Core.Server.ImportItems", true)) {
 
             TNECore.eco().account().getImporting().add(id);
 
-            for(HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
+            for(final HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
 
               acc.get().setHoldings(entry, entry.getHandler());
             }
@@ -133,7 +133,7 @@ public class PlayerJoinHandler {
         TNECore.eco().account().getLoading().add(id);
 
         final String region = TNECore.eco().region().getMode().region(provider);
-        for(Currency currency : TNECore.eco().currency().getCurrencies(region)) {
+        for(final Currency currency : TNECore.eco().currency().getCurrencies(region)) {
 
           if(currency instanceof ItemCurrency itemCurrency) {
 
@@ -143,7 +143,7 @@ public class PlayerJoinHandler {
 
                 TNECore.eco().account().getImporting().add(id);
 
-                for(HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
+                for(final HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
 
                   acc.get().setHoldings(entry, entry.getHandler());
                 }
@@ -158,7 +158,7 @@ public class PlayerJoinHandler {
               }
             } else {
 
-              for(HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
+              for(final HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {
 
                 acc.get().setHoldings(entry, entry.getHandler());
               }

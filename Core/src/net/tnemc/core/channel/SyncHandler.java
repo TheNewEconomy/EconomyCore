@@ -38,9 +38,9 @@ public class SyncHandler extends ChannelMessageHandler {
     super("sync");
   }
 
-  public static void send(String account) {
+  public static void send(final String account) {
 
-    ByteArrayDataOutput out = ByteStreams.newDataOutput();
+    final ByteArrayDataOutput out = ByteStreams.newDataOutput();
     out.writeUTF(PluginCore.instance().getServerID().toString());
     out.writeUTF(account);
 
@@ -48,7 +48,7 @@ public class SyncHandler extends ChannelMessageHandler {
   }
 
   @Override
-  public void handle(ChannelBytesWrapper wrapper) {
+  public void handle(final ChannelBytesWrapper wrapper) {
 
     //This will never come into the server by design.
   }

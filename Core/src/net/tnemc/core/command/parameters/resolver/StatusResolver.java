@@ -35,7 +35,7 @@ import java.util.Optional;
 public class StatusResolver implements ValueResolver<AccountStatus> {
 
   @Override
-  public AccountStatus resolve(@NotNull ValueResolverContext context) throws Throwable {
+  public AccountStatus resolve(@NotNull final ValueResolverContext context) throws Throwable {
 
     final String value = context.arguments().pop();
 

@@ -35,14 +35,14 @@ import java.util.UUID;
  */
 public class BaseCommand {
 
-  public static void help(CmdSource<?> source, CommandHelp<String> helpEntries, final int page) {
+  public static void help(final CmdSource<?> source, final CommandHelp<String> helpEntries, final int page) {
 
     for(final String entry : helpEntries.paginate(page, 5)) {
       source.message(new MessageData(entry));
     }
   }
 
-  public static Optional<Account> account(CmdSource<?> sender, final String type) {
+  public static Optional<Account> account(final CmdSource<?> sender, final String type) {
 
     if(sender.identifier().isEmpty()) {
       return Optional.empty();
@@ -63,7 +63,7 @@ public class BaseCommand {
    *
    * @return The name of the world that this command source is in.
    */
-  public static String region(CmdSource<?> sender) {
+  public static String region(final CmdSource<?> sender) {
 
     if(sender.player().isPresent()) {
       return TNECore.eco().region().getMode().region(sender.player().get());

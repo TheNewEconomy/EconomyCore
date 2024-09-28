@@ -48,7 +48,7 @@ public class RegionProvider {
 
   private RegionMode mode;
 
-  public RegionProvider(boolean realmSharing, final String mode) {
+  public RegionProvider(final boolean realmSharing, final String mode) {
 
     this.realmSharing = realmSharing;
 
@@ -150,7 +150,7 @@ public class RegionProvider {
     return realmSharing;
   }
 
-  public void setRealmSharing(boolean realmSharing) {
+  public void setRealmSharing(final boolean realmSharing) {
 
     this.realmSharing = realmSharing;
   }

@@ -34,14 +34,14 @@ public class PageSwitchWithClose extends IconAction {
   private final String menu;
   private final int page;
 
-  public PageSwitchWithClose(String menu, int page) {
+  public PageSwitchWithClose(final String menu, final int page) {
 
     super(ActionType.ANY);
     this.menu = menu;
     this.page = page;
   }
 
-  public PageSwitchWithClose(String menu, int page, ActionType type) {
+  public PageSwitchWithClose(final String menu, final int page, final ActionType type) {
 
     super(type);
     this.menu = menu;
@@ -57,7 +57,7 @@ public class PageSwitchWithClose extends IconAction {
    * {@code false}.
    */
   @Override
-  public boolean onClick(MenuClickHandler handler) {
+  public boolean onClick(final MenuClickHandler handler) {
 
     if(page == -1) {
       handler.player().inventory().close();

@@ -63,7 +63,7 @@ public class PaperPlugin {
    * Called when the plugin is loaded by the Bukkit plugin manager. This method should be used to
    * initialize any necessary resources or data.
    */
-  public void load(final JavaPlugin plugin, TNECore core, ServerConnector provider) {
+  public void load(final JavaPlugin plugin, final TNECore core, final ServerConnector provider) {
 
     //Initialize our TNE Core Class
     this.core = core;
@@ -138,7 +138,7 @@ public class PaperPlugin {
     return papiHooked;
   }
 
-  public void setPapiHooked(boolean papiHooked) {
+  public void setPapiHooked(final boolean papiHooked) {
 
     this.papiHooked = papiHooked;
   }

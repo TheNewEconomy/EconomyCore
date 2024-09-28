@@ -34,7 +34,7 @@ public class SpongeCurrency implements Currency {
 
   private final net.tnemc.core.currency.Currency currency;
 
-  public SpongeCurrency(net.tnemc.core.currency.Currency currency) {
+  public SpongeCurrency(final net.tnemc.core.currency.Currency currency) {
 
     this.currency = currency;
   }
@@ -58,7 +58,7 @@ public class SpongeCurrency implements Currency {
   }
 
   @Override
-  public Component format(BigDecimal amount, int numFractionDigits) {
+  public Component format(final BigDecimal amount, final int numFractionDigits) {
 
     return Component.text(CurrencyFormatter.format(null, amount));
   }

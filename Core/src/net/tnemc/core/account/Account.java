@@ -57,7 +57,7 @@ public class Account extends ReceiptBox {
 
   protected AccountStatus status;
 
-  public Account(UUID identifier, String name) {
+  public Account(final UUID identifier, final String name) {
 
     super(identifier);
     this.identifier = identifier;
@@ -118,7 +118,7 @@ public class Account extends ReceiptBox {
 
     BigDecimal amount = BigDecimal.ZERO;
 
-    for(HoldingsEntry entry : getHoldings(region, currency)) {
+    for(final HoldingsEntry entry : getHoldings(region, currency)) {
       amount = amount.add(entry.getAmount());
     }
     return amount;
@@ -182,7 +182,7 @@ public class Account extends ReceiptBox {
 
     TNECore.eco().currency().currencies().forEach((currency)->{
       BigDecimal amount = BigDecimal.ZERO;
-      for(HoldingsEntry entry : currency.type().getHoldings(this, resolve, currency, type)) {
+      for(final HoldingsEntry entry : currency.type().getHoldings(this, resolve, currency, type)) {
         amount = amount.add(entry.getAmount());
       }
       holdings.add(new HoldingsEntry(resolve, currency.getUid(), amount, type));
@@ -249,7 +249,7 @@ public class Account extends ReceiptBox {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(final String name) {
 
     this.name = name;
   }
@@ -259,7 +259,7 @@ public class Account extends ReceiptBox {
     return creationDate;
   }
 
-  public void setCreationDate(long creationDate) {
+  public void setCreationDate(final long creationDate) {
 
     this.creationDate = creationDate;
   }
@@ -269,7 +269,7 @@ public class Account extends ReceiptBox {
     return pin;
   }
 
-  public void setPin(String pin) {
+  public void setPin(final String pin) {
 
     this.pin = pin;
   }
@@ -279,7 +279,7 @@ public class Account extends ReceiptBox {
     return status;
   }
 
-  public void setStatus(AccountStatus status) {
+  public void setStatus(final AccountStatus status) {
 
     this.status = status;
   }
@@ -289,7 +289,7 @@ public class Account extends ReceiptBox {
     return wallet;
   }
 
-  public void setWallet(Wallet wallet) {
+  public void setWallet(final Wallet wallet) {
 
     this.wallet = wallet;
   }

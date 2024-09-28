@@ -35,7 +35,7 @@ public class SymbolRule implements FormatRule {
   }
 
   @Override
-  public String format(@Nullable Account account, HoldingsEntry entry, String format) {
+  public String format(@Nullable final Account account, final HoldingsEntry entry, final String format) {
 
     final Optional<Currency> currency = entry.currency();
     return currency.map(value->format.replace("<symbol>", value.getSymbol())).orElse(format);

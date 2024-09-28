@@ -50,8 +50,8 @@ public class CurrencySelectionPage {
   protected final String currencyPageID;
   protected final int menuRows;
 
-  public CurrencySelectionPage(String currencyID, String returnMenu, String menuName,
-                               final int menuPage, final int returnPage, String currencyPageID, final int menuRows) {
+  public CurrencySelectionPage(final String currencyID, final String returnMenu, final String menuName,
+                               final int menuPage, final int returnPage, final String currencyPageID, final int menuRows) {
 
     this.returnMenu = returnMenu;
     this.menuName = menuName;

@@ -46,7 +46,7 @@ public class BaseTranslationProvider implements TranslationProvider {
    * @return The language that should be used for this player.
    */
   @Override
-  public String getLang(UUID identifier) {
+  public String getLang(final UUID identifier) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
 
@@ -67,11 +67,11 @@ public class BaseTranslationProvider implements TranslationProvider {
    * exist.
    */
   @Override
-  public String translateNode(final MessageData messageData, String language) {
+  public String translateNode(final MessageData messageData, final String language) {
 
     String string = TNECore.instance().message().getString(messageData.getNode(), language);
 
-    for(Map.Entry<String, String> replacement : messageData.getReplacements().entrySet()) {
+    for(final Map.Entry<String, String> replacement : messageData.getReplacements().entrySet()) {
       PluginCore.log().debug("Replace: " + replacement.getKey() + ":" + replacement.getValue(), DebugLevel.DEVELOPER);
       string = string.replace(replacement.getKey(), replacement.getValue());
     }

@@ -30,7 +30,7 @@ import net.tnemc.plugincore.core.api.CallbackProvider;
 public class TNECallbackProvider implements CallbackProvider {
 
   @Override
-  public void init(CallbackManager callbackManager) {
+  public void init(final CallbackManager callbackManager) {
 
   }
 }

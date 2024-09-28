@@ -33,7 +33,7 @@ public class DenominationLoadCallback implements Callback {
   private Currency currency;
   private Denomination denomination;
 
-  public DenominationLoadCallback(Currency currency, Denomination denomination) {
+  public DenominationLoadCallback(final Currency currency, final Denomination denomination) {
 
     this.currency = currency;
     this.denomination = denomination;
@@ -55,7 +55,7 @@ public class DenominationLoadCallback implements Callback {
     return currency;
   }
 
-  public void setCurrency(Currency currency) {
+  public void setCurrency(final Currency currency) {
 
     this.currency = currency;
   }
@@ -65,7 +65,7 @@ public class DenominationLoadCallback implements Callback {
     return denomination;
   }
 
-  public void setDenomination(Denomination denomination) {
+  public void setDenomination(final Denomination denomination) {
 
     this.denomination = denomination;
   }

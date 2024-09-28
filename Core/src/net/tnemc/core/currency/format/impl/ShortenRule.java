@@ -37,7 +37,7 @@ public class ShortenRule implements FormatRule {
   }
 
   @Override
-  public String format(@Nullable Account account, HoldingsEntry entry, String format) {
+  public String format(@Nullable final Account account, final HoldingsEntry entry, String format) {
 
     final Monetary monetary = entry.asMonetary();
 
@@ -66,7 +66,7 @@ public class ShortenRule implements FormatRule {
       }
     }
 
-    char pre;
+    final char pre;
     if(currency.get().getPrefixes().length() < (pos + 1)) {
       pre = '^';
     } else {

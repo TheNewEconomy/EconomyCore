@@ -97,14 +97,14 @@ public class HoldingsEntry {
 
   public HoldingsEntry modifyGrab(final BigDecimal modifier) {
 
-    HoldingsEntry entry = new HoldingsEntry(region, currency, amount, handler);
+    final HoldingsEntry entry = new HoldingsEntry(region, currency, amount, handler);
     entry.modify(new HoldingsModifier(region, currency, modifier));
     return entry;
   }
 
   public HoldingsEntry modifyGrab(final HoldingsModifier modifier) {
 
-    HoldingsEntry entry = new HoldingsEntry(region, currency, amount, handler);
+    final HoldingsEntry entry = new HoldingsEntry(region, currency, amount, handler);
     entry.modify(modifier);
     return entry;
   }
@@ -119,7 +119,7 @@ public class HoldingsEntry {
     return currency;
   }
 
-  public void setCurrency(UUID currency) {
+  public void setCurrency(final UUID currency) {
 
     this.currency = currency;
   }
@@ -129,7 +129,7 @@ public class HoldingsEntry {
     return region;
   }
 
-  public void setRegion(String region) {
+  public void setRegion(final String region) {
 
     this.region = region;
   }
@@ -149,7 +149,7 @@ public class HoldingsEntry {
     return monetary;
   }
 
-  public void setAmount(BigDecimal amount) {
+  public void setAmount(final BigDecimal amount) {
 
     this.amount = amount;
     final Optional<Currency> cur = currency();
@@ -161,7 +161,7 @@ public class HoldingsEntry {
     return handler;
   }
 
-  public void setHandler(Identifier handler) {
+  public void setHandler(final Identifier handler) {
 
     this.handler = handler;
   }

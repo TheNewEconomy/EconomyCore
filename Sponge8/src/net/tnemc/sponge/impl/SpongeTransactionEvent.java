@@ -32,7 +32,7 @@ public class SpongeTransactionEvent implements EconomyTransactionEvent {
 
   private final SpongeReceipt receipt;
 
-  public SpongeTransactionEvent(SpongeReceipt receipt) {
+  public SpongeTransactionEvent(final SpongeReceipt receipt) {
 
     this.receipt = receipt;
   }

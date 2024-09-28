@@ -138,7 +138,7 @@ public class Receipt {
     return from;
   }
 
-  public void setFrom(TransactionParticipant from) {
+  public void setFrom(final TransactionParticipant from) {
 
     this.from = from;
   }
@@ -148,7 +148,7 @@ public class Receipt {
     return to;
   }
 
-  public void setTo(TransactionParticipant to) {
+  public void setTo(final TransactionParticipant to) {
 
     this.to = to;
   }
@@ -158,7 +158,7 @@ public class Receipt {
     return modifierTo;
   }
 
-  public void setModifierTo(HoldingsModifier modifierTo) {
+  public void setModifierTo(final HoldingsModifier modifierTo) {
 
     this.modifierTo = modifierTo;
   }
@@ -168,7 +168,7 @@ public class Receipt {
     return modifierFrom;
   }
 
-  public void setModifierFrom(HoldingsModifier modifierFrom) {
+  public void setModifierFrom(final HoldingsModifier modifierFrom) {
 
     this.modifierFrom = modifierFrom;
   }
@@ -178,7 +178,7 @@ public class Receipt {
     return archive;
   }
 
-  public void setArchive(boolean archive) {
+  public void setArchive(final boolean archive) {
 
     this.archive = archive;
   }
@@ -188,7 +188,7 @@ public class Receipt {
     return voided;
   }
 
-  public void setVoided(boolean voided) {
+  public void setVoided(final boolean voided) {
 
     this.voided = voided;
   }

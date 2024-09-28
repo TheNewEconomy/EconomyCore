@@ -51,8 +51,8 @@ public class AmountSelectionPage {
 
   protected final Consumer<AmountSelectionHandler> selectionListener;
 
-  public AmountSelectionPage(String amtID, String returnMenu, String menuName,
-                             final int menuPage, final int returnPage, Consumer<AmountSelectionHandler> selectionListener) {
+  public AmountSelectionPage(final String amtID, final String returnMenu, final String menuName,
+                             final int menuPage, final int returnPage, final Consumer<AmountSelectionHandler> selectionListener) {
 
     this.returnMenu = returnMenu;
     this.menuName = menuName;

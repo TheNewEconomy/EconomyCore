@@ -33,7 +33,7 @@ public class PreTransactionCallback implements Callback {
 
   protected Transaction transaction;
 
-  public PreTransactionCallback(Transaction transaction) {
+  public PreTransactionCallback(final Transaction transaction) {
 
     this.transaction = transaction;
   }
@@ -54,7 +54,7 @@ public class PreTransactionCallback implements Callback {
     return transaction;
   }
 
-  public void setTransaction(Transaction transaction) {
+  public void setTransaction(final Transaction transaction) {
 
     this.transaction = transaction;
   }

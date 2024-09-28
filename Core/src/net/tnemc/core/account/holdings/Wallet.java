@@ -146,7 +146,7 @@ public class Wallet {
    * @param modifier The modifier to use
    * @param type     The type to use.
    */
-  public void modifyHoldings(final @NotNull HoldingsModifier modifier, Identifier type) {
+  public void modifyHoldings(final @NotNull HoldingsModifier modifier, final Identifier type) {
 
     final Optional<HoldingsEntry> entry = getHoldings(modifier.getRegion(), modifier.getCurrency(), type);
 
@@ -209,11 +209,11 @@ public class Wallet {
    *
    * @param wallet The other wallet to merge.
    */
-  public void merge(@NotNull Wallet wallet) {
+  public void merge(@NotNull final Wallet wallet) {
 
-    for(RegionHoldings region : wallet.getHoldings().values()) {
-      for(CurrencyHoldings currency : region.getHoldings().values()) {
-        for(Map.Entry<String, HoldingsEntry> entry : currency.getHoldings().entrySet()) {
+    for(final RegionHoldings region : wallet.getHoldings().values()) {
+      for(final CurrencyHoldings currency : region.getHoldings().values()) {
+        for(final Map.Entry<String, HoldingsEntry> entry : currency.getHoldings().entrySet()) {
           modifyHoldings(new HoldingsModifier(entry.getValue()));
         }
       }
@@ -244,9 +244,9 @@ public class Wallet {
 
     final List<HoldingsEntry> holdingsEntries = new ArrayList<>();
 
-    for(RegionHoldings region : holdings.values()) {
-      for(CurrencyHoldings currency : region.getHoldings().values()) {
-        for(Map.Entry<String, HoldingsEntry> entry : currency.getHoldings().entrySet()) {
+    for(final RegionHoldings region : holdings.values()) {
+      for(final CurrencyHoldings currency : region.getHoldings().values()) {
+        for(final Map.Entry<String, HoldingsEntry> entry : currency.getHoldings().entrySet()) {
 
           holdingsEntries.add(entry.getValue());
         }

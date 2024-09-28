@@ -34,13 +34,13 @@ public class PlayerLeaveListener {
 
   private final PluginContainer plugin;
 
-  public PlayerLeaveListener(PluginContainer plugin) {
+  public PlayerLeaveListener(final PluginContainer plugin) {
 
     this.plugin = plugin;
   }
 
   @Listener
-  public void listen(ServerSideConnectionEvent.Disconnect event) {
+  public void listen(final ServerSideConnectionEvent.Disconnect event) {
 
     new PlayerLeaveHandler().handle(new SpongePlayerProvider(event.player().user(), plugin));
   }

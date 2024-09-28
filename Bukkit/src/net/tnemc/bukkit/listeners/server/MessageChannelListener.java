@@ -32,7 +32,7 @@ import org.jetbrains.annotations.NotNull;
 public class MessageChannelListener implements PluginMessageListener {
 
   @Override
-  public void onPluginMessageReceived(@NotNull String channel, @NotNull Player player, byte[] bytes) {
+  public void onPluginMessageReceived(@NotNull final String channel, @NotNull final Player player, final byte[] bytes) {
 
     PluginCore.instance().getChannelMessageManager().handle(channel, bytes);
   }

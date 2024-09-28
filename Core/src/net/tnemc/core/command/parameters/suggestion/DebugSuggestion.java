@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
 public class DebugSuggestion implements SuggestionProvider {
 
   @Override
-  public @NotNull Collection<String> getSuggestions(@NotNull List<String> list, @NotNull CommandActor commandActor, @NotNull ExecutableCommand executableCommand) throws Throwable {
+  public @NotNull Collection<String> getSuggestions(@NotNull final List<String> list, @NotNull final CommandActor commandActor, @NotNull final ExecutableCommand executableCommand) throws Throwable {
 
     return Arrays.stream(DebugLevel.values()).map(DebugLevel::getIdentifier).collect(Collectors.toList());
   }

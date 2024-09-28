@@ -36,11 +36,11 @@ public class ItemCalculations<I> {
    *
    * @return The {@link BigDecimal} representation of the inventory materials balance value.
    */
-  public BigDecimal calculateHoldings(CalculationData<I> data) {
+  public BigDecimal calculateHoldings(final CalculationData<I> data) {
 
     BigDecimal holdings = BigDecimal.ZERO;
 
-    for(Map.Entry<BigDecimal, Denomination> entry : data.getDenominations().entrySet()) {
+    for(final Map.Entry<BigDecimal, Denomination> entry : data.getDenominations().entrySet()) {
       final int amount = data.getInventoryMaterials().getOrDefault(entry.getKey(), 0);
 
       if(amount > 0) {
@@ -50,7 +50,7 @@ public class ItemCalculations<I> {
     return holdings;
   }
 
-  public void setItems(CalculationData<I> data, BigDecimal amount) {
+  public void setItems(final CalculationData<I> data, final BigDecimal amount) {
 
     final BigDecimal holdings = calculateHoldings(data);
 
@@ -72,17 +72,17 @@ public class ItemCalculations<I> {
    * @return The {@link BigDecimal} representation of the leftover amount that couldn't be removed
    * because there's no more materials left to remove.
    */
-  public BigDecimal calculation(CalculationData<I> data, BigDecimal change) {
+  public BigDecimal calculation(final CalculationData<I> data, final BigDecimal change) {
 
     data.getCalculator().initialize(data.getCurrency(), data.getInventoryMaterials());
 
     data.getCalculator().calculateDenominationCounts(change);
 
-    for(Map.Entry<BigDecimal, Integer> entry : data.getCalculator().getToAdd().entrySet()) {
+    for(final Map.Entry<BigDecimal, Integer> entry : data.getCalculator().getToAdd().entrySet()) {
       data.provideMaterials(data.getDenominations().get(entry.getKey()), entry.getValue());
     }
 
-    for(Map.Entry<BigDecimal, Integer> entry : data.getCalculator().getToRemove().entrySet()) {
+    for(final Map.Entry<BigDecimal, Integer> entry : data.getCalculator().getToRemove().entrySet()) {
       data.removeMaterials(data.getDenominations().get(entry.getKey()), entry.getValue());
     }
 
@@ -96,13 +96,13 @@ public class ItemCalculations<I> {
    *
    * @param amount The amount that the items should add up to.
    */
-  public void provideMaterials(CalculationData<I> data, BigDecimal amount) {
+  public void provideMaterials(final CalculationData<I> data, final BigDecimal amount) {
 
     data.getCalculator().initialize(data.getCurrency(), data.getInventoryMaterials());
 
-    for(Map.Entry<BigDecimal, Integer> entry : data.getCalculator().breakdown(amount).entrySet()) {
+    for(final Map.Entry<BigDecimal, Integer> entry : data.getCalculator().breakdown(amount).entrySet()) {
 
-      int holding = data.getInventoryMaterials().getOrDefault(entry.getKey(), 0);
+      final int holding = data.getInventoryMaterials().getOrDefault(entry.getKey(), 0);
       data.getInventoryMaterials().put(entry.getKey(), holding + entry.getValue());
       data.provideMaterials(data.getDenominations().get(entry.getKey()), entry.getValue());
     }
@@ -114,7 +114,7 @@ public class ItemCalculations<I> {
    * @param denom  The denom name in String form.
    * @param amount The amount of the material to remove from working materials.
    */
-  public void removeMaterials(CalculationData<I> data, Denomination denom, Integer amount) {
+  public void removeMaterials(final CalculationData<I> data, final Denomination denom, final Integer amount) {
 
     data.removeMaterials(denom, amount);
   }

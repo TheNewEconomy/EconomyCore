@@ -70,7 +70,7 @@ public class ConversionType implements TransactionType {
 
     if(MainConfig.yaml().getBoolean("Core.Transactions.Conversion.Tax.Enabled")) {
       final String tax = MainConfig.yaml().getString("Core.Transactions.Conversion.Tax.Rate");
-      TaxEntry entry;
+      final TaxEntry entry;
       if(tax.contains("%")) {
         entry = new TaxEntry("percent", Double.parseDouble(tax.replace("%", "")) / 100);
       } else {

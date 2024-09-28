@@ -37,7 +37,7 @@ import static net.tnemc.core.menu.MyEcoMenu.CURRENCIES_PAGE;
  */
 public class SaveCurrencyIcon extends SwitchPageIcon {
 
-  public SaveCurrencyIcon(int slot, final Currency currency) {
+  public SaveCurrencyIcon(final int slot, final Currency currency) {
 
     super(slot, PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
                   .display(Component.text(currency.getIdentifier())).lore(Collections.singletonList(Component.text("Click to Save Currency"))),

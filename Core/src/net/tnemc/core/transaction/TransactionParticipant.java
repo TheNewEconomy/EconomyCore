@@ -43,7 +43,7 @@ public class TransactionParticipant {
   private final UUID id;
   private BigDecimal tax;
 
-  public TransactionParticipant(final UUID id, List<HoldingsEntry> startBalances) {
+  public TransactionParticipant(final UUID id, final List<HoldingsEntry> startBalances) {
 
     this.id = id;
     this.startingBalances.addAll(startBalances);
@@ -65,7 +65,7 @@ public class TransactionParticipant {
     return tax;
   }
 
-  public void setTax(BigDecimal tax) {
+  public void setTax(final BigDecimal tax) {
 
     this.tax = tax;
   }
@@ -84,7 +84,7 @@ public class TransactionParticipant {
 
     BigDecimal combined = BigDecimal.ZERO;
 
-    for(HoldingsEntry entry : getEndingBalances()) {
+    for(final HoldingsEntry entry : getEndingBalances()) {
       combined = combined.add(entry.getAmount());
     }
     return combined;

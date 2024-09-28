@@ -222,7 +222,7 @@ public class MyEcoMenu extends Menu {
               return false;
             }
 
-            Currency newCurObj = new Currency(message.getMessage());
+            final Currency newCurObj = new Currency(message.getMessage());
             message.getPlayer().viewer().get().addData(ACTIVE_CURRENCY, newCurObj);
             TNECore.eco().currency().addCurrency(newCurObj);
             return true;

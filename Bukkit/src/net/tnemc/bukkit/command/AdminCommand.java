@@ -68,7 +68,7 @@ public class AdminCommand {
   @Usage("Admin.MyEco.Arguments")
   @Description("Admin.MyEco.Description")
   @CommandPermission("tne.admin.menu")
-  public void onMyEco(BukkitCommandActor sender) {
+  public void onMyEco(final BukkitCommandActor sender) {
 
     net.tnemc.core.command.AdminCommand.onMyEco(new BukkitCMDSource(sender));
   }
@@ -76,7 +76,7 @@ public class AdminCommand {
   @Subcommand({ "help", "?" })
   @Usage("Help.Arguments")
   @Description("Help.Description")
-  public void help(BukkitCommandActor actor, CommandHelp<String> helpEntries, @Default("1") int page) {
+  public void help(final BukkitCommandActor actor, final CommandHelp<String> helpEntries, @Default("1") final int page) {
 
     BaseCommand.help(new BukkitCMDSource(actor), helpEntries, page);
   }
@@ -85,7 +85,7 @@ public class AdminCommand {
   @Usage("Admin.Backup.Arguments")
   @Description("Admin.Backup.Description")
   @CommandPermission("tne.admin.backup")
-  public void backup(BukkitCommandActor sender) {
+  public void backup(final BukkitCommandActor sender) {
 
     net.tnemc.core.command.AdminCommand.onBackup(new BukkitCMDSource(sender));
   }
@@ -94,7 +94,7 @@ public class AdminCommand {
   @Usage("Admin.Create.Arguments")
   @Description("Admin.Create.Description")
   @CommandPermission("tne.admin.create")
-  public void create(BukkitCommandActor sender, String name) {
+  public void create(final BukkitCommandActor sender, final String name) {
 
     net.tnemc.core.command.AdminCommand.onCreate(new BukkitCMDSource(sender), name);
   }
@@ -103,7 +103,7 @@ public class AdminCommand {
   @Usage("Admin.Debug.Arguments")
   @Description("Admin.Debug.Description")
   @CommandPermission("tne.admin.debug")
-  public void debug(BukkitCommandActor sender, DebugLevel level) {
+  public void debug(final BukkitCommandActor sender, final DebugLevel level) {
 
     net.tnemc.core.command.AdminCommand.onDebug(new BukkitCMDSource(sender), level);
   }
@@ -112,7 +112,7 @@ public class AdminCommand {
   @Usage("Admin.Delete.Arguments")
   @Description("Admin.Delete.Description")
   @CommandPermission("tne.admin.delete")
-  public void delete(BukkitCommandActor sender, String name) {
+  public void delete(final BukkitCommandActor sender, final String name) {
 
     net.tnemc.core.command.AdminCommand.onDelete(new BukkitCMDSource(sender), name);
   }
@@ -121,7 +121,7 @@ public class AdminCommand {
   @Usage("Admin.Extract.Arguments")
   @Description("Admin.Extract.Description")
   @CommandPermission("tne.admin.extract")
-  public void extract(BukkitCommandActor sender) {
+  public void extract(final BukkitCommandActor sender) {
 
     net.tnemc.core.command.AdminCommand.onExtract(new BukkitCMDSource(sender));
   }
@@ -130,7 +130,7 @@ public class AdminCommand {
   @Usage("Admin.Purge.Arguments")
   @Description("Admin.Purge.Description")
   @CommandPermission("tne.admin.purge")
-  public void purge(BukkitCommandActor sender) {
+  public void purge(final BukkitCommandActor sender) {
 
     net.tnemc.core.command.AdminCommand.onPurge(new BukkitCMDSource(sender));
   }
@@ -139,7 +139,7 @@ public class AdminCommand {
   @Usage("Admin.Reload.Arguments")
   @Description("Admin.Reload.Description")
   @CommandPermission("tne.admin.reload")
-  public void reload(BukkitCommandActor sender, @Default("all") String type) {
+  public void reload(final BukkitCommandActor sender, @Default("all") final String type) {
 
     net.tnemc.core.command.AdminCommand.onReload(new BukkitCMDSource(sender), type);
   }
@@ -148,7 +148,7 @@ public class AdminCommand {
   @Usage("Admin.Reset.Arguments")
   @Description("Admin.Reset.Description")
   @CommandPermission("tne.admin.reset")
-  public void reset(BukkitCommandActor sender) {
+  public void reset(final BukkitCommandActor sender) {
 
     net.tnemc.core.command.AdminCommand.onReset(new BukkitCMDSource(sender));
   }
@@ -157,7 +157,7 @@ public class AdminCommand {
   @Usage("Admin.Restore.Arguments")
   @Description("Admin.Restore.Description")
   @CommandPermission("tne.admin.restore")
-  public void restore(BukkitCommandActor sender, @Default("0") int extraction) {
+  public void restore(final BukkitCommandActor sender, @Default("0") final int extraction) {
 
     net.tnemc.core.command.AdminCommand.onRestore(new BukkitCMDSource(sender), extraction);
   }
@@ -166,7 +166,7 @@ public class AdminCommand {
   @Usage("Admin.Restore.Arguments")
   @Description("Admin.Restore.Description")
   @CommandPermission("tne.admin.old")
-  public void old(BukkitCommandActor sender, @Default("0") int extraction) {
+  public void old(final BukkitCommandActor sender, @Default("0") final int extraction) {
 
     PluginCore.server().scheduler().createDelayedTask(()->restoreOld(extraction), new ChoreTime(0), ChoreExecution.SECONDARY);
     new BukkitCMDSource(sender).message(new MessageData("Messages.Admin.Restoration"));
@@ -176,7 +176,7 @@ public class AdminCommand {
   @Usage("Admin.Save.Arguments")
   @Description("Admin.Save.Description")
   @CommandPermission("tne.admin.save")
-  public void save(BukkitCommandActor sender) {
+  public void save(final BukkitCommandActor sender) {
 
     net.tnemc.core.command.AdminCommand.onSave(new BukkitCMDSource(sender));
   }
@@ -185,7 +185,7 @@ public class AdminCommand {
   @Usage("Admin.Status.Arguments")
   @Description("Admin.Status.Description")
   @CommandPermission("tne.admin.status")
-  public void status(BukkitCommandActor sender, Account account, @Default("normal") AccountStatus status) {
+  public void status(final BukkitCommandActor sender, final Account account, @Default("normal") final AccountStatus status) {
 
     net.tnemc.core.command.AdminCommand.onStatus(new BukkitCMDSource(sender), account, status);
   }
@@ -194,7 +194,7 @@ public class AdminCommand {
   @Usage("Admin.Version.Arguments")
   @Description("Admin.Version.Description")
   @CommandPermission("tne.admin.version")
-  public void version(BukkitCommandActor sender) {
+  public void version(final BukkitCommandActor sender) {
 
     net.tnemc.core.command.AdminCommand.onVersion(new BukkitCMDSource(sender));
   }
@@ -229,7 +229,7 @@ public class AdminCommand {
 
       final boolean recode = extracted.contains("Version");
 
-      for(Object nameObj : accounts) {
+      for(final Object nameObj : accounts) {
 
         final String name = (String)nameObj;
         final String username = name.replaceAll("\\!", "\\.").replaceAll("\\@", "-").replaceAll("\\%", "_");
@@ -248,11 +248,11 @@ public class AdminCommand {
         }
 
         final Set<Object> regions = extracted.getSection("Accounts." + name + ".Balances").getKeys();
-        for(Object regionObj : regions) {
+        for(final Object regionObj : regions) {
 
           final String region = (String)regionObj;
           final Set<Object> currencies = extracted.getSection("Accounts." + name + ".Balances." + region).getKeys();
-          for(Object currencyNameObj : currencies) {
+          for(final Object currencyNameObj : currencies) {
 
             final String currency = (String)currencyNameObj;
             if(!recode) {
@@ -268,7 +268,7 @@ public class AdminCommand {
             } else {
 
               final Set<Object> types = extracted.getSection("Accounts." + name + ".Balances." + region + "." + currency).getKeys();
-              for(Object typeObj : types) {
+              for(final Object typeObj : types) {
 
                 final String type = (String)typeObj;
                 final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name
@@ -300,7 +300,7 @@ public class AdminCommand {
 
   protected static UUID get(final String name) {
 
-    for(OfflinePlayer player : Bukkit.getServer().getOfflinePlayers()) {
+    for(final OfflinePlayer player : Bukkit.getServer().getOfflinePlayers()) {
       if(player.getName() == null) continue;
       if(player.getName().equalsIgnoreCase(name)) {
         return player.getUniqueId();

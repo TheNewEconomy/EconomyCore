@@ -59,7 +59,7 @@ public class CalculationData<I> {
   private boolean dropped = false;
   private boolean failedDrop = false;
 
-  public CalculationData(final ItemCurrency currency, I inventory, final UUID player) {
+  public CalculationData(final ItemCurrency currency, final I inventory, final UUID player) {
 
     this.currency = currency;
     this.inventory = inventory;
@@ -90,7 +90,7 @@ public class CalculationData<I> {
 
   public void inventoryCounts() {
 
-    for(Map.Entry<BigDecimal, Denomination> entry : currency.getDenominations().entrySet()) {
+    for(final Map.Entry<BigDecimal, Denomination> entry : currency.getDenominations().entrySet()) {
       if(entry.getValue() instanceof final ItemDenomination denomination) {
 
         final AbstractItemStack<?> stack = TNECore.instance().denominationToStack(denomination);
@@ -103,7 +103,7 @@ public class CalculationData<I> {
     }
   }
 
-  public void removeMaterials(Denomination denomination, Integer amount) {
+  public void removeMaterials(final Denomination denomination, final Integer amount) {
 
     final AbstractItemStack<?> stack = TNECore.instance().denominationToStack((ItemDenomination)denomination);
     final int contains = inventoryMaterials.getOrDefault(denomination.weight(), 0);
@@ -122,7 +122,7 @@ public class CalculationData<I> {
     PluginCore.server().calculations().removeItem((AbstractItemStack<Object>)stackClone, inventory);
   }
 
-  public void provideMaterials(final Denomination denomination, Integer amount) {
+  public void provideMaterials(final Denomination denomination, final Integer amount) {
 
     int contains = (inventoryMaterials.getOrDefault(denomination.weight(), amount));
 
@@ -159,7 +159,7 @@ public class CalculationData<I> {
     inventoryMaterials.put(denomination.weight(), contains);
   }
 
-  public void drop(final Collection<AbstractItemStack<Object>> toDrop, PlayerAccount account) {
+  public void drop(final Collection<AbstractItemStack<Object>> toDrop, final PlayerAccount account) {
 
     final CurrencyDropCallback currencyDrop = new CurrencyDropCallback(player, currency, toDrop);
     if(PluginCore.callbacks().call(currencyDrop)) {

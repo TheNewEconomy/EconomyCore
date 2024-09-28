@@ -35,7 +35,7 @@ public class TransactionResult {
   private boolean successful;
   private String message;
 
-  public TransactionResult(boolean successful, String message) {
+  public TransactionResult(final boolean successful, final String message) {
 
     this.successful = successful;
     this.message = message;
@@ -53,7 +53,7 @@ public class TransactionResult {
     return Optional.ofNullable(receipt);
   }
 
-  public void setReceipt(@Nullable Receipt receipt) {
+  public void setReceipt(@Nullable final Receipt receipt) {
 
     this.receipt = receipt;
   }
@@ -63,7 +63,7 @@ public class TransactionResult {
     return successful;
   }
 
-  public void setSuccessful(boolean successful) {
+  public void setSuccessful(final boolean successful) {
 
     this.successful = successful;
   }
@@ -73,7 +73,7 @@ public class TransactionResult {
     return message;
   }
 
-  public void setMessage(String message) {
+  public void setMessage(final String message) {
 
     this.message = message;
   }

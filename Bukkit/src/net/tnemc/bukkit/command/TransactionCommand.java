@@ -47,7 +47,7 @@ public class TransactionCommand {
   @DefaultFor({ "transaction", "trans", "receipt" })
   @Usage("Help.Arguments")
   @Description("Help.Description")
-  public void help(BukkitCommandActor actor, CommandHelp<String> helpEntries, @Default("1") int page) {
+  public void help(final BukkitCommandActor actor, final CommandHelp<String> helpEntries, @Default("1") final int page) {
 
     BaseCommand.help(new BukkitCMDSource(actor), helpEntries, page);
   }
@@ -56,7 +56,7 @@ public class TransactionCommand {
   @Usage("Transaction.Away.Arguments")
   @Description("Transaction.Away.Description")
   @CommandPermission("tne.transaction.away")
-  public void away(BukkitCommandActor sender, @Default("1") int page) {
+  public void away(final BukkitCommandActor sender, @Default("1") final int page) {
 
     net.tnemc.core.command.TransactionCommand.away(new BukkitCMDSource(sender), page);
   }
@@ -65,7 +65,7 @@ public class TransactionCommand {
   @Usage("Transaction.History.Arguments")
   @Description("Transaction.History.Description")
   @CommandPermission("tne.transaction.history")
-  public void history(BukkitCommandActor sender, @Default("1") int page, @Default("world-113") @Named("region") String region, @Default("SELF_ACCOUNT") Account account) {
+  public void history(final BukkitCommandActor sender, @Default("1") final int page, @Default("world-113") @Named("region") final String region, @Default("SELF_ACCOUNT") final Account account) {
 
     net.tnemc.core.command.TransactionCommand.history(new BukkitCMDSource(sender), page, region, account);
   }
@@ -74,7 +74,7 @@ public class TransactionCommand {
   @Usage("Transaction.Info.Arguments")
   @Description("Transaction.Info.Description")
   @CommandPermission("tne.info.history")
-  public void info(BukkitCommandActor sender, UUID uuid) {
+  public void info(final BukkitCommandActor sender, final UUID uuid) {
 
     net.tnemc.core.command.TransactionCommand.info(new BukkitCMDSource(sender), uuid);
   }
@@ -83,7 +83,7 @@ public class TransactionCommand {
   @Usage("Transaction.Void.Arguments")
   @Description("Transaction.Void.Description")
   @CommandPermission("tne.void.history")
-  public void voidT(BukkitCommandActor sender, Account account, UUID uuid) {
+  public void voidT(final BukkitCommandActor sender, final Account account, final UUID uuid) {
 
     net.tnemc.core.command.TransactionCommand.voidT(new BukkitCMDSource(sender), account, uuid);
   }

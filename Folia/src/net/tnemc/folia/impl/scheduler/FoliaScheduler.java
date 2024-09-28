@@ -43,7 +43,7 @@ public class FoliaScheduler extends SchedulerProvider<FoliaChore> {
    * @param environment The execution environment for the task.
    */
   @Override
-  public void createDelayedTask(Runnable task, ChoreTime delay, ChoreExecution environment) {
+  public void createDelayedTask(final Runnable task, final ChoreTime delay, final ChoreExecution environment) {
     //we divide the delay by 20 because Folia uses seconds, and the delay is sent in ticks.
     Bukkit.getAsyncScheduler().runDelayed(PaperCore.instance().getPlugin(), (scheduledTask)->task.run(), delay.asSeconds(), TimeUnit.SECONDS);
   }
@@ -59,7 +59,7 @@ public class FoliaScheduler extends SchedulerProvider<FoliaChore> {
    * @return The associated {@link Chore} with this task.
    */
   @Override
-  public FoliaChore createRepeatingTask(Runnable task, ChoreTime delay, ChoreTime period, ChoreExecution environment) {
+  public FoliaChore createRepeatingTask(final Runnable task, final ChoreTime delay, final ChoreTime period, final ChoreExecution environment) {
 
     return new FoliaChore(Bukkit.getAsyncScheduler()
                                   .runAtFixedRate(PaperCore.instance().getPlugin(), (scheduledTask)->task.run(),

@@ -87,7 +87,7 @@ public class FoliaServerProvider implements ServerConnector {
    * @return The string after placeholders have been replaced.
    */
   @Override
-  public String replacePlaceholder(UUID player, String message) {
+  public String replacePlaceholder(final UUID player, final String message) {
 
     final Optional<PlayerProvider> playerOpt = PluginCore.server().findPlayer(player);
     if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI") && playerOpt.isPresent()
@@ -116,7 +116,7 @@ public class FoliaServerProvider implements ServerConnector {
    * @return The {@link CmdSource} for this actor.
    */
   @Override
-  public CmdSource<?> source(@NotNull CommandActor actor) {
+  public CmdSource<?> source(@NotNull final CommandActor actor) {
 
     return null;
   }
@@ -141,7 +141,7 @@ public class FoliaServerProvider implements ServerConnector {
    * if no player is located.
    */
   @Override
-  public Optional<PlayerProvider> findPlayer(@NotNull UUID identifier) {
+  public Optional<PlayerProvider> findPlayer(@NotNull final UUID identifier) {
 
     return Optional.of(FoliaPlayerProvider.find(identifier.toString()));
   }
@@ -155,7 +155,7 @@ public class FoliaServerProvider implements ServerConnector {
    * @return The initialized {@link PlayerProvider player object}.
    */
   @Override
-  public PlayerProvider initializePlayer(@NotNull Object player) {
+  public PlayerProvider initializePlayer(@NotNull final Object player) {
 
     if(player instanceof Player playerObj) {
       return new FoliaPlayerProvider(playerObj);
@@ -171,7 +171,7 @@ public class FoliaServerProvider implements ServerConnector {
    * @return True if the player has played on the server before, otherwise false.
    */
   @Override
-  public boolean playedBefore(UUID uuid) {
+  public boolean playedBefore(final UUID uuid) {
 
     return false;
   }
@@ -184,7 +184,7 @@ public class FoliaServerProvider implements ServerConnector {
    * @return True if someone with the specified username has played before, otherwise false.
    */
   @Override
-  public boolean playedBefore(String name) {
+  public boolean playedBefore(final String name) {
 
     return false;
   }
@@ -197,7 +197,7 @@ public class FoliaServerProvider implements ServerConnector {
    * @return True if someone with the specified username is online.
    */
   @Override
-  public boolean online(String name) {
+  public boolean online(final String name) {
 
     try {
 
@@ -209,7 +209,7 @@ public class FoliaServerProvider implements ServerConnector {
   }
 
   @Override
-  public Optional<UUID> fromName(String name) {
+  public Optional<UUID> fromName(final String name) {
 
     final PlayerProfile profile = Bukkit.createProfile(name);
     final boolean complete = profile.completeFromCache();
@@ -229,9 +229,9 @@ public class FoliaServerProvider implements ServerConnector {
    * @return An optional containing the name if exists, otherwise false.
    */
   @Override
-  public Optional<String> fromID(UUID id) {
+  public Optional<String> fromID(final UUID id) {
 
-    for(OfflinePlayer player : Bukkit.getServer().getOfflinePlayers()) {
+    for(final OfflinePlayer player : Bukkit.getServer().getOfflinePlayers()) {
       if(player.getUniqueId().equals(id)) {
         return Optional.ofNullable(player.getName());
       }
@@ -256,13 +256,13 @@ public class FoliaServerProvider implements ServerConnector {
    * @return True if a plugin with that name exists, otherwise false.
    */
   @Override
-  public boolean pluginAvailable(String name) {
+  public boolean pluginAvailable(final String name) {
 
     return Bukkit.getPluginManager().isPluginEnabled(name);
   }
 
   @Override
-  public String replaceColours(String string, boolean strip) {
+  public String replaceColours(final String string, final boolean strip) {
 
     if(strip) {
       return ChatColor.stripColor(string);
@@ -277,13 +277,13 @@ public class FoliaServerProvider implements ServerConnector {
   }
 
   @Override
-  public void saveResource(String path, boolean replace) {
+  public void saveResource(final String path, final boolean replace) {
 
     PaperCore.instance().getPlugin().saveResource(path, replace);
   }
 
   @Override
-  public @Nullable InputStream getResource(@NotNull String s) {
+  public @Nullable InputStream getResource(@NotNull final String s) {
 
     return null;
   }
@@ -307,7 +307,7 @@ public class FoliaServerProvider implements ServerConnector {
    * @see CraftingRecipe
    */
   @Override
-  public void registerCrafting(@NotNull final String key, @NotNull CraftingRecipe recipe) {
+  public void registerCrafting(@NotNull final String key, @NotNull final CraftingRecipe recipe) {
 
     if(recipe.isShaped()) {
       ShapedRecipe shaped;
@@ -320,7 +320,7 @@ public class FoliaServerProvider implements ServerConnector {
 
       shaped.shape(recipe.getRows());
 
-      for(Map.Entry<Character, String> ingredient : recipe.getIngredients().entrySet()) {
+      for(final Map.Entry<Character, String> ingredient : recipe.getIngredients().entrySet()) {
         shaped.setIngredient(ingredient.getKey(), Material.valueOf(ingredient.getValue()));
       }
       Bukkit.getServer().addRecipe(shaped);
@@ -333,7 +333,7 @@ public class FoliaServerProvider implements ServerConnector {
         shapeless = new ShapelessRecipe((ItemStack)recipe.getResult().locale());
       }
 
-      for(Map.Entry<Character, String> ingredient : recipe.getIngredients().entrySet()) {
+      for(final Map.Entry<Character, String> ingredient : recipe.getIngredients().entrySet()) {
         shapeless.addIngredient(1, Material.valueOf(ingredient.getValue()));
       }
       Bukkit.getServer().addRecipe(shapeless);

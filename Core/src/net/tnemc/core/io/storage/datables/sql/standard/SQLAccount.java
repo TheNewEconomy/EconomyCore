@@ -72,7 +72,7 @@ public class SQLAccount implements Datable<Account> {
    * @param connector The storage connector to use for this transaction.
    */
   @Override
-  public void purge(StorageConnector<?> connector) {
+  public void purge(final StorageConnector<?> connector) {
 
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
       sql.executeUpdate(tne.accountPurge(
@@ -89,7 +89,7 @@ public class SQLAccount implements Datable<Account> {
    * @param account   The object to be stored.
    */
   @Override
-  public void store(StorageConnector<?> connector, @NotNull Account account, @Nullable String identifier) {
+  public void store(final StorageConnector<?> connector, @NotNull final Account account, @Nullable final String identifier) {
 
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
 
@@ -137,8 +137,8 @@ public class SQLAccount implements Datable<Account> {
                           });
 
         //Account members(account_members table)
-        for(Member member : shared.getMembers().values()) {
-          for(Map.Entry<String, Boolean> entry : member.getPermissions().entrySet()) {
+        for(final Member member : shared.getMembers().values()) {
+          for(final Map.Entry<String, Boolean> entry : member.getPermissions().entrySet()) {
             sql.executeUpdate(tne.saveMembers(),
                               new Object[]{
                                       member.getId().toString(),
@@ -165,10 +165,10 @@ public class SQLAccount implements Datable<Account> {
    * @param connector The storage connector to use for this transaction.
    */
   @Override
-  public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
+  public void storeAll(final StorageConnector<?> connector, @Nullable final String identifier) {
 
     if(connector instanceof SQLConnector) {
-      for(Account account : TNECore.eco().account().getAccounts().values()) {
+      for(final Account account : TNECore.eco().account().getAccounts().values()) {
         store(connector, account, account.getIdentifier().toString());
       }
     }
@@ -183,7 +183,7 @@ public class SQLAccount implements Datable<Account> {
    * @return The object to load.
    */
   @Override
-  public Optional<Account> load(StorageConnector<?> connector, @NotNull String identifier) {
+  public Optional<Account> load(final StorageConnector<?> connector, @NotNull final String identifier) {
 
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
 
@@ -266,7 +266,7 @@ public class SQLAccount implements Datable<Account> {
         }
 
         final Collection<HoldingsEntry> holdings = TNECore.instance().storage().loadAll(HoldingsEntry.class, identifier);
-        for(HoldingsEntry entry : holdings) {
+        for(final HoldingsEntry entry : holdings) {
           account.getWallet().setHoldings(entry);
         }
 
@@ -287,7 +287,7 @@ public class SQLAccount implements Datable<Account> {
    * @return A collection containing the objects loaded.
    */
   @Override
-  public Collection<Account> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
+  public Collection<Account> loadAll(final StorageConnector<?> connector, @Nullable final String identifier) {
 
     final Collection<Account> accounts = new ArrayList<>(); // is this required? Not entirely sure it is - seems maybe a waste
 
@@ -304,7 +304,7 @@ public class SQLAccount implements Datable<Account> {
         e.printStackTrace();
       }
 
-      for(String id : ids) {
+      for(final String id : ids) {
 
         final Optional<Account> loaded = load(connector, id);
         if(loaded.isPresent()) {

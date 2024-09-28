@@ -50,7 +50,7 @@ public class VirtualType implements CurrencyType {
     return "A simple currency type that is strictly virtual, which is imaginary money used in commands.";
   }
 
-  protected HoldingsEntry virtual(Account account, String region, Currency currency) {
+  protected HoldingsEntry virtual(final Account account, final String region, final Currency currency) {
 
     final Optional<HoldingsEntry> holdings = account.getWallet().getHoldings(region,
                                                                              currency.getUid(),

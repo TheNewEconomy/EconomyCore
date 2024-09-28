@@ -38,7 +38,7 @@ public class AccountAPIResponse {
   private final @Nullable Account account;
   private final EconomyResponse response;
 
-  public AccountAPIResponse(@Nullable Account account, EconomyResponse response) {
+  public AccountAPIResponse(@Nullable final Account account, final EconomyResponse response) {
 
     this.account = account;
     this.response = response;

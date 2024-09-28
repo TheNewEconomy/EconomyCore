@@ -55,7 +55,7 @@ public class MaterialRule implements FormatRule {
   }
 
   @Override
-  public String format(@Nullable Account account, HoldingsEntry entry, String format) {
+  public String format(@Nullable final Account account, final HoldingsEntry entry, final String format) {
 
     String formatted = format;
 
@@ -64,7 +64,7 @@ public class MaterialRule implements FormatRule {
     if(account != null && account.isPlayer() && currency.isPresent() && currency.get() instanceof ItemCurrency) {
       final Optional<PlayerProvider> provider = PluginCore.server().findPlayer(((PlayerAccount)account).getUUID());
       if(provider.isPresent()) {
-        for(Denomination denomination : currency.get().getDenominations().values()) {
+        for(final Denomination denomination : currency.get().getDenominations().values()) {
 
           final ItemDenomination denom = (ItemDenomination)denomination;
           if(formatted.contains(denom.getMaterial())) {

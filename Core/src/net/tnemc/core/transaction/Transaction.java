@@ -59,7 +59,7 @@ public class Transaction {
 
   private Consumer<TransactionResult> resultConsumer;
 
-  public Transaction(String type) {
+  public Transaction(final String type) {
 
     this.type = type;
 
@@ -144,7 +144,7 @@ public class Transaction {
       if(modifier.isPercent()) {
 
         BigDecimal total = BigDecimal.ZERO;
-        for(HoldingsEntry entry : balances) {
+        for(final HoldingsEntry entry : balances) {
           total = total.add(entry.getAmount());
         }
         working = modifier.modify(total);
@@ -158,7 +158,7 @@ public class Transaction {
 
     for(int i = 0; i < balances.size(); i++) {
       final HoldingsEntry entry = balances.get(i);
-      HoldingsEntry ending;
+      final HoldingsEntry ending;
 
       PluginCore.log().debug("entry bal: " + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
       PluginCore.log().debug("entry bal: " + entry.getRegion(), DebugLevel.DEVELOPER);
@@ -253,7 +253,7 @@ public class Transaction {
       if(modifier.isPercent()) {
 
         BigDecimal total = BigDecimal.ZERO;
-        for(HoldingsEntry entry : balances) {
+        for(final HoldingsEntry entry : balances) {
           total = total.add(entry.getAmount());
         }
         working = modifier.modify(total);
@@ -267,7 +267,7 @@ public class Transaction {
 
     for(int i = 0; i < balances.size(); i++) {
       final HoldingsEntry entry = balances.get(i);
-      HoldingsEntry ending;
+      final HoldingsEntry ending;
 
       PluginCore.log().debug("entry bal: " + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
       PluginCore.log().debug("entry bal: " + entry.getRegion(), DebugLevel.DEVELOPER);
@@ -367,7 +367,7 @@ public class Transaction {
    * @throws InvalidTransactionException If all required aspects of the transaction are not
    *                                     present.
    */
-  public void process(Consumer<TransactionResult> resultConsumer) throws InvalidTransactionException {
+  public void process(final Consumer<TransactionResult> resultConsumer) throws InvalidTransactionException {
 
     this.resultConsumer = resultConsumer;
 
@@ -490,7 +490,7 @@ public class Transaction {
     return track;
   }
 
-  public void setTrack(boolean track) {
+  public void setTrack(final boolean track) {
 
     this.track = track;
   }

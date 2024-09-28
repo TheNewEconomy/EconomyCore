@@ -54,7 +54,7 @@ public class VelocityCore {
   private static VelocityCore instance;
 
   @Inject
-  public VelocityCore(ProxyServer server, Logger logger) {
+  public VelocityCore(final ProxyServer server, final Logger logger) {
 
     this.server = server;
     this.logger = logger;
@@ -64,7 +64,7 @@ public class VelocityCore {
   }
 
   @Subscribe
-  public void onInitialize(ProxyInitializeEvent event) {
+  public void onInitialize(final ProxyInitializeEvent event) {
 
     this.manager = new MessageManager(new VelocityProxy());
 

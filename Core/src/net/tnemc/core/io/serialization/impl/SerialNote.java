@@ -45,7 +45,7 @@ public class SerialNote implements JSONAble<Note> {
    * @return The {@link JSONObject} associated with the JSON-valid String.
    */
   @Override
-  public JSONObject toJSON(Note note) {
+  public JSONObject toJSON(final Note note) {
 
     final JSONObject json = new JSONObject();
     json.put("material", note.getMaterial());
@@ -74,7 +74,7 @@ public class SerialNote implements JSONAble<Note> {
    * @return The object that was deserialized from the JSON string.
    */
   @Override
-  public Note fromJSON(String serialized) {
+  public Note fromJSON(final String serialized) {
 
     final JSONParser parser = new JSONParser();
 

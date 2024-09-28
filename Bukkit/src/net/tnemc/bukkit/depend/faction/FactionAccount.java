@@ -31,7 +31,7 @@ import java.util.UUID;
  */
 public class FactionAccount extends NonPlayerAccount {
 
-  public FactionAccount(UUID identifier, String name) {
+  public FactionAccount(final UUID identifier, final String name) {
 
     super(identifier, name);
   }

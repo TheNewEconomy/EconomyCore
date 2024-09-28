@@ -31,7 +31,7 @@ import net.tnemc.bungee.message.MessageManager;
 public class MessageListener {
 
   @Subscribe
-  public void handle(PluginMessageEvent event) {
+  public void handle(final PluginMessageEvent event) {
 
     final String id = event.getIdentifier().toString();
 

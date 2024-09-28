@@ -45,7 +45,7 @@ public class SerialDenomination implements JSONAble<Denomination> {
    * @return The {@link JSONObject} associated with the JSON-valid String.
    */
   @Override
-  public JSONObject toJSON(Denomination denom) {
+  public JSONObject toJSON(final Denomination denom) {
 
     final JSONObject json = new JSONObject();
     json.put("single", denom.singular());
@@ -74,7 +74,7 @@ public class SerialDenomination implements JSONAble<Denomination> {
    * @return The object that was deserialized from the JSON string.
    */
   @Override
-  public Denomination fromJSON(String serialized) {
+  public Denomination fromJSON(final String serialized) {
 
     final JSONParser parser = new JSONParser();
     JSONObject jsonObject = null;

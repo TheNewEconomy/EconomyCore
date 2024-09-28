@@ -36,12 +36,12 @@ public class SwitchPageIcon extends Icon {
   private final int page;
   private final ActionType actionType;
 
-  public SwitchPageIcon(int slot, @NotNull AbstractItemStack<?> item, final String menu, final int page, final ActionType type) {
+  public SwitchPageIcon(final int slot, @NotNull final AbstractItemStack<?> item, final String menu, final int page, final ActionType type) {
 
     this(slot, item, menu, page, type, true);
   }
 
-  public SwitchPageIcon(int slot, @NotNull AbstractItemStack<?> item, final String menu, final int page, final ActionType type, boolean registerAction) {
+  public SwitchPageIcon(final int slot, @NotNull final AbstractItemStack<?> item, final String menu, final int page, final ActionType type, final boolean registerAction) {
 
     super(item, null);
 

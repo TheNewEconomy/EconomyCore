@@ -43,14 +43,14 @@ import java.util.function.Consumer;
  */
 public class MyBalAmountSelectionPage extends AmountSelectionPage {
 
-  public MyBalAmountSelectionPage(String amtID, String returnMenu, String menuName, int menuPage,
-                                  int returnPage, final Consumer<AmountSelectionHandler> selectionListener) {
+  public MyBalAmountSelectionPage(final String amtID, final String returnMenu, final String menuName, final int menuPage,
+                                  final int returnPage, final Consumer<AmountSelectionHandler> selectionListener) {
 
     super(amtID, returnMenu, menuName, menuPage, returnPage, selectionListener);
   }
 
   @Override
-  public void handle(PageOpenCallback callback) {
+  public void handle(final PageOpenCallback callback) {
 
     super.handle(callback);
 

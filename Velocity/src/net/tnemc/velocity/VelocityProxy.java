@@ -43,7 +43,7 @@ public class VelocityProxy implements ProxyProvider {
    * @param out     The data to send.
    */
   @Override
-  public void sendToAll(String channel, byte[] out, boolean backlog) {
+  public void sendToAll(final String channel, final byte[] out, final boolean backlog) {
 
     VelocityCore.instance().getServer().getAllServers().forEach(server->{
       if(!server.getPlayersConnected().isEmpty()) {
@@ -65,7 +65,7 @@ public class VelocityProxy implements ProxyProvider {
    * @param out        The data to send.
    */
   @Override
-  public void sendTo(String serverName, String channel, byte[] out) {
+  public void sendTo(final String serverName, final String channel, final byte[] out) {
 
     final Optional<RegisteredServer> server = VelocityCore.instance().getServer().getServer(serverName);
     server.ifPresent(registeredServer->registeredServer.sendPluginMessage(MinecraftChannelIdentifier.from(channel), out));
@@ -77,11 +77,11 @@ public class VelocityProxy implements ProxyProvider {
    * @param data The {@link MessageData} to use for determining the server, and backlog to send.
    */
   @Override
-  public void sendBacklog(@NotNull MessageData data) {
+  public void sendBacklog(@NotNull final MessageData data) {
 
-    for(RegisteredServer server : VelocityCore.instance().getServer().getAllServers()) {
+    for(final RegisteredServer server : VelocityCore.instance().getServer().getAllServers()) {
       if(server.getServerInfo().getAddress().getPort() == Integer.valueOf(data.getServerName())) {
-        for(BacklogEntry entry : data.getBacklog()) {
+        for(final BacklogEntry entry : data.getBacklog()) {
           server.sendPluginMessage(MinecraftChannelIdentifier.from(entry.channel()), entry.out());
         }
       }

@@ -46,7 +46,7 @@ public class AdminCommand {
   @Usage("#{Admin.MyEco.Arguments}")
   @Description("#{Admin.MyEco.Description}")
   @CommandPermission("tne.money.myeco")
-  public void onMyEco(SpongeCommandActor sender) {
+  public void onMyEco(final SpongeCommandActor sender) {
 
     net.tnemc.core.command.AdminCommand.onMyEco(new SpongeCMDSource(sender));
   }
@@ -55,7 +55,7 @@ public class AdminCommand {
   @Usage("#{Admin.Backup.Arguments}")
   @Description("#{Admin.Backup.Description}")
   @CommandPermission("tne.admin.backup")
-  public void backup(SpongeCommandActor sender) {
+  public void backup(final SpongeCommandActor sender) {
 
     net.tnemc.core.command.AdminCommand.onBackup(new SpongeCMDSource(sender));
   }
@@ -64,7 +64,7 @@ public class AdminCommand {
   @Usage("#{Admin.Create.Arguments}")
   @Description("#{Admin.Create.Description}")
   @CommandPermission("tne.admin.create")
-  public void create(SpongeCommandActor sender, String name) {
+  public void create(final SpongeCommandActor sender, final String name) {
 
     net.tnemc.core.command.AdminCommand.onCreate(new SpongeCMDSource(sender), name);
   }
@@ -73,7 +73,7 @@ public class AdminCommand {
   @Usage("#{Admin.Debug.Arguments}")
   @Description("#{Admin.Debug.Description}")
   @CommandPermission("tne.admin.debug")
-  public void debug(SpongeCommandActor sender, DebugLevel level) {
+  public void debug(final SpongeCommandActor sender, final DebugLevel level) {
 
     net.tnemc.core.command.AdminCommand.onDebug(new SpongeCMDSource(sender), level);
   }
@@ -82,7 +82,7 @@ public class AdminCommand {
   @Usage("#{Admin.Delete.Arguments}")
   @Description("#{Admin.Delete.Description}")
   @CommandPermission("tne.admin.delete")
-  public void delete(SpongeCommandActor sender, String name) {
+  public void delete(final SpongeCommandActor sender, final String name) {
 
     net.tnemc.core.command.AdminCommand.onDelete(new SpongeCMDSource(sender), name);
   }
@@ -91,7 +91,7 @@ public class AdminCommand {
   @Usage("#{Admin.Extract.Arguments}")
   @Description("#{Admin.Extract.Description}")
   @CommandPermission("tne.admin.extract")
-  public void extract(SpongeCommandActor sender) {
+  public void extract(final SpongeCommandActor sender) {
 
     net.tnemc.core.command.AdminCommand.onExtract(new SpongeCMDSource(sender));
   }
@@ -100,7 +100,7 @@ public class AdminCommand {
   @Usage("#{Admin.Purge.Arguments}")
   @Description("#{Admin.Purge.Description}")
   @CommandPermission("tne.admin.purge")
-  public void purge(SpongeCommandActor sender) {
+  public void purge(final SpongeCommandActor sender) {
 
     net.tnemc.core.command.AdminCommand.onPurge(new SpongeCMDSource(sender));
   }
@@ -109,7 +109,7 @@ public class AdminCommand {
   @Usage("#{Admin.Reload.Arguments}")
   @Description("#{Admin.Reload.Description}")
   @CommandPermission("tne.admin.reload")
-  public void reload(SpongeCommandActor sender, @Default("all") String type) {
+  public void reload(final SpongeCommandActor sender, @Default("all") final String type) {
 
     net.tnemc.core.command.AdminCommand.onReload(new SpongeCMDSource(sender), type);
   }
@@ -118,7 +118,7 @@ public class AdminCommand {
   @Usage("#{Admin.Reset.Arguments}")
   @Description("#{Admin.Reset.Description}")
   @CommandPermission("tne.admin.reset")
-  public void reset(SpongeCommandActor sender) {
+  public void reset(final SpongeCommandActor sender) {
 
     net.tnemc.core.command.AdminCommand.onReset(new SpongeCMDSource(sender));
   }
@@ -127,7 +127,7 @@ public class AdminCommand {
   @Usage("#{Admin.Restore.Arguments}")
   @Description("#{Admin.Restore.Description}")
   @CommandPermission("tne.admin.restore")
-  public void restore(SpongeCommandActor sender, @Default("0") int extraction) {
+  public void restore(final SpongeCommandActor sender, @Default("0") final int extraction) {
 
     net.tnemc.core.command.AdminCommand.onRestore(new SpongeCMDSource(sender), extraction);
   }
@@ -136,7 +136,7 @@ public class AdminCommand {
   @Usage("#{Admin.Save.Arguments}")
   @Description("#{Admin.Save.Description}")
   @CommandPermission("tne.admin.save")
-  public void save(SpongeCommandActor sender) {
+  public void save(final SpongeCommandActor sender) {
 
     net.tnemc.core.command.AdminCommand.onSave(new SpongeCMDSource(sender));
   }
@@ -145,7 +145,7 @@ public class AdminCommand {
   @Usage("#{Admin.Status.Arguments}")
   @Description("#{Admin.Status.Description}")
   @CommandPermission("tne.admin.status")
-  public void status(SpongeCommandActor sender, Account account, @Default("normal") AccountStatus status) {
+  public void status(final SpongeCommandActor sender, final Account account, @Default("normal") final AccountStatus status) {
 
     net.tnemc.core.command.AdminCommand.onStatus(new SpongeCMDSource(sender), account, status);
   }
@@ -154,7 +154,7 @@ public class AdminCommand {
   @Usage("#{Admin.Version.Arguments}")
   @Description("#{Admin.Version.Description}")
   @CommandPermission("tne.admin.version")
-  public void version(SpongeCommandActor sender) {
+  public void version(final SpongeCommandActor sender) {
 
     net.tnemc.core.command.AdminCommand.onVersion(new SpongeCMDSource(sender));
   }

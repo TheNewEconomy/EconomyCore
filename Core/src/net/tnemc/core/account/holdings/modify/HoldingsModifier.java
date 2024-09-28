@@ -292,7 +292,7 @@ public class HoldingsModifier {
     return percent;
   }
 
-  public void setPercent(boolean percent) {
+  public void setPercent(final boolean percent) {
 
     this.percent = percent;
   }

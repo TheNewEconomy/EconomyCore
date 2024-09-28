@@ -102,7 +102,7 @@ public class MessageConfig extends Config {
 
     if(langFiles != null) {
 
-      for(File langFile : langFiles) {
+      for(final File langFile : langFiles) {
 
         final String name = langFile.getName().replace(".yml", "");
 

@@ -31,7 +31,7 @@ import revxrsal.commands.process.ValueResolver;
 public class DebugResolver implements ValueResolver<DebugLevel> {
 
   @Override
-  public DebugLevel resolve(@NotNull ValueResolverContext context) throws Throwable {
+  public DebugLevel resolve(@NotNull final ValueResolverContext context) throws Throwable {
 
     final String value = context.arguments().pop();
 

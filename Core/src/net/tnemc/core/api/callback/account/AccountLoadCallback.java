@@ -29,7 +29,7 @@ import net.tnemc.core.api.callback.TNECallbacks;
  */
 public class AccountLoadCallback extends AccountCallback {
 
-  public AccountLoadCallback(Account account) {
+  public AccountLoadCallback(final Account account) {
 
     super(account);
   }

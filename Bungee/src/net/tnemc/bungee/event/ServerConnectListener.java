@@ -33,14 +33,14 @@ import net.tnemc.bungee.message.backlog.ConfigEntry;
 public class ServerConnectListener implements Listener {
 
   @EventHandler
-  public void onMessage(ServerConnectEvent event) {
+  public void onMessage(final ServerConnectEvent event) {
 
     if(!event.getPlayer().getServer().getInfo().getPlayers().isEmpty()) {
 
       final String address = event.getPlayer().getServer().getInfo().getSocketAddress().toString();
       MessageManager.instance().backlog(address);
 
-      for(ConfigEntry entry : MessageManager.instance().getHubs().values()) {
+      for(final ConfigEntry entry : MessageManager.instance().getHubs().values()) {
         if(!entry.getSynced().contains(address)) {
 
           event.getTarget().sendData("tne:config", entry.getBytes(), false);

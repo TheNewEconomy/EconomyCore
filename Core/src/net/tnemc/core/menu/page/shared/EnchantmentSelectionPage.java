@@ -57,9 +57,9 @@ public class EnchantmentSelectionPage {
 
   protected final Consumer<StringSelectionHandler> selectionListener;
 
-  public EnchantmentSelectionPage(String enchantsID, String returnMenu, String menuName,
-                                  final int menuPage, final int returnPage, String enchantPageID,
-                                  final int menuRows, Consumer<StringSelectionHandler> selectionListener) {
+  public EnchantmentSelectionPage(final String enchantsID, final String returnMenu, final String menuName,
+                                  final int menuPage, final int returnPage, final String enchantPageID,
+                                  final int menuRows, final Consumer<StringSelectionHandler> selectionListener) {
 
     this.enchantsID = enchantsID;
     this.returnMenu = returnMenu;

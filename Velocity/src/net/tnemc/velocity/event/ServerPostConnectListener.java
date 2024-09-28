@@ -34,7 +34,7 @@ import java.util.Optional;
 public class ServerPostConnectListener {
 
   @Subscribe
-  public void handle(ServerPostConnectEvent event) {
+  public void handle(final ServerPostConnectEvent event) {
 
     final Optional<ServerConnection> server = event.getPlayer().getCurrentServer();
     if(server.isPresent() && server.get().getServer().getPlayersConnected().size() <= 1) {

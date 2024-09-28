@@ -53,7 +53,7 @@ public class TopManager {
 
     instance = this;
 
-    for(String str : MainConfig.yaml().getStringList("Core.Commands.Top.Exclusions")) {
+    for(final String str : MainConfig.yaml().getStringList("Core.Commands.Top.Exclusions")) {
       try {
         regexExclusions.add(Pattern.compile(str));
       } catch(PatternSyntaxException ignore) {
@@ -65,7 +65,7 @@ public class TopManager {
   public void load() {
 
     topMap.clear();
-    for(Currency currency : TNECore.eco().currency().currencies()) {
+    for(final Currency currency : TNECore.eco().currency().currencies()) {
       topMap.put(currency.getUid(), new TopCurrency(PluginCore.server().defaultWorld(), currency.getUid()));
     }
   }

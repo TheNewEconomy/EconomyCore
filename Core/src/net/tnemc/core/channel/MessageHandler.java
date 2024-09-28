@@ -56,7 +56,7 @@ public class MessageHandler extends ChannelMessageHandler {
   }
 
   @Override
-  public void handle(ChannelBytesWrapper wrapper) {
+  public void handle(final ChannelBytesWrapper wrapper) {
 
     try {
 

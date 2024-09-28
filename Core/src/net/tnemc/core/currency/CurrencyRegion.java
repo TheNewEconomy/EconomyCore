@@ -30,7 +30,7 @@ public class CurrencyRegion {
   private final boolean enabled;
   private final boolean regionDefault;
 
-  public CurrencyRegion(String region, boolean enabled, boolean regionDefault) {
+  public CurrencyRegion(final String region, final boolean enabled, final boolean regionDefault) {
 
     this.region = region;
     this.enabled = enabled;

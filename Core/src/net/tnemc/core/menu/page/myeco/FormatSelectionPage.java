@@ -58,9 +58,9 @@ public class FormatSelectionPage {
 
   protected final Consumer<StringSelectionHandler> selectionListener;
 
-  public FormatSelectionPage(String formatID, String returnMenu, String menuName,
-                             final int menuPage, final int returnPage, String formatPageID,
-                             final int menuRows, Consumer<StringSelectionHandler> selectionListener) {
+  public FormatSelectionPage(final String formatID, final String returnMenu, final String menuName,
+                             final int menuPage, final int returnPage, final String formatPageID,
+                             final int menuRows, final Consumer<StringSelectionHandler> selectionListener) {
 
     this.returnMenu = returnMenu;
     this.menuName = menuName;

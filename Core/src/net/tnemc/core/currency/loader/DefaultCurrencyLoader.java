@@ -74,7 +74,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       final File[] currencies = IOUtil.getYAMLs(directory);
       if(currencies.length > 0) {
 
-        for(File curFile : currencies) {
+        for(final File curFile : currencies) {
 
           final boolean loaded = loadCurrency(directory, curFile);
 
@@ -96,7 +96,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
    * @param name      The name of the currency to load.
    */
   @Override
-  public boolean loadCurrency(final File directory, String name) {
+  public boolean loadCurrency(final File directory, final String name) {
 
     return loadCurrency(directory, new File(directory, name + ".yml"));
   }
@@ -108,7 +108,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
    * @param curDirectory The file of the currency
    */
   @Override
-  public boolean loadCurrency(final File directory, File curDirectory) {
+  public boolean loadCurrency(final File directory, final File curDirectory) {
 
     YamlDocument cur = null;
 
@@ -213,7 +213,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     currency.getRegions().put("global", new CurrencyRegion("global", global, globalDefault));
 
     if(cur.contains("Options.MultiRegion.Regions")) {
-      for(Object regionObj : cur.getSection("Options.MultiRegion.Regions").getKeys()) {
+      for(final Object regionObj : cur.getSection("Options.MultiRegion.Regions").getKeys()) {
 
         final String region = (String)regionObj;
         final boolean isDefault = cur.getBoolean("Options.MultiRegion.Regions." + region + ".Default", true);
@@ -224,7 +224,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     if(cur.contains("Converting")) {
       final Set<Object> converting = cur.getSection("Converting").getKeys();
 
-      for(Object strObj : converting) {
+      for(final Object strObj : converting) {
 
         final String str = (String)strObj;
         currency.getConversion().put(str, cur.getDouble("Converting." + str, 1.0));
@@ -289,13 +289,13 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
    * @param currency  The currency of the denomination.
    */
   @Override
-  public boolean loadDenominations(final File directory, Currency currency) {
+  public boolean loadDenominations(final File directory, final Currency currency) {
 
     if(directory.exists()) {
       final File[] denominations = IOUtil.getYAMLs(directory);
 
       if(denominations.length > 0) {
-        for(File denomination : denominations) {
+        for(final File denomination : denominations) {
 
           final boolean loaded = loadDenomination(currency, denomination);
 
@@ -320,7 +320,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
    * @param name      The name of the denomination to load.
    */
   @Override
-  public boolean loadDenomination(final File directory, Currency currency, String name) {
+  public boolean loadDenomination(final File directory, final Currency currency, final String name) {
 
     return loadDenomination(currency, new File(directory, name + ".yml"));
   }
@@ -332,7 +332,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
    * @param denomFile The file of the denomination to load.
    */
   @Override
-  public boolean loadDenomination(Currency currency, File denomFile) {
+  public boolean loadDenomination(final Currency currency, final File denomFile) {
 
     YamlDocument denom = null;
     try {
@@ -354,8 +354,8 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
     final String material = denom.getString("Options.Material", "PAPER");
 
-    Denomination denomination = (currency instanceof ItemCurrency)?
-                                new ItemDenomination(weight, material) : new Denomination(weight);
+    final Denomination denomination = (currency instanceof ItemCurrency)?
+                                      new ItemDenomination(weight, material) : new Denomination(weight);
 
     denomination.setSingle(single);
     denomination.setPlural(plural);
@@ -366,7 +366,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
       final List<String> loreStr = denom.getStringList("Options.Lore");
       final LinkedList<Component> lore = new LinkedList<>();
-      for(String str : loreStr) {
+      for(final String str : loreStr) {
         lore.add(MiniMessage.miniMessage().deserialize(str));
       }
 
@@ -387,18 +387,18 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
         final boolean shapeless = denom.getBoolean("Options.Crafting.Shapeless", false);
         final int amount = denom.getInt("Options.Crafting.Amount", 1);
 
-        CraftingRecipe recipe = new CraftingRecipe(!shapeless, amount, TNECore.instance().denominationToStack(item));
+        final CraftingRecipe recipe = new CraftingRecipe(!shapeless, amount, TNECore.instance().denominationToStack(item));
 
-        for(String materials : denom.getStringList("Options.Crafting.Materials")) {
+        for(final String materials : denom.getStringList("Options.Crafting.Materials")) {
 
-          String[] split = materials.split(":");
+          final String[] split = materials.split(":");
           if(split.length >= 2) {
             recipe.getIngredients().put(split[0].charAt(0), split[1]);
           }
         }
 
         int i = 0;
-        for(String row : denom.getStringList("Options.Crafting.Recipe")) {
+        for(final String row : denom.getStringList("Options.Crafting.Recipe")) {
           if(i > 2) break;
 
           recipe.getRows()[i] = row;

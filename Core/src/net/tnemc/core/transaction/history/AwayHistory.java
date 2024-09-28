@@ -35,7 +35,7 @@ public class AwayHistory {
 
   private final UUID account;
 
-  public AwayHistory(UUID account) {
+  public AwayHistory(final UUID account) {
 
     this.account = account;
   }
@@ -58,8 +58,8 @@ public class AwayHistory {
     final int start = ((page * 5) - 5) + 1;
     final int end = start + 5;
 
-    int i = 1;
-    for(Map.Entry<Long, UUID> entry : receipts.entrySet()) {
+    final int i = 1;
+    for(final Map.Entry<Long, UUID> entry : receipts.entrySet()) {
       if(i < start) continue;
 
       values.put(entry.getKey(), entry.getValue());

@@ -67,7 +67,7 @@ import static net.tnemc.core.EconomyManager.TOP_PER_PAGE;
 public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: [currency]
-  public static void onMyBal(CmdSource<?> sender) {
+  public static void onMyBal(final CmdSource<?> sender) {
 
     if(sender.player().isPresent()) {
       sender.player().get().inventory().openMenu(sender.player().get(), "my_bal");
@@ -75,7 +75,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: [currency] [world]
-  public static void onBalance(CmdSource<?> sender, Currency currency, String region) {
+  public static void onBalance(final CmdSource<?> sender, final Currency currency, final String region) {
 
     final Optional<PlayerProvider> player = sender.player();
     if(EconomyManager.limitCurrency() && player.isPresent()) {
@@ -104,7 +104,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <amount> <to currency> [from currency]
-  public static void onConvert(CmdSource<?> sender, PercentBigDecimal amount, Currency currency, Currency fromCurrency) {
+  public static void onConvert(final CmdSource<?> sender, final PercentBigDecimal amount, final Currency currency, final Currency fromCurrency) {
 
     final Optional<PlayerProvider> player = sender.player();
     if(EconomyManager.limitCurrency() && player.isPresent()) {
@@ -179,7 +179,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <amount> [currency]
-  public static void onDeposit(CmdSource<?> sender, PercentBigDecimal amount, Currency currency, String region) {
+  public static void onDeposit(final CmdSource<?> sender, final PercentBigDecimal amount, final Currency currency, String region) {
 
     final Optional<PlayerProvider> player = sender.player();
     if(EconomyManager.limitCurrency() && player.isPresent()) {
@@ -240,7 +240,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> <amount> [world] [currency]
-  public static void onGive(CmdSource<?> sender, Account account, PercentBigDecimal amount, String region, Currency currency) {
+  public static void onGive(final CmdSource<?> sender, final Account account, final PercentBigDecimal amount, String region, final Currency currency) {
 
     final Optional<PlayerProvider> player = sender.player();
     if(EconomyManager.limitCurrency() && player.isPresent()) {
@@ -292,7 +292,7 @@ public class MoneyCommand extends BaseCommand {
     }
   }
 
-  public static void onGiveNote(CmdSource<?> sender, Account acc, BigDecimal amount, Currency currency) {
+  public static void onGiveNote(final CmdSource<?> sender, final Account acc, final BigDecimal amount, final Currency currency) {
 
     final Optional<Note> note = currency.getNote();
 
@@ -339,7 +339,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <amount> [currency]
-  public static void onNote(CmdSource<?> sender, PercentBigDecimal amount, Currency currency) {
+  public static void onNote(final CmdSource<?> sender, final PercentBigDecimal amount, final Currency currency) {
 
     final Optional<Account> account = BaseCommand.account(sender, "note");
     final Optional<Note> note = currency.getNote();
@@ -399,7 +399,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> [world] [currency]
-  public static void onOther(CmdSource<?> sender, Account account, String region, Currency currency) {
+  public static void onOther(final CmdSource<?> sender, final Account account, String region, final Currency currency) {
 
     final Optional<PlayerProvider> player = sender.player();
     final Optional<UUID> senderID = sender.identifier();
@@ -449,7 +449,7 @@ public class MoneyCommand extends BaseCommand {
     entryMSG.addReplacement("$currency", currency.getIdentifier());
 
     BigDecimal amount = BigDecimal.ZERO;
-    for(HoldingsEntry entry : currency.type().getHoldings(account, region, currency, EconomyManager.NORMAL)) {
+    for(final HoldingsEntry entry : currency.type().getHoldings(account, region, currency, EconomyManager.NORMAL)) {
       amount = amount.add(entry.getAmount());
 
       if(entry.getHandler().asID().equalsIgnoreCase(EconomyManager.INVENTORY_ONLY.asID())) {
@@ -477,7 +477,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> <amount> [currency] [from:account]
-  public static void onPay(CmdSource<?> sender, Account acc, PercentBigDecimal amount, Currency currency, String from) {
+  public static void onPay(final CmdSource<?> sender, final Account acc, final PercentBigDecimal amount, final Currency currency, final String from) {
 
     final Optional<PlayerProvider> player = sender.player();
     if(EconomyManager.limitCurrency() && player.isPresent()) {
@@ -581,7 +581,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> <amount> [currency]
-  public static void onRequest(CmdSource<?> sender, Account account, BigDecimal amount, Currency currency) {
+  public static void onRequest(final CmdSource<?> sender, final Account account, final BigDecimal amount, final Currency currency) {
 
     final Optional<PlayerProvider> player = sender.player();
     if(EconomyManager.limitCurrency() && player.isPresent()) {
@@ -620,7 +620,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> <amount> [world] [currency]
-  public static void onSet(CmdSource<?> sender, Account account, BigDecimal amount, String region, Currency currency) {
+  public static void onSet(final CmdSource<?> sender, final Account account, final BigDecimal amount, String region, final Currency currency) {
 
     final Optional<PlayerProvider> player = sender.player();
     if(EconomyManager.limitCurrency() && player.isPresent()) {
@@ -664,7 +664,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <amount> [world] [currency]
-  public static void onSetAll(CmdSource<?> sender, BigDecimal amount, String region, Currency currency) {
+  public static void onSetAll(final CmdSource<?> sender, final BigDecimal amount, String region, final Currency currency) {
 
     final Optional<PlayerProvider> player = sender.player();
     if(EconomyManager.limitCurrency() && player.isPresent()) {
@@ -689,7 +689,7 @@ public class MoneyCommand extends BaseCommand {
                                                            HoldingsOperation.SET);
 
     final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
-    for(Account account : TNECore.eco().account().getAccounts().values()) {
+    for(final Account account : TNECore.eco().account().getAccounts().values()) {
       final Transaction transaction = new Transaction("set")
               .to(account, modifier)
               .processor(EconomyManager.baseProcessor())
@@ -716,7 +716,7 @@ public class MoneyCommand extends BaseCommand {
     }
   }
 
-  public static void onSwitch(CmdSource<?> sender, Account account) {
+  public static void onSwitch(final CmdSource<?> sender, final Account account) {
 
     if(account instanceof SharedAccount shared) {
 
@@ -782,7 +782,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> <amount> [world] [currency]
-  public static void onTake(CmdSource<?> sender, Account account, PercentBigDecimal amount, String region, Currency currency) {
+  public static void onTake(final CmdSource<?> sender, final Account account, final PercentBigDecimal amount, String region, final Currency currency) {
 
     final Optional<PlayerProvider> player = sender.player();
     if(EconomyManager.limitCurrency() && player.isPresent()) {
@@ -838,7 +838,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: [page] [currency:name] [world:world] [limit:#]
-  public static void onTop(CmdSource<?> sender, Integer page, Currency currency, Boolean refresh) {
+  public static void onTop(final CmdSource<?> sender, Integer page, final Currency currency, final Boolean refresh) {
 
     final Optional<PlayerProvider> player = sender.player();
     if(EconomyManager.limitCurrency() && player.isPresent()) {
@@ -886,7 +886,7 @@ public class MoneyCommand extends BaseCommand {
 
       final int adjusted = (page - 1) * TOP_PER_PAGE;
       int i = 1;
-      for(Map.Entry<String, BigDecimal> entry : pageEntry.getValues().entrySet()) {
+      for(final Map.Entry<String, BigDecimal> entry : pageEntry.getValues().entrySet()) {
         final MessageData en = new MessageData("Messages.Money.TopEntry");
         en.addReplacement("$pos", (adjusted + i));
         en.addReplacement("$player", entry.getKey());
@@ -899,7 +899,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <amount> [currency]
-  public static void onWithdraw(CmdSource<?> sender, PercentBigDecimal amount, Currency currency, String region) {
+  public static void onWithdraw(final CmdSource<?> sender, final PercentBigDecimal amount, final Currency currency, String region) {
 
     final Optional<PlayerProvider> player = sender.player();
     if(EconomyManager.limitCurrency() && player.isPresent()) {
@@ -960,7 +960,7 @@ public class MoneyCommand extends BaseCommand {
     }
   }
 
-  public static Optional<Receipt> processTransaction(CmdSource<?> sender, Transaction transaction, final String modifiedAccount, final BigDecimal modifier) {
+  public static Optional<Receipt> processTransaction(final CmdSource<?> sender, final Transaction transaction, final String modifiedAccount, final BigDecimal modifier) {
 
     try {
       final TransactionResult result = transaction.process();

@@ -78,7 +78,7 @@ public class TNEAPI {
    * @see <a href="https://github.com/TheNewEconomy/EconomyCore/wiki/API#holdings-handlers">Handlers
    * Wiki</a>
    */
-  public void addHandler(HoldingsHandler handler) {
+  public void addHandler(final HoldingsHandler handler) {
 
     EconomyManager.instance().addHandler(handler);
   }
@@ -91,7 +91,7 @@ public class TNEAPI {
    *              {@code Boolean}. It is used to check if an account of the specified type is valid
    *              based on some criteria. The {@code String} argument is the account's name.
    */
-  public void addAccountType(Class<? extends SharedAccount> type, Function<String, Boolean> check) {
+  public void addAccountType(final Class<? extends SharedAccount> type, final Function<String, Boolean> check) {
     //TODO: implement this.
   }
 
@@ -100,7 +100,7 @@ public class TNEAPI {
    *
    * @param status The {@code AccountStatus} to be added.
    */
-  public void addAccountStatus(AccountStatus status) {
+  public void addAccountStatus(final AccountStatus status) {
 
     TNECore.eco().account().addAccountStatus(status);
   }
@@ -116,7 +116,7 @@ public class TNEAPI {
    *
    * @since 0.1.2.0
    */
-  public boolean hasAccount(@NotNull String identifier) {
+  public boolean hasAccount(@NotNull final String identifier) {
 
     return TNECore.eco().account().findAccount(identifier).isPresent();
   }
@@ -132,7 +132,7 @@ public class TNEAPI {
    *
    * @since 0.1.2.0
    */
-  public boolean hasPlayerAccount(@NotNull UUID identifier) {
+  public boolean hasPlayerAccount(@NotNull final UUID identifier) {
 
     return TNECore.eco().account().findAccount(identifier).isPresent();
   }
@@ -152,9 +152,9 @@ public class TNEAPI {
    *
    * @since 0.1.2.0
    */
-  public AccountAPIResponse getOrCreateAccount(@NotNull String identifier, @NotNull String name) {
+  public AccountAPIResponse getOrCreateAccount(@NotNull final String identifier, @NotNull final String name) {
 
-    AccountAPIResponse response = TNECore.eco().account().createAccount(identifier, name);
+    final AccountAPIResponse response = TNECore.eco().account().createAccount(identifier, name);
 
     return response;
   }
@@ -173,7 +173,7 @@ public class TNEAPI {
    *
    * @since 0.1.2.0
    */
-  public AccountAPIResponse getOrCreatePlayerAccount(@NotNull UUID identifier, @NotNull String name) {
+  public AccountAPIResponse getOrCreatePlayerAccount(@NotNull final UUID identifier, @NotNull final String name) {
 
     return getOrCreateAccount(identifier.toString(), name);
   }
@@ -191,7 +191,7 @@ public class TNEAPI {
    *
    * @since 0.1.2.0
    */
-  public Optional<SharedAccount> createAccount(@NotNull String identifier) {
+  public Optional<SharedAccount> createAccount(@NotNull final String identifier) {
 
     return TNECore.eco().account().createNonPlayerAccount(identifier);
   }
@@ -210,7 +210,7 @@ public class TNEAPI {
    *
    * @since 0.1.2.0
    */
-  public AccountAPIResponse createPlayerAccount(@NotNull UUID identifier, @NotNull String name) {
+  public AccountAPIResponse createPlayerAccount(@NotNull final UUID identifier, @NotNull final String name) {
 
     return TNECore.eco().account().createAccount(identifier.toString(), name);
   }
@@ -229,7 +229,7 @@ public class TNEAPI {
    *
    * @since 0.1.2.0
    */
-  public Optional<Account> getAccount(@NotNull String identifier) {
+  public Optional<Account> getAccount(@NotNull final String identifier) {
 
     return TNECore.eco().account().findAccount(identifier);
   }
@@ -245,7 +245,7 @@ public class TNEAPI {
    *
    * @since 0.1.2.0
    */
-  public Optional<PlayerAccount> getPlayerAccount(@NotNull UUID identifier) {
+  public Optional<PlayerAccount> getPlayerAccount(@NotNull final UUID identifier) {
 
     return TNECore.eco().account().findPlayerAccount(identifier);
   }
@@ -263,7 +263,7 @@ public class TNEAPI {
    *
    * @since 0.1.2.0
    */
-  public EconomyResponse deleteAccount(@NotNull String identifier, @NotNull ActionSource source) {
+  public EconomyResponse deleteAccount(@NotNull final String identifier, @NotNull final ActionSource source) {
 
     return TNECore.eco().account().deleteAccount(identifier);
   }
@@ -281,7 +281,7 @@ public class TNEAPI {
    *
    * @since 0.1.2.0
    **/
-  public EconomyResponse deleteAccount(@NotNull UUID identifier, @NotNull ActionSource source) {
+  public EconomyResponse deleteAccount(@NotNull final UUID identifier, @NotNull final ActionSource source) {
 
     return TNECore.eco().account().deleteAccount(identifier);
   }
@@ -291,7 +291,7 @@ public class TNEAPI {
    *
    * @param type The {@link CurrencyType} to be added.
    */
-  public void addCurrencyType(CurrencyType type) {
+  public void addCurrencyType(final CurrencyType type) {
 
     TNECore.eco().currency().addType(type);
   }
@@ -301,7 +301,7 @@ public class TNEAPI {
    *
    * @param currency The {@link Currency} to be added.
    */
-  public void addCurrency(Currency currency) {
+  public void addCurrency(final Currency currency) {
 
     TNECore.eco().currency().addCurrency(currency);
   }
@@ -311,7 +311,7 @@ public class TNEAPI {
    *
    * @param rule The {@link FormatRule} to be added for balance formatting.
    */
-  public void addBalanceFormatRule(FormatRule rule) {
+  public void addBalanceFormatRule(final FormatRule rule) {
 
     CurrencyFormatter.addRule(rule);
   }
@@ -342,7 +342,7 @@ public class TNEAPI {
    *
    * @since 0.1.2.0
    */
-  public @NotNull Currency getDefaultCurrency(@NotNull String region) {
+  public @NotNull Currency getDefaultCurrency(@NotNull final String region) {
 
     return TNECore.eco().currency().getDefaultCurrency(region);
   }
@@ -372,7 +372,7 @@ public class TNEAPI {
    *
    * @since 0.1.2.0
    */
-  public Collection<Currency> getCurrencies(@NotNull String region) {
+  public Collection<Currency> getCurrencies(@NotNull final String region) {
 
     return TNECore.api().getCurrencies(region);
   }
@@ -386,7 +386,7 @@ public class TNEAPI {
    *
    * @return The holdings in {@link BigDecimal} format.
    */
-  public BigDecimal getHoldings(String identifier, String world, String currency) {
+  public BigDecimal getHoldings(final String identifier, final String world, final String currency) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
     final Optional<Currency> currency1 = TNECore.eco().currency().findCurrency(currency);
@@ -407,7 +407,7 @@ public class TNEAPI {
    *
    * @return True if the specified identifier has the holdings, otherwise false.
    */
-  public boolean hasHoldings(String identifier, String world, String currency, BigDecimal amount) {
+  public boolean hasHoldings(final String identifier, final String world, final String currency, final BigDecimal amount) {
 
     return getHoldings(identifier, world, currency).compareTo(amount) >= 0;
   }
@@ -423,7 +423,7 @@ public class TNEAPI {
    *
    * @return The associated {@link TransactionResult result} from the transaction.
    */
-  public TransactionResult removeHoldings(String identifier, String world, String currency, BigDecimal amount, String pluginName) {
+  public TransactionResult removeHoldings(final String identifier, final String world, final String currency, final BigDecimal amount, final String pluginName) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
     final Optional<Currency> currencyObject = TNECore.eco().currency().findCurrency(currency);
@@ -459,7 +459,7 @@ public class TNEAPI {
    *
    * @return The associated {@link TransactionResult result} from the transaction.
    */
-  public TransactionResult addHoldings(String identifier, String world, String currency, BigDecimal amount, String pluginName) {
+  public TransactionResult addHoldings(final String identifier, final String world, final String currency, final BigDecimal amount, final String pluginName) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
     final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency(currency);
@@ -493,7 +493,7 @@ public class TNEAPI {
    *
    * @return True if the transactions was successful, otherwise false.
    */
-  public boolean setHoldings(String identifier, String world, String currency, BigDecimal amount) {
+  public boolean setHoldings(final String identifier, final String world, final String currency, final BigDecimal amount) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
     final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency(currency);

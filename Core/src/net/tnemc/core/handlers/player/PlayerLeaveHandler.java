@@ -45,7 +45,7 @@ public class PlayerLeaveHandler {
    *
    * @return True if the event should be cancelled, otherwise false.
    */
-  public HandlerResponse handle(PlayerProvider provider) {
+  public HandlerResponse handle(final PlayerProvider provider) {
 
     final HandlerResponse response = new HandlerResponse("", false);
 
@@ -53,11 +53,11 @@ public class PlayerLeaveHandler {
     if(account.isPresent() && (account.get() instanceof PlayerAccount)) {
 
       final String region = TNECore.eco().region().getMode().region(provider);
-      for(Currency currency : TNECore.eco().currency().getCurrencies(region)) {
+      for(final Currency currency : TNECore.eco().currency().getCurrencies(region)) {
 
         if(currency.type().supportsItems()) {
 
-          for(HoldingsEntry entry : account.get().getHoldings(region, currency.getUid())) {
+          for(final HoldingsEntry entry : account.get().getHoldings(region, currency.getUid())) {
 
             //account.get().setHoldings(entry, entry.getHandler());
             account.get().getWallet().setHoldings(entry);

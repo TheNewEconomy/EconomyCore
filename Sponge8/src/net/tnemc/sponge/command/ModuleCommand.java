@@ -41,7 +41,7 @@ public class ModuleCommand {
   @Usage("#{Module.Info.Arguments}")
   @Description("#{Module.Info.Description}")
   @CommandPermission("tne.module.info")
-  public void onInfo(SpongeCommandActor sender, String moduleName) {
+  public void onInfo(final SpongeCommandActor sender, final String moduleName) {
 
     net.tnemc.core.command.ModuleCommand.onInfo(new SpongeCMDSource(sender), moduleName);
   }
@@ -51,7 +51,7 @@ public class ModuleCommand {
   @DefaultFor({ "module", "mod" })
   @Description("#{Module.List.Description}")
   @CommandPermission("tne.list.available")
-  public void onList(SpongeCommandActor sender) {
+  public void onList(final SpongeCommandActor sender) {
 
     net.tnemc.core.command.ModuleCommand.onList(new SpongeCMDSource(sender));
   }

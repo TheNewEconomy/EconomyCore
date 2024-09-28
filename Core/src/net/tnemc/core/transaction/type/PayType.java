@@ -57,7 +57,7 @@ public class PayType implements TransactionType {
 
     if(MainConfig.yaml().getBoolean("Core.Transactions.Pay.Tax.Enabled", false)) {
       final String tax = MainConfig.yaml().getString("Core.Transactions.Pay.Tax.Receiver");
-      TaxEntry entry;
+      final TaxEntry entry;
       if(tax.contains("%")) {
         entry = new TaxEntry("percent", Double.parseDouble(tax.replace("%", "")) / 100);
       } else {
@@ -80,7 +80,7 @@ public class PayType implements TransactionType {
 
     if(MainConfig.yaml().getBoolean("Core.Transactions.Pay.Tax.Enabled", false)) {
       final String tax = MainConfig.yaml().getString("Core.Transactions.Pay.Tax.Sender");
-      TaxEntry entry;
+      final TaxEntry entry;
       if(tax.contains("%")) {
         entry = new TaxEntry("percent", Double.parseDouble(tax.replace("%", "")));
       } else {

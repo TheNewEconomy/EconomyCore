@@ -67,7 +67,7 @@ public class SQLReceipt implements Datable<Receipt> {
    * @param connector The storage connector to use for this transaction.
    */
   @Override
-  public void purge(StorageConnector<?> connector) {
+  public void purge(final StorageConnector<?> connector) {
 
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
       sql.executeUpdate(tne.receiptPurge(DataConfig.yaml().getInt("Data.Purge.Transaction.Days")),
@@ -82,7 +82,7 @@ public class SQLReceipt implements Datable<Receipt> {
    * @param receipt   The object to be stored.
    */
   @Override
-  public void store(StorageConnector<?> connector, @NotNull Receipt receipt, @Nullable String identifier) {
+  public void store(final StorageConnector<?> connector, @NotNull final Receipt receipt, @Nullable final String identifier) {
 
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
 
@@ -105,8 +105,8 @@ public class SQLReceipt implements Datable<Receipt> {
     }
   }
 
-  private void storeParticipant(StorageConnector<?> connector, @Nullable TransactionParticipant participant,
-                                @Nullable HoldingsModifier modifier, final String type, @NotNull String identifier) {
+  private void storeParticipant(final StorageConnector<?> connector, @Nullable final TransactionParticipant participant,
+                                @Nullable final HoldingsModifier modifier, final String type, @NotNull final String identifier) {
 
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne
        && participant != null && modifier != null) {
@@ -121,11 +121,11 @@ public class SQLReceipt implements Datable<Receipt> {
                         });
 
       //store holdings
-      for(HoldingsEntry entry : participant.getStartingBalances()) {
+      for(final HoldingsEntry entry : participant.getStartingBalances()) {
         storeReceiptHolding(connector, entry, participant.getId().toString(), identifier, false);
       }
 
-      for(HoldingsEntry entry : participant.getEndingBalances()) {
+      for(final HoldingsEntry entry : participant.getEndingBalances()) {
         storeReceiptHolding(connector, entry, participant.getId().toString(), identifier, true);
       }
 
@@ -143,7 +143,7 @@ public class SQLReceipt implements Datable<Receipt> {
     }
   }
 
-  private void storeReceiptHolding(StorageConnector<?> connector, @NotNull HoldingsEntry entry, final String participant,
+  private void storeReceiptHolding(final StorageConnector<?> connector, @NotNull final HoldingsEntry entry, final String participant,
                                    final String receipt, final boolean ending) {
 
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
@@ -167,11 +167,11 @@ public class SQLReceipt implements Datable<Receipt> {
    * @param connector The storage connector to use for this transaction.
    */
   @Override
-  public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
+  public void storeAll(final StorageConnector<?> connector, @Nullable final String identifier) {
 
     if(connector instanceof SQLConnector && identifier != null) {
 
-      for(Receipt receipt : TransactionManager.receipts().getReceipts().values()) {
+      for(final Receipt receipt : TransactionManager.receipts().getReceipts().values()) {
         store(connector, receipt, identifier);
       }
     }
@@ -186,7 +186,7 @@ public class SQLReceipt implements Datable<Receipt> {
    * @return The object to load.
    */
   @Override
-  public Optional<Receipt> load(StorageConnector<?> connector, @NotNull String identifier) {
+  public Optional<Receipt> load(final StorageConnector<?> connector, @NotNull final String identifier) {
 
     //We shouldn't load individual Receipts, it doesn't make sense to me/no use case with caching. - creatorfromhell
     return Optional.empty();
@@ -202,7 +202,7 @@ public class SQLReceipt implements Datable<Receipt> {
    *
    * @throws SQLException if an error occurs while accessing the ResultSet data.
    */
-  public Receipt load(ResultSet result, SQLConnector sql, TNEDialect dialect) throws SQLException {
+  public Receipt load(final ResultSet result, final SQLConnector sql, final TNEDialect dialect) throws SQLException {
 
     //SQL Columns: uid, performed, receipt_type, receipt_source, receipt_source_type, archive, voided
     final Receipt receipt = new Receipt(
@@ -217,7 +217,7 @@ public class SQLReceipt implements Datable<Receipt> {
     return receipt;
   }
 
-  public void loadParticipants(Receipt receipt, SQLConnector sql, TNEDialect dialect) {
+  public void loadParticipants(final Receipt receipt, final SQLConnector sql, final TNEDialect dialect) {
 
     try(ResultSet result = sql.executeQuery(dialect.loadParticipants(), new Object[]{
             receipt.getId().toString() })) {
@@ -246,7 +246,7 @@ public class SQLReceipt implements Datable<Receipt> {
   }
 
   public Optional<HoldingsModifier> loadModifier(final UUID receiptID, final UUID participant,
-                                                 final String type, SQLConnector sql, TNEDialect dialect) {
+                                                 final String type, final SQLConnector sql, final TNEDialect dialect) {
 
     HoldingsModifier modifier = null;
     //participant, participant_type, operation, region, currency AS currency, modifier  - uid/participant
@@ -266,7 +266,7 @@ public class SQLReceipt implements Datable<Receipt> {
   }
 
   public List<HoldingsEntry> loadHoldings(final UUID receiptID, final UUID participant, final boolean ending,
-                                          SQLConnector sql, TNEDialect dialect) {
+                                          final SQLConnector sql, final TNEDialect dialect) {
 
     final List<HoldingsEntry> holdings = new ArrayList<>();
 
@@ -297,7 +297,7 @@ public class SQLReceipt implements Datable<Receipt> {
    * @return A collection containing the objects loaded.
    */
   @Override
-  public Collection<Receipt> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
+  public Collection<Receipt> loadAll(final StorageConnector<?> connector, @Nullable final String identifier) {
 
     final Collection<Receipt> receipts = new ArrayList<>(); // is this required? Not entirely sure it is - seems maybe a waste
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {

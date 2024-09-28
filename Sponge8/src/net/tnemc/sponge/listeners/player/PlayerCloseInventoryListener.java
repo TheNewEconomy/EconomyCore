@@ -41,23 +41,23 @@ public class PlayerCloseInventoryListener {
 
   private final PluginContainer plugin;
 
-  public PlayerCloseInventoryListener(PluginContainer plugin) {
+  public PlayerCloseInventoryListener(final PluginContainer plugin) {
 
     this.plugin = plugin;
   }
 
   @Listener
-  public void onClose(InteractContainerEvent.Close event, @First ServerPlayer player) {
+  public void onClose(final InteractContainerEvent.Close event, @First final ServerPlayer player) {
 
     if(isEnderChest(event.container())) {
       final HandlerResponse handle = new PlayerJoinHandler().handle(new SpongePlayerProvider(player.user(), plugin));
     }
   }
 
-  public boolean isEnderChest(Container container) {
+  public boolean isEnderChest(final Container container) {
 
     if(container instanceof BlockCarrier) {
-      Location<?, ?> location = ((BlockCarrier)container).location();
+      final Location<?, ?> location = ((BlockCarrier)container).location();
       return location.blockEntity().isPresent() && (location.blockEntity().get() instanceof EnderChest);
     }
     return false;

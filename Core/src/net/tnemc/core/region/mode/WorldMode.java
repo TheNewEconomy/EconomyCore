@@ -50,7 +50,7 @@ public class WorldMode implements RegionMode {
   }
 
   @Override
-  public String region(@NotNull PlayerProvider player) {
+  public String region(@NotNull final PlayerProvider player) {
 
     final String playerWorld = player.world();
     if(TNECore.eco().region().getDisabledRegions().contains(playerWorld)) {

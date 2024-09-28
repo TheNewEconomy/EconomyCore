@@ -55,7 +55,7 @@ public class PlayerInteractHandler {
    *
    * @return True if the event should be cancelled, otherwise false.
    */
-  public HandlerResponse handle(PlayerProvider provider, final AbstractItemStack<?> item) {
+  public HandlerResponse handle(final PlayerProvider provider, final AbstractItemStack<?> item) {
 
     final HandlerResponse response = new HandlerResponse("", false);
 
@@ -73,7 +73,7 @@ public class PlayerInteractHandler {
 
       final List<Component> lore = item.lore();
 
-      for(Component component : lore) {
+      for(final Component component : lore) {
         //TODO: Fix
         final String[] info = component.toString().split(":");
         if(info.length < 2) continue;

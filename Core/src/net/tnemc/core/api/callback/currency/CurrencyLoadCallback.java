@@ -31,7 +31,7 @@ public class CurrencyLoadCallback implements Callback {
 
   private Currency currency;
 
-  public CurrencyLoadCallback(Currency currency) {
+  public CurrencyLoadCallback(final Currency currency) {
 
     this.currency = currency;
   }
@@ -52,7 +52,7 @@ public class CurrencyLoadCallback implements Callback {
     return currency;
   }
 
-  public void setCurrency(Currency currency) {
+  public void setCurrency(final Currency currency) {
 
     this.currency = currency;
   }

@@ -53,8 +53,8 @@ public class AccountSelectionPage {
   protected final String accountPageID;
   protected final int menuRows;
 
-  public AccountSelectionPage(String accountDataID, String returnMenu, String menuName,
-                              final int menuPage, final int returnPage, String accountPageID, final int menuRows) {
+  public AccountSelectionPage(final String accountDataID, final String returnMenu, final String menuName,
+                              final int menuPage, final int returnPage, final String accountPageID, final int menuRows) {
 
     this.returnMenu = returnMenu;
     this.menuName = menuName;
@@ -107,7 +107,7 @@ public class AccountSelectionPage {
                                          .build());
 
       int i = 0;
-      for(Map.Entry<String, Account> entry : TNECore.eco().account().getAccounts().entrySet()) {
+      for(final Map.Entry<String, Account> entry : TNECore.eco().account().getAccounts().entrySet()) {
 
         if(i < start) {
 

@@ -42,7 +42,7 @@ public class MultiTreeMap<V> {
 
   private final int perPage;
 
-  public MultiTreeMap(int perPage) {
+  public MultiTreeMap(final int perPage) {
 
     this.perPage = perPage;
   }
@@ -74,8 +74,8 @@ public class MultiTreeMap<V> {
 
     int page = 1;
     TopPage<V> pageEntry = new TopPage<>(page);
-    for(Map.Entry<BigDecimal, List<V>> entry : map.entrySet()) {
-      for(V value : entry.getValue()) {
+    for(final Map.Entry<BigDecimal, List<V>> entry : map.entrySet()) {
+      for(final V value : entry.getValue()) {
         pageEntry.getValues().put(value, entry.getKey());
 
         if(pageEntry.getValues().size() >= perPage) {
@@ -100,9 +100,9 @@ public class MultiTreeMap<V> {
     map.clear();
   }
 
-  public int position(V search) {
+  public int position(final V search) {
 
-    for(TopPage<V> page : pageMap.values()) {
+    for(final TopPage<V> page : pageMap.values()) {
       if(page.getValues().containsKey(search)) {
         return (((page.getPage() - 1) * perPage) + new LinkedList<>(page.getValues().keySet()).indexOf(search));
       }

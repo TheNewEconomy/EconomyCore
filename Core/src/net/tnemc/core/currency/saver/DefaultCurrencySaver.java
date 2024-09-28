@@ -64,7 +64,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
    * @param directory The directory used for saving.
    */
   @Override
-  public void saveCurrenciesUUID(File directory) {
+  public void saveCurrenciesUUID(final File directory) {
 
     for(final Currency currency : TNECore.eco().currency().currencies()) {
       saveID(directory, currency);
@@ -78,7 +78,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
    * @param currency  The currency to save.
    */
   @Override
-  public void saveCurrency(final File directory, Currency currency) {
+  public void saveCurrency(final File directory, final Currency currency) {
 
     YamlDocument cur = null;
 
@@ -126,7 +126,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     //World Configurations
     MISCUtils.setComment(cur, "Options.MultiRegion", "Configurations relating to multi region support.");
     MISCUtils.setComment(cur, "Options.MultiRegion.Regions", "Configurations relating to regions this currency is enabled in.");
-    for(CurrencyRegion region : currency.getRegions().values()) {
+    for(final CurrencyRegion region : currency.getRegions().values()) {
 
       if(region.region().equalsIgnoreCase("global")) {
 
@@ -235,7 +235,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     if(!currency.getConversion().isEmpty()) {
       MISCUtils.setComment(cur, "Converting", "Format is currency name and decimal based rate");
 
-      for(Map.Entry<String, Double> entry : currency.getConversion().entrySet()) {
+      for(final Map.Entry<String, Double> entry : currency.getConversion().entrySet()) {
         cur.set("Converting." + entry.getKey(), entry.getValue());
       }
     }
@@ -267,7 +267,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     }
   }
 
-  public void saveID(final File directory, Currency currency) {
+  public void saveID(final File directory, final Currency currency) {
 
     YamlDocument cur = null;
 
@@ -300,7 +300,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
    * @param denomination The denomination to save.
    */
   @Override
-  public void saveDenomination(final File directory, Currency currency, Denomination denomination) {
+  public void saveDenomination(final File directory, final Currency currency, final Denomination denomination) {
 
     YamlDocument denom = null;
     try {

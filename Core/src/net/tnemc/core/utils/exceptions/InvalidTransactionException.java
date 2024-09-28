@@ -30,7 +30,7 @@ public class InvalidTransactionException extends Exception {
    * Constructs a new exception with {@code null} as its detail message. The cause is not
    * initialized, and may subsequently be initialized by a call to {@link #initCause}.
    */
-  public InvalidTransactionException(String missing) {
+  public InvalidTransactionException(final String missing) {
 
     super("The transaction attempted was missing a requirement and could not be processed!" +
           "Missing: " + missing);

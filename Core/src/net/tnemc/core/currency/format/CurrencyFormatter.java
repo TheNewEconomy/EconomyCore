@@ -65,17 +65,17 @@ public class CurrencyFormatter {
     addRule(new MaterialRule());
   }
 
-  public static void addRule(FormatRule rule) {
+  public static void addRule(final FormatRule rule) {
 
     rulesMap.put(rule.name(), rule);
   }
 
-  public static String format(@Nullable Account account, final BigDecimal amount) {
+  public static String format(@Nullable final Account account, final BigDecimal amount) {
 
     return format(account, new HoldingsEntry(PluginCore.server().defaultWorld(), TNECore.eco().currency().getDefaultCurrency().getUid(), amount, EconomyManager.NORMAL));
   }
 
-  public static String format(@Nullable Account account, HoldingsEntry entry) {
+  public static String format(@Nullable final Account account, final HoldingsEntry entry) {
 
     String format = "";
 
@@ -84,7 +84,7 @@ public class CurrencyFormatter {
 
       format = currency.get().getFormat();
 
-      for(FormatRule rule : rulesMap.values()) {
+      for(final FormatRule rule : rulesMap.values()) {
         format = rule.format(account, entry, format);
       }
     }

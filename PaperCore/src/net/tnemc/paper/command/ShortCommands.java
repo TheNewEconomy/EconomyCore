@@ -44,7 +44,7 @@ public class ShortCommands {
   @Usage("Money.Give.Arguments")
   @Description("Money.Give.Description")
   @CommandPermission("tne.money.give")
-  public void onGive(BukkitCommandActor sender, @Named("account") Account player, @Named("amount") PercentBigDecimal amount, @Default("") @Named("currency") Currency currency, @Default("world-113") @Named("region") String region) {
+  public void onGive(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final PercentBigDecimal amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
 
     net.tnemc.core.command.MoneyCommand.onGive(new PaperCMDSource(sender), player, amount, region, currency);
   }
@@ -53,7 +53,7 @@ public class ShortCommands {
   @Usage("Money.GiveNote.Arguments")
   @Description("Money.GiveNote.Description")
   @CommandPermission("tne.money.givenote")
-  public void onGiveNote(BukkitCommandActor sender, Account player, @Named("amount") BigDecimal amount, @Default("") @Named("currency") Currency currency) {
+  public void onGiveNote(final BukkitCommandActor sender, final Account player, @Named("amount") final BigDecimal amount, @Default("") @Named("currency") final Currency currency) {
 
     net.tnemc.core.command.MoneyCommand.onGiveNote(new PaperCMDSource(sender), player, amount, currency);
   }
@@ -62,7 +62,7 @@ public class ShortCommands {
   @Usage("Money.Pay.Arguments")
   @Description("Money.Pay.Description")
   @CommandPermission("tne.money.pay")
-  public void onPay(BukkitCommandActor sender, @Named("account") Account player, @Named("amount") PercentBigDecimal amount, @Default("") @Named("currency") Currency currency, @Default("") String from) {
+  public void onPay(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final PercentBigDecimal amount, @Default("") @Named("currency") final Currency currency, @Default("") final String from) {
 
     net.tnemc.core.command.MoneyCommand.onPay(new PaperCMDSource(sender), player, amount, currency, from);
   }
@@ -71,7 +71,7 @@ public class ShortCommands {
   @Usage("Money.Set.Arguments")
   @Description("Money.Set.Description")
   @CommandPermission("tne.money.set")
-  public void onSet(BukkitCommandActor sender, @Named("account") Account player, @Named("amount") BigDecimal amount, @Default("") @Named("currency") Currency currency, @Default("world-113") @Named("region") String region) {
+  public void onSet(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final BigDecimal amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
 
     net.tnemc.core.command.MoneyCommand.onSet(new PaperCMDSource(sender), player, amount, region, currency);
   }
@@ -80,7 +80,7 @@ public class ShortCommands {
   @Usage("Money.Take.Arguments")
   @Description("Money.Take.Description")
   @CommandPermission("tne.money.take")
-  public void onTake(BukkitCommandActor sender, @Named("account") Account player, @Named("amount") PercentBigDecimal amount, @Default("") @Named("currency") Currency currency, @Default("world-113") @Named("region") String region) {
+  public void onTake(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final PercentBigDecimal amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
 
     net.tnemc.core.command.MoneyCommand.onTake(new PaperCMDSource(sender), player, amount, region, currency);
   }
@@ -89,7 +89,7 @@ public class ShortCommands {
   @Usage("Money.Top.Arguments")
   @Description("Money.Top.Description")
   @CommandPermission("tne.money.top")
-  public void onTop(BukkitCommandActor sender, @Default("1") @Named("page") Integer page, @Default("") @Named("currency") Currency currency, @Default("false") Boolean refresh) {
+  public void onTop(final BukkitCommandActor sender, @Default("1") @Named("page") final Integer page, @Default("") @Named("currency") final Currency currency, @Default("false") final Boolean refresh) {
 
     net.tnemc.core.command.MoneyCommand.onTop(new PaperCMDSource(sender), page, currency, refresh);
   }
@@ -98,7 +98,7 @@ public class ShortCommands {
   @Usage("Transaction.History.Arguments")
   @Description("Transaction.History.Description")
   @CommandPermission("tne.transaction.history")
-  public void history(BukkitCommandActor sender, @Default("1") int page, @Default("world-113") @Named("region") String region, @Default("SELF_ACCOUNT") Account account) {
+  public void history(final BukkitCommandActor sender, @Default("1") final int page, @Default("world-113") @Named("region") final String region, @Default("SELF_ACCOUNT") final Account account) {
 
     net.tnemc.core.command.TransactionCommand.history(new PaperCMDSource(sender), page, region, account);
   }

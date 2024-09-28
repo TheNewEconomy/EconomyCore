@@ -60,7 +60,7 @@ public class ExperienceHandler implements HoldingsHandler {
    * @return True if it supports the currency type, otherwise false.
    */
   @Override
-  public boolean supports(CurrencyType type) {
+  public boolean supports(final CurrencyType type) {
 
     return (type instanceof ExperienceType);
   }
@@ -78,7 +78,7 @@ public class ExperienceHandler implements HoldingsHandler {
    * @return True if the holdings have been set, otherwise false.
    */
   @Override
-  public boolean setHoldings(Account account, String region, Currency currency, CurrencyType type, BigDecimal amount) {
+  public boolean setHoldings(final Account account, final String region, final Currency currency, final CurrencyType type, final BigDecimal amount) {
 
     account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, identifier()));
     if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
@@ -99,7 +99,7 @@ public class ExperienceHandler implements HoldingsHandler {
    * @return The holdings for the specific account.
    */
   @Override
-  public HoldingsEntry getHoldings(Account account, String region, Currency currency, CurrencyType type) {
+  public HoldingsEntry getHoldings(final Account account, final String region, final Currency currency, final CurrencyType type) {
 
     if(!account.isPlayer() || !((PlayerAccount)account).isOnline()) {
       //Offline players/non-players have their balances saved to their wallet so check it.

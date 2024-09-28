@@ -68,7 +68,7 @@ public class StatusCheck implements TransactionCheck {
    * response are ignored if the check was successful.
    */
   @Override
-  public EconomyResponse checkParticipant(Transaction transaction, @NotNull TransactionParticipant participant, HoldingsModifier modifier) {
+  public EconomyResponse checkParticipant(final Transaction transaction, @NotNull final TransactionParticipant participant, final HoldingsModifier modifier) {
     //Override status restrictions if the transaction is an administrator one.
     if(transaction.isAdmin()) return GeneralResponse.SUCCESS;
 

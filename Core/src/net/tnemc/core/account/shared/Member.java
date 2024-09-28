@@ -62,7 +62,7 @@ public class Member {
    * @param permission The permission to set.
    * @param value      The value to set for the permission.
    */
-  public void addPermission(Permission permission, boolean value) {
+  public void addPermission(final Permission permission, final boolean value) {
 
     permissions.put(permission.identifier(), value);
   }
@@ -73,7 +73,7 @@ public class Member {
    * @param permission The permission to set.
    * @param value      The value to set for the permission.
    */
-  public void addPermission(String permission, boolean value) {
+  public void addPermission(final String permission, final boolean value) {
 
     permissions.put(permission, value);
   }
@@ -83,7 +83,7 @@ public class Member {
    *
    * @param permission The permission to set.
    */
-  public void removePermission(Permission permission) {
+  public void removePermission(final Permission permission) {
 
     permissions.remove(permission.identifier());
   }
@@ -93,7 +93,7 @@ public class Member {
    *
    * @param permission The permission to set.
    */
-  public void removePermission(String permission) {
+  public void removePermission(final String permission) {
 
     permissions.remove(permission);
   }
@@ -105,7 +105,7 @@ public class Member {
    *
    * @return True if this member has the specified permission, otherwise false.
    */
-  public boolean hasPermission(Permission permission) {
+  public boolean hasPermission(final Permission permission) {
 
     return permissions.getOrDefault(permission.identifier(), permission.defaultValue());
   }
@@ -119,7 +119,7 @@ public class Member {
    *
    * @return True if this member has the specified permission, otherwise false.
    */
-  public boolean hasPermission(String permission, final boolean defaultValue) {
+  public boolean hasPermission(final String permission, final boolean defaultValue) {
 
     return permissions.getOrDefault(permission, defaultValue);
   }

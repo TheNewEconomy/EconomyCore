@@ -38,7 +38,7 @@ public class BungeeProxy implements ProxyProvider {
    * @param out     The data to send.
    */
   @Override
-  public void sendToAll(String channel, byte[] out, boolean backlog) {
+  public void sendToAll(final String channel, final byte[] out, final boolean backlog) {
 
     BungeeCore.instance().getProxy().getServers().values().forEach(server->{
       if(!server.getPlayers().isEmpty()) {
@@ -60,7 +60,7 @@ public class BungeeProxy implements ProxyProvider {
    * @param out        The data to send.
    */
   @Override
-  public void sendTo(String serverName, String channel, byte[] out) {
+  public void sendTo(final String serverName, final String channel, final byte[] out) {
 
     BungeeCore.instance().getProxy().getServers().values().forEach(server->{
       if(server.getName().equalsIgnoreCase(serverName)) {
@@ -75,11 +75,11 @@ public class BungeeProxy implements ProxyProvider {
    * @param data The {@link MessageData} to use for determining the server, and backlog to send.
    */
   @Override
-  public void sendBacklog(@NotNull MessageData data) {
+  public void sendBacklog(@NotNull final MessageData data) {
 
     BungeeCore.instance().getProxy().getServers().values().forEach(server->{
       if(server.getSocketAddress().toString().equalsIgnoreCase(data.getServerName())) {
-        for(BacklogEntry entry : data.getBacklog()) {
+        for(final BacklogEntry entry : data.getBacklog()) {
           server.sendData(entry.channel(), entry.out(), true);
         }
       }

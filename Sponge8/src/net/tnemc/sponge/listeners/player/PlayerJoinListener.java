@@ -36,13 +36,13 @@ public class PlayerJoinListener {
 
   private final PluginContainer plugin;
 
-  public PlayerJoinListener(PluginContainer plugin) {
+  public PlayerJoinListener(final PluginContainer plugin) {
 
     this.plugin = plugin;
   }
 
   @Listener
-  public void listen(ServerSideConnectionEvent.Join event) {
+  public void listen(final ServerSideConnectionEvent.Join event) {
 
     final HandlerResponse handle = new PlayerJoinHandler()
             .handle(new SpongePlayerProvider(event.player().user(), plugin));

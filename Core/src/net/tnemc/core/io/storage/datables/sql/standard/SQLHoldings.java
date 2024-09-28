@@ -67,7 +67,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    * @param connector The storage connector to use for this transaction.
    */
   @Override
-  public void purge(StorageConnector<?> connector) {
+  public void purge(final StorageConnector<?> connector) {
     //This isn't required, it'll be deleted with the account.
   }
 
@@ -78,7 +78,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    * @param object    The object to be stored.
    */
   @Override
-  public void store(StorageConnector<?> connector, @NotNull HoldingsEntry object, @Nullable String identifier) {
+  public void store(final StorageConnector<?> connector, @NotNull final HoldingsEntry object, @Nullable final String identifier) {
 
     if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne && identifier != null) {
 
@@ -103,15 +103,15 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    * @param connector The storage connector to use for this transaction.
    */
   @Override
-  public void storeAll(StorageConnector<?> connector, @Nullable String identifier) {
+  public void storeAll(final StorageConnector<?> connector, @Nullable final String identifier) {
 
     if(connector instanceof SQLConnector sql && identifier != null) {
 
       final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
       if(account.isPresent()) {
-        for(RegionHoldings region : account.get().getWallet().getHoldings().values()) {
-          for(CurrencyHoldings currency : region.getHoldings().values()) {
-            for(HoldingsEntry entry : currency.getHoldings().values()) {
+        for(final RegionHoldings region : account.get().getWallet().getHoldings().values()) {
+          for(final CurrencyHoldings currency : region.getHoldings().values()) {
+            for(final HoldingsEntry entry : currency.getHoldings().values()) {
               store(connector, entry, identifier);
             }
           }
@@ -132,7 +132,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    * @throws UnsupportedOperationException as this method is not valid for holdings.
    */
   @Override
-  public Optional<HoldingsEntry> load(StorageConnector<?> connector, @NotNull String identifier) {
+  public Optional<HoldingsEntry> load(final StorageConnector<?> connector, @NotNull final String identifier) {
 
     throw new UnsupportedOperationException("load for HoldingsEntry is not a supported operation.");
   }
@@ -145,7 +145,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
    * @return A collection containing the objects loaded.
    */
   @Override
-  public Collection<HoldingsEntry> loadAll(StorageConnector<?> connector, @Nullable String identifier) {
+  public Collection<HoldingsEntry> loadAll(final StorageConnector<?> connector, @Nullable final String identifier) {
 
     final Collection<HoldingsEntry> holdings = new ArrayList<>();
 

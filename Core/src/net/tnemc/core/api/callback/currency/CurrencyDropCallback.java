@@ -38,7 +38,7 @@ public class CurrencyDropCallback implements Callback {
 
   private final Collection<AbstractItemStack<Object>> drops;
 
-  public CurrencyDropCallback(UUID player, Currency currency, Collection<AbstractItemStack<Object>> drops) {
+  public CurrencyDropCallback(final UUID player, final Currency currency, final Collection<AbstractItemStack<Object>> drops) {
 
     this.player = player;
     this.currency = currency;
@@ -71,7 +71,7 @@ public class CurrencyDropCallback implements Callback {
     return player;
   }
 
-  public void setCurrency(Currency currency) {
+  public void setCurrency(final Currency currency) {
 
     this.currency = currency;
   }

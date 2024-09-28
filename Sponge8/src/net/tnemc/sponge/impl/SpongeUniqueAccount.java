@@ -31,7 +31,7 @@ import java.util.UUID;
  */
 public class SpongeUniqueAccount extends SpongeVirtualAccount implements UniqueAccount {
 
-  public SpongeUniqueAccount(PlayerAccount account) {
+  public SpongeUniqueAccount(final PlayerAccount account) {
 
     super(account);
   }

@@ -105,14 +105,14 @@ public class MessageManager {
     }
   }
 
-  public void addData(final String server, BacklogEntry entry) {
+  public void addData(final String server, final BacklogEntry entry) {
 
     if(data.containsKey(server)) {
       data.get(server).getBacklog().add(entry);
       return;
     }
 
-    MessageData data = new MessageData(server);
+    final MessageData data = new MessageData(server);
     data.getBacklog().add(entry);
     this.data.put(server, data);
   }

@@ -30,7 +30,7 @@ import java.util.UUID;
  */
 public class PactAccount extends NonPlayerAccount {
 
-  public PactAccount(UUID identifier, String name) {
+  public PactAccount(final UUID identifier, final String name) {
 
     super(identifier, name);
     //this.owner = Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getKing().getUUID();
@@ -48,7 +48,7 @@ public class PactAccount extends NonPlayerAccount {
   }
 
   @Override
-  public UUID generateIdentifier(String name) {
+  public UUID generateIdentifier(final String name) {
 
     return super.generateIdentifier(name);
   }

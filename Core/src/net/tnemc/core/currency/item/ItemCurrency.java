@@ -36,7 +36,7 @@ public class ItemCurrency extends Currency {
   protected boolean enderFill;
   protected boolean importItem;
 
-  public ItemCurrency(String identifier) {
+  public ItemCurrency(final String identifier) {
 
     super(identifier);
 
@@ -47,7 +47,7 @@ public class ItemCurrency extends Currency {
 
   public Optional<ItemDenomination> getDenominationByMaterial(final String material) {
 
-    for(Denomination denom : getDenominations().values()) {
+    for(final Denomination denom : getDenominations().values()) {
       final ItemDenomination item = (ItemDenomination)denom;
 
       if(item.getMaterial().equalsIgnoreCase(material)) {
@@ -62,7 +62,7 @@ public class ItemCurrency extends Currency {
     return enderChest;
   }
 
-  public void setEnderChest(boolean enderChest) {
+  public void setEnderChest(final boolean enderChest) {
 
     this.enderChest = enderChest;
   }
@@ -72,7 +72,7 @@ public class ItemCurrency extends Currency {
     return enderFill;
   }
 
-  public void setEnderFill(boolean enderFill) {
+  public void setEnderFill(final boolean enderFill) {
 
     this.enderFill = enderFill;
   }
@@ -82,7 +82,7 @@ public class ItemCurrency extends Currency {
     return importItem;
   }
 
-  public void setImportItem(boolean importItem) {
+  public void setImportItem(final boolean importItem) {
 
     this.importItem = importItem;
   }
