@@ -22,6 +22,7 @@
     </modules>
 
     <properties>
+        <papi.version>2.11.6</papi.version>
         <tnml.version>1.5.0.1-SNAPSHOT-19</tnml.version>
         <tnpc.version>1.0.0.2-Pre-14</tnpc.version>
         <tne.relocation>net.tnemc.libs</tne.relocation>
