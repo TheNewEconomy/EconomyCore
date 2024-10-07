@@ -3,7 +3,7 @@
 #License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 #All configurable messages in TNE
 Messages:
-  config-version: 7
+  config-version: 8
   General:
     Version: "<white>TNE-Version: <green>$version <white>- Bau: <green>$build"
     NoPerm: "<red>Es tut mir leid, aber Sie haben keine Berechtigung für diese Aktion."
