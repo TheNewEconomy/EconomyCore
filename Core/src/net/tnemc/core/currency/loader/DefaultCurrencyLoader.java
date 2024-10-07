@@ -117,7 +117,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     try {
       cur = YamlDocument.create(curDirectory);
 
-    } catch(IOException e) {
+    } catch(final IOException e) {
       PluginCore.log().error("Failed to load currency: " + curDirectory.getName(), e, DebugLevel.OFF);
       return false;
     }
@@ -140,6 +140,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
     //Currency Options configs.
     final String decimal = cur.getString("Options.Decimal", ".");
+    final boolean sync = cur.getBoolean("Options.Sync", true);
     final int decimalPlaces = (Math.min(cur.getInt("Options.DecimalPlaces", 2), 4));
     final String currencyType = cur.getString("Options.Type", "virtual");
     final int minorWeight = cur.getInt("Options.Minor_Weight", 100);
@@ -189,6 +190,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     currency.setIdentifier(identifier);
     currency.setFile(curDirectory.getName());
     currency.setIconMaterial(icon);
+    currency.setSync(sync);
     currency.setMaxBalance(maxBalance);
     currency.setMinBalance(minBalance);
     currency.setStartingHoldings(balance);
@@ -232,7 +234,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     }
 
     //Load our item-back currency configurations.
-    if(currency instanceof ItemCurrency item) {
+    if(currency instanceof final ItemCurrency item) {
       item.setEnderChest(cur.getBoolean("Item.EnderChest", true));
       item.setEnderFill(cur.getBoolean("Item.EnderFill", true));
       item.setImportItem(cur.getBoolean("Item.ImportItems", true));
@@ -276,7 +278,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
     try {
       cur.save();
-    } catch(IOException e) {
+    } catch(final IOException e) {
       PluginCore.log().error("Failed to save currency YAML!", e, DebugLevel.OFF);
     }
     return true;
@@ -337,7 +339,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     YamlDocument denom = null;
     try {
       denom = YamlDocument.create(denomFile);
-    } catch(IOException e) {
+    } catch(final IOException e) {
       PluginCore.log().error("Failed to load denomination: " + denomFile.getName(), e, DebugLevel.OFF);
       return false;
     }
@@ -360,7 +362,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     denomination.setSingle(single);
     denomination.setPlural(plural);
 
-    if(denomination instanceof ItemDenomination item) {
+    if(denomination instanceof final ItemDenomination item) {
 
       item.setName(denom.getString("Options.Name", ""));
 

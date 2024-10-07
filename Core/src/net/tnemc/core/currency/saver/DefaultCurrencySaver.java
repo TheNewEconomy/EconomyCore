@@ -85,7 +85,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     try {
       cur = YamlDocument.create(directory);
 
-    } catch(IOException e) {
+    } catch(final IOException e) {
       PluginCore.log().error("Failed to save currency: " + currency.getIdentifier(), e, DebugLevel.STANDARD);
       return;
     }
@@ -148,6 +148,9 @@ public class DefaultCurrencySaver implements CurrencySaver {
     MISCUtils.setComment(cur, "Options.Disabled", "Whether this currency is enabled.");
     cur.set("Options.Disabled", false);
 
+    MISCUtils.setComment(cur, "Options.Sync", "Should this currency be synced across servers when enabled?");
+    cur.set("Options.Sync", true);
+
     MISCUtils.setComment(cur, "Options.MaxBalance", "The maximum balance possible for this currency.");
     cur.set("Options.MaxBalance", currency.getMaxBalance().toPlainString());
 
@@ -170,7 +173,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     cur.set("Options.Minor_Weight", currency.getMinorWeight());
 
     //Load our item-back currency configurations.
-    if(currency instanceof ItemCurrency item) {
+    if(currency instanceof final ItemCurrency item) {
 
       MISCUtils.setComment(cur, "Item", "All configurations relating to item-backed currencies");
       MISCUtils.setComment(cur, "Item.EnderChest", "Would you like your item currency balances to also check the player's ender chest?");
@@ -242,7 +245,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
 
     try {
       cur.save();
-    } catch(IOException e) {
+    } catch(final IOException e) {
       PluginCore.log().error("Failed to save currency: " + currency.getIdentifier(), e, DebugLevel.STANDARD);
     }
 
@@ -255,7 +258,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
           PluginCore.log().error("Failed to save currency: " + currency.getIdentifier(), DebugLevel.STANDARD);
           return;
         }
-      } catch(Exception e) {
+      } catch(final Exception e) {
 
         PluginCore.log().error("Failed to save currency: " + currency.getIdentifier(), e, DebugLevel.STANDARD);
         return;
@@ -274,7 +277,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     try {
       cur = YamlDocument.create(new File(directory, currency.getIdentifier() + ".yml"));
 
-    } catch(IOException e) {
+    } catch(final IOException e) {
       PluginCore.log().error("Failed to save currency: " + currency.getIdentifier(), e, DebugLevel.STANDARD);
       return;
     }
@@ -287,7 +290,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
 
     try {
       cur.save();
-    } catch(IOException e) {
+    } catch(final IOException e) {
       PluginCore.log().error("Failed to save currency: " + currency.getIdentifier(), e, DebugLevel.STANDARD);
     }
   }
@@ -306,7 +309,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     try {
 
       denom = YamlDocument.create(new File(directory, denomination.singular() + ".yml"));
-    } catch(IOException e) {
+    } catch(final IOException e) {
       PluginCore.log().error("Failed to save currency denomination: " + denomination.singular(), e, DebugLevel.STANDARD);
       return;
     }
@@ -326,7 +329,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     MISCUtils.setComment(denom, "Options.Weight", "The weight of the tier. E.X. 20USD would equal 20");
     denom.set("Options.Weight", denomination.weight().doubleValue());
 
-    if(denomination instanceof ItemDenomination itemDenomination) {
+    if(denomination instanceof final ItemDenomination itemDenomination) {
 
       MISCUtils.setComment(denom, "Options.Material", "The material used for this item.");
       denom.set("Options.Material", itemDenomination.getMaterial());
@@ -371,7 +374,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
 
     try {
       denom.save();
-    } catch(IOException e) {
+    } catch(final IOException e) {
       PluginCore.log().error("Failed to save currency denomination: " + denomination.singular(), e, DebugLevel.STANDARD);
     }
   }

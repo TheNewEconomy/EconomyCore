@@ -58,6 +58,9 @@ Options:
   #Whether this currency is enabled.
   Disabled: false
 
+  #Should this currency be synced across servers when enabled?
+  Sync: true
+
   #The maximum balance possible for this currency.
   # Maximum possible value: 900000000000000000000000000000000000000000000
   MaxBalance: 900000000000000000000000000000000000000000000

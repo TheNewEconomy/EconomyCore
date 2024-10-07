@@ -51,6 +51,7 @@ public class Currency {
   private BigDecimal minBalance;
 
   private boolean negativeSupport = false;
+  private boolean sync = true;
 
   //identifier
   private UUID uid;
@@ -134,6 +135,16 @@ public class Currency {
   public Optional<Note> getNote() {
 
     return Optional.ofNullable(note);
+  }
+
+  public boolean isSync() {
+
+    return sync;
+  }
+
+  public void setSync(final boolean sync) {
+
+    this.sync = sync;
   }
 
   public CurrencyType type() {
@@ -449,7 +460,7 @@ public class Currency {
     cloned.minorWeight = original.minorWeight;
     cloned.note = original.note;
 
-    if(cloned instanceof ItemCurrency clonedItem && original instanceof ItemCurrency itemCurrency) {
+    if(cloned instanceof final ItemCurrency clonedItem && original instanceof final ItemCurrency itemCurrency) {
       clonedItem.setEnderChest(itemCurrency.canEnderChest());
       clonedItem.setEnderFill(itemCurrency.isEnderFill());
     }
