@@ -25,7 +25,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * FoliaCore
  *
  * @author creatorfromhell
- * @since 0.1.3.2
+ * @since 0.1.3.4
  */
 public class FoliaCore extends PaperCore {
 
