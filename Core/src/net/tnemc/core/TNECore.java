@@ -106,7 +106,7 @@ public abstract class TNECore extends PluginEngine {
   public static final String coreURL = "https://tnemc.net/files/module-version.xml";
 
   public static final String version = "0.1.3.2";
-  public static final String build = "Pre-5";
+  public static final String build = "RELEASE-1";
 
   /* Key Managers and Object instances utilized with TNE */
 
@@ -309,7 +309,7 @@ public abstract class TNECore extends PluginEngine {
 
         try {
           MainConfig.yaml().save();
-        } catch(IOException e) {
+        } catch(final IOException e) {
           PluginCore.log().error("Issue while saving Server UUID to config.yml", e, DebugLevel.OFF);
         }
       } else {

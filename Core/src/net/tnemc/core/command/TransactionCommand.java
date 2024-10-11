@@ -84,8 +84,8 @@ public class TransactionCommand {
   public static void history(final CmdSource<?> sender, final int page, String region, final Account account) {
 
     if(sender.player().isPresent() && MainConfig.yaml().getBoolean("Core.Commands.GUIAlternatives", true)) {
-      sender.player().get().inventory().openMenu(sender.player().get(), "transaction_menu");
-      return;
+      //sender.player().get().inventory().openMenu(sender.player().get(), "transaction_menu");
+      //return;
     }
 
     region = TNECore.eco().region().resolve(region);

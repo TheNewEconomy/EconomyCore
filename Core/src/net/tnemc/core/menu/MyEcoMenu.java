@@ -155,7 +155,7 @@ public class MyEcoMenu extends Menu {
 
         final UUID id = open.getPlayer().identifier();
 
-        open.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
+        open.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
                                                        .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Save"), id))
                                                        .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Currency.SaveLore"), id))))
                                        .withActions(new RunnableAction((click)->{
@@ -185,9 +185,9 @@ public class MyEcoMenu extends Menu {
                                              provider.get().message(new MessageData("Messages.Menu.MyEco.Main.Saved"));
                                            }
 
-                                         } catch(NoValidCurrenciesException ignore) { }
+                                         } catch(final NoValidCurrenciesException ignore) { }
                                        }), new PageSwitchWithClose(this.name, -1))
-                                       .withSlot(6)
+                                       .withSlot(8)
                                        .build());
 
         open.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BLACK_WOOL", 1)
@@ -203,9 +203,9 @@ public class MyEcoMenu extends Menu {
                                            TNECore.eco().currency().getCurIDMap().clear();
 
                                            TNECore.eco().currency().getLoader().loadCurrencies(directory);
-                                         } catch(NoValidCurrenciesException ignore) { }
+                                         } catch(final NoValidCurrenciesException ignore) { }
                                        }), new PageSwitchWithClose(this.name, -1))
-                                       .withSlot(8)
+                                       .withSlot(6)
                                        .build());
 
         //add currency
@@ -539,7 +539,7 @@ public class MyEcoMenu extends Menu {
         if(denomOpt.isPresent()) {
 
           final Denomination denomObj = (Denomination)denomOpt.get();
-          if(denomObj instanceof ItemDenomination itemDenomination) {
+          if(denomObj instanceof final ItemDenomination itemDenomination) {
             itemDenomination.setMaterial(selection.getValue());
           }
         }
@@ -557,7 +557,7 @@ public class MyEcoMenu extends Menu {
         if(denomOpt.isPresent()) {
 
           final Denomination denomObj = (Denomination)denomOpt.get();
-          if(denomObj instanceof ItemDenomination itemDenomination && !selection.getValue().isEmpty()) {
+          if(denomObj instanceof final ItemDenomination itemDenomination && !selection.getValue().isEmpty()) {
             itemDenomination.setEnchantments(Arrays.asList(selection.getValue().split(",")));
           }
         }
@@ -574,7 +574,7 @@ public class MyEcoMenu extends Menu {
         if(denomOpt.isPresent()) {
 
           final Denomination denomObj = (Denomination)denomOpt.get();
-          if(denomObj instanceof ItemDenomination itemDenomination && !selection.getValue().isEmpty()) {
+          if(denomObj instanceof final ItemDenomination itemDenomination && !selection.getValue().isEmpty()) {
             itemDenomination.setFlags(Arrays.asList(selection.getValue().split(",")));
           }
         }
@@ -674,7 +674,7 @@ public class MyEcoMenu extends Menu {
                                            .withActions(new SwitchPageAction(this.name, CURRENCY_ICON_MATERIAL_PAGE))
                                            .build());
 
-        if(currencyObject instanceof ItemCurrency itemCurrency) {
+        if(currencyObject instanceof final ItemCurrency itemCurrency) {
 
           final AbstractItemStack<?> disabledStack = PluginCore.server().stackBuilder().display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Disabled"), id)).of("RED_WOOL", 1);
           final AbstractItemStack<?> enabledStack = PluginCore.server().stackBuilder().display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Enabled"), id)).of("GREEN_WOOL", 1);
@@ -1061,7 +1061,7 @@ public class MyEcoMenu extends Menu {
                                                    currency.getNote().get().setCustomModelData(Integer.parseInt(message.getMessage()));
 
                                                    return true;
-                                                 } catch(NumberFormatException ignore) { }
+                                                 } catch(final NumberFormatException ignore) { }
                                                }
                                                message.getPlayer().message("Enter custom model of the note item:");
                                                return false;
@@ -1112,7 +1112,7 @@ public class MyEcoMenu extends Menu {
 
               message.getPlayer().viewer().get().addData(ACTIVE_DENOMINATION, denomObj);
               return true;
-            } catch(NumberFormatException ignore) { }
+            } catch(final NumberFormatException ignore) { }
           }
           message.getPlayer().message("Enter a valid decimal for the weight of the denomination:");
           return false;
@@ -1210,7 +1210,7 @@ public class MyEcoMenu extends Menu {
                                                    .display(Component.text(denomination.weight().toString())))
                                            .build());
 
-        if(denomination instanceof ItemDenomination itemDenomination) {
+        if(denomination instanceof final ItemDenomination itemDenomination) {
 
           callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(itemDenomination.getMaterial(), 1)
                                                              .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetMaterialLore"), id))))
@@ -1252,7 +1252,7 @@ public class MyEcoMenu extends Menu {
 
                                                    itemDenomination.setCustomModel(Integer.parseInt(message.getMessage()));
                                                    return true;
-                                                 } catch(NumberFormatException ignore) { }
+                                                 } catch(final NumberFormatException ignore) { }
                                                }
                                                message.getPlayer().message("Enter custom model of the denomination item:");
                                                return false;
