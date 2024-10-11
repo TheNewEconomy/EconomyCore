@@ -54,6 +54,9 @@ Options:
   #Whether this currency is enabled.
   Disabled: false
 
+  #Should this currency be synced across servers when enabled?
+  Sync: true
+
   #The maximum balance possible for this currency.
   # Maximum possible value: 900000000000000000000000000000000000000000000
   MaxBalance: 900000000000000000000000000000000000000000000
@@ -86,6 +89,9 @@ Item:
   #Would you like your item currency items to go into the ender chest before dropping on the ground if inventory is full?
   EnderFill: true
 
+  #Whether to import exist item currencies into a player's balance with the first balance check for this currency.
+  ImportItems: true
+
 #All configurations related to formatting.
 Formatting:
 
@@ -101,6 +107,7 @@ Formatting:
   #<minor.amount> - The currency's minor amount.
   #<short.amount> - The currency's shortened amount.
   #<shorten> - Added to make the outputted value shortened
+  #<shortenj> - Use japanese power of 10 formatting.
   # If shortened, it will ignore the value of Format.
   #It's also possible to include all colour variables from messages.yml
   # Materials: You can add <(material name)> to include counts of a material from a player's
@@ -127,6 +134,23 @@ Formatting:
   #Nondecillion - N
   #Nonvigintillion - ₮
   Prefixes: kMGTPEZYXWVUN₮
+
+  #The prefixes for japanese power of 10 <shortenj> format.
+  #The order based on https://en.wikipedia.org/wiki/Japanese_numerals#Powers_of_10
+  #Requested by okarradon from discord.
+  #Instead of doing every thousand swap, it's every ^4 powers of 10, starting at 10000.
+  #10^4 - 万
+  #10^8 - 億
+  #10^{12} - 兆
+  #10^{16} - 京
+  #10^{20} - 垓
+  #10^{24} - 𥝱
+  #10^{28} - 穣
+  #10^{32} - 溝
+  #10^{36} - 澗
+  #10^{40} - 正
+  #10^{44} - 載
+  JPrefixes: '万億兆京垓𥝱穣溝澗正載'
 
   #Whether the major value should be separated every three numeric places.
   Major_Separate: true
