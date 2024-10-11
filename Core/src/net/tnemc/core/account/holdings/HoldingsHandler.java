@@ -44,23 +44,25 @@ public interface HoldingsHandler {
   Identifier identifier();
 
   /**
-   * Used to determine if this handler may be used for the specified {@link CurrencyType}.
+   * Used to determine if this handler may be used for the specified{@link Currency} and {@link CurrencyType}.
    *
+   * @param currency The currency.
    * @param type The currency type.
    *
    * @return True if it supports the currency type, otherwise false.
    */
-  boolean supports(CurrencyType type);
+  boolean supports(Currency currency, CurrencyType type);
 
   /**
    * Used to determine if this handler may be used for the specified {@link Account}. This defaults
    * to true for all accounts.
    *
+   * @param currency The currency.
    * @param account The account.
    *
    * @return True if it supports the account, otherwise false.
    */
-  default boolean appliesTo(final Account account) {
+  default boolean appliesTo(final Account account, final Currency currency) {
 
     return true;
   }

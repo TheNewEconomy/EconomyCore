@@ -61,7 +61,7 @@ public class ExperienceLevelHandler implements HoldingsHandler {
    * @return True if it supports the currency type, otherwise false.
    */
   @Override
-  public boolean supports(final CurrencyType type) {
+  public boolean supports(final Currency currency, final CurrencyType type) {
 
     return (type instanceof ExperienceLevelType);
   }
@@ -83,7 +83,7 @@ public class ExperienceLevelHandler implements HoldingsHandler {
 
     account.getWallet().setHoldings(new HoldingsEntry(region, currency.getUid(), amount, identifier()));
 
-    if(account instanceof PlayerAccount player && player.isOnline() && player.getPlayer().isPresent()) {
+    if(account instanceof final PlayerAccount player && player.isOnline() && player.getPlayer().isPresent()) {
       Experience.setLevel(player.getPlayer().get(), amount.intValueExact());
     }
     return true;
@@ -103,7 +103,7 @@ public class ExperienceLevelHandler implements HoldingsHandler {
   @Override
   public HoldingsEntry getHoldings(final Account account, final String region, final Currency currency, final CurrencyType type) {
 
-    if(account instanceof PlayerAccount player && player.isOnline() && player.getPlayer().isPresent()) {
+    if(account instanceof final PlayerAccount player && player.isOnline() && player.getPlayer().isPresent()) {
 
       final BigDecimal amount = new BigDecimal(player.getPlayer().get().getExpLevel());
       final HoldingsEntry entry = new HoldingsEntry(region, currency.getUid(), amount, EXPERIENCE);

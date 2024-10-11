@@ -62,7 +62,11 @@ public class EnderChestHandler implements HoldingsHandler {
    * @return True if it supports the currency type, otherwise false.
    */
   @Override
-  public boolean supports(final CurrencyType type) {
+  public boolean supports(final Currency currency, final CurrencyType type) {
+
+    if(currency instanceof final ItemCurrency item && !item.canEnderChest()) {
+      return false;
+    }
 
     return type.supportsItems();
   }

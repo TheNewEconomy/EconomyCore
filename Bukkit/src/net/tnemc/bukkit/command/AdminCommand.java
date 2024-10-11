@@ -212,7 +212,7 @@ public class AdminCommand {
     YamlDocument extracted = null;
     try {
       extracted = YamlDocument.create(file);
-    } catch(Exception e) {
+    } catch(final Exception e) {
       PluginCore.log().error("Failed load extraction file for writing.", e, DebugLevel.OFF);
     }
 
@@ -264,7 +264,7 @@ public class AdminCommand {
               final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name + ".Balances." + region + "." + currency));
 
               response.getAccount().get().setHoldings(new HoldingsEntry(TNECore.eco().region().resolve(region), currencyObj.getUid(),
-                                                                        amount, EconomyManager.NORMAL), TNECore.eco().getFor(currencyObj.type()).get(0).identifier());
+                                                                        amount, EconomyManager.NORMAL), TNECore.eco().getFor(currencyObj, currencyObj.type()).get(0).identifier());
             } else {
 
               final Set<Object> types = extracted.getSection("Accounts." + name + ".Balances." + region + "." + currency).getKeys();
@@ -288,7 +288,7 @@ public class AdminCommand {
                 final int progress = (number * 100) / accounts.size();
                 PluginCore.log().inform("Restoration Progress: " + progress, DebugLevel.OFF);
               }
-            } catch(Exception ignore) { }
+            } catch(final Exception ignore) { }
           }
         }
       }

@@ -39,6 +39,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -80,7 +81,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
   @Override
   public void store(final StorageConnector<?> connector, @NotNull final HoldingsEntry object, @Nullable final String identifier) {
 
-    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne && identifier != null) {
+    if(connector instanceof final SQLConnector sql && sql.dialect() instanceof final TNEDialect tne && identifier != null) {
 
       PluginCore.log().debug("Storing holdings for Identifier: " + identifier);
 
@@ -105,13 +106,15 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
   @Override
   public void storeAll(final StorageConnector<?> connector, @Nullable final String identifier) {
 
-    if(connector instanceof SQLConnector sql && identifier != null) {
+    if(connector instanceof final SQLConnector sql && identifier != null) {
 
       final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
       if(account.isPresent()) {
-        for(final RegionHoldings region : account.get().getWallet().getHoldings().values()) {
-          for(final CurrencyHoldings currency : region.getHoldings().values()) {
-            for(final HoldingsEntry entry : currency.getHoldings().values()) {
+
+
+        for(final Map.Entry<String, RegionHoldings> region : account.get().getWallet().getHoldings().entrySet()) {
+          for(final Map.Entry<UUID, CurrencyHoldings> currency : region.getValue().getHoldings().entrySet()) {
+            for(final HoldingsEntry entry : account.get().getHoldings(region.getKey(), currency.getKey())) {
               store(connector, entry, identifier);
             }
           }
@@ -149,10 +152,10 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
 
     final Collection<HoldingsEntry> holdings = new ArrayList<>();
 
-    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne && identifier != null) {
+    if(connector instanceof final SQLConnector sql && sql.dialect() instanceof final TNEDialect tne && identifier != null) {
       PluginCore.log().debug("SQLHoldings-loadAll-Account ID:" + identifier, DebugLevel.DEVELOPER);
-      try(ResultSet result = sql.executeQuery(tne.loadHoldings(),
-                                              new Object[]{
+      try(final ResultSet result = sql.executeQuery(tne.loadHoldings(),
+                                                    new Object[]{
                                                       identifier,
                                                       MainConfig.yaml().getString("Core.Server.Name")
                                               })) {
@@ -174,7 +177,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
           PluginCore.log().debug("SQLHoldings-loadAll-Entry AMT:" + entry.getAmount().toPlainString(), DebugLevel.DEVELOPER);
           holdings.add(entry);
         }
-      } catch(SQLException e) {
+      } catch(final SQLException e) {
         e.printStackTrace();
       }
     }

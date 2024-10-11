@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -86,7 +87,7 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
     while(TNECore.yaml().inUse(file)) {
       try {
         Thread.sleep(1000);
-      } catch(InterruptedException ignore) {
+      } catch(final InterruptedException ignore) {
       }
     }
 
@@ -96,20 +97,22 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
     if(!accFile.exists()) {
       try {
         accFile.createNewFile();
-      } catch(IOException ignore) {
+      } catch(final IOException ignore) {
 
-        PluginCore.log().error("Issue creating account file. Account: " + identifier);
+        PluginCore.log().error("Issue creating account file. Account: " + identifier, DebugLevel.OFF);
         return;
       }
     }
+
+    PluginCore.log().inform("Saving holdings for: " + identifier, DebugLevel.OFF);
 
 
     YamlDocument yaml = null;
     try {
       yaml = YamlDocument.create(accFile);
-    } catch(IOException ignore) {
+    } catch(final IOException ignore) {
 
-      PluginCore.log().error("Issue loading account file. Account: " + identifier);
+      PluginCore.log().error("Issue loading account file. Account: " + identifier, DebugLevel.OFF);
       return;
     }
 
@@ -123,8 +126,8 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
     try {
       yaml.save();
       yaml = null;
-    } catch(IOException ignore) {
-      PluginCore.log().error("Issue saving account holdings to file. Account: " + identifier);
+    } catch(final IOException ignore) {
+      PluginCore.log().error("Issue saving account holdings to file. Account: " + identifier, DebugLevel.OFF);
     }
     TNECore.yaml().remove(file);
   }
@@ -140,12 +143,14 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
     final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
     if(account.isPresent()) {
 
+      PluginCore.log().inform("Saving holdings for: " + identifier, DebugLevel.OFF);
+
       //check if our file is in use.
       final String file = "accounts/" + identifier + ".yml";
       while(TNECore.yaml().inUse(file)) {
         try {
           Thread.sleep(1000);
-        } catch(InterruptedException ignore) {
+        } catch(final InterruptedException ignore) {
         }
       }
 
@@ -155,7 +160,7 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
       if(!accFile.exists()) {
         try {
           accFile.createNewFile();
-        } catch(IOException ignore) {
+        } catch(final IOException ignore) {
 
           PluginCore.log().error("Issue creating account file. Account: " + identifier);
           return;
@@ -166,15 +171,15 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
       YamlDocument yaml = null;
       try {
         yaml = YamlDocument.create(accFile);
-      } catch(IOException ignore) {
+      } catch(final IOException ignore) {
 
-        PluginCore.log().error("Issue loading account file. Account: " + identifier);
+        PluginCore.log().error("Issue loading account file. Account: " + identifier, DebugLevel.OFF);
         return;
       }
 
-      for(final RegionHoldings region : account.get().getWallet().getHoldings().values()) {
-        for(final CurrencyHoldings currency : region.getHoldings().values()) {
-          for(final HoldingsEntry entry : currency.getHoldings().values()) {
+      for(final Map.Entry<String, RegionHoldings> region : account.get().getWallet().getHoldings().entrySet()) {
+        for(final Map.Entry<UUID, CurrencyHoldings> currency : region.getValue().getHoldings().entrySet()) {
+          for(final HoldingsEntry entry : account.get().getHoldings(region.getKey(), currency.getKey())) {
 
             yaml.set("Holdings." + MainConfig.yaml().getString("Core.Server.Name")
                      + "." + entry.getRegion() + "." + entry.getCurrency().toString() + "."
@@ -186,8 +191,8 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
       try {
         yaml.save();
         yaml = null;
-      } catch(IOException ignore) {
-        PluginCore.log().error("Issue saving account holdings to file. Account: " + identifier);
+      } catch(final IOException ignore) {
+        PluginCore.log().error("Issue saving account holdings to file. Account: " + identifier, DebugLevel.OFF);
       }
 
       TNECore.yaml().remove(file);
@@ -234,7 +239,7 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
       YamlDocument yaml = null;
       try {
         yaml = YamlDocument.create(accFile);
-      } catch(IOException ignore) {
+      } catch(final IOException ignore) {
 
         PluginCore.log().error("Issue loading account file. Account: " + identifier, DebugLevel.OFF);
       }
@@ -294,7 +299,7 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
             }
           }
         }
-      } catch(Exception ignore) {
+      } catch(final Exception ignore) {
 
         PluginCore.log().error("Issue loading account file. Skipping. Account: " + identifier, DebugLevel.OFF);
       }

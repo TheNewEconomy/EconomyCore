@@ -26,6 +26,7 @@ import net.tnemc.core.account.holdings.handlers.ExperienceLevelHandler;
 import net.tnemc.core.account.holdings.handlers.InventoryHandler;
 import net.tnemc.core.account.holdings.handlers.VirtualHandler;
 import net.tnemc.core.config.MainConfig;
+import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.manager.AccountManager;
 import net.tnemc.core.manager.CurrencyManager;
@@ -143,22 +144,22 @@ public class EconomyManager {
     ids.put(id.asID(), id);
   }
 
-  public LinkedList<HoldingsHandler> getFor(final Account account) {
+  public LinkedList<HoldingsHandler> getFor(final Account account, final Currency currency) {
 
     return handlers.values().stream()
-            .filter(handler->handler.appliesTo(account)).collect(Collectors.toCollection(LinkedList::new));
+            .filter(handler->handler.appliesTo(account, currency)).collect(Collectors.toCollection(LinkedList::new));
   }
 
-  public LinkedList<HoldingsHandler> getFor(final CurrencyType type) {
+  public LinkedList<HoldingsHandler> getFor(final Currency currency, final CurrencyType type) {
 
     return handlers.values().stream()
-            .filter(handler->handler.supports(type)).collect(Collectors.toCollection(LinkedList::new));
+            .filter(handler->handler.supports(currency, type)).collect(Collectors.toCollection(LinkedList::new));
   }
 
-  public LinkedList<HoldingsHandler> getFor(final Account account, final CurrencyType type) {
+  public LinkedList<HoldingsHandler> getFor(final Account account, final Currency currency, final CurrencyType type) {
 
     return handlers.values().stream()
-            .filter(handler->handler.appliesTo(account) && handler.supports(type))
+            .filter(handler->handler.appliesTo(account, currency) && handler.supports(currency, type))
             .collect(Collectors.toCollection(LinkedList::new));
   }
 
