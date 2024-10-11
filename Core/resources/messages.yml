@@ -4,7 +4,7 @@
 # All configurable messages in TNE
 Messages:
 
-  config-version: 8
+  config-version: 9
 
   General:
     Version: "<white>TNE Version: <green>$version <white>- Build: <green>$build"
@@ -89,6 +89,7 @@ Messages:
     Restricted: "<red>$player is unable to use the specified currency."
     Insufficient: "<red>I'm sorry, but you do not have <gold>$amount<red>."
     InsufficientOther: "<red>I'm sorry, but $player does not have <gold>$amount<red>."
+    HoldingsMultiOther: "<white>Balances for $player in world '$world' are: "
     HoldingsMulti: "<white>Balances for world '$world' are: "
     HoldingsMultiSingle: "<white>$currency<newline>Total: <gold>$amount<newline><white>Inventory: <gold>$inventory<newline><white>Ender Chest: <gold>$ender<newline><white>Virtual: <gold>$virtual"
     Holdings: "<white>You currently have <gold>$amount<white> on you."

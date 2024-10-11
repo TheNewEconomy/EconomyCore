@@ -298,7 +298,7 @@ public class MoneyCommand extends BaseCommand {
 
     final Optional<Account> accountOpt = BaseCommand.account(acc.getIdentifier(), "note");
     final Account account = accountOpt.orElse(acc);
-    if(note.isPresent() && account instanceof PlayerAccount player) {
+    if(note.isPresent() && account instanceof final PlayerAccount player) {
 
       final Optional<PlayerProvider> provider = player.getPlayer();
 
@@ -343,7 +343,7 @@ public class MoneyCommand extends BaseCommand {
 
     final Optional<Account> account = BaseCommand.account(sender, "note");
     final Optional<Note> note = currency.getNote();
-    if(account.isPresent() && note.isPresent() && account.get() instanceof PlayerAccount player) {
+    if(account.isPresent() && note.isPresent() && account.get() instanceof final PlayerAccount player) {
 
       final Optional<PlayerProvider> provider = player.getPlayer();
       if(provider.isEmpty()) {
@@ -431,7 +431,9 @@ public class MoneyCommand extends BaseCommand {
       return;
     }
 
-    final MessageData msg = new MessageData("Messages.Money.HoldingsMulti");
+    final String header = (other)? "Messages.Money.HoldingsMultiOther" : "Messages.Money.HoldingsMulti";
+
+    final MessageData msg = new MessageData(header);
     msg.addReplacement("$world", MISCUtils.worldFormatted(region));
     msg.addReplacement("$player", account.getName());
     sender.message(msg);
@@ -718,7 +720,7 @@ public class MoneyCommand extends BaseCommand {
 
   public static void onSwitch(final CmdSource<?> sender, final Account account) {
 
-    if(account instanceof SharedAccount shared) {
+    if(account instanceof final SharedAccount shared) {
 
       if(sender.identifier().isEmpty()) {
 
@@ -975,7 +977,7 @@ public class MoneyCommand extends BaseCommand {
       }
 
       return result.getReceipt();
-    } catch(InvalidTransactionException e) {
+    } catch(final InvalidTransactionException e) {
       e.printStackTrace();
     }
     return Optional.empty();
