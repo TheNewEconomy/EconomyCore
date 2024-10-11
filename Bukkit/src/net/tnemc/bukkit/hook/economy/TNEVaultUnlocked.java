@@ -18,6 +18,7 @@ package net.tnemc.bukkit.hook.economy;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.milkbowl.vault2.economy.AccountPermission;
 import net.milkbowl.vault2.economy.Economy;
 import net.milkbowl.vault2.economy.EconomyResponse;
 import net.milkbowl.vault2.economy.EconomyResponse.ResponseType;
@@ -34,11 +35,11 @@ import net.tnemc.core.transaction.TransactionResult;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -73,13 +74,8 @@ public class TNEVaultUnlocked implements Economy {
     return "TheNewEconomy";
   }
 
-  /**
-   * Returns true if the economy plugin supports banks.
-   *
-   * @return true if the economy plugin supports banks.
-   */
   @Override
-  public boolean hasBankSupport() {
+  public boolean hasSharedAccountSupport() {
 
     return false;
   }
@@ -158,14 +154,8 @@ public class TNEVaultUnlocked implements Economy {
     return TNECore.eco().currency().findCurrency(currency).isPresent();
   }
 
-  /**
-   * Returns the default currency that is able to be used in API operations. May not be
-   * human-readable.
-   *
-   * @return name of the currency i.e.: USD
-   */
   @Override
-  public String defaultCurrency() {
+  public @NotNull String getDefaultCurrency() {
 
     return TNECore.eco().currency().getDefaultCurrency().getIdentifier();
   }
@@ -308,6 +298,18 @@ public class TNEVaultUnlocked implements Economy {
     return false;
   }
 
+  @Override
+  public boolean accountSupportsCurrency(final String s, final UUID uuid, final String s1) {
+
+    return true;
+  }
+
+  @Override
+  public boolean accountSupportsCurrency(final String s, final UUID uuid, final String s1, final String s2) {
+
+    return true;
+  }
+
   /**
    * Gets balance of an account associated with a UUID.
    *
@@ -319,7 +321,7 @@ public class TNEVaultUnlocked implements Economy {
   @Override
   public BigDecimal getBalance(final String pluginName, final UUID uuid) {
 
-    return getBalance(pluginName, uuid, TNECore.eco().region().defaultRegion(), defaultCurrency());
+    return getBalance(pluginName, uuid, TNECore.eco().region().defaultRegion(), getDefaultCurrency());
   }
 
   /**
@@ -335,7 +337,7 @@ public class TNEVaultUnlocked implements Economy {
   @Override
   public BigDecimal getBalance(final String pluginName, final UUID uuid, final String world) {
 
-    return getBalance(pluginName, uuid, world, defaultCurrency());
+    return getBalance(pluginName, uuid, world, getDefaultCurrency());
   }
 
   /**
@@ -377,7 +379,7 @@ public class TNEVaultUnlocked implements Economy {
   @Override
   public boolean has(final String pluginName, final UUID uuid, final BigDecimal amount) {
 
-    return has(pluginName, uuid, TNECore.eco().region().defaultRegion(), defaultCurrency(), amount);
+    return has(pluginName, uuid, TNECore.eco().region().defaultRegion(), getDefaultCurrency(), amount);
   }
 
   /**
@@ -395,7 +397,7 @@ public class TNEVaultUnlocked implements Economy {
   @Override
   public boolean has(final String pluginName, final UUID uuid, final String worldName, final BigDecimal amount) {
 
-    return has(pluginName, uuid, worldName, defaultCurrency(), amount);
+    return has(pluginName, uuid, worldName, getDefaultCurrency(), amount);
   }
 
   /**
@@ -430,13 +432,13 @@ public class TNEVaultUnlocked implements Economy {
    * @param amount     Amount to withdraw.
    *
    * @return {@link EconomyResponse} which includes the Economy plugin's
-   * {@link EconomyResponse.ResponseType} as to whether the transaction was a Success, Failure,
+   * {@link ResponseType} as to whether the transaction was a Success, Failure,
    * Unsupported.
    */
   @Override
   public EconomyResponse withdraw(final String pluginName, final UUID uuid, final BigDecimal amount) {
 
-    return withdraw(pluginName, uuid, TNECore.eco().region().defaultRegion(), defaultCurrency(), amount);
+    return withdraw(pluginName, uuid, TNECore.eco().region().defaultRegion(), getDefaultCurrency(), amount);
   }
 
   /**
@@ -455,7 +457,7 @@ public class TNEVaultUnlocked implements Economy {
   @Override
   public EconomyResponse withdraw(final String pluginName, final UUID uuid, final String worldName, final BigDecimal amount) {
 
-    return withdraw(pluginName, uuid, worldName, defaultCurrency(), amount);
+    return withdraw(pluginName, uuid, worldName, getDefaultCurrency(), amount);
   }
 
   /**
@@ -479,7 +481,7 @@ public class TNEVaultUnlocked implements Economy {
 
     if(account.isEmpty()) {
       return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO,
-                                 EconomyResponse.ResponseType.FAILURE, "Unable to locate associated account.");
+                                 ResponseType.FAILURE, "Unable to locate associated account.");
     }
 
     final HoldingsModifier modifier = new HoldingsModifier(worldName,
@@ -496,10 +498,10 @@ public class TNEVaultUnlocked implements Economy {
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding(),
                                  fromResult(result),
                                  result.getMessage());
-    } catch(InvalidTransactionException e) {
+    } catch(final InvalidTransactionException e) {
 
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding(),
-                                 EconomyResponse.ResponseType.FAILURE, e.getMessage());
+                                 ResponseType.FAILURE, e.getMessage());
     }
   }
 
@@ -516,7 +518,7 @@ public class TNEVaultUnlocked implements Economy {
   @Override
   public EconomyResponse deposit(final String pluginName, final UUID uuid, final BigDecimal amount) {
 
-    return deposit(pluginName, uuid, TNECore.eco().region().defaultRegion(), defaultCurrency(), amount);
+    return deposit(pluginName, uuid, TNECore.eco().region().defaultRegion(), getDefaultCurrency(), amount);
   }
 
   /**
@@ -535,7 +537,7 @@ public class TNEVaultUnlocked implements Economy {
   @Override
   public EconomyResponse deposit(final String pluginName, final UUID uuid, final String worldName, final BigDecimal amount) {
 
-    return deposit(pluginName, uuid, worldName, defaultCurrency(), amount);
+    return deposit(pluginName, uuid, worldName, getDefaultCurrency(), amount);
   }
 
   /**
@@ -575,284 +577,72 @@ public class TNEVaultUnlocked implements Economy {
       final TransactionResult result = transaction.process();
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding(), fromResult(result),
                                  result.getMessage());
-    } catch(InvalidTransactionException e) {
+    } catch(final InvalidTransactionException e) {
 
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding(),
                                  ResponseType.FAILURE, e.getMessage());
     }
   }
 
-  /**
-   * Creates a bank account with the specified name and the given UUID as the owner.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param name       Name of account.
-   * @param uuid       UUID of the account should be linked to.
-   *
-   * @return true if bank creation is successful.
-   */
   @Override
-  public boolean createBank(final String pluginName, final String name, final UUID uuid) {
+  public boolean createSharedAccount(final String s, final UUID uuid, final String s1, final UUID uuid1) {
 
     return false;
   }
 
-  /**
-   * Deletes a bank account with the specified UUID.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       UUID of the bank to be deleted.
-   *
-   * @return true if the operation completed successfully
-   */
   @Override
-  public boolean deleteBank(final String pluginName, final UUID uuid) {
+  public boolean isAccountOwner(final String s, final UUID uuid, final UUID uuid1) {
 
     return false;
   }
 
-  /**
-   * Returns a map that represents all of the UUIDs which have banks in the plugin, as well as their
-   * last-known-name. This is used for Vault's economy converter and should be given every account
-   * available.
-   *
-   * @return a {@link Map} composed of the accounts keyed by their UUID, along with their associated
-   * last-known-name.
-   */
   @Override
-  public Map<UUID, String> getBankUUIDNameMap() {
-
-    return Map.of();
-  }
-
-  /**
-   * Gets the last known name of an bank with the given UUID. Required for messages to be more
-   * human-readable than UUIDs alone can provide.
-   *
-   * @param uuid UUID to look up.
-   *
-   * @return name of the bank.
-   */
-  @Override
-  public String getBankAccountName(final UUID uuid) {
-
-    return "";
-  }
-
-  /**
-   * Checks if this UUID has a bank yet.
-   *
-   * @param uuid UUID to check.
-   *
-   * @return true if the UUID has an account.
-   */
-  @Override
-  public boolean hasBankAccount(final UUID uuid) {
+  public boolean setOwner(final String s, final UUID uuid, final UUID uuid1) {
 
     return false;
   }
 
-  /**
-   * Checks if the specified bank account supports the specified currency.
-   *
-   * @param uuid     UUID of the account.
-   * @param currency the currency to use.
-   *
-   * @return true if the bank supports the currency
-   */
   @Override
-  public boolean bankSupportsCurrency(final UUID uuid, final String currency) {
+  public boolean isAccountMember(final String s, final UUID uuid, final UUID uuid1) {
 
     return false;
   }
 
-  /**
-   * A method which changes the name associated with the given UUID in the Map<UUID, String>
-   * received from {@link #getBankUUIDNameMap()}.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       UUID which is having a name change.
-   * @param name       name that will be associated with the UUID in the Map<UUID, String> map.
-   *
-   * @return true if the name change is successful.
-   */
   @Override
-  public boolean renameBankAccount(final String pluginName, final UUID uuid, final String name) {
+  public boolean addAccountMember(final String s, final UUID uuid, final UUID uuid1) {
 
     return false;
   }
 
-  /**
-   * Returns the amount the bank has.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       UUID of the account.
-   *
-   * @return amount which the bank holds as a balance.
-   */
   @Override
-  public BigDecimal bankBalance(final String pluginName, final UUID uuid) {
-
-    return BigDecimal.ZERO;
-  }
-
-  /**
-   * Returns the amount the bank has.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       UUID of the account.
-   * @param currency   the currency to use.
-   *
-   * @return amount which the bank holds as a balance.
-   */
-  @Override
-  public BigDecimal bankBalance(final String pluginName, final UUID uuid, final String currency) {
-
-    return BigDecimal.ZERO;
-  }
-
-  /**
-   * Returns true or false whether the bank has the amount specified - DO NOT USE NEGATIVE AMOUNTS.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       UUID of the account.
-   * @param amount     to check for
-   *
-   * @return true if the bank has the given amount.
-   */
-  @Override
-  public boolean bankHas(final String pluginName, final UUID uuid, final BigDecimal amount) {
+  public boolean addAccountMember(final String s, final UUID uuid, final UUID uuid1, final AccountPermission... accountPermissions) {
 
     return false;
   }
 
-  /**
-   * Returns true or false whether the bank has the amount specified - DO NOT USE NEGATIVE AMOUNTS.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       UUID of the account.
-   * @param currency   the currency to use.
-   * @param amount     to check for
-   *
-   * @return true if the bank has the given amount.
-   */
   @Override
-  public boolean bankHas(final String pluginName, final UUID uuid, final String currency, final BigDecimal amount) {
+  public boolean removeAccountMember(final String s, final UUID uuid, final UUID uuid1) {
 
     return false;
   }
 
-  /**
-   * Withdraw an amount from a bank account - DO NOT USE NEGATIVE AMOUNTS.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       UUID of the account.
-   * @param amount     to withdraw.
-   *
-   * @return {@link EconomyResponse} which includes the Economy plugin's {@link ResponseType} as to
-   * whether the transaction was a Success, Failure, Unsupported.
-   */
   @Override
-  public EconomyResponse bankWithdraw(final String pluginName, final UUID uuid, final BigDecimal amount) {
-
-    return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO, ResponseType.NOT_IMPLEMENTED, "");
-  }
-
-  /**
-   * Withdraw an amount from a bank account - DO NOT USE NEGATIVE AMOUNTS.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       UUID of the account.
-   * @param currency   the currency to use.
-   * @param amount     to withdraw.
-   *
-   * @return {@link EconomyResponse} which includes the Economy plugin's {@link ResponseType} as to
-   * whether the transaction was a Success, Failure, Unsupported.
-   */
-  @Override
-  public EconomyResponse bankWithdraw(final String pluginName, final UUID uuid, final String currency, final BigDecimal amount) {
-
-    return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO, ResponseType.NOT_IMPLEMENTED, "");
-  }
-
-  /**
-   * Deposit an amount into a bank account - DO NOT USE NEGATIVE AMOUNTS.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       UUID of the account.
-   * @param amount     to deposit.
-   *
-   * @return {@link EconomyResponse} which includes the Economy plugin's {@link ResponseType} as to
-   * whether the transaction was a Success, Failure, Unsupported.
-   */
-  @Override
-  public EconomyResponse bankDeposit(final String pluginName, final UUID uuid, final BigDecimal amount) {
-
-    return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO, ResponseType.NOT_IMPLEMENTED, "");
-  }
-
-  /**
-   * Deposit an amount into a bank account - DO NOT USE NEGATIVE AMOUNTS.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       UUID of the account.
-   * @param currency   the currency to use.
-   * @param amount     to deposit.
-   *
-   * @return {@link EconomyResponse} which includes the Economy plugin's
-   * {@link EconomyResponse.ResponseType} as to whether the transaction was a Success, Failure,
-   * Unsupported.
-   */
-  @Override
-  public EconomyResponse bankDeposit(final String pluginName, final UUID uuid, final String currency, final BigDecimal amount) {
-
-    return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO, ResponseType.NOT_IMPLEMENTED, "");
-  }
-
-  /**
-   * Check if a UUID is the owner of a bank account.
-   *
-   * @param uuid     UUID of the player/object who might be an owner.
-   * @param bankUUID UUID of the bank account to check ownership of.
-   *
-   * @return true if the uuid is the owner of the bank associated with bankUUID.
-   */
-  @Override
-  public boolean isBankOwner(final UUID uuid, final UUID bankUUID) {
+  public boolean hasAccountPermission(final String s, final UUID uuid, final UUID uuid1, final AccountPermission accountPermission) {
 
     return false;
   }
 
-  /**
-   * Check if the UUID is a member of the bank account
-   *
-   * @param uuid     UUID of the player/object who might be a member.
-   * @param bankUUID UUID of the bank account to check membership of.
-   *
-   * @return @return true if the uuid is a member of the bank associated with bankUUID.
-   */
   @Override
-  public boolean isBankMember(final UUID uuid, final UUID bankUUID) {
+  public boolean updateAccountPermission(final String s, final UUID uuid, final UUID uuid1, final AccountPermission accountPermission, final boolean b) {
 
     return false;
   }
 
-  /**
-   * Gets the list of banks' UUIDs.
-   *
-   * @return the List of Banks' UUIDs.
-   */
-  @Override
-  public Collection<UUID> getBanks() {
-
-    return List.of();
-  }
-
-  private EconomyResponse.ResponseType fromResult(@Nullable final TransactionResult result) {
+  private ResponseType fromResult(@Nullable final TransactionResult result) {
 
     if(result != null && result.isSuccessful()) {
-      return EconomyResponse.ResponseType.SUCCESS;
+      return ResponseType.SUCCESS;
     }
-    return EconomyResponse.ResponseType.FAILURE;
+    return ResponseType.FAILURE;
   }
 }
