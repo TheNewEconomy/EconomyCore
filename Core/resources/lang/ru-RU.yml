@@ -3,7 +3,7 @@
 #License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 #All configurable messages in TNE
 Messages:
-  config-version: 8
+  config-version: 9
   General:
     Version: "<white>Версия TNE: <green>$version <white>- Сборка: <green>$build"
     NoPerm: "<red>У вас недостаточно прав для этого."
@@ -80,6 +80,7 @@ Messages:
     Restricted: "<red>Игрок $player не может использовать указанную валюту."
     Insufficient: "<red>Извините, у вас нет <gold>$amount<red>."
     InsufficientOther: "<red>Извините, у игрока $player нет <gold>$amount<red>."
+    HoldingsMultiOther: "<white>Balances for $player in world '$world' are: "
     HoldingsMulti: "<white>Балансы для мира '$world': "
     HoldingsMultiSingle: "<white>$currency<newline> Всего: <gold>$amount<newline><white>Инвентарь: <gold>$inventory<newline><white>Эндер-сундук: <gold>$ender<newline><white> Виртуально: <gold>$virtual"
     Holdings: "<white>У вас имеется <gold>$amount<white>."
