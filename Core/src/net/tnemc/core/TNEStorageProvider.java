@@ -35,6 +35,7 @@ import net.tnemc.core.io.storage.dialect.TNEDialect;
 import net.tnemc.core.io.storage.dialect.impl.MariaDialect;
 import net.tnemc.core.io.storage.dialect.impl.MariaOutdatedDialect;
 import net.tnemc.core.io.storage.dialect.impl.MySQLDialect;
+import net.tnemc.core.io.storage.dialect.impl.MySQLRevampDialect;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
@@ -76,12 +77,12 @@ public class TNEStorageProvider implements StorageProvider {
     try {
       Class.forName("org.mariadb.jdbc.Driver");
       maria = true;
-    } catch(Exception ignore) { }
+    } catch(final Exception ignore) { }
 
     try {
       Class.forName("org.mariadb.jdbc.MariaDbDataSource");
       maria = true;
-    } catch(Exception ignore) { }
+    } catch(final Exception ignore) { }
 
     switch(engine.toLowerCase()) {
       case "mysql" -> {
@@ -121,6 +122,16 @@ public class TNEStorageProvider implements StorageProvider {
         this.engine = new PostgreSQL(new MySQLDialect(prefix));
         this.connector = new SQLConnector();
       }
+      case "mysql-revamp" -> {
+        if(maria) {
+          this.engine = new MariaDB(prefix, new MySQLRevampDialect(prefix));
+          this.connector = new SQLConnector();
+          break;
+        }
+
+        this.engine = new MySQL(prefix, new MySQLRevampDialect(prefix));
+        this.connector = new SQLConnector();
+      }
       default -> {
         this.engine = new YAML();
         this.connector = new YAMLConnector();
@@ -156,9 +167,9 @@ public class TNEStorageProvider implements StorageProvider {
   @Override
   public void initialize() {
 
-    if(connector instanceof SQLConnector sql
-       && this.engine instanceof StandardSQL sqlEngine
-       && sqlEngine.dialect() instanceof TNEDialect tneDialect) {
+    if(connector instanceof final SQLConnector sql
+       && this.engine instanceof final StandardSQL sqlEngine
+       && sqlEngine.dialect() instanceof final TNEDialect tneDialect) {
 
       sql.executeUpdate(tneDialect.accountsTable(), new Object[]{});
       sql.executeUpdate(tneDialect.accountsNonPlayerTable(), new Object[]{});

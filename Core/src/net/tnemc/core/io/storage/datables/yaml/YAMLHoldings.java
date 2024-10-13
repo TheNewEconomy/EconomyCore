@@ -104,7 +104,7 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
       }
     }
 
-    PluginCore.log().inform("Saving holdings for: " + identifier, DebugLevel.OFF);
+    PluginCore.log().inform("Saving holdings for: " + identifier, DebugLevel.STANDARD);
 
 
     YamlDocument yaml = null;
@@ -143,7 +143,7 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
     final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
     if(account.isPresent()) {
 
-      PluginCore.log().inform("Saving holdings for: " + identifier, DebugLevel.OFF);
+      PluginCore.log().inform("Saving holdings for: " + identifier, DebugLevel.STANDARD);
 
       //check if our file is in use.
       final String file = "accounts/" + identifier + ".yml";
