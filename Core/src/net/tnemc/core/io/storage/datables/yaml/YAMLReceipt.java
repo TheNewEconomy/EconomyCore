@@ -37,6 +37,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -97,7 +98,7 @@ public class YAMLReceipt implements Datable<Receipt> {
           PluginCore.log().error("Issue creating transaction file. Transaction: " + receipt.getId().toString());
           return;
         }
-      } catch(IOException ignore) {
+      } catch(final IOException ignore) {
 
         PluginCore.log().error("Issue creating transaction file. Transaction: " + receipt.getId().toString());
         return;
@@ -107,7 +108,7 @@ public class YAMLReceipt implements Datable<Receipt> {
     YamlDocument yaml = null;
     try {
       yaml = YamlDocument.create(file);
-    } catch(IOException ignore) {
+    } catch(final IOException ignore) {
 
       PluginCore.log().error("Issue loading transaction file. Transaction: " + receipt.getId().toString());
       return;
@@ -162,7 +163,7 @@ public class YAMLReceipt implements Datable<Receipt> {
       yaml.save();
 
       yaml = null;
-    } catch(IOException ignore) {
+    } catch(final IOException ignore) {
       PluginCore.log().error("Issue saving transaction file. Transaction: " + receipt.getId().toString());
       return;
     }
@@ -212,32 +213,38 @@ public class YAMLReceipt implements Datable<Receipt> {
       return Optional.empty();
     }
 
-    YamlDocument yaml = null;
     try {
-      yaml = YamlDocument.create(file);
-    } catch(IOException ignore) {
+
+      try(final FileInputStream fis = new FileInputStream(file)) {
+
+        final YamlDocument yaml = YamlDocument.create(fis);
+
+        if(yaml != null) {
+
+          final UUID id = UUID.fromString(yaml.getString("id"));
+          final long time = yaml.getLong("time");
+          final String type = yaml.getString("type");
+          final String sourceType = yaml.getString("source.type");
+          final String sourceName = yaml.getString("source.name");
+
+          final Receipt receipt = new Receipt(id, time, type);
+          receipt.setSource(ActionSource.create(sourceName, sourceType));
+
+          loadParticipant(yaml, receipt, "from");
+          loadParticipant(yaml, receipt, "to");
+
+          receipt.setArchive(yaml.getBoolean("archive"));
+          receipt.setVoided(yaml.getBoolean("voided"));
+
+          return Optional.of(receipt);
+        }
+      }
+
+    } catch(final IOException ignore) {
 
       PluginCore.log().error("Issue loading account file. Receipt: " + identifier);
-    }
 
-    if(yaml != null) {
-
-      final UUID id = UUID.fromString(yaml.getString("id"));
-      final long time = yaml.getLong("time");
-      final String type = yaml.getString("type");
-      final String sourceType = yaml.getString("source.type");
-      final String sourceName = yaml.getString("source.name");
-
-      final Receipt receipt = new Receipt(id, time, type);
-      receipt.setSource(ActionSource.create(sourceName, sourceType));
-
-      loadParticipant(yaml, receipt, "from");
-      loadParticipant(yaml, receipt, "to");
-
-      receipt.setArchive(yaml.getBoolean("archive"));
-      receipt.setVoided(yaml.getBoolean("voided"));
-
-      return Optional.of(receipt);
+      return Optional.empty();
     }
     return Optional.empty();
   }
