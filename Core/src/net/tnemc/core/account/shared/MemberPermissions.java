@@ -220,6 +220,33 @@ public enum MemberPermissions implements Permission {
   /**
    * Can the member transfer ownership of the account?
    */
+  OWNERSHIP {
+    /**
+     * The identifier of the permission.
+     *
+     * @return The identifier of the permission.
+     */
+    @Override
+    public String identifier() {
+
+      return "OWNERSHIP";
+    }
+
+    /**
+     * The default value of the permission.
+     *
+     * @return The default value of the permission.
+     */
+    @Override
+    public boolean defaultValue() {
+
+      return false;
+    }
+  },
+
+  /**
+   * Can the member transfer ownership of the account?
+   */
   TRANSFER_OWNERSHIP {
     /**
      * The identifier of the permission.
@@ -243,5 +270,4 @@ public enum MemberPermissions implements Permission {
       return false;
     }
   }
-
 }
