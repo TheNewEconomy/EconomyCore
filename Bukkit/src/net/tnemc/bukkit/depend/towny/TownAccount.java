@@ -35,6 +35,8 @@ public class TownAccount extends NonPlayerAccount {
   public TownAccount(final UUID identifier, final String name) {
 
     super(identifier, name);
+
+    this.identifier = identifier;
     //this.owner = Objects.requireNonNull(TownyAPI.getInstance().getTown(name)).getMayor().getUUID();
   }
 
@@ -54,7 +56,7 @@ public class TownAccount extends NonPlayerAccount {
 
     try {
       return Objects.requireNonNull(TownyAPI.getInstance().getTown(name)).getUUID();
-    } catch(Exception ignore) {
+    } catch(final Exception ignore) {
       return super.generateIdentifier(name);
     }
   }

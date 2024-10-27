@@ -191,9 +191,9 @@ public class TNEAPI {
    *
    * @since 0.1.2.0
    */
-  public Optional<SharedAccount> createAccount(@NotNull final String identifier) {
+  public Optional<SharedAccount> createNonPlayerAccount(@NotNull final String identifier, final String name) {
 
-    return TNECore.eco().account().createNonPlayerAccount(identifier);
+    return TNECore.eco().account().createNonPlayerAccount(identifier, name);
   }
 
   /**
@@ -441,7 +441,7 @@ public class TNEAPI {
 
         return transaction.process();
 
-      } catch(InvalidTransactionException e) {
+      } catch(final InvalidTransactionException e) {
         return new TransactionResult(false, e.getMessage());
       }
     }
@@ -477,7 +477,7 @@ public class TNEAPI {
 
         return transaction.process();
 
-      } catch(InvalidTransactionException e) {
+      } catch(final InvalidTransactionException e) {
         return new TransactionResult(false, e.getMessage());
       }
     }

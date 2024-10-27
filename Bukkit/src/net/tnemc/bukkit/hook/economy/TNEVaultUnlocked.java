@@ -213,6 +213,8 @@ public class TNEVaultUnlocked implements Economy {
   @Override
   public boolean createAccount(final UUID uuid, final String name) {
 
+    PluginCore.log().debug("Account create called: " + uuid.toString() + " Name: " + name, DebugLevel.STANDARD);
+
     return TNECore.eco().account().createAccount(uuid.toString(), name).getResponse().success();
   }
 
@@ -375,11 +377,11 @@ public class TNEVaultUnlocked implements Economy {
     final Optional<Currency> currencyOpt = TNECore.eco().currency().findCurrency(currency);
 
     if(account.isPresent() && currencyOpt.isPresent()) {
-      PluginCore.log().debug("Vault Balance call. Account exists. Name:" + account.get().getName(), DebugLevel.STANDARD);
+      PluginCore.log().debug("Vault Unlocked Balance call. Account exists. Name:" + account.get().getName(), DebugLevel.STANDARD);
       return account.get().getHoldingsTotal(world, currencyOpt.get().getUid());
     }
 
-    PluginCore.log().debug("Vault Balance call. Account doesn't exist. Name:" + uuid, DebugLevel.STANDARD);
+    PluginCore.log().debug("Vault Unlocked Balance call. Account doesn't exist. Name:" + uuid, DebugLevel.STANDARD);
     return BigDecimal.ZERO;
   }
 

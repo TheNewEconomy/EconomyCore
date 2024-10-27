@@ -35,6 +35,8 @@ public class NationAccount extends NonPlayerAccount {
   public NationAccount(final UUID identifier, final String name) {
 
     super(identifier, name);
+
+    this.identifier = identifier;
     //this.owner = Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getKing().getUUID();
   }
 
@@ -54,7 +56,7 @@ public class NationAccount extends NonPlayerAccount {
 
     try {
       return Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getUUID();
-    } catch(Exception ignore) {
+    } catch(final Exception ignore) {
       return super.generateIdentifier(name);
     }
   }

@@ -161,7 +161,7 @@ public class AccountManager {
         account = new PlayerAccount(id, name);
 
         uuidProvider.store(new UUIDPair(id, name));
-      } catch(Exception ignore) {
+      } catch(final Exception ignore) {
 
         //Our identifier is an invalid UUID, let's search for it.
         final Optional<UUID> id = PluginCore.server().fromName(name);
@@ -190,11 +190,11 @@ public class AccountManager {
         account = new GeyserAccount(id, name);
 
         uuidProvider.store(new UUIDPair(id, name));
-      } catch(Exception ignore) {
+      } catch(final Exception ignore) {
         return new AccountAPIResponse(null, AccountResponse.CREATION_FAILED);
       }
     } else {
-      final Optional<SharedAccount> nonPlayerAccount = createNonPlayerAccount(name);
+      final Optional<SharedAccount> nonPlayerAccount = createNonPlayerAccount(identifier, name);
 
       if(nonPlayerAccount.isEmpty()) {
         return new AccountAPIResponse(null, AccountResponse.CREATION_FAILED);
@@ -213,7 +213,7 @@ public class AccountManager {
 
     try {
       uuidProvider.store(new UUIDPair(account.getIdentifier(), account.getName()));
-    } catch(Exception ignore) {
+    } catch(final Exception ignore) {
       //identifier isn't an uuid, so it'll be a string, most likely a non-player.
     }
     return new AccountAPIResponse(account, AccountResponse.CREATED);
@@ -228,15 +228,23 @@ public class AccountManager {
    * @return An Optional containing the new account class if it was able to be created, otherwise an
    * empty Optional.
    */
-  public Optional<SharedAccount> createNonPlayerAccount(final String name) {
+  public Optional<SharedAccount> createNonPlayerAccount(final String identifier, final String name) {
+
+    UUID uuid = UUID.randomUUID();
+
+    try {
+      uuid = UUID.fromString(identifier);
+    } catch(final Exception ignore) {
+      //stay with the random UUID if the identifier passed isn't a UUID.
+    }
 
     for(final Map.Entry<Class<? extends SharedAccount>, Function<String, Boolean>> entry : types.entrySet()) {
 
       if(entry.getValue().apply(name)) {
         try {
           return Optional.of(entry.getKey().getDeclaredConstructor(UUID.class, String.class)
-                                     .newInstance(UUID.randomUUID(), name));
-        } catch(Exception e) {
+                                     .newInstance(uuid, name));
+        } catch(final Exception e) {
           PluginCore.log().error("An error occured while trying to create a new NonPlayer Account" +
                                  "for : " + name, e, DebugLevel.STANDARD);
         }
@@ -372,6 +380,10 @@ public class AccountManager {
   public void addDefaultTypes() {
 
     PluginCore.callbacks().call(new AccountTypesCallback());
+
+    for(final Class<? extends SharedAccount> account : types.keySet()) {
+      PluginCore.log().debug("Adding default account types: " + account.getClass().getSimpleName());
+    }
 
     addAccountType(NonPlayerAccount.class, (value)->true);
   }
