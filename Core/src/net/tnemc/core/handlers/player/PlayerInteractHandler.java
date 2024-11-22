@@ -78,12 +78,13 @@ public class PlayerInteractHandler {
         final String[] info = component.toString().split(":");
         if(info.length < 2) continue;
 
+
         if(info[0].contains(curCompare)) {
-          currency = info[1].trim();
+          currency = info[1].split("\"")[0].trim();
         } else if(info[0].contains(regionCompare)) {
-          region = info[1].trim();
+          region = info[1].split("\"")[0].trim();
         } else if(info[0].contains(amtCompare)) {
-          amount = info[1].trim();
+          amount = info[1].split("\"")[0].trim();
         }
 
       }
@@ -121,7 +122,7 @@ public class PlayerInteractHandler {
           provider.message(claimed);
           return response;
         }
-      } catch(InvalidTransactionException e) {
+      } catch(final InvalidTransactionException e) {
         e.printStackTrace();
       }
       provider.message(new MessageData("Messages.Note.Failed"));
