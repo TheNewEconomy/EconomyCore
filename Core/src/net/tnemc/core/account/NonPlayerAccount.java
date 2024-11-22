@@ -34,7 +34,7 @@ public class NonPlayerAccount extends SharedAccount {
 
     super(identifier, name, null);
 
-    this.identifier = generateIdentifier(name);
+    this.identifier = identifier;
   }
 
   /**
