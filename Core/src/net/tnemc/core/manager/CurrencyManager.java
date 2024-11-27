@@ -18,6 +18,7 @@ package net.tnemc.core.manager;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyLoader;
 import net.tnemc.core.currency.CurrencySaver;
@@ -92,7 +93,7 @@ public class CurrencyManager {
 
     try {
       loader.loadCurrencies(new File(parent, "currency"));
-    } catch(NoValidCurrenciesException ignore) {
+    } catch(final NoValidCurrenciesException ignore) {
       if(retry) {
         PluginCore.log().error("No valid currencies found and failed to create USD defaults! Disabling plugin. Configure your currencies properly then retry!", DebugLevel.OFF);
         return false;
@@ -310,7 +311,7 @@ public class CurrencyManager {
     try {
 
       return Optional.ofNullable(currencies.get(UUID.fromString(identifier)));
-    } catch(Exception ignore) {
+    } catch(final Exception ignore) {
 
       for(final Map.Entry<String, UUID> entry : curIDMap.entrySet()) {
 

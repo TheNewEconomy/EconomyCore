@@ -85,7 +85,7 @@ public class TransactionManager {
 
     try {
       this.amount = new BigDecimal(MainConfig.yaml().getString("Core.Transactions.Tracking.Amount", "400"));
-    } catch(NumberFormatException ignore) {
+    } catch(final NumberFormatException ignore) {
 
       //Invalid configuration so we set our default
       this.amount = new BigDecimal("400");
