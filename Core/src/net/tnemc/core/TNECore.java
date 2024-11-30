@@ -202,12 +202,15 @@ public abstract class TNECore extends PluginEngine {
     config.setMaxIdle(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.MaxIdle", 10));
     config.setMinIdle(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.MinIdle", 1));
 
+    final String redisUser = (DataConfig.yaml().contains("Data.Sync.Redis.User"))? DataConfig.yaml().getString("Data.Sync.Redis.User") : null;
+    final String redisPass = (DataConfig.yaml().contains("Data.Sync.Redis.Password"))? DataConfig.yaml().getString("Data.Sync.Redis.Password") : null;
+
     this.storage = new StorageManager(DataConfig.yaml().getString("Data.Database.Type"),
                                       new TNEStorageProvider(), settings, new JedisPool(config, DataConfig.yaml().getString("Data.Sync.Redis.Host"),
                                                                                         DataConfig.yaml().getInt("Data.Sync.Redis.Port"),
                                                                                         DataConfig.yaml().getInt("Data.Sync.Redis.Timeout"),
-                                                                                        DataConfig.yaml().getString("Data.Sync.Redis.User"),
-                                                                                        DataConfig.yaml().getString("Data.Sync.Redis.Password"),
+                                                                                        redisUser,
+                                                                                        redisPass,
                                                                                         DataConfig.yaml().getInt("Data.Sync.Redis.Index"),
                                                                                         DataConfig.yaml().getBoolean("Data.Sync.Redis.SSL")));
   }
