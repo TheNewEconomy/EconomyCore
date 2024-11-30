@@ -66,7 +66,7 @@ Messages:
     Info: "<white>==== 模块 $module 的信息 ====<newline>作者： $author<newline>版本： $version"
     Invalid: "<red>无法找到名为 \"$module\" 的模块。"
     List: "<white>当前服务器正在使用这些TNE模块：$modules。"
-    Loaded: "<white>Loaded module '$module' $version created by '$author'."
+    Loaded: ""
     Reloaded: "<white>Reloaded module '$module'."
     Unloaded: "<white>Unloaded module '$module'."
   Money:
