@@ -25,10 +25,14 @@ import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.channel.SyncHandler;
+import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.item.ItemCurrency;
+import net.tnemc.core.manager.TransactionManager;
+import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.history.AwayHistory;
+import net.tnemc.core.utils.MISCUtils;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import net.tnemc.plugincore.core.compatibility.scheduler.ChoreExecution;
@@ -37,6 +41,7 @@ import net.tnemc.plugincore.core.id.UUIDPair;
 import net.tnemc.plugincore.core.io.message.MessageData;
 import net.tnemc.plugincore.core.utils.HandlerResponse;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -135,7 +140,7 @@ public class PlayerJoinHandler {
         final String region = TNECore.eco().region().getMode().region(provider);
         for(final Currency currency : TNECore.eco().currency().getCurrencies(region)) {
 
-          if(currency instanceof ItemCurrency itemCurrency) {
+          if(currency instanceof final ItemCurrency itemCurrency) {
 
             if(!acc.get().getWallet().contains(region, currency.getUid())) {
 
@@ -197,7 +202,22 @@ public class PlayerJoinHandler {
 
       //If this is the first player online, sync balances.
       if(PluginCore.server().onlinePlayers() == 1) {
-        SyncHandler.send(acc.get().getIdentifier().toString());
+        //check if server own wants db reloaded
+        if(DataConfig.yaml().getBoolean("Data.Sync.Reload.Enabled", false)) {
+
+          if(MISCUtils.isTimeDifferenceGreaterOrEqual(new Date(TNECore.eco().getReloadTime()), DataConfig.yaml().getInt("Data.Sync.Reload.Time", 120))) {
+
+            TNECore.eco().account().getAccounts().clear();
+            TransactionManager.receipts().getReceipts().clear();
+
+            TNECore.instance().storage().loadAll(Account.class, "");
+            TNECore.instance().storage().loadAll(Receipt.class, "");
+
+            TNECore.eco().setReloadTime(new Date().getTime());
+          }
+        } else {
+          SyncHandler.send(acc.get().getIdentifier().toString());
+        }
       }
     }
     return response;

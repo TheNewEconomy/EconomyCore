@@ -23,6 +23,8 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.api.response.AccountAPIResponse;
+import net.tnemc.core.manager.TransactionManager;
+import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.utils.Extractor;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.CmdSource;
@@ -156,6 +158,15 @@ public class AdminCommand extends BaseCommand {
     final MessageData data = new MessageData("Messages.Admin.Reloaded");
     data.addReplacement("$type", formattedType);
     sender.message(data);
+  }
+
+  public static void onReloadDB(final CmdSource<?> sender) {
+
+    TNECore.eco().account().getAccounts().clear();
+    TransactionManager.receipts().getReceipts().clear();
+
+    TNECore.instance().storage().loadAll(Account.class, "");
+    TNECore.instance().storage().loadAll(Receipt.class, "");
   }
 
   public static void onReset(final CmdSource<?> sender) {

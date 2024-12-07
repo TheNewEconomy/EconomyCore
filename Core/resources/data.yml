@@ -3,10 +3,20 @@
 # License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 Data:
 
-  config-version: 1
+  config-version: 2
 
   #Configurations related to syncing data across servers.
   Sync:
+
+    #DB reload configurations.
+    Reload:
+
+      #Reload from DB on first player join.
+      #Reloads data from the database when the first player joins the server after a prolonged timeframe.
+      Enabled: false
+
+      #The time to reload, in minutes.
+      Time: 120
 
     #The data syncing method to utilize. Options: Bungee, Redis
     Type: Bungee

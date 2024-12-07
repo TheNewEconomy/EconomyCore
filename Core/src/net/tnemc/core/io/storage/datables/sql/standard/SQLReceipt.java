@@ -69,7 +69,7 @@ public class SQLReceipt implements Datable<Receipt> {
   @Override
   public void purge(final StorageConnector<?> connector) {
 
-    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
+    if(connector instanceof final SQLConnector sql && sql.dialect() instanceof final TNEDialect tne) {
       sql.executeUpdate(tne.receiptPurge(DataConfig.yaml().getInt("Data.Purge.Transaction.Days")),
                         new Object[]{});
     }
@@ -84,7 +84,7 @@ public class SQLReceipt implements Datable<Receipt> {
   @Override
   public void store(final StorageConnector<?> connector, @NotNull final Receipt receipt, @Nullable final String identifier) {
 
-    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
+    if(connector instanceof final SQLConnector sql && sql.dialect() instanceof final TNEDialect tne) {
 
       //Store the receipt info
       sql.executeUpdate(tne.saveReceipt(),
@@ -108,7 +108,7 @@ public class SQLReceipt implements Datable<Receipt> {
   private void storeParticipant(final StorageConnector<?> connector, @Nullable final TransactionParticipant participant,
                                 @Nullable final HoldingsModifier modifier, final String type, @NotNull final String identifier) {
 
-    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne
+    if(connector instanceof final SQLConnector sql && sql.dialect() instanceof final TNEDialect tne
        && participant != null && modifier != null) {
 
       //store participant info
@@ -146,7 +146,7 @@ public class SQLReceipt implements Datable<Receipt> {
   private void storeReceiptHolding(final StorageConnector<?> connector, @NotNull final HoldingsEntry entry, final String participant,
                                    final String receipt, final boolean ending) {
 
-    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
+    if(connector instanceof final SQLConnector sql && sql.dialect() instanceof final TNEDialect tne) {
       sql.executeUpdate(tne.saveReceiptHolding(),
                         new Object[]{
                                 receipt,
@@ -219,7 +219,7 @@ public class SQLReceipt implements Datable<Receipt> {
 
   public void loadParticipants(final Receipt receipt, final SQLConnector sql, final TNEDialect dialect) {
 
-    try(ResultSet result = sql.executeQuery(dialect.loadParticipants(), new Object[]{
+    try(final ResultSet result = sql.executeQuery(dialect.loadParticipants(), new Object[]{
             receipt.getId().toString() })) {
       while(result.next()) {
 
@@ -242,7 +242,7 @@ public class SQLReceipt implements Datable<Receipt> {
           modifier.ifPresent(receipt::setModifierTo);
         }
       }
-    } catch(Exception ignore) { }
+    } catch(final Exception ignore) { }
   }
 
   public Optional<HoldingsModifier> loadModifier(final UUID receiptID, final UUID participant,
@@ -250,7 +250,7 @@ public class SQLReceipt implements Datable<Receipt> {
 
     HoldingsModifier modifier = null;
     //participant, participant_type, operation, region, currency AS currency, modifier  - uid/participant
-    try(ResultSet result = sql.executeQuery(dialect.loadReceiptHolding(), new Object[]{
+    try(final ResultSet result = sql.executeQuery(dialect.loadReceiptHolding(), new Object[]{
             receiptID.toString(), participant, type })) {
 
       if(result.next()) {
@@ -261,7 +261,7 @@ public class SQLReceipt implements Datable<Receipt> {
                 result.getBigDecimal("modifier"),
                 HoldingsOperation.valueOf(result.getString("operation")));
       }
-    } catch(Exception ignore) { }
+    } catch(final Exception ignore) { }
     return Optional.ofNullable(modifier);
   }
 
@@ -271,7 +271,7 @@ public class SQLReceipt implements Datable<Receipt> {
     final List<HoldingsEntry> holdings = new ArrayList<>();
 
     //participant, ending, server, region, currency AS currency, holdings_type, holdings - uid/participant
-    try(ResultSet result = sql.executeQuery(dialect.loadReceiptHolding(), new Object[]{
+    try(final ResultSet result = sql.executeQuery(dialect.loadReceiptHolding(), new Object[]{
             receiptID.toString(), participant, ending })) {
 
       while(result.next()) {
@@ -284,7 +284,7 @@ public class SQLReceipt implements Datable<Receipt> {
         );
         holdings.add(entry);
       }
-    } catch(Exception ignore) { }
+    } catch(final Exception ignore) { }
 
     return holdings;
   }
@@ -300,16 +300,19 @@ public class SQLReceipt implements Datable<Receipt> {
   public Collection<Receipt> loadAll(final StorageConnector<?> connector, @Nullable final String identifier) {
 
     final Collection<Receipt> receipts = new ArrayList<>(); // is this required? Not entirely sure it is - seems maybe a waste
-    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
+    if(connector instanceof final SQLConnector sql && sql.dialect() instanceof final TNEDialect tne) {
 
-      try(ResultSet result = sql.executeQuery(tne.loadReceipts(), new Object[0])) {
+      try(final ResultSet result = sql.executeQuery(tne.loadReceipts(), new Object[0])) {
 
         while(result.next()) {
 
-          receipts.add(load(result, sql, tne));
+          final Receipt receipt = load(result, sql, tne);
+
+          receipts.add(receipt);
+          TransactionManager.receipts().log(receipt);
         }
 
-      } catch(Exception ignore) { }
+      } catch(final Exception ignore) { }
     }
     return receipts;
   }

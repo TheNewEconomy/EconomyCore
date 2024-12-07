@@ -87,6 +87,8 @@ public class EconomyManager {
 
   private final boolean limitCurrency;
 
+  private long reloadTime;
+
   private static EconomyManager instance;
 
   public EconomyManager() {
@@ -220,5 +222,15 @@ public class EconomyManager {
         PluginCore.log().inform("Account Balances found for non existent currency ID: " + currency);
       }
     }
+  }
+
+  public long getReloadTime() {
+
+    return reloadTime;
+  }
+
+  public void setReloadTime(final long reloadTime) {
+
+    this.reloadTime = reloadTime;
   }
 }

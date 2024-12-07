@@ -86,6 +86,7 @@ import revxrsal.commands.command.ExecutableCommand;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -346,6 +347,8 @@ public abstract class TNECore extends PluginEngine {
     this.storage.loadAll(Account.class, "");
 
     this.storage.loadAll(Receipt.class, "");
+
+    this.economyManager.setReloadTime(new Date().getTime());
 
     final String name = MainConfig.yaml().getString("Core.Server.Account.Name");
     serverAccount = UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8));

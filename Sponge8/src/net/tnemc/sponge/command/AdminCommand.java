@@ -114,6 +114,15 @@ public class AdminCommand {
     net.tnemc.core.command.AdminCommand.onReload(new SpongeCMDSource(sender), type);
   }
 
+  @Subcommand({ "reloaddb" })
+  @Usage("Admin.ReloadDB.Arguments")
+  @Description("Admin.ReloadDB.Description")
+  @CommandPermission("tne.admin.reloaddb")
+  public void reloadDB(final SpongeCommandActor sender) {
+
+    net.tnemc.core.command.AdminCommand.onReloadDB(new SpongeCMDSource(sender));
+  }
+
   @Subcommand({ "reset", "nuke" })
   @Usage("#{Admin.Reset.Arguments}")
   @Description("#{Admin.Reset.Description}")

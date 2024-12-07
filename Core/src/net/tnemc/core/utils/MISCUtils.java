@@ -26,6 +26,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.zip.ZipEntry;
@@ -56,6 +57,24 @@ public class MISCUtils {
     }
   }
 
+  /**
+   * Checks if the time difference between a given date and the current date is greater than or equal to the specified number of minutes.
+   *
+   * @param date the date to compare
+   * @param minutes the number of minutes to compare against
+   * @return true if the time difference is greater than or equal to the specified minutes, false otherwise
+   */
+  public static boolean isTimeDifferenceGreaterOrEqual(final Date date, final int minutes) {
+
+    final Date now = new Date();
+
+    final long diffInMillis = now.getTime() - date.getTime();
+
+    final long minutesInMillis = minutes * 60 * 1000;
+
+    return diffInMillis >= minutesInMillis;
+  }
+
   public static String randomString(final int length) {
 
     final Random rand = new Random();
@@ -84,8 +103,8 @@ public class MISCUtils {
 
   public static void zipFolder(final File sourceFolder, final String destinationZipFile) throws IOException {
 
-    try(FileOutputStream fos = new FileOutputStream(destinationZipFile);
-        ZipOutputStream zos = new ZipOutputStream(fos)) {
+    try(final FileOutputStream fos = new FileOutputStream(destinationZipFile);
+        final ZipOutputStream zos = new ZipOutputStream(fos)) {
 
       //zipFolder(sourceFolder, sourceFolder.getName(), zos);
 
@@ -94,7 +113,7 @@ public class MISCUtils {
       zos.flush();
       zos.close();
       fos.flush();
-    } catch(Exception e) {
+    } catch(final Exception e) {
       e.printStackTrace();
     }
   }
@@ -161,7 +180,7 @@ public class MISCUtils {
       final ZipEntry zipEntry = new ZipEntry(parentFolder + File.separator + file.getName());
       zos.putNextEntry(zipEntry);
 
-      try(FileInputStream fis = new FileInputStream(file)) {
+      try(final FileInputStream fis = new FileInputStream(file)) {
         final byte[] buffer = new byte[1024];
         int length;
         while((length = fis.read(buffer)) > 0) {
