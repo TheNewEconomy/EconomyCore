@@ -3,7 +3,7 @@
 # License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 Data:
 
-  config-version: 2
+  config-version: 3
 
   #Configurations related to syncing data across servers.
   Sync:
