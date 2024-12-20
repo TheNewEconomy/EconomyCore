@@ -81,7 +81,7 @@ public class TNEVaultUnlocked implements Economy {
   @Override
   public boolean hasSharedAccountSupport() {
 
-    return false;
+    return true;
   }
 
   /**
@@ -216,6 +216,14 @@ public class TNEVaultUnlocked implements Economy {
     return TNECore.eco().account().createAccount(uuid.toString(), name).getResponse().success();
   }
 
+  @Override
+  public boolean createAccount(final UUID uuid, final String name, final boolean player) {
+
+    PluginCore.log().debug("Account create called: " + uuid.toString() + " Name: " + name + " Player: " + player, DebugLevel.STANDARD);
+
+    return TNECore.eco().account().createAccount(uuid.toString(), name, !player).getResponse().success();
+  }
+
   /**
    * Attempts to create an account for the given UUID on the specified world IMPLEMENTATION SPECIFIC
    * - if an economy plugin does not support this then false will always be returned.
@@ -230,6 +238,12 @@ public class TNEVaultUnlocked implements Economy {
   public boolean createAccount(final UUID uuid, final String name, final String worldName) {
 
     return createAccount(uuid, name);
+  }
+
+  @Override
+  public boolean createAccount(final UUID uuid, final String name, final String worldName, final boolean player) {
+
+    return createAccount(uuid, name, player);
   }
 
   /**
