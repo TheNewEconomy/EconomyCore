@@ -111,6 +111,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public @NotNull String format(final BigDecimal amount) {
+    PluginCore.log().debug("Format method called with amount: " + amount, DebugLevel.STANDARD);
 
     return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
                                                             TNECore.eco().currency().getDefaultCurrency().getUid(),
@@ -121,6 +122,7 @@ public class TNEVaultUnlocked implements Economy {
 
   @Override
   public @NotNull String format(final String pluginName, final BigDecimal amount) {
+    PluginCore.log().debug("Format method called with pluginName: " + pluginName + ", amount: " + amount, DebugLevel.STANDARD);
 
     return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
                                                             TNECore.eco().currency().getDefaultCurrency().getUid(),
@@ -140,6 +142,7 @@ public class TNEVaultUnlocked implements Economy {
    */
   @Override
   public @NotNull String format(final BigDecimal amount, final String currency) {
+    PluginCore.log().debug("Format method called with amount: " + amount + ", currency: " + currency, DebugLevel.STANDARD);
 
     return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
                                                             TNECore.eco().currency().getDefaultCurrency().getUid(),
@@ -150,6 +153,7 @@ public class TNEVaultUnlocked implements Economy {
 
   @Override
   public @NotNull String format(final String pluginName, final BigDecimal amount, final String currency) {
+    PluginCore.log().debug("Format method called with pluginName: " + pluginName + ", amount: " + amount + ", currency: " + currency, DebugLevel.STANDARD);
 
     return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
                                                             TNECore.eco().currency().getDefaultCurrency().getUid(),
@@ -158,359 +162,185 @@ public class TNEVaultUnlocked implements Economy {
     ));
   }
 
-  /**
-   * Returns true if a currency with the specified name exists.
-   *
-   * @param currency the currency to use.
-   *
-   * @return true if a currency with the specified name exists.
-   */
   @Override
   public boolean hasCurrency(final String currency) {
-
+    PluginCore.log().debug("HasCurrency method called with currency: " + currency, DebugLevel.STANDARD);
     return TNECore.eco().currency().findCurrency(currency).isPresent();
   }
 
   @Override
   public @NotNull String getDefaultCurrency(final String pluginName) {
-
+    PluginCore.log().debug("GetDefaultCurrency method called with pluginName: " + pluginName, DebugLevel.STANDARD);
     return TNECore.eco().currency().getDefaultCurrency().getIdentifier();
   }
 
   @Override
   public @NotNull String defaultCurrencyNamePlural(final String pluginName) {
-
+    PluginCore.log().debug("DefaultCurrencyNamePlural method called with pluginName: " + pluginName, DebugLevel.STANDARD);
     return TNECore.eco().currency().getDefaultCurrency().getDisplayPlural();
   }
 
   @Override
   public @NotNull String defaultCurrencyNameSingular(final String pluginName) {
-
+    PluginCore.log().debug("DefaultCurrencyNameSingular method called with pluginName: " + pluginName, DebugLevel.STANDARD);
     return TNECore.eco().currency().getDefaultCurrency().getDisplay();
   }
 
-  /**
-   * Returns a list of currencies used by the economy plugin. These are able to be used in the calls
-   * in the methods of the API. May not be human-readable.
-   *
-   * @return list of currencies used by the economy plugin. These are able to be used in the calls
-   * in the methods of the API.
-   */
   @Override
   public Collection<String> currencies() {
-
+    PluginCore.log().debug("Currencies method called", DebugLevel.STANDARD);
     return TNECore.eco().currency().getCurIDMap().keySet();
   }
 
-  /**
-   * Attempts to create a account for the given UUID.
-   *
-   * @param uuid UUID associated with the account.
-   * @param name UUID associated with the account.
-   *
-   * @return true if the account creation was successful.
-   */
   @Override
   public boolean createAccount(final UUID uuid, final String name) {
-
+    PluginCore.log().debug("CreateAccount method called with UUID: " + uuid + ", Name: " + name, DebugLevel.STANDARD);
     return TNECore.eco().account().createAccount(uuid.toString(), name).getResponse().success();
   }
 
   @Override
   public boolean createAccount(final UUID uuid, final String name, final boolean player) {
-
-    PluginCore.log().debug("Account create called: " + uuid.toString() + " Name: " + name + " Player: " + player, DebugLevel.STANDARD);
-
+    PluginCore.log().debug("CreateAccount method called with UUID: " + uuid + ", Name: " + name + ", Player: " + player, DebugLevel.STANDARD);
     return TNECore.eco().account().createAccount(uuid.toString(), name, !player).getResponse().success();
   }
 
-  /**
-   * Attempts to create an account for the given UUID on the specified world IMPLEMENTATION SPECIFIC
-   * - if an economy plugin does not support this then false will always be returned.
-   *
-   * @param uuid      UUID associated with the account.
-   * @param name      UUID associated with the account.
-   * @param worldName String name of the world.
-   *
-   * @return if the account creation was successful
-   */
   @Override
   public boolean createAccount(final UUID uuid, final String name, final String worldName) {
-
+    PluginCore.log().debug("CreateAccount method called with UUID: " + uuid + ", Name: " + name + ", WorldName: " + worldName, DebugLevel.STANDARD);
     return createAccount(uuid, name);
   }
 
   @Override
   public boolean createAccount(final UUID uuid, final String name, final String worldName, final boolean player) {
-
+    PluginCore.log().debug("CreateAccount method called with UUID: " + uuid + ", Name: " + name + ", WorldName: " + worldName + ", Player: " + player, DebugLevel.STANDARD);
     return createAccount(uuid, name, player);
   }
 
-  /**
-   * Returns a map that represents all the UUIDs which have accounts in the plugin, as well as their
-   * last-known-name. This is used for Vault's economy converter and should be given every account
-   * available.
-   *
-   * @return a {@link Map} composed of the accounts keyed by their UUID, along with their associated
-   * last-known-name.
-   */
   @Override
   public Map<UUID, String> getUUIDNameMap() {
-
+    PluginCore.log().debug("GetUUIDNameMap method called", DebugLevel.STANDARD);
     return Map.of();
   }
 
-  /**
-   * Gets the last known name of an account owned by the given UUID. Required for messages to be
-   * more human-readable than UUIDs alone can provide.
-   *
-   * @param uuid UUID associated with the account.
-   *
-   * @return name of the account owner.
-   */
   @Override
   public Optional<String> getAccountName(final UUID uuid) {
-
+    PluginCore.log().debug("GetAccountName method called with UUID: " + uuid, DebugLevel.STANDARD);
     final Optional<Account> accountOpt = TNECore.eco().account().findAccount(uuid);
     return accountOpt.map(Account::getName);
   }
 
-  /**
-   * Checks if this UUID has an account yet.
-   *
-   * @param uuid UUID to check for an existing account.
-   *
-   * @return true if the UUID has an account.
-   */
   @Override
   public boolean hasAccount(final UUID uuid) {
-
+    PluginCore.log().debug("HasAccount method called with UUID: " + uuid, DebugLevel.STANDARD);
     return TNECore.eco().account().findAccount(uuid.toString()).isPresent();
   }
 
-  /**
-   * Checks if this UUID has an account yet on the given world.
-   *
-   * @param uuid      UUID to check for an existing account.
-   * @param worldName world-specific account.
-   *
-   * @return if the UUID has an account.
-   */
   @Override
   public boolean hasAccount(final UUID uuid, final String worldName) {
-
+    PluginCore.log().debug("HasAccount method called with UUID: " + uuid + ", WorldName: " + worldName, DebugLevel.STANDARD);
     return hasAccount(uuid);
   }
 
-  /**
-   * A method which changes the name associated with the given UUID in the Map<UUID, String>
-   * received from {@link #getUUIDNameMap()}.
-   *
-   * @param uuid UUID whose account is having a name change.
-   * @param name String name that will be associated with the UUID in the Map<UUID, String> map.
-   *
-   * @return true if the name change is successful.
-   */
   @Override
   public boolean renameAccount(final UUID uuid, final String name) {
-
+    PluginCore.log().debug("RenameAccount method called with UUID: " + uuid + ", Name: " + name, DebugLevel.STANDARD);
     return renameAccount("vault-unlocked", uuid, name);
   }
 
   @Override
   public boolean renameAccount(final String plugin, final UUID accountID, final String name) {
-
+    PluginCore.log().debug("RenameAccount method called with Plugin: " + plugin + ", AccountID: " + accountID + ", Name: " + name, DebugLevel.STANDARD);
     return false;
   }
 
   @Override
   public boolean deleteAccount(final String plugin, final UUID accountID) {
-
+    PluginCore.log().debug("DeleteAccount method called with Plugin: " + plugin + ", AccountID: " + accountID, DebugLevel.STANDARD);
     return TNECore.eco().account().deleteAccount(accountID).success();
   }
 
   @Override
   public boolean accountSupportsCurrency(final String plugin, final UUID accountID, final String currency) {
-
+    PluginCore.log().debug("AccountSupportsCurrency method called with Plugin: " + plugin + ", AccountID: " + accountID + ", Currency: " + currency, DebugLevel.STANDARD);
     return true;
   }
 
   @Override
   public boolean accountSupportsCurrency(final String plugin, final UUID accountID, final String currency, final String world) {
-
+    PluginCore.log().debug("AccountSupportsCurrency method called with Plugin: " + plugin + ", AccountID: " + accountID + ", Currency: " + currency + ", World: " + world, DebugLevel.STANDARD);
     return true;
   }
 
-  /**
-   * Gets balance of an account associated with a UUID.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       UUID of the account to get a balance for.
-   *
-   * @return Amount currently held in account associated with the given UUID.
-   */
   @Override
   public BigDecimal getBalance(final String pluginName, final UUID uuid) {
-
+    PluginCore.log().debug("GetBalance method called with PluginName: " + pluginName + ", UUID: " + uuid, DebugLevel.STANDARD);
     return getBalance(pluginName, uuid, TNECore.eco().region().defaultRegion(), getDefaultCurrency(pluginName));
   }
 
-  /**
-   * Gets balance of a UUID on the specified world. IMPLEMENTATION SPECIFIC - if an economy plugin
-   * does not support this the global balance will be returned.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       UUID of the account to get a balance for.
-   * @param world      name of the world.
-   *
-   * @return Amount currently held in account associated with the given UUID.
-   */
   @Override
   public BigDecimal getBalance(final String pluginName, final UUID uuid, final String world) {
-
+    PluginCore.log().debug("GetBalance method called with PluginName: " + pluginName + ", UUID: " + uuid + ", World: " + world, DebugLevel.STANDARD);
     return getBalance(pluginName, uuid, world, getDefaultCurrency(pluginName));
   }
 
-  /**
-   * Gets balance of a UUID on the specified world. IMPLEMENTATION SPECIFIC - if an economy plugin
-   * does not support this the global balance will be returned.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       UUID of the account to get a balance for.
-   * @param world      name of the world.
-   * @param currency   the currency to use.
-   *
-   * @return Amount currently held in account associated with the given UUID.
-   */
   @Override
   public BigDecimal getBalance(final String pluginName, final UUID uuid, final String world, final String currency) {
+    PluginCore.log().debug("GetBalance method called with PluginName: " + pluginName + ", UUID: " + uuid + ", World: " + world + ", Currency: " + currency, DebugLevel.STANDARD);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
     final Optional<Currency> currencyOpt = TNECore.eco().currency().findCurrency(currency);
 
-    if(account.isPresent() && currencyOpt.isPresent()) {
-      PluginCore.log().debug("Vault Balance call. Account exists. Name:" + account.get().getName(), DebugLevel.STANDARD);
+    if (account.isPresent() && currencyOpt.isPresent()) {
+      PluginCore.log().debug("Account exists. Name: " + account.get().getName(), DebugLevel.STANDARD);
       return account.get().getHoldingsTotal(world, currencyOpt.get().getUid());
     }
 
-    PluginCore.log().debug("Vault Balance call. Account doesn't exist. Name:" + uuid, DebugLevel.STANDARD);
+    PluginCore.log().debug("Account does not exist. UUID: " + uuid, DebugLevel.STANDARD);
     return BigDecimal.ZERO;
   }
 
-  /**
-   * Checks if the account associated with the given UUID has the amount - DO NOT USE NEGATIVE
-   * AMOUNTS.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       the UUID associated with the account to check the balance of.
-   * @param amount     the amount to check for.
-   *
-   * @return True if <b>UUID</b> has <b>amount</b>, False else wise.
-   */
   @Override
   public boolean has(final String pluginName, final UUID uuid, final BigDecimal amount) {
-
+    PluginCore.log().debug("Has method called with PluginName: " + pluginName + ", UUID: " + uuid + ", Amount: " + amount, DebugLevel.STANDARD);
     return has(pluginName, uuid, TNECore.eco().region().defaultRegion(), getDefaultCurrency(pluginName), amount);
   }
 
-  /**
-   * Checks if the account associated with the given UUID has the amount in the given world - DO NOT
-   * USE NEGATIVE AMOUNTS IMPLEMENTATION SPECIFIC - if an economy plugin does not support this the
-   * global balance will be returned.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       the UUID associated with the account to check the balance of.
-   * @param worldName  the name of the world to check in.
-   * @param amount     the amount to check for.
-   *
-   * @return True if <b>UUID</b> has <b>amount</b> in the given <b>world</b>, False else wise.
-   */
   @Override
   public boolean has(final String pluginName, final UUID uuid, final String worldName, final BigDecimal amount) {
-
+    PluginCore.log().debug("Has method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Amount: " + amount, DebugLevel.STANDARD);
     return has(pluginName, uuid, worldName, getDefaultCurrency(pluginName), amount);
   }
 
-  /**
-   * Checks if the account associated with the given UUID has the amount in the given world - DO NOT
-   * USE NEGATIVE AMOUNTS IMPLEMENTATION SPECIFIC - if an economy plugin does not support this the
-   * global balance will be returned.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       the UUID associated with the account to check the balance of.
-   * @param worldName  the name of the world to check in.
-   * @param currency   the currency to use.
-   * @param amount     the amount to check for.
-   *
-   * @return True if <b>UUID</b> has <b>amount</b> in the given <b>world</b>, False else wise.
-   */
   @Override
   public boolean has(final String pluginName, final UUID uuid, final String worldName, final String currency, final BigDecimal amount) {
+    PluginCore.log().debug("Has method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Currency: " + currency + ", Amount: " + amount, DebugLevel.STANDARD);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
     final Optional<Currency> currencyOpt = TNECore.eco().currency().findCurrency(currency);
 
-    return currencyOpt.filter(currency1->account.filter(value->value.getHoldingsTotal(worldName, currency1.getUid())
-                                                                       .compareTo(amount) >= 0).isPresent()).isPresent();
-
+    return currencyOpt.filter(currency1 -> account.filter(value -> value.getHoldingsTotal(worldName, currency1.getUid())
+                                                                           .compareTo(amount) >= 0).isPresent()).isPresent();
   }
 
-  /**
-   * Withdraw an amount from an account associated with a UUID - DO NOT USE NEGATIVE AMOUNTS.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       the UUID associated with the account to withdraw from.
-   * @param amount     Amount to withdraw.
-   *
-   * @return {@link EconomyResponse} which includes the Economy plugin's
-   * {@link ResponseType} as to whether the transaction was a Success, Failure,
-   * Unsupported.
-   */
   @Override
   public EconomyResponse withdraw(final String pluginName, final UUID uuid, final BigDecimal amount) {
-
+    PluginCore.log().debug("Withdraw method called with PluginName: " + pluginName + ", UUID: " + uuid + ", Amount: " + amount, DebugLevel.STANDARD);
     return withdraw(pluginName, uuid, TNECore.eco().region().defaultRegion(), getDefaultCurrency(pluginName), amount);
   }
 
-  /**
-   * Withdraw an amount from an account associated with a UUID on a given world - DO NOT USE
-   * NEGATIVE AMOUNTS IMPLEMENTATION SPECIFIC - if an economy plugin does not support this the
-   * global balance will be returned.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       the UUID associated with the account to withdraw from.
-   * @param worldName  the name of the world to check in.
-   * @param amount     Amount to withdraw.
-   *
-   * @return {@link EconomyResponse} which includes the Economy plugin's {@link ResponseType} as to
-   * whether the transaction was a Success, Failure, Unsupported.
-   */
   @Override
   public EconomyResponse withdraw(final String pluginName, final UUID uuid, final String worldName, final BigDecimal amount) {
-
+    PluginCore.log().debug("Withdraw method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Amount: " + amount, DebugLevel.STANDARD);
     return withdraw(pluginName, uuid, worldName, getDefaultCurrency(pluginName), amount);
   }
 
-  /**
-   * Withdraw an amount from an account associated with a UUID on a given world - DO NOT USE
-   * NEGATIVE AMOUNTS IMPLEMENTATION SPECIFIC - if an economy plugin does not support this the
-   * global balance will be returned.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       the UUID associated with the account to withdraw from.
-   * @param worldName  the name of the world to check in.
-   * @param currency   the currency to use.
-   * @param amount     Amount to withdraw.
-   *
-   * @return {@link EconomyResponse} which includes the Economy plugin's {@link ResponseType} as to
-   * whether the transaction was a Success, Failure, Unsupported.
-   */
   @Override
   public EconomyResponse withdraw(final String pluginName, final UUID uuid, final String worldName, final String currency, final BigDecimal amount) {
+    PluginCore.log().debug("Withdraw method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Currency: " + currency + ", Amount: " + amount, DebugLevel.STANDARD);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
 
-    if(account.isEmpty()) {
+    if (account.isEmpty()) {
       return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO,
                                  ResponseType.FAILURE, "Unable to locate associated account.");
     }
@@ -529,75 +359,37 @@ public class TNEVaultUnlocked implements Economy {
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding(),
                                  fromResult(result),
                                  result.getMessage());
-    } catch(final InvalidTransactionException e) {
-
+    } catch (final InvalidTransactionException e) {
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding(),
                                  ResponseType.FAILURE, e.getMessage());
     }
   }
 
-  /**
-   * Deposit an amount to an account associated with the given UUID - DO NOT USE NEGATIVE AMOUNTS.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       the UUID associated with the account to deposit to.
-   * @param amount     Amount to deposit.
-   *
-   * @return {@link EconomyResponse} which includes the Economy plugin's {@link ResponseType} as to
-   * whether the transaction was a Success, Failure, Unsupported.
-   */
   @Override
   public EconomyResponse deposit(final String pluginName, final UUID uuid, final BigDecimal amount) {
-
+    PluginCore.log().debug("Deposit method called with PluginName: " + pluginName + ", UUID: " + uuid + ", Amount: " + amount, DebugLevel.STANDARD);
     return deposit(pluginName, uuid, TNECore.eco().region().defaultRegion(), getDefaultCurrency(pluginName), amount);
   }
 
-  /**
-   * Deposit an amount to an account associated with a UUID on a given world - DO NOT USE NEGATIVE
-   * AMOUNTS IMPLEMENTATION SPECIFIC - if an economy plugin does not support this the global balance
-   * will be returned.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       the UUID associated with the account to deposit to.
-   * @param worldName  the name of the world to check in.
-   * @param amount     Amount to deposit.
-   *
-   * @return {@link EconomyResponse} which includes the Economy plugin's {@link ResponseType} as to
-   * whether the transaction was a Success, Failure, Unsupported.
-   */
   @Override
   public EconomyResponse deposit(final String pluginName, final UUID uuid, final String worldName, final BigDecimal amount) {
-
+    PluginCore.log().debug("Deposit method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Amount: " + amount, DebugLevel.STANDARD);
     return deposit(pluginName, uuid, worldName, getDefaultCurrency(pluginName), amount);
   }
 
-  /**
-   * Deposit an amount to an account associated with a UUID on a given world - DO NOT USE NEGATIVE
-   * AMOUNTS IMPLEMENTATION SPECIFIC - if an economy plugin does not support this the global balance
-   * will be returned.
-   *
-   * @param pluginName The name of the plugin that is calling the method.
-   * @param uuid       the UUID associated with the account to deposit to.
-   * @param worldName  the name of the world to check in.
-   * @param currency   the currency to use.
-   * @param amount     Amount to deposit.
-   *
-   * @return {@link EconomyResponse} which includes the Economy plugin's {@link ResponseType} as to
-   * whether the transaction was a Success, Failure, Unsupported.
-   */
   @Override
   public EconomyResponse deposit(final String pluginName, final UUID uuid, final String worldName, final String currency, final BigDecimal amount) {
+    PluginCore.log().debug("Deposit method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Currency: " + currency + ", Amount: " + amount, DebugLevel.STANDARD);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
 
-    if(account.isEmpty()) {
+    if (account.isEmpty()) {
       return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO, ResponseType.FAILURE, "Unable to locate associated account.");
     }
 
     final HoldingsModifier modifier = new HoldingsModifier(worldName,
                                                            TNECore.eco().currency().getDefaultCurrency(worldName).getUid(),
                                                            amount);
-
 
     final Transaction transaction = new Transaction("give")
             .to(account.get(), modifier)
@@ -608,8 +400,7 @@ public class TNEVaultUnlocked implements Economy {
       final TransactionResult result = transaction.process();
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding(), fromResult(result),
                                  result.getMessage());
-    } catch(final InvalidTransactionException e) {
-
+    } catch (final InvalidTransactionException e) {
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding(),
                                  ResponseType.FAILURE, e.getMessage());
     }
