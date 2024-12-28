@@ -223,6 +223,7 @@ public class Account extends ReceiptBox {
     }
 
     if(result && currencyObject.get().isSync()) {
+
       //Send out our update to our proxies.
       if(!PluginCore.instance().getChannelMessageManager().isAffected(identifier.toString()) && !TNECore.eco().account().getLoading().contains(identifier)) {
         PluginCore.server().scheduler().createDelayedTask(()->{

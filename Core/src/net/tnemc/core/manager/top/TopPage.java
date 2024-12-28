@@ -18,12 +18,19 @@ package net.tnemc.core.manager.top;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.EconomyManager;
+import net.tnemc.core.TNECore;
+import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.currency.format.CurrencyFormatter;
+import net.tnemc.core.manager.CurrencyManager;
+import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.io.message.MessageData;
 
 import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * TopPage
@@ -65,7 +72,7 @@ public class TopPage<V> {
     return (V)"no one";
   }
 
-  public MessageData getFor(final int pos) {
+  public MessageData getFor(final int pos, final UUID currency) {
 
     final MessageData data = new MessageData("Messages.Money.PlaceholderTopEntry");
     data.addReplacement("$toppos", String.valueOf(pos));
@@ -82,6 +89,7 @@ public class TopPage<V> {
     while(it.hasNext()) {
       if(pos - 1 == i) {
         data.addReplacement("$account", (String)it.next().getKey());
+        data.addReplacement("$balance", CurrencyFormatter.format(null, new HoldingsEntry(PluginCore.server().defaultWorld(), currency, it.next().getValue(), EconomyManager.NORMAL)));
         return data;
       }
 

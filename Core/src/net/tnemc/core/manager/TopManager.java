@@ -56,7 +56,7 @@ public class TopManager {
     for(final String str : MainConfig.yaml().getStringList("Core.Commands.Top.Exclusions")) {
       try {
         regexExclusions.add(Pattern.compile(str));
-      } catch(PatternSyntaxException ignore) {
+      } catch(final PatternSyntaxException ignore) {
         exclusions.add(str);
       }
     }
@@ -100,7 +100,7 @@ public class TopManager {
       final int internalPos = (position % 5 == 0)? 5 : position % 5;
 
 
-      return topMap.get(currency).getBalances().getValues(positionToPage(position)).getFor(internalPos);
+      return topMap.get(currency).getBalances().getValues(positionToPage(position)).getFor(internalPos, currency);
     }
     final MessageData data = new MessageData("Messages.Money.PlaceholderTopEntry");
     data.addReplacement("$toppos", String.valueOf(position));
