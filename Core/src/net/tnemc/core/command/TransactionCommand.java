@@ -108,15 +108,19 @@ public class TransactionCommand {
       if(receipt.isPresent()) {
 
         String from = "None";
-        final Optional<Account> fromACC = receipt.get().getFrom().asAccount();
-        if(fromACC.isPresent()) {
-          from = fromACC.get().getName();
+        if(receipt.get().getFrom() != null) {
+          final Optional<Account> fromACC = receipt.get().getFrom().asAccount();
+          if(fromACC.isPresent()) {
+            from = fromACC.get().getName();
+          }
         }
 
         String to = "None";
-        final Optional<Account> toACC = receipt.get().getTo().asAccount();
-        if(toACC.isPresent()) {
-          to = toACC.get().getName();
+        if(receipt.get().getTo() != null) {
+          final Optional<Account> toACC = receipt.get().getTo().asAccount();
+          if(toACC.isPresent()) {
+            to = toACC.get().getName();
+          }
         }
 
         final MessageData awayEntry = new MessageData("Messages.Transaction.HistoryEntry");
