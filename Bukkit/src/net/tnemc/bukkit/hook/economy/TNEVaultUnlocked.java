@@ -73,7 +73,7 @@ public class TNEVaultUnlocked implements Economy {
    * @return Name of the active economy plugin on the server.
    */
   @Override
-  public String getName() {
+  public @NotNull String getName() {
 
     return "TheNewEconomy";
   }
@@ -96,7 +96,7 @@ public class TNEVaultUnlocked implements Economy {
   }
 
   @Override
-  public int fractionalDigits(final String pluginName) {
+  public int fractionalDigits(final @NotNull String pluginName) {
 
     return TNECore.eco().currency().getDefaultCurrency().getDecimalPlaces();
   }
@@ -110,7 +110,7 @@ public class TNEVaultUnlocked implements Economy {
    * @return Human-readable string describing amount, ie 5 Dollars or 5.55 Pounds.
    */
   @Override
-  public @NotNull String format(final BigDecimal amount) {
+  public @NotNull String format(final @NotNull BigDecimal amount) {
     PluginCore.log().debug("Format method called with amount: " + amount, DebugLevel.STANDARD);
 
     return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
@@ -121,7 +121,7 @@ public class TNEVaultUnlocked implements Economy {
   }
 
   @Override
-  public @NotNull String format(final String pluginName, final BigDecimal amount) {
+  public @NotNull String format(final @NotNull String pluginName, final @NotNull BigDecimal amount) {
     PluginCore.log().debug("Format method called with pluginName: " + pluginName + ", amount: " + amount, DebugLevel.STANDARD);
 
     return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
@@ -141,7 +141,7 @@ public class TNEVaultUnlocked implements Economy {
    * @return Human-readable string describing amount, ie 5 Dollars or 5.55 Pounds.
    */
   @Override
-  public @NotNull String format(final BigDecimal amount, final String currency) {
+  public @NotNull String format(final @NotNull BigDecimal amount, final @NotNull String currency) {
     PluginCore.log().debug("Format method called with amount: " + amount + ", currency: " + currency, DebugLevel.STANDARD);
 
     return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
@@ -152,7 +152,7 @@ public class TNEVaultUnlocked implements Economy {
   }
 
   @Override
-  public @NotNull String format(final String pluginName, final BigDecimal amount, final String currency) {
+  public @NotNull String format(final @NotNull String pluginName, final @NotNull BigDecimal amount, final @NotNull String currency) {
     PluginCore.log().debug("Format method called with pluginName: " + pluginName + ", amount: " + amount + ", currency: " + currency, DebugLevel.STANDARD);
 
     return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
@@ -163,67 +163,67 @@ public class TNEVaultUnlocked implements Economy {
   }
 
   @Override
-  public boolean hasCurrency(final String currency) {
+  public boolean hasCurrency(final @NotNull String currency) {
     PluginCore.log().debug("HasCurrency method called with currency: " + currency, DebugLevel.STANDARD);
     return TNECore.eco().currency().findCurrency(currency).isPresent();
   }
 
   @Override
-  public @NotNull String getDefaultCurrency(final String pluginName) {
+  public @NotNull String getDefaultCurrency(final @NotNull String pluginName) {
     PluginCore.log().debug("GetDefaultCurrency method called with pluginName: " + pluginName, DebugLevel.STANDARD);
     return TNECore.eco().currency().getDefaultCurrency().getIdentifier();
   }
 
   @Override
-  public @NotNull String defaultCurrencyNamePlural(final String pluginName) {
+  public @NotNull String defaultCurrencyNamePlural(final @NotNull String pluginName) {
     PluginCore.log().debug("DefaultCurrencyNamePlural method called with pluginName: " + pluginName, DebugLevel.STANDARD);
     return TNECore.eco().currency().getDefaultCurrency().getDisplayPlural();
   }
 
   @Override
-  public @NotNull String defaultCurrencyNameSingular(final String pluginName) {
+  public @NotNull String defaultCurrencyNameSingular(final @NotNull String pluginName) {
     PluginCore.log().debug("DefaultCurrencyNameSingular method called with pluginName: " + pluginName, DebugLevel.STANDARD);
     return TNECore.eco().currency().getDefaultCurrency().getDisplay();
   }
 
   @Override
-  public Collection<String> currencies() {
+  public @NotNull Collection<String> currencies() {
     PluginCore.log().debug("Currencies method called", DebugLevel.STANDARD);
     return TNECore.eco().currency().getCurIDMap().keySet();
   }
 
   @Override
-  public boolean createAccount(final UUID uuid, final String name) {
+  public boolean createAccount(final UUID uuid, final @NotNull String name) {
     PluginCore.log().debug("CreateAccount method called with UUID: " + uuid + ", Name: " + name, DebugLevel.STANDARD);
     return TNECore.eco().account().createAccount(uuid.toString(), name).getResponse().success();
   }
 
   @Override
-  public boolean createAccount(final UUID uuid, final String name, final boolean player) {
+  public boolean createAccount(final UUID uuid, final @NotNull String name, final boolean player) {
     PluginCore.log().debug("CreateAccount method called with UUID: " + uuid + ", Name: " + name + ", Player: " + player, DebugLevel.STANDARD);
     return TNECore.eco().account().createAccount(uuid.toString(), name, !player).getResponse().success();
   }
 
   @Override
-  public boolean createAccount(final UUID uuid, final String name, final String worldName) {
+  public boolean createAccount(final @NotNull UUID uuid, final @NotNull String name, final @NotNull String worldName) {
     PluginCore.log().debug("CreateAccount method called with UUID: " + uuid + ", Name: " + name + ", WorldName: " + worldName, DebugLevel.STANDARD);
     return createAccount(uuid, name);
   }
 
   @Override
-  public boolean createAccount(final UUID uuid, final String name, final String worldName, final boolean player) {
+  public boolean createAccount(final @NotNull UUID uuid, final @NotNull String name, final @NotNull String worldName, final boolean player) {
     PluginCore.log().debug("CreateAccount method called with UUID: " + uuid + ", Name: " + name + ", WorldName: " + worldName + ", Player: " + player, DebugLevel.STANDARD);
     return createAccount(uuid, name, player);
   }
 
   @Override
-  public Map<UUID, String> getUUIDNameMap() {
+  public @NotNull Map<UUID, String> getUUIDNameMap() {
     PluginCore.log().debug("GetUUIDNameMap method called", DebugLevel.STANDARD);
     return Map.of();
   }
 
   @Override
-  public Optional<String> getAccountName(final UUID uuid) {
+  public Optional<String> getAccountName(final @NotNull UUID uuid) {
     PluginCore.log().debug("GetAccountName method called with UUID: " + uuid, DebugLevel.STANDARD);
     final Optional<Account> accountOpt = TNECore.eco().account().findAccount(uuid);
     return accountOpt.map(Account::getName);
@@ -236,55 +236,55 @@ public class TNEVaultUnlocked implements Economy {
   }
 
   @Override
-  public boolean hasAccount(final UUID uuid, final String worldName) {
+  public boolean hasAccount(final @NotNull UUID uuid, final @NotNull String worldName) {
     PluginCore.log().debug("HasAccount method called with UUID: " + uuid + ", WorldName: " + worldName, DebugLevel.STANDARD);
     return hasAccount(uuid);
   }
 
   @Override
-  public boolean renameAccount(final UUID uuid, final String name) {
+  public boolean renameAccount(final @NotNull UUID uuid, final @NotNull String name) {
     PluginCore.log().debug("RenameAccount method called with UUID: " + uuid + ", Name: " + name, DebugLevel.STANDARD);
     return renameAccount("vault-unlocked", uuid, name);
   }
 
   @Override
-  public boolean renameAccount(final String plugin, final UUID accountID, final String name) {
+  public boolean renameAccount(final @NotNull String plugin, final @NotNull UUID accountID, final @NotNull String name) {
     PluginCore.log().debug("RenameAccount method called with Plugin: " + plugin + ", AccountID: " + accountID + ", Name: " + name, DebugLevel.STANDARD);
     return false;
   }
 
   @Override
-  public boolean deleteAccount(final String plugin, final UUID accountID) {
+  public boolean deleteAccount(final @NotNull String plugin, final @NotNull UUID accountID) {
     PluginCore.log().debug("DeleteAccount method called with Plugin: " + plugin + ", AccountID: " + accountID, DebugLevel.STANDARD);
     return TNECore.eco().account().deleteAccount(accountID).success();
   }
 
   @Override
-  public boolean accountSupportsCurrency(final String plugin, final UUID accountID, final String currency) {
+  public boolean accountSupportsCurrency(final @NotNull String plugin, final @NotNull UUID accountID, final @NotNull String currency) {
     PluginCore.log().debug("AccountSupportsCurrency method called with Plugin: " + plugin + ", AccountID: " + accountID + ", Currency: " + currency, DebugLevel.STANDARD);
     return true;
   }
 
   @Override
-  public boolean accountSupportsCurrency(final String plugin, final UUID accountID, final String currency, final String world) {
+  public boolean accountSupportsCurrency(final @NotNull String plugin, final @NotNull UUID accountID, final @NotNull String currency, final @NotNull String world) {
     PluginCore.log().debug("AccountSupportsCurrency method called with Plugin: " + plugin + ", AccountID: " + accountID + ", Currency: " + currency + ", World: " + world, DebugLevel.STANDARD);
     return true;
   }
 
   @Override
-  public BigDecimal getBalance(final String pluginName, final UUID uuid) {
+  public @NotNull BigDecimal getBalance(final @NotNull String pluginName, final @NotNull UUID uuid) {
     PluginCore.log().debug("GetBalance method called with PluginName: " + pluginName + ", UUID: " + uuid, DebugLevel.STANDARD);
     return getBalance(pluginName, uuid, TNECore.eco().region().defaultRegion(), getDefaultCurrency(pluginName));
   }
 
   @Override
-  public BigDecimal getBalance(final String pluginName, final UUID uuid, final String world) {
+  public @NotNull BigDecimal getBalance(final @NotNull String pluginName, final @NotNull UUID uuid, final @NotNull String world) {
     PluginCore.log().debug("GetBalance method called with PluginName: " + pluginName + ", UUID: " + uuid + ", World: " + world, DebugLevel.STANDARD);
     return getBalance(pluginName, uuid, world, getDefaultCurrency(pluginName));
   }
 
   @Override
-  public BigDecimal getBalance(final String pluginName, final UUID uuid, final String world, final String currency) {
+  public @NotNull BigDecimal getBalance(final @NotNull String pluginName, final UUID uuid, final @NotNull String world, final @NotNull String currency) {
     PluginCore.log().debug("GetBalance method called with PluginName: " + pluginName + ", UUID: " + uuid + ", World: " + world + ", Currency: " + currency, DebugLevel.STANDARD);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
@@ -300,19 +300,47 @@ public class TNEVaultUnlocked implements Economy {
   }
 
   @Override
-  public boolean has(final String pluginName, final UUID uuid, final BigDecimal amount) {
+  public @NotNull BigDecimal balance(final @NotNull String pluginName, final @NotNull UUID uuid) {
+    PluginCore.log().debug("GetBalance method called with PluginName: " + pluginName + ", UUID: " + uuid, DebugLevel.STANDARD);
+    return balance(pluginName, uuid, TNECore.eco().region().defaultRegion(), getDefaultCurrency(pluginName));
+  }
+
+  @Override
+  public @NotNull BigDecimal balance(final @NotNull String pluginName, final @NotNull UUID uuid, final @NotNull String world) {
+    PluginCore.log().debug("GetBalance method called with PluginName: " + pluginName + ", UUID: " + uuid + ", World: " + world, DebugLevel.STANDARD);
+    return balance(pluginName, uuid, world, getDefaultCurrency(pluginName));
+  }
+
+  @Override
+  public @NotNull BigDecimal balance(final @NotNull String pluginName, final UUID uuid, final @NotNull String world, final @NotNull String currency) {
+    PluginCore.log().debug("GetBalance method called with PluginName: " + pluginName + ", UUID: " + uuid + ", World: " + world + ", Currency: " + currency, DebugLevel.STANDARD);
+
+    final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
+    final Optional<Currency> currencyOpt = TNECore.eco().currency().findCurrency(currency);
+
+    if (account.isPresent() && currencyOpt.isPresent()) {
+      PluginCore.log().debug("Account exists. Name: " + account.get().getName(), DebugLevel.STANDARD);
+      return account.get().getHoldingsTotal(world, currencyOpt.get().getUid());
+    }
+
+    PluginCore.log().debug("Account does not exist. UUID: " + uuid, DebugLevel.STANDARD);
+    return BigDecimal.ZERO;
+  }
+
+  @Override
+  public boolean has(final @NotNull String pluginName, final @NotNull UUID uuid, final @NotNull BigDecimal amount) {
     PluginCore.log().debug("Has method called with PluginName: " + pluginName + ", UUID: " + uuid + ", Amount: " + amount, DebugLevel.STANDARD);
     return has(pluginName, uuid, TNECore.eco().region().defaultRegion(), getDefaultCurrency(pluginName), amount);
   }
 
   @Override
-  public boolean has(final String pluginName, final UUID uuid, final String worldName, final BigDecimal amount) {
+  public boolean has(final @NotNull String pluginName, final @NotNull UUID uuid, final @NotNull String worldName, final @NotNull BigDecimal amount) {
     PluginCore.log().debug("Has method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Amount: " + amount, DebugLevel.STANDARD);
     return has(pluginName, uuid, worldName, getDefaultCurrency(pluginName), amount);
   }
 
   @Override
-  public boolean has(final String pluginName, final UUID uuid, final String worldName, final String currency, final BigDecimal amount) {
+  public boolean has(final @NotNull String pluginName, final UUID uuid, final @NotNull String worldName, final @NotNull String currency, final @NotNull BigDecimal amount) {
     PluginCore.log().debug("Has method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Currency: " + currency + ", Amount: " + amount, DebugLevel.STANDARD);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
@@ -323,19 +351,19 @@ public class TNEVaultUnlocked implements Economy {
   }
 
   @Override
-  public EconomyResponse withdraw(final String pluginName, final UUID uuid, final BigDecimal amount) {
+  public @NotNull EconomyResponse withdraw(final @NotNull String pluginName, final @NotNull UUID uuid, final @NotNull BigDecimal amount) {
     PluginCore.log().debug("Withdraw method called with PluginName: " + pluginName + ", UUID: " + uuid + ", Amount: " + amount, DebugLevel.STANDARD);
     return withdraw(pluginName, uuid, TNECore.eco().region().defaultRegion(), getDefaultCurrency(pluginName), amount);
   }
 
   @Override
-  public EconomyResponse withdraw(final String pluginName, final UUID uuid, final String worldName, final BigDecimal amount) {
+  public @NotNull EconomyResponse withdraw(final @NotNull String pluginName, final @NotNull UUID uuid, final @NotNull String worldName, final @NotNull BigDecimal amount) {
     PluginCore.log().debug("Withdraw method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Amount: " + amount, DebugLevel.STANDARD);
     return withdraw(pluginName, uuid, worldName, getDefaultCurrency(pluginName), amount);
   }
 
   @Override
-  public EconomyResponse withdraw(final String pluginName, final UUID uuid, final String worldName, final String currency, final BigDecimal amount) {
+  public @NotNull EconomyResponse withdraw(final @NotNull String pluginName, final UUID uuid, final @NotNull String worldName, final @NotNull String currency, final @NotNull BigDecimal amount) {
     PluginCore.log().debug("Withdraw method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Currency: " + currency + ", Amount: " + amount, DebugLevel.STANDARD);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
@@ -366,19 +394,19 @@ public class TNEVaultUnlocked implements Economy {
   }
 
   @Override
-  public EconomyResponse deposit(final String pluginName, final UUID uuid, final BigDecimal amount) {
+  public @NotNull EconomyResponse deposit(final @NotNull String pluginName, final @NotNull UUID uuid, final @NotNull BigDecimal amount) {
     PluginCore.log().debug("Deposit method called with PluginName: " + pluginName + ", UUID: " + uuid + ", Amount: " + amount, DebugLevel.STANDARD);
     return deposit(pluginName, uuid, TNECore.eco().region().defaultRegion(), getDefaultCurrency(pluginName), amount);
   }
 
   @Override
-  public EconomyResponse deposit(final String pluginName, final UUID uuid, final String worldName, final BigDecimal amount) {
+  public @NotNull EconomyResponse deposit(final @NotNull String pluginName, final @NotNull UUID uuid, final @NotNull String worldName, final @NotNull BigDecimal amount) {
     PluginCore.log().debug("Deposit method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Amount: " + amount, DebugLevel.STANDARD);
     return deposit(pluginName, uuid, worldName, getDefaultCurrency(pluginName), amount);
   }
 
   @Override
-  public EconomyResponse deposit(final String pluginName, final UUID uuid, final String worldName, final String currency, final BigDecimal amount) {
+  public @NotNull EconomyResponse deposit(final @NotNull String pluginName, final UUID uuid, final @NotNull String worldName, final @NotNull String currency, final @NotNull BigDecimal amount) {
     PluginCore.log().debug("Deposit method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Currency: " + currency + ", Amount: " + amount, DebugLevel.STANDARD);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
@@ -407,7 +435,7 @@ public class TNEVaultUnlocked implements Economy {
   }
 
   @Override
-  public boolean createSharedAccount(final String pluginName, final UUID accountID, final String name, final UUID owner) {
+  public boolean createSharedAccount(final @NotNull String pluginName, final @NotNull UUID accountID, final @NotNull String name, final @NotNull UUID owner) {
 
     if(TNECore.eco().account().findAccount(name).isPresent() || TNECore.eco().account().findAccount(accountID.toString()).isPresent()) {
 
@@ -423,7 +451,7 @@ public class TNEVaultUnlocked implements Economy {
   }
 
   @Override
-  public boolean isAccountOwner(final String pluginName, final UUID accountID, final UUID uuid) {
+  public boolean isAccountOwner(final @NotNull String pluginName, final UUID accountID, final @NotNull UUID uuid) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(accountID.toString());
     if(account.isEmpty()) {
@@ -440,7 +468,7 @@ public class TNEVaultUnlocked implements Economy {
   }
 
   @Override
-  public boolean setOwner(final String pluginName, final UUID accountID, final UUID uuid) {
+  public boolean setOwner(final @NotNull String pluginName, final UUID accountID, final @NotNull UUID uuid) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(accountID.toString());
     if(account.isEmpty()) {
@@ -459,7 +487,7 @@ public class TNEVaultUnlocked implements Economy {
   }
 
   @Override
-  public boolean isAccountMember(final String pluginName, final UUID accountID, final UUID uuid) {
+  public boolean isAccountMember(final @NotNull String pluginName, final UUID accountID, final @NotNull UUID uuid) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(accountID.toString());
     if(account.isEmpty()) {
@@ -476,7 +504,7 @@ public class TNEVaultUnlocked implements Economy {
   }
 
   @Override
-  public boolean addAccountMember(final String pluginName, final UUID accountID, final UUID uuid) {
+  public boolean addAccountMember(final @NotNull String pluginName, final UUID accountID, final @NotNull UUID uuid) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(accountID.toString());
     if(account.isEmpty()) {
@@ -495,7 +523,7 @@ public class TNEVaultUnlocked implements Economy {
   }
 
   @Override
-  public boolean addAccountMember(final String pluginName, final UUID accountID, final UUID uuid, final AccountPermission... initialPermissions) {
+  public boolean addAccountMember(final @NotNull String pluginName, final UUID accountID, final @NotNull UUID uuid, final AccountPermission... initialPermissions) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(accountID.toString());
     if(account.isEmpty()) {
@@ -525,7 +553,7 @@ public class TNEVaultUnlocked implements Economy {
   }
 
   @Override
-  public boolean removeAccountMember(final String pluginName, final UUID accountID, final UUID uuid) {
+  public boolean removeAccountMember(final @NotNull String pluginName, final UUID accountID, final @NotNull UUID uuid) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(accountID.toString());
     if(account.isEmpty()) {
@@ -543,7 +571,7 @@ public class TNEVaultUnlocked implements Economy {
   }
 
   @Override
-  public boolean hasAccountPermission(final String pluginName, final UUID accountID, final UUID uuid, final AccountPermission permission) {
+  public boolean hasAccountPermission(final @NotNull String pluginName, final UUID accountID, final @NotNull UUID uuid, final @NotNull AccountPermission permission) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(accountID.toString());
     final MemberPermissions perm = permissionConversion(permission);
@@ -565,7 +593,7 @@ public class TNEVaultUnlocked implements Economy {
   }
 
   @Override
-  public boolean updateAccountPermission(final String pluginName, final UUID accountID, final UUID uuid, final AccountPermission permission, final boolean value) {
+  public boolean updateAccountPermission(final @NotNull String pluginName, final UUID accountID, final @NotNull UUID uuid, final @NotNull AccountPermission permission, final boolean value) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(accountID.toString());
     final MemberPermissions perm = permissionConversion(permission);
