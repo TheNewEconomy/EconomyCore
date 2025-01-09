@@ -3,7 +3,7 @@
 #License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 #All configurable messages in TNE
 Messages:
-  config-version: 9
+  config-version: 10
   General:
     Version: "<white>TNE-Version: <green>$version <white>- Bau: <green>$build"
     NoPerm: "<red>Es tut mir leid, aber Sie haben keine Berechtigung für diese Aktion."
@@ -437,7 +437,10 @@ Messages:
         Description: "Deposits money from an item form into a virtual bank for mixed currencies."
       Give:
         Arguments: "<player> <amount> [currency] [world]"
-        Description: "Adds money into your economy, and gives it to a player."
+        Description: "Adds money into your economy, and gives it to a account."
+      GiveAll:
+        Arguments: "<amount> [currency] [world]"
+        Description: "Adds money into your economy, and gives it to every account."
       GiveNote:
         Arguments: "<player> <amount> [currency]"
         Description: "Gives a player a physical money note they can redeem for monies."
