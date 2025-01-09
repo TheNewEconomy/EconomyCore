@@ -50,8 +50,10 @@ import net.tnemc.plugincore.core.io.message.MessageData;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -290,6 +292,64 @@ public class MoneyCommand extends BaseCommand {
         provider.ifPresent(playerProvider->playerProvider.message(msgData));
       }
     }
+  }//ArgumentsParser: <amount> [world] [currency]
+  public static void onGiveAll(final CmdSource<?> sender, final PercentBigDecimal amount, String region, final Currency currency) {
+
+    final Optional<PlayerProvider> player = sender.player();
+    if(EconomyManager.limitCurrency() && player.isPresent()) {
+      if(!player.get().hasPermission("tne.money.give." + currency.getIdentifier())) {
+        final MessageData data = new MessageData("Messages.Account.BlockedAction");
+        data.addReplacement("$action", "give funds");
+        data.addReplacement("$currency", currency.getDisplay());
+        sender.message(data);
+        return;
+      }
+    }
+
+    if(player.isPresent() && region.equalsIgnoreCase("world-113")) {
+      region = player.get().world();
+    }
+
+    region = TNECore.eco().region().resolve(region);
+
+    final HoldingsModifier modifier = new HoldingsModifier(region,
+                                                           currency.getUid(),
+                                                           amount);
+
+    final List<String> accounts = new ArrayList<>();
+
+    final UUID sourceID = (sender.identifier().isPresent())? sender.identifier().get() : TNECore.instance().getServerAccount();
+    for(final Account account : TNECore.eco().account().getAccounts().values()) {
+
+      final Transaction transaction = new Transaction("give")
+              .to(account, modifier)
+              .source(new PlayerSource(sourceID));
+
+      final Optional<Receipt> receipt = processTransaction(sender, transaction, account.getName(), amount.value());
+      if(receipt.isPresent()) {
+
+        accounts.add(account.getName());
+
+        final MessageData msgData = new MessageData("Messages.Money.Given");
+        msgData.addReplacement("$currency", currency.getIdentifier());
+        msgData.addReplacement("$player", (sender.name() == null)? MainConfig.yaml().getString("Core.Server.Account.Name") : sender.name());
+        msgData.addReplacement("$amount", CurrencyFormatter.format(account, modifier.asEntry()));
+
+        MessageHandler.send(account.getIdentifier(), msgData.grab(account.getIdentifier()));
+        if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
+
+          final Optional<PlayerProvider> provider = ((PlayerAccount)account).getPlayer();
+
+          provider.ifPresent(playerProvider->playerProvider.message(msgData));
+        }
+      }
+    }
+
+    final MessageData data = new MessageData("Messages.Money.Gave");
+    data.addReplacement("$player", String.join(", ", accounts));
+    data.addReplacement("$currency", currency.getIdentifier());
+    data.addReplacement("$amount", CurrencyFormatter.format(null, modifier.asEntry()));
+    sender.message(data);
   }
 
   public static void onGiveNote(final CmdSource<?> sender, final Account acc, final BigDecimal amount, final Currency currency) {
