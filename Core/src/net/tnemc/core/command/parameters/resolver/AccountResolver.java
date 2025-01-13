@@ -20,11 +20,16 @@ package net.tnemc.core.command.parameters.resolver;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.utils.exceptions.InvalidAccountException;
 import org.jetbrains.annotations.NotNull;
 import revxrsal.commands.process.ValueResolver;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * AccountResolver
@@ -43,9 +48,13 @@ public class AccountResolver implements ValueResolver<Account> {
       value = context.actor().getName();
     }
 
-    final Optional<Account> account = TNECore.eco().account().findAccount(value);
-    if(account.isPresent()) {
-      return account.get();
+
+    if(!TNECore.eco().account().excluded(value)) {
+
+      final Optional<Account> account = TNECore.eco().account().findAccount(value);
+      if(account.isPresent()) {
+        return account.get();
+      }
     }
     throw new InvalidAccountException(value);
   }

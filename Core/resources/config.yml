@@ -3,7 +3,7 @@
 # License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 Core:
 
-  config-version: 4
+  config-version: 5
 
   #Cracked Server? Set this to true. May cause data issues as spigot/paper UUIDs are unpredictable.
   #Do not change this unless you know what you're doing.
@@ -86,6 +86,13 @@ Core:
 
     #Should the commands in TNE use their GUI alternatives?
     GUIAlternatives: true
+
+    #A list of values to use to exclude certain users from the parameters of an account argument if the username contains these values.
+    Exclusions:
+      - "^town-.*"
+      - "^nation-.*"
+      - "^faction-.*"
+      - "^towny-.*"
 
     #Configurations relating to balance commands.
     Balance:

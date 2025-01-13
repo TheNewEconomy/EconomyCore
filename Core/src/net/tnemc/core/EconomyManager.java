@@ -44,6 +44,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
 
 /**
@@ -109,6 +111,17 @@ public class EconomyManager {
     //Init our default account manager stuff.
     this.accountManager.addDefaultStatuses();
     this.accountManager.addDefaultTypes();
+
+    if(MainConfig.yaml().contains("Core.Commands.Exclusions")) {
+
+      for(final String str : MainConfig.yaml().getStringList("Core.Commands.Exclusions")) {
+        try {
+          accountManager.regexExclusions().add(Pattern.compile(str));
+        } catch(final PatternSyntaxException ignore) {
+          accountManager.exclusions().add(str);
+        }
+      }
+    }
 
     addIdentifier(NORMAL);
     addIdentifier(DATABASE);

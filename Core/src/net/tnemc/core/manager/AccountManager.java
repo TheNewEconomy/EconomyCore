@@ -51,6 +51,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Manages everything related to accounts.
@@ -70,6 +72,10 @@ public class AccountManager {
   private final LinkedHashMap<Class<? extends SharedAccount>, Function<String, Boolean>> types = new LinkedHashMap<>();
 
   protected final UUIDProvider uuidProvider = new BaseUUIDProvider();
+
+  //exclusion lists for account argument parameters.
+  protected final List<Pattern> regexExclusions = new ArrayList<>();
+  protected final List<String> exclusions = new ArrayList<>();
 
   /*
    * list for if player accounts are loading in this will mean that players in this list
@@ -403,6 +409,18 @@ public class AccountManager {
     return accountSwaps.getOrDefault(swapType + ":" + account.toString(), account);
   }
 
+  public boolean excluded(final String name) {
+
+    for(final Pattern pattern : regexExclusions) {
+      if(pattern.matcher(name).matches()) return true;
+    }
+
+    for(final String str : exclusions) {
+      if(name.contains(str)) return true;
+    }
+    return false;
+  }
+
   /**
    * Adds our default built-in account types.
    */
@@ -436,5 +454,15 @@ public class AccountManager {
   public List<UUID> getImporting() {
 
     return importing;
+  }
+
+  public List<Pattern> regexExclusions() {
+
+    return regexExclusions;
+  }
+
+  public List<String> exclusions() {
+
+    return exclusions;
   }
 }
