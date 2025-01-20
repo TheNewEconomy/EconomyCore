@@ -40,6 +40,6 @@ public class AccountSuggestion implements SuggestionProvider {
   @Override
   public @NotNull Collection<String> getSuggestions(@NotNull final List<String> list, @NotNull final CommandActor commandActor, @NotNull final ExecutableCommand executableCommand) throws Throwable {
 
-    return TNECore.eco().account().getAccounts().values().stream().map(Account::getName).collect(Collectors.toList());
+    return TNECore.eco().account().getAccounts().values().stream().map(Account::getName).filter(value -> !TNECore.eco().account().excluded(value)).collect(Collectors.toList());
   }
 }

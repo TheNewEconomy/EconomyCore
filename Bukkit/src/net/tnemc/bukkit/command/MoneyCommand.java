@@ -91,6 +91,15 @@ public class MoneyCommand {
     net.tnemc.core.command.MoneyCommand.onDeposit(new BukkitCMDSource(sender), amount, currency, region);
   }
 
+  @Subcommand({ "giveall", "+a", "addall" })
+  @Usage("Money.GiveAll.Arguments")
+  @Description("Money.GiveAll.Description")
+  @CommandPermission("tne.money.giveall")
+  public void onGiveAll(final BukkitCommandActor sender, @Named("amount") final PercentBigDecimal amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+
+    net.tnemc.core.command.MoneyCommand.onGiveAll(new BukkitCMDSource(sender), amount, region, currency);
+  }
+
   @Subcommand({ "give", "+", "add" })
   @Usage("Money.Give.Arguments")
   @Description("Money.Give.Description")

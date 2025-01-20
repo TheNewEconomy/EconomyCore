@@ -21,11 +21,13 @@ package net.tnemc.paper.command;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.command.parameters.PercentBigDecimal;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.plugincore.bukkit.impl.BukkitCMDSource;
 import net.tnemc.plugincore.paper.impl.PaperCMDSource;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.Description;
 import revxrsal.commands.annotation.Named;
+import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
 import revxrsal.commands.bukkit.BukkitCommandActor;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
@@ -47,6 +49,15 @@ public class ShortCommands {
   public void onGive(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final PercentBigDecimal amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
 
     net.tnemc.core.command.MoneyCommand.onGive(new PaperCMDSource(sender), player, amount, region, currency);
+  }
+
+  @Subcommand({ "giveallmoney", "giveallbal" })
+  @Usage("Money.GiveAll.Arguments")
+  @Description("Money.GiveAll.Description")
+  @CommandPermission("tne.money.giveall")
+  public void onGiveAll(final BukkitCommandActor sender, @Named("amount") final PercentBigDecimal amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+
+    net.tnemc.core.command.MoneyCommand.onGiveAll(new BukkitCMDSource(sender), amount, region, currency);
   }
 
   @Command({ "givenote", "+note", "addnote" })
