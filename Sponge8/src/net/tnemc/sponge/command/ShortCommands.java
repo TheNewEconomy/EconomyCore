@@ -26,6 +26,7 @@ import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.Description;
 import revxrsal.commands.annotation.Named;
+import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
 import revxrsal.commands.sponge.SpongeCommandActor;
 import revxrsal.commands.sponge.annotation.CommandPermission;
@@ -48,6 +49,15 @@ public class ShortCommands {
   public void onGive(final SpongeCommandActor sender, @Named("account") final Account player, @Named("amount") final PercentBigDecimal amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
 
     net.tnemc.core.command.MoneyCommand.onGive(new SpongeCMDSource(sender), player, amount, region, currency);
+  }
+
+  @Subcommand({ "giveallmoney", "giveallbal" })
+  @Usage("Money.GiveAll.Arguments")
+  @Description("Money.GiveAll.Description")
+  @CommandPermission("tne.money.giveall")
+  public void onGiveAll(final SpongeCommandActor sender, @Named("amount") final PercentBigDecimal amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+
+    net.tnemc.core.command.MoneyCommand.onGiveAll(new SpongeCMDSource(sender), amount, region, currency);
   }
 
   @Command({ "givenote", "+note", "addnote" })

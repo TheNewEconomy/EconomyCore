@@ -57,7 +57,7 @@ public class ShortCommands {
   @CommandPermission("tne.money.giveall")
   public void onGiveAll(final BukkitCommandActor sender, @Named("amount") final PercentBigDecimal amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
 
-    net.tnemc.core.command.MoneyCommand.onGiveAll(new BukkitCMDSource(sender), amount, region, currency);
+    net.tnemc.core.command.MoneyCommand.onGiveAll(new PaperCMDSource(sender), amount, region, currency);
   }
 
   @Command({ "givenote", "+note", "addnote" })
