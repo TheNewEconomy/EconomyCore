@@ -40,7 +40,7 @@ import java.util.logging.Logger;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-@Plugin(id = "tne_velocity", name = "The New Economy Velocity", version = "0.1.3.4",
+@Plugin(id = "tne_velocity", name = "The New Economy Velocity", version = "0.1.3.5",
         url = "https://tnemc.net", description = "A bridge for TheNewEconomy plugin.", authors = { "creatorfromhell" })
 public class VelocityCore {
 
