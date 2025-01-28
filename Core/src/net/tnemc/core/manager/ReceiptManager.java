@@ -18,6 +18,7 @@ package net.tnemc.core.manager;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.transaction.Receipt;
 
 import java.util.ArrayList;
@@ -48,7 +49,10 @@ public class ReceiptManager {
    */
   public void log(final Receipt receipt) {
 
-    receipts.put(receipt.getId(), receipt);
+    if(MainConfig.yaml().getBoolean("Core.Transactions.Record")) {
+
+      receipts.put(receipt.getId(), receipt);
+    }
   }
 
   /**
