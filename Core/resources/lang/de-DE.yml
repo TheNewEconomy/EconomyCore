@@ -12,7 +12,7 @@ Messages:
     Disabled: "<red>Economy Features sind derzeit in dieser Welt deaktiviert!"
     IsConsole: "<red>Du kannst diesen Befehl nicht von der Konsole ausführen!"
   Worlds:
-    example: "replacement"
+    example: "Ersatz"
   Item:
     Invalid: "<red>Ungültiger Artikelname und/oder Haltbarkeitskombination eingegeben."
     InvalidAmount: "<red>Ungültige Artikelmenge eingegeben."
@@ -38,8 +38,8 @@ Messages:
     Restoration: "<white>Extraktion gestartet. Bitte beobachte die Konsole zur Vervollständigungsbestätigung."
   Account:
     NoSuch: "<red>Dein Account konnte nicht gefunden werden!"
-    Switched: "<white>Successfully switched your holdings account to <green>$account<white>."
-    SwitchedFailed: "<red>You don't have access to switch your holdings account to <white>$account<red>."
+    Switched: "<white>Ihr Beteiligungskonto wurde erfolgreich auf <green>$account<white> gewechselt."
+    SwitchedFailed: "<red>Sie haben keinen Zugriff, um Ihr Beteiligungskonto auf <white>$account<red> zu wechseln."
     NoHoldings: "<red>Sie haben keine Anteile für die Währung '$currency'."
     PinSetAlready: "<red>Du hast bereits einen Pin gesetzt. Bitte gib den alten Pin an, um einen neuen Pin zu setzen."
     PinSet: "<white>Deine Pin wurde auf $pin gesetzt."
@@ -67,7 +67,7 @@ Messages:
     Invalid: "<red>Es konnte kein Modul mit dem Namen '$module ' gefunden werden."
     List: "<white>Dieser Server benutzt derzeit diese TNE Module: $modules."
     Loaded: "<white>Loaded module '$module' $version created by '$author'."
-    Reloaded: "<white>Reloaded module '$module'."
+    Reloaded: "<white>Modul '$module ' neu geladen."
     Unloaded: "<white>Unloaded module '$module'."
   Money:
     NotMixed: "<red>This action requires a mixed currency type."
