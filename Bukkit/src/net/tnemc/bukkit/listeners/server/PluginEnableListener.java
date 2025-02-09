@@ -19,6 +19,8 @@ package net.tnemc.bukkit.listeners.server;
  */
 
 import net.tnemc.bukkit.hook.misc.PAPIHook;
+import net.tnemc.bukkit.hook.misc.PlaceHolderRule;
+import net.tnemc.core.currency.format.CurrencyFormatter;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginEnableEvent;
@@ -36,6 +38,8 @@ public class PluginEnableListener implements Listener {
 
     if(event.getPlugin().getName().equalsIgnoreCase("placeholderapi")) {
       new PAPIHook().register();
+
+      CurrencyFormatter.addRule(new PlaceHolderRule());
     }
   }
 }

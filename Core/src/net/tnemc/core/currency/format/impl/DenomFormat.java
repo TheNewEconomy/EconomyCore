@@ -1,5 +1,4 @@
 package net.tnemc.core.currency.format.impl;
-
 /*
  * The New Economy
  * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
@@ -34,12 +33,18 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class MaterialRule implements FormatRule {
+/**
+ * DenomFormat
+ *
+ * @author creatorfromhell
+ * @since 0.1.2.0
+ */
+public class DenomFormat implements FormatRule {
 
   @Override
   public String name() {
 
-    return "material";
+    return "denom";
   }
 
   /**
@@ -62,16 +67,20 @@ public class MaterialRule implements FormatRule {
 
     final Optional<Currency> currency = entry.currency();
     if(account != null && account.isPlayer() && currency.isPresent() && currency.get() instanceof ItemCurrency) {
+
       final Optional<PlayerProvider> provider = PluginCore.server().findPlayer(((PlayerAccount)account).getUUID());
       if(provider.isPresent()) {
         for(final Denomination denomination : currency.get().getDenominations().values()) {
 
           final ItemDenomination denom = (ItemDenomination)denomination;
-          if(formatted.contains(denom.getMaterial())) {
+          final String replace = "<" + name() + "." + denom.getName() + ">";
+
+          if(formatted.contains(replace)) {
 
             final AbstractItemStack<?> stack = TNECore.instance().denominationToStack(denom);
             final int count = PluginCore.server().calculations().count((AbstractItemStack<Object>)stack, provider.get().inventory().getInventory(false));
-            formatted = formatted.replace("<" + denom.getMaterial() + ">", String.valueOf(count));
+
+            formatted = formatted.replace(replace, String.valueOf(count));
           }
         }
       }

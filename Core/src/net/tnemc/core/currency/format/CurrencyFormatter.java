@@ -24,11 +24,13 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.format.impl.DecimalRule;
+import net.tnemc.core.currency.format.impl.DenomFormat;
 import net.tnemc.core.currency.format.impl.MajorAmountRule;
 import net.tnemc.core.currency.format.impl.MajorNameRule;
 import net.tnemc.core.currency.format.impl.MajorRule;
 import net.tnemc.core.currency.format.impl.MaterialRule;
 import net.tnemc.core.currency.format.impl.MinorAmountRule;
+import net.tnemc.core.currency.format.impl.MinorNameRule;
 import net.tnemc.core.currency.format.impl.MinorRule;
 import net.tnemc.core.currency.format.impl.ShortenJRule;
 import net.tnemc.core.currency.format.impl.ShortenRule;
@@ -59,10 +61,11 @@ public class CurrencyFormatter {
     addRule(new MajorNameRule());
     addRule(new MajorRule());
     addRule(new MinorAmountRule());
-    //addRule(new MinorNameRule());
+    addRule(new MinorNameRule());
     addRule(new MinorRule());
     addRule(new SymbolRule());
     addRule(new MaterialRule());
+    addRule(new DenomFormat());
   }
 
   public static void addRule(final FormatRule rule) {

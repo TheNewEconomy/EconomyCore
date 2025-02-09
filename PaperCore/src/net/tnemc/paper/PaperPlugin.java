@@ -17,6 +17,7 @@ package net.tnemc.paper;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.bukkit.hook.misc.PlaceHolderRule;
 import net.tnemc.bukkit.listeners.entity.EntityKilledListener;
 import net.tnemc.bukkit.listeners.player.PlayerCloseInventoryListener;
 import net.tnemc.bukkit.listeners.player.PlayerExperienceGainListener;
@@ -26,6 +27,7 @@ import net.tnemc.bukkit.listeners.server.PluginEnableListener;
 import net.tnemc.bukkit.listeners.world.WorldLoadListener;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.TNECallbackProvider;
+import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.io.message.BaseTranslationProvider;
 import net.tnemc.item.paper.PaperCalculationsProvider;
 import net.tnemc.paper.hook.economy.VaultHook;
@@ -74,7 +76,7 @@ public class PaperPlugin {
     try {
       Class.forName("net.milkbowl.vault2.economy.Economy");
       new VaultUnlockedHook().register();
-    } catch(Exception ignore) {
+    } catch(final Exception ignore) {
       PluginCore.log().error("Unable to connect to VaultUnlocked!");
     }
 
@@ -82,7 +84,7 @@ public class PaperPlugin {
     try {
       Class.forName("net.milkbowl.vault.economy.Economy");
       new VaultHook().register();
-    } catch(Exception ignore) {
+    } catch(final Exception ignore) {
       PluginCore.log().error("Unable to connect to vault!");
     }
   }
@@ -115,6 +117,8 @@ public class PaperPlugin {
     //PAPI
     if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
       new PAPIHook().register();
+
+      CurrencyFormatter.addRule(new PlaceHolderRule());
     } else {
       Bukkit.getPluginManager().registerEvents(new PluginEnableListener(), plugin);
     }

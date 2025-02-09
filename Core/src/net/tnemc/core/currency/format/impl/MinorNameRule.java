@@ -52,7 +52,9 @@ public class MinorNameRule implements FormatRule {
 [15:52:47 WARN]:        at BukkitCore-0.1.3.0-SNAPSHOT-7.jar//net.tnemc.bukkit.command.MoneyCommand.onSet(MoneyCom
      */
 
+
     final Optional<Currency> currency = entry.currency();
+
     return currency.map(value->format.replace("<minor.name>",
                                               (monetary.minorAsInt().compareTo(BigInteger.ONE) == 0)?
                                               value.getDisplayMinor() :
