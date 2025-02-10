@@ -299,24 +299,24 @@ Messages:
     MyBal:
       Main:
         Balance: "Bilanz: $balance"
-        Pay: "Left click to pay account using currency."
-        Other: "Press Q for other actions using currency."
-        Note: "Right click to create physical currency note."
-        Breakdown: "Right click to view balance breakdown."
+        Pay: "Links klicken, um das Konto mit der Währung zu bezahlen."
+        Other: "Drücke Q für weitere Währungsoptionen."
+        Note: "Rechts klicken, um einen Geldschein zu erstellen."
+        Breakdown: "Rechts klicken, um die Bilanzübersicht anzuzeigen. "
       Actions:
-        ConvertDisplay: "Convert Currency"
-        Convert: "Click to convert this currency to another"
-        DepositDisplay: "Deposit Currency"
-        Deposit: "Click to deposit some physical currency to your virtual balance."
-        WithdrawDisplay: "Withdraw Currency"
-        Withdraw: "Click to withdraw some physical currency from your virtual balance."
+        ConvertDisplay: "Währung konvertieren"
+        Convert: "Klicken, um die Währung zu einer anderen Währung zu konvertieren."
+        DepositDisplay: "Währung einzahlen"
+        Deposit: "Klicken, um physische Währung in das virtuelle Konto einzuzahlen."
+        WithdrawDisplay: "Währung abheben"
+        Withdraw: "Klicken, um physische Währung von dem virtuellen Konto abzuheben."
       Breakdown:
-        Balance: "Balance: $balance"
+        Balance: "Bilanz: $balance"
       Currency:
-        Select: "Click to select currency."
+        Select: "Klicken, um eine Währung auszuwählen."
       AmountSelect:
         MaxDisplay: "Add Max"
-        Max: "Adds your entire balance."
+        Max: "Wird zu deiner Gesamtbilanz hinzugefügt."
         Player: "Player action will be performed on."
   Currency:
     Type:
@@ -324,9 +324,9 @@ Messages:
       EXPERIENCE_HOLDINGS: "Experience Holdings"
       INVENTORY_HOLDINGS: "Inventory Holdings"
       ENDER_HOLDINGS: "Ender Chest Holdings"
-    Sure: "<red>Are you sure that you want to delete currency $currency? Type \"confirm\" to delete, or anything else to not delete."
-    Only: "<red>You're not able to delete the only currency that is loaded."
-    Deleted: "<yellow>You have successfully deleted the currency $currency."
+    Sure: "<red>Bist du sicher, dass du die folgende Währung ($currency) löschen möchtest? Gib \"confirm\" ein, um die Währung zu löschen. Ansonsten gibt etwas anderes ein."
+    Only: "<red>Du kannst eine geladene Währung nicht löschen."
+    Deleted: "<yellow>Du hast erfolgreich die Währung ($currency) gelöscht."
   Note:
     Created: "<white>You gave a note to $player in the amount of <gold>$amount<white> for currency <green>$currency<white>."
     Given: "<white>A note has been given to you in the amount of <gold>$amount<white> for currency <green>$currency<white>."
@@ -334,63 +334,63 @@ Messages:
     Failed: "<red>I'm sorry, but your attempt to claim that currency note failed!."
     Minimum: "<red>The minimum note amount of $amount was not met."
     Name: "Currency Note"
-    Currency: "Currency: $currency"
+    Currency: "Währung: $currency"
     Region: "Region: $region"
-    Amount: "Amount: $amount"
+    Amount: "Betrag: $amount"
     Action: "Right click to claim note."
     Dropped: "<red>Your inventory was full, so your currency note was dropped on the ground."
     CreateOffline: "<red>You can't create notes for an offline player!"
   Setup:
     General:
-      Failed: "Setup failed during step '$step'!"
-      Successful: "Setup has sucessfully completed!"
-      StepComplete: "Setup step '$step' has successfully been completed."
+      Failed: "Die Einrichtung ist während Schritt $step fehlgeschlagen!"
+      Successful: "Die Einrichtung wurde erfolgreich abgeschlossen?"
+      StepComplete: "Einrichtungsschritt '$step' wurde erfolgreich abgeschlossen."
     Conversion:
-      Identifier: "conversion"
+      Identifier: "Umwandlung"
   Transaction:
-    Already: "<red>The transaction with the ID of $transaction has already been voided."
-    Away: "<white>=====[<green>Missed Transactions</green>]===== $page/$page_top<newline>ID | Type"
+    Already: "<red>Die Transaktion mit der ID $transaction wurde bereits storniert."
+    Away: "<white>=====[<green>Verpasste Transaktionen</green>]===== $page/$page_top<newline>ID | Typ"
     AwayEntry: "<green><click:run_command:/transaction info $id>$id</click> <white>|</white> $type"
-    AwayNone: "<red>No transactions occured while you were offline."
-    AwayJoin: "<white>You missed some transactions while you were gone. <green><click:run_command:/transaction away>View Them Now</click>!"
+    AwayNone: "<red>Es gab keine keine Transaktionen, während du offline warst."
+    AwayJoin: "<white>Es gab Transaktionen, während du offline warst. <green><click:run_command:/transaction away>Schau dir die Transaktionen an</click>!"
     HistoryNone: "No transactions to show!"
-    History: "<white>=====[<green>Transactions<white>]===== $page/$page_top<newline>ID | Type | Initiator | Recipient"
+    History: "<white>===[<green>Transaktionen<white>]===== $page/$page_top<newline>ID | Typ | Sender | Empfänger"
     HistoryEntry: "<green><click:run_command:/transaction info $id>$id</click> <white>| <green>$type <white>| <green>$initiator <white>| <green>$recipient"
-    Info: "<white>Transaction Information:<newline><white>ID: <green>$id<newline><white>Type: <green>$type"
-    Invalid: "<red>There is no transaction with the ID of $transaction."
-    Unable: "<red>Unable to void that transaction at this time."
-    Voided: "<white>Successfully voided the transaction with the ID of <green>$transaction<white>."
+    Info: "<white>Transaktionsinformationen:<newline><white>ID: <green>$id<newline><white>Typ: <green>$type"
+    Invalid: "<red>Es gibt keine Transaktion mit der ID $transaction."
+    Unable: "<red>Diese Transaktion kann derzeit nicht storniert werden."
+    Voided: "<white>Die Transaktion mit der ID <green>$transaction<white> wurde erfolgreich storniert."
   Commands:
     Help:
-      Title: "=====<white> Help for <green>$command</green> Page: <green>$page</green> ====="
+      Title: "=====<white> Hilfe für <green>$command</green> Seite: <green>$page</green> ====="
       Entry: "<gold>$command $arguments - <white>$description</white>"
       Arguments: "[page]"
       Description: "Command help pages."
     Admin:
       Backup:
         Arguments: ""
-        Description: "Creates a backup of all server data."
+        Description: "Erstellt eine Sicherung aller Serverdaten."
       Create:
         Arguments: "<name> [balance]"
-        Description: "Creates a new non-player economy account.<newline>- name - The name of the account.<newline>- Balance ~ The starting balance of the account."
+        Description: "Erstellt einen Nichtspieler-Account.<newline>- Name - Accountname.<newline>- Bilanz ~ Startbilanz des Accounts."
       Debug:
         Arguments: ""
-        Description: "Toggles console debug mode."
+        Description: "Schaltet den Konsolen-Debug-Modus um."
       Delete:
         Arguments: "<player>"
-        Description: "Deletes a player account.<newline>- Player ~ The account owner."
+        Description: "Löscht einen Spieleraccount .<newline>- Spieler ~ Accountsbesitzer"
       Extract:
         Arguments: ""
         Description: "Extracts all player balances with their username attached for database-related debugging."
       Main:
         Arguments: ""
-        Description: "The main admin command for TNE."
+        Description: "Der Administrationshauptbefehl"
       MyEco:
         Arguments: ""
-        Description: "Opens the MyEco menu"
+        Description: "Öffnet das MyEco-Menü"
       Purge:
         Arguments: ""
-        Description: "Deletes all player accounts that have the default balance"
+        Description: "Löscht alle Spieleraccounts mit der Standardstartbilanz"
       Reload:
         Arguments: "[configuration]"
         Description: "Saves modifications made via command, and reloads a configuration file.<newline>- Configuration ~ The identifier of the configuration to reload. Default is all."
@@ -428,16 +428,16 @@ Messages:
     Money:
       Balance:
         Arguments: "[currency] [region]"
-        Description: "Displays your current holdings."
+        Description: "Zeigt deinen aktuellen Bestand an."
       Convert:
         Arguments: "<amount> <to currency> [from currency]"
-        Description: "Convert some of your holdings to another currency."
+        Description: "Konvertiere etwas von deinem aktuellen Bestand in eine andere Währung."
       Deposit:
         Arguments: "<amount> [currency]"
         Description: "Deposits money from an item form into a virtual bank for mixed currencies."
       Give:
         Arguments: "<player> <amount> [currency] [world]"
-        Description: "Adds money into your economy, and gives it to a player."
+        Description: "Adds money into your economy, and gives it to a account."
       GiveAll:
         Arguments: "<amount> [currency] [world]"
         Description: "Adds money into your economy, and gives it to every account."
@@ -449,7 +449,7 @@ Messages:
         Description: "Makes your virtual currency physical, for storage/trading purposes."
       MyBal:
         Arguments: "[currency]"
-        Description: "Opens the MyBal menu"
+        Description: "Öffnet das myBal-Menü"
       Other:
         Arguments: "<player> [currency] [region]"
         Description: "Retrieves the balance of a player.<newline>- Player ~ The account owner.<newline>- World ~ The world to retrieve the balance from.<newline>- currency ~ The currency to retrieve the balance of."
@@ -458,7 +458,7 @@ Messages:
         Description: "Use some of your holdings to pay another player."
       Request:
         Arguments: "<player> <amount> [currency]"
-        Description: "Request money from a player."
+        Description: "Erfrage Geld von einem Spieler."
       Set:
         Arguments: "<player> <amount> [currency] [world]"
         Description: "Set the holdings of a player."
