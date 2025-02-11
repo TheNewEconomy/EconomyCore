@@ -28,6 +28,8 @@ import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.io.message.MessageHandler;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -57,9 +59,11 @@ public class MyBalAmountSelectionPage extends AmountSelectionPage {
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
 
+      final UUID viewerID = viewer.get().uuid();
+
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-                                                         .display(Component.text("Add Max"))
-                                                         .lore(Collections.singletonList(Component.text("Adds your entire balance."))))
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.AmountSelect.MaxDisplay"), viewerID))
+                                                         .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.AmountSelect.Max"), viewerID))))
                                          .withActions(new SwitchPageAction(menuName, menuPage))
                                          .withClick((click)->balAddClick(click, ((BigDecimal)viewer.get().dataOrDefault(MyBalMenu.ACTION_MAX_HOLDINGS, BigDecimal.ZERO))))
                                          .withSlot(31)
@@ -79,11 +83,11 @@ public class MyBalAmountSelectionPage extends AmountSelectionPage {
             profile.setUuid(account);
           }
 
-        } catch(Exception ignore) { }
+        } catch(final Exception ignore) { }
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PLAYER_HEAD", 1)
                                                            .display(Component.text((String)name.get()))
-                                                           .lore(Collections.singletonList(Component.text("Player action will be performed on.")))
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.AmountSelect.Player"), viewerID)))
                                                            .profile(profile))
                                            .withActions(new SwitchPageAction(menuName, menuPage))
                                            .withSlot(13)

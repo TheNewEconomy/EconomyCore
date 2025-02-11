@@ -24,8 +24,11 @@ import net.tnemc.core.menu.icons.shared.SwitchPageIcon;
 import net.tnemc.menu.core.icon.action.ActionType;
 import net.tnemc.menu.core.icon.action.impl.DataAction;
 import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.io.message.MessageHandler;
 
 import java.util.Collections;
+import java.util.UUID;
 
 import static net.tnemc.core.menu.MyEcoMenu.ACTIVE_CURRENCY;
 import static net.tnemc.core.menu.MyEcoMenu.CURRENCY_EDIT_PAGE;
@@ -38,10 +41,10 @@ import static net.tnemc.core.menu.MyEcoMenu.CURRENCY_EDIT_PAGE;
  */
 public class CurrencyIcon extends SwitchPageIcon {
 
-  public CurrencyIcon(final int slot, final Currency currency) {
+  public CurrencyIcon(final UUID id, final int slot, final Currency currency) {
 
     super(slot, PluginCore.server().stackBuilder().of(currency.getIconMaterial(), 1)
-                  .display(Component.text(currency.getIdentifier())).lore(Collections.singletonList(Component.text("Click to edit currency"))),
+                  .display(Component.text(currency.getIdentifier())).lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Currencies.Edit"), id))),
           "my_eco", CURRENCY_EDIT_PAGE, ActionType.ANY, false);
 
     actions.add(new DataAction(ACTIVE_CURRENCY, currency));

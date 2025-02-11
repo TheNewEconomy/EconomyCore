@@ -27,9 +27,12 @@ import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
 import net.tnemc.menu.core.manager.MenuManager;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.io.message.MessageHandler;
 
 import java.util.Collections;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 /**
@@ -71,6 +74,8 @@ public class MaterialSelectionPageCallback {
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
 
+      final UUID id = viewer.get().uuid();
+
       final int page = (Integer)viewer.get().dataOrDefault(materialPageID, 1);
       final int items = (menuRows - 1) * 9;
       final int start = ((page - 1) * items);
@@ -83,23 +88,23 @@ public class MaterialSelectionPageCallback {
       if(maxPages > 1) {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
-                                                           .display(Component.text("Previous Page"))
-                                                           .lore(Collections.singletonList(Component.text("Click to go to previous page."))))
+                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))))
                                            .withActions(new DataAction(materialPageID, prev), new SwitchPageAction(menuName, menuPage))
                                            .withSlot(0)
                                            .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                                                           .display(Component.text("Next Page"))
-                                                           .lore(Collections.singletonList(Component.text("Click to go to next page."))))
+                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPage"), id))))
                                            .withActions(new DataAction(materialPageID, next), new SwitchPageAction(menuName, menuPage))
                                            .withSlot(8)
                                            .build());
       }
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
-                                                         .display(Component.text("Escape Menu"))
-                                                         .lore(Collections.singletonList(Component.text("Click to exit this menu."))))
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EscapeDisplay"), id))
+                                                         .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Escape"), id))))
                                          .withActions(new SwitchPageAction(returnMenu, returnPage))
                                          .withSlot(4)
                                          .build());
@@ -112,7 +117,7 @@ public class MaterialSelectionPageCallback {
         final String material = MenuManager.instance().getHelper().materials().get(i);
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(material, 1)
-                                                           .lore(Collections.singletonList(Component.text("Click to select material."))))
+                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Material.Select"), id))))
                                            .withActions(new DataAction(materialDataID, material),
                                                         new RunnableAction((click)->{
 

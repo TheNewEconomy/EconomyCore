@@ -18,11 +18,14 @@ package net.tnemc.core.menu.icons.shared;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.kyori.adventure.text.Component;
 import net.tnemc.menu.core.icon.Icon;
 import net.tnemc.menu.core.icon.action.ActionType;
 import net.tnemc.menu.core.icon.action.impl.SwitchMenuAction;
 import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.io.message.MessageHandler;
+
+import java.util.UUID;
 
 /**
  * BackIcon
@@ -32,9 +35,9 @@ import net.tnemc.plugincore.PluginCore;
  */
 public class PreviousMenuIcon extends Icon {
 
-  public PreviousMenuIcon(final int slot, final String menu, final ActionType type) {
+  public PreviousMenuIcon(final UUID id, final int slot, final String menu, final ActionType type) {
 
-    super(PluginCore.server().stackBuilder().of("RED_WOOL", 1).display(Component.text("Previous Menu")), null);
+    super(PluginCore.server().stackBuilder().of("RED_WOOL", 1).display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousMenuDisplay"), id)), null);
 
     this.slot = slot;
 

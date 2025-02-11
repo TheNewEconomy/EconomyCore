@@ -132,7 +132,6 @@ public class MyEcoMenu extends Menu {
      * Currency List Page
      */
     final Page currency = new PageBuilder(CURRENCIES_PAGE).build();
-    currency.addIcon(new PreviousPageIcon(0, this.name, 1, ActionType.ANY));
     setClose((close)->{
 
       final Optional<MenuViewer> viewer = close.getPlayer().viewer();
@@ -154,6 +153,8 @@ public class MyEcoMenu extends Menu {
       if(open.getPlayer().viewer().isPresent()) {
 
         final UUID id = open.getPlayer().identifier();
+
+        open.getPage().addIcon(new PreviousPageIcon(id, 0, this.name, 1, ActionType.ANY));
 
         open.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
                                                        .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Save"), id))
@@ -235,7 +236,8 @@ public class MyEcoMenu extends Menu {
 
         int i = 19;
         for(final Currency curObj : TNECore.eco().currency().currencies()) {
-          currency.addIcon(new CurrencyIcon(i, curObj));
+
+          currency.addIcon(new CurrencyIcon(id, i, curObj));
 
           i += 2;
         }
@@ -248,12 +250,13 @@ public class MyEcoMenu extends Menu {
      * Currency Edit Page
      */
     final Page currencyEditor = new PageBuilder(CURRENCY_EDIT_PAGE).build();
-    currencyEditor.addIcon(new PreviousPageIcon(0, this.name, CURRENCIES_PAGE, ActionType.ANY));
 
     currencyEditor.setOpen((open)->{
       if(open.getPlayer().viewer().isPresent()) {
 
         final UUID id = open.getPlayer().identifier();
+
+        currencyEditor.addIcon(new PreviousPageIcon(id, 0, this.name, CURRENCIES_PAGE, ActionType.ANY));
 
         //denominations
         currencyEditor.addIcon(new SwitchPageIcon(10, PluginCore.server().stackBuilder().of("GOLD_INGOT", 1)
@@ -292,7 +295,6 @@ public class MyEcoMenu extends Menu {
      * Currency Edit Info
      */
     final Page currencyInfoEditPage = new PageBuilder(CURRENCY_INFO_EDIT_PAGE).build();
-    currencyInfoEditPage.addIcon(new PreviousPageIcon(0, this.name, CURRENCY_EDIT_PAGE, ActionType.ANY));
     currencyInfoEditPage.setOpen((this::handleCurrencyEditInfoOpen));
 
     addPage(currencyInfoEditPage);
@@ -359,7 +361,6 @@ public class MyEcoMenu extends Menu {
      * Currency Edit Format
      */
     final Page currencyFormatEditPage = new PageBuilder(CURRENCY_FORMAT_EDIT_PAGE).build();
-    currencyFormatEditPage.addIcon(new PreviousPageIcon(0, this.name, CURRENCY_EDIT_PAGE, ActionType.ANY));
     currencyFormatEditPage.setOpen((this::handleCurrencyEditFormatOpen));
 
     addPage(currencyFormatEditPage);
@@ -382,13 +383,23 @@ public class MyEcoMenu extends Menu {
      * Currency Edit Type
      */
     final Page currencyTypeEditPage = new PageBuilder(CURRENCY_TYPE_EDIT_PAGE).build();
-    currencyTypeEditPage.addIcon(new PreviousPageIcon(0, this.name, CURRENCY_EDIT_PAGE, ActionType.ANY));
+
+    currencyEditor.setOpen(open->{
+      if(open.getPlayer().viewer().isPresent()) {
+
+
+        final UUID id = open.getPlayer().identifier();
+
+        open.getPage().addIcon(new PreviousPageIcon(id, 0, this.name, CURRENCY_EDIT_PAGE, ActionType.ANY));
+      }
+    });
 
     int i = 19;
     for(final CurrencyType type : TNECore.eco().currency().getTypes().values()) {
 
       final SwitchPageIcon switchIcon = new SwitchPageIcon(i, PluginCore.server().stackBuilder().of("PAPER", 1)
-              .display(Component.text("Type: " + type.name())).lore(Collections.singletonList(Component.text("Click to set currency to this type."))), this.name, CURRENCY_EDIT_PAGE, ActionType.ANY, false);
+              .display(Component.text("Type: " + type.name()))
+              .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Currency.SetCurrencyTypeLore"), UUID.randomUUID()))), this.name, CURRENCY_EDIT_PAGE, ActionType.ANY, false);
       switchIcon.addAction(new RunnableAction((click)->{
 
         if(click.player().viewer().isPresent()) {
@@ -424,7 +435,6 @@ public class MyEcoMenu extends Menu {
      * Currency Note Edit Info
      */
     final Page currencyFormatNotePage = new PageBuilder(CURRENCY_NOTE_EDIT_PAGE).build();
-    currencyFormatNotePage.addIcon(new PreviousPageIcon(0, this.name, CURRENCY_EDIT_PAGE, ActionType.ANY));
     currencyFormatNotePage.setOpen((this::handleCurrencyEditNoteOpen));
 
     addPage(currencyFormatNotePage);
@@ -517,7 +527,6 @@ public class MyEcoMenu extends Menu {
      * Denominations List Page
      */
     final Page denominationsPage = new PageBuilder(DENOMINATIONS_PAGE).build();
-    denominationsPage.addIcon(new PreviousPageIcon(0, this.name, CURRENCY_EDIT_PAGE, ActionType.ANY));
     denominationsPage.setOpen((this::handleDenominationOpen));
 
     addPage(denominationsPage);
@@ -526,7 +535,6 @@ public class MyEcoMenu extends Menu {
      * Denominations Edit Page
      */
     final Page denominationsEditPage = new PageBuilder(DENOMINATION_EDIT_PAGE).build();
-    denominationsEditPage.addIcon(new PreviousPageIcon(0, this.name, DENOMINATIONS_PAGE, ActionType.ANY));
     denominationsEditPage.setOpen((this::handleDenominationEditOpen));
     addPage(denominationsEditPage);
 
@@ -618,6 +626,9 @@ public class MyEcoMenu extends Menu {
     if(viewer.isPresent()) {
 
       final UUID id = viewer.get().uuid();
+
+      callback.getPage().addIcon(new PreviousPageIcon(id, 0, this.name, CURRENCY_EDIT_PAGE, ActionType.ANY));
+
       final Optional<Object> currencyOpt = viewer.get().findData(ACTIVE_CURRENCY);
       if(currencyOpt.isPresent()) {
 
@@ -771,6 +782,9 @@ public class MyEcoMenu extends Menu {
     if(viewer.isPresent()) {
 
       final UUID id = viewer.get().uuid();
+
+      callback.getPage().addIcon(new PreviousPageIcon(id, 0, this.name, CURRENCY_EDIT_PAGE, ActionType.ANY));
+
       final Optional<Object> currencyOpt = viewer.get().findData(ACTIVE_CURRENCY);
       if(currencyOpt.isPresent()) {
 
@@ -988,6 +1002,9 @@ public class MyEcoMenu extends Menu {
     if(viewer.isPresent()) {
 
       final UUID id = viewer.get().uuid();
+
+      callback.getPage().addIcon(new PreviousPageIcon(id, 0, this.name, CURRENCY_EDIT_PAGE, ActionType.ANY));
+
       final Optional<Object> currencyOpt = viewer.get().findData(ACTIVE_CURRENCY);
       if(currencyOpt.isPresent()) {
 
@@ -1088,6 +1105,9 @@ public class MyEcoMenu extends Menu {
     if(viewer.isPresent()) {
 
       final UUID id = viewer.get().uuid();
+
+      callback.getPage().addIcon(new PreviousPageIcon(id, 0, this.name, CURRENCY_EDIT_PAGE, ActionType.ANY));
+
       final Optional<Object> currencyOpt = viewer.get().findData(ACTIVE_CURRENCY);
       if(currencyOpt.isPresent()) {
 
@@ -1124,7 +1144,7 @@ public class MyEcoMenu extends Menu {
         int i = 19;
         for(final Denomination denomObj : currency.getDenominations().values()) {
 
-          callback.getPage().addIcon(new DenominationIcon(i, denomObj));
+          callback.getPage().addIcon(new DenominationIcon(id, i, denomObj));
 
           i += 2;
         }
@@ -1154,6 +1174,9 @@ public class MyEcoMenu extends Menu {
     if(viewer.isPresent()) {
 
       final UUID id = viewer.get().uuid();
+
+      callback.getPage().addIcon(new PreviousPageIcon(id, 0, this.name, DENOMINATIONS_PAGE, ActionType.ANY));
+
       final Optional<Object> denomOpt = viewer.get().findData(ACTIVE_DENOMINATION);
       final Optional<Object> currencyOpt = viewer.get().findData(ACTIVE_CURRENCY);
       if(denomOpt.isPresent() && currencyOpt.isPresent()) {

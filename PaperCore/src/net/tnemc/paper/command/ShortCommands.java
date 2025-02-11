@@ -51,7 +51,7 @@ public class ShortCommands {
     net.tnemc.core.command.MoneyCommand.onGive(new PaperCMDSource(sender), player, amount, region, currency);
   }
 
-  @Subcommand({ "giveallmoney", "giveallbal" })
+  @Command({ "giveallmoney", "giveallbal" })
   @Usage("Money.GiveAll.Arguments")
   @Description("Money.GiveAll.Description")
   @CommandPermission("tne.money.giveall")

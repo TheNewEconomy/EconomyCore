@@ -24,8 +24,11 @@ import net.tnemc.core.menu.icons.shared.SwitchPageIcon;
 import net.tnemc.menu.core.icon.action.ActionType;
 import net.tnemc.menu.core.icon.action.impl.RunnableAction;
 import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.io.message.MessageHandler;
 
 import java.util.Collections;
+import java.util.UUID;
 
 import static net.tnemc.core.menu.MyEcoMenu.CURRENCIES_PAGE;
 
@@ -37,10 +40,10 @@ import static net.tnemc.core.menu.MyEcoMenu.CURRENCIES_PAGE;
  */
 public class SaveCurrencyIcon extends SwitchPageIcon {
 
-  public SaveCurrencyIcon(final int slot, final Currency currency) {
+  public SaveCurrencyIcon(final UUID id, final int slot, final Currency currency) {
 
     super(slot, PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                  .display(Component.text(currency.getIdentifier())).lore(Collections.singletonList(Component.text("Click to Save Currency"))),
+                  .display(Component.text(currency.getIdentifier())).lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Currencies.Save"), id))),
           "my_eco", CURRENCIES_PAGE, ActionType.ANY, false);
 
     addAction(new RunnableAction((click->{

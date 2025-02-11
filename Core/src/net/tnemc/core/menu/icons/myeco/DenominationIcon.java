@@ -25,8 +25,11 @@ import net.tnemc.core.menu.icons.shared.SwitchPageIcon;
 import net.tnemc.menu.core.icon.action.ActionType;
 import net.tnemc.menu.core.icon.action.impl.DataAction;
 import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.io.message.MessageHandler;
 
 import java.util.Collections;
+import java.util.UUID;
 
 import static net.tnemc.core.menu.MyEcoMenu.DENOMINATION_EDIT_PAGE;
 
@@ -38,10 +41,10 @@ import static net.tnemc.core.menu.MyEcoMenu.DENOMINATION_EDIT_PAGE;
  */
 public class DenominationIcon extends SwitchPageIcon {
 
-  public DenominationIcon(final int slot, final Denomination denomination) {
+  public DenominationIcon(final UUID id, final int slot, final Denomination denomination) {
 
     super(slot, PluginCore.server().stackBuilder().of((denomination instanceof ItemDenomination)? ((ItemDenomination)denomination).getMaterial() : "PAPER", 1)
-                  .display(Component.text(denomination.weight().toString())).lore(Collections.singletonList(Component.text("Click to edit denomination"))),
+                  .display(Component.text(denomination.weight().toString())).lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.Icon"), id))),
           "my_eco", DENOMINATION_EDIT_PAGE, ActionType.ANY, false);
 
 

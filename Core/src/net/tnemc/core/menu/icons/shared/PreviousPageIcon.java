@@ -19,10 +19,16 @@ package net.tnemc.core.menu.icons.shared;
  */
 
 import net.kyori.adventure.text.Component;
+import net.tnemc.core.TNECore;
 import net.tnemc.menu.core.icon.Icon;
 import net.tnemc.menu.core.icon.action.ActionType;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
 import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.io.message.MessageHandler;
+
+import java.util.Collections;
+import java.util.UUID;
 
 /**
  * BackIcon
@@ -32,9 +38,11 @@ import net.tnemc.plugincore.PluginCore;
  */
 public class PreviousPageIcon extends Icon {
 
-  public PreviousPageIcon(final int slot, final String menu, final int page, final ActionType type) {
+  public PreviousPageIcon(final UUID id, final int slot, final String menu, final int page, final ActionType type) {
 
-    super(PluginCore.server().stackBuilder().of("RED_WOOL", 1).display(Component.text("Previous Page")), null);
+    super(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
+                  .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
+                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))), null);
 
     this.slot = slot;
 

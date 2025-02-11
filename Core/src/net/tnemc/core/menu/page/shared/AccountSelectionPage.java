@@ -22,9 +22,11 @@ import net.kyori.adventure.text.Component;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
+import net.tnemc.core.menu.icons.shared.PreviousPageIcon;
 import net.tnemc.item.providers.SkullProfile;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
+import net.tnemc.menu.core.icon.action.ActionType;
 import net.tnemc.menu.core.icon.action.impl.DataAction;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
 import net.tnemc.menu.core.viewer.MenuViewer;
@@ -73,6 +75,9 @@ public class AccountSelectionPage {
     if(viewer.isPresent()) {
 
       final UUID id = viewer.get().uuid();
+
+      callback.getPage().addIcon(new PreviousPageIcon(id, 0, this.menuName, 1, ActionType.ANY));
+
       final int page = (Integer)viewer.get().dataOrDefault(accountPageID, 1);
       final int items = (menuRows - 1) * 9;
       final int start = ((page - 1) * 9);
@@ -128,7 +133,7 @@ public class AccountSelectionPage {
             }
           }
 
-        } catch(Exception ignore) { }
+        } catch(final Exception ignore) { }
 
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PLAYER_HEAD", 1)

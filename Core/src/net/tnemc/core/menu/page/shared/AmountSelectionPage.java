@@ -19,6 +19,7 @@ package net.tnemc.core.menu.page.shared;
  */
 
 import net.kyori.adventure.text.Component;
+import net.tnemc.core.TNECore;
 import net.tnemc.core.menu.handlers.AmountSelectionHandler;
 import net.tnemc.core.menu.icons.actions.PageSwitchWithClose;
 import net.tnemc.menu.core.builder.IconBuilder;
@@ -29,10 +30,13 @@ import net.tnemc.menu.core.icon.action.impl.RunnableAction;
 import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;
 import net.tnemc.menu.core.viewer.MenuViewer;
 import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.io.message.MessageHandler;
 
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 /**
@@ -67,16 +71,18 @@ public class AmountSelectionPage {
     final Optional<MenuViewer> viewer = callback.getPlayer().viewer();
     if(viewer.isPresent()) {
 
+      final UUID id = viewer.get().uuid();
+
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
-                                                         .display(Component.text("Escape Menu"))
-                                                         .lore(Collections.singletonList(Component.text("Click to exit this menu."))))
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EscapeDisplay"), id))
+                                                         .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Escape"), id))))
                                          .withActions(new PageSwitchWithClose(returnMenu, returnPage))
                                          .withSlot(0)
                                          .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                                                         .display(Component.text("Save."))
-                                                         .lore(Collections.singletonList(Component.text("Click save the amount."))))
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Save"), id))
+                                                         .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.AmountSelect.Save"), id))))
                                          .withActions(new RunnableAction((click)->{
                                            if(selectionListener != null) {
 
@@ -87,8 +93,8 @@ public class AmountSelectionPage {
                                          .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-                                                         .display(Component.text("Enter your own"))
-                                                         .lore(Collections.singletonList(Component.text("Click to enter a custom amount."))))
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.OwnDisplay"), id))
+                                                         .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.AmountSelect.Enter"), id))))
                                          .withActions(new ChatAction((message)->{
 
 
@@ -98,8 +104,10 @@ public class AmountSelectionPage {
 
                                                message.getPlayer().viewer().get().addData(amtID, new BigDecimal(message.getMessage()));
                                                return true;
-                                             } catch(NumberFormatException ignore) { }
+                                             } catch(final NumberFormatException ignore) { }
                                            }
+
+                                           //TODO:
 
                                            message.getPlayer().message("Enter a valid decimal value:");
                                            return false;
@@ -110,98 +118,98 @@ public class AmountSelectionPage {
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
                                                          .display(Component.text(((BigDecimal)viewer.get().dataOrDefault(amtID, BigDecimal.ZERO)).toPlainString()))
-                                                         .lore(Collections.singletonList(Component.text("The amount"))))
+                                                         .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.AmountSelect.Amount"), id))))
                                          .withActions(new SwitchPageAction(menuName, menuPage))
                                          .withSlot(4)
                                          .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BLACK_WOOL", 1)
-                                                         .display(Component.text("Reset To Zero"))
-                                                         .lore(Collections.singletonList(Component.text("Click to reset the amount to zero."))))
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.AmountSelect.ResetDisplay"), id))
+                                                         .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.AmountSelect.Reset"), id))))
                                          .withClick((click)->click.player().viewer().ifPresent(menuViewer->menuViewer.addData(amtID, BigDecimal.ZERO)))
                                          .withActions(new SwitchPageAction(menuName, menuPage))
                                          .withSlot(6)
                                          .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-                                                         .display(Component.text("Add 100")))
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.AmountSelect.Add100"), id)))
                                          .withActions(new SwitchPageAction(menuName, menuPage))
                                          .withClick((click)->balAddClick(click, new BigDecimal("100")))
                                          .withSlot(15)
                                          .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-                                                         .display(Component.text("Add 50")))
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.AmountSelect.Add50"), id)))
                                          .withActions(new SwitchPageAction(menuName, menuPage))
                                          .withClick((click)->balAddClick(click, new BigDecimal("50")))
                                          .withSlot(17)
                                          .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-                                                         .display(Component.text("Add 10")))
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.AmountSelect.Add10"), id)))
                                          .withActions(new SwitchPageAction(menuName, menuPage))
                                          .withClick((click)->balAddClick(click, new BigDecimal("10")))
                                          .withSlot(33)
                                          .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-                                                         .display(Component.text("Add 1")))
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.AmountSelect.Add1"), id)))
                                          .withActions(new SwitchPageAction(menuName, menuPage))
                                          .withClick((click)->balAddClick(click, new BigDecimal("1")))
                                          .withSlot(35)
                                          .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-                                                         .display(Component.text("Add .10")))
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.AmountSelect.AddTenth"), id)))
                                          .withActions(new SwitchPageAction(menuName, menuPage))
                                          .withClick((click)->balAddClick(click, new BigDecimal(".10")))
                                          .withSlot(51)
                                          .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-                                                         .display(Component.text("Add .01")))
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.AmountSelect.AddHundredth"), id)))
                                          .withActions(new SwitchPageAction(menuName, menuPage))
                                          .withClick((click)->balAddClick(click, new BigDecimal(".01")))
                                          .withSlot(53)
                                          .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-                                                         .display(Component.text("Remove 100")))
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.AmountSelect.Remove100"), id)))
                                          .withActions(new SwitchPageAction(menuName, menuPage))
                                          .withClick((click)->balAddClick(click, new BigDecimal("-100")))
                                          .withSlot(11)
                                          .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-                                                         .display(Component.text("Remove 50")))
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.AmountSelect.Remove50"), id)))
                                          .withActions(new SwitchPageAction(menuName, menuPage))
                                          .withClick((click)->balAddClick(click, new BigDecimal("-50")))
                                          .withSlot(9)
                                          .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-                                                         .display(Component.text("Remove 10")))
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.AmountSelect.Remove10"), id)))
                                          .withActions(new SwitchPageAction(menuName, menuPage))
                                          .withClick((click)->balAddClick(click, new BigDecimal("-10")))
                                          .withSlot(29)
                                          .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-                                                         .display(Component.text("Remove 1")))
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.AmountSelect.Remove1"), id)))
                                          .withActions(new SwitchPageAction(menuName, menuPage))
                                          .withClick((click)->balAddClick(click, new BigDecimal("-1")))
                                          .withSlot(27)
                                          .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-                                                         .display(Component.text("Remove .10")))
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.AmountSelect.RemoveTenth"), id)))
                                          .withActions(new SwitchPageAction(menuName, menuPage))
                                          .withClick((click)->balAddClick(click, new BigDecimal("-.10")))
                                          .withSlot(47)
                                          .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-                                                         .display(Component.text("Remove .01")))
+                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.AmountSelect.RemoveHundredth"), id)))
                                          .withActions(new SwitchPageAction(menuName, menuPage))
                                          .withClick((click)->balAddClick(click, new BigDecimal("-.01")))
                                          .withSlot(45)

@@ -49,6 +49,15 @@ public class ShortCommands {
     net.tnemc.core.command.MoneyCommand.onGive(new BukkitCMDSource(sender), player, amount, region, currency);
   }
 
+  @Command({ "giveallmoney", "giveallbal" })
+  @Usage("Money.GiveAll.Arguments")
+  @Description("Money.GiveAll.Description")
+  @CommandPermission("tne.money.giveall")
+  public void onGiveAll(final BukkitCommandActor sender, @Named("amount") final PercentBigDecimal amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+
+    net.tnemc.core.command.MoneyCommand.onGiveAll(new BukkitCMDSource(sender), amount, region, currency);
+  }
+
   @Command({ "givenote", "+note", "addnote" })
   @Usage("Money.GiveNote.Arguments")
   @Description("Money.GiveNote.Description")

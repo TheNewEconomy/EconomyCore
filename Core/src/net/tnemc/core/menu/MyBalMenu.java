@@ -104,7 +104,6 @@ public class MyBalMenu extends Menu {
     addPage(main);
 
     final Page balanceActionsPage = new PageBuilder(BALANCE_ACTIONS_PAGE).build();
-    balanceActionsPage.addIcon(new PreviousPageIcon(0, this.name, 1, ActionType.ANY));
     balanceActionsPage.setOpen(this::actionsPage);
     addPage(balanceActionsPage);
 
@@ -125,12 +124,10 @@ public class MyBalMenu extends Menu {
     addPage(balanceWithdrawAmountPage);
 
     final Page balanceBreakdownPage = new PageBuilder(BALANCE_BREAKDOWN_PAGE).build();
-    balanceBreakdownPage.addIcon(new PreviousPageIcon(0, this.name, 1, ActionType.ANY));
     balanceBreakdownPage.setOpen(this::handleBreakdownPage);
     addPage(balanceBreakdownPage);
 
     final Page balancePayPage = new PageBuilder(BALANCE_PAY_PAGE).build();
-    balancePayPage.addIcon(new PreviousPageIcon(0, this.name, 1, ActionType.ANY));
     balancePayPage.setOpen((open->new AccountSelectionPage(ACTION_ACCOUNT_ID, this.name, this.name, BALANCE_PAY_PAGE, BALANCE_PAY_AMOUNT_PAGE, "PAY_ACCOUNT_NAME_SELECTION", this.rows).handle(open)));
     addPage(balancePayPage);
 
@@ -164,6 +161,8 @@ public class MyBalMenu extends Menu {
     if(viewer.isPresent()) {
 
       final UUID id = viewer.get().uuid();
+      callback.getPage().addIcon(new PreviousPageIcon(id, 0, this.name, 1, ActionType.ANY));
+
       final Optional<Account> account = TNECore.eco().account().findAccount(callback.getPlayer().identifier());
       if(account.isPresent()) {
 
@@ -208,6 +207,8 @@ public class MyBalMenu extends Menu {
     if(viewer.isPresent()) {
 
       final UUID id = viewer.get().uuid();
+      callback.getPage().addIcon(new PreviousPageIcon(id, 0, this.name, 1, ActionType.ANY));
+
       final Optional<Account> account = TNECore.eco().account().findAccount(callback.getPlayer().identifier());
       if(account.isPresent()) {
 
@@ -707,7 +708,7 @@ public class MyBalMenu extends Menu {
       }
 
       return result.getReceipt();
-    } catch(InvalidTransactionException e) {
+    } catch(final InvalidTransactionException e) {
       e.printStackTrace();
     }
     return Optional.empty();
