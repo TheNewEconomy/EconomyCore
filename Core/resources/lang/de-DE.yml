@@ -5,7 +5,7 @@
 Messages:
   config-version: 10
   General:
-    Version: "<white>TNE-Version: <green>$version <white>- Bau: <green>$build"
+    Version: "<white>TNE-Version: <green>$version <white>- Build: <green>$build"
     NoPerm: "<red>Es tut mir leid, aber Sie haben keine Berechtigung für diese Aktion."
     Saved: "<yellow>Alle TNE-Daten erfolgreich gespeichert!"
     NoPlayer: "<red>Spieler '$player ' nicht gefunden!"
@@ -299,7 +299,7 @@ Messages:
     MyBal:
       Main:
         Balance: "Bilanz: $balance"
-        Pay: "Links klicken, um das Konto mit der Währung zu bezahlen."
+        Pay: "Links klicken, um mit der Währung zu bezahlen."
         Other: "Drücke Q für weitere Währungsoptionen."
         Note: "Rechts klicken, um einen Geldschein zu erstellen."
         Breakdown: "Rechts klicken, um die Bilanzübersicht anzuzeigen. "
