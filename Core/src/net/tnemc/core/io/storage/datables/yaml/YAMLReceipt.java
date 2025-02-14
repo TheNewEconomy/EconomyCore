@@ -219,7 +219,7 @@ public class YAMLReceipt implements Datable<Receipt> {
 
         final YamlDocument yaml = YamlDocument.create(fis);
 
-        if(yaml != null) {
+        if(yaml != null && yaml.contains("id")) {
 
           final UUID id = UUID.fromString(yaml.getString("id"));
           final long time = yaml.getLong("time");
@@ -237,6 +237,9 @@ public class YAMLReceipt implements Datable<Receipt> {
           receipt.setVoided(yaml.getBoolean("voided"));
 
           return Optional.of(receipt);
+        } else {
+
+          PluginCore.log().warning("Invalid receipt file passed to YAMLReceipt.load. Skipping. Receipt: " + identifier);
         }
       }
 
