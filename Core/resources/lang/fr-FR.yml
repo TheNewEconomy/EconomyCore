@@ -3,7 +3,7 @@
 #License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 #All configurable messages in TNE
 Messages:
-  config-version: 10
+  config-version: 11
   General:
     Version: "<white>Version TNE : <green>$version <white>- N° <green>$build"
     NoPerm: "<red>Désolé, vous n'avez pas la permission pour faire cela."
@@ -122,6 +122,10 @@ Messages:
       PreviousPage: "Cliquez pour aller à la page précédente."
       NextPageDisplay: "Page Suivante"
       NextPage: "Cliquez pour aller à la page suivante."
+      PreviousMenuDisplay: "Previous Menu"
+      PreviousMenu: "Click to go to previous menu."
+      NextMenuDisplay: "Next Menu"
+      NextMenu: "Click to go to next menu."
       EscapeDisplay: "Menu Échap"
       Escape: "Cliquez pour quitter ce menu."
       Enabled: "Activé"
@@ -139,11 +143,13 @@ Messages:
       Add100: "Ajouter 100"
       Add50: "Ajouter 50"
       Add10: "Ajouter 10"
+      Add1: "Add 1"
       AddTenth: "Ajouter .10"
       AddHundredth: "Ajouter .01"
       Remove100: "Retirer 100"
       Remove50: "Retirer 50"
       Remove10: "Retirer 10"
+      Remove1: "Remove 1"
       RemoveTenth: "Retirer .10"
       RemoveHundredth: "Remove .01"
     MyEco:
