@@ -384,7 +384,7 @@ public class MyEcoMenu extends Menu {
      */
     final Page currencyTypeEditPage = new PageBuilder(CURRENCY_TYPE_EDIT_PAGE).build();
 
-    currencyEditor.setOpen(open->{
+    currencyTypeEditPage.setOpen(open->{
       if(open.getPlayer().viewer().isPresent()) {
 
 

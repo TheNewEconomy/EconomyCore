@@ -250,7 +250,13 @@ public class MyBalMenu extends Menu {
     actions.add(new DataAction(ACTION_MAX_HOLDINGS, account.getHoldingsTotal(TNECore.eco().region().defaultRegion(), currency.getUid())));
 
     final MessageData balance = new MessageData("Messages.Menu.MyBal.Main.Balance");
-    balance.addReplacement("$balance", CurrencyFormatter.format(account, account.getHoldingsTotal(TNECore.eco().region().defaultRegion(), currency.getUid())));
+
+    final HoldingsEntry entry = new HoldingsEntry(PluginCore.server().defaultWorld(), currency.getUid(),
+                                                  account.getHoldingsTotal(TNECore.eco().region().defaultRegion(),
+                                                                           currency.getUid()),
+                                                  EconomyManager.NORMAL);
+
+    balance.addReplacement("$balance", CurrencyFormatter.format(account, entry));
 
     lore.add(MessageHandler.grab(balance, id));
 
