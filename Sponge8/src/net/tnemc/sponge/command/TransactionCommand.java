@@ -22,11 +22,10 @@ import net.tnemc.core.account.Account;
 import net.tnemc.plugincore.sponge.impl.SpongeCMDSource;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
-import revxrsal.commands.annotation.DefaultFor;
 import revxrsal.commands.annotation.Description;
 import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
-import revxrsal.commands.sponge.SpongeCommandActor;
+import revxrsal.commands.sponge.actor.SpongeCommandActor;
 import revxrsal.commands.sponge.annotation.CommandPermission;
 
 import java.util.UUID;
@@ -50,7 +49,7 @@ public class TransactionCommand {
     net.tnemc.core.command.TransactionCommand.away(new SpongeCMDSource(sender), page);
   }
 
-  @DefaultFor({ "transaction", "trans", "receipt" })
+  //@DefaultFor({ "transaction", "trans", "receipt" })
   @Subcommand({ "history", "list", "hist", "archive" })
   @Usage("Transaction.History.Arguments")
   @Description("Transaction.History.Description")

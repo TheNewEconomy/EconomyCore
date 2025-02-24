@@ -24,11 +24,10 @@ import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.plugincore.sponge.impl.SpongeCMDSource;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
-import revxrsal.commands.annotation.DefaultFor;
 import revxrsal.commands.annotation.Description;
 import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
-import revxrsal.commands.sponge.SpongeCommandActor;
+import revxrsal.commands.sponge.actor.SpongeCommandActor;
 import revxrsal.commands.sponge.annotation.CommandPermission;
 
 /**
@@ -41,7 +40,7 @@ import revxrsal.commands.sponge.annotation.CommandPermission;
 @Description("#{Admin.Main.Description}")
 public class AdminCommand {
 
-  @DefaultFor({ "tne", "ecomin", "ecoadmin", "ecomanage", "theneweconomy" })
+  //@DefaultFor({ "tne", "ecomin", "ecoadmin", "ecomanage", "theneweconomy" })
   @Subcommand({ "ecomenu", "menu", "myeco", "ecomenu" })
   @Usage("#{Admin.MyEco.Arguments}")
   @Description("#{Admin.MyEco.Description}")

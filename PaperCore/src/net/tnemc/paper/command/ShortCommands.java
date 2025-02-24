@@ -21,15 +21,13 @@ package net.tnemc.paper.command;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.command.parameters.PercentBigDecimal;
 import net.tnemc.core.currency.Currency;
-import net.tnemc.plugincore.bukkit.impl.BukkitCMDSource;
 import net.tnemc.plugincore.paper.impl.PaperCMDSource;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.Description;
 import revxrsal.commands.annotation.Named;
-import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
-import revxrsal.commands.bukkit.BukkitCommandActor;
+import revxrsal.commands.bukkit.actor.BukkitCommandActor;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
 
 import java.math.BigDecimal;

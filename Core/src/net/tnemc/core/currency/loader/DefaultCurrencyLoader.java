@@ -347,14 +347,17 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     final String single = denom.getString("Info.Single", "Dollar");
     final String plural = denom.getString("Info.Plural", "Dollars");
 
-    final BigDecimal weight = BigDecimal.valueOf(denom.getDouble("Options.Weight", 1.0));
+    final BigDecimal weight = new BigDecimal(denom.getString("Options.Weight", "1.0"));
+    PluginCore.log().debug("Loading denomination with weight of: " + weight);
     if(weight.compareTo(BigDecimal.ZERO) <= 0) {
+
       PluginCore.log().error("Failed to load denomination: " + denomFile.getName() + ". Invalid Options.Weight Value: " + weight.toPlainString(), DebugLevel.OFF);
       return false;
     }
 
 
     final String material = denom.getString("Options.Material", "PAPER");
+    PluginCore.log().debug("Loading denomination with material of: " + material);
 
     final Denomination denomination = (currency instanceof ItemCurrency)?
                                       new ItemDenomination(weight, material) : new Denomination(weight);
@@ -369,6 +372,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       final List<String> loreStr = denom.getStringList("Options.Lore");
       final LinkedList<Component> lore = new LinkedList<>();
       for(final String str : loreStr) {
+
         lore.add(MiniMessage.miniMessage().deserialize(str));
       }
 

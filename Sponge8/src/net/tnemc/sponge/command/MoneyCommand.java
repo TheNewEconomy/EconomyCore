@@ -24,12 +24,11 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.plugincore.sponge.impl.SpongeCMDSource;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
-import revxrsal.commands.annotation.DefaultFor;
 import revxrsal.commands.annotation.Description;
 import revxrsal.commands.annotation.Named;
 import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
-import revxrsal.commands.sponge.SpongeCommandActor;
+import revxrsal.commands.sponge.actor.SpongeCommandActor;
 import revxrsal.commands.sponge.annotation.CommandPermission;
 
 import java.math.BigDecimal;
@@ -43,7 +42,7 @@ import java.math.BigDecimal;
 @Command({ "money", "eco", "balo", "balance", "bal", "balanceother", "mybal" })
 public class MoneyCommand {
 
-  @DefaultFor({ "mybal" })
+  //@DefaultFor({ "mybal" })
   @Subcommand({ "balmenu", "menu", "mybal" })
   @Usage("Money.MyBal.Arguments")
   @Description("Money.MyBal.Description")
@@ -53,7 +52,7 @@ public class MoneyCommand {
     net.tnemc.core.command.MoneyCommand.onMyBal(new SpongeCMDSource(sender));
   }
 
-  @DefaultFor({ "bal", "money", "eco", "balance" })
+  //@DefaultFor({ "bal", "money", "eco", "balance" })
   @Subcommand({ "balance", "bal", "val" })
   @Usage("#{Money.Balance.Arguments}")
   @Description("#{Money.Balance.Description}")
@@ -118,7 +117,7 @@ public class MoneyCommand {
   }
 
   @Subcommand({ "other", "check", "balo" })
-  @DefaultFor({ "balo", "balanceother" })
+  //@DefaultFor({ "balo", "balanceother" })
   @Usage("#{Money.Other.Arguments}")
   @Description("#{Money.Other.Description}")
   @CommandPermission("tne.money.other")
