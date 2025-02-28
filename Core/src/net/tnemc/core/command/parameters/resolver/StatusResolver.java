@@ -21,10 +21,18 @@ package net.tnemc.core.command.parameters.resolver;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.utils.exceptions.InvalidStatusException;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import org.jetbrains.annotations.NotNull;
-import revxrsal.commands.process.ValueResolver;
+import revxrsal.commands.autocomplete.SuggestionProvider;
+import revxrsal.commands.command.CommandActor;
+import revxrsal.commands.node.ExecutionContext;
+import revxrsal.commands.parameter.ParameterType;
+import revxrsal.commands.stream.MutableStringStream;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * StatusResolver
@@ -32,17 +40,20 @@ import java.util.Optional;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class StatusResolver implements ValueResolver<AccountStatus> {
+public class StatusResolver implements ParameterType<CommandActor, AccountStatus> {
 
   @Override
-  public AccountStatus resolve(@NotNull final ValueResolverContext context) throws Throwable {
+  public AccountStatus parse(@NotNull final MutableStringStream input, @NotNull final ExecutionContext<CommandActor> context) {
 
-    final String value = context.arguments().pop();
+    final String value = input.readString();
 
     final Optional<AccountStatus> status = Optional.ofNullable(TNECore.eco().account().getStatuses().get(value));
-    if(status.isPresent()) {
-      return status.get();
-    }
-    throw new InvalidStatusException(value);
+    return status.orElse(null);
+  }
+
+  @Override
+  public @NotNull SuggestionProvider<@NotNull CommandActor> defaultSuggestions() {
+
+    return (context)->List.copyOf(TNECore.eco().account().getStatuses().values().stream().map(AccountStatus::identifier).collect(Collectors.toList()));
   }
 }

@@ -264,9 +264,9 @@ public abstract class TNECore extends PluginEngine {
   public String commandHelpWriter(final ExecutableCommand command, final CommandActor actor) {
 
     final MessageData data = new MessageData("Messages.Commands.Help.Entry");
-    data.addReplacement("$command", command.getPath().toRealString());
-    data.addReplacement("$arguments", MessageHandler.getInstance().getTranslator().translateNode(new MessageData("Messages.Commands." + command.getUsage()), "default"));
-    data.addReplacement("$description", MessageHandler.getInstance().getTranslator().translateNode(new MessageData("Messages.Commands." + command.getDescription()), "default"));
+    data.addReplacement("$command", command.path());
+    data.addReplacement("$arguments", MessageHandler.getInstance().getTranslator().translateNode(new MessageData("Messages.Commands." + command.usage()), "default"));
+    data.addReplacement("$description", MessageHandler.getInstance().getTranslator().translateNode(new MessageData("Messages.Commands." + command.description()), "default"));
 
     return MessageHandler.getInstance().getTranslator().translateNode(data, "default");
   }

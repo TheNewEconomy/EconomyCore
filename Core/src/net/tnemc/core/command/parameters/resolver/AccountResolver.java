@@ -20,16 +20,13 @@ package net.tnemc.core.command.parameters.resolver;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
-import net.tnemc.core.config.MainConfig;
-import net.tnemc.core.utils.exceptions.InvalidAccountException;
 import org.jetbrains.annotations.NotNull;
-import revxrsal.commands.process.ValueResolver;
+import revxrsal.commands.command.CommandActor;
+import revxrsal.commands.node.ExecutionContext;
+import revxrsal.commands.parameter.ParameterType;
+import revxrsal.commands.stream.MutableStringStream;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 /**
  * AccountResolver
@@ -37,15 +34,15 @@ import java.util.regex.PatternSyntaxException;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class AccountResolver implements ValueResolver<Account> {
+public class AccountResolver implements ParameterType<CommandActor, Account> {
 
   @Override
-  public Account resolve(@NotNull final ValueResolverContext context) throws Throwable {
+  public Account parse(@NotNull final MutableStringStream input, @NotNull final ExecutionContext<CommandActor> context) {
 
-    String value = context.arguments().pop();
+    String value = input.readString();
 
     if(value.equalsIgnoreCase("SELF_ACCOUNT")) {
-      value = context.actor().getName();
+      value = context.actor().name();
     }
 
 
@@ -56,6 +53,6 @@ public class AccountResolver implements ValueResolver<Account> {
         return account.get();
       }
     }
-    throw new InvalidAccountException(value);
+    return null;
   }
 }

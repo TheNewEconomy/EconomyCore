@@ -18,9 +18,19 @@ package net.tnemc.core.command.parameters.resolver;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.currency.Currency;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import org.jetbrains.annotations.NotNull;
-import revxrsal.commands.process.ValueResolver;
+import revxrsal.commands.autocomplete.SuggestionProvider;
+import revxrsal.commands.command.CommandActor;
+import revxrsal.commands.node.ExecutionContext;
+import revxrsal.commands.parameter.ParameterType;
+import revxrsal.commands.stream.MutableStringStream;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * DebugResolver
@@ -28,13 +38,19 @@ import revxrsal.commands.process.ValueResolver;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class DebugResolver implements ValueResolver<DebugLevel> {
+public class DebugResolver implements ParameterType<CommandActor, DebugLevel> {
 
   @Override
-  public DebugLevel resolve(@NotNull final ValueResolverContext context) throws Throwable {
+  public DebugLevel parse(@NotNull final MutableStringStream input, @NotNull final ExecutionContext<CommandActor> context) {
 
-    final String value = context.arguments().pop();
+    final String value = input.readString();
 
     return DebugLevel.fromID(value);
+  }
+
+  @Override
+  public @NotNull SuggestionProvider<@NotNull CommandActor> defaultSuggestions() {
+
+    return (context)->List.copyOf(Arrays.stream(DebugLevel.values()).map(DebugLevel::getIdentifier).collect(Collectors.toList()));
   }
 }
