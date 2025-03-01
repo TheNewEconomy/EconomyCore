@@ -36,3 +36,5 @@ hs_err_pid*
 /Sponge/target/
 /Folia/target/
 /.testserver/
+/Bukkit/dependency-reduced-pom.xml
+/PaperCore/dependency-reduced-pom.xml

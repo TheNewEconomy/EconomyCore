@@ -182,6 +182,8 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
     return new FoliaInventoryProvider(identifier(), PaperCore.instance().getPlugin());
   }
 
+
+
   /**
    * Used to determine if this player has the specified permission node.
    *
@@ -218,7 +220,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
       return;
     }
 
-    try(BukkitAudiences provider = BukkitAudiences.create(PaperCore.instance().getPlugin())) {
+    try(final BukkitAudiences provider = BukkitAudiences.create(PaperCore.instance().getPlugin())) {
       MessageHandler.translate(messageData, player.getUniqueId(), provider.sender(player.getPlayer()));
     }
   }
@@ -232,7 +234,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
 
     try {
       return new FoliaPlayerProvider(Bukkit.getOfflinePlayer(UUID.fromString(identifier)));
-    } catch(Exception ignore) {
+    } catch(final Exception ignore) {
       return new FoliaPlayerProvider(Bukkit.getOfflinePlayer(identifier));
     }
   }
