@@ -17,7 +17,10 @@ package net.tnemc.core.currency.parser;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.currency.parser.impl.FractionParseRule;
 import net.tnemc.core.currency.parser.impl.NumericParseRule;
+import net.tnemc.core.currency.parser.impl.RandomParseRule;
+import net.tnemc.core.currency.parser.impl.RomanParseRule;
 import net.tnemc.core.currency.parser.impl.ShortenParseRule;
 import net.tnemc.core.currency.parser.impl.SymbolParseRule;
 
@@ -37,6 +40,9 @@ public class MoneyParser {
 
     addRule(new SymbolParseRule()); //$5 -> sets currency to USD
     addRule(new ShortenParseRule()); // 5k -> 5000
+    addRule(new FractionParseRule()); // 1/2 -> .50
+    addRule(new RomanParseRule()); // X, IV
+    addRule(new RandomParseRule()); // random(1-10) = 6?
     addRule(new NumericParseRule()); // scientific notation and general numerics
   }
 
