@@ -38,6 +38,7 @@ import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.plugincore.core.utils.IOUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -293,6 +294,28 @@ public class CurrencyManager {
         if(denom.isPresent()) {
           return Optional.of(currency);
         }
+      }
+    }
+    return Optional.empty();
+  }
+
+  /**
+   * Finds a Currency object based on the symbol provided.
+   *
+   * @param symbol The symbol of the currency to search for.
+   * @return An Optional containing the Currency object if found, otherwise an empty Optional.
+   */
+  public Optional<Currency> findCurrencyBySymbol(@Nullable final String symbol) {
+    if(symbol == null) {
+
+      return Optional.empty();
+    }
+
+    for(final Currency currency : currencies.values()) {
+
+      if(currency.getSymbol().equalsIgnoreCase(symbol)) {
+
+        return Optional.of(currency);
       }
     }
     return Optional.empty();

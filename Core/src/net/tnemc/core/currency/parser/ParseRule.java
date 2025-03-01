@@ -1,5 +1,4 @@
-package net.tnemc.core.command.parameters.resolver;
-
+package net.tnemc.core.currency.parser;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2025 Daniel "creatorfromhell" Vidmar
@@ -18,25 +17,26 @@ package net.tnemc.core.command.parameters.resolver;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jetbrains.annotations.NotNull;
-import revxrsal.commands.command.CommandActor;
-import revxrsal.commands.node.ExecutionContext;
-import revxrsal.commands.parameter.ParameterType;
-import revxrsal.commands.stream.MutableStringStream;
-
-import java.math.BigDecimal;
-
 /**
- * BigDecimalResolver
+ * MoneyParseRule
  *
  * @author creatorfromhell
- * @since 0.1.2.0
+ * @since 0.1.3.6
  */
-public class BigDecimalResolver implements ParameterType<CommandActor, BigDecimal> {
+public interface ParseRule {
 
-  @Override
-  public BigDecimal parse(@NotNull final MutableStringStream input, @NotNull final ExecutionContext<CommandActor> context) {
+  /**
+   * Retrieves an identifier.
+   *
+   * @return The identifier as a String.
+   */
+  String identifier();
 
-    return new BigDecimal(PercentDecimalResolver.replaceDecimals(input.readString()));
-  }
+  /**
+   * Applies the given parse money object to the input string according to the specified rules.
+   *
+   * @param parseMoney the ParseMoney object to apply the rules to
+   * @param input the input string to apply the rules on
+   */
+  void apply(ParseMoney parseMoney, String input);
 }
