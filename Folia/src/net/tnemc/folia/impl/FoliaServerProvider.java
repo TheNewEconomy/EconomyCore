@@ -21,8 +21,8 @@ package net.tnemc.folia.impl;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import net.tnemc.folia.impl.scheduler.FoliaScheduler;
 import net.tnemc.item.AbstractItemStack;
-import net.tnemc.item.bukkit.BukkitItemStack;
 import net.tnemc.item.paper.PaperCalculationsProvider;
+import net.tnemc.item.paper.PaperItemStack;
 import net.tnemc.paper.PaperCore;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.bukkit.hook.PAPIParser;
@@ -91,7 +91,7 @@ public class FoliaServerProvider implements ServerConnector {
 
     final Optional<PlayerProvider> playerOpt = PluginCore.server().findPlayer(player);
     if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI") && playerOpt.isPresent()
-       && playerOpt.get() instanceof BukkitPlayerProvider bukkitPlayer) {
+       && playerOpt.get() instanceof final BukkitPlayerProvider bukkitPlayer) {
       return PAPIParser.parse(bukkitPlayer, message);
     }
     return message;
@@ -157,7 +157,7 @@ public class FoliaServerProvider implements ServerConnector {
   @Override
   public PlayerProvider initializePlayer(@NotNull final Object player) {
 
-    if(player instanceof Player playerObj) {
+    if(player instanceof final Player playerObj) {
       return new FoliaPlayerProvider(playerObj);
     }
     return null;
@@ -203,7 +203,7 @@ public class FoliaServerProvider implements ServerConnector {
 
       final UUID id = UUID.fromString(name);
       return Bukkit.getPlayer(id) != null;
-    } catch(Exception ignore) {
+    } catch(final Exception ignore) {
       return Bukkit.getPlayer(name) != null;
     }
   }
@@ -273,7 +273,7 @@ public class FoliaServerProvider implements ServerConnector {
   @Override
   public AbstractItemStack<?> stackBuilder() {
 
-    return new BukkitItemStack();
+    return new PaperItemStack();
   }
 
   @Override
@@ -314,7 +314,7 @@ public class FoliaServerProvider implements ServerConnector {
 
       try {
         shaped = new ShapedRecipe(new NamespacedKey(PaperCore.instance().getPlugin(), key), (ItemStack)recipe.getResult().locale());
-      } catch(Exception ignore) {
+      } catch(final Exception ignore) {
         shaped = new ShapedRecipe((ItemStack)recipe.getResult().locale());
       }
 
@@ -329,7 +329,7 @@ public class FoliaServerProvider implements ServerConnector {
 
       try {
         shapeless = new ShapelessRecipe(new NamespacedKey(PaperCore.instance().getPlugin(), key), (ItemStack)recipe.getResult().locale());
-      } catch(Exception ignore) {
+      } catch(final Exception ignore) {
         shapeless = new ShapelessRecipe((ItemStack)recipe.getResult().locale());
       }
 
