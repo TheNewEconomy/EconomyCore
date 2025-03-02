@@ -21,6 +21,7 @@ import net.tnemc.core.currency.parser.ParseMoney;
 import net.tnemc.core.currency.parser.ParseRule;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,18 +51,22 @@ public class FractionParseRule implements ParseRule {
    * @param input      the input string to apply the rules on
    */
   @Override
-  public void apply(final ParseMoney parseMoney, final String input) {
+  public String apply(final ParseMoney parseMoney, final String input) {
     final Matcher matcher = Pattern.compile("([0-9]+)/([0-9]+)").matcher(input);
-    if (matcher.find()) {
+    if(matcher.find()) {
+
       final BigDecimal numerator = new BigDecimal(matcher.group(1));
       final BigDecimal denominator = new BigDecimal(matcher.group(2));
 
-      if (denominator.compareTo(BigDecimal.ZERO) == 0) {
+      if(denominator.compareTo(BigDecimal.ZERO) == 0) {
         throw new IllegalArgumentException("Division by zero in fraction: " + input);
       }
 
-      final BigDecimal fractionValue = numerator.divide(denominator, 10, BigDecimal.ROUND_HALF_UP);
+      final BigDecimal fractionValue = numerator.divide(denominator, 10, RoundingMode.HALF_UP);
       parseMoney.amount(fractionValue);
+
+      return input.replace(matcher.group(), fractionValue.toPlainString()).trim();
     }
+    return input;
   }
 }

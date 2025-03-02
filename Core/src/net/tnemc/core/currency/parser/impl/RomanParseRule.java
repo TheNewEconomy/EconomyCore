@@ -64,14 +64,18 @@ public class RomanParseRule implements ParseRule {
    * @param input      the input string to apply the rules on
    */
   @Override
-  public void apply(final ParseMoney parseMoney, final String input) {
-    final Matcher matcher = Pattern.compile("^[IVXLCDM]+").matcher(input);
+  public String apply(final ParseMoney parseMoney, final String input) {
+
+    final Matcher matcher = Pattern.compile("^([^IVXLCDM]*)([IVXLCDM]+)").matcher(input);
     if(matcher.find()) {
 
-      final String roman = matcher.group();
+      final String roman = matcher.group(2);
       final int numericValue = romanToInteger(roman);
-      parseMoney.amount(new BigDecimal(numericValue));
+      final BigDecimal value = new BigDecimal(numericValue);
+      parseMoney.amount(value);
+      return input.replaceFirst(roman, value.toPlainString()).trim();
     }
+    return input;
   }
 
   private int romanToInteger(final String roman) {
@@ -79,6 +83,7 @@ public class RomanParseRule implements ParseRule {
     int prevValue = 0;
 
     for(int i = roman.length() - 1; i >= 0; i--) {
+
       final int value = ROMAN_VALUES.get(roman.charAt(i));
 
       if(value < prevValue) {

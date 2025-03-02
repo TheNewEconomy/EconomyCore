@@ -53,20 +53,24 @@ public class RandomParseRule implements ParseRule {
    * @param input      the input string to apply the rules on
    */
   @Override
-  public void apply(final ParseMoney parseMoney, final String input) {
+  public String apply(final ParseMoney parseMoney, final String input) {
 
     final Random RANDOM = new Random();
     final Matcher matcher = RANDOM_PATTERN.matcher(input);
     if(matcher.find()) {
+
       final int min = Integer.parseInt(matcher.group(1));
       final int max = Integer.parseInt(matcher.group(2));
 
       if(min > max) {
+
         throw new IllegalArgumentException("Invalid random range: " + input);
       }
 
-      final int randomValue = RANDOM.nextInt((max - min) + 1) + min;
-      parseMoney.amount(BigDecimal.valueOf(randomValue));
+      final BigDecimal value = BigDecimal.valueOf(RANDOM.nextInt(min, max + 1));
+      parseMoney.amount(value);
+      return input.replace(matcher.group(), value.toPlainString()).trim();
     }
+    return input;
   }
 }

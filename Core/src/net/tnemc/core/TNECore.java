@@ -20,7 +20,6 @@ package net.tnemc.core;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.tnemc.core.account.Account;
-import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.api.TNEAPI;
 import net.tnemc.core.api.callback.TNECallbacks;
@@ -37,22 +36,9 @@ import net.tnemc.core.api.callback.transaction.PreTransactionCallback;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.channel.BalanceHandler;
 import net.tnemc.core.channel.SyncHandler;
-import net.tnemc.core.command.parameters.PercentBigDecimal;
-import net.tnemc.core.command.parameters.resolver.AccountResolver;
-import net.tnemc.core.command.parameters.resolver.BigDecimalResolver;
-import net.tnemc.core.command.parameters.resolver.CurrencyResolver;
-import net.tnemc.core.command.parameters.resolver.DebugResolver;
-import net.tnemc.core.command.parameters.resolver.PercentDecimalResolver;
-import net.tnemc.core.command.parameters.resolver.StatusResolver;
-import net.tnemc.core.command.parameters.suggestion.AccountSuggestion;
-import net.tnemc.core.command.parameters.suggestion.CurrencySuggestion;
-import net.tnemc.core.command.parameters.suggestion.DebugSuggestion;
-import net.tnemc.core.command.parameters.suggestion.RegionSuggestion;
-import net.tnemc.core.command.parameters.suggestion.StatusSuggestion;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.config.MessageConfig;
-import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.io.yaml.YamlStorageManager;
@@ -60,7 +46,6 @@ import net.tnemc.core.manager.Updater;
 import net.tnemc.core.menu.MyBalMenu;
 import net.tnemc.core.menu.MyEcoMenu;
 import net.tnemc.core.menu.TransactionMenu;
-import net.tnemc.core.region.RegionGroup;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.utils.MISCUtils;
 import net.tnemc.item.AbstractItemStack;
@@ -230,19 +215,19 @@ public abstract class TNECore extends PluginEngine {
     //TODO: Register custom validators
 
     //Value Resolvers
-    command.registerValueResolver(Account.class, new AccountResolver());
+    /*command.registerValueResolver(Account.class, new AccountResolver());
     command.registerValueResolver(AccountStatus.class, new StatusResolver());
     command.registerValueResolver(DebugLevel.class, new DebugResolver());
     command.registerValueResolver(Currency.class, new CurrencyResolver());
     command.registerValueResolver(BigDecimal.class, new BigDecimalResolver());
-    command.registerValueResolver(PercentBigDecimal.class, new PercentDecimalResolver());
+    command.registerValueResolver(PercentBigDecimal.class, new PercentDecimalResolver());*/
 
     //Annotation
-    command.getAutoCompleter().registerParameterSuggestions(AccountStatus.class, new StatusSuggestion());
+    /*command.getAutoCompleter().registerParameterSuggestions(AccountStatus.class, new StatusSuggestion());
     command.getAutoCompleter().registerParameterSuggestions(DebugLevel.class, new DebugSuggestion());
     command.getAutoCompleter().registerParameterSuggestions(RegionGroup.class, new RegionSuggestion());
     command.getAutoCompleter().registerParameterSuggestions(Account.class, new AccountSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(Currency.class, new CurrencySuggestion());
+    command.getAutoCompleter().registerParameterSuggestions(Currency.class, new CurrencySuggestion());*/
   }
 
   @Override

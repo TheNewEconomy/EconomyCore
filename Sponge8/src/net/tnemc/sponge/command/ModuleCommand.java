@@ -20,11 +20,10 @@ package net.tnemc.sponge.command;
 
 import net.tnemc.plugincore.sponge.impl.SpongeCMDSource;
 import revxrsal.commands.annotation.Command;
-import revxrsal.commands.annotation.DefaultFor;
 import revxrsal.commands.annotation.Description;
 import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
-import revxrsal.commands.sponge.SpongeCommandActor;
+import revxrsal.commands.sponge.actor.SpongeCommandActor;
 import revxrsal.commands.sponge.annotation.CommandPermission;
 
 
@@ -48,7 +47,7 @@ public class ModuleCommand {
 
   @Subcommand({ "list", "l" })
   @Usage("#{Module.List.Arguments}")
-  @DefaultFor({ "module", "mod" })
+  //@DefaultFor({ "module", "mod" })
   @Description("#{Module.List.Description}")
   @CommandPermission("tne.list.available")
   public void onList(final SpongeCommandActor sender) {

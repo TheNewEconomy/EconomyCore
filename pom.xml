@@ -23,11 +23,9 @@
 
     <properties>
         <papi.version>2.11.6</papi.version>
-        <tnml.version>1.5.0.1-SNAPSHOT-19</tnml.version>
-        <tnpc.version>1.0.0.2-Pre-18</tnpc.version>
+        <tnml.version>1.6.0.0-SNAPSHOT-6</tnml.version>
+        <tnpc.version>1.0.0.2-Pre-19</tnpc.version>
         <tne.relocation>net.tnemc.libs</tne.relocation>
-        <tne.java>17</tne.java>
-        <maven.compiler.target>17</maven.compiler.target>
         <maven.javadoc.plugin.version>3.0.1</maven.javadoc.plugin.version>
         <maven.source.version>3.2.0</maven.source.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -54,7 +54,7 @@ import org.spongepowered.plugin.PluginContainer;
 import org.spongepowered.plugin.builtin.jvm.Plugin;
 import revxrsal.commands.command.CommandActor;
 import revxrsal.commands.command.ExecutableCommand;
-import revxrsal.commands.sponge.SpongeCommandHandler;
+import revxrsal.commands.sponge.SpongeLamp;
 
 import java.nio.file.Path;
 
@@ -84,7 +84,7 @@ public class SpongeCore extends TNECore {
     this.pluginCore = new SpongePluginCore(container, this, log, new BaseTranslationProvider(), new TNECallbackProvider());
     this.container = container;
 
-    command = SpongeCommandHandler.create(container);
+    command = SpongeLamp.builder(container).build();
 
     metrics = metricsFactory.make(19246);
   }
@@ -143,7 +143,7 @@ public class SpongeCore extends TNECore {
   @Override
   public void registerCommandHandler() {
 
-    command = SpongeCommandHandler.create(container);
+    command = SpongeLamp.builder(container).build();
   }
 
   @Override

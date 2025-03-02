@@ -22,6 +22,7 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.parser.ParseMoney;
 import net.tnemc.core.currency.parser.ParseRule;
 
+import java.math.RoundingMode;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,14 +48,20 @@ public class SymbolParseRule implements ParseRule {
   }
 
   @Override
-  public void apply(final ParseMoney parseMoney, final String input) {
+  public String apply(final ParseMoney parseMoney, final String input) {
     final Matcher matcher = Pattern.compile("^([^0-9]+)").matcher(input);
     if(matcher.find()) {
 
       final String symbol = matcher.group(1).trim();
       final Optional<Currency> currency = TNECore.eco().currency().findCurrencyBySymbol(symbol);
+      if(currency.isPresent()) {
 
-      currency.ifPresent(parseMoney::currency);
+        parseMoney.currency(currency.get());
+        parseMoney.amount(parseMoney.amount().setScale(currency.get().getDecimalPlaces(), RoundingMode.FLOOR));
+
+        return input.replace(matcher.group(), "").trim();
+      }
     }
+    return input;
   }
 }

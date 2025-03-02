@@ -33,10 +33,11 @@ public interface ParseRule {
   String identifier();
 
   /**
-   * Applies the given parse money object to the input string according to the specified rules.
+   * Applies the given ParseMoney object to the input string according to the specified rules.
    *
-   * @param parseMoney the ParseMoney object to apply the rules to
-   * @param input the input string to apply the rules on
+   * @param parseMoney The ParseMoney object to apply the rules to.
+   * @param input The input string to apply the rules on.
+   * @return A String after applying the rules to the input string based on the ParseMoney object.
    */
-  void apply(ParseMoney parseMoney, String input);
+  String apply(ParseMoney parseMoney, String input);
 }

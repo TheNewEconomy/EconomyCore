@@ -21,6 +21,7 @@ import net.tnemc.core.currency.parser.ParseMoney;
 import net.tnemc.core.currency.parser.ParseRule;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,15 +51,24 @@ public class ShortenParseRule implements ParseRule {
    * @param input      the input string to apply the rules on
    */
   @Override
-  public void apply(final ParseMoney parseMoney, final String input) {
+  public String apply(final ParseMoney parseMoney, final String input) {
 
     final String shortcuts = parseMoney.currency().getPrefixes();
     final Matcher matcher = Pattern.compile("([0-9]+(?:\\.[0-9]*)?)[" + shortcuts + "]$").matcher(input);
-    if (matcher.find()) {
+    if(matcher.find()) {
+
       final BigDecimal baseValue = new BigDecimal(matcher.group(1));
       final char suffix = input.charAt(input.length() - 1);
-      final int exponent = shortcuts.indexOf(suffix) * 3; // Exponent based on position in the string
-      parseMoney.amount(baseValue.multiply(BigDecimal.TEN.pow(exponent)));
+      final int exponent = (shortcuts.indexOf(suffix) + 1) * 3; // Exponent based on position in the string
+
+      if(exponent > 0) {
+
+        final BigDecimal value = baseValue.multiply(BigDecimal.TEN.pow(exponent)).setScale(parseMoney.currency().getDecimalPlaces(), RoundingMode.HALF_UP);
+        parseMoney.amount(value);
+
+        return input.replace(matcher.group(), value.toPlainString()).trim();
+      }
     }
+    return input;
   }
 }

@@ -50,20 +50,26 @@ public class NumericParseRule implements ParseRule {
    * @param input      the input string to apply the rules on
    */
   @Override
-  public void apply(final ParseMoney parseMoney, final String input) {
+  public String apply(final ParseMoney parseMoney, final String input) {
 
     final String decimalSeparator = parseMoney.currency().getDecimal();
     final String majorSeparator = parseMoney.currency().getMajorSeparator();
 
-    String normalizedInput = input.replace(majorSeparator, ""); // Remove thousands separator
+    String normalizedInput = "";
+
     if(!decimalSeparator.equals(".")) {
 
-      normalizedInput = normalizedInput.replace(decimalSeparator, "."); // Convert to standard decimal
+      normalizedInput = input.replace(decimalSeparator, "."); // Convert to standard decimal
     }
 
+    normalizedInput = normalizedInput.replace(majorSeparator, ""); // Remove thousands separator
+
+
     final Matcher matcher = Pattern.compile("([0-9]+(?:\\.[0-9]*)?(?:[eE][-+]?[0-9]+)?)").matcher(normalizedInput);
-    if (matcher.find()) {
+    if(matcher.find()) {
+
       parseMoney.amount(new BigDecimal(matcher.group(1)));
     }
+    return input;
   }
 }

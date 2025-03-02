@@ -37,13 +37,13 @@ public class MoneyParser {
   private final LinkedHashMap<String, ParseRule> rules = new LinkedHashMap<>();
 
   public MoneyParser() {
-
-    addRule(new SymbolParseRule()); //$5 -> sets currency to USD
-    addRule(new ShortenParseRule()); // 5k -> 5000
-    addRule(new FractionParseRule()); // 1/2 -> .50
-    addRule(new RomanParseRule()); // X, IV
+    addRule(new RomanParseRule()); // X, IV - works without symbol attached
+    rules.put("roman2", new RomanParseRule());
+    addRule(new FractionParseRule()); // 1/2 -> .50 - doesn't work
     addRule(new RandomParseRule()); // random(1-10) = 6?
+    addRule(new SymbolParseRule()); //$5 -> sets currency to USD
     addRule(new NumericParseRule()); // scientific notation and general numerics
+    addRule(new ShortenParseRule()); // 5k -> 5000
   }
 
   public void addRule(final ParseRule rule) {
@@ -53,8 +53,11 @@ public class MoneyParser {
   public ParseMoney parse(final String region, final String input) {
     final ParseMoney parseMoney = new ParseMoney(region);
 
-    for (final ParseRule rule : rules.values()) {
-      rule.apply(parseMoney, input);
+    String parsedInput = input;
+    for(final ParseRule rule : rules.values()) {
+      parsedInput = rule.apply(parseMoney, parsedInput);
+
+      System.out.println("Parsed: " + parsedInput + " Rule: " + rule.identifier());
     }
 
     return parseMoney;

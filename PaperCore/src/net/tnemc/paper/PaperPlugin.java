@@ -33,6 +33,7 @@ import net.tnemc.item.paper.PaperCalculationsProvider;
 import net.tnemc.paper.hook.economy.VaultHook;
 import net.tnemc.paper.hook.economy.VaultUnlockedHook;
 import net.tnemc.paper.hook.misc.PAPIHook;
+import net.tnemc.paper.listener.PlayerChatListener;
 import net.tnemc.paper.listener.PlayerInteractListener;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.ServerConnector;
@@ -104,6 +105,7 @@ public class PaperPlugin {
     //Player Listeners
     Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), plugin);
     Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), plugin);
+    Bukkit.getPluginManager().registerEvents(new PlayerChatListener(), plugin);
 
     //Menu-related Listeners from TNML
     Bukkit.getPluginManager().registerEvents(new PlayerCloseInventoryListener(), plugin);

@@ -87,11 +87,11 @@ public class BukkitCore extends TNECore {
     super.registerCommands();
 
     //Register our commands
-    command.register(new AdminCommand());
+    /*command.register(new AdminCommand());
     command.register(new ShortCommands());
     command.register(new ModuleCommand());
     command.register(new MoneyCommand());
-    command.register(new TransactionCommand());
+    command.register(new TransactionCommand());*/
   }
 
   @Override
