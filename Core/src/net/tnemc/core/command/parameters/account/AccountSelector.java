@@ -1,5 +1,4 @@
-package net.tnemc.core.command;
-
+package net.tnemc.core.command.parameters.account;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2025 Daniel "creatorfromhell" Vidmar
@@ -18,30 +17,15 @@ package net.tnemc.core.command;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.plugincore.core.compatibility.CmdSource;
+import net.tnemc.core.account.Account;
+
+import java.util.List;
 
 /**
- * CurrencyCommand
+ * AccountSelector
  *
  * @author creatorfromhell
- * @since 0.1.2.0
+ * @since 0.1.3.6
  */
-public class CurrencyCommand {
-
-  public static void onCreate(final CmdSource<?> sender, final String name, final String type) {
-
-  }
-
-  public static void onInstall(final CmdSource<?> sender, final String template) {
-
-  }
-
-
-  public static void onList(final CmdSource<?> sender) {
-
-  }
-
-  public static void onSet(final CmdSource<?> sender) {
-
-  }
+public interface AccountSelector<A extends Account> extends List<A> {
 }
