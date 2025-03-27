@@ -152,6 +152,8 @@ public abstract class TNECore extends PluginEngine {
 
     if(!this.messageConfig.load()) {
       PluginCore.log().error("Failed to load message configuration!", DebugLevel.OFF);
+    } else {
+      this.messageConfig.loadLanguages();
     }
   }
 
