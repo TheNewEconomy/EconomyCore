@@ -23,33 +23,57 @@ Options:
 
   #The damage value used for this item. Defaults to 0.
   #Optional.
-  #Damage: 0
+  Damage: 0
+
+  #The custom name this item must have in order to be considered currency. Can't be removed at anvil
+  #Optional.
+  Name: 'One'
 
   #The custom name this item must have in order to be considered currency.
+  #This one can be removed at anvils.
   #Optional.
-  #Name: 'One'
+  CustomName: 'One'
 
   #The lore string this item must have  in order to be considered currency.
   #Optional.
-  #Lore:
-  #  - "example lore"
-  #  - "example second line"
+  Lore:
+    - "example lore"
+    - "example second line"
 
   #The custom model data value used for this item. Defaults to -1. No longer used in 1.21.4+
   #Optional.
-  #ModelData: -1
+  ModelData: -1
+
+  #Represents configurations related to custom item models.
+  #Optional
+  ItemModel:
+
+    Model: "minecraft:custom_model_data"
+
+    Colors:
+      - 4752506
+
+    Booleans:
+      - false
+
+    Floats:
+      - 4.0
+
+    Strings:
+      - "String one"
+
 
   #All configurations relating to enchantment identification for currency tiers
   #The format is - enchantment name
   #Optional.
-  #Enchantments:
-  #  - "example_enchant"
+  Enchantments:
+    - "example_enchant"
 
   #All configurations relating to item flags identification for currency tiers
   #The format is - item flag
   #Optional.
-  #Flags:
-  #  - "example_flag"
+  Flags:
+    - "example_flag"
 
   #Configurations relating to crafting this currency tier.
   Crafting:
