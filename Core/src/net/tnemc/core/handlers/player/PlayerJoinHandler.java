@@ -216,7 +216,7 @@ public class PlayerJoinHandler {
             TNECore.eco().setReloadTime(new Date().getTime());
           }
         } else {
-          SyncHandler.send(acc.get().getIdentifier().toString());
+          SyncHandler.send(acc.get().getIdentifier().toString(), acc.get().getName());
         }
       }
     }
