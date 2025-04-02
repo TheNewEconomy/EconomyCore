@@ -36,8 +36,6 @@ import java.util.UUID;
  */
 public class BungeeCore extends Plugin {
 
-  private final Map<UUID, MessageData> backlog = new HashMap<>();
-
   private static BungeeCore instance;
   private MessageManager manager;
 
@@ -58,15 +56,5 @@ public class BungeeCore extends Plugin {
   public static BungeeCore instance() {
 
     return instance;
-  }
-
-  public Map<UUID, MessageData> getBacklog() {
-
-    return backlog;
-  }
-
-  public void remove(final UUID server) {
-
-    backlog.remove(server);
   }
 }

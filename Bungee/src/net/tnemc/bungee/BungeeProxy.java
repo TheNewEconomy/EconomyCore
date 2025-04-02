@@ -23,6 +23,10 @@ import net.tnemc.bungee.message.backlog.BacklogEntry;
 import net.tnemc.bungee.message.backlog.MessageData;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 /**
  * BungeeProxy
  *

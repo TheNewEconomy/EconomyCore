@@ -44,8 +44,6 @@ import java.util.logging.Logger;
         url = "https://tnemc.net", description = "A bridge for TheNewEconomy plugin.", authors = { "creatorfromhell" })
 public class VelocityCore {
 
-  private final Map<UUID, MessageData> backlog = new HashMap<>();
-
   private final ProxyServer server;
   private final Logger logger;
   private MessageManager manager;
@@ -83,15 +81,5 @@ public class VelocityCore {
   public ProxyServer getServer() {
 
     return server;
-  }
-
-  public Map<UUID, MessageData> getBacklog() {
-
-    return backlog;
-  }
-
-  public void remove(final UUID server) {
-
-    backlog.remove(server);
   }
 }

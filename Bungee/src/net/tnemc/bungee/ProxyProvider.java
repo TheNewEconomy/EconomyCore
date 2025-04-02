@@ -21,6 +21,9 @@ package net.tnemc.bungee;
 import net.tnemc.bungee.message.backlog.MessageData;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
+import java.util.UUID;
+
 /**
  * ProxyProvider
  *
