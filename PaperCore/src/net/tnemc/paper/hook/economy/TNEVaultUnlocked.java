@@ -363,19 +363,23 @@ public class TNEVaultUnlocked implements Economy {
   }
 
   @Override
-  public @NotNull EconomyResponse withdraw(final @NotNull String pluginName, final UUID uuid, final @NotNull String worldName, final @NotNull String currency, final @NotNull BigDecimal amount) {
-    PluginCore.log().debug("Withdraw method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Currency: " + currency + ", Amount: " + amount, DebugLevel.STANDARD);
+  public @NotNull EconomyResponse withdraw(final @NotNull String pluginName, final UUID uuid, final @NotNull String worldName, final @NotNull String currencyId, final @NotNull BigDecimal amount) {
+    PluginCore.log().debug("Withdraw method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Currency: " + currencyId + ", Amount: " + amount, DebugLevel.STANDARD);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
+    final Optional<Currency> currency = TNECore.eco().currency().findCurrency(currencyId);
 
     if (account.isEmpty()) {
       return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO,
                                  ResponseType.FAILURE, "Unable to locate associated account.");
     }
 
-    final HoldingsModifier modifier = new HoldingsModifier(worldName,
-                                                           TNECore.eco().currency().getDefaultCurrency(worldName).getUid(),
-                                                           amount);
+    if (currency.isEmpty()) {
+      return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO,
+                                 ResponseType.FAILURE, "Unable to find currency %s.".formatted(currencyId));
+    }
+
+    final HoldingsModifier modifier = new HoldingsModifier(worldName, currency.get().getUid(), amount);
 
     final Transaction transaction = new Transaction("take")
             .to(account.get(), modifier.counter())
@@ -406,18 +410,21 @@ public class TNEVaultUnlocked implements Economy {
   }
 
   @Override
-  public @NotNull EconomyResponse deposit(final @NotNull String pluginName, final UUID uuid, final @NotNull String worldName, final @NotNull String currency, final @NotNull BigDecimal amount) {
-    PluginCore.log().debug("Deposit method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Currency: " + currency + ", Amount: " + amount, DebugLevel.STANDARD);
+  public @NotNull EconomyResponse deposit(final @NotNull String pluginName, final UUID uuid, final @NotNull String worldName, final @NotNull String currencyId, final @NotNull BigDecimal amount) {
+    PluginCore.log().debug("Deposit method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Currency: " + currencyId + ", Amount: " + amount, DebugLevel.STANDARD);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
+    final Optional<Currency> currency = TNECore.eco().currency().findCurrency(currencyId);
 
     if (account.isEmpty()) {
       return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO, ResponseType.FAILURE, "Unable to locate associated account.");
     }
 
-    final HoldingsModifier modifier = new HoldingsModifier(worldName,
-                                                           TNECore.eco().currency().getDefaultCurrency(worldName).getUid(),
-                                                           amount);
+    if (currency.isEmpty()) {
+      return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO, ResponseType.FAILURE, "Unable to find currency %s.".formatted(currencyId));
+    }
+
+    final HoldingsModifier modifier = new HoldingsModifier(worldName, currency.get().getUid(), amount);
 
     final Transaction transaction = new Transaction("give")
             .to(account.get(), modifier)
