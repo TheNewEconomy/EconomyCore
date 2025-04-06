@@ -29,6 +29,7 @@ import net.tnemc.bungee.message.handlers.SyncAllMessageHandler;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -41,7 +42,7 @@ import java.util.UUID;
 public class MessageManager {
 
   private final Map<String, MessageHandler> handlers = new HashMap<>();
-  private final Map<String, MessageData> data = new HashMap<>();
+  private final Map<String, MessageData> data = new LinkedHashMap<>();
 
   private final Map<String, ConfigEntry> hubs = new HashMap<>();
 
