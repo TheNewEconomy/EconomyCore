@@ -1,4 +1,0 @@
-#stolen from Towny github O-O
-files:
-  - source: /Core/resources/messages.yml
-    translation: /Core/resources/lang/%locale%.yml
