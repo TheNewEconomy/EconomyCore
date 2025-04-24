@@ -77,10 +77,7 @@ the [Translation Guide](https://github.com/TheNewEconomy/EconomyCore/wiki/Transl
 
 ## Documented
 
-TNE has lots of documentation for the power users that like all the documentation.
-
-*Please note: As the new TNE Core is a work in progress, documentation is very limited at the
-moment.*
+TNE has lots of documentation for the power users who like all the documentation. Find documentation [here](https://tne.gitbook.io/tne-docs).
 
 ## Requirements
 
