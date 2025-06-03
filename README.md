@@ -105,7 +105,6 @@ Thank you for your contributions!
 
 We have some organizations that provide open-source licenses to help support this project.
 
-<a href="https://jb.gg/OpenSourceSupport"><img align="left" width="200" height="200" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png"></a>
 <a href="https://www.ej-technologies.com/products/jprofiler/overview.html"><img align="left" width="200" height="200" src="jprofiler.svg"></a>
 
 
