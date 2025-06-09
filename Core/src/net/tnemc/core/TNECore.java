@@ -452,12 +452,32 @@ public abstract class TNECore extends PluginEngine {
 
   public AbstractItemStack<?> denominationToStack(final ItemDenomination denomination, final int amount) {
 
-    return PluginCore.server().stackBuilder().of(denomination.material(), amount)
+    AbstractItemStack<?> stack = PluginCore.server().stackBuilder().of(denomination.material(), amount)
             .enchant(denomination.enchantments())
             .lore(denomination.getLore())
             .flags(denomination.flags())
             .damage(denomination.getDamage())
-            .customName(MiniMessage.miniMessage().deserialize(denomination.getName()))
-            .modelDataOld(denomination.getCustomModel()).debug(false);
+            .customName(MiniMessage.miniMessage().deserialize(denomination.getName())).debug(false);
+
+    if(denomination.getCustomModel() > -1) {
+      stack = stack.modelDataOld(denomination.getCustomModel());
+    }
+
+    if(!denomination.provider().equalsIgnoreCase("vanilla")) {
+      stack = stack.setItemProvider(denomination.provider()).setProviderItemID(denomination.provider());
+    }
+
+    if(!denomination.itemModel().isEmpty()) {
+      stack = stack.itemModel(denomination.itemModel());
+    }
+
+    if(!denomination.modelBooleans().isEmpty() || !denomination.modelStrings().isEmpty()
+      || !denomination.modelColours().isEmpty() || !denomination.modelFloats().isEmpty()) {
+
+      stack = stack.modelData(denomination.modelColours(), denomination.modelFloats(),
+                              denomination.modelBooleans(), denomination.modelStrings());
+    }
+
+    return stack;
   }
 }
