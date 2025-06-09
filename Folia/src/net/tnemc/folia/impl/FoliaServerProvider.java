@@ -91,7 +91,7 @@ public class FoliaServerProvider implements ServerConnector {
 
     final Optional<PlayerProvider> playerOpt = PluginCore.server().findPlayer(player);
     if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI") && playerOpt.isPresent()
-       && playerOpt.get() instanceof BukkitPlayerProvider bukkitPlayer) {
+       && playerOpt.get() instanceof final BukkitPlayerProvider bukkitPlayer) {
       return PAPIParser.parse(bukkitPlayer, message);
     }
     return message;
@@ -157,7 +157,7 @@ public class FoliaServerProvider implements ServerConnector {
   @Override
   public PlayerProvider initializePlayer(@NotNull final Object player) {
 
-    if(player instanceof Player playerObj) {
+    if(player instanceof final Player playerObj) {
       return new FoliaPlayerProvider(playerObj);
     }
     return null;
@@ -203,7 +203,7 @@ public class FoliaServerProvider implements ServerConnector {
 
       final UUID id = UUID.fromString(name);
       return Bukkit.getPlayer(id) != null;
-    } catch(Exception ignore) {
+    } catch(final Exception ignore) {
       return Bukkit.getPlayer(name) != null;
     }
   }
@@ -313,9 +313,9 @@ public class FoliaServerProvider implements ServerConnector {
       ShapedRecipe shaped;
 
       try {
-        shaped = new ShapedRecipe(new NamespacedKey(PaperCore.instance().getPlugin(), key), (ItemStack)recipe.getResult().locale());
-      } catch(Exception ignore) {
-        shaped = new ShapedRecipe((ItemStack)recipe.getResult().locale());
+        shaped = new ShapedRecipe(new NamespacedKey(PaperCore.instance().getPlugin(), key), (ItemStack)recipe.getResult().cacheLocale());
+      } catch(final Exception ignore) {
+        shaped = new ShapedRecipe((ItemStack)recipe.getResult().cacheLocale());
       }
 
       shaped.shape(recipe.getRows());
@@ -328,9 +328,9 @@ public class FoliaServerProvider implements ServerConnector {
       ShapelessRecipe shapeless;
 
       try {
-        shapeless = new ShapelessRecipe(new NamespacedKey(PaperCore.instance().getPlugin(), key), (ItemStack)recipe.getResult().locale());
-      } catch(Exception ignore) {
-        shapeless = new ShapelessRecipe((ItemStack)recipe.getResult().locale());
+        shapeless = new ShapelessRecipe(new NamespacedKey(PaperCore.instance().getPlugin(), key), (ItemStack)recipe.getResult().cacheLocale());
+      } catch(final Exception ignore) {
+        shapeless = new ShapelessRecipe((ItemStack)recipe.getResult().cacheLocale());
       }
 
       for(final Map.Entry<Character, String> ingredient : recipe.getIngredients().entrySet()) {

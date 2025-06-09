@@ -90,14 +90,14 @@ public class AccountSelectionPage {
       if(maxPages > 1) {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
-                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
+                                                           .customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
                                                            .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))))
                                            .withActions(new DataAction(accountPageID, prev), new SwitchPageAction(menuName, menuPage))
                                            .withSlot(0)
                                            .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
+                                                           .customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
                                                            .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPage"), id))))
                                            .withActions(new DataAction(accountPageID, next), new SwitchPageAction(menuName, menuPage))
                                            .withSlot(8)
@@ -105,7 +105,7 @@ public class AccountSelectionPage {
       }
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
-                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EscapeDisplay"), id))
+                                                         .customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EscapeDisplay"), id))
                                                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Escape"), id))))
                                          .withActions(new SwitchPageAction(returnMenu, returnPage))
                                          .withSlot(4)
@@ -129,7 +129,7 @@ public class AccountSelectionPage {
             profile = new SkullProfile();
 
             if(PluginCore.server().playedBefore(UUID.fromString(entry.getKey()))) {
-              profile.setUuid(UUID.fromString(entry.getKey()));
+              profile.uuid(UUID.fromString(entry.getKey()));
             }
           }
 
@@ -137,7 +137,7 @@ public class AccountSelectionPage {
 
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PLAYER_HEAD", 1)
-                                                           .display(Component.text(entry.getValue().getName()))
+                                                           .customName(Component.text(entry.getValue().getName()))
                                                            .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Account.Select"), id)))
                                                            .profile(profile))
                                            .withActions(new DataAction(accountDataID + "_ID", entry.getKey()),

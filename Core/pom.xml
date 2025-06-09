@@ -41,13 +41,6 @@
             <version>${tnpc.version}</version>
             <scope>compile</scope>
         </dependency>
-
-        <dependency>
-            <groupId>me.lokka30</groupId>
-            <artifactId>treasury-api</artifactId>
-            <version>2.0.2-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>

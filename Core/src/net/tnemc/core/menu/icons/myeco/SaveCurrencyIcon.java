@@ -43,7 +43,7 @@ public class SaveCurrencyIcon extends SwitchPageIcon {
   public SaveCurrencyIcon(final UUID id, final int slot, final Currency currency) {
 
     super(slot, PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                  .display(Component.text(currency.getIdentifier())).lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Currencies.Save"), id))),
+                  .customName(Component.text(currency.getIdentifier())).lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Currencies.Save"), id))),
           "my_eco", CURRENCIES_PAGE, ActionType.ANY, false);
 
     addAction(new RunnableAction((click->{

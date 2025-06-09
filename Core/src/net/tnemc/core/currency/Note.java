@@ -152,10 +152,10 @@ public class Note {
     lore.add(Component.text(MessageConfig.yaml().getString("Messages.Note.Action")));
 
     return (AbstractItemStack<Object>)PluginCore.server().stackBuilder().of(material, 1)
-            .display(Component.text(MessageConfig.yaml().getString("Messages.Note.Name")))
+            .customName(Component.text(MessageConfig.yaml().getString("Messages.Note.Name")))
             .enchant(enchantments)
             .flags(flags)
-            .modelData(customModelData)
+            .modelDataOld(customModelData)
             .lore(lore);
   }
 }

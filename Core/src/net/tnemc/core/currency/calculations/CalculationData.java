@@ -167,7 +167,7 @@ public class CalculationData<I> {
 
     } else {
 
-      failedDrop = PluginCore.server().calculations().drop(toDrop, player);
+      failedDrop = PluginCore.server().calculations().drop(toDrop, player, true);
 
       final MessageData messageData = new MessageData("Messages.Money.Dropped");
       account.getPlayer().ifPresent(player->player.message(messageData));

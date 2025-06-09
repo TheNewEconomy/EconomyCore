@@ -84,7 +84,7 @@ public class SpongeCore extends TNECore {
     this.pluginCore = new SpongePluginCore(container, this, log, new BaseTranslationProvider(), new TNECallbackProvider());
     this.container = container;
 
-    command = SpongeLamp.builder(container).build();
+    command = SpongeLamp.builder(container);
 
     metrics = metricsFactory.make(19246);
   }
@@ -143,7 +143,7 @@ public class SpongeCore extends TNECore {
   @Override
   public void registerCommandHandler() {
 
-    command = SpongeLamp.builder(container).build();
+    command = SpongeLamp.builder(container);
   }
 
   @Override
@@ -157,11 +157,12 @@ public class SpongeCore extends TNECore {
 
     super.registerCommands();
 
+    /*
     command.register(new AdminCommand());
     command.register(new ModuleCommand());
     command.register(new MoneyCommand());
     command.register(new ShortCommands());
-    command.register(new TransactionCommand());
+    command.register(new TransactionCommand());*/
   }
 
   @Override

@@ -390,7 +390,7 @@ public class MoneyCommand extends BaseCommand {
       sender.message(senderMSG);
 
       if(!left.isEmpty()) {
-        PluginCore.server().calculations().drop(left, player.getUUID());
+        PluginCore.server().calculations().drop(left, player.getUUID(), true);
         provider.get().message(new MessageData("Messages.Note.Dropped"));
       }
       return;
@@ -451,7 +451,7 @@ public class MoneyCommand extends BaseCommand {
         sender.message(entryMSG);
 
         if(!left.isEmpty()) {
-          PluginCore.server().calculations().drop(left, ((PlayerAccount)account.get()).getUUID());
+          PluginCore.server().calculations().drop(left, ((PlayerAccount)account.get()).getUUID(), true);
           sender.message(new MessageData("Messages.Note.Dropped"));
         }
       }

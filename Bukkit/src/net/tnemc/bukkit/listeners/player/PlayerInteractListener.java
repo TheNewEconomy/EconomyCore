@@ -49,7 +49,7 @@ public class PlayerInteractListener implements Listener {
     if(event.getAction().equals(Action.RIGHT_CLICK_AIR) ||
        event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 
-      new PlayerInteractHandler().handle(provider, BukkitItemStack.locale(stack));
+      new PlayerInteractHandler().handle(provider, new BukkitItemStack().of(stack));
     }
   }
 }

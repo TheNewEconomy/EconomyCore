@@ -63,7 +63,7 @@ public class PaperCore extends TNECore {
   @Override
   public void registerCommandHandler() {
 
-    command = BukkitLamp.builder(plugin).build();
+    command = BukkitLamp.builder(plugin);
   }
 
   @Override

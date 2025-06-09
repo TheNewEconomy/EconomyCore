@@ -457,7 +457,7 @@ public abstract class TNECore extends PluginEngine {
             .lore(denomination.getLore())
             .flags(denomination.getFlags())
             .damage(denomination.getDamage())
-            .display(MiniMessage.miniMessage().deserialize(denomination.getName()))
-            .modelData(denomination.getCustomModel()).debug(false);
+            .customName(MiniMessage.miniMessage().deserialize(denomination.getName()))
+            .modelDataOld(denomination.getCustomModel()).debug(false);
   }
 }

@@ -31,6 +31,7 @@ import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 import net.tnemc.item.AbstractItemStack;
+import net.tnemc.item.component.impl.LoreComponent;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import net.tnemc.plugincore.core.io.message.MessageData;
@@ -60,8 +61,8 @@ public class PlayerInteractHandler {
     final HandlerResponse response = new HandlerResponse("", false);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(provider.identifier());
-    if(account.isPresent() && (account.get() instanceof PlayerAccount) && item.display() != null
-       && Component.EQUALS.test(item.display(), Component.text(MessageConfig.yaml().getString("Messages.Note.Name")))) {
+    if(account.isPresent() && (account.get() instanceof PlayerAccount) && item.customName().isPresent()
+       && Component.EQUALS.test(item.customName().get().customName(), Component.text(MessageConfig.yaml().getString("Messages.Note.Name")))) {
 
       String currency = null;
       String region = null;
@@ -71,22 +72,25 @@ public class PlayerInteractHandler {
       final String regionCompare = MessageConfig.yaml().getString("Messages.Note.Region").split(":")[0];
       final String amtCompare = MessageConfig.yaml().getString("Messages.Note.Amount").split(":")[0];
 
-      final List<Component> lore = item.lore();
+      final Optional<? extends LoreComponent<? extends AbstractItemStack<?>, ?>> loreOptional = item.lore();
 
-      for(final Component component : lore) {
-        //TODO: Fix
-        final String[] info = component.toString().split(":");
-        if(info.length < 2) continue;
+      if(loreOptional.isPresent()) {
+
+        for(final Component component : loreOptional.get().lore()) {
+          //TODO: Fix
+          final String[] info = component.toString().split(":");
+          if(info.length < 2) continue;
 
 
-        if(info[0].contains(curCompare)) {
-          currency = info[1].split("\"")[0].trim();
-        } else if(info[0].contains(regionCompare)) {
-          region = info[1].split("\"")[0].trim();
-        } else if(info[0].contains(amtCompare)) {
-          amount = info[1].split("\"")[0].trim();
+          if(info[0].contains(curCompare)) {
+            currency = info[1].split("\"")[0].trim();
+          } else if(info[0].contains(regionCompare)) {
+            region = info[1].split("\"")[0].trim();
+          } else if(info[0].contains(amtCompare)) {
+            amount = info[1].split("\"")[0].trim();
+          }
+
         }
-
       }
 
       if(currency == null || region == null || amount == null) return response;

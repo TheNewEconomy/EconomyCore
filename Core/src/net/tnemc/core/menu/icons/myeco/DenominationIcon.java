@@ -44,7 +44,7 @@ public class DenominationIcon extends SwitchPageIcon {
   public DenominationIcon(final UUID id, final int slot, final Denomination denomination) {
 
     super(slot, PluginCore.server().stackBuilder().of((denomination instanceof ItemDenomination)? ((ItemDenomination)denomination).getMaterial() : "PAPER", 1)
-                  .display(Component.text(denomination.weight().toString())).lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.Icon"), id))),
+                  .customName(Component.text(denomination.weight().toString())).lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.Icon"), id))),
           "my_eco", DENOMINATION_EDIT_PAGE, ActionType.ANY, false);
 
 
