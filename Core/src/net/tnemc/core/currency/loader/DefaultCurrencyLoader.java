@@ -370,6 +370,8 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
       item.setName(denom.getString("Options.Name", ""));
 
+      item.maxStack(denom.getInt("Options.MaxStack", 0));
+
       final List<String> loreStr = denom.getStringList("Options.Lore");
       final LinkedList<Component> lore = new LinkedList<>();
       for(final String str : loreStr) {

@@ -478,6 +478,9 @@ public abstract class TNECore extends PluginEngine {
                               denomination.modelBooleans(), denomination.modelStrings());
     }
 
+    if(denomination.maxStack() > 0) {
+      stack = stack.maxStackSize(denomination.maxStack());
+    }
     return stack;
   }
 }

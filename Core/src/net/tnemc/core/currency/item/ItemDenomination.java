@@ -52,6 +52,7 @@ public class ItemDenomination extends Denomination {
 
   private String material = "PAPER";
   private short damage = 0;
+  private int maxStack = 0;
   private String name = "";
   private Integer customModel = -1;
   private String texture = "";
@@ -118,6 +119,16 @@ public class ItemDenomination extends Denomination {
   public void setDamage(final short damage) {
 
     this.damage = damage;
+  }
+
+  public int maxStack() {
+
+    return maxStack;
+  }
+
+  public void maxStack(final int maxStack) {
+
+    this.maxStack = maxStack;
   }
 
   public String getName() {

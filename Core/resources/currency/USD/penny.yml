@@ -70,6 +70,10 @@ Options:
   #Optional.
   #Damage: 0
 
+  #The max stack size for this item. Defaults to 0.
+  #Optional.
+  #MaxStack: 0
+
   #The custom name this item must have in order to be considered currency.
   #Optional.
   #Name: 'Penny'
