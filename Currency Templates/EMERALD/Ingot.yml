@@ -7,6 +7,51 @@ Info:
   #The plural name of this tier.
   Plural: 'Emeralds'
 
+#The checks to perform on items to determine if they are valid currency items or not
+Checks:
+  - "name"
+  - "texture"
+  - "material"
+  - "custom-name"
+  - "lore"
+  - "model-data-old"
+  - "item-model"
+  - "model-data"
+  - "enchantments"
+  - "flags"
+
+Integrations:
+
+  ItemsAdder:
+
+    Enabled: false
+
+    item: "example:item"
+
+  Oraxen:
+
+    Enabled: false
+
+    item: "example:item"
+
+  Nexo:
+
+    Enabled: false
+
+    item: "example:item"
+
+  Nova:
+
+    Enabled: false
+
+    item: "example:item"
+
+  SlimeFun:
+
+    Enabled: false
+
+    item: "example:item"
+
 #Various options for this currency tier.
 Options:
 

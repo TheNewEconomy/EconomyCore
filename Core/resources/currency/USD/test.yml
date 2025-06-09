@@ -93,6 +93,8 @@ Options:
   #Optional
   ItemModel:
 
+    Enabled: false
+
     Model: "minecraft:custom_model_data"
 
     Colors:

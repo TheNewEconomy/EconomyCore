@@ -9,6 +9,51 @@ Info:
   #The plural name of this tier.
   Plural: 'Ones'
 
+#The checks to perform on items to determine if they are valid currency items or not
+Checks:
+  - "name"
+  - "texture"
+  - "material"
+  - "custom-name"
+  - "lore"
+  - "model-data-old"
+  - "item-model"
+  - "model-data"
+  - "enchantments"
+  - "flags"
+
+Integrations:
+
+  ItemsAdder:
+
+    Enabled: false
+
+    item: "example:item"
+
+  Oraxen:
+
+    Enabled: false
+
+    item: "example:item"
+
+  Nexo:
+
+    Enabled: false
+
+    item: "example:item"
+
+  Nova:
+
+    Enabled: false
+
+    item: "example:item"
+
+  SlimeFun:
+
+    Enabled: false
+
+    item: "example:item"
+
 #Various options for this currency tier.
 Options:
 
@@ -38,6 +83,26 @@ Options:
   #The custom model data value used for this item. Defaults to -1. No longer used in 1.21.4+
   #Optional.
   #ModelData: -1
+
+  #Represents configurations related to custom item models.
+  #Optional
+  #ItemModel:
+
+  #  Enabled: false
+  #
+  #  Model: "minecraft:custom_model_data"
+  #
+  #  Colors:
+  #      - 4752506
+  #
+  #  Booleans:
+  #    - false
+  #
+  #  Floats:
+  #    - 4.0
+  #
+  #  Strings:
+  #    - "String one"
 
   #All configurations relating to enchantment identification for currency tiers
   #The format is - enchantment name
