@@ -43,6 +43,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -376,16 +377,71 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
         lore.add(MiniMessage.miniMessage().deserialize(str));
       }
 
+      item.checks().addAll(denom.getStringList("Checks", new ArrayList<>()));
+
+      String provider = "vanilla";
+      String providerID = "";
+
+      if(denom.getBoolean("Integrations.ItemsAdder.Enabled", false)) {
+
+        provider = "itemsadder";
+        providerID = denom.getString("Integrations.ItemsAdder.Item");
+      }
+
+      if(denom.getBoolean("Integrations.Oraxen.Enabled", false)) {
+
+        provider = "oraxen";
+        providerID = denom.getString("Integrations.Oraxen.Item");
+      }
+
+      if(denom.getBoolean("Integrations.Nexo.Enabled", false)) {
+
+        provider = "nexo";
+        providerID = denom.getString("Integrations.Nexo.Item");
+      }
+
+      if(denom.getBoolean("Integrations.Nova.Enabled", false)) {
+
+        provider = "nova";
+        providerID = denom.getString("Integrations.Nova.Item");
+      }
+
+      if(denom.getBoolean("Integrations.SlimeFun.Enabled", false)) {
+
+        provider = "slimefun";
+        providerID = denom.getString("Integrations.Slimefun.Item");
+      }
+
+      item.provider(provider);
+      item.provider(providerID);
+
       item.setLore(lore);
       item.setCustomModel(denom.getInt("Options.ModelData", -1));
       item.setTexture(denom.getString("Options.Texture", ""));
 
+      if(denom.getBoolean("Options.ItemModel.Enabled", false)) {
+
+        item.itemModel(denom.getString("Options.ItemModel.Model"));
+        item.modelColours().addAll(denom.getStringList("Options.ItemModel.Colours", new ArrayList<>()));
+        item.modelStrings().addAll(denom.getStringList("Options.ItemModel.Strings", new ArrayList<>()));
+
+        for(final String str : denom.getStringList("Options.ItemModel.Booleans", new ArrayList<>())) {
+
+          item.modelBooleans().add(Boolean.valueOf(str));
+        }
+
+        for(final String str : denom.getStringList("Options.ItemModel.Floats", new ArrayList<>())) {
+
+          item.modelFloats().add(Float.valueOf(str));
+        }
+      }
+
       if(denom.contains("Options.Enchantments")) {
-        item.setEnchantments(denom.getStringList("Options.Enchantments"));
+        item.enchantments(denom.getStringList("Options.Enchantments"));
       }
 
       if(denom.contains("Options.Flags")) {
-        item.setFlags(denom.getStringList("Options.Flags"));
+        item.flags(denom.getStringList("Options.Flags"));
       }
 
       //Crafting

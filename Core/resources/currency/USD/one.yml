@@ -93,7 +93,7 @@ Options:
   #  Model: "minecraft:custom_model_data"
   #
   #  Colors:
-  #      - 4752506
+  #      - "4752506"
   #
   #  Booleans:
   #    - false

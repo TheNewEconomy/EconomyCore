@@ -452,10 +452,10 @@ public abstract class TNECore extends PluginEngine {
 
   public AbstractItemStack<?> denominationToStack(final ItemDenomination denomination, final int amount) {
 
-    return PluginCore.server().stackBuilder().of(denomination.getMaterial(), amount)
-            .enchant(denomination.getEnchantments())
+    return PluginCore.server().stackBuilder().of(denomination.material(), amount)
+            .enchant(denomination.enchantments())
             .lore(denomination.getLore())
-            .flags(denomination.getFlags())
+            .flags(denomination.flags())
             .damage(denomination.getDamage())
             .customName(MiniMessage.miniMessage().deserialize(denomination.getName()))
             .modelDataOld(denomination.getCustomModel()).debug(false);

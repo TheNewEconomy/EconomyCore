@@ -52,12 +52,12 @@ public class SerialDenomination implements JSONAble<Denomination> {
     json.put("plural", denom.plural());
     json.put("weight", denom.weight());
 
-    if(denom instanceof ItemDenomination itemDenomination) {
-      json.put("enchantments", itemDenomination.getEnchantments());
+    if(denom instanceof final ItemDenomination itemDenomination) {
+      json.put("enchantments", itemDenomination.enchantments());
       json.put("item", true);
-      json.put("flags", itemDenomination.getFlags());
+      json.put("flags", itemDenomination.flags());
       json.put("lore", itemDenomination.getLore());
-      json.put("material", itemDenomination.getMaterial());
+      json.put("material", itemDenomination.material());
       json.put("damage", itemDenomination.getDamage());
       json.put("name", itemDenomination.getName());
       json.put("customModel", itemDenomination.getCustomModel());
@@ -90,12 +90,12 @@ public class SerialDenomination implements JSONAble<Denomination> {
       denomination.setSingle((String)jsonObject.get("single"));
       denomination.setPlural((String)jsonObject.get("plural"));
 
-      if(denomination instanceof ItemDenomination itemDenomination) {
+      if(denomination instanceof final ItemDenomination itemDenomination) {
 
-        itemDenomination.setEnchantments((List<String>)jsonObject.get("enchantments"));
-        itemDenomination.setFlags((List<String>)jsonObject.get("flags"));
+        itemDenomination.enchantments((List<String>)jsonObject.get("enchantments"));
+        itemDenomination.flags((List<String>)jsonObject.get("flags"));
         itemDenomination.setLore((List<Component>)jsonObject.get("lore"));
-        itemDenomination.setMaterial((String)jsonObject.get("material"));
+        itemDenomination.material((String)jsonObject.get("material"));
         itemDenomination.setDamage(((Long)jsonObject.get("damage")).shortValue());
         itemDenomination.setName((String)jsonObject.get("name"));
         itemDenomination.setCustomModel((Integer)jsonObject.get("customModel"));
@@ -104,7 +104,7 @@ public class SerialDenomination implements JSONAble<Denomination> {
         return itemDenomination;
       }
       return denomination;
-    } catch(ParseException e) {
+    } catch(final ParseException e) {
       return null;
     }
   }

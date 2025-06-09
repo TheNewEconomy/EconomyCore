@@ -548,7 +548,7 @@ public class MyEcoMenu extends Menu {
 
           final Denomination denomObj = (Denomination)denomOpt.get();
           if(denomObj instanceof final ItemDenomination itemDenomination) {
-            itemDenomination.setMaterial(selection.getValue());
+            itemDenomination.material(selection.getValue());
           }
         }
       }
@@ -566,7 +566,7 @@ public class MyEcoMenu extends Menu {
 
           final Denomination denomObj = (Denomination)denomOpt.get();
           if(denomObj instanceof final ItemDenomination itemDenomination && !selection.getValue().isEmpty()) {
-            itemDenomination.setEnchantments(Arrays.asList(selection.getValue().split(",")));
+            itemDenomination.enchantments(Arrays.asList(selection.getValue().split(",")));
           }
         }
       }
@@ -583,7 +583,7 @@ public class MyEcoMenu extends Menu {
 
           final Denomination denomObj = (Denomination)denomOpt.get();
           if(denomObj instanceof final ItemDenomination itemDenomination && !selection.getValue().isEmpty()) {
-            itemDenomination.setFlags(Arrays.asList(selection.getValue().split(",")));
+            itemDenomination.flags(Arrays.asList(selection.getValue().split(",")));
           }
         }
       }
@@ -1235,7 +1235,7 @@ public class MyEcoMenu extends Menu {
 
         if(denomination instanceof final ItemDenomination itemDenomination) {
 
-          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(itemDenomination.getMaterial(), 1)
+          callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(itemDenomination.material(), 1)
                                                              .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.DenomEdit.SetMaterialLore"), id))))
                                              .withSlot(13)
                                              .withActions(new SwitchPageAction(this.name, DENOMINATION_MATERIAL_PAGE))

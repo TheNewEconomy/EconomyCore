@@ -67,11 +67,11 @@ public class MaterialRule implements FormatRule {
         for(final Denomination denomination : currency.get().getDenominations().values()) {
 
           final ItemDenomination denom = (ItemDenomination)denomination;
-          if(formatted.contains(denom.getMaterial())) {
+          if(formatted.contains(denom.material())) {
 
             final AbstractItemStack<?> stack = TNECore.instance().denominationToStack(denom);
             final int count = PluginCore.server().calculations().count((AbstractItemStack<Object>)stack, provider.get().inventory().getInventory(false));
-            formatted = formatted.replace("<" + denom.getMaterial() + ">", String.valueOf(count));
+            formatted = formatted.replace("<" + denom.material() + ">", String.valueOf(count));
           }
         }
       }

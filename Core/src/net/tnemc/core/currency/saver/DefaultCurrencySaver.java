@@ -332,7 +332,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     if(denomination instanceof final ItemDenomination itemDenomination) {
 
       MISCUtils.setComment(denom, "Options.Material", "The material used for this item.");
-      denom.set("Options.Material", itemDenomination.getMaterial());
+      denom.set("Options.Material", itemDenomination.material());
 
       if(itemDenomination.getTexture() != null) {
         MISCUtils.setComment(denom, "Options.Texture", "The base64 texture to use if the material is PLAYER_HEAD");
@@ -359,14 +359,14 @@ public class DefaultCurrencySaver implements CurrencySaver {
         denom.set("Options.ModelData", itemDenomination.getCustomModel());
       }
 
-      if(!itemDenomination.getEnchantments().isEmpty()) {
+      if(!itemDenomination.enchantments().isEmpty()) {
         MISCUtils.setComment(denom, "Options.Enchantments", "All configurations relating to enchantment identification for currency tiers.(Optional)");
-        denom.set("Options.Enchantments", itemDenomination.getEnchantments());
+        denom.set("Options.Enchantments", itemDenomination.enchantments());
       }
 
-      if(!itemDenomination.getFlags().isEmpty()) {
+      if(!itemDenomination.flags().isEmpty()) {
         MISCUtils.setComment(denom, "Options.Flags", "All configurations relating to item flags identification for currency tiers.(Optional)");
-        denom.set("Options.Flags", itemDenomination.getFlags());
+        denom.set("Options.Flags", itemDenomination.flags());
       }
 
       //TODO: Crafting stuff

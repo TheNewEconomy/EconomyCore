@@ -50,7 +50,7 @@ public class ItemCurrency extends Currency {
     for(final Denomination denom : getDenominations().values()) {
       final ItemDenomination item = (ItemDenomination)denom;
 
-      if(item.getMaterial().equalsIgnoreCase(material)) {
+      if(item.material().equalsIgnoreCase(material)) {
         return Optional.of(item);
       }
     }
