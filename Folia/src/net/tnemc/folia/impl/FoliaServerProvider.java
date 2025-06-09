@@ -89,6 +89,8 @@ public class FoliaServerProvider implements ServerConnector {
   @Override
   public String replacePlaceholder(final UUID player, final String message) {
 
+    if(player == null) return message;
+
     final Optional<PlayerProvider> playerOpt = PluginCore.server().findPlayer(player);
     if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI") && playerOpt.isPresent()
        && playerOpt.get() instanceof final BukkitPlayerProvider bukkitPlayer) {
