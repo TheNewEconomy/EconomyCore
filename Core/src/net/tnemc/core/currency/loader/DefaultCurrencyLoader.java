@@ -412,7 +412,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
           i++;
         }
 
-        PluginCore.server().registerCrafting(currency.getIdentifier(), recipe);
+        PluginCore.server().registerCrafting(currency.getIdentifier() + ":" + single, recipe);
       }
     }
 
