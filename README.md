@@ -77,10 +77,7 @@ the [Translation Guide](https://github.com/TheNewEconomy/EconomyCore/wiki/Transl
 
 ## Documented
 
-TNE has lots of documentation for the power users that like all the documentation.
-
-*Please note: As the new TNE Core is a work in progress, documentation is very limited at the
-moment.*
+TNE has lots of documentation for the power users who like all the documentation. Find documentation [here](https://tne.gitbook.io/tne-docs).
 
 ## Requirements
 
@@ -108,7 +105,6 @@ Thank you for your contributions!
 
 We have some organizations that provide open-source licenses to help support this project.
 
-<a href="https://jb.gg/OpenSourceSupport"><img align="left" width="200" height="200" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png"></a>
 <a href="https://www.ej-technologies.com/products/jprofiler/overview.html"><img align="left" width="200" height="200" src="jprofiler.svg"></a>
 
 
