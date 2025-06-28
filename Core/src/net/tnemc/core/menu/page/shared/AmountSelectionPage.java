@@ -19,7 +19,6 @@ package net.tnemc.core.menu.page.shared;
  */
 
 import net.kyori.adventure.text.Component;
-import net.tnemc.core.TNECore;
 import net.tnemc.core.menu.handlers.AmountSelectionHandler;
 import net.tnemc.core.menu.icons.actions.PageSwitchWithClose;
 import net.tnemc.menu.core.builder.IconBuilder;

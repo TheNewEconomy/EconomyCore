@@ -19,7 +19,6 @@ package net.tnemc.sponge.listeners.player;
  */
 
 import net.tnemc.core.handlers.player.PlayerCloseEChestHandler;
-import net.tnemc.core.handlers.player.PlayerJoinHandler;
 import net.tnemc.plugincore.core.utils.HandlerResponse;
 import net.tnemc.plugincore.sponge.impl.SpongePlayerProvider;
 import org.spongepowered.api.block.entity.EnderChest;

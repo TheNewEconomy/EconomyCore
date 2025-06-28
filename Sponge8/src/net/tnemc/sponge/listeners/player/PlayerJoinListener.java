@@ -26,7 +26,6 @@ import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.network.ServerSideConnectionEvent;
 import org.spongepowered.plugin.PluginContainer;
 
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.Optional;
 
@@ -41,7 +40,7 @@ public class PlayerJoinListener {
   private final PluginContainer plugin;
   private final Optional<InetSocketAddress> boundAddress;
 
-  public PlayerJoinListener(final PluginContainer plugin, InetSocketAddress boundAddress) {
+  public PlayerJoinListener(final PluginContainer plugin, final InetSocketAddress boundAddress) {
 
     this.plugin = plugin;
       this.boundAddress = Optional.ofNullable(boundAddress);

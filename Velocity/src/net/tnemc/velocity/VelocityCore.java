@@ -25,13 +25,9 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import net.tnemc.bungee.message.MessageManager;
-import net.tnemc.bungee.message.backlog.MessageData;
 import net.tnemc.velocity.event.ServerPostConnectListener;
 import net.tnemc.velocity.message.MessageListener;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 /**

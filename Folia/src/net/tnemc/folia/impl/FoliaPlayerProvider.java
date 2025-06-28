@@ -29,7 +29,6 @@ import net.tnemc.plugincore.core.io.message.MessageHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 

@@ -18,7 +18,6 @@ package net.tnemc.bungee.message.handlers;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bungee.BungeeCore;
 import net.tnemc.bungee.message.MessageManager;
 
 import java.io.DataInputStream;
@@ -48,7 +47,7 @@ public class SyncAllMessageHandler extends AccountHandler {
         MessageManager.instance().backlog(serverAddress);
         MessageManager.instance().backlog(String.valueOf(serverPort));
         MessageManager.instance().backlog(serverAddress + ":" + serverPort);
-      } catch (IOException e) {
+      } catch (final IOException e) {
           e.printStackTrace();
       }
   }

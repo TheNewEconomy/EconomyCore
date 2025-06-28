@@ -34,6 +34,7 @@ import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.utils.MISCUtils;
 import net.tnemc.core.utils.exceptions.NoValidCurrenciesException;
+import net.tnemc.item.AbstractItemStack;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
@@ -389,7 +390,9 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
         final boolean shapeless = denom.getBoolean("Options.Crafting.Shapeless", false);
         final int amount = denom.getInt("Options.Crafting.Amount", 1);
 
-        final CraftingRecipe recipe = new CraftingRecipe(!shapeless, amount, TNECore.instance().denominationToStack(item));
+        final AbstractItemStack<?> craftingItem = TNECore.instance().denominationToStack(item).amount(amount);
+
+        final CraftingRecipe recipe = new CraftingRecipe(!shapeless, amount, craftingItem);
 
         for(final String materials : denom.getStringList("Options.Crafting.Materials")) {
 
