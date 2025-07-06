@@ -30,7 +30,7 @@ import java.util.LinkedHashMap;
  * MoneyParser
  *
  * @author creatorfromhell
- * @since 0.1.3.6
+ * @since 0.1.4.0
  */
 public class MoneyParser {
 
@@ -46,10 +46,22 @@ public class MoneyParser {
     addRule(new ShortenParseRule()); // 5k -> 5000
   }
 
+  /**
+   * Adds a rule to the MoneyParser object.
+   *
+   * @param rule The ParseRule object to add to the rules collection.
+   */
   public void addRule(final ParseRule rule) {
     rules.put(rule.identifier(), rule);
   }
 
+  /**
+   * Parses the input string based on the specified rules for the given region.
+   *
+   * @param region The region to parse the input for.
+   * @param input The input string to be parsed.
+   * @return A ParseMoney object containing the parsed information.
+   */
   public ParseMoney parse(final String region, final String input) {
     final ParseMoney parseMoney = new ParseMoney(region);
 

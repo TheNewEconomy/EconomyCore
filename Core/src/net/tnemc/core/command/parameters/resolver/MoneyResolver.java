@@ -1,4 +1,4 @@
-package net.tnemc.core.command.parameters.account;
+package net.tnemc.core.command.parameters.resolver;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2025 Daniel "creatorfromhell" Vidmar
@@ -17,15 +17,28 @@ package net.tnemc.core.command.parameters.account;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.account.Account;
 
-import java.util.List;
+import net.tnemc.core.TNECore;
+import net.tnemc.core.currency.parser.ParseMoney;
+import org.jetbrains.annotations.NotNull;
+import revxrsal.commands.command.CommandActor;
+import revxrsal.commands.node.ExecutionContext;
+import revxrsal.commands.parameter.ParameterType;
+import revxrsal.commands.stream.MutableStringStream;
 
 /**
- * AccountSelector
+ * PercentDecimalResolver
  *
  * @author creatorfromhell
  * @since 0.1.4.0
  */
-public interface AccountSelector<A extends Account> extends List<A> {
+public class MoneyResolver implements ParameterType<CommandActor, ParseMoney> {
+
+  @Override
+  public ParseMoney parse(@NotNull final MutableStringStream input, @NotNull final ExecutionContext<CommandActor> context) {
+
+    final String value = input.readString();
+
+    return TNECore.eco().currency().parser().parse(TNECore.eco().region().defaultRegion(), value);
+  }
 }

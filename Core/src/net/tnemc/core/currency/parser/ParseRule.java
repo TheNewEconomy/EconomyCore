@@ -21,7 +21,7 @@ package net.tnemc.core.currency.parser;
  * MoneyParseRule
  *
  * @author creatorfromhell
- * @since 0.1.3.6
+ * @since 0.1.4.0
  */
 public interface ParseRule {
 

@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.tnemc</groupId>
     <artifactId>TNE</artifactId>
-    <version>0.1.3.6-Pre-2</version>
+    <version>0.1.4.0-SNAPSHOT-1</version>
     <packaging>pom</packaging>
     <name>The New Economy</name>
 
@@ -24,7 +24,7 @@
     <properties>
         <papi.version>2.11.6</papi.version>
         <tnml.version>1.7.0.0-SNAPSHOT-4</tnml.version>
-        <tnpc.version>1.1.0.0-SNAPSHOT-1</tnpc.version>
+        <tnpc.version>1.1.0.0-SNAPSHOT-3</tnpc.version>
         <tne.relocation>net.tnemc.libs</tne.relocation>
 
         <depend.adventure>4.19.0</depend.adventure>

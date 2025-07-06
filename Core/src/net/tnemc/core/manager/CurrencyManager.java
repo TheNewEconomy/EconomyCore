@@ -25,6 +25,8 @@ import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.currency.loader.DefaultCurrencyLoader;
+import net.tnemc.core.currency.parser.MoneyParser;
+import net.tnemc.core.currency.parser.ParseRule;
 import net.tnemc.core.currency.saver.DefaultCurrencySaver;
 import net.tnemc.core.currency.type.ExperienceLevelType;
 import net.tnemc.core.currency.type.ExperienceType;
@@ -66,6 +68,8 @@ public class CurrencyManager {
 
   private CurrencyLoader loader = new DefaultCurrencyLoader();
   private CurrencySaver saver = new DefaultCurrencySaver();
+
+  private MoneyParser parser = new MoneyParser();
 
   private boolean retry = false;
 
@@ -415,6 +419,20 @@ public class CurrencyManager {
   public CurrencyType findTypeOrDefault(final String identifier) {
 
     return types.getOrDefault(identifier, types.get("virtual"));
+  }
+
+  public MoneyParser parser() {
+    return parser;
+  }
+
+  /**
+   * Adds a ParseRule to the parser for applying rules during parsing.
+   *
+   * @param rule The ParseRule object to add for parsing.
+   */
+  public void addParseRule(final ParseRule rule) {
+
+    parser.addRule(rule);
   }
 
   public Map<String, UUID> getCurIDMap() {

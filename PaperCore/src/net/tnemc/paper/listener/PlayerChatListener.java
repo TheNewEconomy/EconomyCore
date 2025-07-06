@@ -31,7 +31,7 @@ import org.bukkit.event.Listener;
  * PlayerChatListener
  *
  * @author creatorfromhell
- * @since 0.1.3.6
+ * @since 0.1.4.0
  */
 public class PlayerChatListener implements Listener {
 

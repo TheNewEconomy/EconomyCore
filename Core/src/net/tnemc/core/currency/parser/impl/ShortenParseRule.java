@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
  * ShortenParseRule
  *
  * @author creatorfromhell
- * @since 0.1.3.6
+ * @since 0.1.4.0
  */
 public class ShortenParseRule implements ParseRule {
 

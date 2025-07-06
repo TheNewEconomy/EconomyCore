@@ -20,6 +20,7 @@ package net.tnemc.core;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.AccountStatus;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.api.TNEAPI;
 import net.tnemc.core.api.callback.TNECallbacks;
@@ -36,9 +37,17 @@ import net.tnemc.core.api.callback.transaction.PreTransactionCallback;
 import net.tnemc.core.api.response.AccountAPIResponse;
 import net.tnemc.core.channel.BalanceHandler;
 import net.tnemc.core.channel.SyncHandler;
+import net.tnemc.core.command.parameters.PercentBigDecimal;
+import net.tnemc.core.command.parameters.resolver.AccountResolver;
+import net.tnemc.core.command.parameters.resolver.BigDecimalResolver;
+import net.tnemc.core.command.parameters.resolver.CurrencyResolver;
+import net.tnemc.core.command.parameters.resolver.DebugResolver;
+import net.tnemc.core.command.parameters.resolver.PercentDecimalResolver;
+import net.tnemc.core.command.parameters.resolver.StatusResolver;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.config.MessageConfig;
+import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.io.yaml.YamlStorageManager;
@@ -49,6 +58,7 @@ import net.tnemc.core.menu.TransactionMenu;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.utils.MISCUtils;
 import net.tnemc.item.AbstractItemStack;
+import net.tnemc.item.providers.ItemProvider;
 import net.tnemc.menu.core.manager.MenuManager;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.PluginEngine;
@@ -63,8 +73,10 @@ import net.tnemc.plugincore.core.io.message.MessageHandler;
 import net.tnemc.plugincore.core.io.storage.Datable;
 import net.tnemc.plugincore.core.io.storage.StorageManager;
 import net.tnemc.plugincore.core.io.storage.engine.StorageSettings;
+import org.jetbrains.annotations.NotNull;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import revxrsal.commands.LampBuilderVisitor;
 import revxrsal.commands.command.CommandActor;
 import revxrsal.commands.command.ExecutableCommand;
 
@@ -91,8 +103,8 @@ public abstract class TNECore extends PluginEngine {
    */
   public static final String coreURL = "https://tnemc.net/files/module-version.xml";
 
-  public static final String version = "0.1.3.4";
-  public static final String build = "RELEASE-1";
+  public static final String version = "0.1.4.0";
+  public static final String build = "SNAPSHOT-1";
 
   /* Key Managers and Object instances utilized with TNE */
 
@@ -211,25 +223,22 @@ public abstract class TNECore extends PluginEngine {
   }
 
   @Override
+  public @NotNull <A extends CommandActor> LampBuilderVisitor<A> registerParameters() {
+
+    return builder ->builder.parameterTypes()
+            .addParameterType(Account.class, new AccountResolver())
+            .addParameterType(AccountStatus.class, new StatusResolver())
+            .addParameterType(DebugLevel.class, new DebugResolver())
+            .addParameterType(Currency.class, new CurrencyResolver())
+            .addParameterType(BigDecimal.class, new BigDecimalResolver())
+            .addParameterType(PercentBigDecimal.class, new PercentDecimalResolver());
+  }
+
+  @Override
   public void registerCommands() {
 
     //Custom Parameters:
     //TODO: Register custom validators
-
-    //Value Resolvers
-    /*command.registerValueResolver(Account.class, new AccountResolver());
-    command.registerValueResolver(AccountStatus.class, new StatusResolver());
-    command.registerValueResolver(DebugLevel.class, new DebugResolver());
-    command.registerValueResolver(Currency.class, new CurrencyResolver());
-    command.registerValueResolver(BigDecimal.class, new BigDecimalResolver());
-    command.registerValueResolver(PercentBigDecimal.class, new PercentDecimalResolver());*/
-
-    //Annotation
-    /*command.getAutoCompleter().registerParameterSuggestions(AccountStatus.class, new StatusSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(DebugLevel.class, new DebugSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(RegionGroup.class, new RegionSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(Account.class, new AccountSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(Currency.class, new CurrencySuggestion());*/
   }
 
   @Override
@@ -464,7 +473,7 @@ public abstract class TNECore extends PluginEngine {
     }
 
     if(!denomination.provider().equalsIgnoreCase("vanilla")) {
-      stack = stack.setItemProvider(denomination.provider()).setProviderItemID(denomination.provider());
+      stack = stack.setItemProvider(denomination.provider()).setProviderItemID(denomination.providerID());
     }
 
     if(!denomination.itemModel().isEmpty()) {

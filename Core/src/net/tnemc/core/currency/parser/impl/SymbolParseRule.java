@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
  * SymbolParseRule
  *
  * @author creatorfromhell
- * @since 0.1.3.6
+ * @since 0.1.4.0
  */
 public class SymbolParseRule implements ParseRule {
 

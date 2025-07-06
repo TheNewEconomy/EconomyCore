@@ -41,7 +41,7 @@ import java.math.BigDecimal;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-@Command({ "money", "eco", "balo", "balance", "bal", "balanceother", "mybal" })
+@Command({ "money", "eco", "mybal" })
 public class MoneyCommand {
 
   //@DefaultFor({ "mybal" })
@@ -127,7 +127,6 @@ public class MoneyCommand {
   }
 
   @Subcommand({ "other", "check", "balo" })
-  //@DefaultFor({ "balo", "balanceother" })
   @Usage("Money.Other.Arguments")
   @Description("Money.Other.Description")
   @CommandPermission("tne.money.other")

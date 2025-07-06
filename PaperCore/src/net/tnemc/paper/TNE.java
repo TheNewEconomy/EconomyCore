@@ -18,6 +18,8 @@ package net.tnemc.paper;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.item.paper.platform.PaperItemPlatform;
+import net.tnemc.item.providers.ItemProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**

@@ -94,6 +94,24 @@ public class ShortCommands {
     net.tnemc.core.command.MoneyCommand.onTake(new BukkitCMDSource(sender), player, amount, region, currency);
   }
 
+  @Command({ "bal", "money", "eco", "balance" })
+  @Usage("Money.Balance.Arguments")
+  @Description("Money.Balance.Description")
+  @CommandPermission("tne.money.balance")
+  public void onBalance(final BukkitCommandActor sender, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+
+    net.tnemc.core.command.MoneyCommand.onBalance(new BukkitCMDSource(sender), currency, region);
+  }
+
+  @Command({ "balo", "balanceother" })
+  @Usage("Money.Other.Arguments")
+  @Description("Money.Other.Description")
+  @CommandPermission("tne.money.other")
+  public void onOther(final BukkitCommandActor sender, final Account player, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+
+    net.tnemc.core.command.MoneyCommand.onOther(new BukkitCMDSource(sender), player, region, currency);
+  }
+
   @Command({ "baltop" })
   @Usage("Money.Top.Arguments")
   @Description("Money.Top.Description")

@@ -20,13 +20,17 @@ package net.tnemc.core.command.parameters.resolver;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.AccountStatus;
 import org.jetbrains.annotations.NotNull;
+import revxrsal.commands.autocomplete.SuggestionProvider;
 import revxrsal.commands.command.CommandActor;
 import revxrsal.commands.node.ExecutionContext;
 import revxrsal.commands.parameter.ParameterType;
 import revxrsal.commands.stream.MutableStringStream;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * AccountResolver
@@ -54,5 +58,11 @@ public class AccountResolver implements ParameterType<CommandActor, Account> {
       }
     }
     return null;
+  }
+
+  @Override
+  public @NotNull SuggestionProvider<@NotNull CommandActor> defaultSuggestions() {
+
+    return (context)->List.copyOf(TNECore.eco().account().getAccounts().keySet());
   }
 }

@@ -63,7 +63,7 @@ public class PaperCore extends TNECore {
   @Override
   public void registerCommandHandler() {
 
-    command = BukkitLamp.builder(plugin);
+    command = BukkitLamp.builder(plugin).accept(registerParameters()).build();
   }
 
   @Override
@@ -89,11 +89,11 @@ public class PaperCore extends TNECore {
     super.registerCommands();
 
     //Register our commands
-    /*command.register(new AdminCommand());
+    command.register(new AdminCommand());
     command.register(new ShortCommands());
     command.register(new ModuleCommand());
     command.register(new MoneyCommand());
-    command.register(new TransactionCommand());*/
+    command.register(new TransactionCommand());
   }
 
   @Override

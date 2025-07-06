@@ -19,6 +19,10 @@ softdepend:
   - Reserve
   - mcMMO
   - LuckPerms
+  - Nexo
+  - Oraxen
+  - Nova
+  - ItemsAdder
 
 permissions:
   tne.*:

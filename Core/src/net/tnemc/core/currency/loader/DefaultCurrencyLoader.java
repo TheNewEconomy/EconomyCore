@@ -46,6 +46,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -357,7 +358,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     }
 
 
-    final String material = denom.getString("Options.Material", "PAPER");
+    final String material = denom.getString("Options.Material", "PAPER").toLowerCase(Locale.ROOT);
     PluginCore.log().debug("Loading denomination with material of: " + material);
 
     final Denomination denomination = (currency instanceof ItemCurrency)?
@@ -415,7 +416,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       }
 
       item.provider(provider);
-      item.provider(providerID);
+      item.providerID(providerID);
 
       item.setLore(lore);
       item.setCustomModel(denom.getInt("Options.ModelData", -1));

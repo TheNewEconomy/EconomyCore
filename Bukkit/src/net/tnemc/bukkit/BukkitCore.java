@@ -30,8 +30,10 @@ import net.tnemc.core.api.callback.TNECallbacks;
 import net.tnemc.menu.bukkit.BukkitMenuHandler;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.api.CallbackManager;
+import net.tnemc.plugincore.core.module.Module;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import revxrsal.commands.Lamp;
 import revxrsal.commands.bukkit.BukkitLamp;
 import revxrsal.commands.command.CommandActor;
 import revxrsal.commands.command.ExecutableCommand;
@@ -61,7 +63,11 @@ public class BukkitCore extends TNECore {
 
   @Override
   public void registerCommandHandler() {
-    command = BukkitLamp.builder(plugin);
+
+    //Lamp.Builder<? extends CommandActor> builder = BukkitLamp.builder(plugin).accept(registerParameters());
+    //TODO: Load module parameter types
+
+    command = BukkitLamp.builder(plugin).accept(registerParameters()).build();
   }
 
   @Override
@@ -87,11 +93,11 @@ public class BukkitCore extends TNECore {
     super.registerCommands();
 
     //Register our commands
-    /*command.register(new AdminCommand());
+    command.register(new AdminCommand());
     command.register(new ShortCommands());
     command.register(new ModuleCommand());
     command.register(new MoneyCommand());
-    command.register(new TransactionCommand());*/
+    command.register(new TransactionCommand());
   }
 
   @Override
