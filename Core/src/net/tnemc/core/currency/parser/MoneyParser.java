@@ -17,6 +17,7 @@ package net.tnemc.core.currency.parser;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.parser.impl.FractionParseRule;
 import net.tnemc.core.currency.parser.impl.NumericParseRule;
 import net.tnemc.core.currency.parser.impl.RandomParseRule;
@@ -68,8 +69,24 @@ public class MoneyParser {
     String parsedInput = input;
     for(final ParseRule rule : rules.values()) {
       parsedInput = rule.apply(parseMoney, parsedInput);
+    }
 
-      System.out.println("Parsed: " + parsedInput + " Rule: " + rule.identifier());
+    return parseMoney;
+  }
+
+  /**
+   * Parses the input string based on the specified rules for the given region.
+   *
+   * @param region The region to parse the input for.
+   * @param input The input string to be parsed.
+   * @return A ParseMoney object containing the parsed information.
+   */
+  public ParseMoney parse(final String region, final Currency currency, final String input) {
+    final ParseMoney parseMoney = new ParseMoney(region, currency);
+
+    String parsedInput = input;
+    for(final ParseRule rule : rules.values()) {
+      parsedInput = rule.apply(parseMoney, parsedInput);
     }
 
     return parseMoney;

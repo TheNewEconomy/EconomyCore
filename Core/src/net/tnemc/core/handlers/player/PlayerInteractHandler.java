@@ -38,7 +38,6 @@ import net.tnemc.plugincore.core.io.message.MessageData;
 import net.tnemc.plugincore.core.utils.HandlerResponse;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -96,7 +95,7 @@ public class PlayerInteractHandler {
       if(currency == null || region == null || amount == null) return response;
 
 
-      final Optional<Currency> curObj = TNECore.eco().currency().findCurrency(currency);
+      final Optional<Currency> curObj = TNECore.eco().currency().find(currency);
       if(curObj.isEmpty() || curObj.get().getNote().isEmpty()) return response;
 
       final BigDecimal value = new BigDecimal(amount);

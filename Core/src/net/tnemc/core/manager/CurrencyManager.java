@@ -187,7 +187,7 @@ public class CurrencyManager {
    * @since 0.1.2.0
    */
   @NotNull
-  public Currency getDefaultCurrency() {
+  public Currency defaultCurrency() {
 
     for(final Currency currency : currencies.values()) {
       if(currency.isGlobalDefault()) {
@@ -210,14 +210,14 @@ public class CurrencyManager {
    * @since 0.1.2.0
    */
   @NotNull
-  public Currency getDefaultCurrency(@NotNull final String region) {
+  public Currency defaultCurrency(@NotNull final String region) {
 
     for(final Currency currency : currencies.values()) {
       if(currency.isRegionDefault(region)) {
         return currency;
       }
     }
-    return getDefaultCurrency();
+    return defaultCurrency();
   }
 
   /**
@@ -252,7 +252,7 @@ public class CurrencyManager {
    *
    * @return An Optional containing the currency if it exists, otherwise an empty Optional.
    */
-  public Optional<Currency> findCurrency(final UUID identifier) {
+  public Optional<Currency> find(final UUID identifier) {
 
     return Optional.ofNullable(currencies.get(identifier));
   }
@@ -265,7 +265,7 @@ public class CurrencyManager {
    * @return An Optional containing the currency if this item is a valid currency item, otherwise an
    * empty Optional.
    */
-  public Optional<Currency> findCurrencyByItem(final AbstractItemStack<?> item) {
+  public Optional<Currency> findByItem(final AbstractItemStack<?> item) {
 
     for(final Currency currency : currencies.values()) {
 
@@ -332,7 +332,7 @@ public class CurrencyManager {
    *
    * @return An Optional containing the currency if it exists, otherwise an empty Optional.
    */
-  public Optional<Currency> findCurrency(final String identifier) {
+  public Optional<Currency> find(final String identifier) {
 
     try {
 

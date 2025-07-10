@@ -55,17 +55,18 @@ public class NumericParseRule implements ParseRule {
     final String decimalSeparator = parseMoney.currency().getDecimal();
     final String majorSeparator = parseMoney.currency().getMajorSeparator();
 
-    String normalizedInput = "";
+    String normalizedInput = input;
 
     if(!decimalSeparator.equals(".")) {
 
-      normalizedInput = input.replace(decimalSeparator, "."); // Convert to standard decimal
+      normalizedInput = normalizedInput.replace(decimalSeparator, "."); // Convert to standard decimal
     }
 
     normalizedInput = normalizedInput.replace(majorSeparator, ""); // Remove thousands separator
 
 
     final Matcher matcher = Pattern.compile("([0-9]+(?:\\.[0-9]*)?(?:[eE][-+]?[0-9]+)?)").matcher(normalizedInput);
+
     if(matcher.find()) {
 
       parseMoney.amount(new BigDecimal(matcher.group(1)));

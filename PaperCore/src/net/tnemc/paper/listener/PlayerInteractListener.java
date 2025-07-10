@@ -19,7 +19,6 @@ package net.tnemc.paper.listener;
  */
 
 import net.tnemc.core.handlers.player.PlayerInteractHandler;
-import net.tnemc.item.bukkit.BukkitItemStack;
 import net.tnemc.item.paper.PaperItemStack;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;

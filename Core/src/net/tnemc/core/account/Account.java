@@ -155,7 +155,7 @@ public class Account extends ReceiptBox {
                                          final @NotNull UUID currency,
                                          final @NotNull Identifier type) {
 
-    final Optional<Currency> currencyObject = TNECore.eco().currency().findCurrency(currency);
+    final Optional<Currency> currencyObject = TNECore.eco().currency().find(currency);
 
     if(currencyObject.isPresent()) {
       final String resolve = TNECore.eco().region().resolve(region);
@@ -208,7 +208,7 @@ public class Account extends ReceiptBox {
    */
   public boolean setHoldings(final @NotNull HoldingsEntry entry, final @NotNull Identifier type) {
 
-    final Optional<Currency> currencyObject = TNECore.eco().currency().findCurrency(entry.getCurrency());
+    final Optional<Currency> currencyObject = TNECore.eco().currency().find(entry.getCurrency());
 
     final String region = TNECore.eco().region().resolve(entry.getRegion());
 

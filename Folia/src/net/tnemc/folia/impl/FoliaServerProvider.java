@@ -21,18 +21,18 @@ package net.tnemc.folia.impl;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import net.tnemc.folia.impl.scheduler.FoliaScheduler;
 import net.tnemc.item.AbstractItemStack;
-import net.tnemc.item.bukkit.BukkitItemStack;
 import net.tnemc.item.paper.PaperCalculationsProvider;
+import net.tnemc.item.paper.PaperItemStack;
 import net.tnemc.paper.PaperCore;
 import net.tnemc.plugincore.PluginCore;
-import net.tnemc.plugincore.bukkit.hook.PAPIParser;
-import net.tnemc.plugincore.bukkit.impl.BukkitPlayerProvider;
 import net.tnemc.plugincore.core.compatibility.CmdSource;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import net.tnemc.plugincore.core.compatibility.ProxyProvider;
 import net.tnemc.plugincore.core.compatibility.ServerConnector;
 import net.tnemc.plugincore.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.plugincore.core.compatibility.scheduler.SchedulerProvider;
+import net.tnemc.plugincore.paper.hook.PAPIParser;
+import net.tnemc.plugincore.paper.impl.PaperPlayerProvider;
 import net.tnemc.plugincore.paper.impl.PaperProxyProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -50,7 +50,9 @@ import revxrsal.commands.command.CommandActor;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * FoliaServerProvider
@@ -93,8 +95,8 @@ public class FoliaServerProvider implements ServerConnector {
 
     final Optional<PlayerProvider> playerOpt = PluginCore.server().findPlayer(player);
     if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI") && playerOpt.isPresent()
-       && playerOpt.get() instanceof final BukkitPlayerProvider bukkitPlayer) {
-      return PAPIParser.parse(bukkitPlayer, message);
+       && playerOpt.get() instanceof final PaperPlayerProvider paperPlayerProvider) {
+      return PAPIParser.parse(paperPlayerProvider, message);
     }
     return message;
   }
@@ -121,6 +123,13 @@ public class FoliaServerProvider implements ServerConnector {
   public CmdSource<?> source(@NotNull final CommandActor actor) {
 
     return null;
+  }
+
+  @Override
+  public Set<String> onlinePlayersList() {
+    return Bukkit.getOnlinePlayers().stream()
+            .map(Player::getName)
+            .collect(Collectors.toSet());
   }
 
   /**
@@ -275,7 +284,7 @@ public class FoliaServerProvider implements ServerConnector {
   @Override
   public AbstractItemStack<?> stackBuilder() {
 
-    return new BukkitItemStack();
+    return new PaperItemStack();
   }
 
   @Override

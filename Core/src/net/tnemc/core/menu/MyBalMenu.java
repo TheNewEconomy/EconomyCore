@@ -169,7 +169,7 @@ public class MyBalMenu extends Menu {
         final Optional<Object> currencyUUID = viewer.get().findData(ACTION_CURRENCY);
         if(currencyUUID.isPresent()) {
 
-          final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((UUID)currencyUUID.get());
+          final Optional<Currency> currencyOptional = TNECore.eco().currency().find((UUID)currencyUUID.get());
           if(currencyOptional.isPresent()) {
 
             callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
@@ -215,7 +215,7 @@ public class MyBalMenu extends Menu {
         final Optional<Object> currencyUUID = viewer.get().findData(ACTION_CURRENCY);
         if(currencyUUID.isPresent()) {
 
-          final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((UUID)currencyUUID.get());
+          final Optional<Currency> currencyOptional = TNECore.eco().currency().find((UUID)currencyUUID.get());
           if(currencyOptional.isPresent()) {
 
             int i = 10;
@@ -298,8 +298,8 @@ public class MyBalMenu extends Menu {
       final Optional<Object> receiverUUID = viewer.get().findData(ACTION_ACCOUNT_ID + "_ID");
       if(currencyUUID.isPresent() && currencyConvertUUID.isPresent() && receiverUUID.isPresent()) {
 
-        final Optional<Currency> fromCurrency = TNECore.eco().currency().findCurrency((UUID)currencyConvertUUID.get());
-        final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((UUID)currencyUUID.get());
+        final Optional<Currency> fromCurrency = TNECore.eco().currency().find((UUID)currencyConvertUUID.get());
+        final Optional<Currency> currencyOptional = TNECore.eco().currency().find((UUID)currencyUUID.get());
         final Optional<PlayerProvider> player = PluginCore.server().findPlayer(handler.getClick().player().identifier());
         if(currencyOptional.isPresent() && fromCurrency.isPresent() && player.isPresent()) {
 
@@ -387,7 +387,7 @@ public class MyBalMenu extends Menu {
       final Optional<Object> receiverUUID = viewer.get().findData(ACTION_ACCOUNT_ID + "_ID");
       if(currencyUUID.isPresent() && receiverUUID.isPresent()) {
 
-        final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((UUID)currencyUUID.get());
+        final Optional<Currency> currencyOptional = TNECore.eco().currency().find((UUID)currencyUUID.get());
         final Optional<PlayerProvider> player = PluginCore.server().findPlayer(handler.getClick().player().identifier());
         if(currencyOptional.isPresent() && player.isPresent()) {
 
@@ -453,7 +453,7 @@ public class MyBalMenu extends Menu {
       final Optional<Object> receiverUUID = viewer.get().findData(ACTION_ACCOUNT_ID + "_ID");
       if(currencyUUID.isPresent() && receiverUUID.isPresent()) {
 
-        final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((UUID)currencyUUID.get());
+        final Optional<Currency> currencyOptional = TNECore.eco().currency().find((UUID)currencyUUID.get());
         final Optional<PlayerProvider> player = PluginCore.server().findPlayer(handler.getClick().player().identifier());
         final Optional<Account> account = TNECore.eco().account().findAccount(playerUUID);
         if(currencyOptional.isPresent() && player.isPresent() && account.isPresent()) {
@@ -523,7 +523,7 @@ public class MyBalMenu extends Menu {
       final Optional<Object> receiverUUID = viewer.get().findData(ACTION_ACCOUNT_ID + "_ID");
       if(currencyUUID.isPresent() && receiverUUID.isPresent()) {
 
-        final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((UUID)currencyUUID.get());
+        final Optional<Currency> currencyOptional = TNECore.eco().currency().find((UUID)currencyUUID.get());
         final Optional<PlayerProvider> player = PluginCore.server().findPlayer(handler.getClick().player().identifier());
         if(currencyOptional.isPresent() && player.isPresent()) {
 
@@ -640,7 +640,7 @@ public class MyBalMenu extends Menu {
       final Optional<Object> currencyUUID = viewer.get().findData(ACTION_CURRENCY);
       if(currencyUUID.isPresent()) {
 
-        final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((UUID)currencyUUID.get());
+        final Optional<Currency> currencyOptional = TNECore.eco().currency().find((UUID)currencyUUID.get());
         final Optional<PlayerProvider> player = PluginCore.server().findPlayer(handler.getClick().player().identifier());
         if(currencyOptional.isPresent() && player.isPresent()) {
 

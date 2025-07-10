@@ -39,7 +39,6 @@ import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.Nullable;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
-//import revxrsal.commands.annotation.DefaultFor;
 import revxrsal.commands.annotation.Description;
 import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
@@ -265,10 +264,10 @@ public class AdminCommand {
 
             final String currency = (String)currencyNameObj;
             if(!recode) {
-              final String finalCurrency = (currency.equalsIgnoreCase("default"))? TNECore.eco().currency().getDefaultCurrency().getIdentifier() : currency;
-              final Optional<Currency> cur = TNECore.eco().currency().findCurrency(finalCurrency);
+              final String finalCurrency = (currency.equalsIgnoreCase("default"))? TNECore.eco().currency().defaultCurrency().getIdentifier() : currency;
+              final Optional<Currency> cur = TNECore.eco().currency().find(finalCurrency);
 
-              final Currency currencyObj = cur.orElseGet(()->TNECore.eco().currency().getDefaultCurrency(TNECore.eco().region().resolve(region)));
+              final Currency currencyObj = cur.orElseGet(()->TNECore.eco().currency().defaultCurrency(TNECore.eco().region().resolve(region)));
 
               final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name + ".Balances." + region + "." + currency));
 

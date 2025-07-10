@@ -264,10 +264,10 @@ public class AdminCommand {
 
             final String currency = (String)currencyNameObj;
             if(!recode) {
-              final String finalCurrency = (currency.equalsIgnoreCase("default"))? TNECore.eco().currency().getDefaultCurrency().getIdentifier() : currency;
-              final Optional<Currency> cur = TNECore.eco().currency().findCurrency(finalCurrency);
+              final String finalCurrency = (currency.equalsIgnoreCase("default"))? TNECore.eco().currency().defaultCurrency().getIdentifier() : currency;
+              final Optional<Currency> cur = TNECore.eco().currency().find(finalCurrency);
 
-              final Currency currencyObj = cur.orElseGet(()->TNECore.eco().currency().getDefaultCurrency(TNECore.eco().region().resolve(region)));
+              final Currency currencyObj = cur.orElseGet(()->TNECore.eco().currency().defaultCurrency(TNECore.eco().region().resolve(region)));
 
               final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name + ".Balances." + region + "." + currency));
 

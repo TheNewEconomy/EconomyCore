@@ -163,7 +163,7 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
 
           final String currency = result.getString("currency");
 
-          if(TNECore.eco().currency().findCurrency(currency).isEmpty()) {
+          if(TNECore.eco().currency().find(currency).isEmpty()) {
             EconomyManager.invalidCurrencies().add(currency);
           }
 

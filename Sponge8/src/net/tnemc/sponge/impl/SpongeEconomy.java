@@ -47,7 +47,7 @@ public class SpongeEconomy implements EconomyService {
   @Override
   public Currency defaultCurrency() {
 
-    return new SpongeCurrency(TNECore.eco().currency().getDefaultCurrency());
+    return new SpongeCurrency(TNECore.eco().currency().defaultCurrency());
   }
 
   @Override

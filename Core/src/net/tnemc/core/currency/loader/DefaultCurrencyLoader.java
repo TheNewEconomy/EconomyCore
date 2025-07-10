@@ -179,7 +179,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       final UUID id = (uuidAsId && !cur.getString("Info.UUID").equalsIgnoreCase(check.toString()))? check : UUID.fromString(cur.getString("Info.UUID"));
 
 
-      final Optional<Currency> curOption = TNECore.eco().currency().findCurrency(id);
+      final Optional<Currency> curOption = TNECore.eco().currency().find(id);
       if(curOption.isEmpty()) {
         currency.setUid(UUID.fromString(cur.getString("Info.UUID")));
       }

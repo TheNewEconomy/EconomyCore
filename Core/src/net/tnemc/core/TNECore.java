@@ -42,6 +42,7 @@ import net.tnemc.core.command.parameters.resolver.AccountResolver;
 import net.tnemc.core.command.parameters.resolver.BigDecimalResolver;
 import net.tnemc.core.command.parameters.resolver.CurrencyResolver;
 import net.tnemc.core.command.parameters.resolver.DebugResolver;
+import net.tnemc.core.command.parameters.resolver.MoneyResolver;
 import net.tnemc.core.command.parameters.resolver.PercentDecimalResolver;
 import net.tnemc.core.command.parameters.resolver.StatusResolver;
 import net.tnemc.core.config.DataConfig;
@@ -50,6 +51,7 @@ import net.tnemc.core.config.MessageConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
+import net.tnemc.core.currency.parser.ParseMoney;
 import net.tnemc.core.io.yaml.YamlStorageManager;
 import net.tnemc.core.manager.Updater;
 import net.tnemc.core.menu.MyBalMenu;
@@ -58,7 +60,6 @@ import net.tnemc.core.menu.TransactionMenu;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.utils.MISCUtils;
 import net.tnemc.item.AbstractItemStack;
-import net.tnemc.item.providers.ItemProvider;
 import net.tnemc.menu.core.manager.MenuManager;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.PluginEngine;
@@ -231,6 +232,7 @@ public abstract class TNECore extends PluginEngine {
             .addParameterType(DebugLevel.class, new DebugResolver())
             .addParameterType(Currency.class, new CurrencyResolver())
             .addParameterType(BigDecimal.class, new BigDecimalResolver())
+            .addParameterType(ParseMoney.class, new MoneyResolver())
             .addParameterType(PercentBigDecimal.class, new PercentDecimalResolver());
   }
 
@@ -365,7 +367,7 @@ public abstract class TNECore extends PluginEngine {
           final BigDecimal defaultBalance = new BigDecimal(MainConfig.yaml().getString("Core.Server.Account.Balance"));
           if(defaultBalance.compareTo(BigDecimal.ZERO) > 0) {
             response.getAccount().ifPresent(value->value.setHoldings(new HoldingsEntry(economyManager.region().defaultRegion(),
-                                                                                       economyManager.currency().getDefaultCurrency().getUid(),
+                                                                                       economyManager.currency().defaultCurrency().getUid(),
                                                                                        defaultBalance,
                                                                                        EconomyManager.NORMAL
             )));

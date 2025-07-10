@@ -19,10 +19,8 @@ package net.tnemc.core.manager.top;
  */
 
 import net.tnemc.core.EconomyManager;
-import net.tnemc.core.TNECore;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.currency.format.CurrencyFormatter;
-import net.tnemc.core.manager.CurrencyManager;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.io.message.MessageData;
 

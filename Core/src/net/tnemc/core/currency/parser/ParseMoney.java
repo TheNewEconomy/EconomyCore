@@ -36,9 +36,14 @@ public class ParseMoney {
 
   public ParseMoney(final String region) {
 
+    this(region, TNECore.eco().currency().defaultCurrency(region));
+  }
+
+  public ParseMoney(final String region, final Currency currency) {
+
     this.region = region;
     this.amount = BigDecimal.ZERO;
-    this.currency = TNECore.eco().currency().getDefaultCurrency(region);
+    this.currency = currency;
   }
 
   public String region() {

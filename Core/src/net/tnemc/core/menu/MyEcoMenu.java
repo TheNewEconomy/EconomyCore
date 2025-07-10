@@ -218,7 +218,7 @@ public class MyEcoMenu extends Menu {
 
           if(message.getPlayer().viewer().isPresent()) {
 
-            if(TNECore.eco().currency().findCurrency(message.getMessage()).isPresent()) {
+            if(TNECore.eco().currency().find(message.getMessage()).isPresent()) {
               message.getPlayer().message("A currency with that identifier already exists! Enter an identifier for the currency:");
               return false;
             }
@@ -642,7 +642,7 @@ public class MyEcoMenu extends Menu {
 
                                              if(message.getPlayer().viewer().isPresent()) {
 
-                                               if(TNECore.eco().currency().findCurrency(message.getMessage()).isPresent()) {
+                                               if(TNECore.eco().currency().find(message.getMessage()).isPresent()) {
                                                  message.getPlayer().message("A currency with that identifier already exists! Enter an identifier for the currency:");
                                                  return false;
                                                }

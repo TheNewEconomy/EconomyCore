@@ -27,7 +27,6 @@ import net.tnemc.plugincore.core.io.message.MessageData;
 import net.tnemc.plugincore.core.module.ModuleUpdateChecker;
 import net.tnemc.plugincore.core.module.ModuleWrapper;
 import net.tnemc.plugincore.core.module.cache.ModuleFile;
-import revxrsal.commands.orphan.Orphans;
 
 import java.util.List;
 import java.util.Optional;

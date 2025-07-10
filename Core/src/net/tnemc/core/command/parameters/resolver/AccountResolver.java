@@ -20,7 +20,7 @@ package net.tnemc.core.command.parameters.resolver;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
-import net.tnemc.core.account.AccountStatus;
+import net.tnemc.plugincore.PluginCore;
 import org.jetbrains.annotations.NotNull;
 import revxrsal.commands.autocomplete.SuggestionProvider;
 import revxrsal.commands.command.CommandActor;
@@ -28,8 +28,12 @@ import revxrsal.commands.node.ExecutionContext;
 import revxrsal.commands.parameter.ParameterType;
 import revxrsal.commands.stream.MutableStringStream;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -45,10 +49,21 @@ public class AccountResolver implements ParameterType<CommandActor, Account> {
 
     String value = input.readString();
 
-    if(value.equalsIgnoreCase("SELF_ACCOUNT")) {
-      value = context.actor().name();
-    }
+    switch (value.toLowerCase()) {
+      case "self_account":
+      case "@s":
+      case "@me":
 
+        value = context.actor().name();
+        break;
+      case "@r":
+        final List<Account> accounts = new ArrayList<>(TNECore.eco().account().getAccounts().values());
+
+        if(!accounts.isEmpty()) {
+          value = accounts.get(new Random().nextInt(accounts.size())).getName();
+        }
+        break;
+    }
 
     if(!TNECore.eco().account().excluded(value)) {
 
@@ -63,6 +78,35 @@ public class AccountResolver implements ParameterType<CommandActor, Account> {
   @Override
   public @NotNull SuggestionProvider<@NotNull CommandActor> defaultSuggestions() {
 
-    return (context)->List.copyOf(TNECore.eco().account().getAccounts().keySet());
+    return context -> {
+      final String partial = context.input().peekString().toLowerCase();
+
+      //Add in our online players first
+      final Set<String> onlineNames = PluginCore.server().onlinePlayersList().stream()
+              .filter(name -> name.toLowerCase().startsWith(partial))
+              .filter(name -> !TNECore.eco().account().excluded(name))
+              .collect(Collectors.toSet());
+
+      final Set<String> suggestions = new LinkedHashSet<>(onlineNames);
+
+      //Matching offline account names (not online & not excluded)
+      TNECore.eco().account().getAccounts().values().stream()
+              .map(Account::getName)
+              .filter(name -> name.toLowerCase().startsWith(partial))
+              .filter(name -> !onlineNames.contains(name))
+              .filter(name -> !TNECore.eco().account().excluded(name))
+              .forEach(suggestions::add);
+
+      //if("self_account".startsWith(partial) || "@s".startsWith(partial) || "@me".startsWith(partial)) {
+      if("self_account".startsWith(partial)) {
+        suggestions.add("SELF_ACCOUNT");
+      }
+
+      /*if("@r".startsWith(partial)) {
+        suggestions.add("@r");
+      }*/
+
+      return new ArrayList<>(suggestions);
+    };
   }
 }

@@ -41,7 +41,7 @@
         <defaultGoal>clean package</defaultGoal>
         <directory>target</directory>
         <outputDirectory>target/classes</outputDirectory>
-        <finalName>${project.artifactId}-${project.version}</finalName>
+        <finalName>TNE-${project.artifactId}-${project.version}</finalName>
         <testOutputDirectory>target/test-classes</testOutputDirectory>
         <sourceDirectory>src/</sourceDirectory>
         <resources>
@@ -107,10 +107,6 @@
                             <include>org.json.simple:*</include>
                             <include>com.zaxxer:*</include>
                             <include>com.github.Revxrsal.Lamp:*</include>
-                            <include>net.kyori:adventure-key</include>
-                            <include>net.kyori:adventure-text-minimessage</include>
-                            <include>net.kyori:examination-api</include>
-                            <include>net.kyori:examination-string</include>
                             <include>redis.clients:*</include>
                             <include>org.apache:*</include>
                             <include>org.apache.commons:*</include>
@@ -119,7 +115,13 @@
                             <include>com.vdurmont:*</include>
                         </includes>
                         <excludes>
+                            <exclude>net.kyori:*</exclude>
+                            <exclude>net.kyori:adventure-platform-bukkit</exclude>
                             <exclude>net.kyori:adventure-api</exclude>
+                            <exclude>net.kyori:adventure-key</exclude>
+                            <exclude>net.kyori:adventure-text-minimessage</exclude>
+                            <exclude>net.kyori:examination-api</exclude>
+                            <exclude>net.kyori:examination-string</exclude>
                             <exclude>net.kyori:adventure-text-serializer-legacy</exclude>
                         </excludes>
                     </artifactSet>
@@ -131,10 +133,6 @@
                         <relocation>
                             <pattern>com.zaxxer</pattern>
                             <shadedPattern>${tne.relocation}.zaxxer</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>net.kyori</pattern>
-                            <shadedPattern>${tne.relocation}.kyori</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.bstats</pattern>
@@ -189,7 +187,7 @@
         <dependency>
             <groupId>net.tnemc</groupId>
             <artifactId>EconomyCore</artifactId>
-            <version>0.1.4.0-SNAPSHOT-1</version>
+            <version>0.1.4.0-SNAPSHOT-3</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
@@ -201,7 +199,7 @@
         <dependency>
             <groupId>net.tnemc</groupId>
             <artifactId>Paper</artifactId>
-            <version>0.1.4.0-SNAPSHOT-1</version>
+            <version>0.1.4.0-SNAPSHOT-3</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
@@ -211,9 +209,15 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-platform-bukkit</artifactId>
+            <version>4.3.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>dev.folia</groupId>
             <artifactId>folia-api</artifactId>
-            <version>1.19.4-R0.1-SNAPSHOT</version>
+            <version>1.20.6-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -222,18 +226,12 @@
             <version>3.0.2</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>net.tnemc</groupId>
-            <artifactId>Paper</artifactId>
-            <version>0.1.4.0-SNAPSHOT-1</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 
     <parent>
         <groupId>net.tnemc</groupId>
         <artifactId>TNE</artifactId>
-        <version>0.1.4.0-SNAPSHOT-1</version>
+        <version>0.1.4.0-SNAPSHOT-3</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 </project>

@@ -23,12 +23,10 @@ import net.tnemc.core.currency.Currency;
 import org.jetbrains.annotations.NotNull;
 import revxrsal.commands.autocomplete.SuggestionProvider;
 import revxrsal.commands.command.CommandActor;
-import revxrsal.commands.command.ExecutableCommand;
 import revxrsal.commands.node.ExecutionContext;
 import revxrsal.commands.parameter.ParameterType;
 import revxrsal.commands.stream.MutableStringStream;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,8 +44,8 @@ public class CurrencyResolver implements ParameterType<CommandActor, Currency> {
 
     final String value = input.readString();
 
-    final Optional<Currency> currency = TNECore.eco().currency().findCurrency(value);
-    return currency.orElseGet(()->TNECore.eco().currency().getDefaultCurrency());
+    final Optional<Currency> currency = TNECore.eco().currency().find(value);
+    return currency.orElseGet(()->TNECore.eco().currency().defaultCurrency());
   }
 
   @Override
