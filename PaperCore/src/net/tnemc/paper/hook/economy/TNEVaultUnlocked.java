@@ -378,14 +378,14 @@ public class TNEVaultUnlocked implements Economy {
     PluginCore.log().debug("Withdraw method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Currency: " + currencyId + ", Amount: " + amount, DebugLevel.STANDARD);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
-    final Optional<Currency> currency = TNECore.eco().currency().findCurrency(currencyId);
+    final Optional<Currency> currency = TNECore.eco().currency().find(currencyId);
 
-    if (account.isEmpty()) {
+    if(account.isEmpty()) {
       return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO,
                                  ResponseType.FAILURE, "Unable to locate associated account.");
     }
     
-    if (currency.isEmpty()) {
+    if(currency.isEmpty()) {
       return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO,
                                  ResponseType.FAILURE, "Unable to find currency %s.".formatted(currencyId));
     }
@@ -402,7 +402,7 @@ public class TNEVaultUnlocked implements Economy {
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding(),
                                  fromResult(result),
                                  result.getMessage());
-    } catch (final InvalidTransactionException e) {
+    } catch(final InvalidTransactionException e) {
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding(),
                                  ResponseType.FAILURE, e.getMessage());
     }
@@ -425,13 +425,13 @@ public class TNEVaultUnlocked implements Economy {
     PluginCore.log().debug("Deposit method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Currency: " + currencyId + ", Amount: " + amount, DebugLevel.STANDARD);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
-    final Optional<Currency> currency = TNECore.eco().currency().findCurrency(currencyId);
+    final Optional<Currency> currency = TNECore.eco().currency().find(currencyId);
 
-    if (account.isEmpty()) {
+    if(account.isEmpty()) {
       return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO, ResponseType.FAILURE, "Unable to locate associated account.");
     }
     
-    if (currency.isEmpty()) {
+    if(currency.isEmpty()) {
       return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO, ResponseType.FAILURE, "Unable to find currency %s.".formatted(currencyId));
     }
 
