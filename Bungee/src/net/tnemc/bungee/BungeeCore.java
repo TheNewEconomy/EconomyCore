@@ -22,11 +22,6 @@ import net.md_5.bungee.api.plugin.Plugin;
 import net.tnemc.bungee.event.MessageListener;
 import net.tnemc.bungee.event.PlayerConnectListener;
 import net.tnemc.bungee.message.MessageManager;
-import net.tnemc.bungee.message.backlog.MessageData;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 /**
  * BungeeCore
@@ -35,8 +30,6 @@ import java.util.UUID;
  * @since 0.1.2.0
  */
 public class BungeeCore extends Plugin {
-
-  private final Map<UUID, MessageData> backlog = new HashMap<>();
 
   private static BungeeCore instance;
   private MessageManager manager;
@@ -58,15 +51,5 @@ public class BungeeCore extends Plugin {
   public static BungeeCore instance() {
 
     return instance;
-  }
-
-  public Map<UUID, MessageData> getBacklog() {
-
-    return backlog;
-  }
-
-  public void remove(final UUID server) {
-
-    backlog.remove(server);
   }
 }

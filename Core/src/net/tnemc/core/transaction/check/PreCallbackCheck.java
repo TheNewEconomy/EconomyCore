@@ -70,6 +70,7 @@ public class PreCallbackCheck implements TransactionCheck {
 
     final PreTransactionCallback callback = new PreTransactionCallback(transaction);
     if(PluginCore.callbacks().call(callback)) {
+
       return GeneralResponse.FAILED_PLUGIN;
     }
     return GeneralResponse.SUCCESS;

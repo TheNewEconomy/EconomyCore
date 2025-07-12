@@ -18,8 +18,8 @@ package net.tnemc.bungee.message.backlog;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * MessageData
@@ -28,8 +28,7 @@ import java.util.List;
  * @since 0.1.2.0
  */
 public class MessageData {
-
-  private final List<BacklogEntry> backlog = new LinkedList<>();
+  private final Queue<BacklogEntry> backlog = new ConcurrentLinkedQueue<>();
 
   private final String serverName;
 
@@ -43,7 +42,7 @@ public class MessageData {
     return serverName;
   }
 
-  public List<BacklogEntry> getBacklog() {
+  public Queue<BacklogEntry> getBacklog() {
 
     return backlog;
   }

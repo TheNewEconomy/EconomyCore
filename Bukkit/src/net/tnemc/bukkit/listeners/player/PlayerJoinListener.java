@@ -22,6 +22,7 @@ import net.tnemc.core.handlers.player.PlayerJoinHandler;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import net.tnemc.plugincore.core.utils.HandlerResponse;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -40,7 +41,7 @@ public class PlayerJoinListener implements Listener {
 
     final PlayerProvider provider = PluginCore.server().initializePlayer(event.getPlayer());
     final HandlerResponse handle = new PlayerJoinHandler()
-            .handle(provider);
+            .handle(provider, Bukkit.getServer().getIp(), Bukkit.getServer().getPort());
 
     if(handle.isCancelled()) {
       event.getPlayer().kickPlayer(handle.getResponse());

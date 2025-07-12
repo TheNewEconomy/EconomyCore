@@ -246,16 +246,16 @@ public abstract class TNECore extends PluginEngine {
   @Override
   public void registerCallbacks(final CallbackManager callbackManager) {
 
-    callbackManager.addCallback(TNECallbacks.ACCOUNT_TYPES.toString(), new CallbackEntry(AccountTypesCallback.class));
-    callbackManager.addCallback(TNECallbacks.ACCOUNT_LOAD.toString(), new CallbackEntry(AccountLoadCallback.class));
-    callbackManager.addCallback(TNECallbacks.ACCOUNT_SAVE.toString(), new CallbackEntry(AccountSaveCallback.class));
-    callbackManager.addCallback(TNECallbacks.ACCOUNT_CREATE.toString(), new CallbackEntry(AccountCreateCallback.class));
-    callbackManager.addCallback(TNECallbacks.ACCOUNT_DELETE.toString(), new CallbackEntry(AccountDeleteCallback.class));
-    callbackManager.addCallback(TNECallbacks.TRANSACTION_PRE.toString(), new CallbackEntry(PreTransactionCallback.class));
-    callbackManager.addCallback(TNECallbacks.TRANSACTION_POST.toString(), new CallbackEntry(PostTransactionCallback.class));
-    callbackManager.addCallback(TNECallbacks.CURRENCY_DROP.toString(), new CallbackEntry(CurrencyDropCallback.class));
-    callbackManager.addCallback(TNECallbacks.CURRENCY_LOAD.toString(), new CallbackEntry(CurrencyLoadCallback.class));
-    callbackManager.addCallback(TNECallbacks.DENOMINATION_LOAD.toString(), new CallbackEntry(DenominationLoadCallback.class));
+    callbackManager.addCallback(TNECallbacks.ACCOUNT_TYPES.id(), new CallbackEntry(AccountTypesCallback.class));
+    callbackManager.addCallback(TNECallbacks.ACCOUNT_LOAD.id(), new CallbackEntry(AccountLoadCallback.class));
+    callbackManager.addCallback(TNECallbacks.ACCOUNT_SAVE.id(), new CallbackEntry(AccountSaveCallback.class));
+    callbackManager.addCallback(TNECallbacks.ACCOUNT_CREATE.id(), new CallbackEntry(AccountCreateCallback.class));
+    callbackManager.addCallback(TNECallbacks.ACCOUNT_DELETE.id(), new CallbackEntry(AccountDeleteCallback.class));
+    callbackManager.addCallback(TNECallbacks.TRANSACTION_PRE.id(), new CallbackEntry(PreTransactionCallback.class));
+    callbackManager.addCallback(TNECallbacks.TRANSACTION_POST.id(), new CallbackEntry(PostTransactionCallback.class));
+    callbackManager.addCallback(TNECallbacks.CURRENCY_DROP.id(), new CallbackEntry(CurrencyDropCallback.class));
+    callbackManager.addCallback(TNECallbacks.CURRENCY_LOAD.id(), new CallbackEntry(CurrencyLoadCallback.class));
+    callbackManager.addCallback(TNECallbacks.DENOMINATION_LOAD.id(), new CallbackEntry(DenominationLoadCallback.class));
   }
 
   @Override

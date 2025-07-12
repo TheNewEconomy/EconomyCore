@@ -25,13 +25,9 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import net.tnemc.bungee.message.MessageManager;
-import net.tnemc.bungee.message.backlog.MessageData;
 import net.tnemc.velocity.event.ServerPostConnectListener;
 import net.tnemc.velocity.message.MessageListener;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 /**
@@ -43,8 +39,6 @@ import java.util.logging.Logger;
 @Plugin(id = "tne_velocity", name = "The New Economy Velocity", version = "0.1.3.5",
         url = "https://tnemc.net", description = "A bridge for TheNewEconomy plugin.", authors = { "creatorfromhell" })
 public class VelocityCore {
-
-  private final Map<UUID, MessageData> backlog = new HashMap<>();
 
   private final ProxyServer server;
   private final Logger logger;
@@ -83,15 +77,5 @@ public class VelocityCore {
   public ProxyServer getServer() {
 
     return server;
-  }
-
-  public Map<UUID, MessageData> getBacklog() {
-
-    return backlog;
-  }
-
-  public void remove(final UUID server) {
-
-    backlog.remove(server);
   }
 }

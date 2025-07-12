@@ -110,7 +110,7 @@ public class SpongeCore extends TNECore {
     PluginCore.log().inform("Starting up The New Economy.");
 
     //Register our event listeners
-    Sponge.eventManager().registerListeners(container, new PlayerJoinListener(container));
+    Sponge.eventManager().registerListeners(container, new PlayerJoinListener(container, event.engine().boundAddress().get()));
     Sponge.eventManager().registerListeners(container, new PlayerLeaveListener(container));
     Sponge.eventManager().registerListeners(container, new PlayerCloseInventoryListener(container));
   }

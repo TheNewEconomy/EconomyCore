@@ -18,7 +18,7 @@ package net.tnemc.sponge.listeners.player;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.handlers.player.PlayerJoinHandler;
+import net.tnemc.core.handlers.player.PlayerCloseEChestHandler;
 import net.tnemc.plugincore.core.utils.HandlerResponse;
 import net.tnemc.plugincore.sponge.impl.SpongePlayerProvider;
 import org.spongepowered.api.block.entity.EnderChest;
@@ -50,7 +50,7 @@ public class PlayerCloseInventoryListener {
   public void onClose(final InteractContainerEvent.Close event, @First final ServerPlayer player) {
 
     if(isEnderChest(event.container())) {
-      final HandlerResponse handle = new PlayerJoinHandler().handle(new SpongePlayerProvider(player.user(), plugin));
+      final HandlerResponse handle = new PlayerCloseEChestHandler().handle(new SpongePlayerProvider(player.user(), plugin));
     }
   }
 

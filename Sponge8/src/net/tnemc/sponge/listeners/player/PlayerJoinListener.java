@@ -26,6 +26,9 @@ import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.network.ServerSideConnectionEvent;
 import org.spongepowered.plugin.PluginContainer;
 
+import java.net.InetSocketAddress;
+import java.util.Optional;
+
 /**
  * PlayerJoinHandler
  *
@@ -35,17 +38,28 @@ import org.spongepowered.plugin.PluginContainer;
 public class PlayerJoinListener {
 
   private final PluginContainer plugin;
+  private final Optional<InetSocketAddress> boundAddress;
 
-  public PlayerJoinListener(final PluginContainer plugin) {
+  public PlayerJoinListener(final PluginContainer plugin, final InetSocketAddress boundAddress) {
 
     this.plugin = plugin;
+      this.boundAddress = Optional.ofNullable(boundAddress);
   }
 
   @Listener
   public void listen(final ServerSideConnectionEvent.Join event) {
 
+    String ip = "";
+    int port = 25565;
+
+    if(boundAddress.isPresent()) {
+
+      ip = boundAddress.get().getAddress().getHostAddress();
+      port = boundAddress.get().getPort();
+    }
+
     final HandlerResponse handle = new PlayerJoinHandler()
-            .handle(new SpongePlayerProvider(event.player().user(), plugin));
+            .handle(new SpongePlayerProvider(event.player().user(), plugin), ip, port);
 
 
     if(handle.isCancelled()) {

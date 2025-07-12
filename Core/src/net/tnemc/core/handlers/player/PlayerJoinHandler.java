@@ -60,7 +60,7 @@ public class PlayerJoinHandler {
    *
    * @return True if the event should be cancelled, otherwise false.
    */
-  public HandlerResponse handle(final PlayerProvider provider) {
+  public HandlerResponse handle(final PlayerProvider provider, final String serverIP, final int serverPort) {
 
     final HandlerResponse response = new HandlerResponse("", false);
 
@@ -216,7 +216,7 @@ public class PlayerJoinHandler {
             TNECore.eco().setReloadTime(new Date().getTime());
           }
         } else {
-          SyncHandler.send(acc.get().getIdentifier().toString());
+          SyncHandler.send(acc.get().getIdentifier().toString(), acc.get().getName(), serverIP, serverPort);
         }
       }
     }

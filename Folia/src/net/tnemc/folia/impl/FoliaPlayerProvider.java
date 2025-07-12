@@ -235,6 +235,7 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
     return player;
   }
 
+
   public static FoliaPlayerProvider find(final String identifier) {
 
     try {

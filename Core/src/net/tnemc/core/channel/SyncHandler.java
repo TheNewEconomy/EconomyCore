@@ -38,11 +38,14 @@ public class SyncHandler extends ChannelMessageHandler {
     super("sync");
   }
 
-  public static void send(final String account) {
+  public static void send(final String identifier, final String name, final String serverAddress, final int port) {
 
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
     out.writeUTF(PluginCore.instance().getServerID().toString());
-    out.writeUTF(account);
+    out.writeUTF(identifier);
+    out.writeUTF(name);
+    out.writeUTF(serverAddress);
+    out.writeInt(port);
 
     TNECore.instance().storage().sendProxyMessage("tne:sync", out.toByteArray());
   }

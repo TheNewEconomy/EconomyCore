@@ -18,9 +18,10 @@ package net.tnemc.bungee.message.handlers;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.bungee.BungeeCore;
+import net.tnemc.bungee.message.MessageManager;
 
 import java.io.DataInputStream;
+import java.io.IOException;
 import java.util.UUID;
 
 /**
@@ -37,12 +38,17 @@ public class SyncAllMessageHandler extends AccountHandler {
   }
 
   @Override
-  public void handle(final String player, final String accountName, final UUID server, final DataInputStream stream) {
+  public void handle(final String player, final String accountName, final UUID server, final DataInputStream in) {
 
-    if(BungeeCore.instance().getBacklog().containsKey(server)) {
-      sendBacklog(BungeeCore.instance().getBacklog().get(server));
+      try {
+          final String serverAddress = in.readUTF();
+          final int serverPort = in.readInt();
 
-      BungeeCore.instance().remove(server);
-    }
+        MessageManager.instance().backlog(serverAddress);
+        MessageManager.instance().backlog(String.valueOf(serverPort));
+        MessageManager.instance().backlog(serverAddress + ":" + serverPort);
+      } catch (final IOException e) {
+          e.printStackTrace();
+      }
   }
 }

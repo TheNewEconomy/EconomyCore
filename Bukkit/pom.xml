@@ -83,10 +83,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.3.1</version>
+                <version>3.11.2</version>
                 <configuration>
                     <show>public</show>
+                    <windowtitle>The New Plugin Core</windowtitle>
+                    <failOnWarnings>false</failOnWarnings>
                     <failOnError>false</failOnError>
+                    <verbose>false</verbose>
+                    <author>true</author>
+                    <version>true</version>
+                    <linksource>true</linksource>
+                    <notimestamp>true</notimestamp>
+                    <bottom><![CDATA[<b>TheNewEconomy, 2025</b>]]></bottom>
                 </configuration>
             </plugin>
             <plugin>
@@ -262,12 +270,6 @@
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>VaultUnlockedAPI</artifactId>
             <version>2.9</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>minecraft-server</artifactId>
-            <version>1.15.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
