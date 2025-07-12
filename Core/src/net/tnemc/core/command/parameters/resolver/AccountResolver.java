@@ -51,7 +51,7 @@ public class AccountResolver implements ParameterType<CommandActor, Account> {
 
     String value = input.readString();
 
-    switch (value.toLowerCase()) {
+    switch(value.toLowerCase()) {
       case "self_account":
       case "@s":
       case "@me":
@@ -64,6 +64,8 @@ public class AccountResolver implements ParameterType<CommandActor, Account> {
         if(!accounts.isEmpty()) {
           value = accounts.get(new Random().nextInt(accounts.size())).getName();
         }
+        break;
+      default:
         break;
     }
 

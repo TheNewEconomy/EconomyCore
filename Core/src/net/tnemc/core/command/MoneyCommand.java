@@ -250,14 +250,13 @@ public class MoneyCommand extends BaseCommand {
 
 
     final Optional<PlayerProvider> player = sender.player();
-    if(EconomyManager.limitCurrency() && player.isPresent()) {
-      if(!player.get().hasPermission("tne.money.give." + parseMoney.currency().getIdentifier())) {
-        final MessageData data = new MessageData("Messages.Account.BlockedAction");
-        data.addReplacement("$action", "give funds");
-        data.addReplacement("$currency", parseMoney.currency().getDisplay());
-        sender.message(data);
-        return;
-      }
+    if(EconomyManager.limitCurrency() && player.isPresent() && !player.get().hasPermission("tne.money.give." + parseMoney.currency().getIdentifier())) {
+
+      final MessageData data = new MessageData("Messages.Account.BlockedAction");
+      data.addReplacement("$action", "give funds");
+      data.addReplacement("$currency", parseMoney.currency().getDisplay());
+      sender.message(data);
+      return;
     }
 
 
