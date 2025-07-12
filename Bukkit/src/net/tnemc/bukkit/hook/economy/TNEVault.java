@@ -86,7 +86,7 @@ public class TNEVault implements Economy {
    */
   public int fractionalDigits() {
 
-    return TNECore.eco().currency().getDefaultCurrency().getDecimalPlaces();
+    return TNECore.eco().currency().defaultCurrency().getDecimalPlaces();
   }
 
   /**
@@ -100,7 +100,7 @@ public class TNEVault implements Economy {
   public String format(final double amount) {
 
     return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
-                                                            TNECore.eco().currency().getDefaultCurrency().getUid(),
+                                                            TNECore.eco().currency().defaultCurrency().getUid(),
                                                             BigDecimal.valueOf(amount),
                                                             EconomyManager.NORMAL
     ));
@@ -114,7 +114,7 @@ public class TNEVault implements Economy {
    */
   public String currencyNamePlural() {
 
-    return TNECore.eco().currency().getDefaultCurrency().getDisplayPlural();
+    return TNECore.eco().currency().defaultCurrency().getDisplayPlural();
   }
 
 
@@ -126,7 +126,7 @@ public class TNEVault implements Economy {
    */
   public String currencyNameSingular() {
 
-    return TNECore.eco().currency().getDefaultCurrency().getDisplay();
+    return TNECore.eco().currency().defaultCurrency().getDisplay();
   }
 
   /**
@@ -221,8 +221,8 @@ public class TNEVault implements Economy {
 
     if(account.isPresent()) {
       PluginCore.log().debug("Vault Balance call. Account exists. Name:" + account.get().getName(), DebugLevel.STANDARD);
-      PluginCore.log().debug("Vault Balance call. Balance:" + account.get().getHoldingsTotal(world, TNECore.eco().currency().getDefaultCurrency(world).getUid()).doubleValue(), DebugLevel.STANDARD);
-      return account.get().getHoldingsTotal(world, TNECore.eco().currency().getDefaultCurrency(world).getUid()).doubleValue();
+      PluginCore.log().debug("Vault Balance call. Balance:" + account.get().getHoldingsTotal(world, TNECore.eco().currency().defaultCurrency(world).getUid()).doubleValue(), DebugLevel.STANDARD);
+      return account.get().getHoldingsTotal(world, TNECore.eco().currency().defaultCurrency(world).getUid()).doubleValue();
     }
 
     PluginCore.log().debug("Vault Balance call. Account doesn't exist. Name:" + name, DebugLevel.STANDARD);
@@ -280,7 +280,7 @@ public class TNEVault implements Economy {
   public boolean has(final String name, final String world, final double amount) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(name);
-    return account.filter(value->value.getHoldingsTotal(world, TNECore.eco().currency().getDefaultCurrency(world).getUid())
+    return account.filter(value->value.getHoldingsTotal(world, TNECore.eco().currency().defaultCurrency(world).getUid())
                                          .compareTo(BigDecimal.valueOf(amount)) >= 0).isPresent();
   }
 
@@ -350,7 +350,7 @@ public class TNEVault implements Economy {
     }
 
     final HoldingsModifier modifier = new HoldingsModifier(world,
-                                                           TNECore.eco().currency().getDefaultCurrency(world).getUid(),
+                                                           TNECore.eco().currency().defaultCurrency(world).getUid(),
                                                            BigDecimal.valueOf(amount));
 
     final Transaction transaction = new Transaction("take")
@@ -430,7 +430,7 @@ public class TNEVault implements Economy {
     }
 
     final HoldingsModifier modifier = new HoldingsModifier(world,
-                                                           TNECore.eco().currency().getDefaultCurrency(world).getUid(),
+                                                           TNECore.eco().currency().defaultCurrency(world).getUid(),
                                                            BigDecimal.valueOf(amount));
 
 

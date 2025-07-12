@@ -83,14 +83,14 @@ public class CurrencySelectionPage {
       if(maxPages > 1) {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
-                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
+                                                           .customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
                                                            .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))))
                                            .withActions(new DataAction(currencyPageID, prev), new SwitchPageAction(menuName, menuPage))
                                            .withSlot(0)
                                            .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
+                                                           .customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
                                                            .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPage"), id))))
                                            .withActions(new DataAction(currencyPageID, next), new SwitchPageAction(menuName, menuPage))
                                            .withSlot(8)
@@ -98,7 +98,7 @@ public class CurrencySelectionPage {
       }
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
-                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EscapeDisplay"), id))
+                                                         .customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EscapeDisplay"), id))
                                                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Escape"), id))))
                                          .withActions(new SwitchPageAction(returnMenu, returnPage))
                                          .withSlot(4)
@@ -112,7 +112,7 @@ public class CurrencySelectionPage {
         final Currency currency = TNECore.eco().currency().currencies().get(i);
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of(currency.getIconMaterial(), 1)
-                                                           .display(Component.text(currency.getIdentifier()))
+                                                           .customName(Component.text(currency.getIdentifier()))
                                                            .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Currency.Select"), id))))
                                            .withActions(new DataAction(currencyID, currency.getUid()),
                                                         new SwitchPageAction(returnMenu, returnPage))

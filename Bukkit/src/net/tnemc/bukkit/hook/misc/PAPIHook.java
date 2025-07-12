@@ -103,7 +103,7 @@ public class PAPIHook extends PlaceholderExpansion {
         default -> EconomyManager.NORMAL;
       };
 
-      final UUID curID = TNECore.eco().currency().getDefaultCurrency().getUid();
+      final UUID curID = TNECore.eco().currency().defaultCurrency().getUid();
       final List<HoldingsEntry> entries = account.get().getHoldings(TNECore.eco().region().defaultRegion(), curID, id);
       final BigDecimal amount = (!entries.isEmpty())? entries.get(0).getAmount() : BigDecimal.ZERO;
 
@@ -125,7 +125,7 @@ public class PAPIHook extends PlaceholderExpansion {
     //%tne_balance%
     if(identifier.contains("balance")) {
 
-      final UUID curID = TNECore.eco().currency().getDefaultCurrency().getUid();
+      final UUID curID = TNECore.eco().currency().defaultCurrency().getUid();
       final BigDecimal amount = account.get().getHoldingsTotal(TNECore.eco().region().defaultRegion(),
                                                                curID);
 
@@ -145,9 +145,9 @@ public class PAPIHook extends PlaceholderExpansion {
       if(args.length >= 3) {
 
         final String region = TNECore.eco().region().resolve(args[1]);
-        final Optional<Currency> currency = TNECore.eco().currency().findCurrency(args[2]);
+        final Optional<Currency> currency = TNECore.eco().currency().find(args[2]);
 
-        final UUID curID = (currency.isPresent())? currency.get().getUid() : TNECore.eco().currency().getDefaultCurrency().getUid();
+        final UUID curID = (currency.isPresent())? currency.get().getUid() : TNECore.eco().currency().defaultCurrency().getUid();
 
 
         final BigDecimal amount = account.get().getHoldingsTotal(region, curID);
@@ -169,7 +169,7 @@ public class PAPIHook extends PlaceholderExpansion {
       if(args.length >= 2) {
 
         final String region = TNECore.eco().region().resolve(args[1]);
-        final UUID curID = TNECore.eco().currency().getDefaultCurrency(region).getUid();
+        final UUID curID = TNECore.eco().currency().defaultCurrency(region).getUid();
         final BigDecimal amount = account.get().getHoldingsTotal(region, curID);
 
         if(args.length >= 3 && args[2].equalsIgnoreCase("formatted")) {
@@ -190,9 +190,9 @@ public class PAPIHook extends PlaceholderExpansion {
       if(args.length >= 2) {
 
         final String region = TNECore.eco().region().defaultRegion();
-        final Optional<Currency> currency = TNECore.eco().currency().findCurrency(args[1]);
+        final Optional<Currency> currency = TNECore.eco().currency().find(args[1]);
 
-        final UUID curID = (currency.isPresent())? currency.get().getUid() : TNECore.eco().currency().getDefaultCurrency().getUid();
+        final UUID curID = (currency.isPresent())? currency.get().getUid() : TNECore.eco().currency().defaultCurrency().getUid();
 
 
         final BigDecimal amount = account.get().getHoldingsTotal(region, curID);
@@ -216,8 +216,8 @@ public class PAPIHook extends PlaceholderExpansion {
 
       if(args.length >= 2) {
 
-        final Optional<Currency> currency = TNECore.eco().currency().findCurrency(args[1]);
-        final UUID curID = (currency.isPresent())? currency.get().getUid() : TNECore.eco().currency().getDefaultCurrency().getUid();
+        final Optional<Currency> currency = TNECore.eco().currency().find(args[1]);
+        final UUID curID = (currency.isPresent())? currency.get().getUid() : TNECore.eco().currency().defaultCurrency().getUid();
 
         if(args.length >= 4 && args[2].equalsIgnoreCase("position")) {
 

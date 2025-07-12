@@ -111,7 +111,7 @@ public class HoldingsEntry {
 
   public Optional<Currency> currency() {
 
-    return TNECore.eco().currency().findCurrency(currency);
+    return TNECore.eco().currency().find(currency);
   }
 
   public UUID getCurrency() {

@@ -2,7 +2,7 @@ package net.tnemc.core.command.parameters.resolver;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2025 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -21,9 +21,15 @@ package net.tnemc.core.command.parameters.resolver;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.currency.Currency;
 import org.jetbrains.annotations.NotNull;
-import revxrsal.commands.process.ValueResolver;
+import revxrsal.commands.autocomplete.SuggestionProvider;
+import revxrsal.commands.command.CommandActor;
+import revxrsal.commands.node.ExecutionContext;
+import revxrsal.commands.parameter.ParameterType;
+import revxrsal.commands.stream.MutableStringStream;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * CurrencyResolver
@@ -31,14 +37,20 @@ import java.util.Optional;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class CurrencyResolver implements ValueResolver<Currency> {
+public class CurrencyResolver implements ParameterType<CommandActor, Currency> {
 
   @Override
-  public Currency resolve(@NotNull final ValueResolverContext context) {
+  public Currency parse(@NotNull final MutableStringStream input, @NotNull final ExecutionContext<CommandActor> context) {
 
-    final String value = context.arguments().pop();
+    final String value = input.readString();
 
-    final Optional<Currency> currency = TNECore.eco().currency().findCurrency(value);
-    return currency.orElseGet(()->TNECore.eco().currency().getDefaultCurrency());
+    final Optional<Currency> currency = TNECore.eco().currency().find(value);
+    return currency.orElseGet(()->TNECore.eco().currency().defaultCurrency());
+  }
+
+  @Override
+  public @NotNull SuggestionProvider<@NotNull CommandActor> defaultSuggestions() {
+
+    return (context)->List.copyOf(TNECore.eco().currency().currencies().stream().map(Currency::getIdentifier).collect(Collectors.toList()));
   }
 }

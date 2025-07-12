@@ -62,7 +62,7 @@ public class MyBalAmountSelectionPage extends AmountSelectionPage {
       final UUID viewerID = viewer.get().uuid();
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("STONE_BUTTON", 1)
-                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.AmountSelect.MaxDisplay"), viewerID))
+                                                         .customName(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.AmountSelect.MaxDisplay"), viewerID))
                                                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.AmountSelect.Max"), viewerID))))
                                          .withActions(new SwitchPageAction(menuName, menuPage))
                                          .withClick((click)->balAddClick(click, ((BigDecimal)viewer.get().dataOrDefault(MyBalMenu.ACTION_MAX_HOLDINGS, BigDecimal.ZERO))))
@@ -80,13 +80,13 @@ public class MyBalAmountSelectionPage extends AmountSelectionPage {
           profile = new SkullProfile();
 
           if(PluginCore.server().playedBefore(account)) {
-            profile.setUuid(account);
+            profile.uuid(account);
           }
 
         } catch(final Exception ignore) { }
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PLAYER_HEAD", 1)
-                                                           .display(Component.text((String)name.get()))
+                                                           .customName(Component.text((String)name.get()))
                                                            .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.AmountSelect.Player"), viewerID)))
                                                            .profile(profile))
                                            .withActions(new SwitchPageAction(menuName, menuPage))

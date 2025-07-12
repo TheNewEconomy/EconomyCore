@@ -51,12 +51,12 @@ public class Denomination {
     cloned.setPlural(original.plural());
     cloned.setWeight(original.weight());
 
-    if(cloned instanceof ItemDenomination clonedItem && original instanceof ItemDenomination itemDenomination) {
+    if(cloned instanceof final ItemDenomination clonedItem && original instanceof final ItemDenomination itemDenomination) {
 
-      clonedItem.setEnchantments(new ArrayList<>(itemDenomination.getEnchantments()));
-      clonedItem.setFlags(new ArrayList<>(itemDenomination.getFlags()));
+      clonedItem.enchantments(new ArrayList<>(itemDenomination.enchantments()));
+      clonedItem.flags(new ArrayList<>(itemDenomination.flags()));
       clonedItem.setLore(new ArrayList<>(itemDenomination.getLore()));
-      clonedItem.setMaterial(itemDenomination.getMaterial());
+      clonedItem.material(itemDenomination.material());
       clonedItem.setDamage(itemDenomination.getDamage());
       clonedItem.setName(itemDenomination.getName());
       clonedItem.setCustomModel(itemDenomination.getCustomModel());

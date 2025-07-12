@@ -39,13 +39,12 @@ import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.Nullable;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
-import revxrsal.commands.annotation.DefaultFor;
 import revxrsal.commands.annotation.Description;
 import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
-import revxrsal.commands.bukkit.BukkitCommandActor;
+import revxrsal.commands.bukkit.actor.BukkitCommandActor;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
-import revxrsal.commands.help.CommandHelp;
+import revxrsal.commands.help.Help;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -63,7 +62,7 @@ import java.util.UUID;
 @Description("Admin.Main.Description")
 public class AdminCommand {
 
-  @DefaultFor({ "tne", "myeco", "ecomin", "ecoadmin", "ecomanage", "theneweconomy" })
+  //@DefaultFor({ "tne", "myeco", "ecomin", "ecoadmin", "ecomanage", "theneweconomy" })
   @Subcommand({ "ecomenu", "menu", "myeco" })
   @Usage("Admin.MyEco.Arguments")
   @Description("Admin.MyEco.Description")
@@ -76,9 +75,9 @@ public class AdminCommand {
   @Subcommand({ "help", "?" })
   @Usage("Help.Arguments")
   @Description("Help.Description")
-  public void help(final BukkitCommandActor actor, final CommandHelp<String> helpEntries, @Default("1") final int page) {
+  public void help(final BukkitCommandActor actor, final Help.RelatedCommands<?> commands, @Default("1") final int page) {
 
-    BaseCommand.help(new BukkitCMDSource(actor), helpEntries, page);
+    BaseCommand.help(new BukkitCMDSource(actor), commands, page);
   }
 
   @Subcommand({ "backup", "archive" })
@@ -265,10 +264,10 @@ public class AdminCommand {
 
             final String currency = (String)currencyNameObj;
             if(!recode) {
-              final String finalCurrency = (currency.equalsIgnoreCase("default"))? TNECore.eco().currency().getDefaultCurrency().getIdentifier() : currency;
-              final Optional<Currency> cur = TNECore.eco().currency().findCurrency(finalCurrency);
+              final String finalCurrency = (currency.equalsIgnoreCase("default"))? TNECore.eco().currency().defaultCurrency().getIdentifier() : currency;
+              final Optional<Currency> cur = TNECore.eco().currency().find(finalCurrency);
 
-              final Currency currencyObj = cur.orElseGet(()->TNECore.eco().currency().getDefaultCurrency(TNECore.eco().region().resolve(region)));
+              final Currency currencyObj = cur.orElseGet(()->TNECore.eco().currency().defaultCurrency(TNECore.eco().region().resolve(region)));
 
               final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name + ".Balances." + region + "." + currency));
 

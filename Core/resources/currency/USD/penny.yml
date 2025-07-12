@@ -9,6 +9,51 @@ Info:
   #The plural name of this tier.
   Plural: 'Pennies'
 
+#The checks to perform on items to determine if they are valid currency items or not
+Checks:
+  - "name"
+  - "texture"
+  - "material"
+  - "custom-name"
+  - "lore"
+  - "model-data-old"
+  - "item-model"
+  - "model-data"
+  - "enchantments"
+  - "flags"
+
+Integrations:
+
+  ItemsAdder:
+
+    Enabled: false
+
+    Item: "example:item"
+
+  Oraxen:
+
+    Enabled: false
+
+    Item: "example:item"
+
+  Nexo:
+
+    Enabled: false
+
+    Item: "example:item"
+
+  Nova:
+
+    Enabled: false
+
+    Item: "example:item"
+
+  SlimeFun:
+
+    Enabled: false
+
+    Item: "example:item"
+
 #Various options for this currency tier.
 Options:
 
@@ -25,6 +70,10 @@ Options:
   #Optional.
   #Damage: 0
 
+  #The max stack size for this item. Defaults to 0.
+  #Optional.
+  #MaxStack: 0
+
   #The custom name this item must have in order to be considered currency.
   #Optional.
   #Name: 'Penny'
@@ -38,6 +87,26 @@ Options:
   #The custom model data value used for this item. Defaults to 0.
   #Optional.
   #ModelData: 0
+
+  #Represents configurations related to custom item models.
+  #Optional
+  #ItemModel:
+
+  #  Enabled: false
+  #
+  #  Model: "minecraft:custom_model_data"
+  #
+  #  Colors:
+  #      - "4752506"
+  #
+  #  Booleans:
+  #    - false
+  #
+  #  Floats:
+  #    - 4.0
+  #
+  #  Strings:
+  #    - "String one"
 
   #All configurations relating to enchantment identification for currency tiers
   #The format is - enchantment name

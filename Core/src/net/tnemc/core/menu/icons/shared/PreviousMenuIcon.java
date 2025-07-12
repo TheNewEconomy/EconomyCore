@@ -37,7 +37,7 @@ public class PreviousMenuIcon extends Icon {
 
   public PreviousMenuIcon(final UUID id, final int slot, final String menu, final ActionType type) {
 
-    super(PluginCore.server().stackBuilder().of("RED_WOOL", 1).display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousMenuDisplay"), id)), null);
+    super(PluginCore.server().stackBuilder().of("RED_WOOL", 1).customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousMenuDisplay"), id)), null);
 
     this.slot = slot;
 

@@ -36,15 +36,31 @@ import java.util.List;
  */
 public class ItemDenomination extends Denomination {
 
+  //Item Comparison checks to run
+  private final List<String> checks = new ArrayList<>();
+
+  //List relating to the itemModel setting
+  private final List<String> modelColours = new ArrayList<>();
+  private final List<Float> modelFloats = new ArrayList<>();
+  private final List<Boolean> modelBooleans = new ArrayList<>();
+  private final List<String> modelStrings = new ArrayList<>();
+
+  //Lists about item settings
   private final List<String> enchantments = new ArrayList<>();
   private final List<String> flags = new ArrayList<>();
   private final List<Component> lore = new ArrayList<>();
 
   private String material = "PAPER";
   private short damage = 0;
+  private int maxStack = 0;
   private String name = "";
   private Integer customModel = -1;
   private String texture = "";
+  private String provider = "vanilla";
+  private String providerID = "";
+
+  private String itemModel = "";
+
 
   public ItemDenomination(final BigDecimal weight, final String material) {
 
@@ -63,34 +79,34 @@ public class ItemDenomination extends Denomination {
     super(weight);
   }
 
-  public List<String> getEnchantments() {
+  public List<String> enchantments() {
 
     return enchantments;
   }
 
-  public void setEnchantments(final List<String> enchantments) {
+  public void enchantments(final List<String> enchantments) {
 
     this.enchantments.clear();
     this.enchantments.addAll(enchantments);
   }
 
-  public List<String> getFlags() {
+  public List<String> flags() {
 
     return flags;
   }
 
-  public void setFlags(final List<String> flags) {
+  public void flags(final List<String> flags) {
 
     this.flags.clear();
     this.flags.addAll(flags);
   }
 
-  public String getMaterial() {
+  public String material() {
 
     return material;
   }
 
-  public void setMaterial(final String material) {
+  public void material(final String material) {
 
     this.material = material;
   }
@@ -103,6 +119,16 @@ public class ItemDenomination extends Denomination {
   public void setDamage(final short damage) {
 
     this.damage = damage;
+  }
+
+  public int maxStack() {
+
+    return maxStack;
+  }
+
+  public void maxStack(final int maxStack) {
+
+    this.maxStack = maxStack;
   }
 
   public String getName() {
@@ -124,6 +150,7 @@ public class ItemDenomination extends Denomination {
 
     final LinkedList<String> loreAsString = new LinkedList<>();
     for(final Component component : lore) {
+
       loreAsString.add(MiniMessage.miniMessage().serialize(component));
     }
     return loreAsString;
@@ -153,5 +180,60 @@ public class ItemDenomination extends Denomination {
   public void setTexture(final String texture) {
 
     this.texture = texture;
+  }
+
+  public List<String> checks() {
+
+    return checks;
+  }
+
+  public String providerID() {
+
+    return providerID;
+  }
+
+  public void providerID(final String providerID) {
+
+    this.providerID = providerID;
+  }
+
+  public String provider() {
+
+    return provider;
+  }
+
+  public void provider(final String provider) {
+
+    this.provider = provider;
+  }
+
+  public List<String> modelColours() {
+
+    return modelColours;
+  }
+
+  public List<Float> modelFloats() {
+
+    return modelFloats;
+  }
+
+  public List<Boolean> modelBooleans() {
+
+    return modelBooleans;
+  }
+
+  public List<String> modelStrings() {
+
+    return modelStrings;
+  }
+
+  public String itemModel() {
+
+    return itemModel;
+  }
+
+  public void itemModel(final String itemModel) {
+
+    this.itemModel = itemModel;
   }
 }

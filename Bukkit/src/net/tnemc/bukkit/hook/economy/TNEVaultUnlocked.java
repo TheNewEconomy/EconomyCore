@@ -98,7 +98,7 @@ public class TNEVaultUnlocked implements Economy {
   @Override
   public int fractionalDigits(final @NotNull String pluginName) {
 
-    return TNECore.eco().currency().getDefaultCurrency().getDecimalPlaces();
+    return TNECore.eco().currency().defaultCurrency().getDecimalPlaces();
   }
 
   /**
@@ -114,7 +114,7 @@ public class TNEVaultUnlocked implements Economy {
     PluginCore.log().debug("Format method called with amount: " + amount, DebugLevel.STANDARD);
 
     return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
-                                                            TNECore.eco().currency().getDefaultCurrency().getUid(),
+                                                            TNECore.eco().currency().defaultCurrency().getUid(),
                                                             amount,
                                                             EconomyManager.NORMAL
     ));
@@ -125,7 +125,7 @@ public class TNEVaultUnlocked implements Economy {
     PluginCore.log().debug("Format method called with pluginName: " + pluginName + ", amount: " + amount, DebugLevel.STANDARD);
 
     return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
-                                                            TNECore.eco().currency().getDefaultCurrency().getUid(),
+                                                            TNECore.eco().currency().defaultCurrency().getUid(),
                                                             amount,
                                                             EconomyManager.NORMAL
     ));
@@ -145,7 +145,7 @@ public class TNEVaultUnlocked implements Economy {
     PluginCore.log().debug("Format method called with amount: " + amount + ", currency: " + currency, DebugLevel.STANDARD);
 
     return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
-                                                            TNECore.eco().currency().getDefaultCurrency().getUid(),
+                                                            TNECore.eco().currency().defaultCurrency().getUid(),
                                                             amount,
                                                             EconomyManager.NORMAL
     ));
@@ -156,7 +156,7 @@ public class TNEVaultUnlocked implements Economy {
     PluginCore.log().debug("Format method called with pluginName: " + pluginName + ", amount: " + amount + ", currency: " + currency, DebugLevel.STANDARD);
 
     return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
-                                                            TNECore.eco().currency().getDefaultCurrency().getUid(),
+                                                            TNECore.eco().currency().defaultCurrency().getUid(),
                                                             amount,
                                                             EconomyManager.NORMAL
     ));
@@ -165,25 +165,25 @@ public class TNEVaultUnlocked implements Economy {
   @Override
   public boolean hasCurrency(final @NotNull String currency) {
     PluginCore.log().debug("HasCurrency method called with currency: " + currency, DebugLevel.STANDARD);
-    return TNECore.eco().currency().findCurrency(currency).isPresent();
+    return TNECore.eco().currency().find(currency).isPresent();
   }
 
   @Override
   public @NotNull String getDefaultCurrency(final @NotNull String pluginName) {
     PluginCore.log().debug("GetDefaultCurrency method called with pluginName: " + pluginName, DebugLevel.STANDARD);
-    return TNECore.eco().currency().getDefaultCurrency().getIdentifier();
+    return TNECore.eco().currency().defaultCurrency().getIdentifier();
   }
 
   @Override
   public @NotNull String defaultCurrencyNamePlural(final @NotNull String pluginName) {
     PluginCore.log().debug("DefaultCurrencyNamePlural method called with pluginName: " + pluginName, DebugLevel.STANDARD);
-    return TNECore.eco().currency().getDefaultCurrency().getDisplayPlural();
+    return TNECore.eco().currency().defaultCurrency().getDisplayPlural();
   }
 
   @Override
   public @NotNull String defaultCurrencyNameSingular(final @NotNull String pluginName) {
     PluginCore.log().debug("DefaultCurrencyNameSingular method called with pluginName: " + pluginName, DebugLevel.STANDARD);
-    return TNECore.eco().currency().getDefaultCurrency().getDisplay();
+    return TNECore.eco().currency().defaultCurrency().getDisplay();
   }
 
   @Override
@@ -250,7 +250,18 @@ public class TNEVaultUnlocked implements Economy {
   @Override
   public boolean renameAccount(final @NotNull String plugin, final @NotNull UUID accountID, final @NotNull String name) {
     PluginCore.log().debug("RenameAccount method called with Plugin: " + plugin + ", AccountID: " + accountID + ", Name: " + name, DebugLevel.STANDARD);
-    return false;
+    final Optional<Account> account = TNECore.eco().account().findAccount(accountID);
+    if(account.isEmpty()) {
+      return false;
+    }
+
+    account.get().setName(name);
+
+    TNECore.eco().account().uuidProvider().store(new UUIDPair(accountID, name));
+
+    TNECore.eco().account().getAccounts().put(accountID.toString(), account.get());
+
+    return true;
   }
 
   @Override
@@ -288,7 +299,7 @@ public class TNEVaultUnlocked implements Economy {
     PluginCore.log().debug("GetBalance method called with PluginName: " + pluginName + ", UUID: " + uuid + ", World: " + world + ", Currency: " + currency, DebugLevel.STANDARD);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
-    final Optional<Currency> currencyOpt = TNECore.eco().currency().findCurrency(currency);
+    final Optional<Currency> currencyOpt = TNECore.eco().currency().find(currency);
 
     if (account.isPresent() && currencyOpt.isPresent()) {
       PluginCore.log().debug("Account exists. Name: " + account.get().getName(), DebugLevel.STANDARD);
@@ -316,7 +327,7 @@ public class TNEVaultUnlocked implements Economy {
     PluginCore.log().debug("GetBalance method called with PluginName: " + pluginName + ", UUID: " + uuid + ", World: " + world + ", Currency: " + currency, DebugLevel.STANDARD);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
-    final Optional<Currency> currencyOpt = TNECore.eco().currency().findCurrency(currency);
+    final Optional<Currency> currencyOpt = TNECore.eco().currency().find(currency);
 
     if (account.isPresent() && currencyOpt.isPresent()) {
       PluginCore.log().debug("Account exists. Name: " + account.get().getName(), DebugLevel.STANDARD);
@@ -344,7 +355,7 @@ public class TNEVaultUnlocked implements Economy {
     PluginCore.log().debug("Has method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Currency: " + currency + ", Amount: " + amount, DebugLevel.STANDARD);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
-    final Optional<Currency> currencyOpt = TNECore.eco().currency().findCurrency(currency);
+    final Optional<Currency> currencyOpt = TNECore.eco().currency().find(currency);
 
     return currencyOpt.filter(currency1 -> account.filter(value -> value.getHoldingsTotal(worldName, currency1.getUid())
                                                                            .compareTo(amount) >= 0).isPresent()).isPresent();
@@ -367,14 +378,14 @@ public class TNEVaultUnlocked implements Economy {
     PluginCore.log().debug("Withdraw method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Currency: " + currencyId + ", Amount: " + amount, DebugLevel.STANDARD);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
-    final Optional<Currency> currency = TNECore.eco().currency().findCurrency(currencyId);
+    final Optional<Currency> currency = TNECore.eco().currency().find(currencyId);
 
-    if (account.isEmpty()) {
+    if(account.isEmpty()) {
       return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO,
                                  ResponseType.FAILURE, "Unable to locate associated account.");
     }
-
-    if (currency.isEmpty()) {
+    
+    if(currency.isEmpty()) {
       return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO,
                                  ResponseType.FAILURE, "Unable to find currency %s.".formatted(currencyId));
     }
@@ -391,7 +402,7 @@ public class TNEVaultUnlocked implements Economy {
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding(),
                                  fromResult(result),
                                  result.getMessage());
-    } catch (final InvalidTransactionException e) {
+    } catch(final InvalidTransactionException e) {
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding(),
                                  ResponseType.FAILURE, e.getMessage());
     }
@@ -414,13 +425,13 @@ public class TNEVaultUnlocked implements Economy {
     PluginCore.log().debug("Deposit method called with PluginName: " + pluginName + ", UUID: " + uuid + ", WorldName: " + worldName + ", Currency: " + currencyId + ", Amount: " + amount, DebugLevel.STANDARD);
 
     final Optional<Account> account = TNECore.eco().account().findAccount(uuid.toString());
-    final Optional<Currency> currency = TNECore.eco().currency().findCurrency(currencyId);
+    final Optional<Currency> currency = TNECore.eco().currency().find(currencyId);
 
-    if (account.isEmpty()) {
+    if(account.isEmpty()) {
       return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO, ResponseType.FAILURE, "Unable to locate associated account.");
     }
-
-    if (currency.isEmpty()) {
+    
+    if(currency.isEmpty()) {
       return new EconomyResponse(BigDecimal.ZERO, BigDecimal.ZERO, ResponseType.FAILURE, "Unable to find currency %s.".formatted(currencyId));
     }
 
@@ -435,7 +446,7 @@ public class TNEVaultUnlocked implements Economy {
       final TransactionResult result = transaction.process();
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding(), fromResult(result),
                                  result.getMessage());
-    } catch (final InvalidTransactionException e) {
+    } catch(final InvalidTransactionException e) {
       return new EconomyResponse(amount, transaction.getTo().getCombinedEnding(),
                                  ResponseType.FAILURE, e.getMessage());
     }

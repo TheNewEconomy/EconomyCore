@@ -44,8 +44,10 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -178,7 +180,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       final UUID id = (uuidAsId && !cur.getString("Info.UUID").equalsIgnoreCase(check.toString()))? check : UUID.fromString(cur.getString("Info.UUID"));
 
 
-      final Optional<Currency> curOption = TNECore.eco().currency().findCurrency(id);
+      final Optional<Currency> curOption = TNECore.eco().currency().find(id);
       if(curOption.isEmpty()) {
         currency.setUid(UUID.fromString(cur.getString("Info.UUID")));
       }
@@ -348,14 +350,17 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     final String single = denom.getString("Info.Single", "Dollar");
     final String plural = denom.getString("Info.Plural", "Dollars");
 
-    final BigDecimal weight = BigDecimal.valueOf(denom.getDouble("Options.Weight", 1.0));
+    final BigDecimal weight = new BigDecimal(denom.getString("Options.Weight", "1.0"));
+    PluginCore.log().debug("Loading denomination with weight of: " + weight);
     if(weight.compareTo(BigDecimal.ZERO) <= 0) {
+
       PluginCore.log().error("Failed to load denomination: " + denomFile.getName() + ". Invalid Options.Weight Value: " + weight.toPlainString(), DebugLevel.OFF);
       return false;
     }
 
 
-    final String material = denom.getString("Options.Material", "PAPER");
+    final String material = denom.getString("Options.Material", "PAPER").toLowerCase(Locale.ROOT);
+    PluginCore.log().debug("Loading denomination with material of: " + material);
 
     final Denomination denomination = (currency instanceof ItemCurrency)?
                                       new ItemDenomination(weight, material) : new Denomination(weight);
@@ -367,22 +372,80 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
       item.setName(denom.getString("Options.Name", ""));
 
+      item.maxStack(denom.getInt("Options.MaxStack", 0));
+
       final List<String> loreStr = denom.getStringList("Options.Lore");
       final LinkedList<Component> lore = new LinkedList<>();
       for(final String str : loreStr) {
+
         lore.add(MiniMessage.miniMessage().deserialize(str));
       }
+
+      item.checks().addAll(denom.getStringList("Checks", new ArrayList<>()));
+
+      String provider = "vanilla";
+      String providerID = "";
+
+      if(denom.getBoolean("Integrations.ItemsAdder.Enabled", false)) {
+
+        provider = "itemsadder";
+        providerID = denom.getString("Integrations.ItemsAdder.Item");
+      }
+
+      if(denom.getBoolean("Integrations.Oraxen.Enabled", false)) {
+
+        provider = "oraxen";
+        providerID = denom.getString("Integrations.Oraxen.Item");
+      }
+
+      if(denom.getBoolean("Integrations.Nexo.Enabled", false)) {
+
+        provider = "nexo";
+        providerID = denom.getString("Integrations.Nexo.Item");
+      }
+
+      if(denom.getBoolean("Integrations.Nova.Enabled", false)) {
+
+        provider = "nova";
+        providerID = denom.getString("Integrations.Nova.Item");
+      }
+
+      if(denom.getBoolean("Integrations.SlimeFun.Enabled", false)) {
+
+        provider = "slimefun";
+        providerID = denom.getString("Integrations.Slimefun.Item");
+      }
+
+      item.provider(provider);
+      item.providerID(providerID);
 
       item.setLore(lore);
       item.setCustomModel(denom.getInt("Options.ModelData", -1));
       item.setTexture(denom.getString("Options.Texture", ""));
 
+      if(denom.getBoolean("Options.ItemModel.Enabled", false)) {
+
+        item.itemModel(denom.getString("Options.ItemModel.Model"));
+        item.modelColours().addAll(denom.getStringList("Options.ItemModel.Colours", new ArrayList<>()));
+        item.modelStrings().addAll(denom.getStringList("Options.ItemModel.Strings", new ArrayList<>()));
+
+        for(final String str : denom.getStringList("Options.ItemModel.Booleans", new ArrayList<>())) {
+
+          item.modelBooleans().add(Boolean.valueOf(str));
+        }
+
+        for(final String str : denom.getStringList("Options.ItemModel.Floats", new ArrayList<>())) {
+
+          item.modelFloats().add(Float.valueOf(str));
+        }
+      }
+
       if(denom.contains("Options.Enchantments")) {
-        item.setEnchantments(denom.getStringList("Options.Enchantments"));
+        item.enchantments(denom.getStringList("Options.Enchantments"));
       }
 
       if(denom.contains("Options.Flags")) {
-        item.setFlags(denom.getStringList("Options.Flags"));
+        item.flags(denom.getStringList("Options.Flags"));
       }
 
       //Crafting
@@ -411,7 +474,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
           i++;
         }
 
-        PluginCore.server().registerCrafting(currency.getIdentifier(), recipe);
+        PluginCore.server().registerCrafting(currency.getIdentifier() + ":" + single, recipe);
       }
     }
 

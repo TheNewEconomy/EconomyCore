@@ -344,7 +344,7 @@ public class TNEAPI {
    */
   public @NotNull Currency getDefaultCurrency(@NotNull final String region) {
 
-    return TNECore.eco().currency().getDefaultCurrency(region);
+    return TNECore.eco().currency().defaultCurrency(region);
   }
 
   /**
@@ -389,7 +389,7 @@ public class TNEAPI {
   public BigDecimal getHoldings(final String identifier, final String world, final String currency) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
-    final Optional<Currency> currency1 = TNECore.eco().currency().findCurrency(currency);
+    final Optional<Currency> currency1 = TNECore.eco().currency().find(currency);
 
     if(account.isPresent() && currency1.isPresent()) {
       return account.get().getHoldingsTotal(world, currency1.get().getUid());
@@ -426,7 +426,7 @@ public class TNEAPI {
   public TransactionResult removeHoldings(final String identifier, final String world, final String currency, final BigDecimal amount, final String pluginName) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
-    final Optional<Currency> currencyObject = TNECore.eco().currency().findCurrency(currency);
+    final Optional<Currency> currencyObject = TNECore.eco().currency().find(currency);
 
     if(account.isPresent() && currencyObject.isPresent()) {
 
@@ -462,7 +462,7 @@ public class TNEAPI {
   public TransactionResult addHoldings(final String identifier, final String world, final String currency, final BigDecimal amount, final String pluginName) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
-    final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency(currency);
+    final Optional<Currency> currencyOptional = TNECore.eco().currency().find(currency);
 
     if(account.isPresent() && currencyOptional.isPresent()) {
 
@@ -496,7 +496,7 @@ public class TNEAPI {
   public boolean setHoldings(final String identifier, final String world, final String currency, final BigDecimal amount) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(identifier);
-    final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency(currency);
+    final Optional<Currency> currencyOptional = TNECore.eco().currency().find(currency);
 
     if(account.isPresent() && currencyOptional.isPresent()) {
       return account.get().setHoldings(new HoldingsEntry(world, currencyOptional.get().getUid(), amount, EconomyManager.NORMAL));

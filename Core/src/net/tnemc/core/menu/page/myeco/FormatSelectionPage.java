@@ -91,14 +91,14 @@ public class FormatSelectionPage {
       if(maxPages > 1) {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
-                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
+                                                           .customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
                                                            .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))))
                                            .withActions(new DataAction(formatPageID, prev), new SwitchPageAction(menuName, menuPage))
                                            .withSlot(0)
                                            .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
+                                                           .customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
                                                            .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPage"), id))))
                                            .withActions(new DataAction(formatPageID, next), new SwitchPageAction(menuName, menuPage))
                                            .withSlot(8)
@@ -106,7 +106,7 @@ public class FormatSelectionPage {
       }
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Space"), id))
+                                                         .customName(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Space"), id))
                                                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Add"), id))))
                                          .withActions(new SwitchPageAction(menuName, menuPage))
                                          .withClick((click)->formatAddClick(click, " "))
@@ -114,7 +114,7 @@ public class FormatSelectionPage {
                                          .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.OwnDisplay"), id))
+                                                         .customName(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.OwnDisplay"), id))
                                                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Own"), id))))
                                          .withActions(new ChatAction((message)->{
 
@@ -134,7 +134,7 @@ public class FormatSelectionPage {
                                          .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BLACK_WOOL", 1)
-                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.ResetDisplay"), id))
+                                                         .customName(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.ResetDisplay"), id))
                                                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Reset"), id))))
                                          .withClick((click)->click.player().viewer().ifPresent(menuViewer->menuViewer.addData(formatID, "")))
                                          .withActions(new SwitchPageAction(menuName, menuPage))
@@ -146,21 +146,21 @@ public class FormatSelectionPage {
       final Component display = (formatData.isPresent())? Component.text((String)formatData.get()) : MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.None"), id);
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-                                                         .display(display)
+                                                         .customName(display)
                                                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Format"), id))))
                                          .withActions(new SwitchPageAction(menuName, menuPage))
                                          .withSlot(4)
                                          .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)
-                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EscapeDisplay"), id))
+                                                         .customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EscapeDisplay"), id))
                                                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Escape"), id))))
                                          .withActions(new SwitchPageAction(returnMenu, returnPage))
                                          .withSlot(1)
                                          .build());
 
       callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("ARROW", 1)
-                                                         .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Save"), id))
+                                                         .customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Save"), id))
                                                          .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Format.Save"), id))))
                                          .withActions(new RunnableAction((click)->{
 
@@ -195,7 +195,7 @@ public class FormatSelectionPage {
         lore.set(1, Component.text(rule.description()));
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                                                           .display(Component.text(rule.name()))
+                                                           .customName(Component.text(rule.name()))
                                                            .lore(lore))
                                            .withActions(new SwitchPageAction(menuName, menuPage))
                                            .withClick((click)->formatAddClick(click, rule.name()))

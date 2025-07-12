@@ -39,7 +39,7 @@ public class PreviousPageIcon extends Icon {
   public PreviousPageIcon(final UUID id, final int slot, final String menu, final int page, final ActionType type) {
 
     super(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
-                  .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
+                  .customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
                   .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))), null);
 
     this.slot = slot;

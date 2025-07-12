@@ -75,7 +75,7 @@ public class MinimumBalanceCheck implements TransactionCheck {
     final Optional<Account> account = participant.asAccount();
     if(account.isPresent() && modifier.isRemoval()) {
 
-      final Optional<Currency> currency = TNECore.eco().currency().findCurrency(modifier.getCurrency());
+      final Optional<Currency> currency = TNECore.eco().currency().find(modifier.getCurrency());
 
       if(currency.isPresent() &&
          participant.getCombinedEnding().compareTo(currency.get().getMinBalance()) < 0) {

@@ -23,14 +23,13 @@ import net.tnemc.core.command.BaseCommand;
 import net.tnemc.plugincore.paper.impl.PaperCMDSource;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
-import revxrsal.commands.annotation.DefaultFor;
 import revxrsal.commands.annotation.Description;
 import revxrsal.commands.annotation.Named;
 import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
-import revxrsal.commands.bukkit.BukkitCommandActor;
+import revxrsal.commands.bukkit.actor.BukkitCommandActor;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
-import revxrsal.commands.help.CommandHelp;
+import revxrsal.commands.help.Help;
 
 import java.util.UUID;
 
@@ -44,12 +43,12 @@ import java.util.UUID;
 public class TransactionCommand {
 
   @Subcommand({ "help", "?" })
-  @DefaultFor({ "transaction", "trans", "receipt" })
+  //@DefaultFor({ "transaction", "trans", "receipt" })
   @Usage("Help.Arguments")
   @Description("Help.Description")
-  public void help(final BukkitCommandActor actor, final CommandHelp<String> helpEntries, @Default("1") final int page) {
+  public void help(final BukkitCommandActor actor, final Help.RelatedCommands<?> commands, @Default("1") final int page) {
 
-    BaseCommand.help(new PaperCMDSource(actor), helpEntries, page);
+    BaseCommand.help(new PaperCMDSource(actor), commands, page);
   }
 
   @Subcommand({ "away", "gone", "afk", "afg" })

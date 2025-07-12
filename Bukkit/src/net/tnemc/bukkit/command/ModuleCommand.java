@@ -23,13 +23,12 @@ import net.tnemc.core.command.BaseCommand;
 import net.tnemc.plugincore.bukkit.impl.BukkitCMDSource;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
-import revxrsal.commands.annotation.DefaultFor;
 import revxrsal.commands.annotation.Description;
 import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
-import revxrsal.commands.bukkit.BukkitCommandActor;
+import revxrsal.commands.bukkit.actor.BukkitCommandActor;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
-import revxrsal.commands.help.CommandHelp;
+import revxrsal.commands.help.Help;
 
 /**
  * ModuleCommand
@@ -43,9 +42,9 @@ public class ModuleCommand {
   @Subcommand({ "help", "?" })
   @Usage("Help.Arguments")
   @Description("Help.Description")
-  public void help(final BukkitCommandActor actor, final CommandHelp<String> helpEntries, @Default("1") final int page) {
+  public void help(final BukkitCommandActor actor, final Help.RelatedCommands<?> commands, @Default("1") final int page) {
 
-    BaseCommand.help(new BukkitCMDSource(actor), helpEntries, page);
+    BaseCommand.help(new BukkitCMDSource(actor), commands, page);
   }
 
   @Subcommand({ "avail", "available" })
@@ -77,7 +76,7 @@ public class ModuleCommand {
 
   @Subcommand({ "list", "l" })
   @Usage("Module.List.Arguments")
-  @DefaultFor({ "module", "mod" })
+  //@DefaultFor({ "module", "mod" })
   @Description("Module.List.Description")
   @CommandPermission("tne.list.available")
   public void onList(final BukkitCommandActor sender) {

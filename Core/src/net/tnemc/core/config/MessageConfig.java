@@ -28,6 +28,7 @@ import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.config.Config;
 import net.tnemc.plugincore.core.io.message.translation.Language;
+import net.tnemc.plugincore.core.utils.IOUtil;
 
 import java.io.File;
 import java.util.Collections;
@@ -98,13 +99,13 @@ public class MessageConfig extends Config {
       return;
     }
 
-    final File[] langFiles = directory.listFiles((dir, name)->name.endsWith(".yml"));
+    final File[] langFiles = IOUtil.getYAMLs(directory);
 
     if(langFiles != null) {
 
       for(final File langFile : langFiles) {
 
-        final String name = langFile.getName().replace(".yml", "");
+        final String name = langFile.getName().replace(".yml", "").replace(".yaml", "");
 
         try {
 
@@ -115,7 +116,7 @@ public class MessageConfig extends Config {
           languages.put(name, lang);
 
           PluginCore.log().inform("Loaded language: " + name);
-        } catch(Exception ignore) {
+        } catch(final Exception ignore) {
 
           PluginCore.log().debug("Failed to load language: " + name);
         }

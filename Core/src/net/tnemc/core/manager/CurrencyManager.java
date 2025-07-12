@@ -25,6 +25,8 @@ import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.item.ItemDenomination;
 import net.tnemc.core.currency.loader.DefaultCurrencyLoader;
+import net.tnemc.core.currency.parser.MoneyParser;
+import net.tnemc.core.currency.parser.ParseRule;
 import net.tnemc.core.currency.saver.DefaultCurrencySaver;
 import net.tnemc.core.currency.type.ExperienceLevelType;
 import net.tnemc.core.currency.type.ExperienceType;
@@ -38,6 +40,7 @@ import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import net.tnemc.plugincore.core.utils.IOUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -65,6 +68,8 @@ public class CurrencyManager {
 
   private CurrencyLoader loader = new DefaultCurrencyLoader();
   private CurrencySaver saver = new DefaultCurrencySaver();
+
+  private MoneyParser parser = new MoneyParser();
 
   private boolean retry = false;
 
@@ -182,7 +187,7 @@ public class CurrencyManager {
    * @since 0.1.2.0
    */
   @NotNull
-  public Currency getDefaultCurrency() {
+  public Currency defaultCurrency() {
 
     for(final Currency currency : currencies.values()) {
       if(currency.isGlobalDefault()) {
@@ -205,14 +210,14 @@ public class CurrencyManager {
    * @since 0.1.2.0
    */
   @NotNull
-  public Currency getDefaultCurrency(@NotNull final String region) {
+  public Currency defaultCurrency(@NotNull final String region) {
 
     for(final Currency currency : currencies.values()) {
       if(currency.isRegionDefault(region)) {
         return currency;
       }
     }
-    return getDefaultCurrency();
+    return defaultCurrency();
   }
 
   /**
@@ -247,7 +252,7 @@ public class CurrencyManager {
    *
    * @return An Optional containing the currency if it exists, otherwise an empty Optional.
    */
-  public Optional<Currency> findCurrency(final UUID identifier) {
+  public Optional<Currency> find(final UUID identifier) {
 
     return Optional.ofNullable(currencies.get(identifier));
   }
@@ -260,7 +265,7 @@ public class CurrencyManager {
    * @return An Optional containing the currency if this item is a valid currency item, otherwise an
    * empty Optional.
    */
-  public Optional<Currency> findCurrencyByItem(final AbstractItemStack<?> item) {
+  public Optional<Currency> findByItem(final AbstractItemStack<?> item) {
 
     for(final Currency currency : currencies.values()) {
 
@@ -299,13 +304,35 @@ public class CurrencyManager {
   }
 
   /**
+   * Finds a Currency object based on the symbol provided.
+   *
+   * @param symbol The symbol of the currency to search for.
+   * @return An Optional containing the Currency object if found, otherwise an empty Optional.
+   */
+  public Optional<Currency> findCurrencyBySymbol(@Nullable final String symbol) {
+    if(symbol == null) {
+
+      return Optional.empty();
+    }
+
+    for(final Currency currency : currencies.values()) {
+
+      if(currency.getSymbol().equalsIgnoreCase(symbol)) {
+
+        return Optional.of(currency);
+      }
+    }
+    return Optional.empty();
+  }
+
+  /**
    * Used to find a {@link Currency currency} based on its user-friendly identifier.
    *
    * @param identifier The identifier to look for.
    *
    * @return An Optional containing the currency if it exists, otherwise an empty Optional.
    */
-  public Optional<Currency> findCurrency(final String identifier) {
+  public Optional<Currency> find(final String identifier) {
 
     try {
 
@@ -392,6 +419,20 @@ public class CurrencyManager {
   public CurrencyType findTypeOrDefault(final String identifier) {
 
     return types.getOrDefault(identifier, types.get("virtual"));
+  }
+
+  public MoneyParser parser() {
+    return parser;
+  }
+
+  /**
+   * Adds a ParseRule to the parser for applying rules during parsing.
+   *
+   * @param rule The ParseRule object to add for parsing.
+   */
+  public void addParseRule(final ParseRule rule) {
+
+    parser.addRule(rule);
   }
 
   public Map<String, UUID> getCurIDMap() {

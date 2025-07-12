@@ -170,8 +170,8 @@ public class Extractor {
 
             final String currency = (String)currencyObj;
             if(!recode) {
-              final String finalCurrency = (currency.equalsIgnoreCase("default"))? TNECore.eco().currency().getDefaultCurrency(region).getIdentifier() : currency;
-              final Optional<Currency> cur = TNECore.eco().currency().findCurrency(finalCurrency);
+              final String finalCurrency = (currency.equalsIgnoreCase("default"))? TNECore.eco().currency().defaultCurrency(region).getIdentifier() : currency;
+              final Optional<Currency> cur = TNECore.eco().currency().find(finalCurrency);
 
               PluginCore.log().inform("Currency avail: " + cur.isPresent());
               if(cur.isPresent()) {
@@ -185,7 +185,7 @@ public class Extractor {
 
                 PluginCore.log().inform("Use default currency");
                 PluginCore.log().inform("Set Balance to: " + amount.toPlainString());
-                response.getAccount().get().setHoldings(new HoldingsEntry(region, TNECore.eco().currency().getDefaultCurrency(region).getUid(),
+                response.getAccount().get().setHoldings(new HoldingsEntry(region, TNECore.eco().currency().defaultCurrency(region).getUid(),
                                                                           amount, EconomyManager.NORMAL));
               }
             } else {

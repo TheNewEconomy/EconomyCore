@@ -42,25 +42,21 @@ import net.tnemc.core.command.parameters.resolver.AccountResolver;
 import net.tnemc.core.command.parameters.resolver.BigDecimalResolver;
 import net.tnemc.core.command.parameters.resolver.CurrencyResolver;
 import net.tnemc.core.command.parameters.resolver.DebugResolver;
+import net.tnemc.core.command.parameters.resolver.MoneyResolver;
 import net.tnemc.core.command.parameters.resolver.PercentDecimalResolver;
 import net.tnemc.core.command.parameters.resolver.StatusResolver;
-import net.tnemc.core.command.parameters.suggestion.AccountSuggestion;
-import net.tnemc.core.command.parameters.suggestion.CurrencySuggestion;
-import net.tnemc.core.command.parameters.suggestion.DebugSuggestion;
-import net.tnemc.core.command.parameters.suggestion.RegionSuggestion;
-import net.tnemc.core.command.parameters.suggestion.StatusSuggestion;
 import net.tnemc.core.config.DataConfig;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.config.MessageConfig;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.calculations.ItemCalculations;
 import net.tnemc.core.currency.item.ItemDenomination;
+import net.tnemc.core.currency.parser.ParseMoney;
 import net.tnemc.core.io.yaml.YamlStorageManager;
 import net.tnemc.core.manager.Updater;
 import net.tnemc.core.menu.MyBalMenu;
 import net.tnemc.core.menu.MyEcoMenu;
 import net.tnemc.core.menu.TransactionMenu;
-import net.tnemc.core.region.RegionGroup;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.utils.MISCUtils;
 import net.tnemc.item.AbstractItemStack;
@@ -78,8 +74,10 @@ import net.tnemc.plugincore.core.io.message.MessageHandler;
 import net.tnemc.plugincore.core.io.storage.Datable;
 import net.tnemc.plugincore.core.io.storage.StorageManager;
 import net.tnemc.plugincore.core.io.storage.engine.StorageSettings;
+import org.jetbrains.annotations.NotNull;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import revxrsal.commands.LampBuilderVisitor;
 import revxrsal.commands.command.CommandActor;
 import revxrsal.commands.command.ExecutableCommand;
 
@@ -106,8 +104,8 @@ public abstract class TNECore extends PluginEngine {
    */
   public static final String coreURL = "https://tnemc.net/files/module-version.xml";
 
-  public static final String version = "0.1.3.6";
-  public static final String build = "SNAPSHOT-6";
+  public static final String version = "0.1.4.0";
+  public static final String build = "SNAPSHOT-1";
 
   /* Key Managers and Object instances utilized with TNE */
 
@@ -167,6 +165,8 @@ public abstract class TNECore extends PluginEngine {
 
     if(!this.messageConfig.load()) {
       PluginCore.log().error("Failed to load message configuration!", DebugLevel.OFF);
+    } else {
+      this.messageConfig.loadLanguages();
     }
   }
 
@@ -224,25 +224,23 @@ public abstract class TNECore extends PluginEngine {
   }
 
   @Override
+  public @NotNull <A extends CommandActor> LampBuilderVisitor<A> registerParameters() {
+
+    return builder ->builder.parameterTypes()
+            .addParameterType(Account.class, new AccountResolver())
+            .addParameterType(AccountStatus.class, new StatusResolver())
+            .addParameterType(DebugLevel.class, new DebugResolver())
+            .addParameterType(Currency.class, new CurrencyResolver())
+            .addParameterType(BigDecimal.class, new BigDecimalResolver())
+            .addParameterType(ParseMoney.class, new MoneyResolver())
+            .addParameterType(PercentBigDecimal.class, new PercentDecimalResolver());
+  }
+
+  @Override
   public void registerCommands() {
 
     //Custom Parameters:
     //TODO: Register custom validators
-
-    //Value Resolvers
-    command.registerValueResolver(Account.class, new AccountResolver());
-    command.registerValueResolver(AccountStatus.class, new StatusResolver());
-    command.registerValueResolver(DebugLevel.class, new DebugResolver());
-    command.registerValueResolver(Currency.class, new CurrencyResolver());
-    command.registerValueResolver(BigDecimal.class, new BigDecimalResolver());
-    command.registerValueResolver(PercentBigDecimal.class, new PercentDecimalResolver());
-
-    //Annotation
-    command.getAutoCompleter().registerParameterSuggestions(AccountStatus.class, new StatusSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(DebugLevel.class, new DebugSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(RegionGroup.class, new RegionSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(Account.class, new AccountSuggestion());
-    command.getAutoCompleter().registerParameterSuggestions(Currency.class, new CurrencySuggestion());
   }
 
   @Override
@@ -264,9 +262,9 @@ public abstract class TNECore extends PluginEngine {
   public String commandHelpWriter(final ExecutableCommand command, final CommandActor actor) {
 
     final MessageData data = new MessageData("Messages.Commands.Help.Entry");
-    data.addReplacement("$command", command.getPath().toRealString());
-    data.addReplacement("$arguments", MessageHandler.getInstance().getTranslator().translateNode(new MessageData("Messages.Commands." + command.getUsage()), "default"));
-    data.addReplacement("$description", MessageHandler.getInstance().getTranslator().translateNode(new MessageData("Messages.Commands." + command.getDescription()), "default"));
+    data.addReplacement("$command", command.path());
+    data.addReplacement("$arguments", MessageHandler.getInstance().getTranslator().translateNode(new MessageData("Messages.Commands." + command.usage()), "default"));
+    data.addReplacement("$description", MessageHandler.getInstance().getTranslator().translateNode(new MessageData("Messages.Commands." + command.description()), "default"));
 
     return MessageHandler.getInstance().getTranslator().translateNode(data, "default");
   }
@@ -369,7 +367,7 @@ public abstract class TNECore extends PluginEngine {
           final BigDecimal defaultBalance = new BigDecimal(MainConfig.yaml().getString("Core.Server.Account.Balance"));
           if(defaultBalance.compareTo(BigDecimal.ZERO) > 0) {
             response.getAccount().ifPresent(value->value.setHoldings(new HoldingsEntry(economyManager.region().defaultRegion(),
-                                                                                       economyManager.currency().getDefaultCurrency().getUid(),
+                                                                                       economyManager.currency().defaultCurrency().getUid(),
                                                                                        defaultBalance,
                                                                                        EconomyManager.NORMAL
             )));
@@ -465,12 +463,35 @@ public abstract class TNECore extends PluginEngine {
 
   public AbstractItemStack<?> denominationToStack(final ItemDenomination denomination, final int amount) {
 
-    return PluginCore.server().stackBuilder().of(denomination.getMaterial(), amount)
-            .enchant(denomination.getEnchantments())
+    AbstractItemStack<?> stack = PluginCore.server().stackBuilder().of(denomination.material(), amount)
+            .enchant(denomination.enchantments())
             .lore(denomination.getLore())
-            .flags(denomination.getFlags())
+            .flags(denomination.flags())
             .damage(denomination.getDamage())
-            .display(MiniMessage.miniMessage().deserialize(denomination.getName()))
-            .modelData(denomination.getCustomModel()).debug(false);
+            .customName(MiniMessage.miniMessage().deserialize(denomination.getName())).debug(false);
+
+    if(denomination.getCustomModel() > -1) {
+      stack = stack.modelDataOld(denomination.getCustomModel());
+    }
+
+    if(!denomination.provider().equalsIgnoreCase("vanilla")) {
+      stack = stack.setItemProvider(denomination.provider()).setProviderItemID(denomination.providerID());
+    }
+
+    if(!denomination.itemModel().isEmpty()) {
+      stack = stack.itemModel(denomination.itemModel());
+    }
+
+    if(!denomination.modelBooleans().isEmpty() || !denomination.modelStrings().isEmpty()
+      || !denomination.modelColours().isEmpty() || !denomination.modelFloats().isEmpty()) {
+
+      stack = stack.modelData(denomination.modelColours(), denomination.modelFloats(),
+                              denomination.modelBooleans(), denomination.modelStrings());
+    }
+
+    if(denomination.maxStack() > 0) {
+      stack = stack.maxStackSize(denomination.maxStack());
+    }
+    return stack;
   }
 }

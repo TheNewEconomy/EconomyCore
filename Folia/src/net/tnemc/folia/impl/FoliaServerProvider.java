@@ -25,14 +25,14 @@ import net.tnemc.item.paper.PaperCalculationsProvider;
 import net.tnemc.item.paper.PaperItemStack;
 import net.tnemc.paper.PaperCore;
 import net.tnemc.plugincore.PluginCore;
-import net.tnemc.plugincore.bukkit.hook.PAPIParser;
-import net.tnemc.plugincore.bukkit.impl.BukkitPlayerProvider;
 import net.tnemc.plugincore.core.compatibility.CmdSource;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import net.tnemc.plugincore.core.compatibility.ProxyProvider;
 import net.tnemc.plugincore.core.compatibility.ServerConnector;
 import net.tnemc.plugincore.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.plugincore.core.compatibility.scheduler.SchedulerProvider;
+import net.tnemc.plugincore.paper.hook.PAPIParser;
+import net.tnemc.plugincore.paper.impl.PaperPlayerProvider;
 import net.tnemc.plugincore.paper.impl.PaperProxyProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -50,7 +50,9 @@ import revxrsal.commands.command.CommandActor;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * FoliaServerProvider
@@ -89,10 +91,12 @@ public class FoliaServerProvider implements ServerConnector {
   @Override
   public String replacePlaceholder(final UUID player, final String message) {
 
+    if(player == null) return message;
+
     final Optional<PlayerProvider> playerOpt = PluginCore.server().findPlayer(player);
     if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI") && playerOpt.isPresent()
-       && playerOpt.get() instanceof final BukkitPlayerProvider bukkitPlayer) {
-      return PAPIParser.parse(bukkitPlayer, message);
+       && playerOpt.get() instanceof final PaperPlayerProvider paperPlayerProvider) {
+      return PAPIParser.parse(paperPlayerProvider, message);
     }
     return message;
   }
@@ -119,6 +123,13 @@ public class FoliaServerProvider implements ServerConnector {
   public CmdSource<?> source(@NotNull final CommandActor actor) {
 
     return null;
+  }
+
+  @Override
+  public Set<String> onlinePlayersList() {
+    return Bukkit.getOnlinePlayers().stream()
+            .map(Player::getName)
+            .collect(Collectors.toSet());
   }
 
   /**
@@ -313,9 +324,9 @@ public class FoliaServerProvider implements ServerConnector {
       ShapedRecipe shaped;
 
       try {
-        shaped = new ShapedRecipe(new NamespacedKey(PaperCore.instance().getPlugin(), key), (ItemStack)recipe.getResult().locale());
+        shaped = new ShapedRecipe(new NamespacedKey(PaperCore.instance().getPlugin(), key), (ItemStack)recipe.getResult().cacheLocale());
       } catch(final Exception ignore) {
-        shaped = new ShapedRecipe((ItemStack)recipe.getResult().locale());
+        shaped = new ShapedRecipe((ItemStack)recipe.getResult().cacheLocale());
       }
 
       shaped.shape(recipe.getRows());
@@ -328,9 +339,9 @@ public class FoliaServerProvider implements ServerConnector {
       ShapelessRecipe shapeless;
 
       try {
-        shapeless = new ShapelessRecipe(new NamespacedKey(PaperCore.instance().getPlugin(), key), (ItemStack)recipe.getResult().locale());
+        shapeless = new ShapelessRecipe(new NamespacedKey(PaperCore.instance().getPlugin(), key), (ItemStack)recipe.getResult().cacheLocale());
       } catch(final Exception ignore) {
-        shapeless = new ShapelessRecipe((ItemStack)recipe.getResult().locale());
+        shapeless = new ShapelessRecipe((ItemStack)recipe.getResult().cacheLocale());
       }
 
       for(final Map.Entry<Character, String> ingredient : recipe.getIngredients().entrySet()) {

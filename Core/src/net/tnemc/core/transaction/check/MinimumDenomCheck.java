@@ -76,7 +76,7 @@ public class MinimumDenomCheck implements TransactionCheck {
     final Optional<Account> account = participant.asAccount();
     if(account.isPresent()) {
 
-      final Optional<Currency> currency = TNECore.eco().currency().findCurrency(modifier.getCurrency());
+      final Optional<Currency> currency = TNECore.eco().currency().find(modifier.getCurrency());
       if(currency.isPresent()) {
 
         final BigDecimal ceiling = currency.get().getDenominations().ceilingKey(BigDecimal.ZERO);

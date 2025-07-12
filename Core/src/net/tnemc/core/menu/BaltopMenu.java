@@ -86,14 +86,14 @@ public class BaltopMenu extends Menu {
       if(maxPages > 1) {
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)
-                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
+                                                           .customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))
                                                            .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))))
                                            .withActions(new DataAction(TOP_PAGE_ID, prev), new SwitchPageAction(this.name, 1))
                                            .withSlot(0)
                                            .build());
 
         callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)
-                                                           .display(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
+                                                           .customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))
                                                            .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPage"), id))))
                                            .withActions(new DataAction(TOP_PAGE_ID, next), new SwitchPageAction(this.name, 1))
                                            .withSlot(8)
@@ -142,7 +142,7 @@ public class BaltopMenu extends Menu {
     lore.add(Component.text("From: " + from));
 
     return new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                                   .display(Component.text(receipt.getId().toString())).lore(lore))
+                                   .customName(Component.text(receipt.getId().toString())).lore(lore))
             .withSlot(slot).build();
   }
 }

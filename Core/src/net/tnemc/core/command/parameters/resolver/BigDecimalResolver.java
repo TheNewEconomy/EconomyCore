@@ -2,7 +2,7 @@ package net.tnemc.core.command.parameters.resolver;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2025 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -19,7 +19,10 @@ package net.tnemc.core.command.parameters.resolver;
  */
 
 import org.jetbrains.annotations.NotNull;
-import revxrsal.commands.process.ValueResolver;
+import revxrsal.commands.command.CommandActor;
+import revxrsal.commands.node.ExecutionContext;
+import revxrsal.commands.parameter.ParameterType;
+import revxrsal.commands.stream.MutableStringStream;
 
 import java.math.BigDecimal;
 
@@ -29,13 +32,11 @@ import java.math.BigDecimal;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class BigDecimalResolver implements ValueResolver<BigDecimal> {
+public class BigDecimalResolver implements ParameterType<CommandActor, BigDecimal> {
 
   @Override
-  public BigDecimal resolve(@NotNull final ValueResolverContext context) {
+  public BigDecimal parse(@NotNull final MutableStringStream input, @NotNull final ExecutionContext<CommandActor> context) {
 
-    final String value = context.arguments().pop();
-
-    return new BigDecimal(PercentDecimalResolver.replaceDecimals(value));
+    return new BigDecimal(PercentDecimalResolver.replaceDecimals(input.readString()));
   }
 }

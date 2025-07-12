@@ -2,7 +2,7 @@ package net.tnemc.core.command;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2025 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -22,7 +22,8 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.plugincore.core.compatibility.CmdSource;
 import net.tnemc.plugincore.core.io.message.MessageData;
-import revxrsal.commands.help.CommandHelp;
+import revxrsal.commands.command.ExecutableCommand;
+import revxrsal.commands.help.Help;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -35,10 +36,11 @@ import java.util.UUID;
  */
 public class BaseCommand {
 
-  public static void help(final CmdSource<?> source, final CommandHelp<String> helpEntries, final int page) {
+  public static void help(final CmdSource<?> source, final Help.RelatedCommands<?> commands, final int page) {
 
-    for(final String entry : helpEntries.paginate(page, 5)) {
-      source.message(new MessageData(entry));
+    for(final ExecutableCommand<?> command : commands.paginate(page, 5)) {
+
+      source.message(new MessageData(command.usage()));
     }
   }
 

@@ -169,11 +169,11 @@ public class MyBalMenu extends Menu {
         final Optional<Object> currencyUUID = viewer.get().findData(ACTION_CURRENCY);
         if(currencyUUID.isPresent()) {
 
-          final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((UUID)currencyUUID.get());
+          final Optional<Currency> currencyOptional = TNECore.eco().currency().find((UUID)currencyUUID.get());
           if(currencyOptional.isPresent()) {
 
             callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                                                               .display(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.ConvertDisplay"), id))
+                                                               .customName(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.ConvertDisplay"), id))
                                                                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.Convert"), id))))
                                                .withSlot(10)
                                                .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_CONVERT_CURRENCY_PAGE))
@@ -182,14 +182,14 @@ public class MyBalMenu extends Menu {
             if(currencyOptional.get().type().supportsExchange()) {
 
               callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                                                                 .display(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.DepositDisplay"), id))
+                                                                 .customName(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.DepositDisplay"), id))
                                                                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.Deposit"), id))))
                                                  .withSlot(12)
                                                  .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_DEPOSIT_AMOUNT_PAGE))
                                                  .build());
 
               callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                                                                 .display(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.WithdrawDisplay"), id))
+                                                                 .customName(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.WithdrawDisplay"), id))
                                                                  .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.Withdraw"), id))))
                                                  .withSlot(14)
                                                  .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_WITHDRAW_AMOUNT_PAGE))
@@ -215,7 +215,7 @@ public class MyBalMenu extends Menu {
         final Optional<Object> currencyUUID = viewer.get().findData(ACTION_CURRENCY);
         if(currencyUUID.isPresent()) {
 
-          final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((UUID)currencyUUID.get());
+          final Optional<Currency> currencyOptional = TNECore.eco().currency().find((UUID)currencyUUID.get());
           if(currencyOptional.isPresent()) {
 
             int i = 10;
@@ -225,7 +225,7 @@ public class MyBalMenu extends Menu {
               balMessage.addReplacement("$balance", entry.getAmount());
 
               callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                                                                 .display(Component.text(entry.getHandler().id()))
+                                                                 .customName(Component.text(entry.getHandler().id()))
                                                                  .lore(Collections.singletonList(MessageHandler.grab(balMessage, id))))
                                                  .withSlot(i).build());
               i += 2;
@@ -278,7 +278,7 @@ public class MyBalMenu extends Menu {
     }
 
     return new IconBuilder(PluginCore.server().stackBuilder().of(currency.getIconMaterial(), 1)
-                                   .display(Component.text(currency.getIdentifier())).lore(lore))
+                                   .customName(Component.text(currency.getIdentifier())).lore(lore))
             .withSlot(slot)
             .withActions(actions.toArray(new IconAction[actions.size()])).build();
   }
@@ -298,8 +298,8 @@ public class MyBalMenu extends Menu {
       final Optional<Object> receiverUUID = viewer.get().findData(ACTION_ACCOUNT_ID + "_ID");
       if(currencyUUID.isPresent() && currencyConvertUUID.isPresent() && receiverUUID.isPresent()) {
 
-        final Optional<Currency> fromCurrency = TNECore.eco().currency().findCurrency((UUID)currencyConvertUUID.get());
-        final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((UUID)currencyUUID.get());
+        final Optional<Currency> fromCurrency = TNECore.eco().currency().find((UUID)currencyConvertUUID.get());
+        final Optional<Currency> currencyOptional = TNECore.eco().currency().find((UUID)currencyUUID.get());
         final Optional<PlayerProvider> player = PluginCore.server().findPlayer(handler.getClick().player().identifier());
         if(currencyOptional.isPresent() && fromCurrency.isPresent() && player.isPresent()) {
 
@@ -387,7 +387,7 @@ public class MyBalMenu extends Menu {
       final Optional<Object> receiverUUID = viewer.get().findData(ACTION_ACCOUNT_ID + "_ID");
       if(currencyUUID.isPresent() && receiverUUID.isPresent()) {
 
-        final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((UUID)currencyUUID.get());
+        final Optional<Currency> currencyOptional = TNECore.eco().currency().find((UUID)currencyUUID.get());
         final Optional<PlayerProvider> player = PluginCore.server().findPlayer(handler.getClick().player().identifier());
         if(currencyOptional.isPresent() && player.isPresent()) {
 
@@ -453,7 +453,7 @@ public class MyBalMenu extends Menu {
       final Optional<Object> receiverUUID = viewer.get().findData(ACTION_ACCOUNT_ID + "_ID");
       if(currencyUUID.isPresent() && receiverUUID.isPresent()) {
 
-        final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((UUID)currencyUUID.get());
+        final Optional<Currency> currencyOptional = TNECore.eco().currency().find((UUID)currencyUUID.get());
         final Optional<PlayerProvider> player = PluginCore.server().findPlayer(handler.getClick().player().identifier());
         final Optional<Account> account = TNECore.eco().account().findAccount(playerUUID);
         if(currencyOptional.isPresent() && player.isPresent() && account.isPresent()) {
@@ -499,7 +499,7 @@ public class MyBalMenu extends Menu {
                                                                                                               player.get().inventory().getInventory(false));
 
               if(!left.isEmpty()) {
-                PluginCore.server().calculations().drop(left, ((PlayerAccount)account.get()).getUUID());
+                PluginCore.server().calculations().drop(left, ((PlayerAccount)account.get()).getUUID(), true);
               }
 
               final MessageData entryMSG = new MessageData("Messages.Note.Given");
@@ -523,7 +523,7 @@ public class MyBalMenu extends Menu {
       final Optional<Object> receiverUUID = viewer.get().findData(ACTION_ACCOUNT_ID + "_ID");
       if(currencyUUID.isPresent() && receiverUUID.isPresent()) {
 
-        final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((UUID)currencyUUID.get());
+        final Optional<Currency> currencyOptional = TNECore.eco().currency().find((UUID)currencyUUID.get());
         final Optional<PlayerProvider> player = PluginCore.server().findPlayer(handler.getClick().player().identifier());
         if(currencyOptional.isPresent() && player.isPresent()) {
 
@@ -640,7 +640,7 @@ public class MyBalMenu extends Menu {
       final Optional<Object> currencyUUID = viewer.get().findData(ACTION_CURRENCY);
       if(currencyUUID.isPresent()) {
 
-        final Optional<Currency> currencyOptional = TNECore.eco().currency().findCurrency((UUID)currencyUUID.get());
+        final Optional<Currency> currencyOptional = TNECore.eco().currency().find((UUID)currencyUUID.get());
         final Optional<PlayerProvider> player = PluginCore.server().findPlayer(handler.getClick().player().identifier());
         if(currencyOptional.isPresent() && player.isPresent()) {
 

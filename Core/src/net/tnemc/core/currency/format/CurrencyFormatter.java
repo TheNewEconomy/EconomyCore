@@ -75,14 +75,14 @@ public class CurrencyFormatter {
 
   public static String format(@Nullable final Account account, final BigDecimal amount) {
 
-    return format(account, new HoldingsEntry(PluginCore.server().defaultWorld(), TNECore.eco().currency().getDefaultCurrency().getUid(), amount, EconomyManager.NORMAL));
+    return format(account, new HoldingsEntry(PluginCore.server().defaultWorld(), TNECore.eco().currency().defaultCurrency().getUid(), amount, EconomyManager.NORMAL));
   }
 
   public static String format(@Nullable final Account account, final HoldingsEntry entry) {
 
     String format = "";
 
-    final Optional<Currency> currency = TNECore.eco().currency().findCurrency(entry.getCurrency());
+    final Optional<Currency> currency = TNECore.eco().currency().find(entry.getCurrency());
     if(currency.isPresent()) {
 
       format = currency.get().getFormat();

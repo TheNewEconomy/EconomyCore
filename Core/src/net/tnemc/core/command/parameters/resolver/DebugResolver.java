@@ -2,7 +2,7 @@ package net.tnemc.core.command.parameters.resolver;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2025 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -20,7 +20,15 @@ package net.tnemc.core.command.parameters.resolver;
 
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 import org.jetbrains.annotations.NotNull;
-import revxrsal.commands.process.ValueResolver;
+import revxrsal.commands.autocomplete.SuggestionProvider;
+import revxrsal.commands.command.CommandActor;
+import revxrsal.commands.node.ExecutionContext;
+import revxrsal.commands.parameter.ParameterType;
+import revxrsal.commands.stream.MutableStringStream;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * DebugResolver
@@ -28,13 +36,19 @@ import revxrsal.commands.process.ValueResolver;
  * @author creatorfromhell
  * @since 0.1.2.0
  */
-public class DebugResolver implements ValueResolver<DebugLevel> {
+public class DebugResolver implements ParameterType<CommandActor, DebugLevel> {
 
   @Override
-  public DebugLevel resolve(@NotNull final ValueResolverContext context) throws Throwable {
+  public DebugLevel parse(@NotNull final MutableStringStream input, @NotNull final ExecutionContext<CommandActor> context) {
 
-    final String value = context.arguments().pop();
+    final String value = input.readString();
 
     return DebugLevel.fromID(value);
+  }
+
+  @Override
+  public @NotNull SuggestionProvider<@NotNull CommandActor> defaultSuggestions() {
+
+    return (context)->List.copyOf(Arrays.stream(DebugLevel.values()).map(DebugLevel::getIdentifier).collect(Collectors.toList()));
   }
 }

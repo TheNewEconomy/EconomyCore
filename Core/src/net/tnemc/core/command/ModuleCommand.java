@@ -2,7 +2,7 @@ package net.tnemc.core.command;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2025 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -27,7 +27,6 @@ import net.tnemc.plugincore.core.io.message.MessageData;
 import net.tnemc.plugincore.core.module.ModuleUpdateChecker;
 import net.tnemc.plugincore.core.module.ModuleWrapper;
 import net.tnemc.plugincore.core.module.cache.ModuleFile;
-import revxrsal.commands.orphan.Orphans;
 
 import java.util.List;
 import java.util.Optional;
@@ -150,9 +149,9 @@ public class ModuleCommand extends BaseCommand {
     });
 
     module.getModule().registerCommands(PluginCore.instance().command());
-    module.getModule().registerMoneySub().forEach((orphan)->PluginCore.instance().command().register(Orphans.path("money"), orphan));
-    module.getModule().registerTransactionSub().forEach((orphan)->PluginCore.instance().command().register(Orphans.path("transaction"), orphan));
-    module.getModule().registerAdminSub().forEach((orphan)->PluginCore.instance().command().register(Orphans.path("tne"), orphan));
+    //module.getModule().registerMoneySub().forEach((orphan)->PluginCore.instance().command().register(Orphans.path("money"), orphan));
+    //module.getModule().registerTransactionSub().forEach((orphan)->PluginCore.instance().command().register(Orphans.path("transaction"), orphan));
+    //module.getModule().registerAdminSub().forEach((orphan)->PluginCore.instance().command().register(Orphans.path("tne"), orphan));
 
     PluginCore.loader().getModules().put(module.name(), module);
 

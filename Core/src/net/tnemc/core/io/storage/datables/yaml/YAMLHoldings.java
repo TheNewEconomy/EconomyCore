@@ -266,7 +266,7 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
 
 
                     final String currency = (String)currencyObj;
-                    if(TNECore.eco().currency().findCurrency(currency).isEmpty()) {
+                    if(TNECore.eco().currency().find(currency).isEmpty()) {
                       EconomyManager.invalidCurrencies().add(currency);
                     }
 

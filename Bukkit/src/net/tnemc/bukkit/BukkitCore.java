@@ -32,7 +32,7 @@ import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.api.CallbackManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import revxrsal.commands.bukkit.BukkitCommandHandler;
+import revxrsal.commands.bukkit.BukkitLamp;
 import revxrsal.commands.command.CommandActor;
 import revxrsal.commands.command.ExecutableCommand;
 
@@ -62,7 +62,10 @@ public class BukkitCore extends TNECore {
   @Override
   public void registerCommandHandler() {
 
-    command = BukkitCommandHandler.create(plugin);
+    //Lamp.Builder<? extends CommandActor> builder = BukkitLamp.builder(plugin).accept(registerParameters());
+    //TODO: Load module parameter types
+
+    command = BukkitLamp.builder(plugin).accept(registerParameters()).build();
   }
 
   @Override

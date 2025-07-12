@@ -29,6 +29,7 @@ import net.tnemc.plugincore.core.io.message.MessageHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -180,6 +181,12 @@ public class FoliaPlayerProvider extends FoliaPlayer implements PlayerProvider {
   public FoliaInventoryProvider inventory() {
 
     return new FoliaInventoryProvider(identifier(), PaperCore.instance().getPlugin());
+  }
+
+  @Override
+  public List<String> getEffectivePermissions() {
+
+    return List.of();
   }
 
   /**

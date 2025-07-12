@@ -44,7 +44,7 @@ public class CurrencyIcon extends SwitchPageIcon {
   public CurrencyIcon(final UUID id, final int slot, final Currency currency) {
 
     super(slot, PluginCore.server().stackBuilder().of(currency.getIconMaterial(), 1)
-                  .display(Component.text(currency.getIdentifier())).lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Currencies.Edit"), id))),
+                  .customName(Component.text(currency.getIdentifier())).lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Currencies.Edit"), id))),
           "my_eco", CURRENCY_EDIT_PAGE, ActionType.ANY, false);
 
     actions.add(new DataAction(ACTIVE_CURRENCY, currency));
