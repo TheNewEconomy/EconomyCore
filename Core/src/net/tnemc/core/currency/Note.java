@@ -38,16 +38,13 @@ import java.util.List;
  */
 public class Note {
 
+  final TaxEntry fee;
   private final List<String> flags = new ArrayList<>();
   private final List<String> enchantments = new ArrayList<>();
-
   private String material;
   private BigDecimal minimum;
-
   private int customModelData;
   private String texture;
-
-  final TaxEntry fee;
 
   public Note(final String material, final BigDecimal minimum, final String fee) {
 

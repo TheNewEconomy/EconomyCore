@@ -29,70 +29,49 @@ import org.intellij.lang.annotations.Language;
  */
 public class MySQLDialect implements TNEDialect {
 
-  private final String requirement = "8.0.0";
-
   //The load and save queries
   @Language("SQL")
   protected final String saveName;
-
   @Language("SQL")
   protected final String loadAccounts;
-
   @Language("SQL")
   protected final String loadAccount;
-
   @Language("SQL")
   protected final String saveAccount;
-
   @Language("SQL")
   protected final String loadNonPlayer;
-
   @Language("SQL")
   protected final String saveNonPlayer;
-
   @Language("SQL")
   protected final String loadPlayer;
-
   @Language("SQL")
   protected final String savePlayer;
-
   @Language("SQL")
   protected final String loadMembers;
-
   @Language("SQL")
   protected final String saveMember;
-
   @Language("SQL")
   protected final String loadHoldings;
-
   @Language("SQL")
   protected final String saveHolding;
-
   @Language("SQL")
   protected final String loadReceipts;
-
   @Language("SQL")
   protected final String saveReceipt;
-
   @Language("SQL")
   protected final String loadReceiptHolding;
-
   @Language("SQL")
   protected final String saveReceiptHolding;
-
   @Language("SQL")
   protected final String loadParticipants;
-
   @Language("SQL")
   protected final String saveParticipant;
-
   @Language("SQL")
   protected final String loadModifiers;
-
   @Language("SQL")
   protected final String saveModifier;
-
   protected final String prefix;
+  private final String requirement = "8.0.0";
 
   public MySQLDialect(final String prefix) {
 

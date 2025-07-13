@@ -38,19 +38,6 @@ public class MessageMessageHandler extends MessageHandler {
     super("message");
   }
 
-  @Override
-  public void handle(final UUID server, final DataInputStream stream) {
-
-    try {
-      final String identifier = stream.readUTF();
-      final String message = stream.readUTF();
-
-      send(server, identifier, message);
-    } catch(IOException e) {
-      e.printStackTrace();
-    }
-  }
-
   public static void send(final UUID server, final String identifier, final String message) {
 
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
@@ -62,5 +49,18 @@ public class MessageMessageHandler extends MessageHandler {
 
 
     sendToAll("tne:message", out, false);
+  }
+
+  @Override
+  public void handle(final UUID server, final DataInputStream stream) {
+
+    try {
+      final String identifier = stream.readUTF();
+      final String message = stream.readUTF();
+
+      send(server, identifier, message);
+    } catch(final IOException e) {
+      e.printStackTrace();
+    }
   }
 }

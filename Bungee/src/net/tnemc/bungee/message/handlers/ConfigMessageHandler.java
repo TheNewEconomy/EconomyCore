@@ -40,17 +40,6 @@ public class ConfigMessageHandler extends MessageHandler {
     super("config");
   }
 
-  @Override
-  public void handle(final UUID server, final DataInputStream stream) {
-
-    final ConfigEntry entry = ConfigEntry.fromBytes(stream);
-    if(entry != null) {
-      MessageManager.instance().getHubs().put(entry.getPin(), entry);
-      //send(server, entry.getBytes());
-    }
-
-  }
-
   public static void send(final UUID server, final byte[] left) {
 
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
@@ -61,5 +50,16 @@ public class ConfigMessageHandler extends MessageHandler {
 
 
     sendToAll("tne:config", out, true);
+  }
+
+  @Override
+  public void handle(final UUID server, final DataInputStream stream) {
+
+    final ConfigEntry entry = ConfigEntry.fromBytes(stream);
+    if(entry != null) {
+      MessageManager.instance().getHubs().put(entry.getPin(), entry);
+      //send(server, entry.getBytes());
+    }
+
   }
 }

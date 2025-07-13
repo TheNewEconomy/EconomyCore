@@ -73,25 +73,17 @@ public class EconomyManager {
 
   public static final Identifier INVENTORY_ONLY = new Identifier("tne", "INVENTORY_HOLDINGS");
   public static final Identifier E_CHEST = new Identifier("tne", "ENDER_HOLDINGS");
-
+  private static EconomyManager instance;
   private final LinkedHashMap<String, HoldingsHandler> handlers = new LinkedHashMap<>();
-
   private final List<String> invalidCurrencies = new ArrayList<>();
-
   private final Map<String, Identifier> ids = new ConcurrentHashMap<>();
-
   private final AccountManager accountManager;
   private final CurrencyManager currencyManager;
   private final TransactionManager transactionManager;
   private final RegionProvider regionProvider;
-
   private final TopManager topManager;
-
   private final boolean limitCurrency;
-
   private long reloadTime;
-
-  private static EconomyManager instance;
 
   public EconomyManager() {
 
@@ -104,6 +96,26 @@ public class EconomyManager {
                                              MainConfig.yaml().getString("Core.Region.Mode"));
     this.topManager = new TopManager();
     this.limitCurrency = MainConfig.yaml().getBoolean("Core.Commands.LimitCurrency", false);
+  }
+
+  public static EconomyManager instance() {
+
+    return instance;
+  }
+
+  public static List<String> invalidCurrencies() {
+
+    return instance.invalidCurrencies;
+  }
+
+  public static boolean limitCurrency() {
+
+    return instance.limitCurrency;
+  }
+
+  public static TransactionProcessor baseProcessor() {
+
+    return instance.transactionManager.getProcessor();
   }
 
   public void init() {
@@ -206,26 +218,6 @@ public class EconomyManager {
   public TopManager getTopManager() {
 
     return topManager;
-  }
-
-  public static EconomyManager instance() {
-
-    return instance;
-  }
-
-  public static List<String> invalidCurrencies() {
-
-    return instance.invalidCurrencies;
-  }
-
-  public static boolean limitCurrency() {
-
-    return instance.limitCurrency;
-  }
-
-  public static TransactionProcessor baseProcessor() {
-
-    return instance.transactionManager.getProcessor();
   }
 
   public void printInvalid() {

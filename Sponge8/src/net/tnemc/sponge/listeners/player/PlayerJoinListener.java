@@ -43,7 +43,7 @@ public class PlayerJoinListener {
   public PlayerJoinListener(final PluginContainer plugin, final InetSocketAddress boundAddress) {
 
     this.plugin = plugin;
-      this.boundAddress = Optional.ofNullable(boundAddress);
+    this.boundAddress = Optional.ofNullable(boundAddress);
   }
 
   @Listener

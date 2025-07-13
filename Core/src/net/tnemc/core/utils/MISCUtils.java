@@ -58,11 +58,14 @@ public class MISCUtils {
   }
 
   /**
-   * Checks if the time difference between a given date and the current date is greater than or equal to the specified number of minutes.
+   * Checks if the time difference between a given date and the current date is greater than or
+   * equal to the specified number of minutes.
    *
-   * @param date the date to compare
+   * @param date    the date to compare
    * @param minutes the number of minutes to compare against
-   * @return true if the time difference is greater than or equal to the specified minutes, false otherwise
+   *
+   * @return true if the time difference is greater than or equal to the specified minutes, false
+   * otherwise
    */
   public static boolean isTimeDifferenceGreaterOrEqual(final Date date, final int minutes) {
 

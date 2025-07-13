@@ -42,11 +42,9 @@ import java.util.regex.PatternSyntaxException;
  */
 public class TopManager {
 
+  private static TopManager instance;
   private final List<Pattern> regexExclusions = new ArrayList<>();
   private final List<String> exclusions = new ArrayList<>();
-
-  private static TopManager instance;
-
   private final Map<UUID, TopCurrency> topMap = new ConcurrentHashMap<>();
 
   public TopManager() {
@@ -60,6 +58,11 @@ public class TopManager {
         exclusions.add(str);
       }
     }
+  }
+
+  public static TopManager instance() {
+
+    return instance;
   }
 
   public void load() {
@@ -132,11 +135,6 @@ public class TopManager {
       return topMap.get(currency).getBalances().pages();
     }
     return 0;
-  }
-
-  public static TopManager instance() {
-
-    return instance;
   }
 
   public List<Pattern> getRegexExclusions() {

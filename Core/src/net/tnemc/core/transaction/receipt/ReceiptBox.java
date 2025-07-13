@@ -45,12 +45,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class ReceiptBox {
 
   private final Queue<UUID> receipts = new ConcurrentLinkedQueue<>();
-
+  private final UUID owner;
   private AwayHistory away = null;
   private SortedHistory sorted = null;
   private boolean checked = false;
-
-  private final UUID owner;
 
   public ReceiptBox(final UUID owner) {
 

@@ -40,12 +40,10 @@ import java.util.logging.Logger;
         url = "https://tnemc.net", description = "A bridge for TheNewEconomy plugin.", authors = { "creatorfromhell" })
 public class VelocityCore {
 
+  private static VelocityCore instance;
   private final ProxyServer server;
   private final Logger logger;
   private MessageManager manager;
-
-
-  private static VelocityCore instance;
 
   @Inject
   public VelocityCore(final ProxyServer server, final Logger logger) {
@@ -55,6 +53,11 @@ public class VelocityCore {
     instance = this;
 
     logger.info("The New Economy Velocity bridge has been started!");
+  }
+
+  public static VelocityCore instance() {
+
+    return instance;
   }
 
   @Subscribe
@@ -67,11 +70,6 @@ public class VelocityCore {
     server.getChannelRegistrar().register(MinecraftChannelIdentifier.from("tne:sync"));
     server.getEventManager().register(this, new MessageListener());
     server.getEventManager().register(this, new ServerPostConnectListener());
-  }
-
-  public static VelocityCore instance() {
-
-    return instance;
   }
 
   public ProxyServer getServer() {

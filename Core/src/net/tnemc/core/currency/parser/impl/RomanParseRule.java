@@ -79,6 +79,7 @@ public class RomanParseRule implements ParseRule {
   }
 
   private int romanToInteger(final String roman) {
+
     int sum = 0;
     int prevValue = 0;
 

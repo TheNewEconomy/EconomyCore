@@ -116,6 +116,11 @@ public class TransactionManager {
     this.processor = new BaseTransactionProcessor(findGroup("core").get().getChecks());
   }
 
+  public static ReceiptManager receipts() {
+
+    return TNECore.eco().transaction().receiptManager;
+  }
+
   /**
    * Attempts to find a {@link TransactionType type}.
    *
@@ -269,11 +274,6 @@ public class TransactionManager {
   public void setProcessor(final TransactionProcessor processor) {
 
     this.processor = processor;
-  }
-
-  public static ReceiptManager receipts() {
-
-    return TNECore.eco().transaction().receiptManager;
   }
 
   public SimpleDateFormat getFormat() {

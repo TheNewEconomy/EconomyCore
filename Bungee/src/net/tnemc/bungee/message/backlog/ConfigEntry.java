@@ -38,15 +38,41 @@ public class ConfigEntry {
 
   private final List<String> configs = new ArrayList<>();
   private final List<String> currencies = new ArrayList<>();
-
-  private byte[] bytes;
-
-
   private final String pin;
+  private byte[] bytes;
 
   public ConfigEntry(final String pin) {
 
     this.pin = pin;
+  }
+
+  public static ConfigEntry fromBytes(final DataInputStream stream) {
+
+    //hub string
+    //currency size short
+    //currencies string
+    //configs
+    try {
+      final String hub = stream.readUTF();
+
+      final ConfigEntry entry = new ConfigEntry(hub);
+
+      final short currencies = stream.readShort();
+      for(int i = 0; i < currencies; i++) {
+        entry.getCurrencies().add(stream.readUTF());
+      }
+
+      entry.getConfigs().add(stream.readUTF());
+      entry.getConfigs().add(stream.readUTF());
+
+      entry.genBytes();
+
+      return entry;
+
+    } catch(final IOException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 
   public List<String> getConfigs() {
@@ -88,34 +114,5 @@ public class ConfigEntry {
       out.writeUTF(str);
     }
     bytes = out.toByteArray();
-  }
-
-  public static ConfigEntry fromBytes(final DataInputStream stream) {
-
-    //hub string
-    //currency size short
-    //currencies string
-    //configs
-    try {
-      final String hub = stream.readUTF();
-
-      final ConfigEntry entry = new ConfigEntry(hub);
-
-      final short currencies = stream.readShort();
-      for(int i = 0; i < currencies; i++) {
-        entry.getCurrencies().add(stream.readUTF());
-      }
-
-      entry.getConfigs().add(stream.readUTF());
-      entry.getConfigs().add(stream.readUTF());
-
-      entry.genBytes();
-
-      return entry;
-
-    } catch(IOException e) {
-      e.printStackTrace();
-    }
-    return null;
   }
 }

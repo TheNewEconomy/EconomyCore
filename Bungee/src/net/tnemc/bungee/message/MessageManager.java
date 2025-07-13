@@ -41,13 +41,11 @@ import java.util.UUID;
  */
 public class MessageManager {
 
+  private static MessageManager instance;
   private final Map<String, MessageHandler> handlers = new HashMap<>();
   private final Map<String, MessageData> data = new LinkedHashMap<>();
-
   private final Map<String, ConfigEntry> hubs = new HashMap<>();
-
   private final ProxyProvider proxy;
-  private static MessageManager instance;
 
   public MessageManager(final ProxyProvider proxy) {
 
@@ -57,6 +55,11 @@ public class MessageManager {
     //handlers.put("config", new ConfigMessageHandler());
     handlers.put("sync", new SyncAllMessageHandler());
     handlers.put("message", new MessageMessageHandler());
+  }
+
+  public static MessageManager instance() {
+
+    return instance;
   }
 
   public void onMessage(final String channel, final byte[] data) {
@@ -77,7 +80,7 @@ public class MessageManager {
 
         in.close();
         stream.close();
-      } catch(Exception e) {
+      } catch(final Exception e) {
         e.printStackTrace();
       }
     }
@@ -91,11 +94,6 @@ public class MessageManager {
   public Map<String, ConfigEntry> getHubs() {
 
     return hubs;
-  }
-
-  public static MessageManager instance() {
-
-    return instance;
   }
 
   public void backlog(final String server) {

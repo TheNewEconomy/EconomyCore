@@ -260,7 +260,6 @@ public class MoneyCommand extends BaseCommand {
     }
 
 
-
     final HoldingsModifier modifier = new HoldingsModifier(parseMoney.region(),
                                                            parseMoney.currency().getUid(),
                                                            parseMoney.amount());

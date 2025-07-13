@@ -26,82 +26,42 @@ import org.intellij.lang.annotations.Language;
  * @author creatorfromhell
  * @since 0.1.2.0
  *
- * CREATE TABLE IF NOT EXISTS prefix_accounts (
- *     uid VARCHAR(36) NOT NULL PRIMARY KEY,
- *     username VARCHAR(50) NOT NULL UNIQUE,
- *     account_type VARCHAR(30) NOT NULL,
- *     created DATETIME NOT NULL,
- *     pin VARCHAR(16),
- *     status VARCHAR(36)
+ * CREATE TABLE IF NOT EXISTS prefix_accounts ( uid VARCHAR(36) NOT NULL PRIMARY KEY, username
+ * VARCHAR(50) NOT NULL UNIQUE, account_type VARCHAR(30) NOT NULL, created DATETIME NOT NULL, pin
+ * VARCHAR(16), status VARCHAR(36) );
+ *
+ * CREATE TABLE IF NOT EXISTS prefix_non_players_accounts ( uid VARCHAR(36) NOT NULL PRIMARY KEY,
+ * owner VARCHAR(36) NOT NULL );
+ *
+ * CREATE TABLE IF NOT EXISTS prefix_players_accounts ( uid VARCHAR(36) NOT NULL PRIMARY KEY,
+ * last_online DATETIME NOT NULL );
+ *
+ * CREATE TABLE IF NOT EXISTS prefix_account_members ( uid VARCHAR(36) NOT NULL PRIMARY KEY, account
+ * VARCHAR(36) NOT NULL, perm VARCHAR(36) NOT NULL, perm_value TINYINT(1) NOT NULL );
+ *
+ * CREATE TABLE IF NOT EXISTS prefix_holdings ( uid VARCHAR(36) NOT NULL, server VARCHAR(40) NOT
+ * NULL, region VARCHAR(40) NOT NULL, currency VARCHAR(36) NOT NULL, holdings_type VARCHAR(30) NOT
+ * NULL, holdings DECIMAL(49, 4) NOT NULL, PRIMARY KEY(uid, server, region, currency, holdings_type)
  * );
  *
- * CREATE TABLE IF NOT EXISTS prefix_non_players_accounts (
- *     uid VARCHAR(36) NOT NULL PRIMARY KEY,
- *     owner VARCHAR(36) NOT NULL
+ * CREATE TABLE IF NOT EXISTS prefix_receipts ( uid VARCHAR(36) NOT NULL PRIMARY KEY, performed
+ * DATETIME NOT NULL, receipt_type VARCHAR(30) NOT NULL, receipt_source VARCHAR(60) NOT NULL,
+ * receipt_source_type VARCHAR(30) NOT NULL, archive TINYINT(1) NOT NULL, voided TINYINT(1) NOT NULL
  * );
  *
- * CREATE TABLE IF NOT EXISTS prefix_players_accounts (
- *     uid VARCHAR(36) NOT NULL PRIMARY KEY,
- *     last_online DATETIME NOT NULL
- * );
+ * CREATE TABLE IF NOT EXISTS prefix_receipts_holdings ( uid VARCHAR(36) NOT NULL, participant
+ * VARCHAR(36) NOT NULL, ending TINYINT(1) NOT NULL, server VARCHAR(40) NOT NULL, region VARCHAR(40)
+ * NOT NULL, currency VARCHAR(36) NOT NULL, holdings_type VARCHAR(30) NOT NULL, holdings DECIMAL(49,
+ * 4) NOT NULL, PRIMARY KEY(uid, participant) );
  *
- * CREATE TABLE IF NOT EXISTS prefix_account_members (
- *     uid VARCHAR(36) NOT NULL PRIMARY KEY,
- *     account VARCHAR(36) NOT NULL,
- *     perm VARCHAR(36) NOT NULL,
- *     perm_value TINYINT(1) NOT NULL
- * );
+ * CREATE TABLE IF NOT EXISTS prefix_receipts_participants ( uid VARCHAR(36) NOT NULL, participant
+ * VARCHAR(36) NOT NULL, participant_type VARCHAR(10) NOT NULL, tax DECIMAL(49, 4) NOT NULL, PRIMARY
+ * KEY(uid, participant) );
  *
- * CREATE TABLE IF NOT EXISTS prefix_holdings (
- *     uid VARCHAR(36) NOT NULL,
- *     server VARCHAR(40) NOT NULL,
- *     region VARCHAR(40) NOT NULL,
- *     currency VARCHAR(36) NOT NULL,
- *     holdings_type VARCHAR(30) NOT NULL,
- *     holdings DECIMAL(49, 4) NOT NULL,
- *     PRIMARY KEY(uid, server, region, currency, holdings_type)
- * );
- *
- * CREATE TABLE IF NOT EXISTS prefix_receipts (
- *     uid VARCHAR(36) NOT NULL PRIMARY KEY,
- *     performed DATETIME NOT NULL,
- *     receipt_type VARCHAR(30) NOT NULL,
- *     receipt_source VARCHAR(60) NOT NULL,
- *     receipt_source_type VARCHAR(30) NOT NULL,
- *     archive TINYINT(1) NOT NULL,
- *     voided TINYINT(1) NOT NULL
- * );
- *
- * CREATE TABLE IF NOT EXISTS prefix_receipts_holdings (
- *     uid VARCHAR(36) NOT NULL,
- *     participant VARCHAR(36) NOT NULL,
- *     ending TINYINT(1) NOT NULL,
- *     server VARCHAR(40) NOT NULL,
- *     region VARCHAR(40) NOT NULL,
- *     currency VARCHAR(36) NOT NULL,
- *     holdings_type VARCHAR(30) NOT NULL,
- *     holdings DECIMAL(49, 4) NOT NULL,
- *     PRIMARY KEY(uid, participant)
- * );
- *
- * CREATE TABLE IF NOT EXISTS prefix_receipts_participants (
- *     uid VARCHAR(36) NOT NULL,
- *     participant VARCHAR(36) NOT NULL,
- *     participant_type VARCHAR(10) NOT NULL,
- *     tax DECIMAL(49, 4) NOT NULL,
- *     PRIMARY KEY(uid, participant)
- * );
- *
- * CREATE TABLE IF NOT EXISTS prefix_receipts_modifiers (
- *     uid VARCHAR(36) NOT NULL,
- *     participant VARCHAR(36) NOT NULL,
- *     participant_type VARCHAR(10) NOT NULL,
- *     operation VARCHAR(10) NOT NULL,
- *     region VARCHAR(40) NOT NULL,
- *     currency VARCHAR(36) NOT NULL,
- *     modifier DECIMAL(49, 4) NOT NULL,
- *     PRIMARY KEY(uid, participant)
- * );
+ * CREATE TABLE IF NOT EXISTS prefix_receipts_modifiers ( uid VARCHAR(36) NOT NULL, participant
+ * VARCHAR(36) NOT NULL, participant_type VARCHAR(10) NOT NULL, operation VARCHAR(10) NOT NULL,
+ * region VARCHAR(40) NOT NULL, currency VARCHAR(36) NOT NULL, modifier DECIMAL(49, 4) NOT NULL,
+ * PRIMARY KEY(uid, participant) );
  */
 public class MySQLRevampDialect implements TNEDialect {
 
@@ -235,6 +195,7 @@ public class MySQLRevampDialect implements TNEDialect {
 
   @Override
   public String accountsTable() {
+
     return "CREATE TABLE IF NOT EXISTS " + prefix + "accounts (\n" +
            "    uid VARCHAR(36) NOT NULL PRIMARY KEY,\n" +
            "    username VARCHAR(50) NOT NULL UNIQUE,\n" +
@@ -247,6 +208,7 @@ public class MySQLRevampDialect implements TNEDialect {
 
   @Override
   public String accountsNonPlayerTable() {
+
     return "CREATE TABLE IF NOT EXISTS " + prefix + "non_players_accounts (\n" +
            "    uid VARCHAR(36) NOT NULL PRIMARY KEY,\n" +
            "    owner VARCHAR(36) NOT NULL\n" +
@@ -255,6 +217,7 @@ public class MySQLRevampDialect implements TNEDialect {
 
   @Override
   public String accountsPlayerTable() {
+
     return "CREATE TABLE IF NOT EXISTS " + prefix + "players_accounts (\n" +
            "    uid VARCHAR(36) NOT NULL PRIMARY KEY,\n" +
            "    last_online DATETIME NOT NULL\n" +
@@ -263,6 +226,7 @@ public class MySQLRevampDialect implements TNEDialect {
 
   @Override
   public String accountMembersTable() {
+
     return "CREATE TABLE IF NOT EXISTS " + prefix + "account_members (\n" +
            "    uid VARCHAR(36) NOT NULL,\n" +
            "    account VARCHAR(36) NOT NULL,\n" +
@@ -274,6 +238,7 @@ public class MySQLRevampDialect implements TNEDialect {
 
   @Override
   public String holdingsTable() {
+
     return "CREATE TABLE IF NOT EXISTS " + prefix + "holdings (\n" +
            "    uid VARCHAR(36) NOT NULL,\n" +
            "    server VARCHAR(40) NOT NULL,\n" +
@@ -287,6 +252,7 @@ public class MySQLRevampDialect implements TNEDialect {
 
   @Override
   public String receiptsTable() {
+
     return "CREATE TABLE IF NOT EXISTS " + prefix + "receipts (\n" +
            "    uid VARCHAR(36) NOT NULL PRIMARY KEY,\n" +
            "    performed DATETIME NOT NULL,\n" +
@@ -300,6 +266,7 @@ public class MySQLRevampDialect implements TNEDialect {
 
   @Override
   public String receiptsHoldingsTable() {
+
     return "CREATE TABLE IF NOT EXISTS " + prefix + "receipts_holdings (\n" +
            "    uid VARCHAR(36) NOT NULL,\n" +
            "    participant VARCHAR(36) NOT NULL,\n" +
@@ -315,6 +282,7 @@ public class MySQLRevampDialect implements TNEDialect {
 
   @Override
   public String receiptsParticipantsTable() {
+
     return "CREATE TABLE IF NOT EXISTS " + prefix + "receipts_participants (\n" +
            "    uid VARCHAR(36) NOT NULL,\n" +
            "    participant VARCHAR(36) NOT NULL,\n" +
@@ -326,6 +294,7 @@ public class MySQLRevampDialect implements TNEDialect {
 
   @Override
   public String receiptsModifiersTable() {
+
     return "CREATE TABLE IF NOT EXISTS " + prefix + "receipts_modifiers (\n" +
            "    uid VARCHAR(36) NOT NULL,\n" +
            "    participant VARCHAR(36) NOT NULL,\n" +

@@ -127,6 +127,7 @@ public class FoliaServerProvider implements ServerConnector {
 
   @Override
   public Set<String> onlinePlayersList() {
+
     return Bukkit.getOnlinePlayers().stream()
             .map(Player::getName)
             .collect(Collectors.toSet());

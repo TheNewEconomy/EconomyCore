@@ -122,6 +122,54 @@ public class Currency {
     this.regions.put("global", new CurrencyRegion("global", true, false));
   }
 
+  public static Currency clone(final Currency original, final boolean item) {
+
+    final Currency cloned = (item)? new ItemCurrency(original.identifier) : new Currency(original.identifier);
+
+    cloned.file = original.file;
+    cloned.startingHoldings = original.startingHoldings;
+    cloned.maxBalance = original.maxBalance;
+    cloned.minBalance = original.minBalance;
+    cloned.negativeSupport = original.negativeSupport;
+    cloned.uid = original.uid;
+    cloned.iconMaterial = original.iconMaterial;
+    cloned.type = original.type;
+    cloned.format = original.format;
+    cloned.symbol = original.symbol;
+    cloned.prefixes = original.prefixes;
+    cloned.prefixesj = original.prefixesj;
+    cloned.decimal = original.decimal;
+    cloned.display = original.display;
+    cloned.displayPlural = original.displayPlural;
+    cloned.displayMinor = original.displayMinor;
+    cloned.displayMinorPlural = original.displayMinorPlural;
+    cloned.separateMajor = original.separateMajor;
+    cloned.majorSeparator = original.majorSeparator;
+    cloned.decimalPlaces = original.decimalPlaces;
+    cloned.minorWeight = original.minorWeight;
+    cloned.note = original.note;
+
+    if(cloned instanceof final ItemCurrency clonedItem && original instanceof final ItemCurrency itemCurrency) {
+      clonedItem.setEnderChest(itemCurrency.canEnderChest());
+      clonedItem.setEnderFill(itemCurrency.isEnderFill());
+    }
+
+    if(original instanceof ItemCurrency && !item || !(original instanceof ItemCurrency) && item) {
+
+      for(final Map.Entry<BigDecimal, Denomination> entry : original.getDenominations().entrySet()) {
+
+        cloned.denominations.put(entry.getKey(), Denomination.clone(entry.getValue(), item));
+      }
+    } else {
+      cloned.denominations.putAll(original.denominations);
+    }
+
+    cloned.conversion.putAll(original.conversion);
+    original.regions.forEach((key, value)->cloned.regions.put(key, new CurrencyRegion(value.region(), value.isEnabled(), value.isDefault())));
+
+    return cloned;
+  }
+
   public Denomination getDenominationByWeight(final BigDecimal weight) {
 
     return denominations.get(weight);
@@ -135,6 +183,11 @@ public class Currency {
   public Optional<Note> getNote() {
 
     return Optional.ofNullable(note);
+  }
+
+  public void setNote(final Note note) {
+
+    this.note = note;
   }
 
   public boolean isSync() {
@@ -392,11 +445,6 @@ public class Currency {
     return negativeSupport;
   }
 
-  public void setNote(final Note note) {
-
-    this.note = note;
-  }
-
   public TreeMap<BigDecimal, Denomination> getDenominations() {
 
     return denominations;
@@ -431,53 +479,5 @@ public class Currency {
   public Map<String, CurrencyRegion> getRegions() {
 
     return regions;
-  }
-
-  public static Currency clone(final Currency original, final boolean item) {
-
-    final Currency cloned = (item)? new ItemCurrency(original.identifier) : new Currency(original.identifier);
-
-    cloned.file = original.file;
-    cloned.startingHoldings = original.startingHoldings;
-    cloned.maxBalance = original.maxBalance;
-    cloned.minBalance = original.minBalance;
-    cloned.negativeSupport = original.negativeSupport;
-    cloned.uid = original.uid;
-    cloned.iconMaterial = original.iconMaterial;
-    cloned.type = original.type;
-    cloned.format = original.format;
-    cloned.symbol = original.symbol;
-    cloned.prefixes = original.prefixes;
-    cloned.prefixesj = original.prefixesj;
-    cloned.decimal = original.decimal;
-    cloned.display = original.display;
-    cloned.displayPlural = original.displayPlural;
-    cloned.displayMinor = original.displayMinor;
-    cloned.displayMinorPlural = original.displayMinorPlural;
-    cloned.separateMajor = original.separateMajor;
-    cloned.majorSeparator = original.majorSeparator;
-    cloned.decimalPlaces = original.decimalPlaces;
-    cloned.minorWeight = original.minorWeight;
-    cloned.note = original.note;
-
-    if(cloned instanceof final ItemCurrency clonedItem && original instanceof final ItemCurrency itemCurrency) {
-      clonedItem.setEnderChest(itemCurrency.canEnderChest());
-      clonedItem.setEnderFill(itemCurrency.isEnderFill());
-    }
-
-    if(original instanceof ItemCurrency && !item || !(original instanceof ItemCurrency) && item) {
-
-      for(final Map.Entry<BigDecimal, Denomination> entry : original.getDenominations().entrySet()) {
-
-        cloned.denominations.put(entry.getKey(), Denomination.clone(entry.getValue(), item));
-      }
-    } else {
-      cloned.denominations.putAll(original.denominations);
-    }
-
-    cloned.conversion.putAll(original.conversion);
-    original.regions.forEach((key, value)->cloned.regions.put(key, new CurrencyRegion(value.region(), value.isEnabled(), value.isDefault())));
-
-    return cloned;
   }
 }

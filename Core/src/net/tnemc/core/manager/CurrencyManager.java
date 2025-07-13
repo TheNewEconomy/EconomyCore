@@ -307,9 +307,11 @@ public class CurrencyManager {
    * Finds a Currency object based on the symbol provided.
    *
    * @param symbol The symbol of the currency to search for.
+   *
    * @return An Optional containing the Currency object if found, otherwise an empty Optional.
    */
   public Optional<Currency> findCurrencyBySymbol(@Nullable final String symbol) {
+
     if(symbol == null) {
 
       return Optional.empty();
@@ -422,6 +424,7 @@ public class CurrencyManager {
   }
 
   public MoneyParser parser() {
+
     return parser;
   }
 

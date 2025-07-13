@@ -52,22 +52,27 @@ public class ParseMoney {
   }
 
   public BigDecimal amount() {
+
     return amount;
   }
 
   public void amount(final BigDecimal amount) {
+
     this.amount = amount;
   }
 
   public Currency currency() {
+
     return currency;
   }
 
   public void currency(final Currency currency) {
+
     this.currency = currency;
   }
 
   public boolean hasCurrency() {
+
     return currency != null;
   }
 }

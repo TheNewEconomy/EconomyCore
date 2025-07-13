@@ -21,7 +21,6 @@ package net.tnemc.core.command.parameters.resolver;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.plugincore.PluginCore;
-import net.tnemc.core.utils.exceptions.InvalidAccountException;
 import org.jetbrains.annotations.NotNull;
 import revxrsal.commands.autocomplete.SuggestionProvider;
 import revxrsal.commands.command.CommandActor;
@@ -36,7 +35,6 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.Optional;
 
 /**
  * AccountResolver
@@ -82,13 +80,13 @@ public class AccountResolver implements ParameterType<CommandActor, Account> {
   @Override
   public @NotNull SuggestionProvider<@NotNull CommandActor> defaultSuggestions() {
 
-    return context -> {
+    return context->{
       final String partial = context.input().peekString().toLowerCase();
 
       //Add in our online players first
       final Set<String> onlineNames = PluginCore.server().onlinePlayersList().stream()
-              .filter(name -> name.toLowerCase().startsWith(partial))
-              .filter(name -> !TNECore.eco().account().excluded(name))
+              .filter(name->name.toLowerCase().startsWith(partial))
+              .filter(name->!TNECore.eco().account().excluded(name))
               .collect(Collectors.toSet());
 
       final Set<String> suggestions = new LinkedHashSet<>(onlineNames);
@@ -96,9 +94,9 @@ public class AccountResolver implements ParameterType<CommandActor, Account> {
       //Matching offline account names (not online & not excluded)
       TNECore.eco().account().getAccounts().values().stream()
               .map(Account::getName)
-              .filter(name -> name.toLowerCase().startsWith(partial))
-              .filter(name -> !onlineNames.contains(name))
-              .filter(name -> !TNECore.eco().account().excluded(name))
+              .filter(name->name.toLowerCase().startsWith(partial))
+              .filter(name->!onlineNames.contains(name))
+              .filter(name->!TNECore.eco().account().excluded(name))
               .forEach(suggestions::add);
 
       //if("self_account".startsWith(partial) || "@s".startsWith(partial) || "@me".startsWith(partial)) {

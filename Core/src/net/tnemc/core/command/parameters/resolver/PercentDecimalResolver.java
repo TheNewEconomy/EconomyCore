@@ -37,17 +37,6 @@ import java.math.BigDecimal;
  */
 public class PercentDecimalResolver implements ParameterType<CommandActor, PercentBigDecimal> {
 
-  @Override
-  public PercentBigDecimal parse(@NotNull final MutableStringStream input, @NotNull final ExecutionContext<CommandActor> context) {
-
-    final String value = input.readString();
-
-    final boolean percent = value.contains("%");
-    final String parsed = (percent)? value.replace("%", "") : value;
-
-    return new PercentBigDecimal(percent, new BigDecimal(replaceDecimals(parsed)));
-  }
-
   public static String replaceDecimals(final String toReplace) {
 
     String toReturn = toReplace;
@@ -58,5 +47,16 @@ public class PercentDecimalResolver implements ParameterType<CommandActor, Perce
       }
     }
     return toReturn;
+  }
+
+  @Override
+  public PercentBigDecimal parse(@NotNull final MutableStringStream input, @NotNull final ExecutionContext<CommandActor> context) {
+
+    final String value = input.readString();
+
+    final boolean percent = value.contains("%");
+    final String parsed = (percent)? value.replace("%", "") : value;
+
+    return new PercentBigDecimal(percent, new BigDecimal(replaceDecimals(parsed)));
   }
 }

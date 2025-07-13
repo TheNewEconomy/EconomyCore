@@ -38,20 +38,6 @@ public class BalanceMessageHandler extends AccountHandler {
     super("balance");
   }
 
-  @Override
-  public void handle(final String account, final String accountName, final UUID server, final DataInputStream stream) {
-
-    try {
-      final String region = stream.readUTF();
-      final String currency = stream.readUTF();
-      final String handler = stream.readUTF();
-      final String amount = stream.readUTF();
-      send(server, account, accountName, region, currency, handler, amount);
-    } catch(IOException e) {
-      e.printStackTrace();
-    }
-  }
-
   public static void send(final UUID server, final String account, final String accountName, final String region, final String currency, final String handler, final String amount) {
 
     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
@@ -63,5 +49,19 @@ public class BalanceMessageHandler extends AccountHandler {
     out.writeUTF(handler);
     out.writeUTF(amount);
     sendToAll("tne:balance", out, true);
+  }
+
+  @Override
+  public void handle(final String account, final String accountName, final UUID server, final DataInputStream stream) {
+
+    try {
+      final String region = stream.readUTF();
+      final String currency = stream.readUTF();
+      final String handler = stream.readUTF();
+      final String amount = stream.readUTF();
+      send(server, account, accountName, region, currency, handler, amount);
+    } catch(final IOException e) {
+      e.printStackTrace();
+    }
   }
 }

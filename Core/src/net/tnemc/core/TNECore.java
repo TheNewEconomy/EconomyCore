@@ -97,36 +97,55 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class TNECore extends PluginEngine {
 
-  protected static TNECore instance;
-
   /*
    * Core final variables utilized within TNE.
    */
   public static final String coreURL = "https://tnemc.net/files/module-version.xml";
-
   public static final String version = "0.1.4.0";
   public static final String build = "SNAPSHOT-1";
+  protected static TNECore instance;
 
   /* Key Managers and Object instances utilized with TNE */
-
+  protected final YamlStorageManager yamlManager = new YamlStorageManager();
+  private final TNEAPI api = new TNEAPI();
   //General Key Object Instances
   protected EconomyManager economyManager;
-
   protected Updater updater;
-
-  protected final YamlStorageManager yamlManager = new YamlStorageManager();
-
+  protected UUID serverAccount;
   private MainConfig config;
   private DataConfig data;
   private MessageConfig messageConfig;
   private Chore<?> autoSaver = null;
 
-  private final TNEAPI api = new TNEAPI();
-  protected UUID serverAccount;
-
   public TNECore() {
 
     instance = this;
+  }
+
+  /**
+   * The implementation's {@link EconomyManager}, which is used to manage everything economy related
+   * in TNE.
+   *
+   * @return The {@link EconomyManager Economy Manager}.
+   */
+  public static EconomyManager eco() {
+
+    return instance.economyManager;
+  }
+
+  public static YamlStorageManager yaml() {
+
+    return instance.yamlManager;
+  }
+
+  public static TNECore instance() {
+
+    return instance;
+  }
+
+  public static TNEAPI api() {
+
+    return instance.api;
   }
 
   @Override
@@ -226,7 +245,7 @@ public abstract class TNECore extends PluginEngine {
   @Override
   public @NotNull <A extends CommandActor> LampBuilderVisitor<A> registerParameters() {
 
-    return builder ->builder.parameterTypes()
+    return builder->builder.parameterTypes()
             .addParameterType(Account.class, new AccountResolver())
             .addParameterType(AccountStatus.class, new StatusResolver())
             .addParameterType(DebugLevel.class, new DebugResolver())
@@ -408,22 +427,6 @@ public abstract class TNECore extends PluginEngine {
     }
   }
 
-  /**
-   * The implementation's {@link EconomyManager}, which is used to manage everything economy related
-   * in TNE.
-   *
-   * @return The {@link EconomyManager Economy Manager}.
-   */
-  public static EconomyManager eco() {
-
-    return instance.economyManager;
-  }
-
-  public static YamlStorageManager yaml() {
-
-    return instance.yamlManager;
-  }
-
   public MainConfig config() {
 
     return config;
@@ -437,16 +440,6 @@ public abstract class TNECore extends PluginEngine {
   public MessageConfig message() {
 
     return messageConfig;
-  }
-
-  public static TNECore instance() {
-
-    return instance;
-  }
-
-  public static TNEAPI api() {
-
-    return instance.api;
   }
 
   public UUID getServerAccount() {
@@ -483,7 +476,7 @@ public abstract class TNECore extends PluginEngine {
     }
 
     if(!denomination.modelBooleans().isEmpty() || !denomination.modelStrings().isEmpty()
-      || !denomination.modelColours().isEmpty() || !denomination.modelFloats().isEmpty()) {
+       || !denomination.modelColours().isEmpty() || !denomination.modelFloats().isEmpty()) {
 
       stack = stack.modelData(denomination.modelColours(), denomination.modelFloats(),
                               denomination.modelBooleans(), denomination.modelStrings());

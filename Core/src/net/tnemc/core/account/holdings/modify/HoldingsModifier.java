@@ -37,9 +37,9 @@ public class HoldingsModifier {
 
   private final UUID currency;
   private final String region;
-  private BigDecimal modifier;
   private final HoldingsOperation operation;
   private final Identifier holdingsID;
+  private BigDecimal modifier;
   private boolean percent = false;
 
   /**

@@ -42,7 +42,8 @@ public class PlayerChatListener implements Listener {
     final MoneyParser parser = new MoneyParser();
     final String region = TNECore.eco().region().resolve(event.getPlayer().getWorld().getName());
 
-    final String message = PlainTextComponentSerializer.plainText().serialize(event.message());;
+    final String message = PlainTextComponentSerializer.plainText().serialize(event.message());
+    ;
     System.out.println("Message: " + message);
     if(message.contains("parse:")) {
 

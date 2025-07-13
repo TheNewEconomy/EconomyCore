@@ -77,7 +77,8 @@ the [Translation Guide](https://github.com/TheNewEconomy/EconomyCore/wiki/Transl
 
 ## Documented
 
-TNE has lots of documentation for the power users who like all the documentation. Find documentation [here](https://tne.gitbook.io/tne-docs).
+TNE has lots of documentation for the power users who like all the documentation. Find
+documentation [here](https://tne.gitbook.io/tne-docs).
 
 ## Requirements
 
@@ -89,13 +90,16 @@ TNE has some minimum requirements that should be followed.
 
 ## Contributing
 
-Contributions to TheNewEconomy are welcome and encouraged! Whether you're fixing a bug, adding a new feature, or improving documentation, we would love your help.
+Contributions to TheNewEconomy are welcome and encouraged! Whether you're fixing a bug, adding a new
+feature, or improving documentation, we would love your help.
 
-However, to ensure the project stays consistent and manageable, we ask that you follow our [contributing guidelines](.contributing/contributing.md) before submitting a pull request.
+However, to ensure the project stays consistent and manageable, we ask that you follow
+our [contributing guidelines](.contributing/contributing.md) before submitting a pull request.
 
 Please make sure to:
 
-- Sign the Contributor License Agreement (CLA) if this is your first contribution when it appears in the Pull Request.
+- Sign the Contributor License Agreement (CLA) if this is your first contribution when it appears in
+  the Pull Request.
 - Follow the coding standards and branch naming conventions outlined in the guidelines.
 - Use the required IntelliJ plugin **Final Obsession** for code quality and consistency.
 
