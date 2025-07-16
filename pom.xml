@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.tnemc</groupId>
     <artifactId>TNE</artifactId>
-    <version>0.1.4.0-SNAPSHOT-4</version>
+    <version>0.1.4.0-SNAPSHOT-5</version>
     <packaging>pom</packaging>
     <name>The New Economy</name>
 
@@ -24,10 +24,10 @@
     <properties>
         <papi.version>2.11.6</papi.version>
         <tnml.version>1.7.0.0-SNAPSHOT-4</tnml.version>
-        <tnpc.version>1.1.0.0-SNAPSHOT-4</tnpc.version>
+        <tnpc.version>1.1.0.0-SNAPSHOT-8</tnpc.version>
         <tne.relocation>net.tnemc.libs</tne.relocation>
 
-        <depend.adventure>4.19.0</depend.adventure>
+        <depend.adventure>4.23.0</depend.adventure>
         <maven.javadoc.plugin.version>3.0.1</maven.javadoc.plugin.version>
         <maven.source.version>3.2.0</maven.source.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

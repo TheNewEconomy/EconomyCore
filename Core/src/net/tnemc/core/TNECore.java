@@ -459,9 +459,15 @@ public abstract class TNECore extends PluginEngine {
     AbstractItemStack<?> stack = PluginCore.server().stackBuilder().of(denomination.material(), amount)
             .enchant(denomination.enchantments())
             .lore(denomination.getLore())
-            .flags(denomination.flags())
-            .damage(denomination.getDamage())
-            .customName(MiniMessage.miniMessage().deserialize(denomination.getName())).debug(false);
+            .flags(denomination.flags()).debug(false);
+
+    if(denomination.getDamage() > 0) {
+      stack = stack.damage(denomination.getDamage());
+    }
+
+    if(!denomination.getName().isEmpty()) {
+      stack = stack.customName(MiniMessage.miniMessage().deserialize(denomination.getName()));
+    }
 
     if(denomination.getCustomModel() > -1) {
       stack = stack.modelDataOld(denomination.getCustomModel());

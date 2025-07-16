@@ -162,6 +162,10 @@
                             <shadedPattern>${tne.relocation}.lamp</shadedPattern>
                         </relocation>
                         <relocation>
+                            <pattern>revxrsal</pattern>
+                            <shadedPattern>${tne.relocation}.lamp</shadedPattern>
+                        </relocation>
+                        <relocation>
                             <pattern>redis.clients</pattern>
                             <shadedPattern>${tne.relocation}.jedis</shadedPattern>
                         </relocation>
@@ -227,13 +231,43 @@
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-platform-bukkit</artifactId>
-            <version>4.3.2</version>
+            <version>4.4.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-text-serializer-plain</artifactId>
-            <version>4.17.0</version>
+            <version>${depend.adventure}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-api</artifactId>
+            <version>${depend.adventure}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-text-serializer-json</artifactId>
+            <version>${depend.adventure}</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.kyori</groupId>
+                    <artifactId>adventure-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-text-serializer-legacy</artifactId>
+            <version>${depend.adventure}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-text-minimessage</artifactId>
+            <version>${depend.adventure}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -277,7 +311,7 @@
     <parent>
         <groupId>net.tnemc</groupId>
         <artifactId>TNE</artifactId>
-        <version>0.1.4.0-SNAPSHOT-4</version>
+        <version>0.1.4.0-SNAPSHOT-5</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 </project>
