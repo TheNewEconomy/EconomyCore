@@ -102,7 +102,7 @@ public abstract class TNECore extends PluginEngine {
    */
   public static final String coreURL = "https://tnemc.net/files/module-version.xml";
   public static final String version = "0.1.4.0";
-  public static final String build = "SNAPSHOT-1";
+  public static final String build = "SNAPSHOT-6";
   protected static TNECore instance;
 
   /* Key Managers and Object instances utilized with TNE */
@@ -456,10 +456,19 @@ public abstract class TNECore extends PluginEngine {
 
   public AbstractItemStack<?> denominationToStack(final ItemDenomination denomination, final int amount) {
 
-    AbstractItemStack<?> stack = PluginCore.server().stackBuilder().of(denomination.material(), amount)
-            .enchant(denomination.enchantments())
-            .lore(denomination.getLore())
-            .flags(denomination.flags()).debug(false);
+    AbstractItemStack<?> stack = PluginCore.server().stackBuilder().of(denomination.material(), amount).debug(false);
+
+    if(!denomination.enchantments().isEmpty()) {
+      stack = stack.enchant(denomination.enchantments());
+    }
+
+    if(!denomination.flags().isEmpty()) {
+      stack = stack.flags(denomination.flags());
+    }
+
+    if(!denomination.getLore().isEmpty()) {
+      stack = stack.lore(denomination.getLore());
+    }
 
     if(denomination.getDamage() > 0) {
       stack = stack.damage(denomination.getDamage());
