@@ -353,6 +353,31 @@ public class CurrencyManager {
   }
 
   /**
+   * Used to find a {@link Currency currency} based on its user-friendly identifier.
+   *
+   * @param identifier The identifier to look for.
+   *
+   * @return An Optional containing the currency if it exists, otherwise an empty Optional.
+   */
+  public Currency findOrDefault(final String identifier) {
+
+    try {
+
+      return findOrDefault(UUID.fromString(identifier));
+    } catch(final Exception ignore) {
+
+      for(final Map.Entry<String, UUID> entry : curIDMap.entrySet()) {
+
+        if(entry.getKey().equalsIgnoreCase(identifier)) {
+
+          return currencies.get(entry.getValue());
+        }
+      }
+      return defaultCurrency();
+    }
+  }
+
+  /**
    * Used to find a {@link Currency currency} based on its {@link UUID identifier}, or a new
    * Currency object if the specified identifier doesn't exist.
    *
