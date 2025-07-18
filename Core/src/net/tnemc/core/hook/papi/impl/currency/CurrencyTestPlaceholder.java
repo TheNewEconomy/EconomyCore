@@ -19,10 +19,12 @@ package net.tnemc.core.hook.papi.impl.currency;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.hook.papi.Placeholder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 /**
@@ -31,7 +33,7 @@ import java.util.Optional;
  * @author creatorfromhell
  * @since 0.1.4.0
  */
-public class CurrencyNamePlaceholder implements Placeholder {
+public class CurrencyTestPlaceholder implements Placeholder {
 
   /**
    * Retrieves the identifier associated with this symbol.
@@ -41,7 +43,7 @@ public class CurrencyNamePlaceholder implements Placeholder {
   @Override
   public String identifier() {
 
-    return "tne_currency_name";
+    return "tne_currency_test";
   }
 
   /**
@@ -54,8 +56,8 @@ public class CurrencyNamePlaceholder implements Placeholder {
   @Override
   public boolean applies(final String[] params) {
 
-    return params[0].equalsIgnoreCase("currency") && params.length >= 3
-           && params[1].equalsIgnoreCase("name");
+    return params[0].equalsIgnoreCase("currency") && params.length >= 4
+           && params[1].equalsIgnoreCase("test");
   }
 
   /**
@@ -74,6 +76,14 @@ public class CurrencyNamePlaceholder implements Placeholder {
 
       return null;
     }
-    return currency.get().getDisplay();
+
+    final BigDecimal amount;
+    try {
+      amount = new BigDecimal(params[3]);
+    } catch(final Exception ignore) {
+      return null;
+    }
+
+    return CurrencyFormatter.format(null, amount);
   }
 }

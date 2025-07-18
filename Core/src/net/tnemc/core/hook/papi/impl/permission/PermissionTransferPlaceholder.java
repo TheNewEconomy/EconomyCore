@@ -1,4 +1,4 @@
-package net.tnemc.core.hook.papi.impl.currency;
+package net.tnemc.core.hook.papi.impl.permission;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2025 Daniel "creatorfromhell" Vidmar
@@ -18,7 +18,9 @@ package net.tnemc.core.hook.papi.impl.currency;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.currency.Currency;
+import net.tnemc.core.account.Account;
+import net.tnemc.core.account.SharedAccount;
+import net.tnemc.core.account.shared.MemberPermissions;
 import net.tnemc.core.hook.papi.Placeholder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,12 +28,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 /**
- * CurrencyNamePlaceholder
+ * BalancePlaceholder
  *
  * @author creatorfromhell
  * @since 0.1.4.0
  */
-public class CurrencyNamePlaceholder implements Placeholder {
+public class PermissionTransferPlaceholder implements Placeholder {
 
   /**
    * Retrieves the identifier associated with this symbol.
@@ -41,7 +43,7 @@ public class CurrencyNamePlaceholder implements Placeholder {
   @Override
   public String identifier() {
 
-    return "tne_currency_name";
+    return "tne_can_transfer";
   }
 
   /**
@@ -54,8 +56,8 @@ public class CurrencyNamePlaceholder implements Placeholder {
   @Override
   public boolean applies(final String[] params) {
 
-    return params[0].equalsIgnoreCase("currency") && params.length >= 3
-           && params[1].equalsIgnoreCase("name");
+    return params[0].equalsIgnoreCase("can") && params.length >= 4
+           && params[1].equalsIgnoreCase("transfer");
   }
 
   /**
@@ -69,11 +71,22 @@ public class CurrencyNamePlaceholder implements Placeholder {
   @Override
   public @Nullable String onRequest(@Nullable final String account, @NotNull final String[] params) {
 
-    final Optional<Currency> currency = TNECore.eco().currency().find(params[2]);
-    if(currency.isEmpty()) {
+    final Optional<Account> accountOptional = TNECore.eco().account().findAccount(params[2]);
 
+    if(accountOptional.isEmpty()) {
       return null;
     }
-    return currency.get().getDisplay();
+
+    final Optional<Account> checkAccountOptional = TNECore.eco().account().findAccount(params[3]);
+
+    if(checkAccountOptional.isEmpty()) {
+      return null;
+    }
+
+    if(!(accountOptional.get() instanceof SharedAccount)) {
+      return "false";
+    }
+
+    return String.valueOf(((SharedAccount)accountOptional.get()).hasPermission(checkAccountOptional.get().getIdentifier(), MemberPermissions.TRANSFER_OWNERSHIP));
   }
 }

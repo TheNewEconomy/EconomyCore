@@ -31,7 +31,7 @@ import java.util.Optional;
  * @author creatorfromhell
  * @since 0.1.4.0
  */
-public class CurrencyNamePlaceholder implements Placeholder {
+public class CurrencyPrecisionPlaceholder implements Placeholder {
 
   /**
    * Retrieves the identifier associated with this symbol.
@@ -41,7 +41,7 @@ public class CurrencyNamePlaceholder implements Placeholder {
   @Override
   public String identifier() {
 
-    return "tne_currency_name";
+    return "tne_currency_precision";
   }
 
   /**
@@ -55,7 +55,7 @@ public class CurrencyNamePlaceholder implements Placeholder {
   public boolean applies(final String[] params) {
 
     return params[0].equalsIgnoreCase("currency") && params.length >= 3
-           && params[1].equalsIgnoreCase("name");
+           && params[1].equalsIgnoreCase("precision");
   }
 
   /**
@@ -74,6 +74,6 @@ public class CurrencyNamePlaceholder implements Placeholder {
 
       return null;
     }
-    return currency.get().getDisplay();
+    return String.valueOf(currency.get().getDecimalPlaces());
   }
 }
