@@ -18,13 +18,13 @@ package net.tnemc.core.manager;
  */
 
 import net.tnemc.core.EconomyManager;
-import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.hook.papi.Placeholder;
 import net.tnemc.core.utils.Identifier;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -44,31 +44,15 @@ public class PlaceholderManager {
 
   private final Map<String, Placeholder> placeholders = new HashMap<>();
 
-  /**
-   * Retrieves the placeholder that applies to the given parameters.
-   *
-   * @param params The parameters to match against placeholders
-   * @return Optional containing the matching placeholder if found, empty Optional otherwise
-   */
-  public Optional<Placeholder> placeholder(final String[] params) {
+  public PlaceholderManager() {
 
-    for(final Placeholder holder : placeholders.values()) {
-
-      if(holder.applies(params)) {
-
-        return Optional.of(holder);
-      }
-    }
-    return Optional.empty();
   }
-
-
-  //Static
 
   /**
    * Parses the given ID string and returns the corresponding Identifier object.
    *
    * @param id The ID string to parse
+   *
    * @return The Identifier object representing the parsed ID
    */
   public static Identifier parseID(@NotNull final String id) {
@@ -82,13 +66,15 @@ public class PlaceholderManager {
   }
 
   /**
-   * Parses the holdings entries for a specific account based on region, currency, ID, and formatting preference.
+   * Parses the holdings entries for a specific account based on region, currency, ID, and
+   * formatting preference.
    *
-   * @param account The account to retrieve holdings from
-   * @param region The region to get holdings for
-   * @param currency The currency UUID for the holdings
-   * @param id The ID string representing the type of holdings to retrieve
+   * @param account   The account to retrieve holdings from
+   * @param region    The region to get holdings for
+   * @param currency  The currency UUID for the holdings
+   * @param id        The ID string representing the type of holdings to retrieve
    * @param formatted Boolean indicating whether the holdings should be formatted
+   *
    * @return A string representation of the parsed holdings based on the given criteria
    */
   public static String parseHoldings(@NotNull final Account account, @NotNull final String region,
@@ -105,6 +91,37 @@ public class PlaceholderManager {
       return CurrencyFormatter.format(account, entry);
     }
     return entry.getAmount().toPlainString();
+  }
+
+
+  //Static
+
+  public @Nullable String onRequest(@Nullable final String account, @NotNull final String[] params) {
+
+    final Optional<Placeholder> placeholderOptional = placeholder(params);
+    if(placeholderOptional.isPresent()) {
+      return placeholderOptional.get().onRequest(account, params);
+    }
+    return null;
+  }
+
+  /**
+   * Retrieves the placeholder that applies to the given parameters.
+   *
+   * @param params The parameters to match against placeholders
+   *
+   * @return Optional containing the matching placeholder if found, empty Optional otherwise
+   */
+  public Optional<Placeholder> placeholder(final String[] params) {
+
+    for(final Placeholder holder : placeholders.values()) {
+
+      if(holder.applies(params)) {
+
+        return Optional.of(holder);
+      }
+    }
+    return Optional.empty();
   }
 
   /**

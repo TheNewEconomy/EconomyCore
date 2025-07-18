@@ -30,6 +30,7 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.CurrencyType;
 import net.tnemc.core.manager.AccountManager;
 import net.tnemc.core.manager.CurrencyManager;
+import net.tnemc.core.manager.PlaceholderManager;
 import net.tnemc.core.manager.TopManager;
 import net.tnemc.core.manager.TransactionManager;
 import net.tnemc.core.region.RegionProvider;
@@ -78,6 +79,7 @@ public class EconomyManager {
   private final List<String> invalidCurrencies = new ArrayList<>();
   private final Map<String, Identifier> ids = new ConcurrentHashMap<>();
   private final AccountManager accountManager;
+  private final PlaceholderManager placeholderManager;
   private final CurrencyManager currencyManager;
   private final TransactionManager transactionManager;
   private final RegionProvider regionProvider;
@@ -90,6 +92,7 @@ public class EconomyManager {
     instance = this;
 
     this.accountManager = new AccountManager();
+    this.placeholderManager = new PlaceholderManager();
     this.currencyManager = new CurrencyManager();
     this.transactionManager = new TransactionManager();
     this.regionProvider = new RegionProvider(MainConfig.yaml().getBoolean("Core.Region.GroupRealms"),
@@ -198,6 +201,11 @@ public class EconomyManager {
   public AccountManager account() {
 
     return accountManager;
+  }
+
+  public PlaceholderManager placeholder() {
+
+    return placeholderManager;
   }
 
   public CurrencyManager currency() {

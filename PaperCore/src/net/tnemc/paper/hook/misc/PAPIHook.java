@@ -29,8 +29,10 @@ import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.utils.Identifier;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.io.message.MessageHandler;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -60,7 +62,7 @@ public class PAPIHook extends PlaceholderExpansion {
   @Override
   public String getVersion() {
 
-    return "0.1.2.8";
+    return "0.1.4.0";
   }
 
   @Override
@@ -70,179 +72,22 @@ public class PAPIHook extends PlaceholderExpansion {
   }
 
   @Override
-  public String onPlaceholderRequest(final Player player, @NotNull final String identifier) {
+  public @Nullable String onRequest(final OfflinePlayer player, @NotNull final String paramString) {
 
-    if(player == null) {
-      return null;
-    }
+    final String[] params = paramString.split("_");
 
-    final String[] args = identifier.split("_");
+    final String account = (player == null)? null: player.getUniqueId().toString();
 
-    Optional<Account> account = TNECore.eco().account().findAccount(player.getUniqueId());
-    if(identifier.contains("player:")) {
-
-      final String[] playerTest = identifier.split("player:");
-      if(playerTest.length >= 2) {
-        account = TNECore.api().getAccount(playerTest[1]);
-      }
-    }
-
-    if(account.isEmpty()) {
-      return null;
-    }
-
-    //%tne_balance:inventory/balance:e_chest/balance:experience/balance:virtualargs[1]%
-    if(identifier.contains("balance:")) {
-
-      PluginCore.log().debug("Balance ID: " + args[0].split(":")[1]);
-
-      final Identifier id = switch(args[0].split(":")[1]) {
-        case "inventory" -> EconomyManager.INVENTORY_ONLY;
-        case "virtual" -> EconomyManager.VIRTUAL;
-        case "ender" -> EconomyManager.E_CHEST;
-        default -> EconomyManager.NORMAL;
-      };
-
-      final UUID curID = TNECore.eco().currency().defaultCurrency().getUid();
-      final List<HoldingsEntry> entries = account.get().getHoldings(TNECore.eco().region().defaultRegion(), curID, id);
-      final BigDecimal amount = (!entries.isEmpty())? entries.get(0).getAmount() : BigDecimal.ZERO;
-
-      if(args.length >= 2 && args[1].equalsIgnoreCase("formatted")) {
-        if(!entries.isEmpty()) {
-          return CurrencyFormatter.format(account.get(), entries.get(0));
-        }
-
-        final HoldingsEntry entry = new HoldingsEntry(TNECore.eco().region().defaultRegion(),
-                                                      curID,
-                                                      amount,
-                                                      EconomyManager.NORMAL);
-        return CurrencyFormatter.format(account.get(), entry);
-      } else {
-        return amount.toPlainString();
-      }
-    }
-
-    //%tne_balance%
-    if(identifier.contains("balance")) {
-
-      final UUID curID = TNECore.eco().currency().defaultCurrency().getUid();
-      final BigDecimal amount = account.get().getHoldingsTotal(TNECore.eco().region().defaultRegion(),
-                                                               curID);
-
-      if(args.length >= 2 && args[1].equalsIgnoreCase("formatted")) {
-        final HoldingsEntry entry = new HoldingsEntry(TNECore.eco().region().defaultRegion(),
-                                                      curID,
-                                                      amount,
-                                                      EconomyManager.NORMAL);
-        return CurrencyFormatter.format(account.get(), entry);
-      } else {
-        return amount.toPlainString();
-      }
-    }
-
-    //%tne_wcurarg[0]_<world name>arg[1]_<currency name>arg[2]
-    if(identifier.toLowerCase().contains("wcur_")) {
-      if(args.length >= 3) {
-
-        final String region = TNECore.eco().region().resolve(args[1]);
-        final Optional<Currency> currency = TNECore.eco().currency().find(args[2]);
-
-        final UUID curID = (currency.isPresent())? currency.get().getUid() : TNECore.eco().currency().defaultCurrency().getUid();
-
-
-        final BigDecimal amount = account.get().getHoldingsTotal(region, curID);
-
-        if(args.length >= 4 && args[3].equalsIgnoreCase("formatted")) {
-          final HoldingsEntry entry = new HoldingsEntry(region,
-                                                        curID,
-                                                        amount,
-                                                        EconomyManager.NORMAL);
-          return CurrencyFormatter.format(account.get(), entry);
-        } else {
-          return amount.toPlainString();
-        }
-      }
-    }
-
-    //%tne_world_<world name>args[1]%
-    if(identifier.toLowerCase().contains("world_")) {
-      if(args.length >= 2) {
-
-        final String region = TNECore.eco().region().resolve(args[1]);
-        final UUID curID = TNECore.eco().currency().defaultCurrency(region).getUid();
-        final BigDecimal amount = account.get().getHoldingsTotal(region, curID);
-
-        if(args.length >= 3 && args[2].equalsIgnoreCase("formatted")) {
-
-          final HoldingsEntry entry = new HoldingsEntry(region,
-                                                        curID,
-                                                        amount,
-                                                        EconomyManager.NORMAL);
-          return CurrencyFormatter.format(account.get(), entry);
-        } else {
-          return amount.toPlainString();
-        }
-      }
-    }
-
-    //%tne_currency_<currency name>args[1]%
-    if(identifier.toLowerCase().contains("currency_")) {
-      if(args.length >= 2) {
-
-        final String region = TNECore.eco().region().defaultRegion();
-        final Optional<Currency> currency = TNECore.eco().currency().find(args[1]);
-
-        final UUID curID = (currency.isPresent())? currency.get().getUid() : TNECore.eco().currency().defaultCurrency().getUid();
-
-
-        final BigDecimal amount = account.get().getHoldingsTotal(region, curID);
-        if(args.length >= 3 && args[2].equalsIgnoreCase("formatted")) {
-
-          final HoldingsEntry entry = new HoldingsEntry(region,
-                                                        curID,
-                                                        amount,
-                                                        EconomyManager.NORMAL);
-          return CurrencyFormatter.format(account.get(), entry);
-        } else {
-          return amount.toPlainString();
-        }
-      }
-    }
-
-    //%tne_toppos[0]_<currency name>[1]_position[2]_<pos>[3]%
-    //%tne_toppos[0]_<currency name>[1]%
-    if(identifier.toLowerCase().contains("toppos")) {
-      int pos = 0;
-
-      if(args.length >= 2) {
-
-        final Optional<Currency> currency = TNECore.eco().currency().find(args[1]);
-        final UUID curID = (currency.isPresent())? currency.get().getUid() : TNECore.eco().currency().defaultCurrency().getUid();
-
-        if(args.length >= 4 && args[2].equalsIgnoreCase("position")) {
-
-          //%tne_toppos[0]_<currency name>[1]_position[2]_<pos>[3]%
-          pos = Integer.parseInt(args[3]);
-          return LegacyComponentSerializer.legacySection().serialize(MessageHandler.grab(TNECore.eco().getTopManager().getFor(pos, curID), player.getUniqueId()));
-
-        } else {
-
-          //%tne_toppos[0]_<currency name>[1]%
-          pos = TNECore.eco().getTopManager().position(curID, account.get().getName());
-        }
-      }
-      return String.valueOf(pos);
-    }
-    return null;
+    return TNECore.eco().placeholder().onRequest(account, params);
   }
 
-  public boolean formatted(final String parameter) {
+  @Override
+  public @Nullable String onPlaceholderRequest(final Player player, @NotNull final String paramString) {
 
-    return parameter.contains("formatted");
-  }
+    final String[] params = paramString.split("_");
 
-  public Optional<Account> findFromArgs(final String parameter) {
+    final String account = (player == null)? null: player.getUniqueId().toString();
 
-    return TNECore.eco().account().findAccount(parameter);
+    return TNECore.eco().placeholder().onRequest(account, params);
   }
 }
