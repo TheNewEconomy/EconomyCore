@@ -1,15 +1,4 @@
-# Placeholders
-
-## Placeholder Values
-Certain placeholders accept different values, here's a list of the values that you may see and the acceptable inputs for each.
-
-$currency
-$storage
-$amount
-$account
-$checkaccount
-$region
-$number
+# TheNewEconomy Placeholders
 
 ## Balance Placeholders
 - [X] tne_balance
