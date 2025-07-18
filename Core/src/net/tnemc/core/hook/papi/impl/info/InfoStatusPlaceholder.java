@@ -23,7 +23,6 @@ import net.tnemc.core.hook.papi.Placeholder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Date;
 import java.util.Optional;
 
 /**

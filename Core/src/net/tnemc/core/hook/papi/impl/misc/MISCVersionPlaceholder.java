@@ -18,13 +18,9 @@ package net.tnemc.core.hook.papi.impl.misc;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.account.Account;
 import net.tnemc.core.hook.papi.Placeholder;
-import net.tnemc.plugincore.core.id.UUIDProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Optional;
 
 /**
  * AccountCreatedPlaceholder

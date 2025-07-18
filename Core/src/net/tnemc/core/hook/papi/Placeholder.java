@@ -39,6 +39,7 @@ public interface Placeholder {
    * Checks if the specified parameters are valid for this method.
    *
    * @param params The parameters to be checked
+   *
    * @return True if the parameters are valid, false otherwise
    */
   boolean applies(String[] params);
@@ -47,8 +48,10 @@ public interface Placeholder {
    * Processes a request with the given account and parameters.
    *
    * @param account Optional account associated with the request
-   * @param params Required parameters for the request
+   * @param params  Required parameters for the request
+   *
    * @return Nullable string response from the request process
    */
-  @Nullable String onRequest(@Nullable String account, @NotNull String[] params);
+  @Nullable
+  String onRequest(@Nullable String account, @NotNull String[] params);
 }

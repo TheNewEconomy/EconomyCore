@@ -19,7 +19,6 @@ package net.tnemc.core.hook.papi.impl.balance;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
-import net.tnemc.core.currency.Currency;
 import net.tnemc.core.hook.papi.Placeholder;
 import net.tnemc.core.manager.PlaceholderManager;
 import org.jetbrains.annotations.NotNull;

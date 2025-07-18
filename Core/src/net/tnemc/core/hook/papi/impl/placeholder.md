@@ -1,6 +1,7 @@
 # TheNewEconomy Placeholders
 
 ## Balance Placeholders
+
 - [X] tne_balance
 - [X] tne_balance_formatted
 - [X] tne_balance0_currency1_$currency2
@@ -19,6 +20,7 @@
 - [X] tne_balance_regstor_$region_$storage_formatted
 
 ## Account Balance Placeholders
+
 - [X] tne_accbalance0_$account1
 - [X] tne_accbalance_$account_formatted
 - [X] tne_accbalance0_$account1_currency2_$currency3
@@ -37,6 +39,7 @@
 - [X] tne_accbalance0_$account_regstor_$region_$storage_formatted
 
 ## Leaderboard Placeholders
+
 - [ ] tne_toppos0_$currency1
 - [ ] tne_toppos_$currency_$account3
 - [ ] tne_toppos_$currency_position_$number4
@@ -47,12 +50,14 @@
 - [ ] tne_topholder_$currency_position_formatted
 
 ## Account Information Placeholders
+
 - [X] tne_account_created_$account
 - [X] tne_account_id_$account
 - [X] tne_account_status_$account
 - [X] tne_account_type_$account
 
 ## Account Permission Placeholders
+
 - [X] tne_can0_balance1_$account2_$checkaccount3
 - [X] tne_can_deposit_$account_$checkaccount
 - [X] tne_can_invite_$account_$checkaccount
@@ -60,6 +65,7 @@
 - [X] tne_can_withdraw_$account_$checkaccount
 
 ## Transaction Placeholders
+
 - [ ] tne_tx_give_$account_$amount
 - [ ] tne_tx_set_$account_$amount
 - [ ] tne_tx_take_$account_$amount
@@ -83,6 +89,7 @@
 - [ ] tne_tx_take_$account_$amount_curregstor_$currency_$region_$storage
 
 ## Currency Information Placeholders
+
 - [X] tne_currency_name_$currency
 - [X] tne_currency_symbol_$currency
 - [X] tne_currency_precision_$currency
@@ -90,5 +97,6 @@
 - [X] tne_currency_test_$currency_$amount
 
 ## MISC/Utility Placeholders
+
 - [X] tne_debug
 - [X] tne_version

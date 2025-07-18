@@ -21,9 +21,7 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.SharedAccount;
 import net.tnemc.core.account.shared.MemberPermissions;
-import net.tnemc.core.currency.Currency;
 import net.tnemc.core.hook.papi.Placeholder;
-import net.tnemc.core.manager.PlaceholderManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
