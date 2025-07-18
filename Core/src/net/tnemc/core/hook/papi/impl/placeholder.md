@@ -18,6 +18,24 @@
 - [X] tne_balance0_regstor1_$region2_$storage3
 - [X] tne_balance_regstor_$region_$storage_formatted
 
+## Account Balance Placeholders
+- [ ] tne_accbalance0_$account1
+- [ ] tne_accbalance_$account_formatted
+- [ ] tne_accbalance0_$account1_currency2_$currency3
+- [ ] tne_accbalance0_$account_currency_$currency_formatted
+- [ ] tne_accbalance0_$account1_region2_$region3
+- [ ] tne_accbalance0_$account_region_$region_formatted
+- [ ] tne_accbalance0_$account1_storage2_$storage3
+- [ ] tne_accbalance0_$account_storage_$storage_formatted
+- [ ] tne_accbalance0_$account1_curreg2_$currency3_$region4
+- [ ] tne_accbalance0_$account1_curreg_$currency_$region_formatted
+- [ ] tne_accbalance0_$account1_curregstor2_$currency3_$region4_$storage5
+- [ ] tne_accbalance0_$account_curregstor_$currency_$region_$storage_formatted
+- [ ] tne_accbalance0_$account1_curstor2_$currency3_$storage4
+- [ ] tne_accbalance0_$account_curstor_$currency_$storage_formatted
+- [ ] tne_accbalance0_$account1_regstor2_$region3_$storage4
+- [ ] tne_accbalance0_$account_regstor_$region_$storage_formatted
+
 ## Leaderboard Placeholders
 - [ ] tne_toppos_$currency
 - [ ] tne_toppos_$currency_$account

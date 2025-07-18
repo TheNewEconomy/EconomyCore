@@ -1,4 +1,4 @@
-package net.tnemc.core.hook.papi.impl.balance;
+package net.tnemc.core.hook.papi.impl.accbalance;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2025 Daniel "creatorfromhell" Vidmar
@@ -33,7 +33,7 @@ import java.util.Optional;
  * @author creatorfromhell
  * @since 0.1.4.0
  */
-public class BalanceCurRegPlaceholder implements Placeholder {
+public class AccountBalanceCurRegPlaceholder implements Placeholder {
 
   /**
    * Retrieves the identifier associated with this symbol.
@@ -43,7 +43,7 @@ public class BalanceCurRegPlaceholder implements Placeholder {
   @Override
   public String identifier() {
 
-    return "tne_balance_curreg";
+    return "tne_accbalance_curreg";
   }
 
   /**
@@ -56,7 +56,7 @@ public class BalanceCurRegPlaceholder implements Placeholder {
   @Override
   public boolean applies(final String[] params) {
 
-    return params[0].equalsIgnoreCase("balance") && params.length >= 3
+    return params[0].equalsIgnoreCase("accbalance") && params.length >= 4
            && params[1].equalsIgnoreCase("curreg");
   }
 
@@ -71,23 +71,19 @@ public class BalanceCurRegPlaceholder implements Placeholder {
   @Override
   public @Nullable String onRequest(@Nullable final String account, @NotNull final String[] params) {
 
-    if(account == null) {
-      return null;
-    }
-
-    final Optional<Account> accountOptional = TNECore.eco().account().findAccount(account);
+    final Optional<Account> accountOptional = TNECore.eco().account().findAccount(params[1]);
 
     if(accountOptional.isEmpty()) {
       return null;
     }
 
-    final Optional<Currency> currency = TNECore.eco().currency().find(params[2]);
+    final Optional<Currency> currency = TNECore.eco().currency().find(params[3]);
     if(currency.isEmpty()) {
 
       return null;
     }
 
-    final String region = TNECore.eco().region().resolve(params[3]);
+    final String region = TNECore.eco().region().resolve(params[4]);
     final boolean formatted = (params[params.length - 1].equalsIgnoreCase("formatted"));
 
     return PlaceholderManager.parseHoldings(accountOptional.get(), region,
