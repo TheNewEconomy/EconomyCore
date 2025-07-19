@@ -66,27 +66,18 @@
 
 ## Transaction Placeholders
 
-- [ ] tne_tx_give_$account_$amount
-- [ ] tne_tx_set_$account_$amount
-- [ ] tne_tx_take_$account_$amount
-- [ ] tne_tx_give_$account_$amount_currency_$currency
-- [ ] tne_tx_set_$account_$amount_currency_$currency
-- [ ] tne_tx_take_$account_$amount_currency_$currency
-- [ ] tne_tx_give_$account_$amount_region_$region
-- [ ] tne_tx_set_$account_$amount_region_$region
-- [ ] tne_tx_take_$account_$amount_region_$region
-- [ ] tne_tx_give_$account_$amount_storage_$storage
-- [ ] tne_tx_set_$account_$amount_storage_$storage
-- [ ] tne_tx_take_$account_$amount_storage_$storage
-- [ ] tne_tx_give_$account_$amount_curreg_$currency_$region
-- [ ] tne_tx_set_$account_$amount_curreg_$currency_$region
-- [ ] tne_tx_take_$account_$amount_curreg_$currency_$region
-- [ ] tne_tx_give_$account_$amount_curstor_$currency_$storage
-- [ ] tne_tx_set_$account_$amount_curstor_$currency_$storage
-- [ ] tne_tx_take_$account_$amount_curstor_$currency_$storage
-- [ ] tne_tx_give_$account_$amount_curregstor_$currency_$region_$storage
-- [ ] tne_tx_set_$account_$amount_curregstor_$currency_$region_$storage
-- [ ] tne_tx_take_$account_$amount_curregstor_$currency_$region_$storage
+- [X] tne_tx0_give1_$account2_$amount3_message4(optional)
+- [X] tne_tx_set_$account_$amount
+- [X] tne_tx_take_$account_$amount
+- [X] tne_tx_give_$account_$amount_currency4_$currency5
+- [X] tne_tx_set_$account_$amount_currency_$currency
+- [X] tne_tx_take_$account_$amount_currency_$currency
+- [X] tne_tx_give_$account_$amount_region_$region
+- [X] tne_tx_set_$account_$amount_region_$region
+- [X] tne_tx_take_$account_$amount_region_$region
+- [X] tne_tx_give_$account_$amount_curreg_$currency_$region
+- [X] tne_tx_set_$account_$amount_curreg_$currency_$region
+- [X] tne_tx_take_$account_$amount_curreg_$currency_$region
 
 ## Currency Information Placeholders
 

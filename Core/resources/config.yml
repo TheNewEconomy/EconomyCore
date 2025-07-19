@@ -9,6 +9,10 @@ Core:
   #Do not change this unless you know what you're doing.
   Offline: false
 
+  #This allows using the tne_tx placeholders, which can be used to modify account balances.
+  #Only enable if you're able to confirm what plugins utilize these placeholders.
+  PlaceholderTransactions: false
+
   #Configurations relating to debugging
   Debugging:
 

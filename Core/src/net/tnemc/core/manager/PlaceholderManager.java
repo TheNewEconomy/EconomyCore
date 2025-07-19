@@ -18,11 +18,23 @@ package net.tnemc.core.manager;
  */
 
 import net.tnemc.core.EconomyManager;
+import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
+import net.tnemc.core.account.holdings.modify.HoldingsModifier;
+import net.tnemc.core.actions.source.PlayerSource;
+import net.tnemc.core.actions.source.PluginSource;
+import net.tnemc.core.channel.MessageHandler;
+import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.hook.papi.Placeholder;
+import net.tnemc.core.transaction.Receipt;
+import net.tnemc.core.transaction.Transaction;
+import net.tnemc.core.transaction.TransactionResult;
 import net.tnemc.core.utils.Identifier;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
+import net.tnemc.plugincore.core.io.message.MessageData;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -66,6 +78,75 @@ public class PlaceholderManager {
   }
 
   /**
+   * Parses the transaction type string and determines the corresponding identifier for the transaction.
+   *
+   * @param type The transaction type string to parse
+   * @return The corresponding identifier for the transaction type
+   */
+  public static String parseTransactionType(@NotNull final String type) {
+
+    switch(type.toLowerCase(Locale.ROOT)) {
+      case "give" -> { return "give"; }
+      case "take" -> { return "take"; }
+      default -> { return "set"; }
+    }
+  }
+
+  /**
+   * Performs a transaction on the specified account.
+   *
+   * @param account The account involved in the transaction
+   * @param type The type of transaction to be performed
+   * @param modifier The modifier for adjusting holdings during the transaction
+   * @param message A flag indicating whether a message should be sent for the transaction
+   *
+   * @return An Optional containing a receipt of the transaction if successful, otherwise empty Optional
+   */
+  public static Optional<Receipt> transact(final Account account, final String type,
+                                           final HoldingsModifier modifier, final boolean message) {
+
+    final Transaction transaction = new Transaction(type)
+            .to(account, modifier)
+            .processor(EconomyManager.baseProcessor())
+            .source(new PluginSource("PAPI"));
+
+    try {
+      final TransactionResult result = transaction.process();
+
+      if(!result.isSuccessful()) {
+        return Optional.empty();
+      }
+
+      if(message) {
+        message(account, type, modifier);
+      }
+
+      return result.getReceipt();
+    } catch(final Exception ignore) {
+      return Optional.empty();
+    }
+  }
+
+  public static void message(final Account account, final String type, final HoldingsModifier modifier) {
+
+    if(type.equalsIgnoreCase("set")) return;
+
+    final String message = (type.equalsIgnoreCase("take"))? "Messages.Money.Taken" : "Messages.Money.Given";
+    final MessageData msgData = new MessageData(message);
+    msgData.addReplacement("$player", MainConfig.yaml().getString("Core.Server.Account.Name"));
+    msgData.addReplacement("$currency", modifier.getCurrency());
+    msgData.addReplacement("$amount", CurrencyFormatter.format(account, modifier.asEntry()));
+    MessageHandler.send(account.getIdentifier(), msgData.grab(account.getIdentifier()));
+
+    if(account.isPlayer() && ((PlayerAccount)account).isOnline()) {
+
+      final Optional<PlayerProvider> provider = ((PlayerAccount)account).getPlayer();
+
+      provider.ifPresent(playerProvider->playerProvider.message(msgData));
+    }
+  }
+
+  /**
    * Parses the holdings entries for a specific account based on region, currency, ID, and
    * formatting preference.
    *
@@ -77,7 +158,7 @@ public class PlaceholderManager {
    *
    * @return A string representation of the parsed holdings based on the given criteria
    */
-  public static String parseHoldings(@NotNull final Account account, @NotNull final String region,
+  public static final String parseHoldings(@NotNull final Account account, @NotNull final String region,
                                      final @NotNull UUID currency, @NotNull final String id,
                                      final boolean formatted) {
 
@@ -96,7 +177,7 @@ public class PlaceholderManager {
 
   //Static
 
-  public @Nullable String onRequest(@Nullable final String account, @NotNull final String[] params) {
+  public final @Nullable String onRequest(@Nullable final String account, @NotNull final String[] params) {
 
     final Optional<Placeholder> placeholderOptional = placeholder(params);
     if(placeholderOptional.isPresent()) {
@@ -112,7 +193,7 @@ public class PlaceholderManager {
    *
    * @return Optional containing the matching placeholder if found, empty Optional otherwise
    */
-  public Optional<Placeholder> placeholder(final String[] params) {
+  public final Optional<Placeholder> placeholder(final String[] params) {
 
     for(final Placeholder holder : placeholders.values()) {
 
@@ -129,12 +210,12 @@ public class PlaceholderManager {
    *
    * @param placeholder The Placeholder object to add
    */
-  public void addPlaceholder(@NotNull final Placeholder placeholder) {
+  public final void addPlaceholder(@NotNull final Placeholder placeholder) {
 
     placeholders.put(placeholder.identifier(), placeholder);
   }
 
-  public Map<String, Placeholder> placeholders() {
+  public final Map<String, Placeholder> placeholders() {
 
     return placeholders;
   }
