@@ -114,6 +114,6 @@
     <parent>
         <groupId>net.tnemc</groupId>
         <artifactId>TNE</artifactId>
-        <version>0.1.4.0-SNAPSHOT-7</version>
+        <version>0.1.4.0-SNAPSHOT-8</version>
     </parent>
 </project>
