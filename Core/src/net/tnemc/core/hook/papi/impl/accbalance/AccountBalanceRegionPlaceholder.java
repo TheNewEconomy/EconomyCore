@@ -56,7 +56,7 @@ public class AccountBalanceRegionPlaceholder implements Placeholder {
   public boolean applies(final String[] params) {
 
     return params[0].equalsIgnoreCase("accbalance") && params.length >= 4
-           && params[1].equalsIgnoreCase("region");
+           && params[2].equalsIgnoreCase("region");
   }
 
   /**

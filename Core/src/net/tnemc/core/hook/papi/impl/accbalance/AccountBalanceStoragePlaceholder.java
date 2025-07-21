@@ -56,7 +56,7 @@ public class AccountBalanceStoragePlaceholder implements Placeholder {
   public boolean applies(final String[] params) {
 
     return params[0].equalsIgnoreCase("accbalance") && params.length >= 4
-           && params[1].equalsIgnoreCase("storage");
+           && params[2].equalsIgnoreCase("storage");
   }
 
   /**

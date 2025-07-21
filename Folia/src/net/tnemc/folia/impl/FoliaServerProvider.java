@@ -134,7 +134,6 @@ public class FoliaServerProvider implements ServerConnector {
   }
 
 
-
   /**
    * Used to get the amount of online players.
    *

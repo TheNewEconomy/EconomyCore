@@ -18,17 +18,55 @@ package net.tnemc.core.manager;
  */
 
 import net.tnemc.core.EconomyManager;
-import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
-import net.tnemc.core.actions.source.PlayerSource;
 import net.tnemc.core.actions.source.PluginSource;
 import net.tnemc.core.channel.MessageHandler;
 import net.tnemc.core.config.MainConfig;
 import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.hook.papi.Placeholder;
+import net.tnemc.core.hook.papi.impl.accbalance.AccountBalanceCurRegPlaceholder;
+import net.tnemc.core.hook.papi.impl.accbalance.AccountBalanceCurRegStorPlaceholder;
+import net.tnemc.core.hook.papi.impl.accbalance.AccountBalanceCurStorPlaceholder;
+import net.tnemc.core.hook.papi.impl.accbalance.AccountBalanceCurrencyPlaceholder;
+import net.tnemc.core.hook.papi.impl.accbalance.AccountBalancePlaceholder;
+import net.tnemc.core.hook.papi.impl.accbalance.AccountBalanceRegStorPlaceholder;
+import net.tnemc.core.hook.papi.impl.accbalance.AccountBalanceRegionPlaceholder;
+import net.tnemc.core.hook.papi.impl.accbalance.AccountBalanceStoragePlaceholder;
+import net.tnemc.core.hook.papi.impl.balance.BalanceCurRegPlaceholder;
+import net.tnemc.core.hook.papi.impl.balance.BalanceCurRegStorPlaceholder;
+import net.tnemc.core.hook.papi.impl.balance.BalanceCurStorPlaceholder;
+import net.tnemc.core.hook.papi.impl.balance.BalanceCurrencyPlaceholder;
+import net.tnemc.core.hook.papi.impl.balance.BalancePlaceholder;
+import net.tnemc.core.hook.papi.impl.balance.BalanceRegStorPlaceholder;
+import net.tnemc.core.hook.papi.impl.balance.BalanceRegionPlaceholder;
+import net.tnemc.core.hook.papi.impl.balance.BalanceStoragePlaceholder;
+import net.tnemc.core.hook.papi.impl.currency.CurrencyNamePlaceholder;
+import net.tnemc.core.hook.papi.impl.currency.CurrencyPrecisionPlaceholder;
+import net.tnemc.core.hook.papi.impl.currency.CurrencySymbolPlaceholder;
+import net.tnemc.core.hook.papi.impl.currency.CurrencyTestPlaceholder;
+import net.tnemc.core.hook.papi.impl.currency.CurrencyTypePlaceholder;
+import net.tnemc.core.hook.papi.impl.info.InfoCreatedPlaceholder;
+import net.tnemc.core.hook.papi.impl.info.InfoIDPlaceholder;
+import net.tnemc.core.hook.papi.impl.info.InfoStatusPlaceholder;
+import net.tnemc.core.hook.papi.impl.info.InfoTypePlaceholder;
+import net.tnemc.core.hook.papi.impl.misc.MISCDebugPlaceholder;
+import net.tnemc.core.hook.papi.impl.misc.MISCVersionPlaceholder;
+import net.tnemc.core.hook.papi.impl.permission.PermissionBalancePlaceholder;
+import net.tnemc.core.hook.papi.impl.permission.PermissionDepositPlaceholder;
+import net.tnemc.core.hook.papi.impl.permission.PermissionInvitePlaceholder;
+import net.tnemc.core.hook.papi.impl.permission.PermissionTransferPlaceholder;
+import net.tnemc.core.hook.papi.impl.permission.PermissionWithdrawPlaceholder;
+import net.tnemc.core.hook.papi.impl.top.TopPosAccountPlaceholder;
+import net.tnemc.core.hook.papi.impl.top.TopPosBalancePlaceholder;
+import net.tnemc.core.hook.papi.impl.top.TopPosHolderPlaceholder;
+import net.tnemc.core.hook.papi.impl.top.TopPosPlaceholder;
+import net.tnemc.core.hook.papi.impl.transaction.TransactionCurRegPlaceholder;
+import net.tnemc.core.hook.papi.impl.transaction.TransactionCurrencyPlaceholder;
+import net.tnemc.core.hook.papi.impl.transaction.TransactionPlaceholder;
+import net.tnemc.core.hook.papi.impl.transaction.TransactionRegionPlaceholder;
 import net.tnemc.core.transaction.Receipt;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
@@ -58,6 +96,53 @@ public class PlaceholderManager {
 
   public PlaceholderManager() {
 
+    addPlaceholder(new AccountBalanceCurRegPlaceholder());
+    addPlaceholder(new AccountBalanceCurRegStorPlaceholder());
+    addPlaceholder(new AccountBalanceCurrencyPlaceholder());
+    addPlaceholder(new AccountBalanceCurStorPlaceholder());
+    addPlaceholder(new AccountBalancePlaceholder());
+    addPlaceholder(new AccountBalanceRegionPlaceholder());
+    addPlaceholder(new AccountBalanceRegStorPlaceholder());
+    addPlaceholder(new AccountBalanceStoragePlaceholder());
+
+    addPlaceholder(new BalanceCurRegPlaceholder());
+    addPlaceholder(new BalanceCurRegStorPlaceholder());
+    addPlaceholder(new BalanceCurrencyPlaceholder());
+    addPlaceholder(new BalanceCurStorPlaceholder());
+    addPlaceholder(new BalancePlaceholder());
+    addPlaceholder(new BalanceRegionPlaceholder());
+    addPlaceholder(new BalanceRegStorPlaceholder());
+    addPlaceholder(new BalanceStoragePlaceholder());
+
+    addPlaceholder(new CurrencyNamePlaceholder());
+    addPlaceholder(new CurrencyPrecisionPlaceholder());
+    addPlaceholder(new CurrencySymbolPlaceholder());
+    addPlaceholder(new CurrencyTestPlaceholder());
+    addPlaceholder(new CurrencyTypePlaceholder());
+
+    addPlaceholder(new InfoCreatedPlaceholder());
+    addPlaceholder(new InfoIDPlaceholder());
+    addPlaceholder(new InfoStatusPlaceholder());
+    addPlaceholder(new InfoTypePlaceholder());
+
+    addPlaceholder(new MISCDebugPlaceholder());
+    addPlaceholder(new MISCVersionPlaceholder());
+
+    addPlaceholder(new PermissionBalancePlaceholder());
+    addPlaceholder(new PermissionDepositPlaceholder());
+    addPlaceholder(new PermissionInvitePlaceholder());
+    addPlaceholder(new PermissionTransferPlaceholder());
+    addPlaceholder(new PermissionWithdrawPlaceholder());
+
+    addPlaceholder(new TopPosAccountPlaceholder());
+    addPlaceholder(new TopPosBalancePlaceholder());
+    addPlaceholder(new TopPosHolderPlaceholder());
+    addPlaceholder(new TopPosPlaceholder());
+
+    addPlaceholder(new TransactionCurRegPlaceholder());
+    addPlaceholder(new TransactionCurrencyPlaceholder());
+    addPlaceholder(new TransactionPlaceholder());
+    addPlaceholder(new TransactionRegionPlaceholder());
   }
 
   /**
@@ -78,9 +163,11 @@ public class PlaceholderManager {
   }
 
   /**
-   * Parses the transaction type string and determines the corresponding identifier for the transaction.
+   * Parses the transaction type string and determines the corresponding identifier for the
+   * transaction.
    *
    * @param type The transaction type string to parse
+   *
    * @return The corresponding identifier for the transaction type
    */
   public static String parseTransactionType(@NotNull final String type) {
@@ -95,12 +182,13 @@ public class PlaceholderManager {
   /**
    * Performs a transaction on the specified account.
    *
-   * @param account The account involved in the transaction
-   * @param type The type of transaction to be performed
+   * @param account  The account involved in the transaction
+   * @param type     The type of transaction to be performed
    * @param modifier The modifier for adjusting holdings during the transaction
-   * @param message A flag indicating whether a message should be sent for the transaction
+   * @param message  A flag indicating whether a message should be sent for the transaction
    *
-   * @return An Optional containing a receipt of the transaction if successful, otherwise empty Optional
+   * @return An Optional containing a receipt of the transaction if successful, otherwise empty
+   * Optional
    */
   public static Optional<Receipt> transact(final Account account, final String type,
                                            final HoldingsModifier modifier, final boolean message) {
@@ -159,8 +247,8 @@ public class PlaceholderManager {
    * @return A string representation of the parsed holdings based on the given criteria
    */
   public static final String parseHoldings(@NotNull final Account account, @NotNull final String region,
-                                     final @NotNull UUID currency, @NotNull final String id,
-                                     final boolean formatted) {
+                                           final @NotNull UUID currency, @NotNull final String id,
+                                           final boolean formatted) {
 
     final Identifier parsedID = parseID(id);
 

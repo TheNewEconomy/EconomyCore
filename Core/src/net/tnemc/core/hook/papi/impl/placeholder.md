@@ -40,14 +40,14 @@
 
 ## Leaderboard Placeholders
 
-- [ ] tne_toppos0_$currency1
-- [ ] tne_toppos_$currency_$account3
-- [ ] tne_toppos_$currency_position_$number4
-- [ ] tne_toppos_$currency_position_$number_$account5
-- [ ] tne_topbal_$currency_$position
-- [ ] tne_topbal_$currency_$position_formatted
-- [ ] tne_topholder_$currency_position
-- [ ] tne_topholder_$currency_position_formatted
+- [X] tne_toppos_$currency
+- [X] tne_toppos_$currency_$account
+- [X] tne_toppos_$currency_account_$number
+- [X] tne_toppos_$currency_account_$number_$account
+- [X] tne_toppos_$currency_holder_$number
+- [X] tne_toppos_$currency_holder_$number_$account
+- [X] tne_toppos_$currency_balance_$number
+- [X] tne_toppos_$currency_balance_$number_$account
 
 ## Account Information Placeholders
 

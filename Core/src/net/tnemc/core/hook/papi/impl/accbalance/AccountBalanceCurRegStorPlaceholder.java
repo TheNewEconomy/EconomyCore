@@ -57,7 +57,7 @@ public class AccountBalanceCurRegStorPlaceholder implements Placeholder {
   public boolean applies(final String[] params) {
 
     return params[0].equalsIgnoreCase("accbalance") && params.length >= 4
-           && params[1].equalsIgnoreCase("curregstor");
+           && params[2].equalsIgnoreCase("curregstor");
   }
 
   /**

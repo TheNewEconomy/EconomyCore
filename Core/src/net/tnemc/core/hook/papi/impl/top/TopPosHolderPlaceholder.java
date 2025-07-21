@@ -1,4 +1,4 @@
-package net.tnemc.core.hook.papi.impl.accbalance;
+package net.tnemc.core.hook.papi.impl.top;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2025 Daniel "creatorfromhell" Vidmar
@@ -17,23 +17,25 @@ package net.tnemc.core.hook.papi.impl.accbalance;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.hook.papi.Placeholder;
-import net.tnemc.core.manager.PlaceholderManager;
+import net.tnemc.plugincore.core.io.message.MessageData;
+import net.tnemc.plugincore.core.io.message.MessageHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
 /**
- * BalancePlaceholder
+ * TopPosPlaceholder
  *
  * @author creatorfromhell
  * @since 0.1.4.0
  */
-public class AccountBalanceCurRegPlaceholder implements Placeholder {
+public class TopPosHolderPlaceholder implements Placeholder {
 
   /**
    * Retrieves the identifier associated with this symbol.
@@ -43,7 +45,7 @@ public class AccountBalanceCurRegPlaceholder implements Placeholder {
   @Override
   public String identifier() {
 
-    return "tne_accbalance_curreg";
+    return "tne_toppos_holder";
   }
 
   /**
@@ -56,8 +58,8 @@ public class AccountBalanceCurRegPlaceholder implements Placeholder {
   @Override
   public boolean applies(final String[] params) {
 
-    return params[0].equalsIgnoreCase("accbalance") && params.length >= 4
-           && params[2].equalsIgnoreCase("curreg");
+    return params[0].equalsIgnoreCase("toppos") && params.length >= 4
+           && params[2].equalsIgnoreCase("holder");
   }
 
   /**
@@ -71,23 +73,35 @@ public class AccountBalanceCurRegPlaceholder implements Placeholder {
   @Override
   public @Nullable String onRequest(@Nullable final String account, @NotNull final String[] params) {
 
-    final Optional<Account> accountOptional = TNECore.eco().account().findAccount(params[1]);
+    if(account == null && params.length < 5) {
+      return null;
+    }
+
+    final String accFinal = (account == null)? params[4] : account;
+
+    final Optional<Account> accountOptional = TNECore.eco().account().findAccount(accFinal);
 
     if(accountOptional.isEmpty()) {
       return null;
     }
 
-    final Optional<Currency> currency = TNECore.eco().currency().find(params[3]);
+    final Optional<Currency> currency = TNECore.eco().currency().find(params[1]);
     if(currency.isEmpty()) {
 
       return null;
     }
+    final int pos;
+    try {
+      pos = Integer.parseInt(params[3]);
+    } catch(final Exception ignore) {
+      return null;
+    }
 
-    final String region = TNECore.eco().region().resolve(params[4]);
-    final boolean formatted = (params[params.length - 1].equalsIgnoreCase("formatted"));
+    final MessageData message = TNECore.eco().getTopManager().getFor(pos, currency.get().getUid());
+    if(message.getReplacements().getOrDefault("$account", "no one").equalsIgnoreCase("no one")) {
+      return null;
+    }
 
-    return PlaceholderManager.parseHoldings(accountOptional.get(), region,
-                                            currency.get().getUid(),
-                                            "all", formatted);
+    return LegacyComponentSerializer.legacySection().serialize(MessageHandler.grab(message, accountOptional.get().getIdentifier()));
   }
 }
