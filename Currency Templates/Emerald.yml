@@ -92,6 +92,9 @@ Item:
   #Whether to import exist item currencies into a player's balance with the first balance check for this currency.
   ImportItems: true
 
+  #Whether we should block crafting with this currency
+  BlockCrafting: false
+
 #All configurations related to formatting.
 Formatting:
 

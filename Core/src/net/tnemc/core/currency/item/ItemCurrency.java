@@ -21,6 +21,7 @@ package net.tnemc.core.currency.item;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.Denomination;
 
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -35,6 +36,7 @@ public class ItemCurrency extends Currency {
   protected boolean enderChest;
   protected boolean enderFill;
   protected boolean importItem;
+  protected boolean blockCraft;
 
   public ItemCurrency(final String identifier) {
 
@@ -43,14 +45,18 @@ public class ItemCurrency extends Currency {
     this.enderChest = true;
     this.enderFill = true;
     this.importItem = true;
+    this.blockCraft = false;
   }
 
   public Optional<ItemDenomination> getDenominationByMaterial(final String material) {
 
     for(final Denomination denom : getDenominations().values()) {
+
       final ItemDenomination item = (ItemDenomination)denom;
 
-      if(item.material().equalsIgnoreCase(material)) {
+      if(item.material().equalsIgnoreCase(material)
+         || item.material().toLowerCase(Locale.ROOT).contains(material.toLowerCase(Locale.ROOT))
+         || material.toLowerCase(Locale.ROOT).contains(item.material().toLowerCase(Locale.ROOT))) {
         return Optional.of(item);
       }
     }
@@ -85,5 +91,15 @@ public class ItemCurrency extends Currency {
   public void setImportItem(final boolean importItem) {
 
     this.importItem = importItem;
+  }
+
+  public boolean blockCraft() {
+
+    return blockCraft;
+  }
+
+  public void blockCraft(final boolean blockCraft) {
+
+    this.blockCraft = blockCraft;
   }
 }

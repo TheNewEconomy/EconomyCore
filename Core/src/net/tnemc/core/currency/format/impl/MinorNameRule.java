@@ -44,12 +44,12 @@ public class MinorNameRule implements FormatRule {
     /*
     [15:52:47 WARN]: java.lang.NullPointerException: Cannot invoke "java.lang.CharSequence.toString()" because "replacement" is null
 [15:52:47 WARN]:        at java.base/java.lang.String.replace(String.java:2956)
-[15:52:47 WARN]:        at BukkitCore-0.1.3.0-SNAPSHOT-8.jar//net.tnemc.core.currency.format.impl.MinorNameRule.lambda$format$0(MinorNameRule.java:42)
+[15:52:47 WARN]:        at BukkitCore-0.1.3.0-SNAPSHOT-9.jar//net.tnemc.core.currency.format.impl.MinorNameRule.lambda$format$0(MinorNameRule.java:42)
 [15:52:47 WARN]:        at java.base/java.util.Optional.map(Optional.java:260)
-[15:52:47 WARN]:        at BukkitCore-0.1.3.0-SNAPSHOT-8.jar//net.tnemc.core.currency.format.impl.MinorNameRule.format(MinorNameRule.java:42)
-[15:52:47 WARN]:        at BukkitCore-0.1.3.0-SNAPSHOT-8.jar//net.tnemc.core.currency.format.CurrencyFormatter.format(CurrencyFormatter.java:77)
-[15:52:47 WARN]:        at BukkitCore-0.1.3.0-SNAPSHOT-8.jar//net.tnemc.core.command.MoneyCommand.onSet(MoneyCommand.java:299)
-[15:52:47 WARN]:        at BukkitCore-0.1.3.0-SNAPSHOT-8.jar//net.tnemc.bukkit.command.MoneyCommand.onSet(MoneyCom
+[15:52:47 WARN]:        at BukkitCore-0.1.3.0-SNAPSHOT-9.jar//net.tnemc.core.currency.format.impl.MinorNameRule.format(MinorNameRule.java:42)
+[15:52:47 WARN]:        at BukkitCore-0.1.3.0-SNAPSHOT-9.jar//net.tnemc.core.currency.format.CurrencyFormatter.format(CurrencyFormatter.java:77)
+[15:52:47 WARN]:        at BukkitCore-0.1.3.0-SNAPSHOT-9.jar//net.tnemc.core.command.MoneyCommand.onSet(MoneyCommand.java:299)
+[15:52:47 WARN]:        at BukkitCore-0.1.3.0-SNAPSHOT-9.jar//net.tnemc.bukkit.command.MoneyCommand.onSet(MoneyCom
      */
 
 

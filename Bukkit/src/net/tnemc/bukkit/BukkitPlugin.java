@@ -23,6 +23,7 @@ import net.tnemc.bukkit.hook.economy.VaultUnlockedHook;
 import net.tnemc.bukkit.hook.misc.PAPIHook;
 import net.tnemc.bukkit.hook.misc.PlaceHolderRule;
 import net.tnemc.bukkit.listeners.entity.EntityKilledListener;
+import net.tnemc.bukkit.listeners.inventory.ItemCraftListener;
 import net.tnemc.bukkit.listeners.player.PlayerCloseInventoryListener;
 import net.tnemc.bukkit.listeners.player.PlayerExperienceGainListener;
 import net.tnemc.bukkit.listeners.player.PlayerInteractListener;
@@ -105,6 +106,9 @@ public class BukkitPlugin {
 
     //World Listeners
     Bukkit.getPluginManager().registerEvents(new WorldLoadListener(), plugin);
+
+    //Inventory Listeners
+    Bukkit.getPluginManager().registerEvents(new ItemCraftListener(), plugin);
 
     //Register our service providers.
 

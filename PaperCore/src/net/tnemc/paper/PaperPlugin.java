@@ -34,6 +34,7 @@ import net.tnemc.paper.hook.economy.VaultHook;
 import net.tnemc.paper.hook.economy.VaultUnlockedHook;
 import net.tnemc.paper.hook.misc.PAPIHook;
 import net.tnemc.paper.listener.PlayerInteractListener;
+import net.tnemc.paper.listener.inventory.ItemCraftListener;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.ServerConnector;
 import net.tnemc.plugincore.paper.PaperPluginCore;
@@ -111,6 +112,9 @@ public class PaperPlugin {
 
     //World Listeners
     Bukkit.getPluginManager().registerEvents(new WorldLoadListener(), plugin);
+
+    //Inventory listeners
+    Bukkit.getPluginManager().registerEvents(new ItemCraftListener(), plugin);
 
     //Register our service providers.
 
