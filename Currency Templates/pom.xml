@@ -6,7 +6,7 @@
     <parent>
         <groupId>net.tnemc</groupId>
         <artifactId>TNE</artifactId>
-        <version>0.1.4.0-SNAPSHOT-9</version>
+        <version>0.1.4.0-SNAPSHOT-10</version>
     </parent>
 
     <artifactId>TNETemplates</artifactId>

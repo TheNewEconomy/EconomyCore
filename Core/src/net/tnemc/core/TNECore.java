@@ -102,7 +102,7 @@ public abstract class TNECore extends PluginEngine {
    */
   public static final String coreURL = "https://tnemc.net/files/module-version.xml";
   public static final String version = "0.1.4.0";
-  public static final String build = "SNAPSHOT-9";
+  public static final String build = "SNAPSHOT-10";
   protected static TNECore instance;
 
   /* Key Managers and Object instances utilized with TNE */
