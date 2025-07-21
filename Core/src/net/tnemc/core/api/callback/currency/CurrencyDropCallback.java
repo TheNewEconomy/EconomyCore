@@ -34,9 +34,8 @@ import java.util.UUID;
 public class CurrencyDropCallback implements Callback {
 
   private final UUID player;
-  private Currency currency;
-
   private final Collection<AbstractItemStack<Object>> drops;
+  private Currency currency;
 
   public CurrencyDropCallback(final UUID player, final Currency currency, final Collection<AbstractItemStack<Object>> drops) {
 
@@ -66,13 +65,13 @@ public class CurrencyDropCallback implements Callback {
     return currency;
   }
 
-  public UUID getPlayer() {
-
-    return player;
-  }
-
   public void setCurrency(final Currency currency) {
 
     this.currency = currency;
+  }
+
+  public UUID getPlayer() {
+
+    return player;
   }
 }

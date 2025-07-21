@@ -44,9 +44,8 @@ import java.util.function.Consumer;
  */
 public class Transaction {
 
-  private TransactionProcessor processor;
-
   private final String type;
+  private TransactionProcessor processor;
   private ActionSource source;
 
   private TransactionParticipant from;
@@ -67,6 +66,18 @@ public class Transaction {
   }
 
   /**
+   * Used to create a new Transaction object from the specified transaction type.
+   *
+   * @param type The identifier of the transaction type.
+   *
+   * @return An instance of the Transaction object created with the specified type.
+   */
+  public static Transaction of(final String type) {
+
+    return new Transaction(type);
+  }
+
+  /**
    * Used to determine if the "to" participant is losing funds in this transaction.
    *
    * @return True if the "to" participant is losing funds, otherwise false.
@@ -84,18 +95,6 @@ public class Transaction {
   public boolean isFromLosing() {
 
     return from != null && modifierFrom.isRemoval();
-  }
-
-  /**
-   * Used to create a new Transaction object from the specified transaction type.
-   *
-   * @param type The identifier of the transaction type.
-   *
-   * @return An instance of the Transaction object created with the specified type.
-   */
-  public static Transaction of(final String type) {
-
-    return new Transaction(type);
   }
 
   /**

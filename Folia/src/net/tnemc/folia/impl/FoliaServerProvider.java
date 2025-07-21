@@ -127,10 +127,12 @@ public class FoliaServerProvider implements ServerConnector {
 
   @Override
   public Set<String> onlinePlayersList() {
+
     return Bukkit.getOnlinePlayers().stream()
             .map(Player::getName)
             .collect(Collectors.toSet());
   }
+
 
   /**
    * Used to get the amount of online players.
@@ -172,6 +174,11 @@ public class FoliaServerProvider implements ServerConnector {
       return new FoliaPlayerProvider(playerObj);
     }
     return null;
+  }
+
+  @Override
+  public void createCustomTexture(final UUID identifier, final String username, final String texture) {
+
   }
 
   /**

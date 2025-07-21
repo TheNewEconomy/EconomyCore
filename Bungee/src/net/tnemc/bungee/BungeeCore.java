@@ -34,6 +34,11 @@ public class BungeeCore extends Plugin {
   private static BungeeCore instance;
   private MessageManager manager;
 
+  public static BungeeCore instance() {
+
+    return instance;
+  }
+
   @Override
   public void onEnable() {
 
@@ -46,10 +51,5 @@ public class BungeeCore extends Plugin {
     getProxy().registerChannel("tne:message");
     getProxy().getPluginManager().registerListener(this, new MessageListener());
     getProxy().getPluginManager().registerListener(this, new PlayerConnectListener());
-  }
-
-  public static BungeeCore instance() {
-
-    return instance;
   }
 }

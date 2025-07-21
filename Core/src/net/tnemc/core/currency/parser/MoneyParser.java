@@ -38,6 +38,7 @@ public class MoneyParser {
   private final LinkedHashMap<String, ParseRule> rules = new LinkedHashMap<>();
 
   public MoneyParser() {
+
     addRule(new RomanParseRule()); // X, IV - works without symbol attached
     rules.put("roman2", new RomanParseRule());
     addRule(new FractionParseRule()); // 1/2 -> .50 - doesn't work
@@ -53,6 +54,7 @@ public class MoneyParser {
    * @param rule The ParseRule object to add to the rules collection.
    */
   public void addRule(final ParseRule rule) {
+
     rules.put(rule.identifier(), rule);
   }
 
@@ -60,10 +62,12 @@ public class MoneyParser {
    * Parses the input string based on the specified rules for the given region.
    *
    * @param region The region to parse the input for.
-   * @param input The input string to be parsed.
+   * @param input  The input string to be parsed.
+   *
    * @return A ParseMoney object containing the parsed information.
    */
   public ParseMoney parse(final String region, final String input) {
+
     final ParseMoney parseMoney = new ParseMoney(region);
 
     String parsedInput = input;
@@ -78,10 +82,12 @@ public class MoneyParser {
    * Parses the input string based on the specified rules for the given region.
    *
    * @param region The region to parse the input for.
-   * @param input The input string to be parsed.
+   * @param input  The input string to be parsed.
+   *
    * @return A ParseMoney object containing the parsed information.
    */
   public ParseMoney parse(final String region, final Currency currency, final String input) {
+
     final ParseMoney parseMoney = new ParseMoney(region, currency);
 
     String parsedInput = input;

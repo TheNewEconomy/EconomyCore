@@ -307,9 +307,11 @@ public class CurrencyManager {
    * Finds a Currency object based on the symbol provided.
    *
    * @param symbol The symbol of the currency to search for.
+   *
    * @return An Optional containing the Currency object if found, otherwise an empty Optional.
    */
   public Optional<Currency> findCurrencyBySymbol(@Nullable final String symbol) {
+
     if(symbol == null) {
 
       return Optional.empty();
@@ -347,6 +349,31 @@ public class CurrencyManager {
         }
       }
       return Optional.empty();
+    }
+  }
+
+  /**
+   * Used to find a {@link Currency currency} based on its user-friendly identifier.
+   *
+   * @param identifier The identifier to look for.
+   *
+   * @return An Optional containing the currency if it exists, otherwise an empty Optional.
+   */
+  public Currency findOrDefault(final String identifier) {
+
+    try {
+
+      return findOrDefault(UUID.fromString(identifier));
+    } catch(final Exception ignore) {
+
+      for(final Map.Entry<String, UUID> entry : curIDMap.entrySet()) {
+
+        if(entry.getKey().equalsIgnoreCase(identifier)) {
+
+          return currencies.get(entry.getValue());
+        }
+      }
+      return defaultCurrency();
     }
   }
 
@@ -422,6 +449,7 @@ public class CurrencyManager {
   }
 
   public MoneyParser parser() {
+
     return parser;
   }
 

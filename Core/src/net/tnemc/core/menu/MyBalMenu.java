@@ -140,6 +140,27 @@ public class MyBalMenu extends Menu {
     addPage(noteAmountPage);
   }
 
+  private static Optional<Receipt> processTransaction(final PlayerProvider player, final Transaction transaction, final String modifiedAccount, final BigDecimal modifier) {
+
+    try {
+      final TransactionResult result = transaction.process();
+
+      if(!result.isSuccessful()) {
+        final MessageData data = new MessageData(result.getMessage());
+        data.addReplacement("$player", modifiedAccount);
+        data.addReplacement("$amount", modifier.toPlainString());
+
+        player.message(data);
+        return Optional.empty();
+      }
+
+      return result.getReceipt();
+    } catch(final InvalidTransactionException e) {
+      e.printStackTrace();
+    }
+    return Optional.empty();
+  }
+
   public void handleMainPage(final PageOpenCallback callback) {
 
     final Optional<Account> account = TNECore.eco().account().findAccount(callback.getPlayer().identifier());
@@ -697,26 +718,5 @@ public class MyBalMenu extends Menu {
         }
       }
     }
-  }
-
-  private static Optional<Receipt> processTransaction(final PlayerProvider player, final Transaction transaction, final String modifiedAccount, final BigDecimal modifier) {
-
-    try {
-      final TransactionResult result = transaction.process();
-
-      if(!result.isSuccessful()) {
-        final MessageData data = new MessageData(result.getMessage());
-        data.addReplacement("$player", modifiedAccount);
-        data.addReplacement("$amount", modifier.toPlainString());
-
-        player.message(data);
-        return Optional.empty();
-      }
-
-      return result.getReceipt();
-    } catch(final InvalidTransactionException e) {
-      e.printStackTrace();
-    }
-    return Optional.empty();
   }
 }

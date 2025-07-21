@@ -139,6 +139,13 @@ public class HoldingsEntry {
     return amount;
   }
 
+  public void setAmount(final BigDecimal amount) {
+
+    this.amount = amount;
+    final Optional<Currency> cur = currency();
+    monetary = new Monetary(amount, cur.map(Currency::getDecimalPlaces).orElse(2));
+  }
+
   public Monetary asMonetary() {
 
     if(monetary != null) {
@@ -147,13 +154,6 @@ public class HoldingsEntry {
     final Optional<Currency> cur = currency();
     monetary = new Monetary(amount, cur.map(Currency::getDecimalPlaces).orElse(2));
     return monetary;
-  }
-
-  public void setAmount(final BigDecimal amount) {
-
-    this.amount = amount;
-    final Optional<Currency> cur = currency();
-    monetary = new Monetary(amount, cur.map(Currency::getDecimalPlaces).orElse(2));
   }
 
   public Identifier getHandler() {

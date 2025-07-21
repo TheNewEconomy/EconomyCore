@@ -89,12 +89,20 @@ public class SpongeCore extends TNECore {
     metrics = metricsFactory.make(19246);
   }
 
+  public static ResourceKey key(final String key) {
+
+    final String[] split = key.split(":");
+
+    final String namespace = (split.length >= 2)? split[0] : "minecraft";
+    final String value = (split.length >= 2)? split[1] : split[0];
+    return ResourceKey.of(namespace, value);
+  }
+
   @Override
   public void registerMenuHandler() {
 
     this.menuHandler = new Sponge8MenuHandler(container, true);
   }
-
 
   @Listener
   public void onConstruct(final ConstructPluginEvent event) {
@@ -185,14 +193,5 @@ public class SpongeCore extends TNECore {
   public boolean hasConsent() {
 
     return this.metricsConfigManager.collectionState(this.container).asBoolean();
-  }
-
-  public static ResourceKey key(final String key) {
-
-    final String[] split = key.split(":");
-
-    final String namespace = (split.length >= 2)? split[0] : "minecraft";
-    final String value = (split.length >= 2)? split[1] : split[0];
-    return ResourceKey.of(namespace, value);
   }
 }

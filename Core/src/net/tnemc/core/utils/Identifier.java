@@ -30,11 +30,6 @@ import java.util.Optional;
  */
 public record Identifier(String plugin, String id) {
 
-  public String asID() {
-
-    return plugin + ":" + id;
-  }
-
   public static Identifier fromID(final String id) {
 
     final Optional<Identifier> idObj = EconomyManager.instance().findID(id);
@@ -48,6 +43,11 @@ public record Identifier(String plugin, String id) {
     } else {
       return new Identifier("generic", split[0]);
     }
+  }
+
+  public String asID() {
+
+    return plugin + ":" + id;
   }
 
   /**

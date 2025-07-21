@@ -36,7 +36,8 @@ public interface ParseRule {
    * Applies the given ParseMoney object to the input string according to the specified rules.
    *
    * @param parseMoney The ParseMoney object to apply the rules to.
-   * @param input The input string to apply the rules on.
+   * @param input      The input string to apply the rules on.
+   *
    * @return A String after applying the rules to the input string based on the ParseMoney object.
    */
   String apply(ParseMoney parseMoney, String input);

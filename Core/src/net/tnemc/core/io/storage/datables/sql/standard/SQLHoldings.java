@@ -156,9 +156,9 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
       PluginCore.log().debug("SQLHoldings-loadAll-Account ID:" + identifier, DebugLevel.DEVELOPER);
       try(final ResultSet result = sql.executeQuery(tne.loadHoldings(),
                                                     new Object[]{
-                                                      identifier,
-                                                      MainConfig.yaml().getString("Core.Server.Name")
-                                              })) {
+                                                            identifier,
+                                                            MainConfig.yaml().getString("Core.Server.Name")
+                                                    })) {
         while(result.next()) {
 
           final String currency = result.getString("currency");

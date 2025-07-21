@@ -40,6 +40,21 @@ import java.util.Set;
  */
 public class MoneyResolver implements ParameterType<CommandActor, ParseMoney> {
 
+  public static String trimQuotes(final String input) {
+
+    if(input == null || input.length() < 2) return input;
+
+    final char first = input.charAt(0);
+    final char last = input.charAt(input.length() - 1);
+
+    // Check if first and last characters are matching quotes
+    if((first == '\'' || first == '"') && first == last) {
+      return input.substring(1, input.length() - 1);
+    }
+
+    return input;
+  }
+
   @Override
   public ParseMoney parse(@NotNull final MutableStringStream input, @NotNull final ExecutionContext<CommandActor> context) {
 
@@ -53,7 +68,8 @@ public class MoneyResolver implements ParameterType<CommandActor, ParseMoney> {
 
   @Override
   public @NotNull SuggestionProvider<@NotNull CommandActor> defaultSuggestions() {
-    return context ->{
+
+    return context->{
 
       final String partial = trimQuotes(context.input().peekString().toLowerCase());
 
@@ -98,19 +114,5 @@ public class MoneyResolver implements ParameterType<CommandActor, ParseMoney> {
 
       return new ArrayList<>(suggestions);
     };
-  }
-
-  public static String trimQuotes(final String input) {
-    if (input == null || input.length() < 2) return input;
-
-    final char first = input.charAt(0);
-    final char last = input.charAt(input.length() - 1);
-
-    // Check if first and last characters are matching quotes
-    if ((first == '\'' || first == '"') && first == last) {
-      return input.substring(1, input.length() - 1);
-    }
-
-    return input;
   }
 }

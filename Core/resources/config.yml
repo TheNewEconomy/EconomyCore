@@ -3,11 +3,15 @@
 # License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 Core:
 
-  config-version: 6
+  config-version: 7
 
   #Cracked Server? Set this to true. May cause data issues as spigot/paper UUIDs are unpredictable.
   #Do not change this unless you know what you're doing.
   Offline: false
+
+  #This allows using the tne_tx placeholders, which can be used to modify account balances.
+  #Only enable if you're able to confirm what plugins utilize these placeholders.
+  PlaceholderTransactions: false
 
   #Configurations relating to debugging
   Debugging:

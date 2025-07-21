@@ -95,10 +95,12 @@ conveying.
 
 An interactive user interface displays "Appropriate Legal Notices" to the extent that it includes a
 convenient and prominently visible feature that (1) displays an appropriate copyright notice, and (
+
 2) tells the user that there is no warranty for the work (except to the extent that warranties are
-provided), that licensees may convey the work under this License, and how to view a copy of this
-License. If the interface presents a list of user commands or options, such as a menu, a prominent
-item in the list meets this criterion.
+   provided), that licensees may convey the work under this License, and how to view a copy of this
+   License. If the interface presents a list of user commands or options, such as a menu, a
+   prominent
+   item in the list meets this criterion.
 
 1. Source Code.
    The "source code" for a work means the preferred form of the work for making modifications to

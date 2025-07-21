@@ -146,6 +146,12 @@ public class ItemDenomination extends Denomination {
     return lore;
   }
 
+  public void setLore(final List<Component> lore) {
+
+    this.lore.clear();
+    this.lore.addAll(lore);
+  }
+
   public LinkedList<String> getLoreAsString() {
 
     final LinkedList<String> loreAsString = new LinkedList<>();
@@ -154,12 +160,6 @@ public class ItemDenomination extends Denomination {
       loreAsString.add(MiniMessage.miniMessage().serialize(component));
     }
     return loreAsString;
-  }
-
-  public void setLore(final List<Component> lore) {
-
-    this.lore.clear();
-    this.lore.addAll(lore);
   }
 
   public int getCustomModel() {

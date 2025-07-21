@@ -28,6 +28,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * @since 0.1.2.0
  */
 public class MessageData {
+
   private final Queue<BacklogEntry> backlog = new ConcurrentLinkedQueue<>();
 
   private final String serverName;

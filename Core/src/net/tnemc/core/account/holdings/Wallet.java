@@ -115,20 +115,6 @@ public class Wallet {
   }
 
   /**
-   * Sets the holdings for the specified entry and in this wallet.
-   *
-   * @param entry The entry to set in this wallet.
-   */
-  public void setHoldings(final @NotNull HoldingsEntry entry) {
-
-    final RegionHoldings regionHoldings = holdings.getOrDefault(entry.getRegion(), new RegionHoldings());
-
-    regionHoldings.setHoldingsEntry(entry, entry.getHandler());
-
-    holdings.put(entry.getRegion(), regionHoldings);
-  }
-
-  /**
    * Used to modify holdings within this wallet. If the wallet has no holdings for the region,
    * currency and type it will set the holdings to the modifier.
    *
@@ -264,5 +250,19 @@ public class Wallet {
   public Map<String, RegionHoldings> getHoldings() {
 
     return holdings;
+  }
+
+  /**
+   * Sets the holdings for the specified entry and in this wallet.
+   *
+   * @param entry The entry to set in this wallet.
+   */
+  public void setHoldings(final @NotNull HoldingsEntry entry) {
+
+    final RegionHoldings regionHoldings = holdings.getOrDefault(entry.getRegion(), new RegionHoldings());
+
+    regionHoldings.setHoldingsEntry(entry, entry.getHandler());
+
+    holdings.put(entry.getRegion(), regionHoldings);
   }
 }

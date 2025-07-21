@@ -23,6 +23,7 @@ import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.menu.icons.shared.PreviousPageIcon;
+import net.tnemc.item.AbstractItemStack;
 import net.tnemc.item.providers.SkullProfile;
 import net.tnemc.menu.core.builder.IconBuilder;
 import net.tnemc.menu.core.callbacks.page.PageOpenCallback;
@@ -135,11 +136,16 @@ public class AccountSelectionPage {
 
         } catch(final Exception ignore) { }
 
+        AbstractItemStack<?> stack = PluginCore.server().stackBuilder().of("PLAYER_HEAD", 1)
+                .customName(Component.text(entry.getValue().getName()))
+                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Account.Select"), id)));
 
-        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PLAYER_HEAD", 1)
-                                                           .customName(Component.text(entry.getValue().getName()))
-                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Account.Select"), id)))
-                                                           .profile(profile))
+        if(profile != null) {
+          stack = stack.profile(profile);
+        }
+
+
+        callback.getPage().addIcon(new IconBuilder(stack)
                                            .withActions(new DataAction(accountDataID + "_ID", entry.getKey()),
                                                         new DataAction(accountDataID + "_NAME", entry.getValue().getName()),
                                                         new SwitchPageAction(returnMenu, returnPage))

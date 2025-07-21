@@ -54,6 +54,11 @@ public class PaperCore extends TNECore {
     this.plugin = plugin;
   }
 
+  public static PaperCore instance() {
+
+    return (PaperCore)TNECore.instance();
+  }
+
   @Override
   public void registerMenuHandler() {
 
@@ -121,11 +126,6 @@ public class PaperCore extends TNECore {
   public BukkitItemCalculations itemCalculations() {
 
     return new BukkitItemCalculations();
-  }
-
-  public static PaperCore instance() {
-
-    return (PaperCore)TNECore.instance();
   }
 
   public JavaPlugin getPlugin() {

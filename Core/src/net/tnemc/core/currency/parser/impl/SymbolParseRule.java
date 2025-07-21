@@ -49,6 +49,7 @@ public class SymbolParseRule implements ParseRule {
 
   @Override
   public String apply(final ParseMoney parseMoney, final String input) {
+
     final Matcher matcher = Pattern.compile("^([^0-9]+)").matcher(input);
     if(matcher.find()) {
 

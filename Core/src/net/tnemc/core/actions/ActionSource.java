@@ -33,6 +33,18 @@ import java.util.UUID;
  */
 public interface ActionSource {
 
+  static ActionSource create(final String name, final String type) {
+
+    if(type.toLowerCase(Locale.ROOT).equals("player")) {
+      try {
+        return new PlayerSource(UUID.fromString(name));
+      } catch(final Exception ignore) { }
+    } else {
+      return new PluginSource(name);
+    }
+    return new PluginSource(name);
+  }
+
   /**
    * Used to get the name of the source of the action.
    *
@@ -56,17 +68,5 @@ public interface ActionSource {
   default String asString() {
 
     return type() + " " + name();
-  }
-
-  static ActionSource create(final String name, final String type) {
-
-    if(type.toLowerCase(Locale.ROOT).equals("player")) {
-      try {
-        return new PlayerSource(UUID.fromString(name));
-      } catch(Exception ignore) { }
-    } else {
-      return new PluginSource(name);
-    }
-    return new PluginSource(name);
   }
 }

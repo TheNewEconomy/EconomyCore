@@ -53,6 +53,11 @@ public class BukkitCore extends TNECore {
     this.plugin = plugin;
   }
 
+  public static BukkitCore instance() {
+
+    return (BukkitCore)TNECore.instance();
+  }
+
   @Override
   public void registerMenuHandler() {
 
@@ -124,11 +129,6 @@ public class BukkitCore extends TNECore {
   public BukkitItemCalculations itemCalculations() {
 
     return new BukkitItemCalculations();
-  }
-
-  public static BukkitCore instance() {
-
-    return (BukkitCore)TNECore.instance();
   }
 
   public JavaPlugin getPlugin() {

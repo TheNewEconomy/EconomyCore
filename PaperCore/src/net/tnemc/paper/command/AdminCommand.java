@@ -62,6 +62,115 @@ import java.util.UUID;
 @Description("Admin.Main.Description")
 public class AdminCommand {
 
+  public static boolean restoreOld(@Nullable final Integer extraction) {
+
+    final File file = new File(PluginCore.directory(), "extracted.yml");
+
+    if(!file.exists()) {
+
+      PluginCore.log().inform("The extraction file doesn't exist.", DebugLevel.OFF);
+      return false;
+    }
+    YamlDocument extracted = null;
+    try {
+      extracted = YamlDocument.create(file);
+    } catch(final Exception e) {
+      PluginCore.log().error("Failed load extraction file for writing.", e, DebugLevel.OFF);
+    }
+
+    if(extracted == null) {
+      PluginCore.log().inform("The extraction file doesn't exist.", DebugLevel.OFF);
+      return false;
+    }
+
+    if(extracted.contains("Accounts")) {
+      final Set<Object> accounts = extracted.getSection("Accounts").getKeys();
+
+      final int frequency = (int)(accounts.size() * 0.10);
+      int number = 1;
+
+      final boolean recode = extracted.contains("Version");
+
+      for(final Object nameObj : accounts) {
+
+        final String name = (String)nameObj;
+        final String username = name.replaceAll("\\!", "\\.").replaceAll("\\@", "-").replaceAll("\\%", "_");
+        boolean nonPlayer = false;
+
+        UUID id = get(username);
+        if(id == null) {
+          nonPlayer = true;
+          id = UUID.randomUUID();
+        }
+
+        final AccountAPIResponse response = TNECore.eco().account().createAccount(id.toString(), username, nonPlayer);
+        if(response.getAccount().isEmpty()) {
+          PluginCore.log().inform("Couldn't create account for " + username + ". Reason: " + response.getResponse().response(), DebugLevel.OFF);
+          continue;
+        }
+
+        final Set<Object> regions = extracted.getSection("Accounts." + name + ".Balances").getKeys();
+        for(final Object regionObj : regions) {
+
+          final String region = (String)regionObj;
+          final Set<Object> currencies = extracted.getSection("Accounts." + name + ".Balances." + region).getKeys();
+          for(final Object currencyNameObj : currencies) {
+
+            final String currency = (String)currencyNameObj;
+            if(!recode) {
+              final String finalCurrency = (currency.equalsIgnoreCase("default"))? TNECore.eco().currency().defaultCurrency().getIdentifier() : currency;
+              final Optional<Currency> cur = TNECore.eco().currency().find(finalCurrency);
+
+              final Currency currencyObj = cur.orElseGet(()->TNECore.eco().currency().defaultCurrency(TNECore.eco().region().resolve(region)));
+
+              final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name + ".Balances." + region + "." + currency));
+
+              response.getAccount().get().setHoldings(new HoldingsEntry(TNECore.eco().region().resolve(region), currencyObj.getUid(),
+                                                                        amount, EconomyManager.NORMAL), TNECore.eco().getFor(currencyObj, currencyObj.type()).get(0).identifier());
+            } else {
+
+              final Set<Object> types = extracted.getSection("Accounts." + name + ".Balances." + region + "." + currency).getKeys();
+              for(final Object typeObj : types) {
+
+                final String type = (String)typeObj;
+                final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name
+                                                                             + ".Balances." + region
+                                                                             + "." + currency + "."
+                                                                             + type));
+
+                response.getAccount().get().setHoldings(new HoldingsEntry(region, UUID.fromString(currency),
+                                                                          amount, Identifier.fromID(type)));
+              }
+            }
+            number++;
+            try {
+              final boolean message = (number % frequency == 0);
+
+              if(message) {
+                final int progress = (number * 100) / accounts.size();
+                PluginCore.log().inform("Restoration Progress: " + progress, DebugLevel.OFF);
+              }
+            } catch(final Exception ignore) { }
+          }
+        }
+      }
+      PluginCore.log().inform("Restoration has completed!", DebugLevel.OFF);
+    }
+
+    return true;
+  }
+
+  protected static UUID get(final String name) {
+
+    for(final OfflinePlayer player : Bukkit.getServer().getOfflinePlayers()) {
+      if(player.getName() == null) continue;
+      if(player.getName().equalsIgnoreCase(name)) {
+        return player.getUniqueId();
+      }
+    }
+    return null;
+  }
+
   //@DefaultFor({ "tne", "myeco", "ecomenu", "ecomin", "ecoadmin", "ecomanage", "theneweconomy" })
   @Subcommand({ "ecomenu", "menu", "myeco" })
   @Usage("Admin.MyEco.Arguments")
@@ -205,115 +314,5 @@ public class AdminCommand {
   public void version(final BukkitCommandActor sender) {
 
     net.tnemc.core.command.AdminCommand.onVersion(new PaperCMDSource(sender));
-  }
-
-
-  public static boolean restoreOld(@Nullable final Integer extraction) {
-
-    final File file = new File(PluginCore.directory(), "extracted.yml");
-
-    if(!file.exists()) {
-
-      PluginCore.log().inform("The extraction file doesn't exist.", DebugLevel.OFF);
-      return false;
-    }
-    YamlDocument extracted = null;
-    try {
-      extracted = YamlDocument.create(file);
-    } catch(final Exception e) {
-      PluginCore.log().error("Failed load extraction file for writing.", e, DebugLevel.OFF);
-    }
-
-    if(extracted == null) {
-      PluginCore.log().inform("The extraction file doesn't exist.", DebugLevel.OFF);
-      return false;
-    }
-
-    if(extracted.contains("Accounts")) {
-      final Set<Object> accounts = extracted.getSection("Accounts").getKeys();
-
-      final int frequency = (int)(accounts.size() * 0.10);
-      int number = 1;
-
-      final boolean recode = extracted.contains("Version");
-
-      for(final Object nameObj : accounts) {
-
-        final String name = (String)nameObj;
-        final String username = name.replaceAll("\\!", "\\.").replaceAll("\\@", "-").replaceAll("\\%", "_");
-        boolean nonPlayer = false;
-
-        UUID id = get(username);
-        if(id == null) {
-          nonPlayer = true;
-          id = UUID.randomUUID();
-        }
-
-        final AccountAPIResponse response = TNECore.eco().account().createAccount(id.toString(), username, nonPlayer);
-        if(response.getAccount().isEmpty()) {
-          PluginCore.log().inform("Couldn't create account for " + username + ". Reason: " + response.getResponse().response(), DebugLevel.OFF);
-          continue;
-        }
-
-        final Set<Object> regions = extracted.getSection("Accounts." + name + ".Balances").getKeys();
-        for(final Object regionObj : regions) {
-
-          final String region = (String)regionObj;
-          final Set<Object> currencies = extracted.getSection("Accounts." + name + ".Balances." + region).getKeys();
-          for(final Object currencyNameObj : currencies) {
-
-            final String currency = (String)currencyNameObj;
-            if(!recode) {
-              final String finalCurrency = (currency.equalsIgnoreCase("default"))? TNECore.eco().currency().defaultCurrency().getIdentifier() : currency;
-              final Optional<Currency> cur = TNECore.eco().currency().find(finalCurrency);
-
-              final Currency currencyObj = cur.orElseGet(()->TNECore.eco().currency().defaultCurrency(TNECore.eco().region().resolve(region)));
-
-              final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name + ".Balances." + region + "." + currency));
-
-              response.getAccount().get().setHoldings(new HoldingsEntry(TNECore.eco().region().resolve(region), currencyObj.getUid(),
-                                                                        amount, EconomyManager.NORMAL), TNECore.eco().getFor(currencyObj, currencyObj.type()).get(0).identifier());
-            } else {
-
-              final Set<Object> types = extracted.getSection("Accounts." + name + ".Balances." + region + "." + currency).getKeys();
-              for(final Object typeObj : types) {
-
-                final String type = (String)typeObj;
-                final BigDecimal amount = new BigDecimal(extracted.getString("Accounts." + name
-                                                                             + ".Balances." + region
-                                                                             + "." + currency + "."
-                                                                             + type));
-
-                response.getAccount().get().setHoldings(new HoldingsEntry(region, UUID.fromString(currency),
-                                                                          amount, Identifier.fromID(type)));
-              }
-            }
-            number++;
-            try {
-              final boolean message = (number % frequency == 0);
-
-              if(message) {
-                final int progress = (number * 100) / accounts.size();
-                PluginCore.log().inform("Restoration Progress: " + progress, DebugLevel.OFF);
-              }
-            } catch(final Exception ignore) { }
-          }
-        }
-      }
-      PluginCore.log().inform("Restoration has completed!", DebugLevel.OFF);
-    }
-
-    return true;
-  }
-
-  protected static UUID get(final String name) {
-
-    for(final OfflinePlayer player : Bukkit.getServer().getOfflinePlayers()) {
-      if(player.getName() == null) continue;
-      if(player.getName().equalsIgnoreCase(name)) {
-        return player.getUniqueId();
-      }
-    }
-    return null;
   }
 }
