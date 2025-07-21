@@ -252,7 +252,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(java.lang.String)">
 <h3>Transaction</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-62">Transaction</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-61">Transaction</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</span></div>
 </section>
 </li>
 </ul>
@@ -264,31 +264,9 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="isToLosing()">
-<h3>isToLosing</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-74">isToLosing</a></span>()</div>
-<div class="block">Used to determine if the "to" participant is losing funds in this transaction.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>True if the "to" participant is losing funds, otherwise false.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="isFromLosing()">
-<h3>isFromLosing</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-84">isFromLosing</a></span>()</div>
-<div class="block">Used to determine if the "from" participant is losing funds in this transaction.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>True if the "from" participant is losing funds, otherwise false.</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="of(java.lang.String)">
 <h3>of</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Transaction.html" title="class in net.tnemc.core.transaction">Transaction</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-96">of</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Transaction.html" title="class in net.tnemc.core.transaction">Transaction</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-75">of</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</span></div>
 <div class="block">Used to create a new Transaction object from the specified transaction type.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -299,9 +277,31 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="isToLosing()">
+<h3>isToLosing</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-85">isToLosing</a></span>()</div>
+<div class="block">Used to determine if the "to" participant is losing funds in this transaction.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>True if the "to" participant is losing funds, otherwise false.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isFromLosing()">
+<h3>isFromLosing</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-95">isFromLosing</a></span>()</div>
+<div class="block">Used to determine if the "from" participant is losing funds in this transaction.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>True if the "from" participant is losing funds, otherwise false.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="from(java.util.UUID,net.tnemc.core.account.holdings.modify.HoldingsModifier)">
 <h3>from</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Transaction.html" title="class in net.tnemc.core.transaction">Transaction</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-109">from</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;id,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Transaction.html" title="class in net.tnemc.core.transaction">Transaction</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-108">from</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;id,
  <a href="../account/holdings/modify/HoldingsModifier.html" title="class in net.tnemc.core.account.holdings.modify">HoldingsModifier</a>&nbsp;modifier)</span></div>
 <div class="block">Used to set the <a href="TransactionParticipant.html" title="class in net.tnemc.core.transaction"><code>from</code></a> participant.</div>
 <dl class="notes">
@@ -316,7 +316,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="from(net.tnemc.core.account.Account,net.tnemc.core.account.holdings.modify.HoldingsModifier)">
 <h3>from</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Transaction.html" title="class in net.tnemc.core.transaction">Transaction</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-124">from</a></span><wbr><span class="parameters">(<a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Transaction.html" title="class in net.tnemc.core.transaction">Transaction</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-123">from</a></span><wbr><span class="parameters">(<a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
  <a href="../account/holdings/modify/HoldingsModifier.html" title="class in net.tnemc.core.account.holdings.modify">HoldingsModifier</a>&nbsp;modifier)</span></div>
 <div class="block">Used to set the <a href="TransactionParticipant.html" title="class in net.tnemc.core.transaction"><code>from</code></a> participant.</div>
 <dl class="notes">
@@ -331,7 +331,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="to(java.util.UUID,net.tnemc.core.account.holdings.modify.HoldingsModifier)">
 <h3>to</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Transaction.html" title="class in net.tnemc.core.transaction">Transaction</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-218">to</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;id,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Transaction.html" title="class in net.tnemc.core.transaction">Transaction</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-217">to</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;id,
  <a href="../account/holdings/modify/HoldingsModifier.html" title="class in net.tnemc.core.account.holdings.modify">HoldingsModifier</a>&nbsp;modifier)</span></div>
 <div class="block">Used to set the <a href="TransactionParticipant.html" title="class in net.tnemc.core.transaction"><code>to</code></a> participant.</div>
 <dl class="notes">
@@ -346,7 +346,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="to(net.tnemc.core.account.Account,net.tnemc.core.account.holdings.modify.HoldingsModifier)">
 <h3>to</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Transaction.html" title="class in net.tnemc.core.transaction">Transaction</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-233">to</a></span><wbr><span class="parameters">(<a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Transaction.html" title="class in net.tnemc.core.transaction">Transaction</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-232">to</a></span><wbr><span class="parameters">(<a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
  <a href="../account/holdings/modify/HoldingsModifier.html" title="class in net.tnemc.core.account.holdings.modify">HoldingsModifier</a>&nbsp;modifier)</span></div>
 <div class="block">Used to set the <a href="TransactionParticipant.html" title="class in net.tnemc.core.transaction"><code>to</code></a> participant.</div>
 <dl class="notes">
@@ -361,7 +361,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="source(net.tnemc.core.actions.ActionSource)">
 <h3>source</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Transaction.html" title="class in net.tnemc.core.transaction">Transaction</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-329">source</a></span><wbr><span class="parameters">(<a href="../actions/ActionSource.html" title="interface in net.tnemc.core.actions">ActionSource</a>&nbsp;source)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Transaction.html" title="class in net.tnemc.core.transaction">Transaction</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-328">source</a></span><wbr><span class="parameters">(<a href="../actions/ActionSource.html" title="interface in net.tnemc.core.actions">ActionSource</a>&nbsp;source)</span></div>
 <div class="block">Used to set <a href="../actions/ActionSource.html" title="interface in net.tnemc.core.actions"><code>source</code></a> of this transaction.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -374,7 +374,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="admin(boolean)">
 <h3>admin</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Transaction.html" title="class in net.tnemc.core.transaction">Transaction</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-343">admin</a></span><wbr><span class="parameters">(boolean&nbsp;admin)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Transaction.html" title="class in net.tnemc.core.transaction">Transaction</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-342">admin</a></span><wbr><span class="parameters">(boolean&nbsp;admin)</span></div>
 <div class="block">Used to set this as an administrator performed transaction. This allows it to override certain
  things such as account statuses.</div>
 <dl class="notes">
@@ -388,7 +388,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="processor(net.tnemc.core.transaction.TransactionProcessor)">
 <h3>processor</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Transaction.html" title="class in net.tnemc.core.transaction">Transaction</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-357">processor</a></span><wbr><span class="parameters">(<a href="TransactionProcessor.html" title="interface in net.tnemc.core.transaction">TransactionProcessor</a>&nbsp;processor)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Transaction.html" title="class in net.tnemc.core.transaction">Transaction</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-356">processor</a></span><wbr><span class="parameters">(<a href="TransactionProcessor.html" title="interface in net.tnemc.core.transaction">TransactionProcessor</a>&nbsp;processor)</span></div>
 <div class="block">Used to set <a href="TransactionProcessor.html" title="interface in net.tnemc.core.transaction"><code>processor</code></a> of this transaction.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -402,7 +402,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="process(java.util.function.Consumer)">
 <h3>process</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-370">process</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="TransactionResult.html" title="class in net.tnemc.core.transaction">TransactionResult</a>&gt;&nbsp;resultConsumer)</span>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-369">process</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="TransactionResult.html" title="class in net.tnemc.core.transaction">TransactionResult</a>&gt;&nbsp;resultConsumer)</span>
              throws <span class="exceptions"><a href="../utils/exceptions/InvalidTransactionException.html" title="class in net.tnemc.core.utils.exceptions">InvalidTransactionException</a></span></div>
 <div class="block">Processes the transaction and sends the result to the
  <code>Result Handler</code>.</div>
@@ -416,7 +416,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="process()">
 <h3>process</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TransactionResult.html" title="class in net.tnemc.core.transaction">TransactionResult</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-384">process</a></span>()
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TransactionResult.html" title="class in net.tnemc.core.transaction">TransactionResult</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-383">process</a></span>()
                           throws <span class="exceptions"><a href="../utils/exceptions/InvalidTransactionException.html" title="class in net.tnemc.core.utils.exceptions">InvalidTransactionException</a></span></div>
 <div class="block">Processes the transaction and sends the result to the
  <code>Result Handler</code>.</div>
@@ -430,79 +430,79 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getFromAccount()">
 <h3>getFromAccount</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-430">getFromAccount</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-429">getFromAccount</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getToAccount()">
 <h3>getToAccount</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-439">getToAccount</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-438">getToAccount</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getProcessor()">
 <h3>getProcessor</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TransactionProcessor.html" title="interface in net.tnemc.core.transaction">TransactionProcessor</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-448">getProcessor</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TransactionProcessor.html" title="interface in net.tnemc.core.transaction">TransactionProcessor</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-447">getProcessor</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getType()">
 <h3>getType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-453">getType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-452">getType</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSource()">
 <h3>getSource</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../actions/ActionSource.html" title="interface in net.tnemc.core.actions">ActionSource</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-458">getSource</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../actions/ActionSource.html" title="interface in net.tnemc.core.actions">ActionSource</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-457">getSource</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFrom()">
 <h3>getFrom</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TransactionParticipant.html" title="class in net.tnemc.core.transaction">TransactionParticipant</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-463">getFrom</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TransactionParticipant.html" title="class in net.tnemc.core.transaction">TransactionParticipant</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-462">getFrom</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getTo()">
 <h3>getTo</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TransactionParticipant.html" title="class in net.tnemc.core.transaction">TransactionParticipant</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-468">getTo</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="TransactionParticipant.html" title="class in net.tnemc.core.transaction">TransactionParticipant</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-467">getTo</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getModifierTo()">
 <h3>getModifierTo</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../account/holdings/modify/HoldingsModifier.html" title="class in net.tnemc.core.account.holdings.modify">HoldingsModifier</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-473">getModifierTo</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../account/holdings/modify/HoldingsModifier.html" title="class in net.tnemc.core.account.holdings.modify">HoldingsModifier</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-472">getModifierTo</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getModifierFrom()">
 <h3>getModifierFrom</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../account/holdings/modify/HoldingsModifier.html" title="class in net.tnemc.core.account.holdings.modify">HoldingsModifier</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-478">getModifierFrom</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../account/holdings/modify/HoldingsModifier.html" title="class in net.tnemc.core.account.holdings.modify">HoldingsModifier</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-477">getModifierFrom</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isAdmin()">
 <h3>isAdmin</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-483">isAdmin</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-482">isAdmin</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isTrack()">
 <h3>isTrack</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-488">isTrack</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-487">isTrack</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setTrack(boolean)">
 <h3>setTrack</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-493">setTrack</a></span><wbr><span class="parameters">(boolean&nbsp;track)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-492">setTrack</a></span><wbr><span class="parameters">(boolean&nbsp;track)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getResultConsumer()">
 <h3>getResultConsumer</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="TransactionResult.html" title="class in net.tnemc.core.transaction">TransactionResult</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-498">getResultConsumer</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="TransactionResult.html" title="class in net.tnemc.core.transaction">TransactionResult</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/transaction/Transaction.html#line-497">getResultConsumer</a></span>()</div>
 </section>
 </li>
 </ul>

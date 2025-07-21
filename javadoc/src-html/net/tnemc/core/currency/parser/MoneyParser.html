@@ -51,60 +51,66 @@
 <span class="source-line-no">038</span><span id="line-38">  private final LinkedHashMap&lt;String, ParseRule&gt; rules = new LinkedHashMap&lt;&gt;();</span>
 <span class="source-line-no">039</span><span id="line-39"></span>
 <span class="source-line-no">040</span><span id="line-40">  public MoneyParser() {</span>
-<span class="source-line-no">041</span><span id="line-41">    addRule(new RomanParseRule()); // X, IV - works without symbol attached</span>
-<span class="source-line-no">042</span><span id="line-42">    rules.put("roman2", new RomanParseRule());</span>
-<span class="source-line-no">043</span><span id="line-43">    addRule(new FractionParseRule()); // 1/2 -&gt; .50 - doesn't work</span>
-<span class="source-line-no">044</span><span id="line-44">    addRule(new RandomParseRule()); // random(1-10) = 6?</span>
-<span class="source-line-no">045</span><span id="line-45">    addRule(new SymbolParseRule()); //$5 -&gt; sets currency to USD</span>
-<span class="source-line-no">046</span><span id="line-46">    addRule(new NumericParseRule()); // scientific notation and general numerics</span>
-<span class="source-line-no">047</span><span id="line-47">    addRule(new ShortenParseRule()); // 5k -&gt; 5000</span>
-<span class="source-line-no">048</span><span id="line-48">  }</span>
-<span class="source-line-no">049</span><span id="line-49"></span>
-<span class="source-line-no">050</span><span id="line-50">  /**</span>
-<span class="source-line-no">051</span><span id="line-51">   * Adds a rule to the MoneyParser object.</span>
-<span class="source-line-no">052</span><span id="line-52">   *</span>
-<span class="source-line-no">053</span><span id="line-53">   * @param rule The ParseRule object to add to the rules collection.</span>
-<span class="source-line-no">054</span><span id="line-54">   */</span>
-<span class="source-line-no">055</span><span id="line-55">  public void addRule(final ParseRule rule) {</span>
-<span class="source-line-no">056</span><span id="line-56">    rules.put(rule.identifier(), rule);</span>
-<span class="source-line-no">057</span><span id="line-57">  }</span>
-<span class="source-line-no">058</span><span id="line-58"></span>
-<span class="source-line-no">059</span><span id="line-59">  /**</span>
-<span class="source-line-no">060</span><span id="line-60">   * Parses the input string based on the specified rules for the given region.</span>
-<span class="source-line-no">061</span><span id="line-61">   *</span>
-<span class="source-line-no">062</span><span id="line-62">   * @param region The region to parse the input for.</span>
-<span class="source-line-no">063</span><span id="line-63">   * @param input The input string to be parsed.</span>
-<span class="source-line-no">064</span><span id="line-64">   * @return A ParseMoney object containing the parsed information.</span>
-<span class="source-line-no">065</span><span id="line-65">   */</span>
-<span class="source-line-no">066</span><span id="line-66">  public ParseMoney parse(final String region, final String input) {</span>
-<span class="source-line-no">067</span><span id="line-67">    final ParseMoney parseMoney = new ParseMoney(region);</span>
-<span class="source-line-no">068</span><span id="line-68"></span>
-<span class="source-line-no">069</span><span id="line-69">    String parsedInput = input;</span>
-<span class="source-line-no">070</span><span id="line-70">    for(final ParseRule rule : rules.values()) {</span>
-<span class="source-line-no">071</span><span id="line-71">      parsedInput = rule.apply(parseMoney, parsedInput);</span>
-<span class="source-line-no">072</span><span id="line-72">    }</span>
-<span class="source-line-no">073</span><span id="line-73"></span>
-<span class="source-line-no">074</span><span id="line-74">    return parseMoney;</span>
-<span class="source-line-no">075</span><span id="line-75">  }</span>
-<span class="source-line-no">076</span><span id="line-76"></span>
-<span class="source-line-no">077</span><span id="line-77">  /**</span>
-<span class="source-line-no">078</span><span id="line-78">   * Parses the input string based on the specified rules for the given region.</span>
-<span class="source-line-no">079</span><span id="line-79">   *</span>
-<span class="source-line-no">080</span><span id="line-80">   * @param region The region to parse the input for.</span>
-<span class="source-line-no">081</span><span id="line-81">   * @param input The input string to be parsed.</span>
-<span class="source-line-no">082</span><span id="line-82">   * @return A ParseMoney object containing the parsed information.</span>
-<span class="source-line-no">083</span><span id="line-83">   */</span>
-<span class="source-line-no">084</span><span id="line-84">  public ParseMoney parse(final String region, final Currency currency, final String input) {</span>
-<span class="source-line-no">085</span><span id="line-85">    final ParseMoney parseMoney = new ParseMoney(region, currency);</span>
-<span class="source-line-no">086</span><span id="line-86"></span>
-<span class="source-line-no">087</span><span id="line-87">    String parsedInput = input;</span>
-<span class="source-line-no">088</span><span id="line-88">    for(final ParseRule rule : rules.values()) {</span>
-<span class="source-line-no">089</span><span id="line-89">      parsedInput = rule.apply(parseMoney, parsedInput);</span>
-<span class="source-line-no">090</span><span id="line-90">    }</span>
-<span class="source-line-no">091</span><span id="line-91"></span>
-<span class="source-line-no">092</span><span id="line-92">    return parseMoney;</span>
-<span class="source-line-no">093</span><span id="line-93">  }</span>
-<span class="source-line-no">094</span><span id="line-94">}</span>
+<span class="source-line-no">041</span><span id="line-41"></span>
+<span class="source-line-no">042</span><span id="line-42">    addRule(new RomanParseRule()); // X, IV - works without symbol attached</span>
+<span class="source-line-no">043</span><span id="line-43">    rules.put("roman2", new RomanParseRule());</span>
+<span class="source-line-no">044</span><span id="line-44">    addRule(new FractionParseRule()); // 1/2 -&gt; .50 - doesn't work</span>
+<span class="source-line-no">045</span><span id="line-45">    addRule(new RandomParseRule()); // random(1-10) = 6?</span>
+<span class="source-line-no">046</span><span id="line-46">    addRule(new SymbolParseRule()); //$5 -&gt; sets currency to USD</span>
+<span class="source-line-no">047</span><span id="line-47">    addRule(new NumericParseRule()); // scientific notation and general numerics</span>
+<span class="source-line-no">048</span><span id="line-48">    addRule(new ShortenParseRule()); // 5k -&gt; 5000</span>
+<span class="source-line-no">049</span><span id="line-49">  }</span>
+<span class="source-line-no">050</span><span id="line-50"></span>
+<span class="source-line-no">051</span><span id="line-51">  /**</span>
+<span class="source-line-no">052</span><span id="line-52">   * Adds a rule to the MoneyParser object.</span>
+<span class="source-line-no">053</span><span id="line-53">   *</span>
+<span class="source-line-no">054</span><span id="line-54">   * @param rule The ParseRule object to add to the rules collection.</span>
+<span class="source-line-no">055</span><span id="line-55">   */</span>
+<span class="source-line-no">056</span><span id="line-56">  public void addRule(final ParseRule rule) {</span>
+<span class="source-line-no">057</span><span id="line-57"></span>
+<span class="source-line-no">058</span><span id="line-58">    rules.put(rule.identifier(), rule);</span>
+<span class="source-line-no">059</span><span id="line-59">  }</span>
+<span class="source-line-no">060</span><span id="line-60"></span>
+<span class="source-line-no">061</span><span id="line-61">  /**</span>
+<span class="source-line-no">062</span><span id="line-62">   * Parses the input string based on the specified rules for the given region.</span>
+<span class="source-line-no">063</span><span id="line-63">   *</span>
+<span class="source-line-no">064</span><span id="line-64">   * @param region The region to parse the input for.</span>
+<span class="source-line-no">065</span><span id="line-65">   * @param input  The input string to be parsed.</span>
+<span class="source-line-no">066</span><span id="line-66">   *</span>
+<span class="source-line-no">067</span><span id="line-67">   * @return A ParseMoney object containing the parsed information.</span>
+<span class="source-line-no">068</span><span id="line-68">   */</span>
+<span class="source-line-no">069</span><span id="line-69">  public ParseMoney parse(final String region, final String input) {</span>
+<span class="source-line-no">070</span><span id="line-70"></span>
+<span class="source-line-no">071</span><span id="line-71">    final ParseMoney parseMoney = new ParseMoney(region);</span>
+<span class="source-line-no">072</span><span id="line-72"></span>
+<span class="source-line-no">073</span><span id="line-73">    String parsedInput = input;</span>
+<span class="source-line-no">074</span><span id="line-74">    for(final ParseRule rule : rules.values()) {</span>
+<span class="source-line-no">075</span><span id="line-75">      parsedInput = rule.apply(parseMoney, parsedInput);</span>
+<span class="source-line-no">076</span><span id="line-76">    }</span>
+<span class="source-line-no">077</span><span id="line-77"></span>
+<span class="source-line-no">078</span><span id="line-78">    return parseMoney;</span>
+<span class="source-line-no">079</span><span id="line-79">  }</span>
+<span class="source-line-no">080</span><span id="line-80"></span>
+<span class="source-line-no">081</span><span id="line-81">  /**</span>
+<span class="source-line-no">082</span><span id="line-82">   * Parses the input string based on the specified rules for the given region.</span>
+<span class="source-line-no">083</span><span id="line-83">   *</span>
+<span class="source-line-no">084</span><span id="line-84">   * @param region The region to parse the input for.</span>
+<span class="source-line-no">085</span><span id="line-85">   * @param input  The input string to be parsed.</span>
+<span class="source-line-no">086</span><span id="line-86">   *</span>
+<span class="source-line-no">087</span><span id="line-87">   * @return A ParseMoney object containing the parsed information.</span>
+<span class="source-line-no">088</span><span id="line-88">   */</span>
+<span class="source-line-no">089</span><span id="line-89">  public ParseMoney parse(final String region, final Currency currency, final String input) {</span>
+<span class="source-line-no">090</span><span id="line-90"></span>
+<span class="source-line-no">091</span><span id="line-91">    final ParseMoney parseMoney = new ParseMoney(region, currency);</span>
+<span class="source-line-no">092</span><span id="line-92"></span>
+<span class="source-line-no">093</span><span id="line-93">    String parsedInput = input;</span>
+<span class="source-line-no">094</span><span id="line-94">    for(final ParseRule rule : rules.values()) {</span>
+<span class="source-line-no">095</span><span id="line-95">      parsedInput = rule.apply(parseMoney, parsedInput);</span>
+<span class="source-line-no">096</span><span id="line-96">    }</span>
+<span class="source-line-no">097</span><span id="line-97"></span>
+<span class="source-line-no">098</span><span id="line-98">    return parseMoney;</span>
+<span class="source-line-no">099</span><span id="line-99">  }</span>
+<span class="source-line-no">100</span><span id="line-100">}</span>
 
 
 

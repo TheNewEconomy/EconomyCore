@@ -92,24 +92,25 @@
 <span class="source-line-no">079</span><span id="line-79">  }</span>
 <span class="source-line-no">080</span><span id="line-80"></span>
 <span class="source-line-no">081</span><span id="line-81">  private int romanToInteger(final String roman) {</span>
-<span class="source-line-no">082</span><span id="line-82">    int sum = 0;</span>
-<span class="source-line-no">083</span><span id="line-83">    int prevValue = 0;</span>
-<span class="source-line-no">084</span><span id="line-84"></span>
-<span class="source-line-no">085</span><span id="line-85">    for(int i = roman.length() - 1; i &gt;= 0; i--) {</span>
-<span class="source-line-no">086</span><span id="line-86"></span>
-<span class="source-line-no">087</span><span id="line-87">      final int value = ROMAN_VALUES.get(roman.charAt(i));</span>
-<span class="source-line-no">088</span><span id="line-88"></span>
-<span class="source-line-no">089</span><span id="line-89">      if(value &lt; prevValue) {</span>
-<span class="source-line-no">090</span><span id="line-90">        sum -= value; // Subtraction case (e.g., IV = 4)</span>
-<span class="source-line-no">091</span><span id="line-91">      } else {</span>
-<span class="source-line-no">092</span><span id="line-92">        sum += value;</span>
-<span class="source-line-no">093</span><span id="line-93">      }</span>
-<span class="source-line-no">094</span><span id="line-94"></span>
-<span class="source-line-no">095</span><span id="line-95">      prevValue = value;</span>
-<span class="source-line-no">096</span><span id="line-96">    }</span>
-<span class="source-line-no">097</span><span id="line-97">    return sum;</span>
-<span class="source-line-no">098</span><span id="line-98">  }</span>
-<span class="source-line-no">099</span><span id="line-99">}</span>
+<span class="source-line-no">082</span><span id="line-82"></span>
+<span class="source-line-no">083</span><span id="line-83">    int sum = 0;</span>
+<span class="source-line-no">084</span><span id="line-84">    int prevValue = 0;</span>
+<span class="source-line-no">085</span><span id="line-85"></span>
+<span class="source-line-no">086</span><span id="line-86">    for(int i = roman.length() - 1; i &gt;= 0; i--) {</span>
+<span class="source-line-no">087</span><span id="line-87"></span>
+<span class="source-line-no">088</span><span id="line-88">      final int value = ROMAN_VALUES.get(roman.charAt(i));</span>
+<span class="source-line-no">089</span><span id="line-89"></span>
+<span class="source-line-no">090</span><span id="line-90">      if(value &lt; prevValue) {</span>
+<span class="source-line-no">091</span><span id="line-91">        sum -= value; // Subtraction case (e.g., IV = 4)</span>
+<span class="source-line-no">092</span><span id="line-92">      } else {</span>
+<span class="source-line-no">093</span><span id="line-93">        sum += value;</span>
+<span class="source-line-no">094</span><span id="line-94">      }</span>
+<span class="source-line-no">095</span><span id="line-95"></span>
+<span class="source-line-no">096</span><span id="line-96">      prevValue = value;</span>
+<span class="source-line-no">097</span><span id="line-97">    }</span>
+<span class="source-line-no">098</span><span id="line-98">    return sum;</span>
+<span class="source-line-no">099</span><span id="line-99">  }</span>
+<span class="source-line-no">100</span><span id="line-100">}</span>
 
 
 

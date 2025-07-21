@@ -36,134 +36,140 @@
 <span class="source-line-no">023</span><span id="line-23">import net.tnemc.core.account.Account;</span>
 <span class="source-line-no">024</span><span id="line-24">import net.tnemc.core.account.PlayerAccount;</span>
 <span class="source-line-no">025</span><span id="line-25">import net.tnemc.core.menu.icons.shared.PreviousPageIcon;</span>
-<span class="source-line-no">026</span><span id="line-26">import net.tnemc.item.providers.SkullProfile;</span>
-<span class="source-line-no">027</span><span id="line-27">import net.tnemc.menu.core.builder.IconBuilder;</span>
-<span class="source-line-no">028</span><span id="line-28">import net.tnemc.menu.core.callbacks.page.PageOpenCallback;</span>
-<span class="source-line-no">029</span><span id="line-29">import net.tnemc.menu.core.icon.action.ActionType;</span>
-<span class="source-line-no">030</span><span id="line-30">import net.tnemc.menu.core.icon.action.impl.DataAction;</span>
-<span class="source-line-no">031</span><span id="line-31">import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;</span>
-<span class="source-line-no">032</span><span id="line-32">import net.tnemc.menu.core.viewer.MenuViewer;</span>
-<span class="source-line-no">033</span><span id="line-33">import net.tnemc.plugincore.PluginCore;</span>
-<span class="source-line-no">034</span><span id="line-34">import net.tnemc.plugincore.core.io.message.MessageData;</span>
-<span class="source-line-no">035</span><span id="line-35">import net.tnemc.plugincore.core.io.message.MessageHandler;</span>
-<span class="source-line-no">036</span><span id="line-36"></span>
-<span class="source-line-no">037</span><span id="line-37">import java.util.Collections;</span>
-<span class="source-line-no">038</span><span id="line-38">import java.util.Map;</span>
-<span class="source-line-no">039</span><span id="line-39">import java.util.Optional;</span>
-<span class="source-line-no">040</span><span id="line-40">import java.util.UUID;</span>
-<span class="source-line-no">041</span><span id="line-41"></span>
-<span class="source-line-no">042</span><span id="line-42">/**</span>
-<span class="source-line-no">043</span><span id="line-43"> * AccountSelectionPage</span>
-<span class="source-line-no">044</span><span id="line-44"> *</span>
-<span class="source-line-no">045</span><span id="line-45"> * @author creatorfromhell</span>
-<span class="source-line-no">046</span><span id="line-46"> * @since 0.1.3.0</span>
-<span class="source-line-no">047</span><span id="line-47"> */</span>
-<span class="source-line-no">048</span><span id="line-48">public class AccountSelectionPage {</span>
-<span class="source-line-no">049</span><span id="line-49"></span>
-<span class="source-line-no">050</span><span id="line-50">  protected final String returnMenu;</span>
-<span class="source-line-no">051</span><span id="line-51">  protected final String menuName;</span>
-<span class="source-line-no">052</span><span id="line-52">  protected final int menuPage;</span>
-<span class="source-line-no">053</span><span id="line-53">  protected final int returnPage;</span>
-<span class="source-line-no">054</span><span id="line-54">  protected final String accountDataID;</span>
-<span class="source-line-no">055</span><span id="line-55">  protected final String accountPageID;</span>
-<span class="source-line-no">056</span><span id="line-56">  protected final int menuRows;</span>
-<span class="source-line-no">057</span><span id="line-57"></span>
-<span class="source-line-no">058</span><span id="line-58">  public AccountSelectionPage(final String accountDataID, final String returnMenu, final String menuName,</span>
-<span class="source-line-no">059</span><span id="line-59">                              final int menuPage, final int returnPage, final String accountPageID, final int menuRows) {</span>
-<span class="source-line-no">060</span><span id="line-60"></span>
-<span class="source-line-no">061</span><span id="line-61">    this.returnMenu = returnMenu;</span>
-<span class="source-line-no">062</span><span id="line-62">    this.menuName = menuName;</span>
-<span class="source-line-no">063</span><span id="line-63">    this.menuPage = menuPage;</span>
-<span class="source-line-no">064</span><span id="line-64">    this.returnPage = returnPage;</span>
-<span class="source-line-no">065</span><span id="line-65">    this.accountDataID = accountDataID;</span>
-<span class="source-line-no">066</span><span id="line-66">    this.accountPageID = accountPageID;</span>
-<span class="source-line-no">067</span><span id="line-67"></span>
-<span class="source-line-no">068</span><span id="line-68">    //we need a controller row and then at least one row for items.</span>
-<span class="source-line-no">069</span><span id="line-69">    this.menuRows = (menuRows &lt;= 1)? 2 : menuRows;</span>
-<span class="source-line-no">070</span><span id="line-70">  }</span>
-<span class="source-line-no">071</span><span id="line-71"></span>
-<span class="source-line-no">072</span><span id="line-72">  public void handle(final PageOpenCallback callback) {</span>
-<span class="source-line-no">073</span><span id="line-73"></span>
-<span class="source-line-no">074</span><span id="line-74">    final Optional&lt;MenuViewer&gt; viewer = callback.getPlayer().viewer();</span>
-<span class="source-line-no">075</span><span id="line-75">    if(viewer.isPresent()) {</span>
-<span class="source-line-no">076</span><span id="line-76"></span>
-<span class="source-line-no">077</span><span id="line-77">      final UUID id = viewer.get().uuid();</span>
-<span class="source-line-no">078</span><span id="line-78"></span>
-<span class="source-line-no">079</span><span id="line-79">      callback.getPage().addIcon(new PreviousPageIcon(id, 0, this.menuName, 1, ActionType.ANY));</span>
-<span class="source-line-no">080</span><span id="line-80"></span>
-<span class="source-line-no">081</span><span id="line-81">      final int page = (Integer)viewer.get().dataOrDefault(accountPageID, 1);</span>
-<span class="source-line-no">082</span><span id="line-82">      final int items = (menuRows - 1) * 9;</span>
-<span class="source-line-no">083</span><span id="line-83">      final int start = ((page - 1) * 9);</span>
-<span class="source-line-no">084</span><span id="line-84"></span>
-<span class="source-line-no">085</span><span id="line-85">      final int maxPages = (TNECore.eco().account().getAccounts().size() / items) + (((TNECore.eco().account().getAccounts().size() % items) &gt; 0)? 1 : 0);</span>
-<span class="source-line-no">086</span><span id="line-86"></span>
-<span class="source-line-no">087</span><span id="line-87">      final int prev = (page &lt;= 1)? maxPages : page - 1;</span>
-<span class="source-line-no">088</span><span id="line-88">      final int next = (page &gt;= maxPages)? 1 : page + 1;</span>
-<span class="source-line-no">089</span><span id="line-89"></span>
-<span class="source-line-no">090</span><span id="line-90">      if(maxPages &gt; 1) {</span>
-<span class="source-line-no">091</span><span id="line-91"></span>
-<span class="source-line-no">092</span><span id="line-92">        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)</span>
-<span class="source-line-no">093</span><span id="line-93">                                                           .customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))</span>
-<span class="source-line-no">094</span><span id="line-94">                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))))</span>
-<span class="source-line-no">095</span><span id="line-95">                                           .withActions(new DataAction(accountPageID, prev), new SwitchPageAction(menuName, menuPage))</span>
-<span class="source-line-no">096</span><span id="line-96">                                           .withSlot(0)</span>
-<span class="source-line-no">097</span><span id="line-97">                                           .build());</span>
-<span class="source-line-no">098</span><span id="line-98"></span>
-<span class="source-line-no">099</span><span id="line-99">        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)</span>
-<span class="source-line-no">100</span><span id="line-100">                                                           .customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))</span>
-<span class="source-line-no">101</span><span id="line-101">                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPage"), id))))</span>
-<span class="source-line-no">102</span><span id="line-102">                                           .withActions(new DataAction(accountPageID, next), new SwitchPageAction(menuName, menuPage))</span>
-<span class="source-line-no">103</span><span id="line-103">                                           .withSlot(8)</span>
-<span class="source-line-no">104</span><span id="line-104">                                           .build());</span>
-<span class="source-line-no">105</span><span id="line-105">      }</span>
-<span class="source-line-no">106</span><span id="line-106"></span>
-<span class="source-line-no">107</span><span id="line-107">      callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)</span>
-<span class="source-line-no">108</span><span id="line-108">                                                         .customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EscapeDisplay"), id))</span>
-<span class="source-line-no">109</span><span id="line-109">                                                         .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Escape"), id))))</span>
-<span class="source-line-no">110</span><span id="line-110">                                         .withActions(new SwitchPageAction(returnMenu, returnPage))</span>
-<span class="source-line-no">111</span><span id="line-111">                                         .withSlot(4)</span>
-<span class="source-line-no">112</span><span id="line-112">                                         .build());</span>
-<span class="source-line-no">113</span><span id="line-113"></span>
-<span class="source-line-no">114</span><span id="line-114">      int i = 0;</span>
-<span class="source-line-no">115</span><span id="line-115">      for(final Map.Entry&lt;String, Account&gt; entry : TNECore.eco().account().getAccounts().entrySet()) {</span>
-<span class="source-line-no">116</span><span id="line-116"></span>
-<span class="source-line-no">117</span><span id="line-117">        if(i &lt; start) {</span>
-<span class="source-line-no">118</span><span id="line-118"></span>
-<span class="source-line-no">119</span><span id="line-119">          i++;</span>
-<span class="source-line-no">120</span><span id="line-120"></span>
-<span class="source-line-no">121</span><span id="line-121">          continue;</span>
-<span class="source-line-no">122</span><span id="line-122">        }</span>
-<span class="source-line-no">123</span><span id="line-123">        if(i &gt;= (start + items)) break;</span>
-<span class="source-line-no">124</span><span id="line-124"></span>
-<span class="source-line-no">125</span><span id="line-125">        SkullProfile profile = null;</span>
-<span class="source-line-no">126</span><span id="line-126">        try {</span>
-<span class="source-line-no">127</span><span id="line-127"></span>
-<span class="source-line-no">128</span><span id="line-128">          if(entry.getValue() instanceof PlayerAccount) {</span>
-<span class="source-line-no">129</span><span id="line-129">            profile = new SkullProfile();</span>
-<span class="source-line-no">130</span><span id="line-130"></span>
-<span class="source-line-no">131</span><span id="line-131">            if(PluginCore.server().playedBefore(UUID.fromString(entry.getKey()))) {</span>
-<span class="source-line-no">132</span><span id="line-132">              profile.uuid(UUID.fromString(entry.getKey()));</span>
-<span class="source-line-no">133</span><span id="line-133">            }</span>
-<span class="source-line-no">134</span><span id="line-134">          }</span>
-<span class="source-line-no">135</span><span id="line-135"></span>
-<span class="source-line-no">136</span><span id="line-136">        } catch(final Exception ignore) { }</span>
-<span class="source-line-no">137</span><span id="line-137"></span>
+<span class="source-line-no">026</span><span id="line-26">import net.tnemc.item.AbstractItemStack;</span>
+<span class="source-line-no">027</span><span id="line-27">import net.tnemc.item.providers.SkullProfile;</span>
+<span class="source-line-no">028</span><span id="line-28">import net.tnemc.menu.core.builder.IconBuilder;</span>
+<span class="source-line-no">029</span><span id="line-29">import net.tnemc.menu.core.callbacks.page.PageOpenCallback;</span>
+<span class="source-line-no">030</span><span id="line-30">import net.tnemc.menu.core.icon.action.ActionType;</span>
+<span class="source-line-no">031</span><span id="line-31">import net.tnemc.menu.core.icon.action.impl.DataAction;</span>
+<span class="source-line-no">032</span><span id="line-32">import net.tnemc.menu.core.icon.action.impl.SwitchPageAction;</span>
+<span class="source-line-no">033</span><span id="line-33">import net.tnemc.menu.core.viewer.MenuViewer;</span>
+<span class="source-line-no">034</span><span id="line-34">import net.tnemc.plugincore.PluginCore;</span>
+<span class="source-line-no">035</span><span id="line-35">import net.tnemc.plugincore.core.io.message.MessageData;</span>
+<span class="source-line-no">036</span><span id="line-36">import net.tnemc.plugincore.core.io.message.MessageHandler;</span>
+<span class="source-line-no">037</span><span id="line-37"></span>
+<span class="source-line-no">038</span><span id="line-38">import java.util.Collections;</span>
+<span class="source-line-no">039</span><span id="line-39">import java.util.Map;</span>
+<span class="source-line-no">040</span><span id="line-40">import java.util.Optional;</span>
+<span class="source-line-no">041</span><span id="line-41">import java.util.UUID;</span>
+<span class="source-line-no">042</span><span id="line-42"></span>
+<span class="source-line-no">043</span><span id="line-43">/**</span>
+<span class="source-line-no">044</span><span id="line-44"> * AccountSelectionPage</span>
+<span class="source-line-no">045</span><span id="line-45"> *</span>
+<span class="source-line-no">046</span><span id="line-46"> * @author creatorfromhell</span>
+<span class="source-line-no">047</span><span id="line-47"> * @since 0.1.3.0</span>
+<span class="source-line-no">048</span><span id="line-48"> */</span>
+<span class="source-line-no">049</span><span id="line-49">public class AccountSelectionPage {</span>
+<span class="source-line-no">050</span><span id="line-50"></span>
+<span class="source-line-no">051</span><span id="line-51">  protected final String returnMenu;</span>
+<span class="source-line-no">052</span><span id="line-52">  protected final String menuName;</span>
+<span class="source-line-no">053</span><span id="line-53">  protected final int menuPage;</span>
+<span class="source-line-no">054</span><span id="line-54">  protected final int returnPage;</span>
+<span class="source-line-no">055</span><span id="line-55">  protected final String accountDataID;</span>
+<span class="source-line-no">056</span><span id="line-56">  protected final String accountPageID;</span>
+<span class="source-line-no">057</span><span id="line-57">  protected final int menuRows;</span>
+<span class="source-line-no">058</span><span id="line-58"></span>
+<span class="source-line-no">059</span><span id="line-59">  public AccountSelectionPage(final String accountDataID, final String returnMenu, final String menuName,</span>
+<span class="source-line-no">060</span><span id="line-60">                              final int menuPage, final int returnPage, final String accountPageID, final int menuRows) {</span>
+<span class="source-line-no">061</span><span id="line-61"></span>
+<span class="source-line-no">062</span><span id="line-62">    this.returnMenu = returnMenu;</span>
+<span class="source-line-no">063</span><span id="line-63">    this.menuName = menuName;</span>
+<span class="source-line-no">064</span><span id="line-64">    this.menuPage = menuPage;</span>
+<span class="source-line-no">065</span><span id="line-65">    this.returnPage = returnPage;</span>
+<span class="source-line-no">066</span><span id="line-66">    this.accountDataID = accountDataID;</span>
+<span class="source-line-no">067</span><span id="line-67">    this.accountPageID = accountPageID;</span>
+<span class="source-line-no">068</span><span id="line-68"></span>
+<span class="source-line-no">069</span><span id="line-69">    //we need a controller row and then at least one row for items.</span>
+<span class="source-line-no">070</span><span id="line-70">    this.menuRows = (menuRows &lt;= 1)? 2 : menuRows;</span>
+<span class="source-line-no">071</span><span id="line-71">  }</span>
+<span class="source-line-no">072</span><span id="line-72"></span>
+<span class="source-line-no">073</span><span id="line-73">  public void handle(final PageOpenCallback callback) {</span>
+<span class="source-line-no">074</span><span id="line-74"></span>
+<span class="source-line-no">075</span><span id="line-75">    final Optional&lt;MenuViewer&gt; viewer = callback.getPlayer().viewer();</span>
+<span class="source-line-no">076</span><span id="line-76">    if(viewer.isPresent()) {</span>
+<span class="source-line-no">077</span><span id="line-77"></span>
+<span class="source-line-no">078</span><span id="line-78">      final UUID id = viewer.get().uuid();</span>
+<span class="source-line-no">079</span><span id="line-79"></span>
+<span class="source-line-no">080</span><span id="line-80">      callback.getPage().addIcon(new PreviousPageIcon(id, 0, this.menuName, 1, ActionType.ANY));</span>
+<span class="source-line-no">081</span><span id="line-81"></span>
+<span class="source-line-no">082</span><span id="line-82">      final int page = (Integer)viewer.get().dataOrDefault(accountPageID, 1);</span>
+<span class="source-line-no">083</span><span id="line-83">      final int items = (menuRows - 1) * 9;</span>
+<span class="source-line-no">084</span><span id="line-84">      final int start = ((page - 1) * 9);</span>
+<span class="source-line-no">085</span><span id="line-85"></span>
+<span class="source-line-no">086</span><span id="line-86">      final int maxPages = (TNECore.eco().account().getAccounts().size() / items) + (((TNECore.eco().account().getAccounts().size() % items) &gt; 0)? 1 : 0);</span>
+<span class="source-line-no">087</span><span id="line-87"></span>
+<span class="source-line-no">088</span><span id="line-88">      final int prev = (page &lt;= 1)? maxPages : page - 1;</span>
+<span class="source-line-no">089</span><span id="line-89">      final int next = (page &gt;= maxPages)? 1 : page + 1;</span>
+<span class="source-line-no">090</span><span id="line-90"></span>
+<span class="source-line-no">091</span><span id="line-91">      if(maxPages &gt; 1) {</span>
+<span class="source-line-no">092</span><span id="line-92"></span>
+<span class="source-line-no">093</span><span id="line-93">        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("RED_WOOL", 1)</span>
+<span class="source-line-no">094</span><span id="line-94">                                                           .customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPageDisplay"), id))</span>
+<span class="source-line-no">095</span><span id="line-95">                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.PreviousPage"), id))))</span>
+<span class="source-line-no">096</span><span id="line-96">                                           .withActions(new DataAction(accountPageID, prev), new SwitchPageAction(menuName, menuPage))</span>
+<span class="source-line-no">097</span><span id="line-97">                                           .withSlot(0)</span>
+<span class="source-line-no">098</span><span id="line-98">                                           .build());</span>
+<span class="source-line-no">099</span><span id="line-99"></span>
+<span class="source-line-no">100</span><span id="line-100">        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("GREEN_WOOL", 1)</span>
+<span class="source-line-no">101</span><span id="line-101">                                                           .customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPageDisplay"), id))</span>
+<span class="source-line-no">102</span><span id="line-102">                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.NextPage"), id))))</span>
+<span class="source-line-no">103</span><span id="line-103">                                           .withActions(new DataAction(accountPageID, next), new SwitchPageAction(menuName, menuPage))</span>
+<span class="source-line-no">104</span><span id="line-104">                                           .withSlot(8)</span>
+<span class="source-line-no">105</span><span id="line-105">                                           .build());</span>
+<span class="source-line-no">106</span><span id="line-106">      }</span>
+<span class="source-line-no">107</span><span id="line-107"></span>
+<span class="source-line-no">108</span><span id="line-108">      callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("BARRIER", 1)</span>
+<span class="source-line-no">109</span><span id="line-109">                                                         .customName(MessageHandler.grab(new MessageData("Messages.Menu.Shared.EscapeDisplay"), id))</span>
+<span class="source-line-no">110</span><span id="line-110">                                                         .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.Shared.Escape"), id))))</span>
+<span class="source-line-no">111</span><span id="line-111">                                         .withActions(new SwitchPageAction(returnMenu, returnPage))</span>
+<span class="source-line-no">112</span><span id="line-112">                                         .withSlot(4)</span>
+<span class="source-line-no">113</span><span id="line-113">                                         .build());</span>
+<span class="source-line-no">114</span><span id="line-114"></span>
+<span class="source-line-no">115</span><span id="line-115">      int i = 0;</span>
+<span class="source-line-no">116</span><span id="line-116">      for(final Map.Entry&lt;String, Account&gt; entry : TNECore.eco().account().getAccounts().entrySet()) {</span>
+<span class="source-line-no">117</span><span id="line-117"></span>
+<span class="source-line-no">118</span><span id="line-118">        if(i &lt; start) {</span>
+<span class="source-line-no">119</span><span id="line-119"></span>
+<span class="source-line-no">120</span><span id="line-120">          i++;</span>
+<span class="source-line-no">121</span><span id="line-121"></span>
+<span class="source-line-no">122</span><span id="line-122">          continue;</span>
+<span class="source-line-no">123</span><span id="line-123">        }</span>
+<span class="source-line-no">124</span><span id="line-124">        if(i &gt;= (start + items)) break;</span>
+<span class="source-line-no">125</span><span id="line-125"></span>
+<span class="source-line-no">126</span><span id="line-126">        SkullProfile profile = null;</span>
+<span class="source-line-no">127</span><span id="line-127">        try {</span>
+<span class="source-line-no">128</span><span id="line-128"></span>
+<span class="source-line-no">129</span><span id="line-129">          if(entry.getValue() instanceof PlayerAccount) {</span>
+<span class="source-line-no">130</span><span id="line-130">            profile = new SkullProfile();</span>
+<span class="source-line-no">131</span><span id="line-131"></span>
+<span class="source-line-no">132</span><span id="line-132">            if(PluginCore.server().playedBefore(UUID.fromString(entry.getKey()))) {</span>
+<span class="source-line-no">133</span><span id="line-133">              profile.uuid(UUID.fromString(entry.getKey()));</span>
+<span class="source-line-no">134</span><span id="line-134">            }</span>
+<span class="source-line-no">135</span><span id="line-135">          }</span>
+<span class="source-line-no">136</span><span id="line-136"></span>
+<span class="source-line-no">137</span><span id="line-137">        } catch(final Exception ignore) { }</span>
 <span class="source-line-no">138</span><span id="line-138"></span>
-<span class="source-line-no">139</span><span id="line-139">        callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PLAYER_HEAD", 1)</span>
-<span class="source-line-no">140</span><span id="line-140">                                                           .customName(Component.text(entry.getValue().getName()))</span>
-<span class="source-line-no">141</span><span id="line-141">                                                           .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Account.Select"), id)))</span>
-<span class="source-line-no">142</span><span id="line-142">                                                           .profile(profile))</span>
-<span class="source-line-no">143</span><span id="line-143">                                           .withActions(new DataAction(accountDataID + "_ID", entry.getKey()),</span>
-<span class="source-line-no">144</span><span id="line-144">                                                        new DataAction(accountDataID + "_NAME", entry.getValue().getName()),</span>
-<span class="source-line-no">145</span><span id="line-145">                                                        new SwitchPageAction(returnMenu, returnPage))</span>
-<span class="source-line-no">146</span><span id="line-146">                                           .withSlot(9 + (i - start))</span>
-<span class="source-line-no">147</span><span id="line-147">                                           .build());</span>
-<span class="source-line-no">148</span><span id="line-148"></span>
-<span class="source-line-no">149</span><span id="line-149">        i++;</span>
-<span class="source-line-no">150</span><span id="line-150">      }</span>
-<span class="source-line-no">151</span><span id="line-151">    }</span>
-<span class="source-line-no">152</span><span id="line-152">  }</span>
-<span class="source-line-no">153</span><span id="line-153">}</span>
+<span class="source-line-no">139</span><span id="line-139">        AbstractItemStack&lt;?&gt; stack = PluginCore.server().stackBuilder().of("PLAYER_HEAD", 1)</span>
+<span class="source-line-no">140</span><span id="line-140">                .customName(Component.text(entry.getValue().getName()))</span>
+<span class="source-line-no">141</span><span id="line-141">                .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyEco.Account.Select"), id)));</span>
+<span class="source-line-no">142</span><span id="line-142"></span>
+<span class="source-line-no">143</span><span id="line-143">        if(profile != null) {</span>
+<span class="source-line-no">144</span><span id="line-144">          stack = stack.profile(profile);</span>
+<span class="source-line-no">145</span><span id="line-145">        }</span>
+<span class="source-line-no">146</span><span id="line-146"></span>
+<span class="source-line-no">147</span><span id="line-147"></span>
+<span class="source-line-no">148</span><span id="line-148">        callback.getPage().addIcon(new IconBuilder(stack)</span>
+<span class="source-line-no">149</span><span id="line-149">                                           .withActions(new DataAction(accountDataID + "_ID", entry.getKey()),</span>
+<span class="source-line-no">150</span><span id="line-150">                                                        new DataAction(accountDataID + "_NAME", entry.getValue().getName()),</span>
+<span class="source-line-no">151</span><span id="line-151">                                                        new SwitchPageAction(returnMenu, returnPage))</span>
+<span class="source-line-no">152</span><span id="line-152">                                           .withSlot(9 + (i - start))</span>
+<span class="source-line-no">153</span><span id="line-153">                                           .build());</span>
+<span class="source-line-no">154</span><span id="line-154"></span>
+<span class="source-line-no">155</span><span id="line-155">        i++;</span>
+<span class="source-line-no">156</span><span id="line-156">      }</span>
+<span class="source-line-no">157</span><span id="line-157">    }</span>
+<span class="source-line-no">158</span><span id="line-158">  }</span>
+<span class="source-line-no">159</span><span id="line-159">}</span>
 
 
 

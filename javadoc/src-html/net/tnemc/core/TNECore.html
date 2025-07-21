@@ -110,404 +110,412 @@
 <span class="source-line-no">097</span><span id="line-97"> */</span>
 <span class="source-line-no">098</span><span id="line-98">public abstract class TNECore extends PluginEngine {</span>
 <span class="source-line-no">099</span><span id="line-99"></span>
-<span class="source-line-no">100</span><span id="line-100">  protected static TNECore instance;</span>
-<span class="source-line-no">101</span><span id="line-101"></span>
-<span class="source-line-no">102</span><span id="line-102">  /*</span>
-<span class="source-line-no">103</span><span id="line-103">   * Core final variables utilized within TNE.</span>
-<span class="source-line-no">104</span><span id="line-104">   */</span>
-<span class="source-line-no">105</span><span id="line-105">  public static final String coreURL = "https://tnemc.net/files/module-version.xml";</span>
-<span class="source-line-no">106</span><span id="line-106"></span>
-<span class="source-line-no">107</span><span id="line-107">  public static final String version = "0.1.4.0";</span>
-<span class="source-line-no">108</span><span id="line-108">  public static final String build = "SNAPSHOT-1";</span>
-<span class="source-line-no">109</span><span id="line-109"></span>
-<span class="source-line-no">110</span><span id="line-110">  /* Key Managers and Object instances utilized with TNE */</span>
-<span class="source-line-no">111</span><span id="line-111"></span>
-<span class="source-line-no">112</span><span id="line-112">  //General Key Object Instances</span>
-<span class="source-line-no">113</span><span id="line-113">  protected EconomyManager economyManager;</span>
-<span class="source-line-no">114</span><span id="line-114"></span>
-<span class="source-line-no">115</span><span id="line-115">  protected Updater updater;</span>
-<span class="source-line-no">116</span><span id="line-116"></span>
-<span class="source-line-no">117</span><span id="line-117">  protected final YamlStorageManager yamlManager = new YamlStorageManager();</span>
-<span class="source-line-no">118</span><span id="line-118"></span>
-<span class="source-line-no">119</span><span id="line-119">  private MainConfig config;</span>
-<span class="source-line-no">120</span><span id="line-120">  private DataConfig data;</span>
-<span class="source-line-no">121</span><span id="line-121">  private MessageConfig messageConfig;</span>
-<span class="source-line-no">122</span><span id="line-122">  private Chore&lt;?&gt; autoSaver = null;</span>
-<span class="source-line-no">123</span><span id="line-123"></span>
-<span class="source-line-no">124</span><span id="line-124">  private final TNEAPI api = new TNEAPI();</span>
-<span class="source-line-no">125</span><span id="line-125">  protected UUID serverAccount;</span>
-<span class="source-line-no">126</span><span id="line-126"></span>
-<span class="source-line-no">127</span><span id="line-127">  public TNECore() {</span>
-<span class="source-line-no">128</span><span id="line-128"></span>
-<span class="source-line-no">129</span><span id="line-129">    instance = this;</span>
-<span class="source-line-no">130</span><span id="line-130">  }</span>
-<span class="source-line-no">131</span><span id="line-131"></span>
-<span class="source-line-no">132</span><span id="line-132">  @Override</span>
-<span class="source-line-no">133</span><span id="line-133">  public String versionCheckSite() {</span>
-<span class="source-line-no">134</span><span id="line-134"></span>
-<span class="source-line-no">135</span><span id="line-135">    return "https://tnemc.net/files/tnebuild.txt";</span>
-<span class="source-line-no">136</span><span id="line-136">  }</span>
+<span class="source-line-no">100</span><span id="line-100">  /*</span>
+<span class="source-line-no">101</span><span id="line-101">   * Core final variables utilized within TNE.</span>
+<span class="source-line-no">102</span><span id="line-102">   */</span>
+<span class="source-line-no">103</span><span id="line-103">  public static final String coreURL = "https://tnemc.net/files/module-version.xml";</span>
+<span class="source-line-no">104</span><span id="line-104">  public static final String version = "0.1.4.0";</span>
+<span class="source-line-no">105</span><span id="line-105">  public static final String build = "SNAPSHOT-7";</span>
+<span class="source-line-no">106</span><span id="line-106">  protected static TNECore instance;</span>
+<span class="source-line-no">107</span><span id="line-107"></span>
+<span class="source-line-no">108</span><span id="line-108">  /* Key Managers and Object instances utilized with TNE */</span>
+<span class="source-line-no">109</span><span id="line-109">  protected final YamlStorageManager yamlManager = new YamlStorageManager();</span>
+<span class="source-line-no">110</span><span id="line-110">  private final TNEAPI api = new TNEAPI();</span>
+<span class="source-line-no">111</span><span id="line-111">  //General Key Object Instances</span>
+<span class="source-line-no">112</span><span id="line-112">  protected EconomyManager economyManager;</span>
+<span class="source-line-no">113</span><span id="line-113">  protected Updater updater;</span>
+<span class="source-line-no">114</span><span id="line-114">  protected UUID serverAccount;</span>
+<span class="source-line-no">115</span><span id="line-115">  private MainConfig config;</span>
+<span class="source-line-no">116</span><span id="line-116">  private DataConfig data;</span>
+<span class="source-line-no">117</span><span id="line-117">  private MessageConfig messageConfig;</span>
+<span class="source-line-no">118</span><span id="line-118">  private Chore&lt;?&gt; autoSaver = null;</span>
+<span class="source-line-no">119</span><span id="line-119"></span>
+<span class="source-line-no">120</span><span id="line-120">  public TNECore() {</span>
+<span class="source-line-no">121</span><span id="line-121"></span>
+<span class="source-line-no">122</span><span id="line-122">    instance = this;</span>
+<span class="source-line-no">123</span><span id="line-123">  }</span>
+<span class="source-line-no">124</span><span id="line-124"></span>
+<span class="source-line-no">125</span><span id="line-125">  /**</span>
+<span class="source-line-no">126</span><span id="line-126">   * The implementation's {@link EconomyManager}, which is used to manage everything economy related</span>
+<span class="source-line-no">127</span><span id="line-127">   * in TNE.</span>
+<span class="source-line-no">128</span><span id="line-128">   *</span>
+<span class="source-line-no">129</span><span id="line-129">   * @return The {@link EconomyManager Economy Manager}.</span>
+<span class="source-line-no">130</span><span id="line-130">   */</span>
+<span class="source-line-no">131</span><span id="line-131">  public static EconomyManager eco() {</span>
+<span class="source-line-no">132</span><span id="line-132"></span>
+<span class="source-line-no">133</span><span id="line-133">    return instance.economyManager;</span>
+<span class="source-line-no">134</span><span id="line-134">  }</span>
+<span class="source-line-no">135</span><span id="line-135"></span>
+<span class="source-line-no">136</span><span id="line-136">  public static YamlStorageManager yaml() {</span>
 <span class="source-line-no">137</span><span id="line-137"></span>
-<span class="source-line-no">138</span><span id="line-138">  @Override</span>
-<span class="source-line-no">139</span><span id="line-139">  public String version() {</span>
+<span class="source-line-no">138</span><span id="line-138">    return instance.yamlManager;</span>
+<span class="source-line-no">139</span><span id="line-139">  }</span>
 <span class="source-line-no">140</span><span id="line-140"></span>
-<span class="source-line-no">141</span><span id="line-141">    return version;</span>
-<span class="source-line-no">142</span><span id="line-142">  }</span>
-<span class="source-line-no">143</span><span id="line-143"></span>
-<span class="source-line-no">144</span><span id="line-144">  @Override</span>
-<span class="source-line-no">145</span><span id="line-145">  public String build() {</span>
-<span class="source-line-no">146</span><span id="line-146"></span>
-<span class="source-line-no">147</span><span id="line-147">    return build;</span>
-<span class="source-line-no">148</span><span id="line-148">  }</span>
-<span class="source-line-no">149</span><span id="line-149"></span>
-<span class="source-line-no">150</span><span id="line-150">  @Override</span>
-<span class="source-line-no">151</span><span id="line-151">  public void registerConfigs() {</span>
-<span class="source-line-no">152</span><span id="line-152"></span>
-<span class="source-line-no">153</span><span id="line-153">    this.config = new MainConfig();</span>
-<span class="source-line-no">154</span><span id="line-154">    this.data = new DataConfig();</span>
-<span class="source-line-no">155</span><span id="line-155">    this.messageConfig = new MessageConfig();</span>
+<span class="source-line-no">141</span><span id="line-141">  public static TNECore instance() {</span>
+<span class="source-line-no">142</span><span id="line-142"></span>
+<span class="source-line-no">143</span><span id="line-143">    return instance;</span>
+<span class="source-line-no">144</span><span id="line-144">  }</span>
+<span class="source-line-no">145</span><span id="line-145"></span>
+<span class="source-line-no">146</span><span id="line-146">  public static TNEAPI api() {</span>
+<span class="source-line-no">147</span><span id="line-147"></span>
+<span class="source-line-no">148</span><span id="line-148">    return instance.api;</span>
+<span class="source-line-no">149</span><span id="line-149">  }</span>
+<span class="source-line-no">150</span><span id="line-150"></span>
+<span class="source-line-no">151</span><span id="line-151">  @Override</span>
+<span class="source-line-no">152</span><span id="line-152">  public String versionCheckSite() {</span>
+<span class="source-line-no">153</span><span id="line-153"></span>
+<span class="source-line-no">154</span><span id="line-154">    return "https://tnemc.net/files/tnebuild.txt";</span>
+<span class="source-line-no">155</span><span id="line-155">  }</span>
 <span class="source-line-no">156</span><span id="line-156"></span>
-<span class="source-line-no">157</span><span id="line-157">    PluginCore.log().inform("Loading configurations!");</span>
-<span class="source-line-no">158</span><span id="line-158">    if(!this.config.load()) {</span>
-<span class="source-line-no">159</span><span id="line-159">      PluginCore.log().error("Failed to load main configuration!", DebugLevel.OFF);</span>
-<span class="source-line-no">160</span><span id="line-160">    }</span>
-<span class="source-line-no">161</span><span id="line-161"></span>
-<span class="source-line-no">162</span><span id="line-162">    if(!this.data.load()) {</span>
-<span class="source-line-no">163</span><span id="line-163">      PluginCore.log().error("Failed to load data configuration!", DebugLevel.OFF);</span>
-<span class="source-line-no">164</span><span id="line-164">    }</span>
+<span class="source-line-no">157</span><span id="line-157">  @Override</span>
+<span class="source-line-no">158</span><span id="line-158">  public String version() {</span>
+<span class="source-line-no">159</span><span id="line-159"></span>
+<span class="source-line-no">160</span><span id="line-160">    return version;</span>
+<span class="source-line-no">161</span><span id="line-161">  }</span>
+<span class="source-line-no">162</span><span id="line-162"></span>
+<span class="source-line-no">163</span><span id="line-163">  @Override</span>
+<span class="source-line-no">164</span><span id="line-164">  public String build() {</span>
 <span class="source-line-no">165</span><span id="line-165"></span>
-<span class="source-line-no">166</span><span id="line-166">    if(!this.messageConfig.load()) {</span>
-<span class="source-line-no">167</span><span id="line-167">      PluginCore.log().error("Failed to load message configuration!", DebugLevel.OFF);</span>
-<span class="source-line-no">168</span><span id="line-168">    } else {</span>
-<span class="source-line-no">169</span><span id="line-169">      this.messageConfig.loadLanguages();</span>
-<span class="source-line-no">170</span><span id="line-170">    }</span>
-<span class="source-line-no">171</span><span id="line-171">  }</span>
-<span class="source-line-no">172</span><span id="line-172"></span>
-<span class="source-line-no">173</span><span id="line-173">  @Override</span>
-<span class="source-line-no">174</span><span id="line-174">  public void registerPluginChannels() {</span>
+<span class="source-line-no">166</span><span id="line-166">    return build;</span>
+<span class="source-line-no">167</span><span id="line-167">  }</span>
+<span class="source-line-no">168</span><span id="line-168"></span>
+<span class="source-line-no">169</span><span id="line-169">  @Override</span>
+<span class="source-line-no">170</span><span id="line-170">  public void registerConfigs() {</span>
+<span class="source-line-no">171</span><span id="line-171"></span>
+<span class="source-line-no">172</span><span id="line-172">    this.config = new MainConfig();</span>
+<span class="source-line-no">173</span><span id="line-173">    this.data = new DataConfig();</span>
+<span class="source-line-no">174</span><span id="line-174">    this.messageConfig = new MessageConfig();</span>
 <span class="source-line-no">175</span><span id="line-175"></span>
-<span class="source-line-no">176</span><span id="line-176">    PluginCore.instance().getChannelMessageManager().register(new BalanceHandler());</span>
-<span class="source-line-no">177</span><span id="line-177">    PluginCore.instance().getChannelMessageManager().register(new SyncHandler());</span>
-<span class="source-line-no">178</span><span id="line-178">    PluginCore.instance().getChannelMessageManager().register(new net.tnemc.core.channel.MessageHandler());</span>
-<span class="source-line-no">179</span><span id="line-179">  }</span>
+<span class="source-line-no">176</span><span id="line-176">    PluginCore.log().inform("Loading configurations!");</span>
+<span class="source-line-no">177</span><span id="line-177">    if(!this.config.load()) {</span>
+<span class="source-line-no">178</span><span id="line-178">      PluginCore.log().error("Failed to load main configuration!", DebugLevel.OFF);</span>
+<span class="source-line-no">179</span><span id="line-179">    }</span>
 <span class="source-line-no">180</span><span id="line-180"></span>
-<span class="source-line-no">181</span><span id="line-181">  @Override</span>
-<span class="source-line-no">182</span><span id="line-182">  public void registerStorage() {</span>
-<span class="source-line-no">183</span><span id="line-183"></span>
-<span class="source-line-no">184</span><span id="line-184">    final StorageSettings settings = new StorageSettings(</span>
-<span class="source-line-no">185</span><span id="line-185">            DataConfig.yaml().getString("Data.Database.File"),</span>
-<span class="source-line-no">186</span><span id="line-186">            DataConfig.yaml().getString("Data.Database.SQL.Host"),</span>
-<span class="source-line-no">187</span><span id="line-187">            DataConfig.yaml().getInt("Data.Database.SQL.Port"),</span>
-<span class="source-line-no">188</span><span id="line-188">            DataConfig.yaml().getString("Data.Database.SQL.DB"),</span>
-<span class="source-line-no">189</span><span id="line-189">            DataConfig.yaml().getString("Data.Database.SQL.User"),</span>
-<span class="source-line-no">190</span><span id="line-190">            DataConfig.yaml().getString("Data.Database.SQL.Password"),</span>
-<span class="source-line-no">191</span><span id="line-191">            DataConfig.yaml().getString("Data.Database.Prefix"),</span>
-<span class="source-line-no">192</span><span id="line-192">            DataConfig.yaml().getBoolean("Data.Database.SQL.PublicKey"),</span>
-<span class="source-line-no">193</span><span id="line-193">            DataConfig.yaml().getBoolean("Data.Database.SQL.SSL"),</span>
-<span class="source-line-no">194</span><span id="line-194">            "TNE",</span>
-<span class="source-line-no">195</span><span id="line-195">            DataConfig.yaml().getInt("Data.Pool.MaxSize"),</span>
-<span class="source-line-no">196</span><span id="line-196">            DataConfig.yaml().getLong("Data.Pool.MaxLife"),</span>
-<span class="source-line-no">197</span><span id="line-197">            DataConfig.yaml().getLong("Data.Pool.Timeout"),</span>
-<span class="source-line-no">198</span><span id="line-198">            DataConfig.yaml().getString("Data.Sync.Type")</span>
-<span class="source-line-no">199</span><span id="line-199">    );</span>
-<span class="source-line-no">200</span><span id="line-200"></span>
-<span class="source-line-no">201</span><span id="line-201">    final JedisPoolConfig config = new JedisPoolConfig();</span>
-<span class="source-line-no">202</span><span id="line-202">    config.setMaxTotal(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.MaxSize", 10));</span>
-<span class="source-line-no">203</span><span id="line-203">    config.setMaxIdle(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.MaxIdle", 10));</span>
-<span class="source-line-no">204</span><span id="line-204">    config.setMinIdle(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.MinIdle", 1));</span>
-<span class="source-line-no">205</span><span id="line-205"></span>
-<span class="source-line-no">206</span><span id="line-206">    String redisUser = (DataConfig.yaml().contains("Data.Sync.Redis.User"))? DataConfig.yaml().getString("Data.Sync.Redis.User") : null;</span>
-<span class="source-line-no">207</span><span id="line-207">    if(redisUser != null &amp;&amp; redisUser.equalsIgnoreCase("none")) {</span>
-<span class="source-line-no">208</span><span id="line-208">      redisUser = null;</span>
-<span class="source-line-no">209</span><span id="line-209">    }</span>
-<span class="source-line-no">210</span><span id="line-210"></span>
-<span class="source-line-no">211</span><span id="line-211">    String redisPass = (DataConfig.yaml().contains("Data.Sync.Redis.Password"))? DataConfig.yaml().getString("Data.Sync.Redis.Password") : null;</span>
-<span class="source-line-no">212</span><span id="line-212">    if(redisPass != null &amp;&amp; redisPass.equalsIgnoreCase("none")) {</span>
-<span class="source-line-no">213</span><span id="line-213">      redisPass = null;</span>
-<span class="source-line-no">214</span><span id="line-214">    }</span>
-<span class="source-line-no">215</span><span id="line-215"></span>
-<span class="source-line-no">216</span><span id="line-216">    this.storage = new StorageManager(DataConfig.yaml().getString("Data.Database.Type"),</span>
-<span class="source-line-no">217</span><span id="line-217">                                      new TNEStorageProvider(), settings, new JedisPool(config, DataConfig.yaml().getString("Data.Sync.Redis.Host"),</span>
-<span class="source-line-no">218</span><span id="line-218">                                                                                        DataConfig.yaml().getInt("Data.Sync.Redis.Port"),</span>
-<span class="source-line-no">219</span><span id="line-219">                                                                                        DataConfig.yaml().getInt("Data.Sync.Redis.Timeout"),</span>
-<span class="source-line-no">220</span><span id="line-220">                                                                                        redisUser,</span>
-<span class="source-line-no">221</span><span id="line-221">                                                                                        redisPass,</span>
-<span class="source-line-no">222</span><span id="line-222">                                                                                        DataConfig.yaml().getInt("Data.Sync.Redis.Index"),</span>
-<span class="source-line-no">223</span><span id="line-223">                                                                                        DataConfig.yaml().getBoolean("Data.Sync.Redis.SSL")));</span>
-<span class="source-line-no">224</span><span id="line-224">  }</span>
-<span class="source-line-no">225</span><span id="line-225"></span>
-<span class="source-line-no">226</span><span id="line-226">  @Override</span>
-<span class="source-line-no">227</span><span id="line-227">  public @NotNull &lt;A extends CommandActor&gt; LampBuilderVisitor&lt;A&gt; registerParameters() {</span>
-<span class="source-line-no">228</span><span id="line-228"></span>
-<span class="source-line-no">229</span><span id="line-229">    return builder -&gt;builder.parameterTypes()</span>
-<span class="source-line-no">230</span><span id="line-230">            .addParameterType(Account.class, new AccountResolver())</span>
-<span class="source-line-no">231</span><span id="line-231">            .addParameterType(AccountStatus.class, new StatusResolver())</span>
-<span class="source-line-no">232</span><span id="line-232">            .addParameterType(DebugLevel.class, new DebugResolver())</span>
-<span class="source-line-no">233</span><span id="line-233">            .addParameterType(Currency.class, new CurrencyResolver())</span>
-<span class="source-line-no">234</span><span id="line-234">            .addParameterType(BigDecimal.class, new BigDecimalResolver())</span>
-<span class="source-line-no">235</span><span id="line-235">            .addParameterType(ParseMoney.class, new MoneyResolver())</span>
-<span class="source-line-no">236</span><span id="line-236">            .addParameterType(PercentBigDecimal.class, new PercentDecimalResolver());</span>
-<span class="source-line-no">237</span><span id="line-237">  }</span>
-<span class="source-line-no">238</span><span id="line-238"></span>
-<span class="source-line-no">239</span><span id="line-239">  @Override</span>
-<span class="source-line-no">240</span><span id="line-240">  public void registerCommands() {</span>
-<span class="source-line-no">241</span><span id="line-241"></span>
-<span class="source-line-no">242</span><span id="line-242">    //Custom Parameters:</span>
-<span class="source-line-no">243</span><span id="line-243">    //TODO: Register custom validators</span>
-<span class="source-line-no">244</span><span id="line-244">  }</span>
-<span class="source-line-no">245</span><span id="line-245"></span>
-<span class="source-line-no">246</span><span id="line-246">  @Override</span>
-<span class="source-line-no">247</span><span id="line-247">  public void registerCallbacks(final CallbackManager callbackManager) {</span>
-<span class="source-line-no">248</span><span id="line-248"></span>
-<span class="source-line-no">249</span><span id="line-249">    callbackManager.addCallback(TNECallbacks.ACCOUNT_TYPES.id(), new CallbackEntry(AccountTypesCallback.class));</span>
-<span class="source-line-no">250</span><span id="line-250">    callbackManager.addCallback(TNECallbacks.ACCOUNT_LOAD.id(), new CallbackEntry(AccountLoadCallback.class));</span>
-<span class="source-line-no">251</span><span id="line-251">    callbackManager.addCallback(TNECallbacks.ACCOUNT_SAVE.id(), new CallbackEntry(AccountSaveCallback.class));</span>
-<span class="source-line-no">252</span><span id="line-252">    callbackManager.addCallback(TNECallbacks.ACCOUNT_CREATE.id(), new CallbackEntry(AccountCreateCallback.class));</span>
-<span class="source-line-no">253</span><span id="line-253">    callbackManager.addCallback(TNECallbacks.ACCOUNT_DELETE.id(), new CallbackEntry(AccountDeleteCallback.class));</span>
-<span class="source-line-no">254</span><span id="line-254">    callbackManager.addCallback(TNECallbacks.TRANSACTION_PRE.id(), new CallbackEntry(PreTransactionCallback.class));</span>
-<span class="source-line-no">255</span><span id="line-255">    callbackManager.addCallback(TNECallbacks.TRANSACTION_POST.id(), new CallbackEntry(PostTransactionCallback.class));</span>
-<span class="source-line-no">256</span><span id="line-256">    callbackManager.addCallback(TNECallbacks.CURRENCY_DROP.id(), new CallbackEntry(CurrencyDropCallback.class));</span>
-<span class="source-line-no">257</span><span id="line-257">    callbackManager.addCallback(TNECallbacks.CURRENCY_LOAD.id(), new CallbackEntry(CurrencyLoadCallback.class));</span>
-<span class="source-line-no">258</span><span id="line-258">    callbackManager.addCallback(TNECallbacks.DENOMINATION_LOAD.id(), new CallbackEntry(DenominationLoadCallback.class));</span>
-<span class="source-line-no">259</span><span id="line-259">  }</span>
+<span class="source-line-no">181</span><span id="line-181">    if(!this.data.load()) {</span>
+<span class="source-line-no">182</span><span id="line-182">      PluginCore.log().error("Failed to load data configuration!", DebugLevel.OFF);</span>
+<span class="source-line-no">183</span><span id="line-183">    }</span>
+<span class="source-line-no">184</span><span id="line-184"></span>
+<span class="source-line-no">185</span><span id="line-185">    if(!this.messageConfig.load()) {</span>
+<span class="source-line-no">186</span><span id="line-186">      PluginCore.log().error("Failed to load message configuration!", DebugLevel.OFF);</span>
+<span class="source-line-no">187</span><span id="line-187">    } else {</span>
+<span class="source-line-no">188</span><span id="line-188">      this.messageConfig.loadLanguages();</span>
+<span class="source-line-no">189</span><span id="line-189">    }</span>
+<span class="source-line-no">190</span><span id="line-190">  }</span>
+<span class="source-line-no">191</span><span id="line-191"></span>
+<span class="source-line-no">192</span><span id="line-192">  @Override</span>
+<span class="source-line-no">193</span><span id="line-193">  public void registerPluginChannels() {</span>
+<span class="source-line-no">194</span><span id="line-194"></span>
+<span class="source-line-no">195</span><span id="line-195">    PluginCore.instance().getChannelMessageManager().register(new BalanceHandler());</span>
+<span class="source-line-no">196</span><span id="line-196">    PluginCore.instance().getChannelMessageManager().register(new SyncHandler());</span>
+<span class="source-line-no">197</span><span id="line-197">    PluginCore.instance().getChannelMessageManager().register(new net.tnemc.core.channel.MessageHandler());</span>
+<span class="source-line-no">198</span><span id="line-198">  }</span>
+<span class="source-line-no">199</span><span id="line-199"></span>
+<span class="source-line-no">200</span><span id="line-200">  @Override</span>
+<span class="source-line-no">201</span><span id="line-201">  public void registerStorage() {</span>
+<span class="source-line-no">202</span><span id="line-202"></span>
+<span class="source-line-no">203</span><span id="line-203">    final StorageSettings settings = new StorageSettings(</span>
+<span class="source-line-no">204</span><span id="line-204">            DataConfig.yaml().getString("Data.Database.File"),</span>
+<span class="source-line-no">205</span><span id="line-205">            DataConfig.yaml().getString("Data.Database.SQL.Host"),</span>
+<span class="source-line-no">206</span><span id="line-206">            DataConfig.yaml().getInt("Data.Database.SQL.Port"),</span>
+<span class="source-line-no">207</span><span id="line-207">            DataConfig.yaml().getString("Data.Database.SQL.DB"),</span>
+<span class="source-line-no">208</span><span id="line-208">            DataConfig.yaml().getString("Data.Database.SQL.User"),</span>
+<span class="source-line-no">209</span><span id="line-209">            DataConfig.yaml().getString("Data.Database.SQL.Password"),</span>
+<span class="source-line-no">210</span><span id="line-210">            DataConfig.yaml().getString("Data.Database.Prefix"),</span>
+<span class="source-line-no">211</span><span id="line-211">            DataConfig.yaml().getBoolean("Data.Database.SQL.PublicKey"),</span>
+<span class="source-line-no">212</span><span id="line-212">            DataConfig.yaml().getBoolean("Data.Database.SQL.SSL"),</span>
+<span class="source-line-no">213</span><span id="line-213">            "TNE",</span>
+<span class="source-line-no">214</span><span id="line-214">            DataConfig.yaml().getInt("Data.Pool.MaxSize"),</span>
+<span class="source-line-no">215</span><span id="line-215">            DataConfig.yaml().getLong("Data.Pool.MaxLife"),</span>
+<span class="source-line-no">216</span><span id="line-216">            DataConfig.yaml().getLong("Data.Pool.Timeout"),</span>
+<span class="source-line-no">217</span><span id="line-217">            DataConfig.yaml().getString("Data.Sync.Type")</span>
+<span class="source-line-no">218</span><span id="line-218">    );</span>
+<span class="source-line-no">219</span><span id="line-219"></span>
+<span class="source-line-no">220</span><span id="line-220">    final JedisPoolConfig config = new JedisPoolConfig();</span>
+<span class="source-line-no">221</span><span id="line-221">    config.setMaxTotal(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.MaxSize", 10));</span>
+<span class="source-line-no">222</span><span id="line-222">    config.setMaxIdle(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.MaxIdle", 10));</span>
+<span class="source-line-no">223</span><span id="line-223">    config.setMinIdle(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.MinIdle", 1));</span>
+<span class="source-line-no">224</span><span id="line-224"></span>
+<span class="source-line-no">225</span><span id="line-225">    String redisUser = (DataConfig.yaml().contains("Data.Sync.Redis.User"))? DataConfig.yaml().getString("Data.Sync.Redis.User") : null;</span>
+<span class="source-line-no">226</span><span id="line-226">    if(redisUser != null &amp;&amp; redisUser.equalsIgnoreCase("none")) {</span>
+<span class="source-line-no">227</span><span id="line-227">      redisUser = null;</span>
+<span class="source-line-no">228</span><span id="line-228">    }</span>
+<span class="source-line-no">229</span><span id="line-229"></span>
+<span class="source-line-no">230</span><span id="line-230">    String redisPass = (DataConfig.yaml().contains("Data.Sync.Redis.Password"))? DataConfig.yaml().getString("Data.Sync.Redis.Password") : null;</span>
+<span class="source-line-no">231</span><span id="line-231">    if(redisPass != null &amp;&amp; redisPass.equalsIgnoreCase("none")) {</span>
+<span class="source-line-no">232</span><span id="line-232">      redisPass = null;</span>
+<span class="source-line-no">233</span><span id="line-233">    }</span>
+<span class="source-line-no">234</span><span id="line-234"></span>
+<span class="source-line-no">235</span><span id="line-235">    this.storage = new StorageManager(DataConfig.yaml().getString("Data.Database.Type"),</span>
+<span class="source-line-no">236</span><span id="line-236">                                      new TNEStorageProvider(), settings, new JedisPool(config, DataConfig.yaml().getString("Data.Sync.Redis.Host"),</span>
+<span class="source-line-no">237</span><span id="line-237">                                                                                        DataConfig.yaml().getInt("Data.Sync.Redis.Port"),</span>
+<span class="source-line-no">238</span><span id="line-238">                                                                                        DataConfig.yaml().getInt("Data.Sync.Redis.Timeout"),</span>
+<span class="source-line-no">239</span><span id="line-239">                                                                                        redisUser,</span>
+<span class="source-line-no">240</span><span id="line-240">                                                                                        redisPass,</span>
+<span class="source-line-no">241</span><span id="line-241">                                                                                        DataConfig.yaml().getInt("Data.Sync.Redis.Index"),</span>
+<span class="source-line-no">242</span><span id="line-242">                                                                                        DataConfig.yaml().getBoolean("Data.Sync.Redis.SSL")));</span>
+<span class="source-line-no">243</span><span id="line-243">  }</span>
+<span class="source-line-no">244</span><span id="line-244"></span>
+<span class="source-line-no">245</span><span id="line-245">  @Override</span>
+<span class="source-line-no">246</span><span id="line-246">  public @NotNull &lt;A extends CommandActor&gt; LampBuilderVisitor&lt;A&gt; registerParameters() {</span>
+<span class="source-line-no">247</span><span id="line-247"></span>
+<span class="source-line-no">248</span><span id="line-248">    return builder-&gt;builder.parameterTypes()</span>
+<span class="source-line-no">249</span><span id="line-249">            .addParameterType(Account.class, new AccountResolver())</span>
+<span class="source-line-no">250</span><span id="line-250">            .addParameterType(AccountStatus.class, new StatusResolver())</span>
+<span class="source-line-no">251</span><span id="line-251">            .addParameterType(DebugLevel.class, new DebugResolver())</span>
+<span class="source-line-no">252</span><span id="line-252">            .addParameterType(Currency.class, new CurrencyResolver())</span>
+<span class="source-line-no">253</span><span id="line-253">            .addParameterType(BigDecimal.class, new BigDecimalResolver())</span>
+<span class="source-line-no">254</span><span id="line-254">            .addParameterType(ParseMoney.class, new MoneyResolver())</span>
+<span class="source-line-no">255</span><span id="line-255">            .addParameterType(PercentBigDecimal.class, new PercentDecimalResolver());</span>
+<span class="source-line-no">256</span><span id="line-256">  }</span>
+<span class="source-line-no">257</span><span id="line-257"></span>
+<span class="source-line-no">258</span><span id="line-258">  @Override</span>
+<span class="source-line-no">259</span><span id="line-259">  public void registerCommands() {</span>
 <span class="source-line-no">260</span><span id="line-260"></span>
-<span class="source-line-no">261</span><span id="line-261">  @Override</span>
-<span class="source-line-no">262</span><span id="line-262">  public String commandHelpWriter(final ExecutableCommand command, final CommandActor actor) {</span>
-<span class="source-line-no">263</span><span id="line-263"></span>
-<span class="source-line-no">264</span><span id="line-264">    final MessageData data = new MessageData("Messages.Commands.Help.Entry");</span>
-<span class="source-line-no">265</span><span id="line-265">    data.addReplacement("$command", command.path());</span>
-<span class="source-line-no">266</span><span id="line-266">    data.addReplacement("$arguments", MessageHandler.getInstance().getTranslator().translateNode(new MessageData("Messages.Commands." + command.usage()), "default"));</span>
-<span class="source-line-no">267</span><span id="line-267">    data.addReplacement("$description", MessageHandler.getInstance().getTranslator().translateNode(new MessageData("Messages.Commands." + command.description()), "default"));</span>
-<span class="source-line-no">268</span><span id="line-268"></span>
-<span class="source-line-no">269</span><span id="line-269">    return MessageHandler.getInstance().getTranslator().translateNode(data, "default");</span>
-<span class="source-line-no">270</span><span id="line-270">  }</span>
-<span class="source-line-no">271</span><span id="line-271"></span>
-<span class="source-line-no">272</span><span id="line-272">  @Override</span>
-<span class="source-line-no">273</span><span id="line-273">  public void registerUpdateChecker() {</span>
-<span class="source-line-no">274</span><span id="line-274"></span>
-<span class="source-line-no">275</span><span id="line-275">    if(MainConfig.yaml().getBoolean("Core.Update.Check")) {</span>
-<span class="source-line-no">276</span><span id="line-276">      this.updateChecker = new Updater();</span>
-<span class="source-line-no">277</span><span id="line-277"></span>
-<span class="source-line-no">278</span><span id="line-278">      PluginCore.log().inform("Running version: " + version() + " Build: " + build());</span>
+<span class="source-line-no">261</span><span id="line-261">    //Custom Parameters:</span>
+<span class="source-line-no">262</span><span id="line-262">    //TODO: Register custom validators</span>
+<span class="source-line-no">263</span><span id="line-263">  }</span>
+<span class="source-line-no">264</span><span id="line-264"></span>
+<span class="source-line-no">265</span><span id="line-265">  @Override</span>
+<span class="source-line-no">266</span><span id="line-266">  public void registerCallbacks(final CallbackManager callbackManager) {</span>
+<span class="source-line-no">267</span><span id="line-267"></span>
+<span class="source-line-no">268</span><span id="line-268">    callbackManager.addCallback(TNECallbacks.ACCOUNT_TYPES.id(), new CallbackEntry(AccountTypesCallback.class));</span>
+<span class="source-line-no">269</span><span id="line-269">    callbackManager.addCallback(TNECallbacks.ACCOUNT_LOAD.id(), new CallbackEntry(AccountLoadCallback.class));</span>
+<span class="source-line-no">270</span><span id="line-270">    callbackManager.addCallback(TNECallbacks.ACCOUNT_SAVE.id(), new CallbackEntry(AccountSaveCallback.class));</span>
+<span class="source-line-no">271</span><span id="line-271">    callbackManager.addCallback(TNECallbacks.ACCOUNT_CREATE.id(), new CallbackEntry(AccountCreateCallback.class));</span>
+<span class="source-line-no">272</span><span id="line-272">    callbackManager.addCallback(TNECallbacks.ACCOUNT_DELETE.id(), new CallbackEntry(AccountDeleteCallback.class));</span>
+<span class="source-line-no">273</span><span id="line-273">    callbackManager.addCallback(TNECallbacks.TRANSACTION_PRE.id(), new CallbackEntry(PreTransactionCallback.class));</span>
+<span class="source-line-no">274</span><span id="line-274">    callbackManager.addCallback(TNECallbacks.TRANSACTION_POST.id(), new CallbackEntry(PostTransactionCallback.class));</span>
+<span class="source-line-no">275</span><span id="line-275">    callbackManager.addCallback(TNECallbacks.CURRENCY_DROP.id(), new CallbackEntry(CurrencyDropCallback.class));</span>
+<span class="source-line-no">276</span><span id="line-276">    callbackManager.addCallback(TNECallbacks.CURRENCY_LOAD.id(), new CallbackEntry(CurrencyLoadCallback.class));</span>
+<span class="source-line-no">277</span><span id="line-277">    callbackManager.addCallback(TNECallbacks.DENOMINATION_LOAD.id(), new CallbackEntry(DenominationLoadCallback.class));</span>
+<span class="source-line-no">278</span><span id="line-278">  }</span>
 <span class="source-line-no">279</span><span id="line-279"></span>
-<span class="source-line-no">280</span><span id="line-280">      PluginCore.log().inform("Build Stability: " + this.updateChecker.stable());</span>
-<span class="source-line-no">281</span><span id="line-281"></span>
-<span class="source-line-no">282</span><span id="line-282">      if(this.updateChecker.needsUpdate()) {</span>
-<span class="source-line-no">283</span><span id="line-283">        PluginCore.log().inform("Update Available! Latest: " + this.updateChecker.getBuild());</span>
-<span class="source-line-no">284</span><span id="line-284">      }</span>
-<span class="source-line-no">285</span><span id="line-285"></span>
-<span class="source-line-no">286</span><span id="line-286">      if(this.updateChecker.isEarlyBuild()) {</span>
-<span class="source-line-no">287</span><span id="line-287">        PluginCore.log().inform("Running pre-release version! Thanks for being a tester!");</span>
-<span class="source-line-no">288</span><span id="line-288">      }</span>
-<span class="source-line-no">289</span><span id="line-289">    }</span>
-<span class="source-line-no">290</span><span id="line-290">  }</span>
-<span class="source-line-no">291</span><span id="line-291"></span>
-<span class="source-line-no">292</span><span id="line-292">  @Override</span>
-<span class="source-line-no">293</span><span id="line-293">  public void postConfigs() {</span>
-<span class="source-line-no">294</span><span id="line-294"></span>
-<span class="source-line-no">295</span><span id="line-295">    //set our debug options.</span>
-<span class="source-line-no">296</span><span id="line-296">    PluginCore.instance().setLevel(DebugLevel.fromID(MainConfig.yaml().getString("Core.Debugging.Mode")));</span>
-<span class="source-line-no">297</span><span id="line-297"></span>
-<span class="source-line-no">298</span><span id="line-298">    this.economyManager = new EconomyManager();</span>
-<span class="source-line-no">299</span><span id="line-299"></span>
-<span class="source-line-no">300</span><span id="line-300">    this.economyManager.init();</span>
-<span class="source-line-no">301</span><span id="line-301"></span>
-<span class="source-line-no">302</span><span id="line-302">    if(!this.economyManager.currency().load(PluginCore.directory(), false)) {</span>
-<span class="source-line-no">303</span><span id="line-303">      return;</span>
-<span class="source-line-no">304</span><span id="line-304">    }</span>
-<span class="source-line-no">305</span><span id="line-305"></span>
-<span class="source-line-no">306</span><span id="line-306">    this.economyManager.currency().saveCurrenciesUUID(PluginCore.directory());</span>
-<span class="source-line-no">307</span><span id="line-307"></span>
-<span class="source-line-no">308</span><span id="line-308">    final UUID serverID;</span>
-<span class="source-line-no">309</span><span id="line-309">    //Set our server UUID. This is used for proxy messaging.</span>
-<span class="source-line-no">310</span><span id="line-310">    final boolean randomUUID = MainConfig.yaml().getBoolean("Core.Server.RandomUUID", false);</span>
-<span class="source-line-no">311</span><span id="line-311"></span>
-<span class="source-line-no">312</span><span id="line-312">    if(!randomUUID) {</span>
-<span class="source-line-no">313</span><span id="line-313">      if(!MainConfig.yaml().contains("Core.ServerID")) {</span>
-<span class="source-line-no">314</span><span id="line-314"></span>
-<span class="source-line-no">315</span><span id="line-315">        serverID = UUID.randomUUID();</span>
-<span class="source-line-no">316</span><span id="line-316">        MainConfig.yaml().set("Core.ServerID", serverID.toString());</span>
-<span class="source-line-no">317</span><span id="line-317">        MISCUtils.setComment(MainConfig.yaml(), "Core.ServerID", "Don't modify unless you know what you're doing.");</span>
+<span class="source-line-no">280</span><span id="line-280">  @Override</span>
+<span class="source-line-no">281</span><span id="line-281">  public String commandHelpWriter(final ExecutableCommand command, final CommandActor actor) {</span>
+<span class="source-line-no">282</span><span id="line-282"></span>
+<span class="source-line-no">283</span><span id="line-283">    final MessageData data = new MessageData("Messages.Commands.Help.Entry");</span>
+<span class="source-line-no">284</span><span id="line-284">    data.addReplacement("$command", command.path());</span>
+<span class="source-line-no">285</span><span id="line-285">    data.addReplacement("$arguments", MessageHandler.getInstance().getTranslator().translateNode(new MessageData("Messages.Commands." + command.usage()), "default"));</span>
+<span class="source-line-no">286</span><span id="line-286">    data.addReplacement("$description", MessageHandler.getInstance().getTranslator().translateNode(new MessageData("Messages.Commands." + command.description()), "default"));</span>
+<span class="source-line-no">287</span><span id="line-287"></span>
+<span class="source-line-no">288</span><span id="line-288">    return MessageHandler.getInstance().getTranslator().translateNode(data, "default");</span>
+<span class="source-line-no">289</span><span id="line-289">  }</span>
+<span class="source-line-no">290</span><span id="line-290"></span>
+<span class="source-line-no">291</span><span id="line-291">  @Override</span>
+<span class="source-line-no">292</span><span id="line-292">  public void registerUpdateChecker() {</span>
+<span class="source-line-no">293</span><span id="line-293"></span>
+<span class="source-line-no">294</span><span id="line-294">    if(MainConfig.yaml().getBoolean("Core.Update.Check")) {</span>
+<span class="source-line-no">295</span><span id="line-295">      this.updateChecker = new Updater();</span>
+<span class="source-line-no">296</span><span id="line-296"></span>
+<span class="source-line-no">297</span><span id="line-297">      PluginCore.log().inform("Running version: " + version() + " Build: " + build());</span>
+<span class="source-line-no">298</span><span id="line-298"></span>
+<span class="source-line-no">299</span><span id="line-299">      PluginCore.log().inform("Build Stability: " + this.updateChecker.stable());</span>
+<span class="source-line-no">300</span><span id="line-300"></span>
+<span class="source-line-no">301</span><span id="line-301">      if(this.updateChecker.needsUpdate()) {</span>
+<span class="source-line-no">302</span><span id="line-302">        PluginCore.log().inform("Update Available! Latest: " + this.updateChecker.getBuild());</span>
+<span class="source-line-no">303</span><span id="line-303">      }</span>
+<span class="source-line-no">304</span><span id="line-304"></span>
+<span class="source-line-no">305</span><span id="line-305">      if(this.updateChecker.isEarlyBuild()) {</span>
+<span class="source-line-no">306</span><span id="line-306">        PluginCore.log().inform("Running pre-release version! Thanks for being a tester!");</span>
+<span class="source-line-no">307</span><span id="line-307">      }</span>
+<span class="source-line-no">308</span><span id="line-308">    }</span>
+<span class="source-line-no">309</span><span id="line-309">  }</span>
+<span class="source-line-no">310</span><span id="line-310"></span>
+<span class="source-line-no">311</span><span id="line-311">  @Override</span>
+<span class="source-line-no">312</span><span id="line-312">  public void postConfigs() {</span>
+<span class="source-line-no">313</span><span id="line-313"></span>
+<span class="source-line-no">314</span><span id="line-314">    //set our debug options.</span>
+<span class="source-line-no">315</span><span id="line-315">    PluginCore.instance().setLevel(DebugLevel.fromID(MainConfig.yaml().getString("Core.Debugging.Mode")));</span>
+<span class="source-line-no">316</span><span id="line-316"></span>
+<span class="source-line-no">317</span><span id="line-317">    this.economyManager = new EconomyManager();</span>
 <span class="source-line-no">318</span><span id="line-318"></span>
-<span class="source-line-no">319</span><span id="line-319">        try {</span>
-<span class="source-line-no">320</span><span id="line-320">          MainConfig.yaml().save();</span>
-<span class="source-line-no">321</span><span id="line-321">        } catch(final IOException e) {</span>
-<span class="source-line-no">322</span><span id="line-322">          PluginCore.log().error("Issue while saving Server UUID to config.yml", e, DebugLevel.OFF);</span>
-<span class="source-line-no">323</span><span id="line-323">        }</span>
-<span class="source-line-no">324</span><span id="line-324">      } else {</span>
-<span class="source-line-no">325</span><span id="line-325">        serverID = UUID.fromString(MainConfig.yaml().getString("Core.ServerID"));</span>
-<span class="source-line-no">326</span><span id="line-326">      }</span>
-<span class="source-line-no">327</span><span id="line-327">    } else {</span>
-<span class="source-line-no">328</span><span id="line-328">      serverID = UUID.randomUUID();</span>
-<span class="source-line-no">329</span><span id="line-329">    }</span>
-<span class="source-line-no">330</span><span id="line-330">    PluginCore.instance().setServerID(serverID);</span>
-<span class="source-line-no">331</span><span id="line-331">  }</span>
-<span class="source-line-no">332</span><span id="line-332"></span>
-<span class="source-line-no">333</span><span id="line-333">  @Override</span>
-<span class="source-line-no">334</span><span id="line-334">  public void postStorage() {</span>
-<span class="source-line-no">335</span><span id="line-335"></span>
-<span class="source-line-no">336</span><span id="line-336">  }</span>
+<span class="source-line-no">319</span><span id="line-319">    this.economyManager.init();</span>
+<span class="source-line-no">320</span><span id="line-320"></span>
+<span class="source-line-no">321</span><span id="line-321">    if(!this.economyManager.currency().load(PluginCore.directory(), false)) {</span>
+<span class="source-line-no">322</span><span id="line-322">      return;</span>
+<span class="source-line-no">323</span><span id="line-323">    }</span>
+<span class="source-line-no">324</span><span id="line-324"></span>
+<span class="source-line-no">325</span><span id="line-325">    this.economyManager.currency().saveCurrenciesUUID(PluginCore.directory());</span>
+<span class="source-line-no">326</span><span id="line-326"></span>
+<span class="source-line-no">327</span><span id="line-327">    final UUID serverID;</span>
+<span class="source-line-no">328</span><span id="line-328">    //Set our server UUID. This is used for proxy messaging.</span>
+<span class="source-line-no">329</span><span id="line-329">    final boolean randomUUID = MainConfig.yaml().getBoolean("Core.Server.RandomUUID", false);</span>
+<span class="source-line-no">330</span><span id="line-330"></span>
+<span class="source-line-no">331</span><span id="line-331">    if(!randomUUID) {</span>
+<span class="source-line-no">332</span><span id="line-332">      if(!MainConfig.yaml().contains("Core.ServerID")) {</span>
+<span class="source-line-no">333</span><span id="line-333"></span>
+<span class="source-line-no">334</span><span id="line-334">        serverID = UUID.randomUUID();</span>
+<span class="source-line-no">335</span><span id="line-335">        MainConfig.yaml().set("Core.ServerID", serverID.toString());</span>
+<span class="source-line-no">336</span><span id="line-336">        MISCUtils.setComment(MainConfig.yaml(), "Core.ServerID", "Don't modify unless you know what you're doing.");</span>
 <span class="source-line-no">337</span><span id="line-337"></span>
-<span class="source-line-no">338</span><span id="line-338">  @Override</span>
-<span class="source-line-no">339</span><span id="line-339">  public void postEnable() {</span>
-<span class="source-line-no">340</span><span id="line-340"></span>
-<span class="source-line-no">341</span><span id="line-341">    MenuManager.instance().addMenu(new MyEcoMenu());</span>
-<span class="source-line-no">342</span><span id="line-342">    MenuManager.instance().addMenu(new MyBalMenu());</span>
-<span class="source-line-no">343</span><span id="line-343">    MenuManager.instance().addMenu(new TransactionMenu());</span>
-<span class="source-line-no">344</span><span id="line-344"></span>
-<span class="source-line-no">345</span><span id="line-345">    this.storage.loadAll(Account.class, "");</span>
-<span class="source-line-no">346</span><span id="line-346"></span>
-<span class="source-line-no">347</span><span id="line-347">    this.storage.loadAll(Receipt.class, "");</span>
-<span class="source-line-no">348</span><span id="line-348"></span>
-<span class="source-line-no">349</span><span id="line-349">    this.economyManager.setReloadTime(new Date().getTime());</span>
-<span class="source-line-no">350</span><span id="line-350"></span>
-<span class="source-line-no">351</span><span id="line-351">    final String name = MainConfig.yaml().getString("Core.Server.Account.Name");</span>
-<span class="source-line-no">352</span><span id="line-352">    serverAccount = UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8));</span>
-<span class="source-line-no">353</span><span id="line-353"></span>
-<span class="source-line-no">354</span><span id="line-354">    if(MainConfig.yaml().getBoolean("Core.Server.Account.Enabled")) {</span>
-<span class="source-line-no">355</span><span id="line-355"></span>
-<span class="source-line-no">356</span><span id="line-356">      PluginCore.log().inform("Checking Server Account.");</span>
-<span class="source-line-no">357</span><span id="line-357"></span>
-<span class="source-line-no">358</span><span id="line-358">      if(economyManager.account().findAccount(serverAccount.toString()).isEmpty()) {</span>
+<span class="source-line-no">338</span><span id="line-338">        try {</span>
+<span class="source-line-no">339</span><span id="line-339">          MainConfig.yaml().save();</span>
+<span class="source-line-no">340</span><span id="line-340">        } catch(final IOException e) {</span>
+<span class="source-line-no">341</span><span id="line-341">          PluginCore.log().error("Issue while saving Server UUID to config.yml", e, DebugLevel.OFF);</span>
+<span class="source-line-no">342</span><span id="line-342">        }</span>
+<span class="source-line-no">343</span><span id="line-343">      } else {</span>
+<span class="source-line-no">344</span><span id="line-344">        serverID = UUID.fromString(MainConfig.yaml().getString("Core.ServerID"));</span>
+<span class="source-line-no">345</span><span id="line-345">      }</span>
+<span class="source-line-no">346</span><span id="line-346">    } else {</span>
+<span class="source-line-no">347</span><span id="line-347">      serverID = UUID.randomUUID();</span>
+<span class="source-line-no">348</span><span id="line-348">    }</span>
+<span class="source-line-no">349</span><span id="line-349">    PluginCore.instance().setServerID(serverID);</span>
+<span class="source-line-no">350</span><span id="line-350">  }</span>
+<span class="source-line-no">351</span><span id="line-351"></span>
+<span class="source-line-no">352</span><span id="line-352">  @Override</span>
+<span class="source-line-no">353</span><span id="line-353">  public void postStorage() {</span>
+<span class="source-line-no">354</span><span id="line-354"></span>
+<span class="source-line-no">355</span><span id="line-355">  }</span>
+<span class="source-line-no">356</span><span id="line-356"></span>
+<span class="source-line-no">357</span><span id="line-357">  @Override</span>
+<span class="source-line-no">358</span><span id="line-358">  public void postEnable() {</span>
 <span class="source-line-no">359</span><span id="line-359"></span>
-<span class="source-line-no">360</span><span id="line-360">        PluginCore.log().inform("Creating Server Account.");</span>
-<span class="source-line-no">361</span><span id="line-361"></span>
-<span class="source-line-no">362</span><span id="line-362">        final AccountAPIResponse response = economyManager.account().createAccount(serverAccount.toString(), name, true);</span>
-<span class="source-line-no">363</span><span id="line-363">        if(response.getResponse().success()) {</span>
-<span class="source-line-no">364</span><span id="line-364"></span>
-<span class="source-line-no">365</span><span id="line-365">          PluginCore.log().inform("Server Account has been created.");</span>
-<span class="source-line-no">366</span><span id="line-366"></span>
-<span class="source-line-no">367</span><span id="line-367">          final BigDecimal defaultBalance = new BigDecimal(MainConfig.yaml().getString("Core.Server.Account.Balance"));</span>
-<span class="source-line-no">368</span><span id="line-368">          if(defaultBalance.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
-<span class="source-line-no">369</span><span id="line-369">            response.getAccount().ifPresent(value-&gt;value.setHoldings(new HoldingsEntry(economyManager.region().defaultRegion(),</span>
-<span class="source-line-no">370</span><span id="line-370">                                                                                       economyManager.currency().defaultCurrency().getUid(),</span>
-<span class="source-line-no">371</span><span id="line-371">                                                                                       defaultBalance,</span>
-<span class="source-line-no">372</span><span id="line-372">                                                                                       EconomyManager.NORMAL</span>
-<span class="source-line-no">373</span><span id="line-373">            )));</span>
-<span class="source-line-no">374</span><span id="line-374">          }</span>
-<span class="source-line-no">375</span><span id="line-375">        } else {</span>
-<span class="source-line-no">376</span><span id="line-376">          PluginCore.log().error("Unable to create Server Account. Reason: " + response.getResponse().response());</span>
-<span class="source-line-no">377</span><span id="line-377">        }</span>
-<span class="source-line-no">378</span><span id="line-378">      }</span>
-<span class="source-line-no">379</span><span id="line-379">    }</span>
+<span class="source-line-no">360</span><span id="line-360">    MenuManager.instance().addMenu(new MyEcoMenu());</span>
+<span class="source-line-no">361</span><span id="line-361">    MenuManager.instance().addMenu(new MyBalMenu());</span>
+<span class="source-line-no">362</span><span id="line-362">    MenuManager.instance().addMenu(new TransactionMenu());</span>
+<span class="source-line-no">363</span><span id="line-363"></span>
+<span class="source-line-no">364</span><span id="line-364">    this.storage.loadAll(Account.class, "");</span>
+<span class="source-line-no">365</span><span id="line-365"></span>
+<span class="source-line-no">366</span><span id="line-366">    this.storage.loadAll(Receipt.class, "");</span>
+<span class="source-line-no">367</span><span id="line-367"></span>
+<span class="source-line-no">368</span><span id="line-368">    this.economyManager.setReloadTime(new Date().getTime());</span>
+<span class="source-line-no">369</span><span id="line-369"></span>
+<span class="source-line-no">370</span><span id="line-370">    final String name = MainConfig.yaml().getString("Core.Server.Account.Name");</span>
+<span class="source-line-no">371</span><span id="line-371">    serverAccount = UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8));</span>
+<span class="source-line-no">372</span><span id="line-372"></span>
+<span class="source-line-no">373</span><span id="line-373">    if(MainConfig.yaml().getBoolean("Core.Server.Account.Enabled")) {</span>
+<span class="source-line-no">374</span><span id="line-374"></span>
+<span class="source-line-no">375</span><span id="line-375">      PluginCore.log().inform("Checking Server Account.");</span>
+<span class="source-line-no">376</span><span id="line-376"></span>
+<span class="source-line-no">377</span><span id="line-377">      if(economyManager.account().findAccount(serverAccount.toString()).isEmpty()) {</span>
+<span class="source-line-no">378</span><span id="line-378"></span>
+<span class="source-line-no">379</span><span id="line-379">        PluginCore.log().inform("Creating Server Account.");</span>
 <span class="source-line-no">380</span><span id="line-380"></span>
-<span class="source-line-no">381</span><span id="line-381">    //Set up the auto saver if enabled.</span>
-<span class="source-line-no">382</span><span id="line-382">    if(DataConfig.yaml().getBoolean("Data.AutoSaver.Enabled")) {</span>
+<span class="source-line-no">381</span><span id="line-381">        final AccountAPIResponse response = economyManager.account().createAccount(serverAccount.toString(), name, true);</span>
+<span class="source-line-no">382</span><span id="line-382">        if(response.getResponse().success()) {</span>
 <span class="source-line-no">383</span><span id="line-383"></span>
-<span class="source-line-no">384</span><span id="line-384">      this.autoSaver = PluginCore.server().scheduler().createRepeatingTask(()-&gt;{</span>
-<span class="source-line-no">385</span><span id="line-385">                                                                             storage.storeAll();</span>
-<span class="source-line-no">386</span><span id="line-386">                                                                           }, new ChoreTime(0),</span>
-<span class="source-line-no">387</span><span id="line-387">                                                                           new ChoreTime(DataConfig.yaml().getInt("Data.AutoSaver.Interval"), TimeUnit.SECONDS),</span>
-<span class="source-line-no">388</span><span id="line-388">                                                                           ChoreExecution.SECONDARY);</span>
-<span class="source-line-no">389</span><span id="line-389">    }</span>
-<span class="source-line-no">390</span><span id="line-390"></span>
-<span class="source-line-no">391</span><span id="line-391"></span>
-<span class="source-line-no">392</span><span id="line-392">    economyManager.printInvalid();</span>
-<span class="source-line-no">393</span><span id="line-393"></span>
-<span class="source-line-no">394</span><span id="line-394">    PluginCore.server().scheduler().createDelayedTask(()-&gt;economyManager.getTopManager().load(), new ChoreTime(2), ChoreExecution.SECONDARY);</span>
-<span class="source-line-no">395</span><span id="line-395">    PluginCore.server().scheduler().createRepeatingTask(()-&gt;economyManager.getTopManager().load(), new ChoreTime(2), new ChoreTime(MainConfig.yaml().getInt("Core.Commands.Top.Refresh"), TimeUnit.SECONDS), ChoreExecution.SECONDARY);</span>
-<span class="source-line-no">396</span><span id="line-396">  }</span>
-<span class="source-line-no">397</span><span id="line-397"></span>
-<span class="source-line-no">398</span><span id="line-398">  @Override</span>
-<span class="source-line-no">399</span><span id="line-399">  public void postDisable() {</span>
-<span class="source-line-no">400</span><span id="line-400"></span>
-<span class="source-line-no">401</span><span id="line-401">    if(autoSaver != null) {</span>
-<span class="source-line-no">402</span><span id="line-402">      autoSaver.cancel();</span>
-<span class="source-line-no">403</span><span id="line-403">    }</span>
-<span class="source-line-no">404</span><span id="line-404"></span>
-<span class="source-line-no">405</span><span id="line-405">    final Optional&lt;Datable&lt;?&gt;&gt; data = Optional.ofNullable(storage.getEngine().datables().get(Account.class));</span>
-<span class="source-line-no">406</span><span id="line-406">    if(data.isPresent()) {</span>
-<span class="source-line-no">407</span><span id="line-407">      data.get().storeAll(storage.getConnector(), null);</span>
+<span class="source-line-no">384</span><span id="line-384">          PluginCore.log().inform("Server Account has been created.");</span>
+<span class="source-line-no">385</span><span id="line-385"></span>
+<span class="source-line-no">386</span><span id="line-386">          final BigDecimal defaultBalance = new BigDecimal(MainConfig.yaml().getString("Core.Server.Account.Balance"));</span>
+<span class="source-line-no">387</span><span id="line-387">          if(defaultBalance.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
+<span class="source-line-no">388</span><span id="line-388">            response.getAccount().ifPresent(value-&gt;value.setHoldings(new HoldingsEntry(economyManager.region().defaultRegion(),</span>
+<span class="source-line-no">389</span><span id="line-389">                                                                                       economyManager.currency().defaultCurrency().getUid(),</span>
+<span class="source-line-no">390</span><span id="line-390">                                                                                       defaultBalance,</span>
+<span class="source-line-no">391</span><span id="line-391">                                                                                       EconomyManager.NORMAL</span>
+<span class="source-line-no">392</span><span id="line-392">            )));</span>
+<span class="source-line-no">393</span><span id="line-393">          }</span>
+<span class="source-line-no">394</span><span id="line-394">        } else {</span>
+<span class="source-line-no">395</span><span id="line-395">          PluginCore.log().error("Unable to create Server Account. Reason: " + response.getResponse().response());</span>
+<span class="source-line-no">396</span><span id="line-396">        }</span>
+<span class="source-line-no">397</span><span id="line-397">      }</span>
+<span class="source-line-no">398</span><span id="line-398">    }</span>
+<span class="source-line-no">399</span><span id="line-399"></span>
+<span class="source-line-no">400</span><span id="line-400">    //Set up the auto saver if enabled.</span>
+<span class="source-line-no">401</span><span id="line-401">    if(DataConfig.yaml().getBoolean("Data.AutoSaver.Enabled")) {</span>
+<span class="source-line-no">402</span><span id="line-402"></span>
+<span class="source-line-no">403</span><span id="line-403">      this.autoSaver = PluginCore.server().scheduler().createRepeatingTask(()-&gt;{</span>
+<span class="source-line-no">404</span><span id="line-404">                                                                             storage.storeAll();</span>
+<span class="source-line-no">405</span><span id="line-405">                                                                           }, new ChoreTime(0),</span>
+<span class="source-line-no">406</span><span id="line-406">                                                                           new ChoreTime(DataConfig.yaml().getInt("Data.AutoSaver.Interval"), TimeUnit.SECONDS),</span>
+<span class="source-line-no">407</span><span id="line-407">                                                                           ChoreExecution.SECONDARY);</span>
 <span class="source-line-no">408</span><span id="line-408">    }</span>
-<span class="source-line-no">409</span><span id="line-409">  }</span>
+<span class="source-line-no">409</span><span id="line-409"></span>
 <span class="source-line-no">410</span><span id="line-410"></span>
-<span class="source-line-no">411</span><span id="line-411">  /**</span>
-<span class="source-line-no">412</span><span id="line-412">   * The implementation's {@link EconomyManager}, which is used to manage everything economy related</span>
-<span class="source-line-no">413</span><span id="line-413">   * in TNE.</span>
-<span class="source-line-no">414</span><span id="line-414">   *</span>
-<span class="source-line-no">415</span><span id="line-415">   * @return The {@link EconomyManager Economy Manager}.</span>
-<span class="source-line-no">416</span><span id="line-416">   */</span>
-<span class="source-line-no">417</span><span id="line-417">  public static EconomyManager eco() {</span>
-<span class="source-line-no">418</span><span id="line-418"></span>
-<span class="source-line-no">419</span><span id="line-419">    return instance.economyManager;</span>
-<span class="source-line-no">420</span><span id="line-420">  }</span>
-<span class="source-line-no">421</span><span id="line-421"></span>
-<span class="source-line-no">422</span><span id="line-422">  public static YamlStorageManager yaml() {</span>
+<span class="source-line-no">411</span><span id="line-411">    economyManager.printInvalid();</span>
+<span class="source-line-no">412</span><span id="line-412"></span>
+<span class="source-line-no">413</span><span id="line-413">    PluginCore.server().scheduler().createDelayedTask(()-&gt;economyManager.getTopManager().load(), new ChoreTime(2), ChoreExecution.SECONDARY);</span>
+<span class="source-line-no">414</span><span id="line-414">    PluginCore.server().scheduler().createRepeatingTask(()-&gt;economyManager.getTopManager().load(), new ChoreTime(2), new ChoreTime(MainConfig.yaml().getInt("Core.Commands.Top.Refresh"), TimeUnit.SECONDS), ChoreExecution.SECONDARY);</span>
+<span class="source-line-no">415</span><span id="line-415">  }</span>
+<span class="source-line-no">416</span><span id="line-416"></span>
+<span class="source-line-no">417</span><span id="line-417">  @Override</span>
+<span class="source-line-no">418</span><span id="line-418">  public void postDisable() {</span>
+<span class="source-line-no">419</span><span id="line-419"></span>
+<span class="source-line-no">420</span><span id="line-420">    if(autoSaver != null) {</span>
+<span class="source-line-no">421</span><span id="line-421">      autoSaver.cancel();</span>
+<span class="source-line-no">422</span><span id="line-422">    }</span>
 <span class="source-line-no">423</span><span id="line-423"></span>
-<span class="source-line-no">424</span><span id="line-424">    return instance.yamlManager;</span>
-<span class="source-line-no">425</span><span id="line-425">  }</span>
-<span class="source-line-no">426</span><span id="line-426"></span>
-<span class="source-line-no">427</span><span id="line-427">  public MainConfig config() {</span>
-<span class="source-line-no">428</span><span id="line-428"></span>
-<span class="source-line-no">429</span><span id="line-429">    return config;</span>
-<span class="source-line-no">430</span><span id="line-430">  }</span>
+<span class="source-line-no">424</span><span id="line-424">    final Optional&lt;Datable&lt;?&gt;&gt; data = Optional.ofNullable(storage.getEngine().datables().get(Account.class));</span>
+<span class="source-line-no">425</span><span id="line-425">    if(data.isPresent()) {</span>
+<span class="source-line-no">426</span><span id="line-426">      data.get().storeAll(storage.getConnector(), null);</span>
+<span class="source-line-no">427</span><span id="line-427">    }</span>
+<span class="source-line-no">428</span><span id="line-428">  }</span>
+<span class="source-line-no">429</span><span id="line-429"></span>
+<span class="source-line-no">430</span><span id="line-430">  public MainConfig config() {</span>
 <span class="source-line-no">431</span><span id="line-431"></span>
-<span class="source-line-no">432</span><span id="line-432">  public DataConfig data() {</span>
-<span class="source-line-no">433</span><span id="line-433"></span>
-<span class="source-line-no">434</span><span id="line-434">    return data;</span>
-<span class="source-line-no">435</span><span id="line-435">  }</span>
+<span class="source-line-no">432</span><span id="line-432">    return config;</span>
+<span class="source-line-no">433</span><span id="line-433">  }</span>
+<span class="source-line-no">434</span><span id="line-434"></span>
+<span class="source-line-no">435</span><span id="line-435">  public DataConfig data() {</span>
 <span class="source-line-no">436</span><span id="line-436"></span>
-<span class="source-line-no">437</span><span id="line-437">  public MessageConfig message() {</span>
-<span class="source-line-no">438</span><span id="line-438"></span>
-<span class="source-line-no">439</span><span id="line-439">    return messageConfig;</span>
-<span class="source-line-no">440</span><span id="line-440">  }</span>
+<span class="source-line-no">437</span><span id="line-437">    return data;</span>
+<span class="source-line-no">438</span><span id="line-438">  }</span>
+<span class="source-line-no">439</span><span id="line-439"></span>
+<span class="source-line-no">440</span><span id="line-440">  public MessageConfig message() {</span>
 <span class="source-line-no">441</span><span id="line-441"></span>
-<span class="source-line-no">442</span><span id="line-442">  public static TNECore instance() {</span>
-<span class="source-line-no">443</span><span id="line-443"></span>
-<span class="source-line-no">444</span><span id="line-444">    return instance;</span>
-<span class="source-line-no">445</span><span id="line-445">  }</span>
+<span class="source-line-no">442</span><span id="line-442">    return messageConfig;</span>
+<span class="source-line-no">443</span><span id="line-443">  }</span>
+<span class="source-line-no">444</span><span id="line-444"></span>
+<span class="source-line-no">445</span><span id="line-445">  public UUID getServerAccount() {</span>
 <span class="source-line-no">446</span><span id="line-446"></span>
-<span class="source-line-no">447</span><span id="line-447">  public static TNEAPI api() {</span>
-<span class="source-line-no">448</span><span id="line-448"></span>
-<span class="source-line-no">449</span><span id="line-449">    return instance.api;</span>
-<span class="source-line-no">450</span><span id="line-450">  }</span>
+<span class="source-line-no">447</span><span id="line-447">    return serverAccount;</span>
+<span class="source-line-no">448</span><span id="line-448">  }</span>
+<span class="source-line-no">449</span><span id="line-449"></span>
+<span class="source-line-no">450</span><span id="line-450">  public abstract &lt;INV&gt; ItemCalculations&lt;INV&gt; itemCalculations();</span>
 <span class="source-line-no">451</span><span id="line-451"></span>
-<span class="source-line-no">452</span><span id="line-452">  public UUID getServerAccount() {</span>
+<span class="source-line-no">452</span><span id="line-452">  public AbstractItemStack&lt;?&gt; denominationToStack(final ItemDenomination denomination) {</span>
 <span class="source-line-no">453</span><span id="line-453"></span>
-<span class="source-line-no">454</span><span id="line-454">    return serverAccount;</span>
+<span class="source-line-no">454</span><span id="line-454">    return denominationToStack(denomination, 1);</span>
 <span class="source-line-no">455</span><span id="line-455">  }</span>
 <span class="source-line-no">456</span><span id="line-456"></span>
-<span class="source-line-no">457</span><span id="line-457">  public abstract &lt;INV&gt; ItemCalculations&lt;INV&gt; itemCalculations();</span>
+<span class="source-line-no">457</span><span id="line-457">  public AbstractItemStack&lt;?&gt; denominationToStack(final ItemDenomination denomination, final int amount) {</span>
 <span class="source-line-no">458</span><span id="line-458"></span>
-<span class="source-line-no">459</span><span id="line-459">  public AbstractItemStack&lt;?&gt; denominationToStack(final ItemDenomination denomination) {</span>
+<span class="source-line-no">459</span><span id="line-459">    AbstractItemStack&lt;?&gt; stack = PluginCore.server().stackBuilder().of(denomination.material(), amount).debug(false);</span>
 <span class="source-line-no">460</span><span id="line-460"></span>
-<span class="source-line-no">461</span><span id="line-461">    return denominationToStack(denomination, 1);</span>
-<span class="source-line-no">462</span><span id="line-462">  }</span>
-<span class="source-line-no">463</span><span id="line-463"></span>
-<span class="source-line-no">464</span><span id="line-464">  public AbstractItemStack&lt;?&gt; denominationToStack(final ItemDenomination denomination, final int amount) {</span>
-<span class="source-line-no">465</span><span id="line-465"></span>
-<span class="source-line-no">466</span><span id="line-466">    AbstractItemStack&lt;?&gt; stack = PluginCore.server().stackBuilder().of(denomination.material(), amount)</span>
-<span class="source-line-no">467</span><span id="line-467">            .enchant(denomination.enchantments())</span>
-<span class="source-line-no">468</span><span id="line-468">            .lore(denomination.getLore())</span>
-<span class="source-line-no">469</span><span id="line-469">            .flags(denomination.flags())</span>
-<span class="source-line-no">470</span><span id="line-470">            .damage(denomination.getDamage())</span>
-<span class="source-line-no">471</span><span id="line-471">            .customName(MiniMessage.miniMessage().deserialize(denomination.getName())).debug(false);</span>
+<span class="source-line-no">461</span><span id="line-461">    if(!denomination.enchantments().isEmpty()) {</span>
+<span class="source-line-no">462</span><span id="line-462">      stack = stack.enchant(denomination.enchantments());</span>
+<span class="source-line-no">463</span><span id="line-463">    }</span>
+<span class="source-line-no">464</span><span id="line-464"></span>
+<span class="source-line-no">465</span><span id="line-465">    if(!denomination.flags().isEmpty()) {</span>
+<span class="source-line-no">466</span><span id="line-466">      stack = stack.flags(denomination.flags());</span>
+<span class="source-line-no">467</span><span id="line-467">    }</span>
+<span class="source-line-no">468</span><span id="line-468"></span>
+<span class="source-line-no">469</span><span id="line-469">    if(!denomination.getLore().isEmpty()) {</span>
+<span class="source-line-no">470</span><span id="line-470">      stack = stack.lore(denomination.getLore());</span>
+<span class="source-line-no">471</span><span id="line-471">    }</span>
 <span class="source-line-no">472</span><span id="line-472"></span>
-<span class="source-line-no">473</span><span id="line-473">    if(denomination.getCustomModel() &gt; -1) {</span>
-<span class="source-line-no">474</span><span id="line-474">      stack = stack.modelDataOld(denomination.getCustomModel());</span>
+<span class="source-line-no">473</span><span id="line-473">    if(denomination.getDamage() &gt; 0) {</span>
+<span class="source-line-no">474</span><span id="line-474">      stack = stack.damage(denomination.getDamage());</span>
 <span class="source-line-no">475</span><span id="line-475">    }</span>
 <span class="source-line-no">476</span><span id="line-476"></span>
-<span class="source-line-no">477</span><span id="line-477">    if(!denomination.provider().equalsIgnoreCase("vanilla")) {</span>
-<span class="source-line-no">478</span><span id="line-478">      stack = stack.setItemProvider(denomination.provider()).setProviderItemID(denomination.providerID());</span>
+<span class="source-line-no">477</span><span id="line-477">    if(!denomination.getName().isEmpty()) {</span>
+<span class="source-line-no">478</span><span id="line-478">      stack = stack.customName(MiniMessage.miniMessage().deserialize(denomination.getName()));</span>
 <span class="source-line-no">479</span><span id="line-479">    }</span>
 <span class="source-line-no">480</span><span id="line-480"></span>
-<span class="source-line-no">481</span><span id="line-481">    if(!denomination.itemModel().isEmpty()) {</span>
-<span class="source-line-no">482</span><span id="line-482">      stack = stack.itemModel(denomination.itemModel());</span>
+<span class="source-line-no">481</span><span id="line-481">    if(denomination.getCustomModel() &gt; -1) {</span>
+<span class="source-line-no">482</span><span id="line-482">      stack = stack.modelDataOld(denomination.getCustomModel());</span>
 <span class="source-line-no">483</span><span id="line-483">    }</span>
 <span class="source-line-no">484</span><span id="line-484"></span>
-<span class="source-line-no">485</span><span id="line-485">    if(!denomination.modelBooleans().isEmpty() || !denomination.modelStrings().isEmpty()</span>
-<span class="source-line-no">486</span><span id="line-486">      || !denomination.modelColours().isEmpty() || !denomination.modelFloats().isEmpty()) {</span>
-<span class="source-line-no">487</span><span id="line-487"></span>
-<span class="source-line-no">488</span><span id="line-488">      stack = stack.modelData(denomination.modelColours(), denomination.modelFloats(),</span>
-<span class="source-line-no">489</span><span id="line-489">                              denomination.modelBooleans(), denomination.modelStrings());</span>
-<span class="source-line-no">490</span><span id="line-490">    }</span>
-<span class="source-line-no">491</span><span id="line-491"></span>
-<span class="source-line-no">492</span><span id="line-492">    if(denomination.maxStack() &gt; 0) {</span>
-<span class="source-line-no">493</span><span id="line-493">      stack = stack.maxStackSize(denomination.maxStack());</span>
-<span class="source-line-no">494</span><span id="line-494">    }</span>
-<span class="source-line-no">495</span><span id="line-495">    return stack;</span>
-<span class="source-line-no">496</span><span id="line-496">  }</span>
-<span class="source-line-no">497</span><span id="line-497">}</span>
+<span class="source-line-no">485</span><span id="line-485">    if(!denomination.provider().equalsIgnoreCase("vanilla")) {</span>
+<span class="source-line-no">486</span><span id="line-486">      stack = stack.setItemProvider(denomination.provider()).setProviderItemID(denomination.providerID());</span>
+<span class="source-line-no">487</span><span id="line-487">    }</span>
+<span class="source-line-no">488</span><span id="line-488"></span>
+<span class="source-line-no">489</span><span id="line-489">    if(!denomination.itemModel().isEmpty()) {</span>
+<span class="source-line-no">490</span><span id="line-490">      stack = stack.itemModel(denomination.itemModel());</span>
+<span class="source-line-no">491</span><span id="line-491">    }</span>
+<span class="source-line-no">492</span><span id="line-492"></span>
+<span class="source-line-no">493</span><span id="line-493">    if(!denomination.modelBooleans().isEmpty() || !denomination.modelStrings().isEmpty()</span>
+<span class="source-line-no">494</span><span id="line-494">       || !denomination.modelColours().isEmpty() || !denomination.modelFloats().isEmpty()) {</span>
+<span class="source-line-no">495</span><span id="line-495"></span>
+<span class="source-line-no">496</span><span id="line-496">      stack = stack.modelData(denomination.modelColours(), denomination.modelFloats(),</span>
+<span class="source-line-no">497</span><span id="line-497">                              denomination.modelBooleans(), denomination.modelStrings());</span>
+<span class="source-line-no">498</span><span id="line-498">    }</span>
+<span class="source-line-no">499</span><span id="line-499"></span>
+<span class="source-line-no">500</span><span id="line-500">    if(denomination.maxStack() &gt; 0) {</span>
+<span class="source-line-no">501</span><span id="line-501">      stack = stack.maxStackSize(denomination.maxStack());</span>
+<span class="source-line-no">502</span><span id="line-502">    }</span>
+<span class="source-line-no">503</span><span id="line-503">    return stack;</span>
+<span class="source-line-no">504</span><span id="line-504">  }</span>
+<span class="source-line-no">505</span><span id="line-505">}</span>
 
 
 

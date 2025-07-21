@@ -62,22 +62,23 @@
 <span class="source-line-no">049</span><span id="line-49"></span>
 <span class="source-line-no">050</span><span id="line-50">  @Override</span>
 <span class="source-line-no">051</span><span id="line-51">  public String apply(final ParseMoney parseMoney, final String input) {</span>
-<span class="source-line-no">052</span><span id="line-52">    final Matcher matcher = Pattern.compile("^([^0-9]+)").matcher(input);</span>
-<span class="source-line-no">053</span><span id="line-53">    if(matcher.find()) {</span>
-<span class="source-line-no">054</span><span id="line-54"></span>
-<span class="source-line-no">055</span><span id="line-55">      final String symbol = matcher.group(1).trim();</span>
-<span class="source-line-no">056</span><span id="line-56">      final Optional&lt;Currency&gt; currency = TNECore.eco().currency().findCurrencyBySymbol(symbol);</span>
-<span class="source-line-no">057</span><span id="line-57">      if(currency.isPresent()) {</span>
-<span class="source-line-no">058</span><span id="line-58"></span>
-<span class="source-line-no">059</span><span id="line-59">        parseMoney.currency(currency.get());</span>
-<span class="source-line-no">060</span><span id="line-60">        parseMoney.amount(parseMoney.amount().setScale(currency.get().getDecimalPlaces(), RoundingMode.FLOOR));</span>
-<span class="source-line-no">061</span><span id="line-61"></span>
-<span class="source-line-no">062</span><span id="line-62">        return input.replace(matcher.group(), "").trim();</span>
-<span class="source-line-no">063</span><span id="line-63">      }</span>
-<span class="source-line-no">064</span><span id="line-64">    }</span>
-<span class="source-line-no">065</span><span id="line-65">    return input;</span>
-<span class="source-line-no">066</span><span id="line-66">  }</span>
-<span class="source-line-no">067</span><span id="line-67">}</span>
+<span class="source-line-no">052</span><span id="line-52"></span>
+<span class="source-line-no">053</span><span id="line-53">    final Matcher matcher = Pattern.compile("^([^0-9]+)").matcher(input);</span>
+<span class="source-line-no">054</span><span id="line-54">    if(matcher.find()) {</span>
+<span class="source-line-no">055</span><span id="line-55"></span>
+<span class="source-line-no">056</span><span id="line-56">      final String symbol = matcher.group(1).trim();</span>
+<span class="source-line-no">057</span><span id="line-57">      final Optional&lt;Currency&gt; currency = TNECore.eco().currency().findCurrencyBySymbol(symbol);</span>
+<span class="source-line-no">058</span><span id="line-58">      if(currency.isPresent()) {</span>
+<span class="source-line-no">059</span><span id="line-59"></span>
+<span class="source-line-no">060</span><span id="line-60">        parseMoney.currency(currency.get());</span>
+<span class="source-line-no">061</span><span id="line-61">        parseMoney.amount(parseMoney.amount().setScale(currency.get().getDecimalPlaces(), RoundingMode.FLOOR));</span>
+<span class="source-line-no">062</span><span id="line-62"></span>
+<span class="source-line-no">063</span><span id="line-63">        return input.replace(matcher.group(), "").trim();</span>
+<span class="source-line-no">064</span><span id="line-64">      }</span>
+<span class="source-line-no">065</span><span id="line-65">    }</span>
+<span class="source-line-no">066</span><span id="line-66">    return input;</span>
+<span class="source-line-no">067</span><span id="line-67">  }</span>
+<span class="source-line-no">068</span><span id="line-68">}</span>
 
 
 

@@ -51,7 +51,15 @@ net.tnemc.core.handlers.player
 net.tnemc.core.handlers.region
 net.tnemc.core.handlers.server
 net.tnemc.core.hook
-net.tnemc.core.hook.tnk
+net.tnemc.core.hook.papi
+net.tnemc.core.hook.papi.impl.accbalance
+net.tnemc.core.hook.papi.impl.balance
+net.tnemc.core.hook.papi.impl.currency
+net.tnemc.core.hook.papi.impl.info
+net.tnemc.core.hook.papi.impl.misc
+net.tnemc.core.hook.papi.impl.permission
+net.tnemc.core.hook.papi.impl.top
+net.tnemc.core.hook.papi.impl.transaction
 net.tnemc.core.io.maps
 net.tnemc.core.io.maps.comparators.receipt
 net.tnemc.core.io.message

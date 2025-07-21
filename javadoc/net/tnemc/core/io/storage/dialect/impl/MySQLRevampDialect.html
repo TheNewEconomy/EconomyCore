@@ -95,7 +95,7 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code>, <code>net.tnemc.plugincore.core.io.storage.Dialect</code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-106">MySQLRevampDialect</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-66">MySQLRevampDialect</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></span></div>
 <div class="block">MySQLRevampDialect</div>
@@ -103,82 +103,42 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <dt>Since:</dt>
 <dd>0.1.2.0
 
- CREATE TABLE IF NOT EXISTS prefix_accounts (
-     uid VARCHAR(36) NOT NULL PRIMARY KEY,
-     username VARCHAR(50) NOT NULL UNIQUE,
-     account_type VARCHAR(30) NOT NULL,
-     created DATETIME NOT NULL,
-     pin VARCHAR(16),
-     status VARCHAR(36)
+ CREATE TABLE IF NOT EXISTS prefix_accounts ( uid VARCHAR(36) NOT NULL PRIMARY KEY, username
+ VARCHAR(50) NOT NULL UNIQUE, account_type VARCHAR(30) NOT NULL, created DATETIME NOT NULL, pin
+ VARCHAR(16), status VARCHAR(36) );
+
+ CREATE TABLE IF NOT EXISTS prefix_non_players_accounts ( uid VARCHAR(36) NOT NULL PRIMARY KEY,
+ owner VARCHAR(36) NOT NULL );
+
+ CREATE TABLE IF NOT EXISTS prefix_players_accounts ( uid VARCHAR(36) NOT NULL PRIMARY KEY,
+ last_online DATETIME NOT NULL );
+
+ CREATE TABLE IF NOT EXISTS prefix_account_members ( uid VARCHAR(36) NOT NULL PRIMARY KEY, account
+ VARCHAR(36) NOT NULL, perm VARCHAR(36) NOT NULL, perm_value TINYINT(1) NOT NULL );
+
+ CREATE TABLE IF NOT EXISTS prefix_holdings ( uid VARCHAR(36) NOT NULL, server VARCHAR(40) NOT
+ NULL, region VARCHAR(40) NOT NULL, currency VARCHAR(36) NOT NULL, holdings_type VARCHAR(30) NOT
+ NULL, holdings DECIMAL(49, 4) NOT NULL, PRIMARY KEY(uid, server, region, currency, holdings_type)
  );
 
- CREATE TABLE IF NOT EXISTS prefix_non_players_accounts (
-     uid VARCHAR(36) NOT NULL PRIMARY KEY,
-     owner VARCHAR(36) NOT NULL
+ CREATE TABLE IF NOT EXISTS prefix_receipts ( uid VARCHAR(36) NOT NULL PRIMARY KEY, performed
+ DATETIME NOT NULL, receipt_type VARCHAR(30) NOT NULL, receipt_source VARCHAR(60) NOT NULL,
+ receipt_source_type VARCHAR(30) NOT NULL, archive TINYINT(1) NOT NULL, voided TINYINT(1) NOT NULL
  );
 
- CREATE TABLE IF NOT EXISTS prefix_players_accounts (
-     uid VARCHAR(36) NOT NULL PRIMARY KEY,
-     last_online DATETIME NOT NULL
- );
+ CREATE TABLE IF NOT EXISTS prefix_receipts_holdings ( uid VARCHAR(36) NOT NULL, participant
+ VARCHAR(36) NOT NULL, ending TINYINT(1) NOT NULL, server VARCHAR(40) NOT NULL, region VARCHAR(40)
+ NOT NULL, currency VARCHAR(36) NOT NULL, holdings_type VARCHAR(30) NOT NULL, holdings DECIMAL(49,
+ 4) NOT NULL, PRIMARY KEY(uid, participant) );
 
- CREATE TABLE IF NOT EXISTS prefix_account_members (
-     uid VARCHAR(36) NOT NULL PRIMARY KEY,
-     account VARCHAR(36) NOT NULL,
-     perm VARCHAR(36) NOT NULL,
-     perm_value TINYINT(1) NOT NULL
- );
+ CREATE TABLE IF NOT EXISTS prefix_receipts_participants ( uid VARCHAR(36) NOT NULL, participant
+ VARCHAR(36) NOT NULL, participant_type VARCHAR(10) NOT NULL, tax DECIMAL(49, 4) NOT NULL, PRIMARY
+ KEY(uid, participant) );
 
- CREATE TABLE IF NOT EXISTS prefix_holdings (
-     uid VARCHAR(36) NOT NULL,
-     server VARCHAR(40) NOT NULL,
-     region VARCHAR(40) NOT NULL,
-     currency VARCHAR(36) NOT NULL,
-     holdings_type VARCHAR(30) NOT NULL,
-     holdings DECIMAL(49, 4) NOT NULL,
-     PRIMARY KEY(uid, server, region, currency, holdings_type)
- );
-
- CREATE TABLE IF NOT EXISTS prefix_receipts (
-     uid VARCHAR(36) NOT NULL PRIMARY KEY,
-     performed DATETIME NOT NULL,
-     receipt_type VARCHAR(30) NOT NULL,
-     receipt_source VARCHAR(60) NOT NULL,
-     receipt_source_type VARCHAR(30) NOT NULL,
-     archive TINYINT(1) NOT NULL,
-     voided TINYINT(1) NOT NULL
- );
-
- CREATE TABLE IF NOT EXISTS prefix_receipts_holdings (
-     uid VARCHAR(36) NOT NULL,
-     participant VARCHAR(36) NOT NULL,
-     ending TINYINT(1) NOT NULL,
-     server VARCHAR(40) NOT NULL,
-     region VARCHAR(40) NOT NULL,
-     currency VARCHAR(36) NOT NULL,
-     holdings_type VARCHAR(30) NOT NULL,
-     holdings DECIMAL(49, 4) NOT NULL,
-     PRIMARY KEY(uid, participant)
- );
-
- CREATE TABLE IF NOT EXISTS prefix_receipts_participants (
-     uid VARCHAR(36) NOT NULL,
-     participant VARCHAR(36) NOT NULL,
-     participant_type VARCHAR(10) NOT NULL,
-     tax DECIMAL(49, 4) NOT NULL,
-     PRIMARY KEY(uid, participant)
- );
-
- CREATE TABLE IF NOT EXISTS prefix_receipts_modifiers (
-     uid VARCHAR(36) NOT NULL,
-     participant VARCHAR(36) NOT NULL,
-     participant_type VARCHAR(10) NOT NULL,
-     operation VARCHAR(10) NOT NULL,
-     region VARCHAR(40) NOT NULL,
-     currency VARCHAR(36) NOT NULL,
-     modifier DECIMAL(49, 4) NOT NULL,
-     PRIMARY KEY(uid, participant)
- );</dd>
+ CREATE TABLE IF NOT EXISTS prefix_receipts_modifiers ( uid VARCHAR(36) NOT NULL, participant
+ VARCHAR(36) NOT NULL, participant_type VARCHAR(10) NOT NULL, operation VARCHAR(10) NOT NULL,
+ region VARCHAR(40) NOT NULL, currency VARCHAR(36) NOT NULL, modifier DECIMAL(49, 4) NOT NULL,
+ PRIMARY KEY(uid, participant) );</dd>
 <dt>Author:</dt>
 <dd>creatorfromhell</dd>
 </dl>
@@ -346,7 +306,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="requirement">
 <h3>requirement</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-108">requirement</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-68">requirement</a></span></div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -368,7 +328,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="&lt;init&gt;(java.lang.String)">
 <h3>MySQLRevampDialect</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-173">MySQLRevampDialect</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prefix)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-133">MySQLRevampDialect</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prefix)</span></div>
 </section>
 </li>
 </ul>
@@ -382,7 +342,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="accountsTable()">
 <h3>accountsTable</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-236">accountsTable</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-196">accountsTable</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#accountsTable()">accountsTable</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -392,7 +352,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="accountsNonPlayerTable()">
 <h3>accountsNonPlayerTable</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-248">accountsNonPlayerTable</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-209">accountsNonPlayerTable</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#accountsNonPlayerTable()">accountsNonPlayerTable</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -402,7 +362,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="accountsPlayerTable()">
 <h3>accountsPlayerTable</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-256">accountsPlayerTable</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-218">accountsPlayerTable</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#accountsPlayerTable()">accountsPlayerTable</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -412,7 +372,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="accountMembersTable()">
 <h3>accountMembersTable</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-264">accountMembersTable</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-227">accountMembersTable</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#accountMembersTable()">accountMembersTable</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -422,7 +382,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="holdingsTable()">
 <h3>holdingsTable</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-275">holdingsTable</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-239">holdingsTable</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#holdingsTable()">holdingsTable</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -432,7 +392,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="receiptsTable()">
 <h3>receiptsTable</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-288">receiptsTable</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-253">receiptsTable</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#receiptsTable()">receiptsTable</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -442,7 +402,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="receiptsHoldingsTable()">
 <h3>receiptsHoldingsTable</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-301">receiptsHoldingsTable</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-267">receiptsHoldingsTable</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#receiptsHoldingsTable()">receiptsHoldingsTable</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -452,7 +412,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="receiptsParticipantsTable()">
 <h3>receiptsParticipantsTable</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-316">receiptsParticipantsTable</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-283">receiptsParticipantsTable</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#receiptsParticipantsTable()">receiptsParticipantsTable</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -462,7 +422,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="receiptsModifiersTable()">
 <h3>receiptsModifiersTable</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-327">receiptsModifiersTable</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-295">receiptsModifiersTable</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#receiptsModifiersTable()">receiptsModifiersTable</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -472,7 +432,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="accountPurge(int)">
 <h3>accountPurge</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-341">accountPurge</a></span><wbr><span class="parameters">(int&nbsp;days)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-310">accountPurge</a></span><wbr><span class="parameters">(int&nbsp;days)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#accountPurge(int)">accountPurge</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -482,7 +442,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="receiptPurge(int)">
 <h3>receiptPurge</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-359">receiptPurge</a></span><wbr><span class="parameters">(int&nbsp;days)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-328">receiptPurge</a></span><wbr><span class="parameters">(int&nbsp;days)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#receiptPurge(int)">receiptPurge</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -492,7 +452,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="saveName()">
 <h3>saveName</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-366">saveName</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-335">saveName</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#saveName()">saveName</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -502,7 +462,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="loadAccounts()">
 <h3>loadAccounts</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-372">loadAccounts</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-341">loadAccounts</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#loadAccounts()">loadAccounts</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -512,7 +472,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="loadAccount()">
 <h3>loadAccount</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-378">loadAccount</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-347">loadAccount</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#loadAccount()">loadAccount</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -522,7 +482,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="saveAccount()">
 <h3>saveAccount</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-384">saveAccount</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-353">saveAccount</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#saveAccount()">saveAccount</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -532,7 +492,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="loadNonPlayer()">
 <h3>loadNonPlayer</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-390">loadNonPlayer</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-359">loadNonPlayer</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#loadNonPlayer()">loadNonPlayer</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -542,7 +502,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="saveNonPlayer()">
 <h3>saveNonPlayer</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-396">saveNonPlayer</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-365">saveNonPlayer</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#saveNonPlayer()">saveNonPlayer</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -552,7 +512,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="loadPlayer()">
 <h3>loadPlayer</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-402">loadPlayer</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-371">loadPlayer</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#loadPlayer()">loadPlayer</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -562,7 +522,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="savePlayer()">
 <h3>savePlayer</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-408">savePlayer</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-377">savePlayer</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#savePlayer()">savePlayer</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -572,7 +532,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="loadMembers()">
 <h3>loadMembers</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-414">loadMembers</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-383">loadMembers</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#loadMembers()">loadMembers</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -582,7 +542,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="saveMembers()">
 <h3>saveMembers</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-420">saveMembers</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-389">saveMembers</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#saveMembers()">saveMembers</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -592,7 +552,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="loadHoldings()">
 <h3>loadHoldings</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-426">loadHoldings</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-395">loadHoldings</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#loadHoldings()">loadHoldings</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -602,7 +562,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="saveHoldings()">
 <h3>saveHoldings</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-432">saveHoldings</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-401">saveHoldings</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#saveHoldings()">saveHoldings</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -612,7 +572,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="loadReceipts()">
 <h3>loadReceipts</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-438">loadReceipts</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-407">loadReceipts</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#loadReceipts()">loadReceipts</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -622,7 +582,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="saveReceipt()">
 <h3>saveReceipt</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-444">saveReceipt</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-413">saveReceipt</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#saveReceipt()">saveReceipt</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -632,7 +592,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="loadReceiptHolding()">
 <h3>loadReceiptHolding</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-450">loadReceiptHolding</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-419">loadReceiptHolding</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#loadReceiptHolding()">loadReceiptHolding</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -642,7 +602,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="saveReceiptHolding()">
 <h3>saveReceiptHolding</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-456">saveReceiptHolding</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-425">saveReceiptHolding</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#saveReceiptHolding()">saveReceiptHolding</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -652,7 +612,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="loadParticipants()">
 <h3>loadParticipants</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-462">loadParticipants</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-431">loadParticipants</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#loadParticipants()">loadParticipants</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -662,7 +622,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="saveParticipant()">
 <h3>saveParticipant</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-468">saveParticipant</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-437">saveParticipant</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#saveParticipant()">saveParticipant</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -672,7 +632,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="loadModifiers()">
 <h3>loadModifiers</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-474">loadModifiers</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-443">loadModifiers</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#loadModifiers()">loadModifiers</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -682,7 +642,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="saveModifier()">
 <h3>saveModifier</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-480">saveModifier</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-449">saveModifier</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../TNEDialect.html#saveModifier()">saveModifier</a></code>&nbsp;in interface&nbsp;<code><a href="../TNEDialect.html" title="interface in net.tnemc.core.io.storage.dialect">TNEDialect</a></code></dd>
@@ -692,7 +652,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="parseVersion(java.lang.String)">
 <h3>parseVersion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-486">parseVersion</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;version)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-455">parseVersion</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;version)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>parseVersion</code>&nbsp;in interface&nbsp;<code>net.tnemc.plugincore.core.io.storage.Dialect</code></dd>
@@ -702,7 +662,7 @@ implements <a href="../TNEDialect.html" title="interface in net.tnemc.core.io.st
 <li>
 <section class="detail" id="requirement()">
 <h3>requirement</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-492">requirement</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/net/tnemc/core/io/storage/dialect/impl/MySQLRevampDialect.html#line-461">requirement</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>requirement</code>&nbsp;in interface&nbsp;<code>net.tnemc.plugincore.core.io.storage.Dialect</code></dd>

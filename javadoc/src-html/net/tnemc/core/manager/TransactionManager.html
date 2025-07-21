@@ -129,164 +129,164 @@
 <span class="source-line-no">116</span><span id="line-116">    this.processor = new BaseTransactionProcessor(findGroup("core").get().getChecks());</span>
 <span class="source-line-no">117</span><span id="line-117">  }</span>
 <span class="source-line-no">118</span><span id="line-118"></span>
-<span class="source-line-no">119</span><span id="line-119">  /**</span>
-<span class="source-line-no">120</span><span id="line-120">   * Attempts to find a {@link TransactionType type}.</span>
-<span class="source-line-no">121</span><span id="line-121">   *</span>
-<span class="source-line-no">122</span><span id="line-122">   * @param identifier The identifier of the type to use in the search.</span>
-<span class="source-line-no">123</span><span id="line-123">   *</span>
-<span class="source-line-no">124</span><span id="line-124">   * @return An Optional containing the type if it exists based on the identifier, otherwise an</span>
-<span class="source-line-no">125</span><span id="line-125">   * empty Optional.</span>
-<span class="source-line-no">126</span><span id="line-126">   */</span>
-<span class="source-line-no">127</span><span id="line-127">  public Optional&lt;TransactionType&gt; findType(final String identifier) {</span>
-<span class="source-line-no">128</span><span id="line-128"></span>
-<span class="source-line-no">129</span><span id="line-129">    return Optional.ofNullable(types.get(identifier));</span>
-<span class="source-line-no">130</span><span id="line-130">  }</span>
-<span class="source-line-no">131</span><span id="line-131"></span>
-<span class="source-line-no">132</span><span id="line-132">  /**</span>
-<span class="source-line-no">133</span><span id="line-133">   * Adds a {@link TransactionType type}.</span>
-<span class="source-line-no">134</span><span id="line-134">   *</span>
-<span class="source-line-no">135</span><span id="line-135">   * @param type The type to add.</span>
-<span class="source-line-no">136</span><span id="line-136">   */</span>
-<span class="source-line-no">137</span><span id="line-137">  public void addType(final TransactionType type) {</span>
-<span class="source-line-no">138</span><span id="line-138"></span>
-<span class="source-line-no">139</span><span id="line-139">    types.put(type);</span>
-<span class="source-line-no">140</span><span id="line-140">  }</span>
-<span class="source-line-no">141</span><span id="line-141"></span>
-<span class="source-line-no">142</span><span id="line-142">  /**</span>
-<span class="source-line-no">143</span><span id="line-143">   * Attempts to find a {@link TaxType type}.</span>
-<span class="source-line-no">144</span><span id="line-144">   *</span>
-<span class="source-line-no">145</span><span id="line-145">   * @param identifier The identifier of the type to use in the search.</span>
-<span class="source-line-no">146</span><span id="line-146">   *</span>
-<span class="source-line-no">147</span><span id="line-147">   * @return An Optional containing the type if it exists based on the identifier, otherwise an</span>
-<span class="source-line-no">148</span><span id="line-148">   * empty Optional.</span>
-<span class="source-line-no">149</span><span id="line-149">   */</span>
-<span class="source-line-no">150</span><span id="line-150">  public Optional&lt;TaxType&gt; findTax(final String identifier) {</span>
-<span class="source-line-no">151</span><span id="line-151"></span>
-<span class="source-line-no">152</span><span id="line-152">    return Optional.ofNullable(tax.get(identifier));</span>
-<span class="source-line-no">153</span><span id="line-153">  }</span>
-<span class="source-line-no">154</span><span id="line-154"></span>
-<span class="source-line-no">155</span><span id="line-155">  /**</span>
-<span class="source-line-no">156</span><span id="line-156">   * Adds a {@link TaxType type}.</span>
-<span class="source-line-no">157</span><span id="line-157">   *</span>
-<span class="source-line-no">158</span><span id="line-158">   * @param type The type to add.</span>
-<span class="source-line-no">159</span><span id="line-159">   */</span>
-<span class="source-line-no">160</span><span id="line-160">  public void addTax(final TaxType type) {</span>
-<span class="source-line-no">161</span><span id="line-161"></span>
-<span class="source-line-no">162</span><span id="line-162">    tax.put(type);</span>
-<span class="source-line-no">163</span><span id="line-163">  }</span>
-<span class="source-line-no">164</span><span id="line-164"></span>
-<span class="source-line-no">165</span><span id="line-165">  /**</span>
-<span class="source-line-no">166</span><span id="line-166">   * Adds a {@link TransactionCheck check}.</span>
-<span class="source-line-no">167</span><span id="line-167">   *</span>
-<span class="source-line-no">168</span><span id="line-168">   * @param check The check to add.</span>
-<span class="source-line-no">169</span><span id="line-169">   */</span>
-<span class="source-line-no">170</span><span id="line-170">  public void addCheck(final TransactionCheck check) {</span>
-<span class="source-line-no">171</span><span id="line-171"></span>
-<span class="source-line-no">172</span><span id="line-172">    checks.put(check);</span>
-<span class="source-line-no">173</span><span id="line-173">  }</span>
-<span class="source-line-no">174</span><span id="line-174"></span>
-<span class="source-line-no">175</span><span id="line-175">  /**</span>
-<span class="source-line-no">176</span><span id="line-176">   * Adds a {@link TransactionCheck check}.</span>
-<span class="source-line-no">177</span><span id="line-177">   *</span>
-<span class="source-line-no">178</span><span id="line-178">   * @param check The check to add.</span>
-<span class="source-line-no">179</span><span id="line-179">   * @param group The {@link TransactionCheckGroup group} to add this check to.</span>
-<span class="source-line-no">180</span><span id="line-180">   */</span>
-<span class="source-line-no">181</span><span id="line-181">  public void addCheck(final TransactionCheck check, final String group) {</span>
-<span class="source-line-no">182</span><span id="line-182"></span>
-<span class="source-line-no">183</span><span id="line-183">    checks.put(check);</span>
-<span class="source-line-no">184</span><span id="line-184">    addCheckToGroup(check.identifier(), group);</span>
-<span class="source-line-no">185</span><span id="line-185">  }</span>
-<span class="source-line-no">186</span><span id="line-186"></span>
-<span class="source-line-no">187</span><span id="line-187">  /**</span>
-<span class="source-line-no">188</span><span id="line-188">   * Attempts to find a {@link TransactionCheck check}.</span>
-<span class="source-line-no">189</span><span id="line-189">   *</span>
-<span class="source-line-no">190</span><span id="line-190">   * @param identifier The identifier of the check to use in the search.</span>
-<span class="source-line-no">191</span><span id="line-191">   *</span>
-<span class="source-line-no">192</span><span id="line-192">   * @return An Optional containing the check if it exists based on the identifier, otherwise an</span>
-<span class="source-line-no">193</span><span id="line-193">   * empty Optional.</span>
-<span class="source-line-no">194</span><span id="line-194">   */</span>
-<span class="source-line-no">195</span><span id="line-195">  public Optional&lt;TransactionCheck&gt; findCheck(final String identifier) {</span>
-<span class="source-line-no">196</span><span id="line-196"></span>
-<span class="source-line-no">197</span><span id="line-197">    return Optional.ofNullable(checks.get(identifier));</span>
-<span class="source-line-no">198</span><span id="line-198">  }</span>
-<span class="source-line-no">199</span><span id="line-199"></span>
-<span class="source-line-no">200</span><span id="line-200">  /**</span>
-<span class="source-line-no">201</span><span id="line-201">   * Adds a {@link TransactionCheck check} to a {@link TransactionCheckGroup group} if it exists,</span>
-<span class="source-line-no">202</span><span id="line-202">   * otherwise it'll create a new group and add it to that.</span>
-<span class="source-line-no">203</span><span id="line-203">   *</span>
-<span class="source-line-no">204</span><span id="line-204">   * @param check The check to add.</span>
-<span class="source-line-no">205</span><span id="line-205">   * @param group The group to add the check to.</span>
-<span class="source-line-no">206</span><span id="line-206">   */</span>
-<span class="source-line-no">207</span><span id="line-207">  public void addCheckToGroup(final String check, final String group) {</span>
-<span class="source-line-no">208</span><span id="line-208"></span>
-<span class="source-line-no">209</span><span id="line-209">    final Optional&lt;TransactionCheckGroup&gt; groupOptional = findGroup(group);</span>
-<span class="source-line-no">210</span><span id="line-210">    groupOptional.ifPresentOrElse(transactionCheckGroup-&gt;{</span>
-<span class="source-line-no">211</span><span id="line-211">      transactionCheckGroup.addCheck(check);</span>
-<span class="source-line-no">212</span><span id="line-212">      addGroup(groupOptional.get());</span>
-<span class="source-line-no">213</span><span id="line-213">    }, ()-&gt;{</span>
-<span class="source-line-no">214</span><span id="line-214">      final TransactionCheckGroup groupObj = new TransactionCheckGroup(group);</span>
-<span class="source-line-no">215</span><span id="line-215">      groupObj.addCheck(check);</span>
-<span class="source-line-no">216</span><span id="line-216">      addGroup(groupObj);</span>
-<span class="source-line-no">217</span><span id="line-217">    });</span>
-<span class="source-line-no">218</span><span id="line-218"></span>
-<span class="source-line-no">219</span><span id="line-219">  }</span>
-<span class="source-line-no">220</span><span id="line-220"></span>
-<span class="source-line-no">221</span><span id="line-221">  /**</span>
-<span class="source-line-no">222</span><span id="line-222">   * Adds a {@link TransactionCheckGroup group}.</span>
-<span class="source-line-no">223</span><span id="line-223">   *</span>
-<span class="source-line-no">224</span><span id="line-224">   * @param group The group to add.</span>
-<span class="source-line-no">225</span><span id="line-225">   */</span>
-<span class="source-line-no">226</span><span id="line-226">  public void addGroup(final TransactionCheckGroup group) {</span>
-<span class="source-line-no">227</span><span id="line-227"></span>
-<span class="source-line-no">228</span><span id="line-228">    checkGroups.put(group);</span>
-<span class="source-line-no">229</span><span id="line-229">  }</span>
-<span class="source-line-no">230</span><span id="line-230"></span>
-<span class="source-line-no">231</span><span id="line-231">  /**</span>
-<span class="source-line-no">232</span><span id="line-232">   * Attempts to find a {@link TransactionCheckGroup group}.</span>
-<span class="source-line-no">233</span><span id="line-233">   *</span>
-<span class="source-line-no">234</span><span id="line-234">   * @param identifier The identifier of the group to use in the search.</span>
-<span class="source-line-no">235</span><span id="line-235">   *</span>
-<span class="source-line-no">236</span><span id="line-236">   * @return An Optional containing the group if it exists based on the identifier, otherwise an</span>
-<span class="source-line-no">237</span><span id="line-237">   * empty Optional.</span>
-<span class="source-line-no">238</span><span id="line-238">   */</span>
-<span class="source-line-no">239</span><span id="line-239">  public Optional&lt;TransactionCheckGroup&gt; findGroup(final String identifier) {</span>
-<span class="source-line-no">240</span><span id="line-240"></span>
-<span class="source-line-no">241</span><span id="line-241">    return Optional.ofNullable(checkGroups.get(identifier));</span>
-<span class="source-line-no">242</span><span id="line-242">  }</span>
-<span class="source-line-no">243</span><span id="line-243"></span>
-<span class="source-line-no">244</span><span id="line-244">  public boolean isTrack() {</span>
+<span class="source-line-no">119</span><span id="line-119">  public static ReceiptManager receipts() {</span>
+<span class="source-line-no">120</span><span id="line-120"></span>
+<span class="source-line-no">121</span><span id="line-121">    return TNECore.eco().transaction().receiptManager;</span>
+<span class="source-line-no">122</span><span id="line-122">  }</span>
+<span class="source-line-no">123</span><span id="line-123"></span>
+<span class="source-line-no">124</span><span id="line-124">  /**</span>
+<span class="source-line-no">125</span><span id="line-125">   * Attempts to find a {@link TransactionType type}.</span>
+<span class="source-line-no">126</span><span id="line-126">   *</span>
+<span class="source-line-no">127</span><span id="line-127">   * @param identifier The identifier of the type to use in the search.</span>
+<span class="source-line-no">128</span><span id="line-128">   *</span>
+<span class="source-line-no">129</span><span id="line-129">   * @return An Optional containing the type if it exists based on the identifier, otherwise an</span>
+<span class="source-line-no">130</span><span id="line-130">   * empty Optional.</span>
+<span class="source-line-no">131</span><span id="line-131">   */</span>
+<span class="source-line-no">132</span><span id="line-132">  public Optional&lt;TransactionType&gt; findType(final String identifier) {</span>
+<span class="source-line-no">133</span><span id="line-133"></span>
+<span class="source-line-no">134</span><span id="line-134">    return Optional.ofNullable(types.get(identifier));</span>
+<span class="source-line-no">135</span><span id="line-135">  }</span>
+<span class="source-line-no">136</span><span id="line-136"></span>
+<span class="source-line-no">137</span><span id="line-137">  /**</span>
+<span class="source-line-no">138</span><span id="line-138">   * Adds a {@link TransactionType type}.</span>
+<span class="source-line-no">139</span><span id="line-139">   *</span>
+<span class="source-line-no">140</span><span id="line-140">   * @param type The type to add.</span>
+<span class="source-line-no">141</span><span id="line-141">   */</span>
+<span class="source-line-no">142</span><span id="line-142">  public void addType(final TransactionType type) {</span>
+<span class="source-line-no">143</span><span id="line-143"></span>
+<span class="source-line-no">144</span><span id="line-144">    types.put(type);</span>
+<span class="source-line-no">145</span><span id="line-145">  }</span>
+<span class="source-line-no">146</span><span id="line-146"></span>
+<span class="source-line-no">147</span><span id="line-147">  /**</span>
+<span class="source-line-no">148</span><span id="line-148">   * Attempts to find a {@link TaxType type}.</span>
+<span class="source-line-no">149</span><span id="line-149">   *</span>
+<span class="source-line-no">150</span><span id="line-150">   * @param identifier The identifier of the type to use in the search.</span>
+<span class="source-line-no">151</span><span id="line-151">   *</span>
+<span class="source-line-no">152</span><span id="line-152">   * @return An Optional containing the type if it exists based on the identifier, otherwise an</span>
+<span class="source-line-no">153</span><span id="line-153">   * empty Optional.</span>
+<span class="source-line-no">154</span><span id="line-154">   */</span>
+<span class="source-line-no">155</span><span id="line-155">  public Optional&lt;TaxType&gt; findTax(final String identifier) {</span>
+<span class="source-line-no">156</span><span id="line-156"></span>
+<span class="source-line-no">157</span><span id="line-157">    return Optional.ofNullable(tax.get(identifier));</span>
+<span class="source-line-no">158</span><span id="line-158">  }</span>
+<span class="source-line-no">159</span><span id="line-159"></span>
+<span class="source-line-no">160</span><span id="line-160">  /**</span>
+<span class="source-line-no">161</span><span id="line-161">   * Adds a {@link TaxType type}.</span>
+<span class="source-line-no">162</span><span id="line-162">   *</span>
+<span class="source-line-no">163</span><span id="line-163">   * @param type The type to add.</span>
+<span class="source-line-no">164</span><span id="line-164">   */</span>
+<span class="source-line-no">165</span><span id="line-165">  public void addTax(final TaxType type) {</span>
+<span class="source-line-no">166</span><span id="line-166"></span>
+<span class="source-line-no">167</span><span id="line-167">    tax.put(type);</span>
+<span class="source-line-no">168</span><span id="line-168">  }</span>
+<span class="source-line-no">169</span><span id="line-169"></span>
+<span class="source-line-no">170</span><span id="line-170">  /**</span>
+<span class="source-line-no">171</span><span id="line-171">   * Adds a {@link TransactionCheck check}.</span>
+<span class="source-line-no">172</span><span id="line-172">   *</span>
+<span class="source-line-no">173</span><span id="line-173">   * @param check The check to add.</span>
+<span class="source-line-no">174</span><span id="line-174">   */</span>
+<span class="source-line-no">175</span><span id="line-175">  public void addCheck(final TransactionCheck check) {</span>
+<span class="source-line-no">176</span><span id="line-176"></span>
+<span class="source-line-no">177</span><span id="line-177">    checks.put(check);</span>
+<span class="source-line-no">178</span><span id="line-178">  }</span>
+<span class="source-line-no">179</span><span id="line-179"></span>
+<span class="source-line-no">180</span><span id="line-180">  /**</span>
+<span class="source-line-no">181</span><span id="line-181">   * Adds a {@link TransactionCheck check}.</span>
+<span class="source-line-no">182</span><span id="line-182">   *</span>
+<span class="source-line-no">183</span><span id="line-183">   * @param check The check to add.</span>
+<span class="source-line-no">184</span><span id="line-184">   * @param group The {@link TransactionCheckGroup group} to add this check to.</span>
+<span class="source-line-no">185</span><span id="line-185">   */</span>
+<span class="source-line-no">186</span><span id="line-186">  public void addCheck(final TransactionCheck check, final String group) {</span>
+<span class="source-line-no">187</span><span id="line-187"></span>
+<span class="source-line-no">188</span><span id="line-188">    checks.put(check);</span>
+<span class="source-line-no">189</span><span id="line-189">    addCheckToGroup(check.identifier(), group);</span>
+<span class="source-line-no">190</span><span id="line-190">  }</span>
+<span class="source-line-no">191</span><span id="line-191"></span>
+<span class="source-line-no">192</span><span id="line-192">  /**</span>
+<span class="source-line-no">193</span><span id="line-193">   * Attempts to find a {@link TransactionCheck check}.</span>
+<span class="source-line-no">194</span><span id="line-194">   *</span>
+<span class="source-line-no">195</span><span id="line-195">   * @param identifier The identifier of the check to use in the search.</span>
+<span class="source-line-no">196</span><span id="line-196">   *</span>
+<span class="source-line-no">197</span><span id="line-197">   * @return An Optional containing the check if it exists based on the identifier, otherwise an</span>
+<span class="source-line-no">198</span><span id="line-198">   * empty Optional.</span>
+<span class="source-line-no">199</span><span id="line-199">   */</span>
+<span class="source-line-no">200</span><span id="line-200">  public Optional&lt;TransactionCheck&gt; findCheck(final String identifier) {</span>
+<span class="source-line-no">201</span><span id="line-201"></span>
+<span class="source-line-no">202</span><span id="line-202">    return Optional.ofNullable(checks.get(identifier));</span>
+<span class="source-line-no">203</span><span id="line-203">  }</span>
+<span class="source-line-no">204</span><span id="line-204"></span>
+<span class="source-line-no">205</span><span id="line-205">  /**</span>
+<span class="source-line-no">206</span><span id="line-206">   * Adds a {@link TransactionCheck check} to a {@link TransactionCheckGroup group} if it exists,</span>
+<span class="source-line-no">207</span><span id="line-207">   * otherwise it'll create a new group and add it to that.</span>
+<span class="source-line-no">208</span><span id="line-208">   *</span>
+<span class="source-line-no">209</span><span id="line-209">   * @param check The check to add.</span>
+<span class="source-line-no">210</span><span id="line-210">   * @param group The group to add the check to.</span>
+<span class="source-line-no">211</span><span id="line-211">   */</span>
+<span class="source-line-no">212</span><span id="line-212">  public void addCheckToGroup(final String check, final String group) {</span>
+<span class="source-line-no">213</span><span id="line-213"></span>
+<span class="source-line-no">214</span><span id="line-214">    final Optional&lt;TransactionCheckGroup&gt; groupOptional = findGroup(group);</span>
+<span class="source-line-no">215</span><span id="line-215">    groupOptional.ifPresentOrElse(transactionCheckGroup-&gt;{</span>
+<span class="source-line-no">216</span><span id="line-216">      transactionCheckGroup.addCheck(check);</span>
+<span class="source-line-no">217</span><span id="line-217">      addGroup(groupOptional.get());</span>
+<span class="source-line-no">218</span><span id="line-218">    }, ()-&gt;{</span>
+<span class="source-line-no">219</span><span id="line-219">      final TransactionCheckGroup groupObj = new TransactionCheckGroup(group);</span>
+<span class="source-line-no">220</span><span id="line-220">      groupObj.addCheck(check);</span>
+<span class="source-line-no">221</span><span id="line-221">      addGroup(groupObj);</span>
+<span class="source-line-no">222</span><span id="line-222">    });</span>
+<span class="source-line-no">223</span><span id="line-223"></span>
+<span class="source-line-no">224</span><span id="line-224">  }</span>
+<span class="source-line-no">225</span><span id="line-225"></span>
+<span class="source-line-no">226</span><span id="line-226">  /**</span>
+<span class="source-line-no">227</span><span id="line-227">   * Adds a {@link TransactionCheckGroup group}.</span>
+<span class="source-line-no">228</span><span id="line-228">   *</span>
+<span class="source-line-no">229</span><span id="line-229">   * @param group The group to add.</span>
+<span class="source-line-no">230</span><span id="line-230">   */</span>
+<span class="source-line-no">231</span><span id="line-231">  public void addGroup(final TransactionCheckGroup group) {</span>
+<span class="source-line-no">232</span><span id="line-232"></span>
+<span class="source-line-no">233</span><span id="line-233">    checkGroups.put(group);</span>
+<span class="source-line-no">234</span><span id="line-234">  }</span>
+<span class="source-line-no">235</span><span id="line-235"></span>
+<span class="source-line-no">236</span><span id="line-236">  /**</span>
+<span class="source-line-no">237</span><span id="line-237">   * Attempts to find a {@link TransactionCheckGroup group}.</span>
+<span class="source-line-no">238</span><span id="line-238">   *</span>
+<span class="source-line-no">239</span><span id="line-239">   * @param identifier The identifier of the group to use in the search.</span>
+<span class="source-line-no">240</span><span id="line-240">   *</span>
+<span class="source-line-no">241</span><span id="line-241">   * @return An Optional containing the group if it exists based on the identifier, otherwise an</span>
+<span class="source-line-no">242</span><span id="line-242">   * empty Optional.</span>
+<span class="source-line-no">243</span><span id="line-243">   */</span>
+<span class="source-line-no">244</span><span id="line-244">  public Optional&lt;TransactionCheckGroup&gt; findGroup(final String identifier) {</span>
 <span class="source-line-no">245</span><span id="line-245"></span>
-<span class="source-line-no">246</span><span id="line-246">    return track;</span>
+<span class="source-line-no">246</span><span id="line-246">    return Optional.ofNullable(checkGroups.get(identifier));</span>
 <span class="source-line-no">247</span><span id="line-247">  }</span>
 <span class="source-line-no">248</span><span id="line-248"></span>
-<span class="source-line-no">249</span><span id="line-249">  public void setTrack(final boolean track) {</span>
+<span class="source-line-no">249</span><span id="line-249">  public boolean isTrack() {</span>
 <span class="source-line-no">250</span><span id="line-250"></span>
-<span class="source-line-no">251</span><span id="line-251">    this.track = track;</span>
+<span class="source-line-no">251</span><span id="line-251">    return track;</span>
 <span class="source-line-no">252</span><span id="line-252">  }</span>
 <span class="source-line-no">253</span><span id="line-253"></span>
-<span class="source-line-no">254</span><span id="line-254">  public BigDecimal getAmount() {</span>
+<span class="source-line-no">254</span><span id="line-254">  public void setTrack(final boolean track) {</span>
 <span class="source-line-no">255</span><span id="line-255"></span>
-<span class="source-line-no">256</span><span id="line-256">    return amount;</span>
+<span class="source-line-no">256</span><span id="line-256">    this.track = track;</span>
 <span class="source-line-no">257</span><span id="line-257">  }</span>
 <span class="source-line-no">258</span><span id="line-258"></span>
-<span class="source-line-no">259</span><span id="line-259">  public void setAmount(final BigDecimal amount) {</span>
+<span class="source-line-no">259</span><span id="line-259">  public BigDecimal getAmount() {</span>
 <span class="source-line-no">260</span><span id="line-260"></span>
-<span class="source-line-no">261</span><span id="line-261">    this.amount = amount;</span>
+<span class="source-line-no">261</span><span id="line-261">    return amount;</span>
 <span class="source-line-no">262</span><span id="line-262">  }</span>
 <span class="source-line-no">263</span><span id="line-263"></span>
-<span class="source-line-no">264</span><span id="line-264">  public TransactionProcessor getProcessor() {</span>
+<span class="source-line-no">264</span><span id="line-264">  public void setAmount(final BigDecimal amount) {</span>
 <span class="source-line-no">265</span><span id="line-265"></span>
-<span class="source-line-no">266</span><span id="line-266">    return processor;</span>
+<span class="source-line-no">266</span><span id="line-266">    this.amount = amount;</span>
 <span class="source-line-no">267</span><span id="line-267">  }</span>
 <span class="source-line-no">268</span><span id="line-268"></span>
-<span class="source-line-no">269</span><span id="line-269">  public void setProcessor(final TransactionProcessor processor) {</span>
+<span class="source-line-no">269</span><span id="line-269">  public TransactionProcessor getProcessor() {</span>
 <span class="source-line-no">270</span><span id="line-270"></span>
-<span class="source-line-no">271</span><span id="line-271">    this.processor = processor;</span>
+<span class="source-line-no">271</span><span id="line-271">    return processor;</span>
 <span class="source-line-no">272</span><span id="line-272">  }</span>
 <span class="source-line-no">273</span><span id="line-273"></span>
-<span class="source-line-no">274</span><span id="line-274">  public static ReceiptManager receipts() {</span>
+<span class="source-line-no">274</span><span id="line-274">  public void setProcessor(final TransactionProcessor processor) {</span>
 <span class="source-line-no">275</span><span id="line-275"></span>
-<span class="source-line-no">276</span><span id="line-276">    return TNECore.eco().transaction().receiptManager;</span>
+<span class="source-line-no">276</span><span id="line-276">    this.processor = processor;</span>
 <span class="source-line-no">277</span><span id="line-277">  }</span>
 <span class="source-line-no">278</span><span id="line-278"></span>
 <span class="source-line-no">279</span><span id="line-279">  public SimpleDateFormat getFormat() {</span>

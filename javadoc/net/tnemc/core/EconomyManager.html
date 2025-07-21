@@ -91,7 +91,7 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-58">EconomyManager</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-59">EconomyManager</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">This class manages everything for the economy plugin, from language storage to holding instances
  to other managers.</div>
@@ -222,18 +222,21 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#limitCurrency()" class="member-name-link">limitCurrency</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printInvalid()" class="member-name-link">printInvalid</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="manager/PlaceholderManager.html" title="class in net.tnemc.core.manager">PlaceholderManager</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#placeholder()" class="member-name-link">placeholder</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="region/RegionProvider.html" title="class in net.tnemc.core.region">RegionProvider</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#region()" class="member-name-link">region</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printInvalid()" class="member-name-link">printInvalid</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setReloadTime(long)" class="member-name-link">setReloadTime</a><wbr>(long&nbsp;reloadTime)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="region/RegionProvider.html" title="class in net.tnemc.core.region">RegionProvider</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#region()" class="member-name-link">region</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="manager/TransactionManager.html" title="class in net.tnemc.core.manager">TransactionManager</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#transaction()" class="member-name-link">transaction</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setReloadTime(long)" class="member-name-link">setReloadTime</a><wbr>(long&nbsp;reloadTime)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="manager/TransactionManager.html" title="class in net.tnemc.core.manager">TransactionManager</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#transaction()" class="member-name-link">transaction</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -254,7 +257,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="TOP_PER_PAGE">
 <h3>TOP_PER_PAGE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-60">TOP_PER_PAGE</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-61">TOP_PER_PAGE</a></span></div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -268,49 +271,49 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="NORMAL">
 <h3>NORMAL</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-65">NORMAL</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-66">NORMAL</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="DATABASE">
 <h3>DATABASE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-66">DATABASE</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-67">DATABASE</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="VIRTUAL">
 <h3>VIRTUAL</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-69">VIRTUAL</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-70">VIRTUAL</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="EXPERIENCE">
 <h3>EXPERIENCE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-70">EXPERIENCE</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-71">EXPERIENCE</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="EXPERIENCE_LEVEL">
 <h3>EXPERIENCE_LEVEL</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-71">EXPERIENCE_LEVEL</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-72">EXPERIENCE_LEVEL</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="ITEM_ONLY">
 <h3>ITEM_ONLY</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-72">ITEM_ONLY</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-73">ITEM_ONLY</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="INVENTORY_ONLY">
 <h3>INVENTORY_ONLY</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-74">INVENTORY_ONLY</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-75">INVENTORY_ONLY</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="E_CHEST">
 <h3>E_CHEST</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-75">E_CHEST</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-76">E_CHEST</a></span></div>
 </section>
 </li>
 </ul>
@@ -324,7 +327,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>EconomyManager</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-96">EconomyManager</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-90">EconomyManager</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -336,53 +339,77 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="instance()">
+<h3>instance</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="EconomyManager.html" title="class in net.tnemc.core">EconomyManager</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-104">instance</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="invalidCurrencies()">
+<h3>invalidCurrencies</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-109">invalidCurrencies</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="limitCurrency()">
+<h3>limitCurrency</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-114">limitCurrency</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="baseProcessor()">
+<h3>baseProcessor</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="transaction/TransactionProcessor.html" title="interface in net.tnemc.core.transaction">TransactionProcessor</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-119">baseProcessor</a></span>()</div>
+</section>
+</li>
+<li>
 <section class="detail" id="init()">
 <h3>init</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-109">init</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-124">init</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="findID(java.lang.String)">
 <h3>findID</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-142">findID</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-157">findID</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="findHandler(net.tnemc.core.utils.Identifier)">
 <h3>findHandler</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="account/holdings/HoldingsHandler.html" title="interface in net.tnemc.core.account.holdings">HoldingsHandler</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-147">findHandler</a></span><wbr><span class="parameters">(<a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a>&nbsp;identifier)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="account/holdings/HoldingsHandler.html" title="interface in net.tnemc.core.account.holdings">HoldingsHandler</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-162">findHandler</a></span><wbr><span class="parameters">(<a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a>&nbsp;identifier)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="addHandler(net.tnemc.core.account.holdings.HoldingsHandler)">
 <h3>addHandler</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-152">addHandler</a></span><wbr><span class="parameters">(<a href="account/holdings/HoldingsHandler.html" title="interface in net.tnemc.core.account.holdings">HoldingsHandler</a>&nbsp;handler)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-167">addHandler</a></span><wbr><span class="parameters">(<a href="account/holdings/HoldingsHandler.html" title="interface in net.tnemc.core.account.holdings">HoldingsHandler</a>&nbsp;handler)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="addIdentifier(net.tnemc.core.utils.Identifier)">
 <h3>addIdentifier</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-157">addIdentifier</a></span><wbr><span class="parameters">(<a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a>&nbsp;id)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-172">addIdentifier</a></span><wbr><span class="parameters">(<a href="utils/Identifier.html" title="class in net.tnemc.core.utils">Identifier</a>&nbsp;id)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFor(net.tnemc.core.account.Account,net.tnemc.core.currency.Currency)">
 <h3>getFor</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/LinkedList.html" title="class or interface in java.util" class="external-link">LinkedList</a>&lt;<a href="account/holdings/HoldingsHandler.html" title="interface in net.tnemc.core.account.holdings">HoldingsHandler</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-162">getFor</a></span><wbr><span class="parameters">(<a href="account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/LinkedList.html" title="class or interface in java.util" class="external-link">LinkedList</a>&lt;<a href="account/holdings/HoldingsHandler.html" title="interface in net.tnemc.core.account.holdings">HoldingsHandler</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-177">getFor</a></span><wbr><span class="parameters">(<a href="account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
  <a href="currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFor(net.tnemc.core.currency.Currency,net.tnemc.core.currency.CurrencyType)">
 <h3>getFor</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/LinkedList.html" title="class or interface in java.util" class="external-link">LinkedList</a>&lt;<a href="account/holdings/HoldingsHandler.html" title="interface in net.tnemc.core.account.holdings">HoldingsHandler</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-168">getFor</a></span><wbr><span class="parameters">(<a href="currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/LinkedList.html" title="class or interface in java.util" class="external-link">LinkedList</a>&lt;<a href="account/holdings/HoldingsHandler.html" title="interface in net.tnemc.core.account.holdings">HoldingsHandler</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-183">getFor</a></span><wbr><span class="parameters">(<a href="currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
  <a href="currency/CurrencyType.html" title="interface in net.tnemc.core.currency">CurrencyType</a>&nbsp;type)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFor(net.tnemc.core.account.Account,net.tnemc.core.currency.Currency,net.tnemc.core.currency.CurrencyType)">
 <h3>getFor</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/LinkedList.html" title="class or interface in java.util" class="external-link">LinkedList</a>&lt;<a href="account/holdings/HoldingsHandler.html" title="interface in net.tnemc.core.account.holdings">HoldingsHandler</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-174">getFor</a></span><wbr><span class="parameters">(<a href="account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/LinkedList.html" title="class or interface in java.util" class="external-link">LinkedList</a>&lt;<a href="account/holdings/HoldingsHandler.html" title="interface in net.tnemc.core.account.holdings">HoldingsHandler</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-189">getFor</a></span><wbr><span class="parameters">(<a href="account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
  <a href="currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
  <a href="currency/CurrencyType.html" title="interface in net.tnemc.core.currency">CurrencyType</a>&nbsp;type)</span></div>
 </section>
@@ -390,61 +417,43 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="clearCache()">
 <h3>clearCache</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-181">clearCache</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-196">clearCache</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="account()">
 <h3>account</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="manager/AccountManager.html" title="class in net.tnemc.core.manager">AccountManager</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-186">account</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="manager/AccountManager.html" title="class in net.tnemc.core.manager">AccountManager</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-201">account</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="placeholder()">
+<h3>placeholder</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="manager/PlaceholderManager.html" title="class in net.tnemc.core.manager">PlaceholderManager</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-206">placeholder</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="currency()">
 <h3>currency</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="manager/CurrencyManager.html" title="class in net.tnemc.core.manager">CurrencyManager</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-191">currency</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="manager/CurrencyManager.html" title="class in net.tnemc.core.manager">CurrencyManager</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-211">currency</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="transaction()">
 <h3>transaction</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="manager/TransactionManager.html" title="class in net.tnemc.core.manager">TransactionManager</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-196">transaction</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="manager/TransactionManager.html" title="class in net.tnemc.core.manager">TransactionManager</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-216">transaction</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="region()">
 <h3>region</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="region/RegionProvider.html" title="class in net.tnemc.core.region">RegionProvider</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-201">region</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="region/RegionProvider.html" title="class in net.tnemc.core.region">RegionProvider</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-221">region</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getTopManager()">
 <h3>getTopManager</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="manager/TopManager.html" title="class in net.tnemc.core.manager">TopManager</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-206">getTopManager</a></span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="instance()">
-<h3>instance</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="EconomyManager.html" title="class in net.tnemc.core">EconomyManager</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-211">instance</a></span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="invalidCurrencies()">
-<h3>invalidCurrencies</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-216">invalidCurrencies</a></span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="limitCurrency()">
-<h3>limitCurrency</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-221">limitCurrency</a></span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="baseProcessor()">
-<h3>baseProcessor</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="transaction/TransactionProcessor.html" title="interface in net.tnemc.core.transaction">TransactionProcessor</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-226">baseProcessor</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="manager/TopManager.html" title="class in net.tnemc.core.manager">TopManager</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/core/EconomyManager.html#line-226">getTopManager</a></span>()</div>
 </section>
 </li>
 <li>

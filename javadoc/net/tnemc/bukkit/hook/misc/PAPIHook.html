@@ -95,7 +95,7 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../src-html/net/tnemc/bukkit/hook/misc/PAPIHook.html#line-46">PAPIHook</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../src-html/net/tnemc/bukkit/hook/misc/PAPIHook.html#line-34">PAPIHook</a></span>
 <span class="extends-implements">extends me.clip.placeholderapi.expansion.PlaceholderExpansion</span></div>
 <div class="block">PAPIHook</div>
 <dl class="notes">
@@ -140,12 +140,6 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="../../../core/account/Account.html" title="class in net.tnemc.core.account">Account</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#findFromArgs(java.lang.String)" class="member-name-link">findFromArgs</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;parameter)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#formatted(java.lang.String)" class="member-name-link">formatted</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;parameter)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAuthor()" class="member-name-link">getAuthor</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -155,22 +149,23 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getVersion()" class="member-name-link">getVersion</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@Nullable <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onPlaceholderRequest(org.bukkit.entity.Player,java.lang.String)" class="member-name-link">onPlaceholderRequest</a><wbr>(org.bukkit.entity.Player&nbsp;player,
- @NotNull <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;identifier)</code></div>
+ @NotNull <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;paramString)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#persist()" class="member-name-link">persist</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@Nullable <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onRequest(org.bukkit.OfflinePlayer,java.lang.String)" class="member-name-link">onRequest</a><wbr>(org.bukkit.OfflinePlayer&nbsp;player,
+ @NotNull <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;paramString)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#persist()" class="member-name-link">persist</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-me.clip.placeholderapi.expansion.PlaceholderExpansion">Methods inherited from class&nbsp;me.clip.placeholderapi.expansion.PlaceholderExpansion</h3>
 <code>canRegister, configurationContains, equals, get, getBoolean, getConfigSection, getConfigSection, getDescription, getDouble, getExpansionType, getInt, getLink, getLong, getName, getPlaceholderAPI, getPlaceholders, getPlugin, getRequiredPlugin, getString, getStringList, info, isRegistered, log, log, register, setExpansionType, severe, severe, toString, unregister, warning</code></div>
-<div class="inherited-list">
-<h3 id="methods-inherited-from-class-me.clip.placeholderapi.PlaceholderHook">Methods inherited from class&nbsp;me.clip.placeholderapi.PlaceholderHook</h3>
-<code>onRequest</code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -188,7 +183,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>PAPIHook</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/bukkit/hook/misc/PAPIHook.html#line-46">PAPIHook</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/bukkit/hook/misc/PAPIHook.html#line-34">PAPIHook</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -202,7 +197,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getAuthor()">
 <h3>getAuthor</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/bukkit/hook/misc/PAPIHook.html#line-48">getAuthor</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/bukkit/hook/misc/PAPIHook.html#line-36">getAuthor</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>getAuthor</code>&nbsp;in class&nbsp;<code>me.clip.placeholderapi.expansion.PlaceholderExpansion</code></dd>
@@ -212,7 +207,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getIdentifier()">
 <h3>getIdentifier</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/bukkit/hook/misc/PAPIHook.html#line-54">getIdentifier</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/bukkit/hook/misc/PAPIHook.html#line-42">getIdentifier</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>getIdentifier</code>&nbsp;in class&nbsp;<code>me.clip.placeholderapi.expansion.PlaceholderExpansion</code></dd>
@@ -222,7 +217,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getVersion()">
 <h3>getVersion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/bukkit/hook/misc/PAPIHook.html#line-60">getVersion</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/bukkit/hook/misc/PAPIHook.html#line-48">getVersion</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>getVersion</code>&nbsp;in class&nbsp;<code>me.clip.placeholderapi.expansion.PlaceholderExpansion</code></dd>
@@ -232,7 +227,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="persist()">
 <h3>persist</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/bukkit/hook/misc/PAPIHook.html#line-66">persist</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/bukkit/hook/misc/PAPIHook.html#line-54">persist</a></span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>persist</code>&nbsp;in class&nbsp;<code>me.clip.placeholderapi.expansion.PlaceholderExpansion</code></dd>
@@ -240,27 +235,29 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="onPlaceholderRequest(org.bukkit.entity.Player,java.lang.String)">
-<h3>onPlaceholderRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/bukkit/hook/misc/PAPIHook.html#line-72">onPlaceholderRequest</a></span><wbr><span class="parameters">(org.bukkit.entity.Player&nbsp;player,
+<section class="detail" id="onRequest(org.bukkit.OfflinePlayer,java.lang.String)">
+<h3>onRequest</h3>
+<div class="member-signature"><span class="annotations">@Nullable
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@Nullable <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/bukkit/hook/misc/PAPIHook.html#line-60">onRequest</a></span><wbr><span class="parameters">(org.bukkit.OfflinePlayer&nbsp;player,
  @NotNull
- @NotNull <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;identifier)</span></div>
+ @NotNull <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;paramString)</span></div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code>onPlaceholderRequest</code>&nbsp;in class&nbsp;<code>me.clip.placeholderapi.PlaceholderHook</code></dd>
+<dd><code>onRequest</code>&nbsp;in class&nbsp;<code>me.clip.placeholderapi.PlaceholderHook</code></dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="formatted(java.lang.String)">
-<h3>formatted</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/bukkit/hook/misc/PAPIHook.html#line-239">formatted</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;parameter)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="findFromArgs(java.lang.String)">
-<h3>findFromArgs</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="../../../core/account/Account.html" title="class in net.tnemc.core.account">Account</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/bukkit/hook/misc/PAPIHook.html#line-244">findFromArgs</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;parameter)</span></div>
+<section class="detail" id="onPlaceholderRequest(org.bukkit.entity.Player,java.lang.String)">
+<h3>onPlaceholderRequest</h3>
+<div class="member-signature"><span class="annotations">@Nullable
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@Nullable <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/bukkit/hook/misc/PAPIHook.html#line-70">onPlaceholderRequest</a></span><wbr><span class="parameters">(org.bukkit.entity.Player&nbsp;player,
+ @NotNull
+ @NotNull <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;paramString)</span></div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code>onPlaceholderRequest</code>&nbsp;in class&nbsp;<code>me.clip.placeholderapi.PlaceholderHook</code></dd>
+</dl>
 </section>
 </li>
 </ul>

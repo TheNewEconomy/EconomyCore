@@ -46,41 +46,41 @@
 <span class="source-line-no">033</span><span id="line-33"> */</span>
 <span class="source-line-no">034</span><span id="line-34">public interface ActionSource {</span>
 <span class="source-line-no">035</span><span id="line-35"></span>
-<span class="source-line-no">036</span><span id="line-36">  /**</span>
-<span class="source-line-no">037</span><span id="line-37">   * Used to get the name of the source of the action.</span>
-<span class="source-line-no">038</span><span id="line-38">   *</span>
-<span class="source-line-no">039</span><span id="line-39">   * Please note: There is no guarantee of uniqueness.</span>
-<span class="source-line-no">040</span><span id="line-40">   *</span>
-<span class="source-line-no">041</span><span id="line-41">   * @return The name of the source for a specific action. This could be user-friendly or not. This</span>
-<span class="source-line-no">042</span><span id="line-42">   * should be the name of the source that has caused this action to occur. For instance, a plugin</span>
-<span class="source-line-no">043</span><span id="line-43">   * name.</span>
-<span class="source-line-no">044</span><span id="line-44">   *</span>
-<span class="source-line-no">045</span><span id="line-45">   * @since 0.1.2.0</span>
-<span class="source-line-no">046</span><span id="line-46">   */</span>
-<span class="source-line-no">047</span><span id="line-47">  String name();</span>
-<span class="source-line-no">048</span><span id="line-48"></span>
-<span class="source-line-no">049</span><span id="line-49">  /**</span>
-<span class="source-line-no">050</span><span id="line-50">   * Used to get the type of action source.</span>
-<span class="source-line-no">051</span><span id="line-51">   *</span>
-<span class="source-line-no">052</span><span id="line-52">   * @return The name of the type of action source.</span>
-<span class="source-line-no">053</span><span id="line-53">   */</span>
-<span class="source-line-no">054</span><span id="line-54">  String type();</span>
-<span class="source-line-no">055</span><span id="line-55"></span>
-<span class="source-line-no">056</span><span id="line-56">  default String asString() {</span>
-<span class="source-line-no">057</span><span id="line-57"></span>
-<span class="source-line-no">058</span><span id="line-58">    return type() + " " + name();</span>
-<span class="source-line-no">059</span><span id="line-59">  }</span>
+<span class="source-line-no">036</span><span id="line-36">  static ActionSource create(final String name, final String type) {</span>
+<span class="source-line-no">037</span><span id="line-37"></span>
+<span class="source-line-no">038</span><span id="line-38">    if(type.toLowerCase(Locale.ROOT).equals("player")) {</span>
+<span class="source-line-no">039</span><span id="line-39">      try {</span>
+<span class="source-line-no">040</span><span id="line-40">        return new PlayerSource(UUID.fromString(name));</span>
+<span class="source-line-no">041</span><span id="line-41">      } catch(final Exception ignore) { }</span>
+<span class="source-line-no">042</span><span id="line-42">    } else {</span>
+<span class="source-line-no">043</span><span id="line-43">      return new PluginSource(name);</span>
+<span class="source-line-no">044</span><span id="line-44">    }</span>
+<span class="source-line-no">045</span><span id="line-45">    return new PluginSource(name);</span>
+<span class="source-line-no">046</span><span id="line-46">  }</span>
+<span class="source-line-no">047</span><span id="line-47"></span>
+<span class="source-line-no">048</span><span id="line-48">  /**</span>
+<span class="source-line-no">049</span><span id="line-49">   * Used to get the name of the source of the action.</span>
+<span class="source-line-no">050</span><span id="line-50">   *</span>
+<span class="source-line-no">051</span><span id="line-51">   * Please note: There is no guarantee of uniqueness.</span>
+<span class="source-line-no">052</span><span id="line-52">   *</span>
+<span class="source-line-no">053</span><span id="line-53">   * @return The name of the source for a specific action. This could be user-friendly or not. This</span>
+<span class="source-line-no">054</span><span id="line-54">   * should be the name of the source that has caused this action to occur. For instance, a plugin</span>
+<span class="source-line-no">055</span><span id="line-55">   * name.</span>
+<span class="source-line-no">056</span><span id="line-56">   *</span>
+<span class="source-line-no">057</span><span id="line-57">   * @since 0.1.2.0</span>
+<span class="source-line-no">058</span><span id="line-58">   */</span>
+<span class="source-line-no">059</span><span id="line-59">  String name();</span>
 <span class="source-line-no">060</span><span id="line-60"></span>
-<span class="source-line-no">061</span><span id="line-61">  static ActionSource create(final String name, final String type) {</span>
-<span class="source-line-no">062</span><span id="line-62"></span>
-<span class="source-line-no">063</span><span id="line-63">    if(type.toLowerCase(Locale.ROOT).equals("player")) {</span>
-<span class="source-line-no">064</span><span id="line-64">      try {</span>
-<span class="source-line-no">065</span><span id="line-65">        return new PlayerSource(UUID.fromString(name));</span>
-<span class="source-line-no">066</span><span id="line-66">      } catch(Exception ignore) { }</span>
-<span class="source-line-no">067</span><span id="line-67">    } else {</span>
-<span class="source-line-no">068</span><span id="line-68">      return new PluginSource(name);</span>
-<span class="source-line-no">069</span><span id="line-69">    }</span>
-<span class="source-line-no">070</span><span id="line-70">    return new PluginSource(name);</span>
+<span class="source-line-no">061</span><span id="line-61">  /**</span>
+<span class="source-line-no">062</span><span id="line-62">   * Used to get the type of action source.</span>
+<span class="source-line-no">063</span><span id="line-63">   *</span>
+<span class="source-line-no">064</span><span id="line-64">   * @return The name of the type of action source.</span>
+<span class="source-line-no">065</span><span id="line-65">   */</span>
+<span class="source-line-no">066</span><span id="line-66">  String type();</span>
+<span class="source-line-no">067</span><span id="line-67"></span>
+<span class="source-line-no">068</span><span id="line-68">  default String asString() {</span>
+<span class="source-line-no">069</span><span id="line-69"></span>
+<span class="source-line-no">070</span><span id="line-70">    return type() + " " + name();</span>
 <span class="source-line-no">071</span><span id="line-71">  }</span>
 <span class="source-line-no">072</span><span id="line-72">}</span>
 

@@ -169,9 +169,9 @@
 <span class="source-line-no">156</span><span id="line-156">      PluginCore.log().debug("SQLHoldings-loadAll-Account ID:" + identifier, DebugLevel.DEVELOPER);</span>
 <span class="source-line-no">157</span><span id="line-157">      try(final ResultSet result = sql.executeQuery(tne.loadHoldings(),</span>
 <span class="source-line-no">158</span><span id="line-158">                                                    new Object[]{</span>
-<span class="source-line-no">159</span><span id="line-159">                                                      identifier,</span>
-<span class="source-line-no">160</span><span id="line-160">                                                      MainConfig.yaml().getString("Core.Server.Name")</span>
-<span class="source-line-no">161</span><span id="line-161">                                              })) {</span>
+<span class="source-line-no">159</span><span id="line-159">                                                            identifier,</span>
+<span class="source-line-no">160</span><span id="line-160">                                                            MainConfig.yaml().getString("Core.Server.Name")</span>
+<span class="source-line-no">161</span><span id="line-161">                                                    })) {</span>
 <span class="source-line-no">162</span><span id="line-162">        while(result.next()) {</span>
 <span class="source-line-no">163</span><span id="line-163"></span>
 <span class="source-line-no">164</span><span id="line-164">          final String currency = result.getString("currency");</span>

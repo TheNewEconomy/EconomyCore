@@ -65,24 +65,25 @@
 <span class="source-line-no">052</span><span id="line-52">   */</span>
 <span class="source-line-no">053</span><span id="line-53">  @Override</span>
 <span class="source-line-no">054</span><span id="line-54">  public String apply(final ParseMoney parseMoney, final String input) {</span>
-<span class="source-line-no">055</span><span id="line-55">    final Matcher matcher = Pattern.compile("([0-9]+)/([0-9]+)").matcher(input);</span>
-<span class="source-line-no">056</span><span id="line-56">    if(matcher.find()) {</span>
-<span class="source-line-no">057</span><span id="line-57"></span>
-<span class="source-line-no">058</span><span id="line-58">      final BigDecimal numerator = new BigDecimal(matcher.group(1));</span>
-<span class="source-line-no">059</span><span id="line-59">      final BigDecimal denominator = new BigDecimal(matcher.group(2));</span>
-<span class="source-line-no">060</span><span id="line-60"></span>
-<span class="source-line-no">061</span><span id="line-61">      if(denominator.compareTo(BigDecimal.ZERO) == 0) {</span>
-<span class="source-line-no">062</span><span id="line-62">        throw new IllegalArgumentException("Division by zero in fraction: " + input);</span>
-<span class="source-line-no">063</span><span id="line-63">      }</span>
-<span class="source-line-no">064</span><span id="line-64"></span>
-<span class="source-line-no">065</span><span id="line-65">      final BigDecimal fractionValue = numerator.divide(denominator, 10, RoundingMode.HALF_UP);</span>
-<span class="source-line-no">066</span><span id="line-66">      parseMoney.amount(fractionValue);</span>
-<span class="source-line-no">067</span><span id="line-67"></span>
-<span class="source-line-no">068</span><span id="line-68">      return input.replace(matcher.group(), fractionValue.toPlainString()).trim();</span>
-<span class="source-line-no">069</span><span id="line-69">    }</span>
-<span class="source-line-no">070</span><span id="line-70">    return input;</span>
-<span class="source-line-no">071</span><span id="line-71">  }</span>
-<span class="source-line-no">072</span><span id="line-72">}</span>
+<span class="source-line-no">055</span><span id="line-55"></span>
+<span class="source-line-no">056</span><span id="line-56">    final Matcher matcher = Pattern.compile("([0-9]+)/([0-9]+)").matcher(input);</span>
+<span class="source-line-no">057</span><span id="line-57">    if(matcher.find()) {</span>
+<span class="source-line-no">058</span><span id="line-58"></span>
+<span class="source-line-no">059</span><span id="line-59">      final BigDecimal numerator = new BigDecimal(matcher.group(1));</span>
+<span class="source-line-no">060</span><span id="line-60">      final BigDecimal denominator = new BigDecimal(matcher.group(2));</span>
+<span class="source-line-no">061</span><span id="line-61"></span>
+<span class="source-line-no">062</span><span id="line-62">      if(denominator.compareTo(BigDecimal.ZERO) == 0) {</span>
+<span class="source-line-no">063</span><span id="line-63">        throw new IllegalArgumentException("Division by zero in fraction: " + input);</span>
+<span class="source-line-no">064</span><span id="line-64">      }</span>
+<span class="source-line-no">065</span><span id="line-65"></span>
+<span class="source-line-no">066</span><span id="line-66">      final BigDecimal fractionValue = numerator.divide(denominator, 10, RoundingMode.HALF_UP);</span>
+<span class="source-line-no">067</span><span id="line-67">      parseMoney.amount(fractionValue);</span>
+<span class="source-line-no">068</span><span id="line-68"></span>
+<span class="source-line-no">069</span><span id="line-69">      return input.replace(matcher.group(), fractionValue.toPlainString()).trim();</span>
+<span class="source-line-no">070</span><span id="line-70">    }</span>
+<span class="source-line-no">071</span><span id="line-71">    return input;</span>
+<span class="source-line-no">072</span><span id="line-72">  }</span>
+<span class="source-line-no">073</span><span id="line-73">}</span>
 
 
 

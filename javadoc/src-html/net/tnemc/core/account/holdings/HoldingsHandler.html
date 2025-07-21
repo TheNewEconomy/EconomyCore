@@ -57,65 +57,66 @@
 <span class="source-line-no">044</span><span id="line-44">  Identifier identifier();</span>
 <span class="source-line-no">045</span><span id="line-45"></span>
 <span class="source-line-no">046</span><span id="line-46">  /**</span>
-<span class="source-line-no">047</span><span id="line-47">   * Used to determine if this handler may be used for the specified{@link Currency} and {@link CurrencyType}.</span>
-<span class="source-line-no">048</span><span id="line-48">   *</span>
-<span class="source-line-no">049</span><span id="line-49">   * @param currency The currency.</span>
-<span class="source-line-no">050</span><span id="line-50">   * @param type The currency type.</span>
-<span class="source-line-no">051</span><span id="line-51">   *</span>
-<span class="source-line-no">052</span><span id="line-52">   * @return True if it supports the currency type, otherwise false.</span>
-<span class="source-line-no">053</span><span id="line-53">   */</span>
-<span class="source-line-no">054</span><span id="line-54">  boolean supports(Currency currency, CurrencyType type);</span>
-<span class="source-line-no">055</span><span id="line-55"></span>
-<span class="source-line-no">056</span><span id="line-56">  /**</span>
-<span class="source-line-no">057</span><span id="line-57">   * Used to determine if this handler may be used for the specified {@link Account}. This defaults</span>
-<span class="source-line-no">058</span><span id="line-58">   * to true for all accounts.</span>
-<span class="source-line-no">059</span><span id="line-59">   *</span>
-<span class="source-line-no">060</span><span id="line-60">   * @param currency The currency.</span>
-<span class="source-line-no">061</span><span id="line-61">   * @param account The account.</span>
-<span class="source-line-no">062</span><span id="line-62">   *</span>
-<span class="source-line-no">063</span><span id="line-63">   * @return True if it supports the account, otherwise false.</span>
-<span class="source-line-no">064</span><span id="line-64">   */</span>
-<span class="source-line-no">065</span><span id="line-65">  default boolean appliesTo(final Account account, final Currency currency) {</span>
-<span class="source-line-no">066</span><span id="line-66"></span>
-<span class="source-line-no">067</span><span id="line-67">    return true;</span>
-<span class="source-line-no">068</span><span id="line-68">  }</span>
-<span class="source-line-no">069</span><span id="line-69"></span>
-<span class="source-line-no">070</span><span id="line-70">  /**</span>
-<span class="source-line-no">071</span><span id="line-71">   * @return If balances of this handler should be saved to the database. Return false to do your</span>
-<span class="source-line-no">072</span><span id="line-72">   * own data handling.</span>
-<span class="source-line-no">073</span><span id="line-73">   */</span>
-<span class="source-line-no">074</span><span id="line-74">  default boolean database() {</span>
-<span class="source-line-no">075</span><span id="line-75"></span>
-<span class="source-line-no">076</span><span id="line-76">    return true;</span>
-<span class="source-line-no">077</span><span id="line-77">  }</span>
-<span class="source-line-no">078</span><span id="line-78"></span>
-<span class="source-line-no">079</span><span id="line-79">  /**</span>
-<span class="source-line-no">080</span><span id="line-80">   * Used to set the holdings for a specific account.</span>
-<span class="source-line-no">081</span><span id="line-81">   *</span>
-<span class="source-line-no">082</span><span id="line-82">   * @param account  The account.</span>
-<span class="source-line-no">083</span><span id="line-83">   * @param region   The name of the region involved. This is usually a world, but could be</span>
-<span class="source-line-no">084</span><span id="line-84">   *                 something else such as a world guard region name/identifier.</span>
-<span class="source-line-no">085</span><span id="line-85">   * @param currency The instance of the currency to use.</span>
-<span class="source-line-no">086</span><span id="line-86">   * @param type     The currency type.</span>
-<span class="source-line-no">087</span><span id="line-87">   * @param amount   The amount to set the player's holdings to.</span>
-<span class="source-line-no">088</span><span id="line-88">   *</span>
-<span class="source-line-no">089</span><span id="line-89">   * @return True if the holdings have been set, otherwise false.</span>
-<span class="source-line-no">090</span><span id="line-90">   */</span>
-<span class="source-line-no">091</span><span id="line-91">  boolean setHoldings(Account account, String region, Currency currency, CurrencyType type, BigDecimal amount);</span>
-<span class="source-line-no">092</span><span id="line-92"></span>
-<span class="source-line-no">093</span><span id="line-93">  /**</span>
-<span class="source-line-no">094</span><span id="line-94">   * Used to get the holdings for a specific account from this handler.</span>
-<span class="source-line-no">095</span><span id="line-95">   *</span>
-<span class="source-line-no">096</span><span id="line-96">   * @param account  The Account.</span>
-<span class="source-line-no">097</span><span id="line-97">   * @param region   The name of the region involved. This is usually a world, but could be</span>
-<span class="source-line-no">098</span><span id="line-98">   *                 something else such as a world guard region name/identifier.</span>
-<span class="source-line-no">099</span><span id="line-99">   * @param currency The instance of the currency to use.</span>
-<span class="source-line-no">100</span><span id="line-100">   * @param type     The currency type.</span>
-<span class="source-line-no">101</span><span id="line-101">   *</span>
-<span class="source-line-no">102</span><span id="line-102">   * @return The holdings for the specific account.</span>
-<span class="source-line-no">103</span><span id="line-103">   */</span>
-<span class="source-line-no">104</span><span id="line-104">  HoldingsEntry getHoldings(Account account, String region, Currency currency, CurrencyType type);</span>
-<span class="source-line-no">105</span><span id="line-105">}</span>
+<span class="source-line-no">047</span><span id="line-47">   * Used to determine if this handler may be used for the specified{@link Currency} and</span>
+<span class="source-line-no">048</span><span id="line-48">   * {@link CurrencyType}.</span>
+<span class="source-line-no">049</span><span id="line-49">   *</span>
+<span class="source-line-no">050</span><span id="line-50">   * @param currency The currency.</span>
+<span class="source-line-no">051</span><span id="line-51">   * @param type     The currency type.</span>
+<span class="source-line-no">052</span><span id="line-52">   *</span>
+<span class="source-line-no">053</span><span id="line-53">   * @return True if it supports the currency type, otherwise false.</span>
+<span class="source-line-no">054</span><span id="line-54">   */</span>
+<span class="source-line-no">055</span><span id="line-55">  boolean supports(Currency currency, CurrencyType type);</span>
+<span class="source-line-no">056</span><span id="line-56"></span>
+<span class="source-line-no">057</span><span id="line-57">  /**</span>
+<span class="source-line-no">058</span><span id="line-58">   * Used to determine if this handler may be used for the specified {@link Account}. This defaults</span>
+<span class="source-line-no">059</span><span id="line-59">   * to true for all accounts.</span>
+<span class="source-line-no">060</span><span id="line-60">   *</span>
+<span class="source-line-no">061</span><span id="line-61">   * @param currency The currency.</span>
+<span class="source-line-no">062</span><span id="line-62">   * @param account  The account.</span>
+<span class="source-line-no">063</span><span id="line-63">   *</span>
+<span class="source-line-no">064</span><span id="line-64">   * @return True if it supports the account, otherwise false.</span>
+<span class="source-line-no">065</span><span id="line-65">   */</span>
+<span class="source-line-no">066</span><span id="line-66">  default boolean appliesTo(final Account account, final Currency currency) {</span>
+<span class="source-line-no">067</span><span id="line-67"></span>
+<span class="source-line-no">068</span><span id="line-68">    return true;</span>
+<span class="source-line-no">069</span><span id="line-69">  }</span>
+<span class="source-line-no">070</span><span id="line-70"></span>
+<span class="source-line-no">071</span><span id="line-71">  /**</span>
+<span class="source-line-no">072</span><span id="line-72">   * @return If balances of this handler should be saved to the database. Return false to do your</span>
+<span class="source-line-no">073</span><span id="line-73">   * own data handling.</span>
+<span class="source-line-no">074</span><span id="line-74">   */</span>
+<span class="source-line-no">075</span><span id="line-75">  default boolean database() {</span>
+<span class="source-line-no">076</span><span id="line-76"></span>
+<span class="source-line-no">077</span><span id="line-77">    return true;</span>
+<span class="source-line-no">078</span><span id="line-78">  }</span>
+<span class="source-line-no">079</span><span id="line-79"></span>
+<span class="source-line-no">080</span><span id="line-80">  /**</span>
+<span class="source-line-no">081</span><span id="line-81">   * Used to set the holdings for a specific account.</span>
+<span class="source-line-no">082</span><span id="line-82">   *</span>
+<span class="source-line-no">083</span><span id="line-83">   * @param account  The account.</span>
+<span class="source-line-no">084</span><span id="line-84">   * @param region   The name of the region involved. This is usually a world, but could be</span>
+<span class="source-line-no">085</span><span id="line-85">   *                 something else such as a world guard region name/identifier.</span>
+<span class="source-line-no">086</span><span id="line-86">   * @param currency The instance of the currency to use.</span>
+<span class="source-line-no">087</span><span id="line-87">   * @param type     The currency type.</span>
+<span class="source-line-no">088</span><span id="line-88">   * @param amount   The amount to set the player's holdings to.</span>
+<span class="source-line-no">089</span><span id="line-89">   *</span>
+<span class="source-line-no">090</span><span id="line-90">   * @return True if the holdings have been set, otherwise false.</span>
+<span class="source-line-no">091</span><span id="line-91">   */</span>
+<span class="source-line-no">092</span><span id="line-92">  boolean setHoldings(Account account, String region, Currency currency, CurrencyType type, BigDecimal amount);</span>
+<span class="source-line-no">093</span><span id="line-93"></span>
+<span class="source-line-no">094</span><span id="line-94">  /**</span>
+<span class="source-line-no">095</span><span id="line-95">   * Used to get the holdings for a specific account from this handler.</span>
+<span class="source-line-no">096</span><span id="line-96">   *</span>
+<span class="source-line-no">097</span><span id="line-97">   * @param account  The Account.</span>
+<span class="source-line-no">098</span><span id="line-98">   * @param region   The name of the region involved. This is usually a world, but could be</span>
+<span class="source-line-no">099</span><span id="line-99">   *                 something else such as a world guard region name/identifier.</span>
+<span class="source-line-no">100</span><span id="line-100">   * @param currency The instance of the currency to use.</span>
+<span class="source-line-no">101</span><span id="line-101">   * @param type     The currency type.</span>
+<span class="source-line-no">102</span><span id="line-102">   *</span>
+<span class="source-line-no">103</span><span id="line-103">   * @return The holdings for the specific account.</span>
+<span class="source-line-no">104</span><span id="line-104">   */</span>
+<span class="source-line-no">105</span><span id="line-105">  HoldingsEntry getHoldings(Account account, String region, Currency currency, CurrencyType type);</span>
+<span class="source-line-no">106</span><span id="line-106">}</span>
 
 
 

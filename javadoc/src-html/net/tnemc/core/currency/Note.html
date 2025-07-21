@@ -51,127 +51,124 @@
 <span class="source-line-no">038</span><span id="line-38"> */</span>
 <span class="source-line-no">039</span><span id="line-39">public class Note {</span>
 <span class="source-line-no">040</span><span id="line-40"></span>
-<span class="source-line-no">041</span><span id="line-41">  private final List&lt;String&gt; flags = new ArrayList&lt;&gt;();</span>
-<span class="source-line-no">042</span><span id="line-42">  private final List&lt;String&gt; enchantments = new ArrayList&lt;&gt;();</span>
-<span class="source-line-no">043</span><span id="line-43"></span>
+<span class="source-line-no">041</span><span id="line-41">  final TaxEntry fee;</span>
+<span class="source-line-no">042</span><span id="line-42">  private final List&lt;String&gt; flags = new ArrayList&lt;&gt;();</span>
+<span class="source-line-no">043</span><span id="line-43">  private final List&lt;String&gt; enchantments = new ArrayList&lt;&gt;();</span>
 <span class="source-line-no">044</span><span id="line-44">  private String material;</span>
 <span class="source-line-no">045</span><span id="line-45">  private BigDecimal minimum;</span>
-<span class="source-line-no">046</span><span id="line-46"></span>
-<span class="source-line-no">047</span><span id="line-47">  private int customModelData;</span>
-<span class="source-line-no">048</span><span id="line-48">  private String texture;</span>
-<span class="source-line-no">049</span><span id="line-49"></span>
-<span class="source-line-no">050</span><span id="line-50">  final TaxEntry fee;</span>
-<span class="source-line-no">051</span><span id="line-51"></span>
-<span class="source-line-no">052</span><span id="line-52">  public Note(final String material, final BigDecimal minimum, final String fee) {</span>
+<span class="source-line-no">046</span><span id="line-46">  private int customModelData;</span>
+<span class="source-line-no">047</span><span id="line-47">  private String texture;</span>
+<span class="source-line-no">048</span><span id="line-48"></span>
+<span class="source-line-no">049</span><span id="line-49">  public Note(final String material, final BigDecimal minimum, final String fee) {</span>
+<span class="source-line-no">050</span><span id="line-50"></span>
+<span class="source-line-no">051</span><span id="line-51">    this.material = material;</span>
+<span class="source-line-no">052</span><span id="line-52">    this.minimum = minimum;</span>
 <span class="source-line-no">053</span><span id="line-53"></span>
-<span class="source-line-no">054</span><span id="line-54">    this.material = material;</span>
-<span class="source-line-no">055</span><span id="line-55">    this.minimum = minimum;</span>
-<span class="source-line-no">056</span><span id="line-56"></span>
-<span class="source-line-no">057</span><span id="line-57">    if(fee.contains("%")) {</span>
-<span class="source-line-no">058</span><span id="line-58">      this.fee = new TaxEntry("percent", Double.parseDouble(fee.replace("%", "")) / 100);</span>
-<span class="source-line-no">059</span><span id="line-59">    } else {</span>
-<span class="source-line-no">060</span><span id="line-60">      this.fee = new TaxEntry("flat", Double.parseDouble(fee));</span>
-<span class="source-line-no">061</span><span id="line-61">    }</span>
-<span class="source-line-no">062</span><span id="line-62">  }</span>
-<span class="source-line-no">063</span><span id="line-63"></span>
-<span class="source-line-no">064</span><span id="line-64">  public Note(final String material, final BigDecimal minimum, final TaxEntry fee) {</span>
-<span class="source-line-no">065</span><span id="line-65"></span>
-<span class="source-line-no">066</span><span id="line-66">    this.material = material;</span>
-<span class="source-line-no">067</span><span id="line-67">    this.minimum = minimum;</span>
-<span class="source-line-no">068</span><span id="line-68">    this.fee = fee;</span>
-<span class="source-line-no">069</span><span id="line-69">  }</span>
-<span class="source-line-no">070</span><span id="line-70"></span>
-<span class="source-line-no">071</span><span id="line-71">  public BigDecimal getMinimum() {</span>
+<span class="source-line-no">054</span><span id="line-54">    if(fee.contains("%")) {</span>
+<span class="source-line-no">055</span><span id="line-55">      this.fee = new TaxEntry("percent", Double.parseDouble(fee.replace("%", "")) / 100);</span>
+<span class="source-line-no">056</span><span id="line-56">    } else {</span>
+<span class="source-line-no">057</span><span id="line-57">      this.fee = new TaxEntry("flat", Double.parseDouble(fee));</span>
+<span class="source-line-no">058</span><span id="line-58">    }</span>
+<span class="source-line-no">059</span><span id="line-59">  }</span>
+<span class="source-line-no">060</span><span id="line-60"></span>
+<span class="source-line-no">061</span><span id="line-61">  public Note(final String material, final BigDecimal minimum, final TaxEntry fee) {</span>
+<span class="source-line-no">062</span><span id="line-62"></span>
+<span class="source-line-no">063</span><span id="line-63">    this.material = material;</span>
+<span class="source-line-no">064</span><span id="line-64">    this.minimum = minimum;</span>
+<span class="source-line-no">065</span><span id="line-65">    this.fee = fee;</span>
+<span class="source-line-no">066</span><span id="line-66">  }</span>
+<span class="source-line-no">067</span><span id="line-67"></span>
+<span class="source-line-no">068</span><span id="line-68">  public BigDecimal getMinimum() {</span>
+<span class="source-line-no">069</span><span id="line-69"></span>
+<span class="source-line-no">070</span><span id="line-70">    return minimum;</span>
+<span class="source-line-no">071</span><span id="line-71">  }</span>
 <span class="source-line-no">072</span><span id="line-72"></span>
-<span class="source-line-no">073</span><span id="line-73">    return minimum;</span>
-<span class="source-line-no">074</span><span id="line-74">  }</span>
-<span class="source-line-no">075</span><span id="line-75"></span>
-<span class="source-line-no">076</span><span id="line-76">  public void setMinimum(final BigDecimal minimum) {</span>
+<span class="source-line-no">073</span><span id="line-73">  public void setMinimum(final BigDecimal minimum) {</span>
+<span class="source-line-no">074</span><span id="line-74"></span>
+<span class="source-line-no">075</span><span id="line-75">    this.minimum = minimum;</span>
+<span class="source-line-no">076</span><span id="line-76">  }</span>
 <span class="source-line-no">077</span><span id="line-77"></span>
-<span class="source-line-no">078</span><span id="line-78">    this.minimum = minimum;</span>
-<span class="source-line-no">079</span><span id="line-79">  }</span>
-<span class="source-line-no">080</span><span id="line-80"></span>
-<span class="source-line-no">081</span><span id="line-81">  public TaxEntry getFee() {</span>
+<span class="source-line-no">078</span><span id="line-78">  public TaxEntry getFee() {</span>
+<span class="source-line-no">079</span><span id="line-79"></span>
+<span class="source-line-no">080</span><span id="line-80">    return fee;</span>
+<span class="source-line-no">081</span><span id="line-81">  }</span>
 <span class="source-line-no">082</span><span id="line-82"></span>
-<span class="source-line-no">083</span><span id="line-83">    return fee;</span>
-<span class="source-line-no">084</span><span id="line-84">  }</span>
-<span class="source-line-no">085</span><span id="line-85"></span>
-<span class="source-line-no">086</span><span id="line-86">  public List&lt;String&gt; getFlags() {</span>
+<span class="source-line-no">083</span><span id="line-83">  public List&lt;String&gt; getFlags() {</span>
+<span class="source-line-no">084</span><span id="line-84"></span>
+<span class="source-line-no">085</span><span id="line-85">    return flags;</span>
+<span class="source-line-no">086</span><span id="line-86">  }</span>
 <span class="source-line-no">087</span><span id="line-87"></span>
-<span class="source-line-no">088</span><span id="line-88">    return flags;</span>
-<span class="source-line-no">089</span><span id="line-89">  }</span>
-<span class="source-line-no">090</span><span id="line-90"></span>
-<span class="source-line-no">091</span><span id="line-91">  public void setFlags(final List&lt;String&gt; flags) {</span>
-<span class="source-line-no">092</span><span id="line-92"></span>
-<span class="source-line-no">093</span><span id="line-93">    this.flags.clear();</span>
-<span class="source-line-no">094</span><span id="line-94">    for(final String str : flags) {</span>
-<span class="source-line-no">095</span><span id="line-95">      if(!str.isEmpty()) {</span>
-<span class="source-line-no">096</span><span id="line-96">        this.flags.add(str);</span>
-<span class="source-line-no">097</span><span id="line-97">      }</span>
-<span class="source-line-no">098</span><span id="line-98">    }</span>
-<span class="source-line-no">099</span><span id="line-99">  }</span>
-<span class="source-line-no">100</span><span id="line-100"></span>
-<span class="source-line-no">101</span><span id="line-101">  public List&lt;String&gt; getEnchantments() {</span>
+<span class="source-line-no">088</span><span id="line-88">  public void setFlags(final List&lt;String&gt; flags) {</span>
+<span class="source-line-no">089</span><span id="line-89"></span>
+<span class="source-line-no">090</span><span id="line-90">    this.flags.clear();</span>
+<span class="source-line-no">091</span><span id="line-91">    for(final String str : flags) {</span>
+<span class="source-line-no">092</span><span id="line-92">      if(!str.isEmpty()) {</span>
+<span class="source-line-no">093</span><span id="line-93">        this.flags.add(str);</span>
+<span class="source-line-no">094</span><span id="line-94">      }</span>
+<span class="source-line-no">095</span><span id="line-95">    }</span>
+<span class="source-line-no">096</span><span id="line-96">  }</span>
+<span class="source-line-no">097</span><span id="line-97"></span>
+<span class="source-line-no">098</span><span id="line-98">  public List&lt;String&gt; getEnchantments() {</span>
+<span class="source-line-no">099</span><span id="line-99"></span>
+<span class="source-line-no">100</span><span id="line-100">    return enchantments;</span>
+<span class="source-line-no">101</span><span id="line-101">  }</span>
 <span class="source-line-no">102</span><span id="line-102"></span>
-<span class="source-line-no">103</span><span id="line-103">    return enchantments;</span>
-<span class="source-line-no">104</span><span id="line-104">  }</span>
-<span class="source-line-no">105</span><span id="line-105"></span>
-<span class="source-line-no">106</span><span id="line-106">  public void setEnchantments(final List&lt;String&gt; enchantments) {</span>
-<span class="source-line-no">107</span><span id="line-107"></span>
-<span class="source-line-no">108</span><span id="line-108">    this.enchantments.clear();</span>
-<span class="source-line-no">109</span><span id="line-109">    for(final String str : enchantments) {</span>
-<span class="source-line-no">110</span><span id="line-110">      if(!str.isEmpty()) {</span>
-<span class="source-line-no">111</span><span id="line-111">        this.enchantments.add(str);</span>
-<span class="source-line-no">112</span><span id="line-112">      }</span>
-<span class="source-line-no">113</span><span id="line-113">    }</span>
-<span class="source-line-no">114</span><span id="line-114">  }</span>
-<span class="source-line-no">115</span><span id="line-115"></span>
-<span class="source-line-no">116</span><span id="line-116">  public String getMaterial() {</span>
+<span class="source-line-no">103</span><span id="line-103">  public void setEnchantments(final List&lt;String&gt; enchantments) {</span>
+<span class="source-line-no">104</span><span id="line-104"></span>
+<span class="source-line-no">105</span><span id="line-105">    this.enchantments.clear();</span>
+<span class="source-line-no">106</span><span id="line-106">    for(final String str : enchantments) {</span>
+<span class="source-line-no">107</span><span id="line-107">      if(!str.isEmpty()) {</span>
+<span class="source-line-no">108</span><span id="line-108">        this.enchantments.add(str);</span>
+<span class="source-line-no">109</span><span id="line-109">      }</span>
+<span class="source-line-no">110</span><span id="line-110">    }</span>
+<span class="source-line-no">111</span><span id="line-111">  }</span>
+<span class="source-line-no">112</span><span id="line-112"></span>
+<span class="source-line-no">113</span><span id="line-113">  public String getMaterial() {</span>
+<span class="source-line-no">114</span><span id="line-114"></span>
+<span class="source-line-no">115</span><span id="line-115">    return material;</span>
+<span class="source-line-no">116</span><span id="line-116">  }</span>
 <span class="source-line-no">117</span><span id="line-117"></span>
-<span class="source-line-no">118</span><span id="line-118">    return material;</span>
-<span class="source-line-no">119</span><span id="line-119">  }</span>
-<span class="source-line-no">120</span><span id="line-120"></span>
-<span class="source-line-no">121</span><span id="line-121">  public void setMaterial(final String material) {</span>
+<span class="source-line-no">118</span><span id="line-118">  public void setMaterial(final String material) {</span>
+<span class="source-line-no">119</span><span id="line-119"></span>
+<span class="source-line-no">120</span><span id="line-120">    this.material = material;</span>
+<span class="source-line-no">121</span><span id="line-121">  }</span>
 <span class="source-line-no">122</span><span id="line-122"></span>
-<span class="source-line-no">123</span><span id="line-123">    this.material = material;</span>
-<span class="source-line-no">124</span><span id="line-124">  }</span>
-<span class="source-line-no">125</span><span id="line-125"></span>
-<span class="source-line-no">126</span><span id="line-126">  public int getCustomModelData() {</span>
+<span class="source-line-no">123</span><span id="line-123">  public int getCustomModelData() {</span>
+<span class="source-line-no">124</span><span id="line-124"></span>
+<span class="source-line-no">125</span><span id="line-125">    return customModelData;</span>
+<span class="source-line-no">126</span><span id="line-126">  }</span>
 <span class="source-line-no">127</span><span id="line-127"></span>
-<span class="source-line-no">128</span><span id="line-128">    return customModelData;</span>
-<span class="source-line-no">129</span><span id="line-129">  }</span>
-<span class="source-line-no">130</span><span id="line-130"></span>
-<span class="source-line-no">131</span><span id="line-131">  public void setCustomModelData(final int customModelData) {</span>
+<span class="source-line-no">128</span><span id="line-128">  public void setCustomModelData(final int customModelData) {</span>
+<span class="source-line-no">129</span><span id="line-129"></span>
+<span class="source-line-no">130</span><span id="line-130">    this.customModelData = customModelData;</span>
+<span class="source-line-no">131</span><span id="line-131">  }</span>
 <span class="source-line-no">132</span><span id="line-132"></span>
-<span class="source-line-no">133</span><span id="line-133">    this.customModelData = customModelData;</span>
-<span class="source-line-no">134</span><span id="line-134">  }</span>
-<span class="source-line-no">135</span><span id="line-135"></span>
-<span class="source-line-no">136</span><span id="line-136">  public String getTexture() {</span>
+<span class="source-line-no">133</span><span id="line-133">  public String getTexture() {</span>
+<span class="source-line-no">134</span><span id="line-134"></span>
+<span class="source-line-no">135</span><span id="line-135">    return texture;</span>
+<span class="source-line-no">136</span><span id="line-136">  }</span>
 <span class="source-line-no">137</span><span id="line-137"></span>
-<span class="source-line-no">138</span><span id="line-138">    return texture;</span>
-<span class="source-line-no">139</span><span id="line-139">  }</span>
-<span class="source-line-no">140</span><span id="line-140"></span>
-<span class="source-line-no">141</span><span id="line-141">  public void setTexture(final String texture) {</span>
+<span class="source-line-no">138</span><span id="line-138">  public void setTexture(final String texture) {</span>
+<span class="source-line-no">139</span><span id="line-139"></span>
+<span class="source-line-no">140</span><span id="line-140">    this.texture = texture;</span>
+<span class="source-line-no">141</span><span id="line-141">  }</span>
 <span class="source-line-no">142</span><span id="line-142"></span>
-<span class="source-line-no">143</span><span id="line-143">    this.texture = texture;</span>
-<span class="source-line-no">144</span><span id="line-144">  }</span>
-<span class="source-line-no">145</span><span id="line-145"></span>
-<span class="source-line-no">146</span><span id="line-146">  public AbstractItemStack&lt;Object&gt; stack(final String currency, final String region, final BigDecimal amount) {</span>
-<span class="source-line-no">147</span><span id="line-147"></span>
-<span class="source-line-no">148</span><span id="line-148">    final LinkedList&lt;Component&gt; lore = new LinkedList&lt;&gt;();</span>
-<span class="source-line-no">149</span><span id="line-149">    lore.add(Component.text(MessageConfig.yaml().getString("Messages.Note.Currency").replace("$currency", currency)));</span>
-<span class="source-line-no">150</span><span id="line-150">    lore.add(Component.text(MessageConfig.yaml().getString("Messages.Note.Region").replace("$region", region)));</span>
-<span class="source-line-no">151</span><span id="line-151">    lore.add(Component.text(MessageConfig.yaml().getString("Messages.Note.Amount").replace("$amount", amount.toPlainString())));</span>
-<span class="source-line-no">152</span><span id="line-152">    lore.add(Component.text(MessageConfig.yaml().getString("Messages.Note.Action")));</span>
-<span class="source-line-no">153</span><span id="line-153"></span>
-<span class="source-line-no">154</span><span id="line-154">    return (AbstractItemStack&lt;Object&gt;)PluginCore.server().stackBuilder().of(material, 1)</span>
-<span class="source-line-no">155</span><span id="line-155">            .customName(Component.text(MessageConfig.yaml().getString("Messages.Note.Name")))</span>
-<span class="source-line-no">156</span><span id="line-156">            .enchant(enchantments)</span>
-<span class="source-line-no">157</span><span id="line-157">            .flags(flags)</span>
-<span class="source-line-no">158</span><span id="line-158">            .modelDataOld(customModelData)</span>
-<span class="source-line-no">159</span><span id="line-159">            .lore(lore);</span>
-<span class="source-line-no">160</span><span id="line-160">  }</span>
-<span class="source-line-no">161</span><span id="line-161">}</span>
+<span class="source-line-no">143</span><span id="line-143">  public AbstractItemStack&lt;Object&gt; stack(final String currency, final String region, final BigDecimal amount) {</span>
+<span class="source-line-no">144</span><span id="line-144"></span>
+<span class="source-line-no">145</span><span id="line-145">    final LinkedList&lt;Component&gt; lore = new LinkedList&lt;&gt;();</span>
+<span class="source-line-no">146</span><span id="line-146">    lore.add(Component.text(MessageConfig.yaml().getString("Messages.Note.Currency").replace("$currency", currency)));</span>
+<span class="source-line-no">147</span><span id="line-147">    lore.add(Component.text(MessageConfig.yaml().getString("Messages.Note.Region").replace("$region", region)));</span>
+<span class="source-line-no">148</span><span id="line-148">    lore.add(Component.text(MessageConfig.yaml().getString("Messages.Note.Amount").replace("$amount", amount.toPlainString())));</span>
+<span class="source-line-no">149</span><span id="line-149">    lore.add(Component.text(MessageConfig.yaml().getString("Messages.Note.Action")));</span>
+<span class="source-line-no">150</span><span id="line-150"></span>
+<span class="source-line-no">151</span><span id="line-151">    return (AbstractItemStack&lt;Object&gt;)PluginCore.server().stackBuilder().of(material, 1)</span>
+<span class="source-line-no">152</span><span id="line-152">            .customName(Component.text(MessageConfig.yaml().getString("Messages.Note.Name")))</span>
+<span class="source-line-no">153</span><span id="line-153">            .enchant(enchantments)</span>
+<span class="source-line-no">154</span><span id="line-154">            .flags(flags)</span>
+<span class="source-line-no">155</span><span id="line-155">            .modelDataOld(customModelData)</span>
+<span class="source-line-no">156</span><span id="line-156">            .lore(lore);</span>
+<span class="source-line-no">157</span><span id="line-157">  }</span>
+<span class="source-line-no">158</span><span id="line-158">}</span>
 
 
 

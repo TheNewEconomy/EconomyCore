@@ -51,31 +51,31 @@
 <span class="source-line-no">038</span><span id="line-38">    super("balance");</span>
 <span class="source-line-no">039</span><span id="line-39">  }</span>
 <span class="source-line-no">040</span><span id="line-40"></span>
-<span class="source-line-no">041</span><span id="line-41">  @Override</span>
-<span class="source-line-no">042</span><span id="line-42">  public void handle(final String account, final String accountName, final UUID server, final DataInputStream stream) {</span>
-<span class="source-line-no">043</span><span id="line-43"></span>
-<span class="source-line-no">044</span><span id="line-44">    try {</span>
-<span class="source-line-no">045</span><span id="line-45">      final String region = stream.readUTF();</span>
-<span class="source-line-no">046</span><span id="line-46">      final String currency = stream.readUTF();</span>
-<span class="source-line-no">047</span><span id="line-47">      final String handler = stream.readUTF();</span>
-<span class="source-line-no">048</span><span id="line-48">      final String amount = stream.readUTF();</span>
-<span class="source-line-no">049</span><span id="line-49">      send(server, account, accountName, region, currency, handler, amount);</span>
-<span class="source-line-no">050</span><span id="line-50">    } catch(IOException e) {</span>
-<span class="source-line-no">051</span><span id="line-51">      e.printStackTrace();</span>
-<span class="source-line-no">052</span><span id="line-52">    }</span>
-<span class="source-line-no">053</span><span id="line-53">  }</span>
-<span class="source-line-no">054</span><span id="line-54"></span>
-<span class="source-line-no">055</span><span id="line-55">  public static void send(final UUID server, final String account, final String accountName, final String region, final String currency, final String handler, final String amount) {</span>
+<span class="source-line-no">041</span><span id="line-41">  public static void send(final UUID server, final String account, final String accountName, final String region, final String currency, final String handler, final String amount) {</span>
+<span class="source-line-no">042</span><span id="line-42"></span>
+<span class="source-line-no">043</span><span id="line-43">    final ByteArrayDataOutput out = ByteStreams.newDataOutput();</span>
+<span class="source-line-no">044</span><span id="line-44">    out.writeUTF(server.toString());</span>
+<span class="source-line-no">045</span><span id="line-45">    out.writeUTF(account);</span>
+<span class="source-line-no">046</span><span id="line-46">    out.writeUTF(accountName);</span>
+<span class="source-line-no">047</span><span id="line-47">    out.writeUTF(region);</span>
+<span class="source-line-no">048</span><span id="line-48">    out.writeUTF(currency);</span>
+<span class="source-line-no">049</span><span id="line-49">    out.writeUTF(handler);</span>
+<span class="source-line-no">050</span><span id="line-50">    out.writeUTF(amount);</span>
+<span class="source-line-no">051</span><span id="line-51">    sendToAll("tne:balance", out, true);</span>
+<span class="source-line-no">052</span><span id="line-52">  }</span>
+<span class="source-line-no">053</span><span id="line-53"></span>
+<span class="source-line-no">054</span><span id="line-54">  @Override</span>
+<span class="source-line-no">055</span><span id="line-55">  public void handle(final String account, final String accountName, final UUID server, final DataInputStream stream) {</span>
 <span class="source-line-no">056</span><span id="line-56"></span>
-<span class="source-line-no">057</span><span id="line-57">    final ByteArrayDataOutput out = ByteStreams.newDataOutput();</span>
-<span class="source-line-no">058</span><span id="line-58">    out.writeUTF(server.toString());</span>
-<span class="source-line-no">059</span><span id="line-59">    out.writeUTF(account);</span>
-<span class="source-line-no">060</span><span id="line-60">    out.writeUTF(accountName);</span>
-<span class="source-line-no">061</span><span id="line-61">    out.writeUTF(region);</span>
-<span class="source-line-no">062</span><span id="line-62">    out.writeUTF(currency);</span>
-<span class="source-line-no">063</span><span id="line-63">    out.writeUTF(handler);</span>
-<span class="source-line-no">064</span><span id="line-64">    out.writeUTF(amount);</span>
-<span class="source-line-no">065</span><span id="line-65">    sendToAll("tne:balance", out, true);</span>
+<span class="source-line-no">057</span><span id="line-57">    try {</span>
+<span class="source-line-no">058</span><span id="line-58">      final String region = stream.readUTF();</span>
+<span class="source-line-no">059</span><span id="line-59">      final String currency = stream.readUTF();</span>
+<span class="source-line-no">060</span><span id="line-60">      final String handler = stream.readUTF();</span>
+<span class="source-line-no">061</span><span id="line-61">      final String amount = stream.readUTF();</span>
+<span class="source-line-no">062</span><span id="line-62">      send(server, account, accountName, region, currency, handler, amount);</span>
+<span class="source-line-no">063</span><span id="line-63">    } catch(final IOException e) {</span>
+<span class="source-line-no">064</span><span id="line-64">      e.printStackTrace();</span>
+<span class="source-line-no">065</span><span id="line-65">    }</span>
 <span class="source-line-no">066</span><span id="line-66">  }</span>
 <span class="source-line-no">067</span><span id="line-67">}</span>
 
