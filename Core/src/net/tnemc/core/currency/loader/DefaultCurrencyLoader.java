@@ -190,6 +190,8 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       }
     }
 
+    System.out.println("File: " + curDirectory.getName());
+
     currency.setIdentifier(identifier);
     currency.setFile(curDirectory.getName());
     currency.setIconMaterial(icon);

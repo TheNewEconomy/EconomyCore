@@ -83,6 +83,7 @@ public class DefaultCurrencySaver implements CurrencySaver {
     YamlDocument cur = null;
 
     try {
+
       cur = YamlDocument.create(directory);
 
     } catch(final IOException e) {
@@ -184,6 +185,15 @@ public class DefaultCurrencySaver implements CurrencySaver {
 
       MISCUtils.setComment(cur, "Item.ImportItems", "Whether to import exist item currencies into a player's balance with the first balance check for this currency.");
       cur.set("Item.ImportItems", item.isImportItem());
+
+      MISCUtils.setComment(cur, "Item.BlockCrafting", "Whether we should block crafting with this currency");
+      cur.set("Item.BlockCrafting", item.blockCraft());
+
+      MISCUtils.setComment(cur, "Item.Shulker", "Should items from shulkers be used in holdings calculations");
+      cur.set("Item.Shulker", item.shulker());
+
+      MISCUtils.setComment(cur, "Item.Bundle", "Should items from bundles be used in holdings calculations");
+      cur.set("Item.Bundle", item.bundle());
     }
 
     //Formatting Configurations
@@ -275,7 +285,8 @@ public class DefaultCurrencySaver implements CurrencySaver {
     YamlDocument cur = null;
 
     try {
-      cur = YamlDocument.create(new File(directory, currency.getIdentifier() + ".yml"));
+
+      cur = YamlDocument.create(new File(directory, currency.getFile()));
 
     } catch(final IOException e) {
       PluginCore.log().error("Failed to save currency: " + currency.getIdentifier(), e, DebugLevel.STANDARD);
