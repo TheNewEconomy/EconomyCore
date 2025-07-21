@@ -53,6 +53,8 @@ public class ShortenParseRule implements ParseRule {
   @Override
   public String apply(final ParseMoney parseMoney, final String input) {
 
+    if(input.length() < 2) return input;
+
     final String shortcuts = parseMoney.currency().getPrefixes();
     final Matcher matcher = Pattern.compile("([0-9]+(?:\\.[0-9]*)?)[" + shortcuts + "]$").matcher(input);
     if(matcher.find()) {

@@ -537,7 +537,7 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> <amount> [currency] [from:account]
-  public static void onPay(final CmdSource<?> sender, final Account acc, final ParseMoney parseMoney, final Currency currency, final String from) {
+  public static void onPay(final CmdSource<?> sender, final Account acc, final ParseMoney parseMoney, final Currency currency) {
 
     final Optional<PlayerProvider> player = sender.player();
     if(EconomyManager.limitCurrency() && player.isPresent()) {

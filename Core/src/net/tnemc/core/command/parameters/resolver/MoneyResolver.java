@@ -58,6 +58,7 @@ public class MoneyResolver implements ParameterType<CommandActor, ParseMoney> {
   @Override
   public ParseMoney parse(@NotNull final MutableStringStream input, @NotNull final ExecutionContext<CommandActor> context) {
 
+
     final String value = trimQuotes(input.readString());
 
     final String region = (context.getResolvedArgumentOrNull("region") == null)? TNECore.eco().region().defaultRegion() : context.getResolvedArgumentOrNull("region");

@@ -129,9 +129,9 @@ public class MoneyCommand {
   @Usage("#{Money.Pay.Arguments}")
   @Description("#{Money.Pay.Description}")
   @CommandPermission("tne.money.pay")
-  public void onPay(final SpongeCommandActor sender, final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("") final String from) {
+  public void onPay(final SpongeCommandActor sender, final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency) {
 
-    net.tnemc.core.command.MoneyCommand.onPay(new SpongeCMDSource(sender), player, amount, currency, from);
+    net.tnemc.core.command.MoneyCommand.onPay(new SpongeCMDSource(sender), player, amount, currency);
   }
 
   @Subcommand({ "request" })
