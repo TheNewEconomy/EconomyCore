@@ -5,6 +5,7 @@ net.tnemc.bukkit.depend.towny
 net.tnemc.bukkit.hook.economy
 net.tnemc.bukkit.hook.misc
 net.tnemc.bukkit.listeners.entity
+net.tnemc.bukkit.listeners.inventory
 net.tnemc.bukkit.listeners.mcmmo
 net.tnemc.bukkit.listeners.player
 net.tnemc.bukkit.listeners.server
@@ -47,6 +48,7 @@ net.tnemc.core.currency.parser.impl
 net.tnemc.core.currency.saver
 net.tnemc.core.currency.type
 net.tnemc.core.handlers.entity
+net.tnemc.core.handlers.inventory
 net.tnemc.core.handlers.player
 net.tnemc.core.handlers.region
 net.tnemc.core.handlers.server
@@ -101,6 +103,7 @@ net.tnemc.paper.command
 net.tnemc.paper.hook.economy
 net.tnemc.paper.hook.misc
 net.tnemc.paper.listener
+net.tnemc.paper.listener.inventory
 net.tnemc.sponge
 net.tnemc.sponge.command
 net.tnemc.sponge.impl

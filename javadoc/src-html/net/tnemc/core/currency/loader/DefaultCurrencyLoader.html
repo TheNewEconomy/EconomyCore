@@ -254,252 +254,253 @@
 <span class="source-line-no">241</span><span id="line-241">      item.setEnderChest(cur.getBoolean("Item.EnderChest", true));</span>
 <span class="source-line-no">242</span><span id="line-242">      item.setEnderFill(cur.getBoolean("Item.EnderFill", true));</span>
 <span class="source-line-no">243</span><span id="line-243">      item.setImportItem(cur.getBoolean("Item.ImportItems", true));</span>
-<span class="source-line-no">244</span><span id="line-244">    }</span>
-<span class="source-line-no">245</span><span id="line-245"></span>
-<span class="source-line-no">246</span><span id="line-246">    //Load our note configurations.</span>
-<span class="source-line-no">247</span><span id="line-247">    if(cur.getBoolean("Note.Notable", true)) {</span>
-<span class="source-line-no">248</span><span id="line-248"></span>
-<span class="source-line-no">249</span><span id="line-249">      //Note Item configs</span>
-<span class="source-line-no">250</span><span id="line-250">      final String material = cur.getString("Note.Item.Material", "PAPER");</span>
-<span class="source-line-no">251</span><span id="line-251"></span>
-<span class="source-line-no">252</span><span id="line-252">      final BigDecimal minimum = new BigDecimal(cur.getString("Note.Minimum", "0.00"));</span>
-<span class="source-line-no">253</span><span id="line-253"></span>
-<span class="source-line-no">254</span><span id="line-254">      final Note note = new Note(material, minimum, cur.getString("Note.Fee", "0.00"));</span>
-<span class="source-line-no">255</span><span id="line-255"></span>
-<span class="source-line-no">256</span><span id="line-256">      note.setTexture(cur.getString("Note.Item.Texture", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDA0NzE5YjNiOTdkMTk1YTIwNTcxOGI2ZWUyMWY1Yzk1Y2FmYTE2N2U3YWJjYTg4YTIxMDNkNTJiMzdkNzIyIn19fQ=="));</span>
-<span class="source-line-no">257</span><span id="line-257">      note.setCustomModelData(cur.getInt("Note.Item.ModelData", -1));</span>
-<span class="source-line-no">258</span><span id="line-258"></span>
-<span class="source-line-no">259</span><span id="line-259">      if(cur.contains("Note.Item.Enchantments")) {</span>
-<span class="source-line-no">260</span><span id="line-260">        note.setEnchantments(cur.getStringList("Note.Item.Enchantments"));</span>
-<span class="source-line-no">261</span><span id="line-261">      }</span>
-<span class="source-line-no">262</span><span id="line-262"></span>
-<span class="source-line-no">263</span><span id="line-263">      if(cur.contains("Note.Item.Flags")) {</span>
-<span class="source-line-no">264</span><span id="line-264">        note.setFlags(cur.getStringList("Note.Item.Flags"));</span>
-<span class="source-line-no">265</span><span id="line-265">      }</span>
-<span class="source-line-no">266</span><span id="line-266">      currency.setNote(note);</span>
-<span class="source-line-no">267</span><span id="line-267">    }</span>
-<span class="source-line-no">268</span><span id="line-268"></span>
-<span class="source-line-no">269</span><span id="line-269">    final CurrencyLoadCallback currencyLoad = new CurrencyLoadCallback(currency);</span>
-<span class="source-line-no">270</span><span id="line-270">    if(PluginCore.callbacks().call(currencyLoad)) {</span>
-<span class="source-line-no">271</span><span id="line-271">      PluginCore.log().error("Cancelled currency load through callback.", DebugLevel.OFF);</span>
-<span class="source-line-no">272</span><span id="line-272">      return false;</span>
-<span class="source-line-no">273</span><span id="line-273">    }</span>
-<span class="source-line-no">274</span><span id="line-274"></span>
-<span class="source-line-no">275</span><span id="line-275">    if(!loadDenominations(new File(directory, identifier), currency)) {</span>
-<span class="source-line-no">276</span><span id="line-276">      PluginCore.log().error("Failed to load currency. Unable to load denominations: " + currency.getIdentifier(), DebugLevel.OFF);</span>
-<span class="source-line-no">277</span><span id="line-277">      return false;</span>
-<span class="source-line-no">278</span><span id="line-278">    }</span>
-<span class="source-line-no">279</span><span id="line-279"></span>
-<span class="source-line-no">280</span><span id="line-280">    TNECore.eco().currency().addCurrency(currency);</span>
-<span class="source-line-no">281</span><span id="line-281"></span>
-<span class="source-line-no">282</span><span id="line-282">    try {</span>
-<span class="source-line-no">283</span><span id="line-283">      cur.save();</span>
-<span class="source-line-no">284</span><span id="line-284">    } catch(final IOException e) {</span>
-<span class="source-line-no">285</span><span id="line-285">      PluginCore.log().error("Failed to save currency YAML!", e, DebugLevel.OFF);</span>
-<span class="source-line-no">286</span><span id="line-286">    }</span>
-<span class="source-line-no">287</span><span id="line-287">    return true;</span>
-<span class="source-line-no">288</span><span id="line-288">  }</span>
-<span class="source-line-no">289</span><span id="line-289"></span>
-<span class="source-line-no">290</span><span id="line-290">  /**</span>
-<span class="source-line-no">291</span><span id="line-291">   * Loads all denominations for a currency.</span>
-<span class="source-line-no">292</span><span id="line-292">   *</span>
-<span class="source-line-no">293</span><span id="line-293">   * @param directory The directory to load the denominations from.</span>
-<span class="source-line-no">294</span><span id="line-294">   * @param currency  The currency of the denomination.</span>
-<span class="source-line-no">295</span><span id="line-295">   */</span>
-<span class="source-line-no">296</span><span id="line-296">  @Override</span>
-<span class="source-line-no">297</span><span id="line-297">  public boolean loadDenominations(final File directory, final Currency currency) {</span>
-<span class="source-line-no">298</span><span id="line-298"></span>
-<span class="source-line-no">299</span><span id="line-299">    if(directory.exists()) {</span>
-<span class="source-line-no">300</span><span id="line-300">      final File[] denominations = IOUtil.getYAMLs(directory);</span>
-<span class="source-line-no">301</span><span id="line-301"></span>
-<span class="source-line-no">302</span><span id="line-302">      if(denominations.length &gt; 0) {</span>
-<span class="source-line-no">303</span><span id="line-303">        for(final File denomination : denominations) {</span>
-<span class="source-line-no">304</span><span id="line-304"></span>
-<span class="source-line-no">305</span><span id="line-305">          final boolean loaded = loadDenomination(currency, denomination);</span>
-<span class="source-line-no">306</span><span id="line-306"></span>
-<span class="source-line-no">307</span><span id="line-307">          if(!loaded) {</span>
-<span class="source-line-no">308</span><span id="line-308">            PluginCore.log().error("Unable to load denomination: " + denomination.getName(), DebugLevel.OFF);</span>
-<span class="source-line-no">309</span><span id="line-309">          }</span>
-<span class="source-line-no">310</span><span id="line-310">        }</span>
-<span class="source-line-no">311</span><span id="line-311">        return true;</span>
-<span class="source-line-no">312</span><span id="line-312">      }</span>
-<span class="source-line-no">313</span><span id="line-313">      PluginCore.log().error("No denominations found for currency: " + currency.getIdentifier(), DebugLevel.OFF);</span>
-<span class="source-line-no">314</span><span id="line-314">      return false;</span>
-<span class="source-line-no">315</span><span id="line-315">    }</span>
-<span class="source-line-no">316</span><span id="line-316">    PluginCore.log().error("Invalid currency directory! Must be the same name as the currency's identifier value. Currency: " + currency.getIdentifier(), DebugLevel.OFF);</span>
-<span class="source-line-no">317</span><span id="line-317">    return false;</span>
-<span class="source-line-no">318</span><span id="line-318">  }</span>
-<span class="source-line-no">319</span><span id="line-319"></span>
-<span class="source-line-no">320</span><span id="line-320">  /**</span>
-<span class="source-line-no">321</span><span id="line-321">   * Loads all denominations for a currency.</span>
-<span class="source-line-no">322</span><span id="line-322">   *</span>
-<span class="source-line-no">323</span><span id="line-323">   * @param directory The directory to load the denomination from.</span>
-<span class="source-line-no">324</span><span id="line-324">   * @param currency  The currency of the denomination.</span>
-<span class="source-line-no">325</span><span id="line-325">   * @param name      The name of the denomination to load.</span>
-<span class="source-line-no">326</span><span id="line-326">   */</span>
-<span class="source-line-no">327</span><span id="line-327">  @Override</span>
-<span class="source-line-no">328</span><span id="line-328">  public boolean loadDenomination(final File directory, final Currency currency, final String name) {</span>
-<span class="source-line-no">329</span><span id="line-329"></span>
-<span class="source-line-no">330</span><span id="line-330">    return loadDenomination(currency, new File(directory, name + ".yml"));</span>
-<span class="source-line-no">331</span><span id="line-331">  }</span>
-<span class="source-line-no">332</span><span id="line-332"></span>
-<span class="source-line-no">333</span><span id="line-333">  /**</span>
-<span class="source-line-no">334</span><span id="line-334">   * Loads all denominations for a currency.</span>
-<span class="source-line-no">335</span><span id="line-335">   *</span>
-<span class="source-line-no">336</span><span id="line-336">   * @param currency  The currency of the denomination.</span>
-<span class="source-line-no">337</span><span id="line-337">   * @param denomFile The file of the denomination to load.</span>
-<span class="source-line-no">338</span><span id="line-338">   */</span>
-<span class="source-line-no">339</span><span id="line-339">  @Override</span>
-<span class="source-line-no">340</span><span id="line-340">  public boolean loadDenomination(final Currency currency, final File denomFile) {</span>
-<span class="source-line-no">341</span><span id="line-341"></span>
-<span class="source-line-no">342</span><span id="line-342">    YamlDocument denom = null;</span>
-<span class="source-line-no">343</span><span id="line-343">    try {</span>
-<span class="source-line-no">344</span><span id="line-344">      denom = YamlDocument.create(denomFile);</span>
-<span class="source-line-no">345</span><span id="line-345">    } catch(final IOException e) {</span>
-<span class="source-line-no">346</span><span id="line-346">      PluginCore.log().error("Failed to load denomination: " + denomFile.getName(), e, DebugLevel.OFF);</span>
-<span class="source-line-no">347</span><span id="line-347">      return false;</span>
-<span class="source-line-no">348</span><span id="line-348">    }</span>
-<span class="source-line-no">349</span><span id="line-349"></span>
-<span class="source-line-no">350</span><span id="line-350">    final String single = denom.getString("Info.Single", "Dollar");</span>
-<span class="source-line-no">351</span><span id="line-351">    final String plural = denom.getString("Info.Plural", "Dollars");</span>
-<span class="source-line-no">352</span><span id="line-352"></span>
-<span class="source-line-no">353</span><span id="line-353">    final BigDecimal weight = new BigDecimal(denom.getString("Options.Weight", "1.0"));</span>
-<span class="source-line-no">354</span><span id="line-354">    PluginCore.log().debug("Loading denomination with weight of: " + weight);</span>
-<span class="source-line-no">355</span><span id="line-355">    if(weight.compareTo(BigDecimal.ZERO) &lt;= 0) {</span>
-<span class="source-line-no">356</span><span id="line-356"></span>
-<span class="source-line-no">357</span><span id="line-357">      PluginCore.log().error("Failed to load denomination: " + denomFile.getName() + ". Invalid Options.Weight Value: " + weight.toPlainString(), DebugLevel.OFF);</span>
-<span class="source-line-no">358</span><span id="line-358">      return false;</span>
-<span class="source-line-no">359</span><span id="line-359">    }</span>
-<span class="source-line-no">360</span><span id="line-360"></span>
+<span class="source-line-no">244</span><span id="line-244">      item.blockCraft(cur.getBoolean("Item.BlockCrafting", false));</span>
+<span class="source-line-no">245</span><span id="line-245">    }</span>
+<span class="source-line-no">246</span><span id="line-246"></span>
+<span class="source-line-no">247</span><span id="line-247">    //Load our note configurations.</span>
+<span class="source-line-no">248</span><span id="line-248">    if(cur.getBoolean("Note.Notable", true)) {</span>
+<span class="source-line-no">249</span><span id="line-249"></span>
+<span class="source-line-no">250</span><span id="line-250">      //Note Item configs</span>
+<span class="source-line-no">251</span><span id="line-251">      final String material = cur.getString("Note.Item.Material", "PAPER");</span>
+<span class="source-line-no">252</span><span id="line-252"></span>
+<span class="source-line-no">253</span><span id="line-253">      final BigDecimal minimum = new BigDecimal(cur.getString("Note.Minimum", "0.00"));</span>
+<span class="source-line-no">254</span><span id="line-254"></span>
+<span class="source-line-no">255</span><span id="line-255">      final Note note = new Note(material, minimum, cur.getString("Note.Fee", "0.00"));</span>
+<span class="source-line-no">256</span><span id="line-256"></span>
+<span class="source-line-no">257</span><span id="line-257">      note.setTexture(cur.getString("Note.Item.Texture", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDA0NzE5YjNiOTdkMTk1YTIwNTcxOGI2ZWUyMWY1Yzk1Y2FmYTE2N2U3YWJjYTg4YTIxMDNkNTJiMzdkNzIyIn19fQ=="));</span>
+<span class="source-line-no">258</span><span id="line-258">      note.setCustomModelData(cur.getInt("Note.Item.ModelData", -1));</span>
+<span class="source-line-no">259</span><span id="line-259"></span>
+<span class="source-line-no">260</span><span id="line-260">      if(cur.contains("Note.Item.Enchantments")) {</span>
+<span class="source-line-no">261</span><span id="line-261">        note.setEnchantments(cur.getStringList("Note.Item.Enchantments"));</span>
+<span class="source-line-no">262</span><span id="line-262">      }</span>
+<span class="source-line-no">263</span><span id="line-263"></span>
+<span class="source-line-no">264</span><span id="line-264">      if(cur.contains("Note.Item.Flags")) {</span>
+<span class="source-line-no">265</span><span id="line-265">        note.setFlags(cur.getStringList("Note.Item.Flags"));</span>
+<span class="source-line-no">266</span><span id="line-266">      }</span>
+<span class="source-line-no">267</span><span id="line-267">      currency.setNote(note);</span>
+<span class="source-line-no">268</span><span id="line-268">    }</span>
+<span class="source-line-no">269</span><span id="line-269"></span>
+<span class="source-line-no">270</span><span id="line-270">    final CurrencyLoadCallback currencyLoad = new CurrencyLoadCallback(currency);</span>
+<span class="source-line-no">271</span><span id="line-271">    if(PluginCore.callbacks().call(currencyLoad)) {</span>
+<span class="source-line-no">272</span><span id="line-272">      PluginCore.log().error("Cancelled currency load through callback.", DebugLevel.OFF);</span>
+<span class="source-line-no">273</span><span id="line-273">      return false;</span>
+<span class="source-line-no">274</span><span id="line-274">    }</span>
+<span class="source-line-no">275</span><span id="line-275"></span>
+<span class="source-line-no">276</span><span id="line-276">    if(!loadDenominations(new File(directory, identifier), currency)) {</span>
+<span class="source-line-no">277</span><span id="line-277">      PluginCore.log().error("Failed to load currency. Unable to load denominations: " + currency.getIdentifier(), DebugLevel.OFF);</span>
+<span class="source-line-no">278</span><span id="line-278">      return false;</span>
+<span class="source-line-no">279</span><span id="line-279">    }</span>
+<span class="source-line-no">280</span><span id="line-280"></span>
+<span class="source-line-no">281</span><span id="line-281">    TNECore.eco().currency().addCurrency(currency);</span>
+<span class="source-line-no">282</span><span id="line-282"></span>
+<span class="source-line-no">283</span><span id="line-283">    try {</span>
+<span class="source-line-no">284</span><span id="line-284">      cur.save();</span>
+<span class="source-line-no">285</span><span id="line-285">    } catch(final IOException e) {</span>
+<span class="source-line-no">286</span><span id="line-286">      PluginCore.log().error("Failed to save currency YAML!", e, DebugLevel.OFF);</span>
+<span class="source-line-no">287</span><span id="line-287">    }</span>
+<span class="source-line-no">288</span><span id="line-288">    return true;</span>
+<span class="source-line-no">289</span><span id="line-289">  }</span>
+<span class="source-line-no">290</span><span id="line-290"></span>
+<span class="source-line-no">291</span><span id="line-291">  /**</span>
+<span class="source-line-no">292</span><span id="line-292">   * Loads all denominations for a currency.</span>
+<span class="source-line-no">293</span><span id="line-293">   *</span>
+<span class="source-line-no">294</span><span id="line-294">   * @param directory The directory to load the denominations from.</span>
+<span class="source-line-no">295</span><span id="line-295">   * @param currency  The currency of the denomination.</span>
+<span class="source-line-no">296</span><span id="line-296">   */</span>
+<span class="source-line-no">297</span><span id="line-297">  @Override</span>
+<span class="source-line-no">298</span><span id="line-298">  public boolean loadDenominations(final File directory, final Currency currency) {</span>
+<span class="source-line-no">299</span><span id="line-299"></span>
+<span class="source-line-no">300</span><span id="line-300">    if(directory.exists()) {</span>
+<span class="source-line-no">301</span><span id="line-301">      final File[] denominations = IOUtil.getYAMLs(directory);</span>
+<span class="source-line-no">302</span><span id="line-302"></span>
+<span class="source-line-no">303</span><span id="line-303">      if(denominations.length &gt; 0) {</span>
+<span class="source-line-no">304</span><span id="line-304">        for(final File denomination : denominations) {</span>
+<span class="source-line-no">305</span><span id="line-305"></span>
+<span class="source-line-no">306</span><span id="line-306">          final boolean loaded = loadDenomination(currency, denomination);</span>
+<span class="source-line-no">307</span><span id="line-307"></span>
+<span class="source-line-no">308</span><span id="line-308">          if(!loaded) {</span>
+<span class="source-line-no">309</span><span id="line-309">            PluginCore.log().error("Unable to load denomination: " + denomination.getName(), DebugLevel.OFF);</span>
+<span class="source-line-no">310</span><span id="line-310">          }</span>
+<span class="source-line-no">311</span><span id="line-311">        }</span>
+<span class="source-line-no">312</span><span id="line-312">        return true;</span>
+<span class="source-line-no">313</span><span id="line-313">      }</span>
+<span class="source-line-no">314</span><span id="line-314">      PluginCore.log().error("No denominations found for currency: " + currency.getIdentifier(), DebugLevel.OFF);</span>
+<span class="source-line-no">315</span><span id="line-315">      return false;</span>
+<span class="source-line-no">316</span><span id="line-316">    }</span>
+<span class="source-line-no">317</span><span id="line-317">    PluginCore.log().error("Invalid currency directory! Must be the same name as the currency's identifier value. Currency: " + currency.getIdentifier(), DebugLevel.OFF);</span>
+<span class="source-line-no">318</span><span id="line-318">    return false;</span>
+<span class="source-line-no">319</span><span id="line-319">  }</span>
+<span class="source-line-no">320</span><span id="line-320"></span>
+<span class="source-line-no">321</span><span id="line-321">  /**</span>
+<span class="source-line-no">322</span><span id="line-322">   * Loads all denominations for a currency.</span>
+<span class="source-line-no">323</span><span id="line-323">   *</span>
+<span class="source-line-no">324</span><span id="line-324">   * @param directory The directory to load the denomination from.</span>
+<span class="source-line-no">325</span><span id="line-325">   * @param currency  The currency of the denomination.</span>
+<span class="source-line-no">326</span><span id="line-326">   * @param name      The name of the denomination to load.</span>
+<span class="source-line-no">327</span><span id="line-327">   */</span>
+<span class="source-line-no">328</span><span id="line-328">  @Override</span>
+<span class="source-line-no">329</span><span id="line-329">  public boolean loadDenomination(final File directory, final Currency currency, final String name) {</span>
+<span class="source-line-no">330</span><span id="line-330"></span>
+<span class="source-line-no">331</span><span id="line-331">    return loadDenomination(currency, new File(directory, name + ".yml"));</span>
+<span class="source-line-no">332</span><span id="line-332">  }</span>
+<span class="source-line-no">333</span><span id="line-333"></span>
+<span class="source-line-no">334</span><span id="line-334">  /**</span>
+<span class="source-line-no">335</span><span id="line-335">   * Loads all denominations for a currency.</span>
+<span class="source-line-no">336</span><span id="line-336">   *</span>
+<span class="source-line-no">337</span><span id="line-337">   * @param currency  The currency of the denomination.</span>
+<span class="source-line-no">338</span><span id="line-338">   * @param denomFile The file of the denomination to load.</span>
+<span class="source-line-no">339</span><span id="line-339">   */</span>
+<span class="source-line-no">340</span><span id="line-340">  @Override</span>
+<span class="source-line-no">341</span><span id="line-341">  public boolean loadDenomination(final Currency currency, final File denomFile) {</span>
+<span class="source-line-no">342</span><span id="line-342"></span>
+<span class="source-line-no">343</span><span id="line-343">    YamlDocument denom = null;</span>
+<span class="source-line-no">344</span><span id="line-344">    try {</span>
+<span class="source-line-no">345</span><span id="line-345">      denom = YamlDocument.create(denomFile);</span>
+<span class="source-line-no">346</span><span id="line-346">    } catch(final IOException e) {</span>
+<span class="source-line-no">347</span><span id="line-347">      PluginCore.log().error("Failed to load denomination: " + denomFile.getName(), e, DebugLevel.OFF);</span>
+<span class="source-line-no">348</span><span id="line-348">      return false;</span>
+<span class="source-line-no">349</span><span id="line-349">    }</span>
+<span class="source-line-no">350</span><span id="line-350"></span>
+<span class="source-line-no">351</span><span id="line-351">    final String single = denom.getString("Info.Single", "Dollar");</span>
+<span class="source-line-no">352</span><span id="line-352">    final String plural = denom.getString("Info.Plural", "Dollars");</span>
+<span class="source-line-no">353</span><span id="line-353"></span>
+<span class="source-line-no">354</span><span id="line-354">    final BigDecimal weight = new BigDecimal(denom.getString("Options.Weight", "1.0"));</span>
+<span class="source-line-no">355</span><span id="line-355">    PluginCore.log().debug("Loading denomination with weight of: " + weight);</span>
+<span class="source-line-no">356</span><span id="line-356">    if(weight.compareTo(BigDecimal.ZERO) &lt;= 0) {</span>
+<span class="source-line-no">357</span><span id="line-357"></span>
+<span class="source-line-no">358</span><span id="line-358">      PluginCore.log().error("Failed to load denomination: " + denomFile.getName() + ". Invalid Options.Weight Value: " + weight.toPlainString(), DebugLevel.OFF);</span>
+<span class="source-line-no">359</span><span id="line-359">      return false;</span>
+<span class="source-line-no">360</span><span id="line-360">    }</span>
 <span class="source-line-no">361</span><span id="line-361"></span>
-<span class="source-line-no">362</span><span id="line-362">    final String material = denom.getString("Options.Material", "PAPER").toLowerCase(Locale.ROOT);</span>
-<span class="source-line-no">363</span><span id="line-363">    PluginCore.log().debug("Loading denomination with material of: " + material);</span>
-<span class="source-line-no">364</span><span id="line-364"></span>
-<span class="source-line-no">365</span><span id="line-365">    final Denomination denomination = (currency instanceof ItemCurrency)?</span>
-<span class="source-line-no">366</span><span id="line-366">                                      new ItemDenomination(weight, material) : new Denomination(weight);</span>
-<span class="source-line-no">367</span><span id="line-367"></span>
-<span class="source-line-no">368</span><span id="line-368">    denomination.setSingle(single);</span>
-<span class="source-line-no">369</span><span id="line-369">    denomination.setPlural(plural);</span>
-<span class="source-line-no">370</span><span id="line-370"></span>
-<span class="source-line-no">371</span><span id="line-371">    if(denomination instanceof final ItemDenomination item) {</span>
-<span class="source-line-no">372</span><span id="line-372"></span>
-<span class="source-line-no">373</span><span id="line-373">      item.setName(denom.getString("Options.Name", ""));</span>
-<span class="source-line-no">374</span><span id="line-374"></span>
-<span class="source-line-no">375</span><span id="line-375">      item.maxStack(denom.getInt("Options.MaxStack", 0));</span>
-<span class="source-line-no">376</span><span id="line-376"></span>
-<span class="source-line-no">377</span><span id="line-377">      final List&lt;String&gt; loreStr = denom.getStringList("Options.Lore");</span>
-<span class="source-line-no">378</span><span id="line-378">      final LinkedList&lt;Component&gt; lore = new LinkedList&lt;&gt;();</span>
-<span class="source-line-no">379</span><span id="line-379">      for(final String str : loreStr) {</span>
-<span class="source-line-no">380</span><span id="line-380"></span>
-<span class="source-line-no">381</span><span id="line-381">        lore.add(MiniMessage.miniMessage().deserialize(str));</span>
-<span class="source-line-no">382</span><span id="line-382">      }</span>
-<span class="source-line-no">383</span><span id="line-383"></span>
-<span class="source-line-no">384</span><span id="line-384">      item.checks().addAll(denom.getStringList("Checks", new ArrayList&lt;&gt;()));</span>
-<span class="source-line-no">385</span><span id="line-385"></span>
-<span class="source-line-no">386</span><span id="line-386">      String provider = "vanilla";</span>
-<span class="source-line-no">387</span><span id="line-387">      String providerID = "";</span>
-<span class="source-line-no">388</span><span id="line-388"></span>
-<span class="source-line-no">389</span><span id="line-389">      if(denom.getBoolean("Integrations.ItemsAdder.Enabled", false)) {</span>
-<span class="source-line-no">390</span><span id="line-390"></span>
-<span class="source-line-no">391</span><span id="line-391">        provider = "itemsadder";</span>
-<span class="source-line-no">392</span><span id="line-392">        providerID = denom.getString("Integrations.ItemsAdder.Item");</span>
-<span class="source-line-no">393</span><span id="line-393">      }</span>
-<span class="source-line-no">394</span><span id="line-394"></span>
-<span class="source-line-no">395</span><span id="line-395">      if(denom.getBoolean("Integrations.Oraxen.Enabled", false)) {</span>
-<span class="source-line-no">396</span><span id="line-396"></span>
-<span class="source-line-no">397</span><span id="line-397">        provider = "oraxen";</span>
-<span class="source-line-no">398</span><span id="line-398">        providerID = denom.getString("Integrations.Oraxen.Item");</span>
-<span class="source-line-no">399</span><span id="line-399">      }</span>
-<span class="source-line-no">400</span><span id="line-400"></span>
-<span class="source-line-no">401</span><span id="line-401">      if(denom.getBoolean("Integrations.Nexo.Enabled", false)) {</span>
-<span class="source-line-no">402</span><span id="line-402"></span>
-<span class="source-line-no">403</span><span id="line-403">        provider = "nexo";</span>
-<span class="source-line-no">404</span><span id="line-404">        providerID = denom.getString("Integrations.Nexo.Item");</span>
-<span class="source-line-no">405</span><span id="line-405">      }</span>
-<span class="source-line-no">406</span><span id="line-406"></span>
-<span class="source-line-no">407</span><span id="line-407">      if(denom.getBoolean("Integrations.Nova.Enabled", false)) {</span>
-<span class="source-line-no">408</span><span id="line-408"></span>
-<span class="source-line-no">409</span><span id="line-409">        provider = "nova";</span>
-<span class="source-line-no">410</span><span id="line-410">        providerID = denom.getString("Integrations.Nova.Item");</span>
-<span class="source-line-no">411</span><span id="line-411">      }</span>
-<span class="source-line-no">412</span><span id="line-412"></span>
-<span class="source-line-no">413</span><span id="line-413">      if(denom.getBoolean("Integrations.SlimeFun.Enabled", false)) {</span>
-<span class="source-line-no">414</span><span id="line-414"></span>
-<span class="source-line-no">415</span><span id="line-415">        provider = "slimefun";</span>
-<span class="source-line-no">416</span><span id="line-416">        providerID = denom.getString("Integrations.Slimefun.Item");</span>
-<span class="source-line-no">417</span><span id="line-417">      }</span>
-<span class="source-line-no">418</span><span id="line-418"></span>
-<span class="source-line-no">419</span><span id="line-419">      item.provider(provider);</span>
-<span class="source-line-no">420</span><span id="line-420">      item.providerID(providerID);</span>
-<span class="source-line-no">421</span><span id="line-421"></span>
-<span class="source-line-no">422</span><span id="line-422">      item.setLore(lore);</span>
-<span class="source-line-no">423</span><span id="line-423">      item.setCustomModel(denom.getInt("Options.ModelData", -1));</span>
-<span class="source-line-no">424</span><span id="line-424">      item.setTexture(denom.getString("Options.Texture", ""));</span>
-<span class="source-line-no">425</span><span id="line-425"></span>
-<span class="source-line-no">426</span><span id="line-426">      if(denom.getBoolean("Options.ItemModel.Enabled", false)) {</span>
-<span class="source-line-no">427</span><span id="line-427"></span>
-<span class="source-line-no">428</span><span id="line-428">        item.itemModel(denom.getString("Options.ItemModel.Model"));</span>
-<span class="source-line-no">429</span><span id="line-429">        item.modelColours().addAll(denom.getStringList("Options.ItemModel.Colours", new ArrayList&lt;&gt;()));</span>
-<span class="source-line-no">430</span><span id="line-430">        item.modelStrings().addAll(denom.getStringList("Options.ItemModel.Strings", new ArrayList&lt;&gt;()));</span>
-<span class="source-line-no">431</span><span id="line-431"></span>
-<span class="source-line-no">432</span><span id="line-432">        for(final String str : denom.getStringList("Options.ItemModel.Booleans", new ArrayList&lt;&gt;())) {</span>
-<span class="source-line-no">433</span><span id="line-433"></span>
-<span class="source-line-no">434</span><span id="line-434">          item.modelBooleans().add(Boolean.valueOf(str));</span>
-<span class="source-line-no">435</span><span id="line-435">        }</span>
-<span class="source-line-no">436</span><span id="line-436"></span>
-<span class="source-line-no">437</span><span id="line-437">        for(final String str : denom.getStringList("Options.ItemModel.Floats", new ArrayList&lt;&gt;())) {</span>
-<span class="source-line-no">438</span><span id="line-438"></span>
-<span class="source-line-no">439</span><span id="line-439">          item.modelFloats().add(Float.valueOf(str));</span>
-<span class="source-line-no">440</span><span id="line-440">        }</span>
-<span class="source-line-no">441</span><span id="line-441">      }</span>
-<span class="source-line-no">442</span><span id="line-442"></span>
-<span class="source-line-no">443</span><span id="line-443">      if(denom.contains("Options.Enchantments")) {</span>
-<span class="source-line-no">444</span><span id="line-444">        item.enchantments(denom.getStringList("Options.Enchantments"));</span>
-<span class="source-line-no">445</span><span id="line-445">      }</span>
-<span class="source-line-no">446</span><span id="line-446"></span>
-<span class="source-line-no">447</span><span id="line-447">      if(denom.contains("Options.Flags")) {</span>
-<span class="source-line-no">448</span><span id="line-448">        item.flags(denom.getStringList("Options.Flags"));</span>
-<span class="source-line-no">449</span><span id="line-449">      }</span>
-<span class="source-line-no">450</span><span id="line-450"></span>
-<span class="source-line-no">451</span><span id="line-451">      //Crafting</span>
-<span class="source-line-no">452</span><span id="line-452">      if(denom.getBoolean("Options.Crafting.Enabled", false)) {</span>
-<span class="source-line-no">453</span><span id="line-453">        final boolean shapeless = denom.getBoolean("Options.Crafting.Shapeless", false);</span>
-<span class="source-line-no">454</span><span id="line-454">        final int amount = denom.getInt("Options.Crafting.Amount", 1);</span>
-<span class="source-line-no">455</span><span id="line-455"></span>
-<span class="source-line-no">456</span><span id="line-456">        final AbstractItemStack&lt;?&gt; craftingItem = TNECore.instance().denominationToStack(item).amount(amount);</span>
-<span class="source-line-no">457</span><span id="line-457"></span>
-<span class="source-line-no">458</span><span id="line-458">        final CraftingRecipe recipe = new CraftingRecipe(!shapeless, amount, craftingItem);</span>
-<span class="source-line-no">459</span><span id="line-459"></span>
-<span class="source-line-no">460</span><span id="line-460">        for(final String materials : denom.getStringList("Options.Crafting.Materials")) {</span>
-<span class="source-line-no">461</span><span id="line-461"></span>
-<span class="source-line-no">462</span><span id="line-462">          final String[] split = materials.split(":");</span>
-<span class="source-line-no">463</span><span id="line-463">          if(split.length &gt;= 2) {</span>
-<span class="source-line-no">464</span><span id="line-464">            recipe.getIngredients().put(split[0].charAt(0), split[1]);</span>
-<span class="source-line-no">465</span><span id="line-465">          }</span>
-<span class="source-line-no">466</span><span id="line-466">        }</span>
-<span class="source-line-no">467</span><span id="line-467"></span>
-<span class="source-line-no">468</span><span id="line-468">        int i = 0;</span>
-<span class="source-line-no">469</span><span id="line-469">        for(final String row : denom.getStringList("Options.Crafting.Recipe")) {</span>
-<span class="source-line-no">470</span><span id="line-470">          if(i &gt; 2) break;</span>
-<span class="source-line-no">471</span><span id="line-471"></span>
-<span class="source-line-no">472</span><span id="line-472">          recipe.getRows()[i] = row;</span>
-<span class="source-line-no">473</span><span id="line-473"></span>
-<span class="source-line-no">474</span><span id="line-474">          i++;</span>
-<span class="source-line-no">475</span><span id="line-475">        }</span>
-<span class="source-line-no">476</span><span id="line-476"></span>
-<span class="source-line-no">477</span><span id="line-477">        PluginCore.server().registerCrafting(currency.getIdentifier() + ":" + single, recipe);</span>
-<span class="source-line-no">478</span><span id="line-478">      }</span>
-<span class="source-line-no">479</span><span id="line-479">    }</span>
-<span class="source-line-no">480</span><span id="line-480"></span>
-<span class="source-line-no">481</span><span id="line-481">    final DenominationLoadCallback denomCallback = new DenominationLoadCallback(currency, denomination);</span>
-<span class="source-line-no">482</span><span id="line-482">    if(PluginCore.callbacks().call(denomCallback)) {</span>
-<span class="source-line-no">483</span><span id="line-483">      return false;</span>
-<span class="source-line-no">484</span><span id="line-484">    }</span>
-<span class="source-line-no">485</span><span id="line-485"></span>
-<span class="source-line-no">486</span><span id="line-486">    currency.getDenominations().put(weight, denomination);</span>
-<span class="source-line-no">487</span><span id="line-487">    return true;</span>
-<span class="source-line-no">488</span><span id="line-488">  }</span>
-<span class="source-line-no">489</span><span id="line-489">}</span>
+<span class="source-line-no">362</span><span id="line-362"></span>
+<span class="source-line-no">363</span><span id="line-363">    final String material = denom.getString("Options.Material", "PAPER").toLowerCase(Locale.ROOT);</span>
+<span class="source-line-no">364</span><span id="line-364">    PluginCore.log().debug("Loading denomination with material of: " + material);</span>
+<span class="source-line-no">365</span><span id="line-365"></span>
+<span class="source-line-no">366</span><span id="line-366">    final Denomination denomination = (currency instanceof ItemCurrency)?</span>
+<span class="source-line-no">367</span><span id="line-367">                                      new ItemDenomination(weight, material) : new Denomination(weight);</span>
+<span class="source-line-no">368</span><span id="line-368"></span>
+<span class="source-line-no">369</span><span id="line-369">    denomination.setSingle(single);</span>
+<span class="source-line-no">370</span><span id="line-370">    denomination.setPlural(plural);</span>
+<span class="source-line-no">371</span><span id="line-371"></span>
+<span class="source-line-no">372</span><span id="line-372">    if(denomination instanceof final ItemDenomination item) {</span>
+<span class="source-line-no">373</span><span id="line-373"></span>
+<span class="source-line-no">374</span><span id="line-374">      item.setName(denom.getString("Options.Name", ""));</span>
+<span class="source-line-no">375</span><span id="line-375"></span>
+<span class="source-line-no">376</span><span id="line-376">      item.maxStack(denom.getInt("Options.MaxStack", 0));</span>
+<span class="source-line-no">377</span><span id="line-377"></span>
+<span class="source-line-no">378</span><span id="line-378">      final List&lt;String&gt; loreStr = denom.getStringList("Options.Lore");</span>
+<span class="source-line-no">379</span><span id="line-379">      final LinkedList&lt;Component&gt; lore = new LinkedList&lt;&gt;();</span>
+<span class="source-line-no">380</span><span id="line-380">      for(final String str : loreStr) {</span>
+<span class="source-line-no">381</span><span id="line-381"></span>
+<span class="source-line-no">382</span><span id="line-382">        lore.add(MiniMessage.miniMessage().deserialize(str));</span>
+<span class="source-line-no">383</span><span id="line-383">      }</span>
+<span class="source-line-no">384</span><span id="line-384"></span>
+<span class="source-line-no">385</span><span id="line-385">      item.checks().addAll(denom.getStringList("Checks", new ArrayList&lt;&gt;()));</span>
+<span class="source-line-no">386</span><span id="line-386"></span>
+<span class="source-line-no">387</span><span id="line-387">      String provider = "vanilla";</span>
+<span class="source-line-no">388</span><span id="line-388">      String providerID = "";</span>
+<span class="source-line-no">389</span><span id="line-389"></span>
+<span class="source-line-no">390</span><span id="line-390">      if(denom.getBoolean("Integrations.ItemsAdder.Enabled", false)) {</span>
+<span class="source-line-no">391</span><span id="line-391"></span>
+<span class="source-line-no">392</span><span id="line-392">        provider = "itemsadder";</span>
+<span class="source-line-no">393</span><span id="line-393">        providerID = denom.getString("Integrations.ItemsAdder.Item");</span>
+<span class="source-line-no">394</span><span id="line-394">      }</span>
+<span class="source-line-no">395</span><span id="line-395"></span>
+<span class="source-line-no">396</span><span id="line-396">      if(denom.getBoolean("Integrations.Oraxen.Enabled", false)) {</span>
+<span class="source-line-no">397</span><span id="line-397"></span>
+<span class="source-line-no">398</span><span id="line-398">        provider = "oraxen";</span>
+<span class="source-line-no">399</span><span id="line-399">        providerID = denom.getString("Integrations.Oraxen.Item");</span>
+<span class="source-line-no">400</span><span id="line-400">      }</span>
+<span class="source-line-no">401</span><span id="line-401"></span>
+<span class="source-line-no">402</span><span id="line-402">      if(denom.getBoolean("Integrations.Nexo.Enabled", false)) {</span>
+<span class="source-line-no">403</span><span id="line-403"></span>
+<span class="source-line-no">404</span><span id="line-404">        provider = "nexo";</span>
+<span class="source-line-no">405</span><span id="line-405">        providerID = denom.getString("Integrations.Nexo.Item");</span>
+<span class="source-line-no">406</span><span id="line-406">      }</span>
+<span class="source-line-no">407</span><span id="line-407"></span>
+<span class="source-line-no">408</span><span id="line-408">      if(denom.getBoolean("Integrations.Nova.Enabled", false)) {</span>
+<span class="source-line-no">409</span><span id="line-409"></span>
+<span class="source-line-no">410</span><span id="line-410">        provider = "nova";</span>
+<span class="source-line-no">411</span><span id="line-411">        providerID = denom.getString("Integrations.Nova.Item");</span>
+<span class="source-line-no">412</span><span id="line-412">      }</span>
+<span class="source-line-no">413</span><span id="line-413"></span>
+<span class="source-line-no">414</span><span id="line-414">      if(denom.getBoolean("Integrations.SlimeFun.Enabled", false)) {</span>
+<span class="source-line-no">415</span><span id="line-415"></span>
+<span class="source-line-no">416</span><span id="line-416">        provider = "slimefun";</span>
+<span class="source-line-no">417</span><span id="line-417">        providerID = denom.getString("Integrations.Slimefun.Item");</span>
+<span class="source-line-no">418</span><span id="line-418">      }</span>
+<span class="source-line-no">419</span><span id="line-419"></span>
+<span class="source-line-no">420</span><span id="line-420">      item.provider(provider);</span>
+<span class="source-line-no">421</span><span id="line-421">      item.providerID(providerID);</span>
+<span class="source-line-no">422</span><span id="line-422"></span>
+<span class="source-line-no">423</span><span id="line-423">      item.setLore(lore);</span>
+<span class="source-line-no">424</span><span id="line-424">      item.setCustomModel(denom.getInt("Options.ModelData", -1));</span>
+<span class="source-line-no">425</span><span id="line-425">      item.setTexture(denom.getString("Options.Texture", ""));</span>
+<span class="source-line-no">426</span><span id="line-426"></span>
+<span class="source-line-no">427</span><span id="line-427">      if(denom.getBoolean("Options.ItemModel.Enabled", false)) {</span>
+<span class="source-line-no">428</span><span id="line-428"></span>
+<span class="source-line-no">429</span><span id="line-429">        item.itemModel(denom.getString("Options.ItemModel.Model"));</span>
+<span class="source-line-no">430</span><span id="line-430">        item.modelColours().addAll(denom.getStringList("Options.ItemModel.Colours", new ArrayList&lt;&gt;()));</span>
+<span class="source-line-no">431</span><span id="line-431">        item.modelStrings().addAll(denom.getStringList("Options.ItemModel.Strings", new ArrayList&lt;&gt;()));</span>
+<span class="source-line-no">432</span><span id="line-432"></span>
+<span class="source-line-no">433</span><span id="line-433">        for(final String str : denom.getStringList("Options.ItemModel.Booleans", new ArrayList&lt;&gt;())) {</span>
+<span class="source-line-no">434</span><span id="line-434"></span>
+<span class="source-line-no">435</span><span id="line-435">          item.modelBooleans().add(Boolean.valueOf(str));</span>
+<span class="source-line-no">436</span><span id="line-436">        }</span>
+<span class="source-line-no">437</span><span id="line-437"></span>
+<span class="source-line-no">438</span><span id="line-438">        for(final String str : denom.getStringList("Options.ItemModel.Floats", new ArrayList&lt;&gt;())) {</span>
+<span class="source-line-no">439</span><span id="line-439"></span>
+<span class="source-line-no">440</span><span id="line-440">          item.modelFloats().add(Float.valueOf(str));</span>
+<span class="source-line-no">441</span><span id="line-441">        }</span>
+<span class="source-line-no">442</span><span id="line-442">      }</span>
+<span class="source-line-no">443</span><span id="line-443"></span>
+<span class="source-line-no">444</span><span id="line-444">      if(denom.contains("Options.Enchantments")) {</span>
+<span class="source-line-no">445</span><span id="line-445">        item.enchantments(denom.getStringList("Options.Enchantments"));</span>
+<span class="source-line-no">446</span><span id="line-446">      }</span>
+<span class="source-line-no">447</span><span id="line-447"></span>
+<span class="source-line-no">448</span><span id="line-448">      if(denom.contains("Options.Flags")) {</span>
+<span class="source-line-no">449</span><span id="line-449">        item.flags(denom.getStringList("Options.Flags"));</span>
+<span class="source-line-no">450</span><span id="line-450">      }</span>
+<span class="source-line-no">451</span><span id="line-451"></span>
+<span class="source-line-no">452</span><span id="line-452">      //Crafting</span>
+<span class="source-line-no">453</span><span id="line-453">      if(denom.getBoolean("Options.Crafting.Enabled", false)) {</span>
+<span class="source-line-no">454</span><span id="line-454">        final boolean shapeless = denom.getBoolean("Options.Crafting.Shapeless", false);</span>
+<span class="source-line-no">455</span><span id="line-455">        final int amount = denom.getInt("Options.Crafting.Amount", 1);</span>
+<span class="source-line-no">456</span><span id="line-456"></span>
+<span class="source-line-no">457</span><span id="line-457">        final AbstractItemStack&lt;?&gt; craftingItem = TNECore.instance().denominationToStack(item).amount(amount);</span>
+<span class="source-line-no">458</span><span id="line-458"></span>
+<span class="source-line-no">459</span><span id="line-459">        final CraftingRecipe recipe = new CraftingRecipe(!shapeless, amount, craftingItem);</span>
+<span class="source-line-no">460</span><span id="line-460"></span>
+<span class="source-line-no">461</span><span id="line-461">        for(final String materials : denom.getStringList("Options.Crafting.Materials")) {</span>
+<span class="source-line-no">462</span><span id="line-462"></span>
+<span class="source-line-no">463</span><span id="line-463">          final String[] split = materials.split(":");</span>
+<span class="source-line-no">464</span><span id="line-464">          if(split.length &gt;= 2) {</span>
+<span class="source-line-no">465</span><span id="line-465">            recipe.getIngredients().put(split[0].charAt(0), split[1]);</span>
+<span class="source-line-no">466</span><span id="line-466">          }</span>
+<span class="source-line-no">467</span><span id="line-467">        }</span>
+<span class="source-line-no">468</span><span id="line-468"></span>
+<span class="source-line-no">469</span><span id="line-469">        int i = 0;</span>
+<span class="source-line-no">470</span><span id="line-470">        for(final String row : denom.getStringList("Options.Crafting.Recipe")) {</span>
+<span class="source-line-no">471</span><span id="line-471">          if(i &gt; 2) break;</span>
+<span class="source-line-no">472</span><span id="line-472"></span>
+<span class="source-line-no">473</span><span id="line-473">          recipe.getRows()[i] = row;</span>
+<span class="source-line-no">474</span><span id="line-474"></span>
+<span class="source-line-no">475</span><span id="line-475">          i++;</span>
+<span class="source-line-no">476</span><span id="line-476">        }</span>
+<span class="source-line-no">477</span><span id="line-477"></span>
+<span class="source-line-no">478</span><span id="line-478">        PluginCore.server().registerCrafting(currency.getIdentifier() + ":" + single, recipe);</span>
+<span class="source-line-no">479</span><span id="line-479">      }</span>
+<span class="source-line-no">480</span><span id="line-480">    }</span>
+<span class="source-line-no">481</span><span id="line-481"></span>
+<span class="source-line-no">482</span><span id="line-482">    final DenominationLoadCallback denomCallback = new DenominationLoadCallback(currency, denomination);</span>
+<span class="source-line-no">483</span><span id="line-483">    if(PluginCore.callbacks().call(denomCallback)) {</span>
+<span class="source-line-no">484</span><span id="line-484">      return false;</span>
+<span class="source-line-no">485</span><span id="line-485">    }</span>
+<span class="source-line-no">486</span><span id="line-486"></span>
+<span class="source-line-no">487</span><span id="line-487">    currency.getDenominations().put(weight, denomination);</span>
+<span class="source-line-no">488</span><span id="line-488">    return true;</span>
+<span class="source-line-no">489</span><span id="line-489">  }</span>
+<span class="source-line-no">490</span><span id="line-490">}</span>
 
 
 

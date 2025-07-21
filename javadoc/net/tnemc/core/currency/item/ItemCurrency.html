@@ -93,7 +93,7 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-33">ItemCurrency</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-34">ItemCurrency</a></span>
 <span class="extends-implements">extends <a href="../Currency.html" title="class in net.tnemc.core.currency">Currency</a></span></div>
 <div class="block">Represents a <a href="../Currency.html" title="class in net.tnemc.core.currency"><code>currency</code></a> that is represented by physical items in game.</div>
 <dl class="notes">
@@ -135,6 +135,12 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#blockCraft()" class="member-name-link">blockCraft</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#blockCraft(boolean)" class="member-name-link">blockCraft</a><wbr>(boolean&nbsp;blockCraft)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#canEnderChest()" class="member-name-link">canEnderChest</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -179,7 +185,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(java.lang.String)">
 <h3>ItemCurrency</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-39">ItemCurrency</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;identifier)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-41">ItemCurrency</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;identifier)</span></div>
 </section>
 </li>
 </ul>
@@ -193,43 +199,55 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getDenominationByMaterial(java.lang.String)">
 <h3>getDenominationByMaterial</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="ItemDenomination.html" title="class in net.tnemc.core.currency.item">ItemDenomination</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-48">getDenominationByMaterial</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;material)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="ItemDenomination.html" title="class in net.tnemc.core.currency.item">ItemDenomination</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-51">getDenominationByMaterial</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;material)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="canEnderChest()">
 <h3>canEnderChest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-60">canEnderChest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-66">canEnderChest</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setEnderChest(boolean)">
 <h3>setEnderChest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-65">setEnderChest</a></span><wbr><span class="parameters">(boolean&nbsp;enderChest)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-71">setEnderChest</a></span><wbr><span class="parameters">(boolean&nbsp;enderChest)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="isEnderFill()">
 <h3>isEnderFill</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-70">isEnderFill</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-76">isEnderFill</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setEnderFill(boolean)">
 <h3>setEnderFill</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-75">setEnderFill</a></span><wbr><span class="parameters">(boolean&nbsp;enderFill)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-81">setEnderFill</a></span><wbr><span class="parameters">(boolean&nbsp;enderFill)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="isImportItem()">
 <h3>isImportItem</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-80">isImportItem</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-86">isImportItem</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setImportItem(boolean)">
 <h3>setImportItem</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-85">setImportItem</a></span><wbr><span class="parameters">(boolean&nbsp;importItem)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-91">setImportItem</a></span><wbr><span class="parameters">(boolean&nbsp;importItem)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="blockCraft()">
+<h3>blockCraft</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-96">blockCraft</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="blockCraft(boolean)">
+<h3>blockCraft</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/item/ItemCurrency.html#line-101">blockCraft</a></span><wbr><span class="parameters">(boolean&nbsp;blockCraft)</span></div>
 </section>
 </li>
 </ul>

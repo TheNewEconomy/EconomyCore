@@ -43,6 +43,7 @@ net.tnemc.core.handlers.entity
 net.tnemc.core.handlers.region
 net.tnemc.core.handlers.server
 net.tnemc.core.handlers.player
+net.tnemc.core.handlers.inventory
 net.tnemc.core.command
 net.tnemc.core.command.parameters.resolver
 net.tnemc.core.command.parameters.account
@@ -88,11 +89,13 @@ net.tnemc.bukkit.listeners.entity
 net.tnemc.bukkit.listeners.world
 net.tnemc.bukkit.listeners.server
 net.tnemc.bukkit.listeners.player
+net.tnemc.bukkit.listeners.inventory
 net.tnemc.bukkit.listeners.mcmmo
 paper
 net.tnemc.paper.hook.misc
 net.tnemc.paper.hook.economy
 net.tnemc.paper
+net.tnemc.paper.listener.inventory
 net.tnemc.paper.listener
 net.tnemc.paper.command
 net.tnemc.folia
