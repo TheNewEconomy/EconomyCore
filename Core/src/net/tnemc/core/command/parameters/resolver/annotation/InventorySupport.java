@@ -1,4 +1,4 @@
-package net.tnemc.core.currency.parser;
+package net.tnemc.core.command.parameters.resolver.annotation;
 /*
  * The New Economy
  * Copyright (C) 2022 - 2025 Daniel "creatorfromhell" Vidmar
@@ -17,30 +17,15 @@ package net.tnemc.core.currency.parser;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.account.Account;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
- * MoneyParseRule
+ * Inventory
  *
  * @author creatorfromhell
  * @since 0.1.4.0
  */
-public interface ParseRule {
-
-  /**
-   * Retrieves an identifier.
-   *
-   * @return The identifier as a String.
-   */
-  String identifier();
-
-  /**
-   * Applies the given ParseMoney object to the input string according to the specified rules.
-   *
-   * @param parseMoney The ParseMoney object to apply the rules to.
-   * @param input      The input string to apply the rules on.
-   *
-   * @return A String after applying the rules to the input string based on the ParseMoney object.
-   */
-  String apply(Account account, ParseMoney parseMoney, String input);
+@Retention(RetentionPolicy.RUNTIME)
+public @interface InventorySupport {
 }

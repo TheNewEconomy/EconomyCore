@@ -67,14 +67,14 @@ These dynamic parts are used within various placeholders:
 These placeholders provide access to leaderboard-related information, including positions, holders,
 formatted entries, and balances.
 
-| Placeholder                                     | Description                                                                  |
-|-------------------------------------------------|------------------------------------------------------------------------------|
-| `tne_toppos_$currency`                          | Your position on the leaderboard for the given currency.                     |
-| `tne_toppos_$currency_$account`                 | Position of a specific account on the currency leaderboard.                  |
-| `tne_toppos_$currency_account_$number`          | Account name at the specified leaderboard position. Returns `null` if empty. |
-| `tne_toppos_$currency_holder_$number`           | Holder (account name) at the specified position.                             |
-| `tne_toppos_$currency_holder_$number_$account`  | Holder at specified position scoped for the given account.                   |
-| `tne_toppos_$currency_balance_$number`          | Balance at the specified leaderboard position.                               |
+| Placeholder                                    | Description                                                                  |
+|------------------------------------------------|------------------------------------------------------------------------------|
+| `tne_toppos_$currency`                         | Your position on the leaderboard for the given currency.                     |
+| `tne_toppos_$currency_$account`                | Position of a specific account on the currency leaderboard.                  |
+| `tne_toppos_$currency_account_$number`         | Account name at the specified leaderboard position. Returns `null` if empty. |
+| `tne_toppos_$currency_holder_$number`          | Holder (account name) at the specified position.                             |
+| `tne_toppos_$currency_holder_$number_$account` | Holder at specified position scoped for the given account.                   |
+| `tne_toppos_$currency_balance_$number`         | Balance at the specified leaderboard position.                               |
 
 ### 🔍 Notes
 

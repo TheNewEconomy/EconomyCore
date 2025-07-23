@@ -19,7 +19,10 @@ package net.tnemc.core.command.parameters.resolver;
 
 
 import net.tnemc.core.TNECore;
+import net.tnemc.core.command.parameters.resolver.annotation.AllSupport;
+import net.tnemc.core.command.parameters.resolver.annotation.InventorySupport;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.currency.parser.ParseMoney;
 import org.jetbrains.annotations.NotNull;
 import revxrsal.commands.autocomplete.SuggestionProvider;
@@ -30,6 +33,7 @@ import revxrsal.commands.stream.MutableStringStream;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -40,31 +44,15 @@ import java.util.Set;
  */
 public class MoneyResolver implements ParameterType<CommandActor, ParseMoney> {
 
-  public static String trimQuotes(final String input) {
-
-    if(input == null || input.length() < 2) return input;
-
-    final char first = input.charAt(0);
-    final char last = input.charAt(input.length() - 1);
-
-    // Check if first and last characters are matching quotes
-    if((first == '\'' || first == '"') && first == last) {
-      return input.substring(1, input.length() - 1);
-    }
-
-    return input;
-  }
-
   @Override
   public ParseMoney parse(@NotNull final MutableStringStream input, @NotNull final ExecutionContext<CommandActor> context) {
 
 
     final String value = trimQuotes(input.readString());
 
-    final String region = (context.getResolvedArgumentOrNull("region") == null)? TNECore.eco().region().defaultRegion() : context.getResolvedArgumentOrNull("region");
-    final Currency currency = (context.getResolvedArgumentOrNull("currency") == null)? TNECore.eco().currency().defaultCurrency(region) : context.getResolvedArgumentOrNull("currency");
+    final String region = TNECore.eco().region().defaultRegion();
 
-    return TNECore.eco().currency().parser().parse(region, currency, value);
+    return TNECore.eco().currency().parser().parse(context.actor().uniqueId(), region, TNECore.eco().currency().defaultCurrency(region), normalize(context.command().usage(), value));
   }
 
   @Override
@@ -76,7 +64,20 @@ public class MoneyResolver implements ParameterType<CommandActor, ParseMoney> {
 
       final Set<String> suggestionsParsing = new LinkedHashSet<>();
 
+      boolean item = false;
+
+      if(context.command().annotations().contains(AllSupport.class)) {
+
+        suggestionsParsing.add("all");
+      }
+
       for(final Currency currency : TNECore.eco().currency().getCurrencies().values()) {
+
+        if(currency instanceof ItemCurrency && !item && context.command().annotations().contains(InventorySupport.class)) {
+          suggestionsParsing.add("inv");
+          suggestionsParsing.add("inventory");
+          item = true;
+        }
 
         final String symbol = currency.getSymbol();
         if(currency.getDecimalPlaces() >= 2) {
@@ -115,5 +116,36 @@ public class MoneyResolver implements ParameterType<CommandActor, ParseMoney> {
 
       return new ArrayList<>(suggestions);
     };
+  }
+
+  public String normalize(final String command, final String input) {
+
+    if(!input.toLowerCase(Locale.ROOT).equalsIgnoreCase("all")) {
+      return input;
+    }
+
+    if(command.toLowerCase().contains("deposit")) {
+
+      return "all-items";
+    } else if(command.toLowerCase().contains("withdraw")) {
+
+      return "all-virtual";
+    }
+    return input;
+  }
+
+  public String trimQuotes(final String input) {
+
+    if(input == null || input.length() < 2) return input;
+
+    final char first = input.charAt(0);
+    final char last = input.charAt(input.length() - 1);
+
+    // Check if first and last characters are matching quotes
+    if((first == '\'' || first == '"') && first == last) {
+      return input.substring(1, input.length() - 1);
+    }
+
+    return input;
   }
 }

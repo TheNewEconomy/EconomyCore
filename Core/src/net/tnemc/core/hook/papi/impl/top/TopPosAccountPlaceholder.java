@@ -18,7 +18,6 @@ package net.tnemc.core.hook.papi.impl.top;
  */
 
 import net.tnemc.core.TNECore;
-import net.tnemc.core.account.Account;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.hook.papi.Placeholder;
 import net.tnemc.plugincore.core.io.message.MessageData;

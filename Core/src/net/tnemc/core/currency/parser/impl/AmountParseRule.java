@@ -17,24 +17,18 @@ package net.tnemc.core.currency.parser.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import net.tnemc.core.TNECore;
+import net.tnemc.core.EconomyManager;
 import net.tnemc.core.account.Account;
-import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.parser.ParseMoney;
 import net.tnemc.core.currency.parser.ParseRule;
 
-import java.math.RoundingMode;
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
- * SymbolParseRule
+ * AmountParseRule
  *
  * @author creatorfromhell
  * @since 0.1.4.0
  */
-public class SymbolParseRule implements ParseRule {
+public class AmountParseRule implements ParseRule {
 
 
   /**
@@ -45,24 +39,38 @@ public class SymbolParseRule implements ParseRule {
   @Override
   public String identifier() {
 
-    return "symbol";
+    return "amount";
   }
 
   @Override
   public String apply(final Account account, final ParseMoney parseMoney, final String input) {
 
-    final Matcher matcher = Pattern.compile("^([^0-9]+)").matcher(input);
-    if(matcher.find()) {
+    if(account == null) {
+      return input;
+    }
 
-      final String symbol = matcher.group(1).trim();
-      final Optional<Currency> currency = TNECore.eco().currency().findCurrencyBySymbol(symbol);
-      if(currency.isPresent()) {
+    switch(input.toLowerCase()) {
+      case "all":
 
-        parseMoney.currency(currency.get());
-        parseMoney.amount(parseMoney.amount().setScale(currency.get().getDecimalPlaces(), RoundingMode.FLOOR));
+        parseMoney.amount(account.getHoldingsTotal(parseMoney.region(), parseMoney.currency().getUid()));
 
-        return input.replace(matcher.group(), "").trim();
-      }
+        return input.replace(input, "").trim();
+      case "all-items":
+
+        parseMoney.amount(account.getHoldingsTotal(parseMoney.region(), parseMoney.currency().getUid(), EconomyManager.ITEM_ONLY));
+
+        return input.replace(input, "").trim();
+      case "all-virtual":
+
+        parseMoney.amount(account.getHoldingsTotal(parseMoney.region(), parseMoney.currency().getUid(), EconomyManager.VIRTUAL));
+
+        return input.replace(input, "").trim();
+      case "inventory":
+      case "inv":
+
+        parseMoney.amount(account.getHoldingsTotal(parseMoney.region(), parseMoney.currency().getUid(), EconomyManager.INVENTORY_ONLY));
+
+        return input.replace(input, "").trim();
     }
     return input;
   }
