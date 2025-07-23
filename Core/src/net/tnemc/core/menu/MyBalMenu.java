@@ -187,34 +187,43 @@ public class MyBalMenu extends Menu {
       final Optional<Account> account = TNECore.eco().account().findAccount(callback.getPlayer().identifier());
       if(account.isPresent()) {
 
+        final Optional<PlayerProvider> provider = (account.get().isPlayer())? ((PlayerAccount)account.get()).getPlayer() : Optional.empty();
+
         final Optional<Object> currencyUUID = viewer.get().findData(ACTION_CURRENCY);
         if(currencyUUID.isPresent()) {
 
           final Optional<Currency> currencyOptional = TNECore.eco().currency().find((UUID)currencyUUID.get());
           if(currencyOptional.isPresent()) {
+            final UUID currencyID = (UUID)currencyUUID.get();
 
-            callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                                                               .customName(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.ConvertDisplay"), id))
-                                                               .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.Convert"), id))))
-                                               .withSlot(10)
-                                               .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_CONVERT_CURRENCY_PAGE))
-                                               .build());
+            if(!EconomyManager.limitCurrency() || provider.isPresent() && provider.get().hasPermission("tne.money.from." + currencyID)) {
+              callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                                 .customName(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.ConvertDisplay"), id))
+                                                                 .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.Convert"), id))))
+                                                 .withSlot(10)
+                                                 .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_CONVERT_CURRENCY_PAGE))
+                                                 .build());
+            }
 
             if(currencyOptional.get().type().supportsExchange()) {
 
-              callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                                                                 .customName(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.DepositDisplay"), id))
-                                                                 .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.Deposit"), id))))
-                                                 .withSlot(12)
-                                                 .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_DEPOSIT_AMOUNT_PAGE))
-                                                 .build());
+              if(!EconomyManager.limitCurrency() || provider.isPresent() && provider.get().hasPermission("tne.money.deposit." + currencyID)) {
+                callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                                   .customName(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.DepositDisplay"), id))
+                                                                   .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.Deposit"), id))))
+                                                   .withSlot(12)
+                                                   .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_DEPOSIT_AMOUNT_PAGE))
+                                                   .build());
+              }
 
-              callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
-                                                                 .customName(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.WithdrawDisplay"), id))
-                                                                 .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.Withdraw"), id))))
-                                                 .withSlot(14)
-                                                 .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_WITHDRAW_AMOUNT_PAGE))
-                                                 .build());
+              if(!EconomyManager.limitCurrency() || provider.isPresent() && provider.get().hasPermission("tne.money.withdraw." + currencyID)) {
+                callback.getPage().addIcon(new IconBuilder(PluginCore.server().stackBuilder().of("PAPER", 1)
+                                                                   .customName(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.WithdrawDisplay"), id))
+                                                                   .lore(Collections.singletonList(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Actions.Withdraw"), id))))
+                                                   .withSlot(14)
+                                                   .withActions(new SwitchPageAction(this.name, BALANCE_ACTION_WITHDRAW_AMOUNT_PAGE))
+                                                   .build());
+              }
             }
           }
         }
@@ -264,6 +273,8 @@ public class MyBalMenu extends Menu {
 
     final UUID id = account.getIdentifier();
 
+    final Optional<PlayerProvider> provider = (account.isPlayer())? ((PlayerAccount)account).getPlayer() : Optional.empty();
+
     final LinkedList<Component> lore = new LinkedList<>();
     final LinkedList<IconAction> actions = new LinkedList<>();
 
@@ -281,16 +292,20 @@ public class MyBalMenu extends Menu {
 
     lore.add(MessageHandler.grab(balance, id));
 
-    lore.add(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Main.Pay"), id));
-    actions.add(new SwitchPageAction(this.name, BALANCE_PAY_PAGE, ActionType.LEFT_CLICK));
+    if(!EconomyManager.limitCurrency() || provider.isPresent() && provider.get().hasPermission("tne.money.pay." + currency.getIdentifier())) {
+      lore.add(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Main.Pay"), id));
+      actions.add(new SwitchPageAction(this.name, BALANCE_PAY_PAGE, ActionType.LEFT_CLICK));
+    }
 
     //Drop Action(Other Currency Actions)
     lore.add(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Main.Other"), id));
     actions.add(new SwitchPageAction(this.name, BALANCE_ACTIONS_PAGE, ActionType.DROP));
 
     if(currency.type() instanceof VirtualType && currency.isNotable()) {
-      lore.add(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Main.Note"), id));
-      actions.add(new SwitchPageAction(this.name, BALANCE_NOTE_AMOUNT_PAGE, ActionType.RIGHT_CLICK));
+      if(!EconomyManager.limitCurrency() || provider.isPresent() && provider.get().hasPermission("tne.money.pay." + currency.getIdentifier())) {
+        lore.add(MessageHandler.grab(new MessageData("Messages.Menu.MyBal.Main.Note"), id));
+        actions.add(new SwitchPageAction(this.name, BALANCE_NOTE_AMOUNT_PAGE, ActionType.RIGHT_CLICK));
+      }
     }
 
     if(currency.type().supportsItems()) {
