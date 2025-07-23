@@ -95,7 +95,7 @@ loadScripts(document, 'script');</script>
 <dd><code>revxrsal.commands.parameter.BaseParameterType</code>, <code>revxrsal.commands.parameter.ParameterType&lt;revxrsal.commands.command.CommandActor,<wbr><a href="../../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&gt;</code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../src-html/net/tnemc/core/command/parameters/resolver/MoneyResolver.html#line-41">MoneyResolver</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../src-html/net/tnemc/core/command/parameters/resolver/MoneyResolver.html#line-45">MoneyResolver</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements revxrsal.commands.parameter.ParameterType&lt;revxrsal.commands.command.CommandActor,<wbr><a href="../../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&gt;</span></div>
 <div class="block">PercentDecimalResolver</div>
@@ -135,7 +135,7 @@ implements revxrsal.commands.parameter.ParameterType&lt;revxrsal.commands.comman
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -144,13 +144,17 @@ implements revxrsal.commands.parameter.ParameterType&lt;revxrsal.commands.comman
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NotNull revxrsal.commands.autocomplete.SuggestionProvider<wbr>&lt;@NotNull revxrsal.commands.command.CommandActor&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#defaultSuggestions()" class="member-name-link">defaultSuggestions</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(revxrsal.commands.stream.MutableStringStream,revxrsal.commands.node.ExecutionContext)" class="member-name-link">parse</a><wbr>(@NotNull revxrsal.commands.stream.MutableStringStream&nbsp;input,
- @NotNull revxrsal.commands.node.ExecutionContext&lt;revxrsal.commands.command.CommandActor&gt;&nbsp;context)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#normalize(java.lang.String,java.lang.String)" class="member-name-link">normalize</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;command,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#trimQuotes(java.lang.String)" class="member-name-link">trimQuotes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(revxrsal.commands.stream.MutableStringStream,revxrsal.commands.node.ExecutionContext)" class="member-name-link">parse</a><wbr>(@NotNull revxrsal.commands.stream.MutableStringStream&nbsp;input,
+ @NotNull revxrsal.commands.node.ExecutionContext&lt;revxrsal.commands.command.CommandActor&gt;&nbsp;context)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#trimQuotes(java.lang.String)" class="member-name-link">trimQuotes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -174,7 +178,7 @@ implements revxrsal.commands.parameter.ParameterType&lt;revxrsal.commands.comman
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>MoneyResolver</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/net/tnemc/core/command/parameters/resolver/MoneyResolver.html#line-41">MoneyResolver</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/net/tnemc/core/command/parameters/resolver/MoneyResolver.html#line-45">MoneyResolver</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -186,15 +190,9 @@ implements revxrsal.commands.parameter.ParameterType&lt;revxrsal.commands.comman
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="trimQuotes(java.lang.String)">
-<h3>trimQuotes</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/net/tnemc/core/command/parameters/resolver/MoneyResolver.html#line-43">trimQuotes</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</span></div>
-</section>
-</li>
-<li>
 <section class="detail" id="parse(revxrsal.commands.stream.MutableStringStream,revxrsal.commands.node.ExecutionContext)">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/net/tnemc/core/command/parameters/resolver/MoneyResolver.html#line-58">parse</a></span><wbr><span class="parameters">(@NotNull
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/net/tnemc/core/command/parameters/resolver/MoneyResolver.html#line-47">parse</a></span><wbr><span class="parameters">(@NotNull
  @NotNull revxrsal.commands.stream.MutableStringStream&nbsp;input,
  @NotNull
  @NotNull revxrsal.commands.node.ExecutionContext&lt;revxrsal.commands.command.CommandActor&gt;&nbsp;context)</span></div>
@@ -208,11 +206,24 @@ implements revxrsal.commands.parameter.ParameterType&lt;revxrsal.commands.comman
 <section class="detail" id="defaultSuggestions()">
 <h3>defaultSuggestions</h3>
 <div class="member-signature"><span class="annotations">@NotNull
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NotNull revxrsal.commands.autocomplete.SuggestionProvider&lt;@NotNull revxrsal.commands.command.CommandActor&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/net/tnemc/core/command/parameters/resolver/MoneyResolver.html#line-69">defaultSuggestions</a></span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NotNull revxrsal.commands.autocomplete.SuggestionProvider&lt;@NotNull revxrsal.commands.command.CommandActor&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/net/tnemc/core/command/parameters/resolver/MoneyResolver.html#line-58">defaultSuggestions</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>defaultSuggestions</code>&nbsp;in interface&nbsp;<code>revxrsal.commands.parameter.ParameterType&lt;revxrsal.commands.command.CommandActor,<wbr><a href="../../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&gt;</code></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="normalize(java.lang.String,java.lang.String)">
+<h3>normalize</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/net/tnemc/core/command/parameters/resolver/MoneyResolver.html#line-121">normalize</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;command,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="trimQuotes(java.lang.String)">
+<h3>trimQuotes</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/net/tnemc/core/command/parameters/resolver/MoneyResolver.html#line-137">trimQuotes</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</span></div>
 </section>
 </li>
 </ul>

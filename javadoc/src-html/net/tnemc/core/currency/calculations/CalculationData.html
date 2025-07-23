@@ -107,7 +107,7 @@
 <span class="source-line-no">094</span><span id="line-94">      if(entry.getValue() instanceof final ItemDenomination denomination) {</span>
 <span class="source-line-no">095</span><span id="line-95"></span>
 <span class="source-line-no">096</span><span id="line-96">        final AbstractItemStack&lt;?&gt; stack = TNECore.instance().denominationToStack(denomination);</span>
-<span class="source-line-no">097</span><span id="line-97">        final int count = PluginCore.server().calculations().count((AbstractItemStack&lt;Object&gt;)stack, inventory);</span>
+<span class="source-line-no">097</span><span id="line-97">        final int count = PluginCore.server().calculations().count((AbstractItemStack&lt;Object&gt;)stack, inventory, currency.shulker(), currency.bundle());</span>
 <span class="source-line-no">098</span><span id="line-98"></span>
 <span class="source-line-no">099</span><span id="line-99">        if(count &gt; 0) {</span>
 <span class="source-line-no">100</span><span id="line-100">          inventoryMaterials.put(entry.getKey(), count);</span>
@@ -124,7 +124,7 @@
 <span class="source-line-no">111</span><span id="line-111">    if(contains == amount) {</span>
 <span class="source-line-no">112</span><span id="line-112">      inventoryMaterials.remove(denomination.weight());</span>
 <span class="source-line-no">113</span><span id="line-113">      PluginCore.log().debug("CalculationData - removeMaterials - equals: Everything equals, remove all materials. Weight: " + denomination.weight(), DebugLevel.DEVELOPER);</span>
-<span class="source-line-no">114</span><span id="line-114">      PluginCore.server().calculations().removeAll((AbstractItemStack&lt;Object&gt;)stack, inventory);</span>
+<span class="source-line-no">114</span><span id="line-114">      PluginCore.server().calculations().removeAll((AbstractItemStack&lt;Object&gt;)stack, inventory, currency.shulker(), currency.bundle());</span>
 <span class="source-line-no">115</span><span id="line-115">      return;</span>
 <span class="source-line-no">116</span><span id="line-116">    }</span>
 <span class="source-line-no">117</span><span id="line-117"></span>
@@ -132,7 +132,7 @@
 <span class="source-line-no">119</span><span id="line-119">    PluginCore.log().debug("CalculationData - removeMaterials - left: " + left + "Weight: " + denomination.weight(), DebugLevel.DEVELOPER);</span>
 <span class="source-line-no">120</span><span id="line-120">    inventoryMaterials.put(denomination.weight(), left);</span>
 <span class="source-line-no">121</span><span id="line-121">    final AbstractItemStack&lt;?&gt; stackClone = stack.amount(amount);</span>
-<span class="source-line-no">122</span><span id="line-122">    PluginCore.server().calculations().removeItem((AbstractItemStack&lt;Object&gt;)stackClone, inventory);</span>
+<span class="source-line-no">122</span><span id="line-122">    PluginCore.server().calculations().removeItem((AbstractItemStack&lt;Object&gt;)stackClone, inventory, currency.shulker(), currency.bundle());</span>
 <span class="source-line-no">123</span><span id="line-123">  }</span>
 <span class="source-line-no">124</span><span id="line-124"></span>
 <span class="source-line-no">125</span><span id="line-125">  public void provideMaterials(final Denomination denomination, final Integer amount) {</span>
@@ -140,14 +140,14 @@
 <span class="source-line-no">127</span><span id="line-127">    int contains = (inventoryMaterials.getOrDefault(denomination.weight(), amount));</span>
 <span class="source-line-no">128</span><span id="line-128"></span>
 <span class="source-line-no">129</span><span id="line-129">    final AbstractItemStack&lt;?&gt; stack = TNECore.instance().denominationToStack((ItemDenomination)denomination).amount(amount);</span>
-<span class="source-line-no">130</span><span id="line-130">    final Collection&lt;AbstractItemStack&lt;Object&gt;&gt; left = PluginCore.server().calculations().giveItems(Collections.singletonList((AbstractItemStack&lt;Object&gt;)stack), inventory);</span>
+<span class="source-line-no">130</span><span id="line-130">    final Collection&lt;AbstractItemStack&lt;Object&gt;&gt; left = PluginCore.server().calculations().giveItems(Collections.singletonList((AbstractItemStack&lt;Object&gt;)stack), inventory, currency.shulker(), currency.bundle());</span>
 <span class="source-line-no">131</span><span id="line-131"></span>
 <span class="source-line-no">132</span><span id="line-132"></span>
 <span class="source-line-no">133</span><span id="line-133">    final Optional&lt;PlayerAccount&gt; account = TNECore.eco().account().findPlayerAccount(player);</span>
 <span class="source-line-no">134</span><span id="line-134">    if(!left.isEmpty() &amp;&amp; account.isPresent()) {</span>
 <span class="source-line-no">135</span><span id="line-135"></span>
 <span class="source-line-no">136</span><span id="line-136">      if(currency.isEnderFill()) {</span>
-<span class="source-line-no">137</span><span id="line-137">        final Collection&lt;AbstractItemStack&lt;Object&gt;&gt; enderLeft = PluginCore.server().calculations().giveItems(left, account.get().getPlayer().get().inventory().getInventory(true));</span>
+<span class="source-line-no">137</span><span id="line-137">        final Collection&lt;AbstractItemStack&lt;Object&gt;&gt; enderLeft = PluginCore.server().calculations().giveItems(left, account.get().getPlayer().get().inventory().getInventory(true), currency.shulker(), currency.bundle());</span>
 <span class="source-line-no">138</span><span id="line-138"></span>
 <span class="source-line-no">139</span><span id="line-139">        if(!enderLeft.isEmpty()) {</span>
 <span class="source-line-no">140</span><span id="line-140"></span>

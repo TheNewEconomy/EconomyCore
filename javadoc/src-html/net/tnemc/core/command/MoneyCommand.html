@@ -550,7 +550,7 @@
 <span class="source-line-no">537</span><span id="line-537">  }</span>
 <span class="source-line-no">538</span><span id="line-538"></span>
 <span class="source-line-no">539</span><span id="line-539">  //ArgumentsParser: &lt;player&gt; &lt;amount&gt; [currency] [from:account]</span>
-<span class="source-line-no">540</span><span id="line-540">  public static void onPay(final CmdSource&lt;?&gt; sender, final Account acc, final ParseMoney parseMoney, final Currency currency, final String from) {</span>
+<span class="source-line-no">540</span><span id="line-540">  public static void onPay(final CmdSource&lt;?&gt; sender, final Account acc, final ParseMoney parseMoney, final Currency currency) {</span>
 <span class="source-line-no">541</span><span id="line-541"></span>
 <span class="source-line-no">542</span><span id="line-542">    final Optional&lt;PlayerProvider&gt; player = sender.player();</span>
 <span class="source-line-no">543</span><span id="line-543">    if(EconomyManager.limitCurrency() &amp;&amp; player.isPresent()) {</span>

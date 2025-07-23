@@ -157,10 +157,17 @@ loadScripts(document, 'script');</script>
 <div class="block">Used to get the holdings based on specific specifications, or returns an empty optional if no
  holdings for the specifications exists.</div>
 </div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Account.</span><code><a href="../../account/Account.html#setHoldings(net.tnemc.core.account.holdings.HoldingsEntry,net.tnemc.core.utils.Identifier)" class="member-name-link">setHoldings</a><wbr>(@NotNull <a href="../../account/holdings/HoldingsEntry.html" title="class in net.tnemc.core.account.holdings">HoldingsEntry</a>&nbsp;entry,
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Account.</span><code><a href="../../account/Account.html#getHoldingsTotal(java.lang.String,java.util.UUID,net.tnemc.core.utils.Identifier)" class="member-name-link">getHoldingsTotal</a><wbr>(@NotNull <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region,
+ @NotNull <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;currency,
  @NotNull <a href="../Identifier.html" title="class in net.tnemc.core.utils">Identifier</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Calculates the total holdings amount based on the provided region, currency, and type.</div>
+</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Account.</span><code><a href="../../account/Account.html#setHoldings(net.tnemc.core.account.holdings.HoldingsEntry,net.tnemc.core.utils.Identifier)" class="member-name-link">setHoldings</a><wbr>(@NotNull <a href="../../account/holdings/HoldingsEntry.html" title="class in net.tnemc.core.account.holdings">HoldingsEntry</a>&nbsp;entry,
+ @NotNull <a href="../Identifier.html" title="class in net.tnemc.core.utils">Identifier</a>&nbsp;type)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Sets the holdings for the specified entry and in this wallet.</div>
 </div>
 </div>

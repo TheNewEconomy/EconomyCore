@@ -82,9 +82,9 @@
 <span class="source-line-no">069</span><span id="line-69">  @Usage("Money.Pay.Arguments")</span>
 <span class="source-line-no">070</span><span id="line-70">  @Description("Money.Pay.Description")</span>
 <span class="source-line-no">071</span><span id="line-71">  @CommandPermission("tne.money.pay")</span>
-<span class="source-line-no">072</span><span id="line-72">  public void onPay(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("") final String from) {</span>
+<span class="source-line-no">072</span><span id="line-72">  public void onPay(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency) {</span>
 <span class="source-line-no">073</span><span id="line-73"></span>
-<span class="source-line-no">074</span><span id="line-74">    net.tnemc.core.command.MoneyCommand.onPay(new BukkitCMDSource(sender), player, amount, currency, from);</span>
+<span class="source-line-no">074</span><span id="line-74">    net.tnemc.core.command.MoneyCommand.onPay(new BukkitCMDSource(sender), player, amount, currency);</span>
 <span class="source-line-no">075</span><span id="line-75">  }</span>
 <span class="source-line-no">076</span><span id="line-76"></span>
 <span class="source-line-no">077</span><span id="line-77">  @Command({ "setmoney", "setbal" })</span>

@@ -91,7 +91,7 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/parser/MoneyParser.html#line-36">MoneyParser</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/parser/MoneyParser.html#line-41">MoneyParser</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">MoneyParser</div>
 <dl class="notes">
@@ -133,13 +133,15 @@ loadScripts(document, 'script');</script>
 <div class="block">Adds a rule to the MoneyParser object.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(java.lang.String,java.lang.String)" class="member-name-link">parse</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(java.util.UUID,java.lang.String,java.lang.String)" class="member-name-link">parse</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;identifier,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Parses the input string based on the specified rules for the given region.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(java.lang.String,net.tnemc.core.currency.Currency,java.lang.String)" class="member-name-link">parse</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(java.util.UUID,java.lang.String,net.tnemc.core.currency.Currency,java.lang.String)" class="member-name-link">parse</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;identifier,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region,
  <a href="../Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -165,7 +167,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>MoneyParser</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/parser/MoneyParser.html#line-40">MoneyParser</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/parser/MoneyParser.html#line-45">MoneyParser</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -179,7 +181,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="addRule(net.tnemc.core.currency.parser.ParseRule)">
 <h3>addRule</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/parser/MoneyParser.html#line-56">addRule</a></span><wbr><span class="parameters">(<a href="ParseRule.html" title="interface in net.tnemc.core.currency.parser">ParseRule</a>&nbsp;rule)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/parser/MoneyParser.html#line-62">addRule</a></span><wbr><span class="parameters">(<a href="ParseRule.html" title="interface in net.tnemc.core.currency.parser">ParseRule</a>&nbsp;rule)</span></div>
 <div class="block">Adds a rule to the MoneyParser object.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -188,9 +190,10 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="parse(java.lang.String,java.lang.String)">
+<section class="detail" id="parse(java.util.UUID,java.lang.String,java.lang.String)">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/parser/MoneyParser.html#line-69">parse</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/parser/MoneyParser.html#line-75">parse</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;identifier,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</span></div>
 <div class="block">Parses the input string based on the specified rules for the given region.</div>
 <dl class="notes">
@@ -203,9 +206,10 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="parse(java.lang.String,net.tnemc.core.currency.Currency,java.lang.String)">
+<section class="detail" id="parse(java.util.UUID,java.lang.String,net.tnemc.core.currency.Currency,java.lang.String)">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/parser/MoneyParser.html#line-89">parse</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/parser/MoneyParser.html#line-97">parse</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;identifier,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region,
  <a href="../Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</span></div>
 <div class="block">Parses the input string based on the specified rules for the given region.</div>

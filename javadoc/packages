@@ -46,6 +46,7 @@ net.tnemc.core.handlers.player
 net.tnemc.core.handlers.inventory
 net.tnemc.core.command
 net.tnemc.core.command.parameters.resolver
+net.tnemc.core.command.parameters.resolver.annotation
 net.tnemc.core.command.parameters.account
 net.tnemc.core.command.parameters
 net.tnemc.core.transaction

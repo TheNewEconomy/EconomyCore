@@ -89,10 +89,10 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="impl/FractionParseRule.html" title="class in net.tnemc.core.currency.parser.impl">FractionParseRule</a></code>, <code><a href="impl/NumericParseRule.html" title="class in net.tnemc.core.currency.parser.impl">NumericParseRule</a></code>, <code><a href="impl/RandomParseRule.html" title="class in net.tnemc.core.currency.parser.impl">RandomParseRule</a></code>, <code><a href="impl/RomanParseRule.html" title="class in net.tnemc.core.currency.parser.impl">RomanParseRule</a></code>, <code><a href="impl/ShortenParseRule.html" title="class in net.tnemc.core.currency.parser.impl">ShortenParseRule</a></code>, <code><a href="impl/SymbolParseRule.html" title="class in net.tnemc.core.currency.parser.impl">SymbolParseRule</a></code></dd>
+<dd><code><a href="impl/AmountParseRule.html" title="class in net.tnemc.core.currency.parser.impl">AmountParseRule</a></code>, <code><a href="impl/FractionParseRule.html" title="class in net.tnemc.core.currency.parser.impl">FractionParseRule</a></code>, <code><a href="impl/NumericParseRule.html" title="class in net.tnemc.core.currency.parser.impl">NumericParseRule</a></code>, <code><a href="impl/RandomParseRule.html" title="class in net.tnemc.core.currency.parser.impl">RandomParseRule</a></code>, <code><a href="impl/RomanParseRule.html" title="class in net.tnemc.core.currency.parser.impl">RomanParseRule</a></code>, <code><a href="impl/ShortenParseRule.html" title="class in net.tnemc.core.currency.parser.impl">ShortenParseRule</a></code>, <code><a href="impl/SymbolParseRule.html" title="class in net.tnemc.core.currency.parser.impl">SymbolParseRule</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/parser/ParseRule.html#line-26">ParseRule</a></span></div>
+<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/parser/ParseRule.html#line-28">ParseRule</a></span></div>
 <div class="block">MoneyParseRule</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -115,7 +115,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#apply(net.tnemc.core.currency.parser.ParseMoney,java.lang.String)" class="member-name-link">apply</a><wbr>(<a href="ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#apply(net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,java.lang.String)" class="member-name-link">apply</a><wbr>(<a href="../../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
+ <a href="ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Applies the given ParseMoney object to the input string according to the specified rules.</div>
@@ -142,7 +143,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="identifier()">
 <h3>identifier</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/parser/ParseRule.html#line-33">identifier</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/parser/ParseRule.html#line-35">identifier</a></span>()</div>
 <div class="block">Retrieves an identifier.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -151,9 +152,10 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="apply(net.tnemc.core.currency.parser.ParseMoney,java.lang.String)">
+<section class="detail" id="apply(net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,java.lang.String)">
 <h3>apply</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/parser/ParseRule.html#line-43">apply</a></span><wbr><span class="parameters">(<a href="ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/net/tnemc/core/currency/parser/ParseRule.html#line-45">apply</a></span><wbr><span class="parameters">(<a href="../../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
+ <a href="ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</span></div>
 <div class="block">Applies the given ParseMoney object to the input string according to the specified rules.</div>
 <dl class="notes">

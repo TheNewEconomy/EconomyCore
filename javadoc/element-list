@@ -36,6 +36,7 @@ net.tnemc.core.command
 net.tnemc.core.command.parameters
 net.tnemc.core.command.parameters.account
 net.tnemc.core.command.parameters.resolver
+net.tnemc.core.command.parameters.resolver.annotation
 net.tnemc.core.config
 net.tnemc.core.currency
 net.tnemc.core.currency.calculations

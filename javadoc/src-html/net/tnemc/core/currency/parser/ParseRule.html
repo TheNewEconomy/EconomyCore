@@ -30,31 +30,33 @@
 <span class="source-line-no">017</span><span id="line-17"> * along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="source-line-no">018</span><span id="line-18"> */</span>
 <span class="source-line-no">019</span><span id="line-19"></span>
-<span class="source-line-no">020</span><span id="line-20">/**</span>
-<span class="source-line-no">021</span><span id="line-21"> * MoneyParseRule</span>
-<span class="source-line-no">022</span><span id="line-22"> *</span>
-<span class="source-line-no">023</span><span id="line-23"> * @author creatorfromhell</span>
-<span class="source-line-no">024</span><span id="line-24"> * @since 0.1.4.0</span>
-<span class="source-line-no">025</span><span id="line-25"> */</span>
-<span class="source-line-no">026</span><span id="line-26">public interface ParseRule {</span>
-<span class="source-line-no">027</span><span id="line-27"></span>
-<span class="source-line-no">028</span><span id="line-28">  /**</span>
-<span class="source-line-no">029</span><span id="line-29">   * Retrieves an identifier.</span>
-<span class="source-line-no">030</span><span id="line-30">   *</span>
-<span class="source-line-no">031</span><span id="line-31">   * @return The identifier as a String.</span>
-<span class="source-line-no">032</span><span id="line-32">   */</span>
-<span class="source-line-no">033</span><span id="line-33">  String identifier();</span>
-<span class="source-line-no">034</span><span id="line-34"></span>
-<span class="source-line-no">035</span><span id="line-35">  /**</span>
-<span class="source-line-no">036</span><span id="line-36">   * Applies the given ParseMoney object to the input string according to the specified rules.</span>
-<span class="source-line-no">037</span><span id="line-37">   *</span>
-<span class="source-line-no">038</span><span id="line-38">   * @param parseMoney The ParseMoney object to apply the rules to.</span>
-<span class="source-line-no">039</span><span id="line-39">   * @param input      The input string to apply the rules on.</span>
-<span class="source-line-no">040</span><span id="line-40">   *</span>
-<span class="source-line-no">041</span><span id="line-41">   * @return A String after applying the rules to the input string based on the ParseMoney object.</span>
-<span class="source-line-no">042</span><span id="line-42">   */</span>
-<span class="source-line-no">043</span><span id="line-43">  String apply(ParseMoney parseMoney, String input);</span>
-<span class="source-line-no">044</span><span id="line-44">}</span>
+<span class="source-line-no">020</span><span id="line-20">import net.tnemc.core.account.Account;</span>
+<span class="source-line-no">021</span><span id="line-21"></span>
+<span class="source-line-no">022</span><span id="line-22">/**</span>
+<span class="source-line-no">023</span><span id="line-23"> * MoneyParseRule</span>
+<span class="source-line-no">024</span><span id="line-24"> *</span>
+<span class="source-line-no">025</span><span id="line-25"> * @author creatorfromhell</span>
+<span class="source-line-no">026</span><span id="line-26"> * @since 0.1.4.0</span>
+<span class="source-line-no">027</span><span id="line-27"> */</span>
+<span class="source-line-no">028</span><span id="line-28">public interface ParseRule {</span>
+<span class="source-line-no">029</span><span id="line-29"></span>
+<span class="source-line-no">030</span><span id="line-30">  /**</span>
+<span class="source-line-no">031</span><span id="line-31">   * Retrieves an identifier.</span>
+<span class="source-line-no">032</span><span id="line-32">   *</span>
+<span class="source-line-no">033</span><span id="line-33">   * @return The identifier as a String.</span>
+<span class="source-line-no">034</span><span id="line-34">   */</span>
+<span class="source-line-no">035</span><span id="line-35">  String identifier();</span>
+<span class="source-line-no">036</span><span id="line-36"></span>
+<span class="source-line-no">037</span><span id="line-37">  /**</span>
+<span class="source-line-no">038</span><span id="line-38">   * Applies the given ParseMoney object to the input string according to the specified rules.</span>
+<span class="source-line-no">039</span><span id="line-39">   *</span>
+<span class="source-line-no">040</span><span id="line-40">   * @param parseMoney The ParseMoney object to apply the rules to.</span>
+<span class="source-line-no">041</span><span id="line-41">   * @param input      The input string to apply the rules on.</span>
+<span class="source-line-no">042</span><span id="line-42">   *</span>
+<span class="source-line-no">043</span><span id="line-43">   * @return A String after applying the rules to the input string based on the ParseMoney object.</span>
+<span class="source-line-no">044</span><span id="line-44">   */</span>
+<span class="source-line-no">045</span><span id="line-45">  String apply(Account account, ParseMoney parseMoney, String input);</span>
+<span class="source-line-no">046</span><span id="line-46">}</span>
 
 
 

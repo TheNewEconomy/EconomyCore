@@ -89,6 +89,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><a href="#net.tnemc.core.currency.format.impl">net.tnemc.core.currency.format.impl</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="#net.tnemc.core.currency.parser">net.tnemc.core.currency.parser</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.tnemc.core.currency.parser.impl">net.tnemc.core.currency.parser.impl</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><a href="#net.tnemc.core.currency.type">net.tnemc.core.currency.type</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><a href="#net.tnemc.core.io.serialization.impl">net.tnemc.core.io.serialization.impl</a></div>
@@ -169,18 +173,16 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">MoneyCommand.</span><code><a href="../../../bukkit/command/MoneyCommand.html#onPay(revxrsal.commands.bukkit.actor.BukkitCommandActor,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency,java.lang.String)" class="member-name-link">onPay</a><wbr>(revxrsal.commands.bukkit.actor.BukkitCommandActor&nbsp;sender,
+<div class="col-second even-row-color"><span class="type-name-label">MoneyCommand.</span><code><a href="../../../bukkit/command/MoneyCommand.html#onPay(revxrsal.commands.bukkit.actor.BukkitCommandActor,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency)" class="member-name-link">onPay</a><wbr>(revxrsal.commands.bukkit.actor.BukkitCommandActor&nbsp;sender,
  <a href="../Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;player,
  <a href="../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;amount,
- <a href="../../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;from)</code></div>
+ <a href="../../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ShortCommands.</span><code><a href="../../../bukkit/command/ShortCommands.html#onPay(revxrsal.commands.bukkit.actor.BukkitCommandActor,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency,java.lang.String)" class="member-name-link">onPay</a><wbr>(revxrsal.commands.bukkit.actor.BukkitCommandActor&nbsp;sender,
+<div class="col-second odd-row-color"><span class="type-name-label">ShortCommands.</span><code><a href="../../../bukkit/command/ShortCommands.html#onPay(revxrsal.commands.bukkit.actor.BukkitCommandActor,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency)" class="member-name-link">onPay</a><wbr>(revxrsal.commands.bukkit.actor.BukkitCommandActor&nbsp;sender,
  <a href="../Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;player,
  <a href="../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;amount,
- <a href="../../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;from)</code></div>
+ <a href="../../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">MoneyCommand.</span><code><a href="../../../bukkit/command/MoneyCommand.html#onRequest(revxrsal.commands.bukkit.actor.BukkitCommandActor,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency)" class="member-name-link">onRequest</a><wbr>(revxrsal.commands.bukkit.actor.BukkitCommandActor&nbsp;sender,
@@ -578,11 +580,10 @@ loadScripts(document, 'script');</script>
  <a href="../../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">MoneyCommand.</span><code><a href="../../command/MoneyCommand.html#onPay(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency,java.lang.String)" class="member-name-link">onPay</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="col-second even-row-color"><span class="type-name-label">MoneyCommand.</span><code><a href="../../command/MoneyCommand.html#onPay(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency)" class="member-name-link">onPay</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;acc,
  <a href="../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
- <a href="../../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;from)</code></div>
+ <a href="../../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">MoneyCommand.</span><code><a href="../../command/MoneyCommand.html#onRequest(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency)" class="member-name-link">onRequest</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
@@ -789,6 +790,80 @@ loadScripts(document, 'script');</script>
  <a href="../holdings/HoldingsEntry.html" title="class in net.tnemc.core.account.holdings">HoldingsEntry</a>&nbsp;entry,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;format)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.tnemc.core.currency.parser">
+<h2>Uses of <a href="../Account.html" title="class in net.tnemc.core.account">Account</a> in <a href="../../currency/parser/package-summary.html">net.tnemc.core.currency.parser</a></h2>
+<div class="caption"><span>Methods in <a href="../../currency/parser/package-summary.html">net.tnemc.core.currency.parser</a> with parameters of type <a href="../Account.html" title="class in net.tnemc.core.account">Account</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ParseRule.</span><code><a href="../../currency/parser/ParseRule.html#apply(net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,java.lang.String)" class="member-name-link">apply</a><wbr>(<a href="../Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
+ <a href="../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Applies the given ParseMoney object to the input string according to the specified rules.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.tnemc.core.currency.parser.impl">
+<h2>Uses of <a href="../Account.html" title="class in net.tnemc.core.account">Account</a> in <a href="../../currency/parser/impl/package-summary.html">net.tnemc.core.currency.parser.impl</a></h2>
+<div class="caption"><span>Methods in <a href="../../currency/parser/impl/package-summary.html">net.tnemc.core.currency.parser.impl</a> with parameters of type <a href="../Account.html" title="class in net.tnemc.core.account">Account</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AmountParseRule.</span><code><a href="../../currency/parser/impl/AmountParseRule.html#apply(net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,java.lang.String)" class="member-name-link">apply</a><wbr>(<a href="../Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
+ <a href="../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FractionParseRule.</span><code><a href="../../currency/parser/impl/FractionParseRule.html#apply(net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,java.lang.String)" class="member-name-link">apply</a><wbr>(<a href="../Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
+ <a href="../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Applies the given parse money object to the input string according to the specified rules.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">NumericParseRule.</span><code><a href="../../currency/parser/impl/NumericParseRule.html#apply(net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,java.lang.String)" class="member-name-link">apply</a><wbr>(<a href="../Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
+ <a href="../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Applies the given parse money object to the input string according to the specified rules.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RandomParseRule.</span><code><a href="../../currency/parser/impl/RandomParseRule.html#apply(net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,java.lang.String)" class="member-name-link">apply</a><wbr>(<a href="../Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
+ <a href="../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Applies the given parse money object to the input string according to the specified rules.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">RomanParseRule.</span><code><a href="../../currency/parser/impl/RomanParseRule.html#apply(net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,java.lang.String)" class="member-name-link">apply</a><wbr>(<a href="../Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
+ <a href="../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Applies the given parse money object to the input string according to the specified rules.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ShortenParseRule.</span><code><a href="../../currency/parser/impl/ShortenParseRule.html#apply(net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,java.lang.String)" class="member-name-link">apply</a><wbr>(<a href="../Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
+ <a href="../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Applies the given parse money object to the input string according to the specified rules.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SymbolParseRule.</span><code><a href="../../currency/parser/impl/SymbolParseRule.html#apply(net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,java.lang.String)" class="member-name-link">apply</a><wbr>(<a href="../Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
+ <a href="../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;input)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -1085,18 +1160,16 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">MoneyCommand.</span><code><a href="../../../paper/command/MoneyCommand.html#onPay(revxrsal.commands.bukkit.actor.BukkitCommandActor,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency,java.lang.String)" class="member-name-link">onPay</a><wbr>(revxrsal.commands.bukkit.actor.BukkitCommandActor&nbsp;sender,
+<div class="col-second even-row-color"><span class="type-name-label">MoneyCommand.</span><code><a href="../../../paper/command/MoneyCommand.html#onPay(revxrsal.commands.bukkit.actor.BukkitCommandActor,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency)" class="member-name-link">onPay</a><wbr>(revxrsal.commands.bukkit.actor.BukkitCommandActor&nbsp;sender,
  <a href="../Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;player,
  <a href="../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;amount,
- <a href="../../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;from)</code></div>
+ <a href="../../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ShortCommands.</span><code><a href="../../../paper/command/ShortCommands.html#onPay(revxrsal.commands.bukkit.actor.BukkitCommandActor,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency,java.lang.String)" class="member-name-link">onPay</a><wbr>(revxrsal.commands.bukkit.actor.BukkitCommandActor&nbsp;sender,
+<div class="col-second odd-row-color"><span class="type-name-label">ShortCommands.</span><code><a href="../../../paper/command/ShortCommands.html#onPay(revxrsal.commands.bukkit.actor.BukkitCommandActor,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency)" class="member-name-link">onPay</a><wbr>(revxrsal.commands.bukkit.actor.BukkitCommandActor&nbsp;sender,
  <a href="../Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;player,
  <a href="../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;amount,
- <a href="../../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;from)</code></div>
+ <a href="../../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">MoneyCommand.</span><code><a href="../../../paper/command/MoneyCommand.html#onRequest(revxrsal.commands.bukkit.actor.BukkitCommandActor,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency)" class="member-name-link">onRequest</a><wbr>(revxrsal.commands.bukkit.actor.BukkitCommandActor&nbsp;sender,
@@ -1208,18 +1281,16 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">MoneyCommand.</span><code><a href="../../../sponge/command/MoneyCommand.html#onPay(revxrsal.commands.sponge.actor.SpongeCommandActor,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency,java.lang.String)" class="member-name-link">onPay</a><wbr>(revxrsal.commands.sponge.actor.SpongeCommandActor&nbsp;sender,
+<div class="col-second even-row-color"><span class="type-name-label">MoneyCommand.</span><code><a href="../../../sponge/command/MoneyCommand.html#onPay(revxrsal.commands.sponge.actor.SpongeCommandActor,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency)" class="member-name-link">onPay</a><wbr>(revxrsal.commands.sponge.actor.SpongeCommandActor&nbsp;sender,
  <a href="../Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;player,
  <a href="../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;amount,
- <a href="../../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;from)</code></div>
+ <a href="../../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ShortCommands.</span><code><a href="../../../sponge/command/ShortCommands.html#onPay(revxrsal.commands.sponge.actor.SpongeCommandActor,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency,java.lang.String)" class="member-name-link">onPay</a><wbr>(revxrsal.commands.sponge.actor.SpongeCommandActor&nbsp;sender,
+<div class="col-second odd-row-color"><span class="type-name-label">ShortCommands.</span><code><a href="../../../sponge/command/ShortCommands.html#onPay(revxrsal.commands.sponge.actor.SpongeCommandActor,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency)" class="member-name-link">onPay</a><wbr>(revxrsal.commands.sponge.actor.SpongeCommandActor&nbsp;sender,
  <a href="../Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;player,
  <a href="../../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;amount,
- <a href="../../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;from)</code></div>
+ <a href="../../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">MoneyCommand.</span><code><a href="../../../sponge/command/MoneyCommand.html#onRequest(revxrsal.commands.sponge.actor.SpongeCommandActor,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency)" class="member-name-link">onRequest</a><wbr>(revxrsal.commands.sponge.actor.SpongeCommandActor&nbsp;sender,
