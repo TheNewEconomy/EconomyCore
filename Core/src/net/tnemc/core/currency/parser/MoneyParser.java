@@ -17,7 +17,10 @@ package net.tnemc.core.currency.parser;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.TNECore;
+import net.tnemc.core.account.Account;
 import net.tnemc.core.currency.Currency;
+import net.tnemc.core.currency.parser.impl.AmountParseRule;
 import net.tnemc.core.currency.parser.impl.FractionParseRule;
 import net.tnemc.core.currency.parser.impl.NumericParseRule;
 import net.tnemc.core.currency.parser.impl.RandomParseRule;
@@ -26,6 +29,8 @@ import net.tnemc.core.currency.parser.impl.ShortenParseRule;
 import net.tnemc.core.currency.parser.impl.SymbolParseRule;
 
 import java.util.LinkedHashMap;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * MoneyParser
@@ -46,6 +51,7 @@ public class MoneyParser {
     addRule(new SymbolParseRule()); //$5 -> sets currency to USD
     addRule(new NumericParseRule()); // scientific notation and general numerics
     addRule(new ShortenParseRule()); // 5k -> 5000
+    addRule(new AmountParseRule()); // all/inventory/ender -> holdings amounts
   }
 
   /**
@@ -66,13 +72,15 @@ public class MoneyParser {
    *
    * @return A ParseMoney object containing the parsed information.
    */
-  public ParseMoney parse(final String region, final String input) {
+  public ParseMoney parse(final UUID identifier, final String region, final String input) {
 
     final ParseMoney parseMoney = new ParseMoney(region);
 
+    final Optional<Account> accountOptional = TNECore.eco().account().findAccount(identifier);
+
     String parsedInput = input;
     for(final ParseRule rule : rules.values()) {
-      parsedInput = rule.apply(parseMoney, parsedInput);
+      parsedInput = rule.apply(accountOptional.orElse(null), parseMoney, parsedInput);
     }
 
     return parseMoney;
@@ -86,13 +94,15 @@ public class MoneyParser {
    *
    * @return A ParseMoney object containing the parsed information.
    */
-  public ParseMoney parse(final String region, final Currency currency, final String input) {
+  public ParseMoney parse(final UUID identifier, final String region, final Currency currency, final String input) {
 
     final ParseMoney parseMoney = new ParseMoney(region, currency);
 
+    final Optional<Account> accountOptional = TNECore.eco().account().findAccount(identifier);
+
     String parsedInput = input;
     for(final ParseRule rule : rules.values()) {
-      parsedInput = rule.apply(parseMoney, parsedInput);
+      parsedInput = rule.apply(accountOptional.orElse(null), parseMoney, parsedInput);
     }
 
     return parseMoney;

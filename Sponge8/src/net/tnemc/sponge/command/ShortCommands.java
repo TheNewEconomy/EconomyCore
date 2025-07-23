@@ -70,9 +70,9 @@ public class ShortCommands {
   @Usage("Money.Pay.Arguments")
   @Description("Money.Pay.Description")
   @CommandPermission("tne.money.pay")
-  public void onPay(final SpongeCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("") final String from) {
+  public void onPay(final SpongeCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency) {
 
-    net.tnemc.core.command.MoneyCommand.onPay(new SpongeCMDSource(sender), player, amount, currency, from);
+    net.tnemc.core.command.MoneyCommand.onPay(new SpongeCMDSource(sender), player, amount, currency);
   }
 
   @Command({ "setmoney", "setbal" })

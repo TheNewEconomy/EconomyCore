@@ -37,6 +37,8 @@ public class ItemCurrency extends Currency {
   protected boolean enderFill;
   protected boolean importItem;
   protected boolean blockCraft;
+  protected boolean shulker;
+  protected boolean bundle;
 
   public ItemCurrency(final String identifier) {
 
@@ -46,6 +48,8 @@ public class ItemCurrency extends Currency {
     this.enderFill = true;
     this.importItem = true;
     this.blockCraft = false;
+    this.shulker = false;
+    this.bundle = false;
   }
 
   public Optional<ItemDenomination> getDenominationByMaterial(final String material) {
@@ -101,5 +105,25 @@ public class ItemCurrency extends Currency {
   public void blockCraft(final boolean blockCraft) {
 
     this.blockCraft = blockCraft;
+  }
+
+  public boolean bundle() {
+
+    return bundle;
+  }
+
+  public void bundle(final boolean bundle) {
+
+    this.bundle = bundle;
+  }
+
+  public boolean shulker() {
+
+    return shulker;
+  }
+
+  public void shulker(final boolean shulker) {
+
+    this.shulker = shulker;
   }
 }

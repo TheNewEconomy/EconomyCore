@@ -168,7 +168,7 @@
         <dependency>
             <groupId>net.tnemc</groupId>
             <artifactId>EconomyCore</artifactId>
-            <version>0.1.4.0-SNAPSHOT-9</version>
+            <version>0.1.4.0-SNAPSHOT-11</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
@@ -196,7 +196,7 @@
         <dependency>
             <groupId>net.tnemc</groupId>
             <artifactId>BukkitCore</artifactId>
-            <version>0.1.4.0-SNAPSHOT-9</version>
+            <version>0.1.4.0-SNAPSHOT-11</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
@@ -244,7 +244,7 @@
     <parent>
         <groupId>net.tnemc</groupId>
         <artifactId>TNE</artifactId>
-        <version>0.1.4.0-SNAPSHOT-9</version>
+        <version>0.1.4.0-SNAPSHOT-11</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 </project>

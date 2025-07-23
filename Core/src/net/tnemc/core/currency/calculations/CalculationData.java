@@ -94,7 +94,7 @@ public class CalculationData<I> {
       if(entry.getValue() instanceof final ItemDenomination denomination) {
 
         final AbstractItemStack<?> stack = TNECore.instance().denominationToStack(denomination);
-        final int count = PluginCore.server().calculations().count((AbstractItemStack<Object>)stack, inventory);
+        final int count = PluginCore.server().calculations().count((AbstractItemStack<Object>)stack, inventory, currency.shulker(), currency.bundle());
 
         if(count > 0) {
           inventoryMaterials.put(entry.getKey(), count);
@@ -111,7 +111,7 @@ public class CalculationData<I> {
     if(contains == amount) {
       inventoryMaterials.remove(denomination.weight());
       PluginCore.log().debug("CalculationData - removeMaterials - equals: Everything equals, remove all materials. Weight: " + denomination.weight(), DebugLevel.DEVELOPER);
-      PluginCore.server().calculations().removeAll((AbstractItemStack<Object>)stack, inventory);
+      PluginCore.server().calculations().removeAll((AbstractItemStack<Object>)stack, inventory, currency.shulker(), currency.bundle());
       return;
     }
 
@@ -119,7 +119,7 @@ public class CalculationData<I> {
     PluginCore.log().debug("CalculationData - removeMaterials - left: " + left + "Weight: " + denomination.weight(), DebugLevel.DEVELOPER);
     inventoryMaterials.put(denomination.weight(), left);
     final AbstractItemStack<?> stackClone = stack.amount(amount);
-    PluginCore.server().calculations().removeItem((AbstractItemStack<Object>)stackClone, inventory);
+    PluginCore.server().calculations().removeItem((AbstractItemStack<Object>)stackClone, inventory, currency.shulker(), currency.bundle());
   }
 
   public void provideMaterials(final Denomination denomination, final Integer amount) {
@@ -127,14 +127,14 @@ public class CalculationData<I> {
     int contains = (inventoryMaterials.getOrDefault(denomination.weight(), amount));
 
     final AbstractItemStack<?> stack = TNECore.instance().denominationToStack((ItemDenomination)denomination).amount(amount);
-    final Collection<AbstractItemStack<Object>> left = PluginCore.server().calculations().giveItems(Collections.singletonList((AbstractItemStack<Object>)stack), inventory);
+    final Collection<AbstractItemStack<Object>> left = PluginCore.server().calculations().giveItems(Collections.singletonList((AbstractItemStack<Object>)stack), inventory, currency.shulker(), currency.bundle());
 
 
     final Optional<PlayerAccount> account = TNECore.eco().account().findPlayerAccount(player);
     if(!left.isEmpty() && account.isPresent()) {
 
       if(currency.isEnderFill()) {
-        final Collection<AbstractItemStack<Object>> enderLeft = PluginCore.server().calculations().giveItems(left, account.get().getPlayer().get().inventory().getInventory(true));
+        final Collection<AbstractItemStack<Object>> enderLeft = PluginCore.server().calculations().giveItems(left, account.get().getPlayer().get().inventory().getInventory(true), currency.shulker(), currency.bundle());
 
         if(!enderLeft.isEmpty()) {
 

@@ -125,6 +125,27 @@ public class Account extends ReceiptBox {
   }
 
   /**
+   * Calculates the total holdings amount based on the provided region, currency, and type.
+   *
+   * @param region   The region to use for calculations.
+   * @param currency The currency to use for calculations.
+   * @param type     The type of identifier to filter the holdings entries.
+   *
+   * @return The total amount of holdings for the specified region, currency, and type.
+   */
+  public BigDecimal getHoldingsTotal(final @NotNull String region,
+                                     final @NotNull UUID currency,
+                                     final @NotNull Identifier type) {
+
+    BigDecimal amount = BigDecimal.ZERO;
+
+    for(final HoldingsEntry entry : getHoldings(region, currency, type)) {
+      amount = amount.add(entry.getAmount());
+    }
+    return amount;
+  }
+
+  /**
    * Used to get the holdings based on specific specifications, or returns an empty optional if no
    * holdings for the specifications exists.
    *

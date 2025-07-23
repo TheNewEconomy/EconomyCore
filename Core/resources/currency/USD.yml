@@ -99,6 +99,12 @@ Item:
   #Whether we should block crafting with this currency
   BlockCrafting: false
 
+  #Should items from shulkers be used in holdings calculations
+  Shulker: true
+
+  #Should items from bundles be used in holdings calculations
+  Bundle: true
+
 #All configurations related to formatting.
 Formatting:
 

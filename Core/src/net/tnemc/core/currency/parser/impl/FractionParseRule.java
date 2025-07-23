@@ -17,6 +17,7 @@ package net.tnemc.core.currency.parser.impl;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.account.Account;
 import net.tnemc.core.currency.parser.ParseMoney;
 import net.tnemc.core.currency.parser.ParseRule;
 
@@ -51,7 +52,7 @@ public class FractionParseRule implements ParseRule {
    * @param input      the input string to apply the rules on
    */
   @Override
-  public String apply(final ParseMoney parseMoney, final String input) {
+  public String apply(final Account account, final ParseMoney parseMoney, final String input) {
 
     final Matcher matcher = Pattern.compile("([0-9]+)/([0-9]+)").matcher(input);
     if(matcher.find()) {

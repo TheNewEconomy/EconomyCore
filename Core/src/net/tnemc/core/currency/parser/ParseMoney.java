@@ -75,4 +75,14 @@ public class ParseMoney {
 
     return currency != null;
   }
+
+  @Override
+  public String toString() {
+
+    return "ParseMoney{" +
+           "region='" + region + '\'' +
+           ", amount=" + amount +
+           ", currency=" + currency +
+           '}';
+  }
 }
