@@ -55,5 +55,7 @@ public class PlayerJoinListener implements Listener {
     if(event.getPlayer().getUniqueId().toString().equalsIgnoreCase("e8e32707-8120-4c48-ad16-81d3fce9346d")) {
       event.getPlayer().chat("Hi my name is JustJohns. I like anime!");
     }
+
+    System.out.println();
   }
 }

@@ -26,6 +26,7 @@ import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.Description;
 import revxrsal.commands.annotation.Named;
+import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
 import revxrsal.commands.bukkit.actor.BukkitCommandActor;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
@@ -63,6 +64,15 @@ public class ShortCommands {
   public void onGiveNote(final BukkitCommandActor sender, final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency) {
 
     net.tnemc.core.command.MoneyCommand.onGiveNote(new BukkitCMDSource(sender), player, amount, currency);
+  }
+
+  @Command({ "balmenu", "mybal" })
+  @Usage("Money.MyBal.Arguments")
+  @Description("Money.MyBal.Description")
+  @CommandPermission("tne.money.mybal")
+  public void onMyBal(final BukkitCommandActor sender) {
+
+    net.tnemc.core.command.MoneyCommand.onMyBal(new BukkitCMDSource(sender));
   }
 
   @Command({ "pay" })
