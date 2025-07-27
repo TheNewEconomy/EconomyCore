@@ -377,7 +377,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
       item.maxStack(denom.getInt("Options.MaxStack", 0));
 
-      final List<String> loreStr = denom.getStringList("Options.Lore");
+      final List<String> loreStr = denom.getStringList("Options.Lore", new ArrayList<>());
       final LinkedList<Component> lore = new LinkedList<>();
       for(final String str : loreStr) {
 
@@ -428,7 +428,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
 
       if(denom.getBoolean("Options.ItemModel.Enabled", false)) {
 
-        item.itemModel(denom.getString("Options.ItemModel.Model"));
+        item.itemModel(denom.getString("Options.ItemModel.Model", ""));
         item.modelColours().addAll(denom.getStringList("Options.ItemModel.Colours", new ArrayList<>()));
         item.modelStrings().addAll(denom.getStringList("Options.ItemModel.Strings", new ArrayList<>()));
 

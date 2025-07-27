@@ -66,6 +66,15 @@ public class ShortCommands {
     net.tnemc.core.command.MoneyCommand.onGiveNote(new SpongeCMDSource(sender), player, amount, currency);
   }
 
+  @Command({ "balmenu", "mybal" })
+  @Usage("Money.MyBal.Arguments")
+  @Description("Money.MyBal.Description")
+  @CommandPermission("tne.money.mybal")
+  public void onMyBal(final SpongeCommandActor sender) {
+
+    net.tnemc.core.command.MoneyCommand.onMyBal(new SpongeCMDSource(sender));
+  }
+
   @Command({ "pay" })
   @Usage("Money.Pay.Arguments")
   @Description("Money.Pay.Description")

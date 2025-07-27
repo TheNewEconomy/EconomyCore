@@ -28,31 +28,31 @@ Integrations:
 
     Enabled: false
 
-    item: "example:item"
+    Item: "example:item"
 
   Oraxen:
 
     Enabled: false
 
-    item: "example:item"
+    Item: "example:item"
 
   Nexo:
 
     Enabled: false
 
-    item: "example:item"
+    Item: "example:item"
 
   Nova:
 
     Enabled: false
 
-    item: "example:item"
+    Item: "example:item"
 
   SlimeFun:
 
     Enabled: false
 
-    item: "example:item"
+    Item: "example:item"
 
 #Various options for this currency tier.
 Options:

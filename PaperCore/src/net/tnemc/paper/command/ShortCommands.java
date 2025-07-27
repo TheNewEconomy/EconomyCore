@@ -65,6 +65,15 @@ public class ShortCommands {
     net.tnemc.core.command.MoneyCommand.onGiveNote(new PaperCMDSource(sender), player, amount, currency);
   }
 
+  @Command({ "balmenu", "mybal" })
+  @Usage("Money.MyBal.Arguments")
+  @Description("Money.MyBal.Description")
+  @CommandPermission("tne.money.mybal")
+  public void onMyBal(final BukkitCommandActor sender) {
+
+    net.tnemc.core.command.MoneyCommand.onMyBal(new PaperCMDSource(sender));
+  }
+
   @Command({ "pay" })
   @Usage("Money.Pay.Arguments")
   @Description("Money.Pay.Description")
