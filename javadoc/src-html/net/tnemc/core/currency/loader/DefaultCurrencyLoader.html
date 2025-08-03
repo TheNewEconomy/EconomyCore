@@ -390,7 +390,7 @@
 <span class="source-line-no">377</span><span id="line-377"></span>
 <span class="source-line-no">378</span><span id="line-378">      item.maxStack(denom.getInt("Options.MaxStack", 0));</span>
 <span class="source-line-no">379</span><span id="line-379"></span>
-<span class="source-line-no">380</span><span id="line-380">      final List&lt;String&gt; loreStr = denom.getStringList("Options.Lore");</span>
+<span class="source-line-no">380</span><span id="line-380">      final List&lt;String&gt; loreStr = denom.getStringList("Options.Lore", new ArrayList&lt;&gt;());</span>
 <span class="source-line-no">381</span><span id="line-381">      final LinkedList&lt;Component&gt; lore = new LinkedList&lt;&gt;();</span>
 <span class="source-line-no">382</span><span id="line-382">      for(final String str : loreStr) {</span>
 <span class="source-line-no">383</span><span id="line-383"></span>
@@ -441,7 +441,7 @@
 <span class="source-line-no">428</span><span id="line-428"></span>
 <span class="source-line-no">429</span><span id="line-429">      if(denom.getBoolean("Options.ItemModel.Enabled", false)) {</span>
 <span class="source-line-no">430</span><span id="line-430"></span>
-<span class="source-line-no">431</span><span id="line-431">        item.itemModel(denom.getString("Options.ItemModel.Model"));</span>
+<span class="source-line-no">431</span><span id="line-431">        item.itemModel(denom.getString("Options.ItemModel.Model", ""));</span>
 <span class="source-line-no">432</span><span id="line-432">        item.modelColours().addAll(denom.getStringList("Options.ItemModel.Colours", new ArrayList&lt;&gt;()));</span>
 <span class="source-line-no">433</span><span id="line-433">        item.modelStrings().addAll(denom.getStringList("Options.ItemModel.Strings", new ArrayList&lt;&gt;()));</span>
 <span class="source-line-no">434</span><span id="line-434"></span>
