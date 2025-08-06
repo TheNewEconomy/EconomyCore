@@ -118,7 +118,7 @@
 <span class="source-line-no">105</span><span id="line-105">  public void registerCallbacks(final CallbackManager callbackManager) {</span>
 <span class="source-line-no">106</span><span id="line-106"></span>
 <span class="source-line-no">107</span><span id="line-107">    super.registerCallbacks(callbackManager);</span>
-<span class="source-line-no">108</span><span id="line-108">    callbackManager.addConsumer(TNECallbacks.ACCOUNT_TYPES.toString(), (callback-&gt;{</span>
+<span class="source-line-no">108</span><span id="line-108">    callbackManager.addConsumer(TNECallbacks.ACCOUNT_TYPES.id(), (callback-&gt;{</span>
 <span class="source-line-no">109</span><span id="line-109"></span>
 <span class="source-line-no">110</span><span id="line-110">      if(Bukkit.getPluginManager().getPlugin("Towny") != null) {</span>
 <span class="source-line-no">111</span><span id="line-111"></span>

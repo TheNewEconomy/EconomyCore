@@ -85,85 +85,87 @@
 <span class="source-line-no">072</span><span id="line-72">    this.core = core;</span>
 <span class="source-line-no">073</span><span id="line-73">    this.pluginCore = new PaperPluginCore(plugin, core, provider, new BaseTranslationProvider(), new TNECallbackProvider());</span>
 <span class="source-line-no">074</span><span id="line-74"></span>
-<span class="source-line-no">075</span><span id="line-75">    //Vault</span>
-<span class="source-line-no">076</span><span id="line-76">    PluginCore.log().inform("Checking for VaultUnlocked");</span>
-<span class="source-line-no">077</span><span id="line-77">    try {</span>
-<span class="source-line-no">078</span><span id="line-78">      Class.forName("net.milkbowl.vault2.economy.Economy");</span>
-<span class="source-line-no">079</span><span id="line-79">      new VaultUnlockedHook().register();</span>
-<span class="source-line-no">080</span><span id="line-80">    } catch(final Exception ignore) {</span>
-<span class="source-line-no">081</span><span id="line-81">      PluginCore.log().error("Unable to connect to VaultUnlocked!");</span>
-<span class="source-line-no">082</span><span id="line-82">    }</span>
-<span class="source-line-no">083</span><span id="line-83"></span>
-<span class="source-line-no">084</span><span id="line-84">    PluginCore.log().inform("Checking for Vault");</span>
-<span class="source-line-no">085</span><span id="line-85">    try {</span>
-<span class="source-line-no">086</span><span id="line-86">      Class.forName("net.milkbowl.vault.economy.Economy");</span>
-<span class="source-line-no">087</span><span id="line-87">      new VaultHook().register();</span>
-<span class="source-line-no">088</span><span id="line-88">    } catch(final Exception ignore) {</span>
-<span class="source-line-no">089</span><span id="line-89">      PluginCore.log().error("Unable to connect to vault!");</span>
-<span class="source-line-no">090</span><span id="line-90">    }</span>
-<span class="source-line-no">091</span><span id="line-91">  }</span>
-<span class="source-line-no">092</span><span id="line-92"></span>
-<span class="source-line-no">093</span><span id="line-93">  /**</span>
-<span class="source-line-no">094</span><span id="line-94">   * Called by the Bukkit plugin manager when the plugin is enabled. This method should be used to</span>
-<span class="source-line-no">095</span><span id="line-95">   * enable the functionality provided by this class.</span>
-<span class="source-line-no">096</span><span id="line-96">   */</span>
-<span class="source-line-no">097</span><span id="line-97">  public void enable(final JavaPlugin plugin) {</span>
-<span class="source-line-no">098</span><span id="line-98"></span>
-<span class="source-line-no">099</span><span id="line-99">    this.pluginCore.enable();</span>
+<span class="source-line-no">075</span><span id="line-75">    this.pluginCore.load();</span>
+<span class="source-line-no">076</span><span id="line-76"></span>
+<span class="source-line-no">077</span><span id="line-77">    //Vault</span>
+<span class="source-line-no">078</span><span id="line-78">    PluginCore.log().inform("Checking for VaultUnlocked");</span>
+<span class="source-line-no">079</span><span id="line-79">    try {</span>
+<span class="source-line-no">080</span><span id="line-80">      Class.forName("net.milkbowl.vault2.economy.Economy");</span>
+<span class="source-line-no">081</span><span id="line-81">      new VaultUnlockedHook().register();</span>
+<span class="source-line-no">082</span><span id="line-82">    } catch(final Exception ignore) {</span>
+<span class="source-line-no">083</span><span id="line-83">      PluginCore.log().error("Unable to connect to VaultUnlocked!");</span>
+<span class="source-line-no">084</span><span id="line-84">    }</span>
+<span class="source-line-no">085</span><span id="line-85"></span>
+<span class="source-line-no">086</span><span id="line-86">    PluginCore.log().inform("Checking for Vault");</span>
+<span class="source-line-no">087</span><span id="line-87">    try {</span>
+<span class="source-line-no">088</span><span id="line-88">      Class.forName("net.milkbowl.vault.economy.Economy");</span>
+<span class="source-line-no">089</span><span id="line-89">      new VaultHook().register();</span>
+<span class="source-line-no">090</span><span id="line-90">    } catch(final Exception ignore) {</span>
+<span class="source-line-no">091</span><span id="line-91">      PluginCore.log().error("Unable to connect to vault!");</span>
+<span class="source-line-no">092</span><span id="line-92">    }</span>
+<span class="source-line-no">093</span><span id="line-93">  }</span>
+<span class="source-line-no">094</span><span id="line-94"></span>
+<span class="source-line-no">095</span><span id="line-95">  /**</span>
+<span class="source-line-no">096</span><span id="line-96">   * Called by the Bukkit plugin manager when the plugin is enabled. This method should be used to</span>
+<span class="source-line-no">097</span><span id="line-97">   * enable the functionality provided by this class.</span>
+<span class="source-line-no">098</span><span id="line-98">   */</span>
+<span class="source-line-no">099</span><span id="line-99">  public void enable(final JavaPlugin plugin) {</span>
 <span class="source-line-no">100</span><span id="line-100"></span>
-<span class="source-line-no">101</span><span id="line-101">    //Register our event listeners</span>
-<span class="source-line-no">102</span><span id="line-102">    Bukkit.getPluginManager().registerEvents(new EntityKilledListener(), plugin);</span>
-<span class="source-line-no">103</span><span id="line-103">    Bukkit.getPluginManager().registerEvents(new PlayerExperienceGainListener(), plugin);</span>
-<span class="source-line-no">104</span><span id="line-104"></span>
-<span class="source-line-no">105</span><span id="line-105">    //Player Listeners</span>
-<span class="source-line-no">106</span><span id="line-106">    Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), plugin);</span>
-<span class="source-line-no">107</span><span id="line-107">    Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), plugin);</span>
-<span class="source-line-no">108</span><span id="line-108"></span>
-<span class="source-line-no">109</span><span id="line-109">    //Menu-related Listeners from TNML</span>
-<span class="source-line-no">110</span><span id="line-110">    Bukkit.getPluginManager().registerEvents(new PlayerCloseInventoryListener(), plugin);</span>
-<span class="source-line-no">111</span><span id="line-111">    Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), plugin);</span>
-<span class="source-line-no">112</span><span id="line-112"></span>
-<span class="source-line-no">113</span><span id="line-113">    //World Listeners</span>
-<span class="source-line-no">114</span><span id="line-114">    Bukkit.getPluginManager().registerEvents(new WorldLoadListener(), plugin);</span>
-<span class="source-line-no">115</span><span id="line-115"></span>
-<span class="source-line-no">116</span><span id="line-116">    //Inventory listeners</span>
-<span class="source-line-no">117</span><span id="line-117">    Bukkit.getPluginManager().registerEvents(new ItemCraftListener(), plugin);</span>
-<span class="source-line-no">118</span><span id="line-118"></span>
-<span class="source-line-no">119</span><span id="line-119">    //Register our service providers.</span>
+<span class="source-line-no">101</span><span id="line-101">    this.pluginCore.enable();</span>
+<span class="source-line-no">102</span><span id="line-102"></span>
+<span class="source-line-no">103</span><span id="line-103">    //Register our event listeners</span>
+<span class="source-line-no">104</span><span id="line-104">    Bukkit.getPluginManager().registerEvents(new EntityKilledListener(), plugin);</span>
+<span class="source-line-no">105</span><span id="line-105">    Bukkit.getPluginManager().registerEvents(new PlayerExperienceGainListener(), plugin);</span>
+<span class="source-line-no">106</span><span id="line-106"></span>
+<span class="source-line-no">107</span><span id="line-107">    //Player Listeners</span>
+<span class="source-line-no">108</span><span id="line-108">    Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), plugin);</span>
+<span class="source-line-no">109</span><span id="line-109">    Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), plugin);</span>
+<span class="source-line-no">110</span><span id="line-110"></span>
+<span class="source-line-no">111</span><span id="line-111">    //Menu-related Listeners from TNML</span>
+<span class="source-line-no">112</span><span id="line-112">    Bukkit.getPluginManager().registerEvents(new PlayerCloseInventoryListener(), plugin);</span>
+<span class="source-line-no">113</span><span id="line-113">    Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), plugin);</span>
+<span class="source-line-no">114</span><span id="line-114"></span>
+<span class="source-line-no">115</span><span id="line-115">    //World Listeners</span>
+<span class="source-line-no">116</span><span id="line-116">    Bukkit.getPluginManager().registerEvents(new WorldLoadListener(), plugin);</span>
+<span class="source-line-no">117</span><span id="line-117"></span>
+<span class="source-line-no">118</span><span id="line-118">    //Inventory listeners</span>
+<span class="source-line-no">119</span><span id="line-119">    Bukkit.getPluginManager().registerEvents(new ItemCraftListener(), plugin);</span>
 <span class="source-line-no">120</span><span id="line-120"></span>
-<span class="source-line-no">121</span><span id="line-121">    //PAPI</span>
-<span class="source-line-no">122</span><span id="line-122">    if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {</span>
-<span class="source-line-no">123</span><span id="line-123">      new PAPIHook().register();</span>
-<span class="source-line-no">124</span><span id="line-124"></span>
-<span class="source-line-no">125</span><span id="line-125">      CurrencyFormatter.addRule(new PlaceHolderRule());</span>
-<span class="source-line-no">126</span><span id="line-126">    } else {</span>
-<span class="source-line-no">127</span><span id="line-127">      Bukkit.getPluginManager().registerEvents(new PluginEnableListener(), plugin);</span>
-<span class="source-line-no">128</span><span id="line-128">    }</span>
-<span class="source-line-no">129</span><span id="line-129"></span>
-<span class="source-line-no">130</span><span id="line-130">    final Metrics metrics = new Metrics(plugin, 602);</span>
+<span class="source-line-no">121</span><span id="line-121">    //Register our service providers.</span>
+<span class="source-line-no">122</span><span id="line-122"></span>
+<span class="source-line-no">123</span><span id="line-123">    //PAPI</span>
+<span class="source-line-no">124</span><span id="line-124">    if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {</span>
+<span class="source-line-no">125</span><span id="line-125">      new PAPIHook().register();</span>
+<span class="source-line-no">126</span><span id="line-126"></span>
+<span class="source-line-no">127</span><span id="line-127">      CurrencyFormatter.addRule(new PlaceHolderRule());</span>
+<span class="source-line-no">128</span><span id="line-128">    } else {</span>
+<span class="source-line-no">129</span><span id="line-129">      Bukkit.getPluginManager().registerEvents(new PluginEnableListener(), plugin);</span>
+<span class="source-line-no">130</span><span id="line-130">    }</span>
 <span class="source-line-no">131</span><span id="line-131"></span>
-<span class="source-line-no">132</span><span id="line-132">    plugin.getLogger().log(Level.INFO, "The New Economy has been enabled!");</span>
-<span class="source-line-no">133</span><span id="line-133">  }</span>
-<span class="source-line-no">134</span><span id="line-134"></span>
-<span class="source-line-no">135</span><span id="line-135">  /**</span>
-<span class="source-line-no">136</span><span id="line-136">   * Called by the Bukkit plugin manager when the plugin is disabled. This method should be used to</span>
-<span class="source-line-no">137</span><span id="line-137">   * disable the functionality provided by this class.</span>
-<span class="source-line-no">138</span><span id="line-138">   */</span>
-<span class="source-line-no">139</span><span id="line-139">  public void disable(final JavaPlugin plugin) {</span>
-<span class="source-line-no">140</span><span id="line-140"></span>
-<span class="source-line-no">141</span><span id="line-141">    this.pluginCore.onDisable();</span>
-<span class="source-line-no">142</span><span id="line-142">  }</span>
-<span class="source-line-no">143</span><span id="line-143"></span>
-<span class="source-line-no">144</span><span id="line-144">  public boolean isPapiHooked() {</span>
+<span class="source-line-no">132</span><span id="line-132">    final Metrics metrics = new Metrics(plugin, 602);</span>
+<span class="source-line-no">133</span><span id="line-133"></span>
+<span class="source-line-no">134</span><span id="line-134">    plugin.getLogger().log(Level.INFO, "The New Economy has been enabled!");</span>
+<span class="source-line-no">135</span><span id="line-135">  }</span>
+<span class="source-line-no">136</span><span id="line-136"></span>
+<span class="source-line-no">137</span><span id="line-137">  /**</span>
+<span class="source-line-no">138</span><span id="line-138">   * Called by the Bukkit plugin manager when the plugin is disabled. This method should be used to</span>
+<span class="source-line-no">139</span><span id="line-139">   * disable the functionality provided by this class.</span>
+<span class="source-line-no">140</span><span id="line-140">   */</span>
+<span class="source-line-no">141</span><span id="line-141">  public void disable(final JavaPlugin plugin) {</span>
+<span class="source-line-no">142</span><span id="line-142"></span>
+<span class="source-line-no">143</span><span id="line-143">    this.pluginCore.onDisable();</span>
+<span class="source-line-no">144</span><span id="line-144">  }</span>
 <span class="source-line-no">145</span><span id="line-145"></span>
-<span class="source-line-no">146</span><span id="line-146">    return papiHooked;</span>
-<span class="source-line-no">147</span><span id="line-147">  }</span>
-<span class="source-line-no">148</span><span id="line-148"></span>
-<span class="source-line-no">149</span><span id="line-149">  public void setPapiHooked(final boolean papiHooked) {</span>
+<span class="source-line-no">146</span><span id="line-146">  public boolean isPapiHooked() {</span>
+<span class="source-line-no">147</span><span id="line-147"></span>
+<span class="source-line-no">148</span><span id="line-148">    return papiHooked;</span>
+<span class="source-line-no">149</span><span id="line-149">  }</span>
 <span class="source-line-no">150</span><span id="line-150"></span>
-<span class="source-line-no">151</span><span id="line-151">    this.papiHooked = papiHooked;</span>
-<span class="source-line-no">152</span><span id="line-152">  }</span>
-<span class="source-line-no">153</span><span id="line-153">}</span>
+<span class="source-line-no">151</span><span id="line-151">  public void setPapiHooked(final boolean papiHooked) {</span>
+<span class="source-line-no">152</span><span id="line-152"></span>
+<span class="source-line-no">153</span><span id="line-153">    this.papiHooked = papiHooked;</span>
+<span class="source-line-no">154</span><span id="line-154">  }</span>
+<span class="source-line-no">155</span><span id="line-155">}</span>
 
 
 
