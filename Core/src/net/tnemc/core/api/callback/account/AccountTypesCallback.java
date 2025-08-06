@@ -38,6 +38,6 @@ public class AccountTypesCallback implements Callback {
   @Override
   public String name() {
 
-    return TNECallbacks.ACCOUNT_TYPES.toString();
+    return TNECallbacks.ACCOUNT_TYPES.id();
   }
 }

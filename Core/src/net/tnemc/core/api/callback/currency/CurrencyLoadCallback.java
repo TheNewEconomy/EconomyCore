@@ -18,6 +18,7 @@ package net.tnemc.core.api.callback.currency;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.api.callback.TNECallbacks;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.plugincore.core.api.callback.Callback;
 
@@ -44,7 +45,7 @@ public class CurrencyLoadCallback implements Callback {
   @Override
   public String name() {
 
-    return "currency_load";
+    return TNECallbacks.CURRENCY_LOAD.id();
   }
 
   public Currency getCurrency() {

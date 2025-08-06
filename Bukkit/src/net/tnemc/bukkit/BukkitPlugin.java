@@ -66,6 +66,8 @@ public class BukkitPlugin {
     this.core = new BukkitCore(plugin);
     this.pluginCore = new ModifiedBukkitPluginCore(plugin, core, server, new BaseTranslationProvider(), new TNECallbackProvider());
 
+    this.pluginCore.load();
+
     //Vault
     PluginCore.log().inform("Checking for VaultUnlocked");
     try {

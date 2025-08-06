@@ -105,7 +105,7 @@ public class PaperCore extends TNECore {
   public void registerCallbacks(final CallbackManager callbackManager) {
 
     super.registerCallbacks(callbackManager);
-    callbackManager.addConsumer(TNECallbacks.ACCOUNT_TYPES.toString(), (callback->{
+    callbackManager.addConsumer(TNECallbacks.ACCOUNT_TYPES.id(), (callback->{
 
       if(Bukkit.getPluginManager().getPlugin("Towny") != null) {
 

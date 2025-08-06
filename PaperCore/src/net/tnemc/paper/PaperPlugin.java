@@ -72,6 +72,8 @@ public class PaperPlugin {
     this.core = core;
     this.pluginCore = new PaperPluginCore(plugin, core, provider, new BaseTranslationProvider(), new TNECallbackProvider());
 
+    this.pluginCore.load();
+
     //Vault
     PluginCore.log().inform("Checking for VaultUnlocked");
     try {

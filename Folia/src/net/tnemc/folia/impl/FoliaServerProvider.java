@@ -29,6 +29,7 @@ import net.tnemc.plugincore.core.compatibility.CmdSource;
 import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import net.tnemc.plugincore.core.compatibility.ProxyProvider;
 import net.tnemc.plugincore.core.compatibility.ServerConnector;
+import net.tnemc.plugincore.core.compatibility.WorldProvider;
 import net.tnemc.plugincore.core.compatibility.helper.CraftingRecipe;
 import net.tnemc.plugincore.core.compatibility.scheduler.SchedulerProvider;
 import net.tnemc.plugincore.paper.hook.PAPIParser;
@@ -79,6 +80,13 @@ public class FoliaServerProvider implements ServerConnector {
 
     return "folia";
   }
+
+  @Override
+  public Optional<WorldProvider> findWorld(final String world) {
+
+    return Optional.empty();
+  }
+
 
   /**
    * Used to replace placeholders from a string.

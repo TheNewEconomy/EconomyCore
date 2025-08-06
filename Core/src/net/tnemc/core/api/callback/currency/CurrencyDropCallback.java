@@ -18,6 +18,7 @@ package net.tnemc.core.api.callback.currency;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import net.tnemc.core.api.callback.TNECallbacks;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.item.AbstractItemStack;
 import net.tnemc.plugincore.core.api.callback.Callback;
@@ -52,7 +53,7 @@ public class CurrencyDropCallback implements Callback {
   @Override
   public String name() {
 
-    return "currency_drop";
+    return TNECallbacks.CURRENCY_DROP.id();
   }
 
   public Collection<AbstractItemStack<Object>> getDrops() {

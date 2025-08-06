@@ -190,6 +190,19 @@ public abstract class TNECore extends PluginEngine {
   }
 
   @Override
+  public void postLoad() {
+
+    super.postLoad();
+
+    //set our debug options.
+    PluginCore.instance().setLevel(DebugLevel.fromID(MainConfig.yaml().getString("Core.Debugging.Mode")));
+
+    this.economyManager = new EconomyManager();
+
+    this.economyManager.init();
+  }
+
+  @Override
   public void registerPluginChannels() {
 
     PluginCore.instance().getChannelMessageManager().register(new BalanceHandler());
@@ -310,13 +323,6 @@ public abstract class TNECore extends PluginEngine {
 
   @Override
   public void postConfigs() {
-
-    //set our debug options.
-    PluginCore.instance().setLevel(DebugLevel.fromID(MainConfig.yaml().getString("Core.Debugging.Mode")));
-
-    this.economyManager = new EconomyManager();
-
-    this.economyManager.init();
 
     if(!this.economyManager.currency().load(PluginCore.directory(), false)) {
       return;
