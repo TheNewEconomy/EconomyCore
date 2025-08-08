@@ -172,97 +172,104 @@
 <span class="source-line-no">159</span><span id="line-159"></span>
 <span class="source-line-no">160</span><span id="line-160">    // Reduce the value associated with the higherEntry key by 1</span>
 <span class="source-line-no">161</span><span id="line-161">    if(toRemove.containsKey(higherEntry.getKey())) {</span>
-<span class="source-line-no">162</span><span id="line-162">      toRemove.put(higherEntry.getKey(), toRemove.get(higherEntry.getKey()) + 1);</span>
-<span class="source-line-no">163</span><span id="line-163">    } else {</span>
-<span class="source-line-no">164</span><span id="line-164">      toRemove.put(higherEntry.getKey(), 1);</span>
-<span class="source-line-no">165</span><span id="line-165">    }</span>
-<span class="source-line-no">166</span><span id="line-166">    // Calculate the difference between the higherEntry key and the given amount</span>
-<span class="source-line-no">167</span><span id="line-167">    final BigDecimal difference = higherEntry.getKey().subtract(amount);</span>
-<span class="source-line-no">168</span><span id="line-168"></span>
-<span class="source-line-no">169</span><span id="line-169">    // Create a new HashMap called counts with the breakdown of the original amount</span>
-<span class="source-line-no">170</span><span id="line-170">    final Map&lt;BigDecimal, Integer&gt; counts = new HashMap&lt;&gt;(breakdown(amount));</span>
-<span class="source-line-no">171</span><span id="line-171"></span>
-<span class="source-line-no">172</span><span id="line-172">    // Combine the counts map with the breakdown of the difference</span>
-<span class="source-line-no">173</span><span id="line-173">    combineMaps(counts, breakdown(difference));</span>
-<span class="source-line-no">174</span><span id="line-174"></span>
-<span class="source-line-no">175</span><span id="line-175">    // Return the counts map</span>
-<span class="source-line-no">176</span><span id="line-176">    return counts;</span>
-<span class="source-line-no">177</span><span id="line-177">  }</span>
-<span class="source-line-no">178</span><span id="line-178"></span>
-<span class="source-line-no">179</span><span id="line-179">  /**</span>
-<span class="source-line-no">180</span><span id="line-180">   * Calculates the number of each denomination required to make up a given monetary amount, using a</span>
-<span class="source-line-no">181</span><span id="line-181">   * currency's denomination values.</span>
-<span class="source-line-no">182</span><span id="line-182">   *</span>
-<span class="source-line-no">183</span><span id="line-183">   * @param amount the monetary amount to break down into denominations</span>
-<span class="source-line-no">184</span><span id="line-184">   *</span>
-<span class="source-line-no">185</span><span id="line-185">   * @return a map of BigDecimal denominations and the number of each denomination required to make</span>
-<span class="source-line-no">186</span><span id="line-186">   * up the amount</span>
-<span class="source-line-no">187</span><span id="line-187">   */</span>
-<span class="source-line-no">188</span><span id="line-188">  public Map&lt;BigDecimal, Integer&gt; breakdown(final BigDecimal amount) {</span>
-<span class="source-line-no">189</span><span id="line-189"></span>
-<span class="source-line-no">190</span><span id="line-190">    // Create a new map to store the breakdown counts</span>
-<span class="source-line-no">191</span><span id="line-191">    final Map&lt;BigDecimal, Integer&gt; counts = new HashMap&lt;&gt;();</span>
-<span class="source-line-no">192</span><span id="line-192"></span>
-<span class="source-line-no">193</span><span id="line-193">    // Create a copy of the amount to work with</span>
-<span class="source-line-no">194</span><span id="line-194">    BigDecimal workingAmount = amount;</span>
-<span class="source-line-no">195</span><span id="line-195"></span>
-<span class="source-line-no">196</span><span id="line-196">    // Iterate through the available denominations in the denominationTypes list</span>
-<span class="source-line-no">197</span><span id="line-197">    for(final BigDecimal denomination : denominationTypes) {</span>
-<span class="source-line-no">198</span><span id="line-198"></span>
-<span class="source-line-no">199</span><span id="line-199">      // Calculate the number of this denomination required to make up the remaining amount</span>
-<span class="source-line-no">200</span><span id="line-200">      final int count = workingAmount.divide(denomination, 0, RoundingMode.DOWN).intValue();</span>
+<span class="source-line-no">162</span><span id="line-162"></span>
+<span class="source-line-no">163</span><span id="line-163">      toRemove.put(higherEntry.getKey(), toRemove.get(higherEntry.getKey()) + 1);</span>
+<span class="source-line-no">164</span><span id="line-164">    } else {</span>
+<span class="source-line-no">165</span><span id="line-165">      toRemove.put(higherEntry.getKey(), 1);</span>
+<span class="source-line-no">166</span><span id="line-166">    }</span>
+<span class="source-line-no">167</span><span id="line-167">    // Calculate the difference between the higherEntry key and the given amount</span>
+<span class="source-line-no">168</span><span id="line-168">    final BigDecimal difference = higherEntry.getKey().subtract(amount);</span>
+<span class="source-line-no">169</span><span id="line-169"></span>
+<span class="source-line-no">170</span><span id="line-170">    // Create a new HashMap called counts with the breakdown of the original amount</span>
+<span class="source-line-no">171</span><span id="line-171">    final Map&lt;BigDecimal, Integer&gt; counts = new HashMap&lt;&gt;(breakdown(amount));</span>
+<span class="source-line-no">172</span><span id="line-172"></span>
+<span class="source-line-no">173</span><span id="line-173">    // Combine the counts map with the breakdown of the difference</span>
+<span class="source-line-no">174</span><span id="line-174">    combineMaps(counts, breakdown(difference));</span>
+<span class="source-line-no">175</span><span id="line-175"></span>
+<span class="source-line-no">176</span><span id="line-176">    // Return the counts map</span>
+<span class="source-line-no">177</span><span id="line-177">    return counts;</span>
+<span class="source-line-no">178</span><span id="line-178">  }</span>
+<span class="source-line-no">179</span><span id="line-179"></span>
+<span class="source-line-no">180</span><span id="line-180">  /**</span>
+<span class="source-line-no">181</span><span id="line-181">   * Calculates the number of each denomination required to make up a given monetary amount, using a</span>
+<span class="source-line-no">182</span><span id="line-182">   * currency's denomination values.</span>
+<span class="source-line-no">183</span><span id="line-183">   *</span>
+<span class="source-line-no">184</span><span id="line-184">   * @param amount the monetary amount to break down into denominations</span>
+<span class="source-line-no">185</span><span id="line-185">   *</span>
+<span class="source-line-no">186</span><span id="line-186">   * @return a map of BigDecimal denominations and the number of each denomination required to make</span>
+<span class="source-line-no">187</span><span id="line-187">   * up the amount</span>
+<span class="source-line-no">188</span><span id="line-188">   */</span>
+<span class="source-line-no">189</span><span id="line-189">  public Map&lt;BigDecimal, Integer&gt; breakdown(final BigDecimal amount) {</span>
+<span class="source-line-no">190</span><span id="line-190"></span>
+<span class="source-line-no">191</span><span id="line-191">    // Create a new map to store the breakdown counts</span>
+<span class="source-line-no">192</span><span id="line-192">    final Map&lt;BigDecimal, Integer&gt; counts = new HashMap&lt;&gt;();</span>
+<span class="source-line-no">193</span><span id="line-193"></span>
+<span class="source-line-no">194</span><span id="line-194">    // Create a copy of the amount to work with</span>
+<span class="source-line-no">195</span><span id="line-195">    BigDecimal workingAmount = amount;</span>
+<span class="source-line-no">196</span><span id="line-196"></span>
+<span class="source-line-no">197</span><span id="line-197">    // Iterate through the available denominations in the denominationTypes list</span>
+<span class="source-line-no">198</span><span id="line-198">    for(final BigDecimal denomination : denominationTypes) {</span>
+<span class="source-line-no">199</span><span id="line-199"></span>
+<span class="source-line-no">200</span><span id="line-200">      //PluginCore.log().debug("breakdown Denomination: " + denomination.toPlainString(), DebugLevel.DEVELOPER);</span>
 <span class="source-line-no">201</span><span id="line-201"></span>
-<span class="source-line-no">202</span><span id="line-202">      // If any of this denomination are required, subtract their value from the working amount</span>
-<span class="source-line-no">203</span><span id="line-203">      // and add the count to the counts map</span>
-<span class="source-line-no">204</span><span id="line-204">      if(count &gt; 0) {</span>
-<span class="source-line-no">205</span><span id="line-205">        workingAmount = workingAmount.subtract(denomination.multiply(BigDecimal.valueOf(count)));</span>
-<span class="source-line-no">206</span><span id="line-206">        counts.put(denomination, count);</span>
-<span class="source-line-no">207</span><span id="line-207">      }</span>
-<span class="source-line-no">208</span><span id="line-208"></span>
-<span class="source-line-no">209</span><span id="line-209">      // If we've made up the entire amount, exit the loop</span>
-<span class="source-line-no">210</span><span id="line-210">      if(workingAmount.compareTo(BigDecimal.ZERO) &lt;= 0) break;</span>
-<span class="source-line-no">211</span><span id="line-211">    }</span>
-<span class="source-line-no">212</span><span id="line-212">    // Return the counts map</span>
-<span class="source-line-no">213</span><span id="line-213">    return counts;</span>
-<span class="source-line-no">214</span><span id="line-214">  }</span>
+<span class="source-line-no">202</span><span id="line-202">      // Calculate the number of this denomination required to make up the remaining amount</span>
+<span class="source-line-no">203</span><span id="line-203">      final int count = workingAmount.divide(denomination, 0, RoundingMode.DOWN).intValue();</span>
+<span class="source-line-no">204</span><span id="line-204"></span>
+<span class="source-line-no">205</span><span id="line-205">      //PluginCore.log().debug("breakdown count: " + count, DebugLevel.DEVELOPER);</span>
+<span class="source-line-no">206</span><span id="line-206"></span>
+<span class="source-line-no">207</span><span id="line-207">      // If any of this denomination are required, subtract their value from the working amount</span>
+<span class="source-line-no">208</span><span id="line-208">      // and add the count to the counts map</span>
+<span class="source-line-no">209</span><span id="line-209">      if(count &gt; 0) {</span>
+<span class="source-line-no">210</span><span id="line-210">        workingAmount = workingAmount.subtract(denomination.multiply(BigDecimal.valueOf(count)));</span>
+<span class="source-line-no">211</span><span id="line-211"></span>
+<span class="source-line-no">212</span><span id="line-212">        //PluginCore.log().debug("breakdown count &gt; 0 workingAmount: " + workingAmount, DebugLevel.DEVELOPER);</span>
+<span class="source-line-no">213</span><span id="line-213">        counts.put(denomination, count);</span>
+<span class="source-line-no">214</span><span id="line-214">      }</span>
 <span class="source-line-no">215</span><span id="line-215"></span>
-<span class="source-line-no">216</span><span id="line-216">  /**</span>
-<span class="source-line-no">217</span><span id="line-217">   * Combines two maps of BigDecimal keys and Integer values, adding the values of matching keys and</span>
-<span class="source-line-no">218</span><span id="line-218">   * adding new key-value pairs as necessary.</span>
-<span class="source-line-no">219</span><span id="line-219">   *</span>
-<span class="source-line-no">220</span><span id="line-220">   * @param exist the map to add values to</span>
-<span class="source-line-no">221</span><span id="line-221">   * @param toAdd the map containing the values to add</span>
-<span class="source-line-no">222</span><span id="line-222">   */</span>
-<span class="source-line-no">223</span><span id="line-223">  private void combineMaps(final Map&lt;BigDecimal, Integer&gt; exist, final Map&lt;BigDecimal, Integer&gt; toAdd) {</span>
-<span class="source-line-no">224</span><span id="line-224"></span>
-<span class="source-line-no">225</span><span id="line-225"></span>
-<span class="source-line-no">226</span><span id="line-226">    // Iterate through the toAdd map</span>
-<span class="source-line-no">227</span><span id="line-227">    for(final Map.Entry&lt;BigDecimal, Integer&gt; entry : toAdd.entrySet()) {</span>
-<span class="source-line-no">228</span><span id="line-228"></span>
-<span class="source-line-no">229</span><span id="line-229">      // If the exist map already contains the key from the current toAdd entry,</span>
-<span class="source-line-no">230</span><span id="line-230">      // add the value from the toAdd entry to the value in the exist map</span>
-<span class="source-line-no">231</span><span id="line-231">      if(exist.containsKey(entry.getKey())) {</span>
+<span class="source-line-no">216</span><span id="line-216">      // If we've made up the entire amount, exit the loop</span>
+<span class="source-line-no">217</span><span id="line-217">      if(workingAmount.compareTo(BigDecimal.ZERO) &lt;= 0) break;</span>
+<span class="source-line-no">218</span><span id="line-218">    }</span>
+<span class="source-line-no">219</span><span id="line-219">    // Return the counts map</span>
+<span class="source-line-no">220</span><span id="line-220">    return counts;</span>
+<span class="source-line-no">221</span><span id="line-221">  }</span>
+<span class="source-line-no">222</span><span id="line-222"></span>
+<span class="source-line-no">223</span><span id="line-223">  /**</span>
+<span class="source-line-no">224</span><span id="line-224">   * Combines two maps of BigDecimal keys and Integer values, adding the values of matching keys and</span>
+<span class="source-line-no">225</span><span id="line-225">   * adding new key-value pairs as necessary.</span>
+<span class="source-line-no">226</span><span id="line-226">   *</span>
+<span class="source-line-no">227</span><span id="line-227">   * @param exist the map to add values to</span>
+<span class="source-line-no">228</span><span id="line-228">   * @param toAdd the map containing the values to add</span>
+<span class="source-line-no">229</span><span id="line-229">   */</span>
+<span class="source-line-no">230</span><span id="line-230">  private void combineMaps(final Map&lt;BigDecimal, Integer&gt; exist, final Map&lt;BigDecimal, Integer&gt; toAdd) {</span>
+<span class="source-line-no">231</span><span id="line-231"></span>
 <span class="source-line-no">232</span><span id="line-232"></span>
-<span class="source-line-no">233</span><span id="line-233">        exist.put(entry.getKey(), (exist.get(entry.getKey()) + entry.getValue()));</span>
-<span class="source-line-no">234</span><span id="line-234"></span>
-<span class="source-line-no">235</span><span id="line-235">      } else {</span>
-<span class="source-line-no">236</span><span id="line-236"></span>
-<span class="source-line-no">237</span><span id="line-237">        // Otherwise, add the new key-value pair to the exist map</span>
-<span class="source-line-no">238</span><span id="line-238">        exist.put(entry.getKey(), entry.getValue());</span>
-<span class="source-line-no">239</span><span id="line-239">      }</span>
-<span class="source-line-no">240</span><span id="line-240">    }</span>
-<span class="source-line-no">241</span><span id="line-241">  }</span>
-<span class="source-line-no">242</span><span id="line-242"></span>
-<span class="source-line-no">243</span><span id="line-243">  public TreeMap&lt;BigDecimal, Integer&gt; getToAdd() {</span>
-<span class="source-line-no">244</span><span id="line-244"></span>
-<span class="source-line-no">245</span><span id="line-245">    return toAdd;</span>
-<span class="source-line-no">246</span><span id="line-246">  }</span>
-<span class="source-line-no">247</span><span id="line-247"></span>
-<span class="source-line-no">248</span><span id="line-248">  public TreeMap&lt;BigDecimal, Integer&gt; getToRemove() {</span>
+<span class="source-line-no">233</span><span id="line-233">    // Iterate through the toAdd map</span>
+<span class="source-line-no">234</span><span id="line-234">    for(final Map.Entry&lt;BigDecimal, Integer&gt; entry : toAdd.entrySet()) {</span>
+<span class="source-line-no">235</span><span id="line-235"></span>
+<span class="source-line-no">236</span><span id="line-236">      // If the exist map already contains the key from the current toAdd entry,</span>
+<span class="source-line-no">237</span><span id="line-237">      // add the value from the toAdd entry to the value in the exist map</span>
+<span class="source-line-no">238</span><span id="line-238">      if(exist.containsKey(entry.getKey())) {</span>
+<span class="source-line-no">239</span><span id="line-239"></span>
+<span class="source-line-no">240</span><span id="line-240">        exist.put(entry.getKey(), (exist.get(entry.getKey()) + entry.getValue()));</span>
+<span class="source-line-no">241</span><span id="line-241"></span>
+<span class="source-line-no">242</span><span id="line-242">      } else {</span>
+<span class="source-line-no">243</span><span id="line-243"></span>
+<span class="source-line-no">244</span><span id="line-244">        // Otherwise, add the new key-value pair to the exist map</span>
+<span class="source-line-no">245</span><span id="line-245">        exist.put(entry.getKey(), entry.getValue());</span>
+<span class="source-line-no">246</span><span id="line-246">      }</span>
+<span class="source-line-no">247</span><span id="line-247">    }</span>
+<span class="source-line-no">248</span><span id="line-248">  }</span>
 <span class="source-line-no">249</span><span id="line-249"></span>
-<span class="source-line-no">250</span><span id="line-250">    return toRemove;</span>
-<span class="source-line-no">251</span><span id="line-251">  }</span>
-<span class="source-line-no">252</span><span id="line-252">}</span>
+<span class="source-line-no">250</span><span id="line-250">  public TreeMap&lt;BigDecimal, Integer&gt; getToAdd() {</span>
+<span class="source-line-no">251</span><span id="line-251"></span>
+<span class="source-line-no">252</span><span id="line-252">    return toAdd;</span>
+<span class="source-line-no">253</span><span id="line-253">  }</span>
+<span class="source-line-no">254</span><span id="line-254"></span>
+<span class="source-line-no">255</span><span id="line-255">  public TreeMap&lt;BigDecimal, Integer&gt; getToRemove() {</span>
+<span class="source-line-no">256</span><span id="line-256"></span>
+<span class="source-line-no">257</span><span id="line-257">    return toRemove;</span>
+<span class="source-line-no">258</span><span id="line-258">  }</span>
+<span class="source-line-no">259</span><span id="line-259">}</span>
 
 
 

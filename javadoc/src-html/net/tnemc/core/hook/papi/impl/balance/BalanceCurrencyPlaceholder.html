@@ -100,7 +100,7 @@
 <span class="source-line-no">087</span><span id="line-87">      return null;</span>
 <span class="source-line-no">088</span><span id="line-88">    }</span>
 <span class="source-line-no">089</span><span id="line-89"></span>
-<span class="source-line-no">090</span><span id="line-90">    final String region = TNECore.eco().region().resolve(params[3]);</span>
+<span class="source-line-no">090</span><span id="line-90">    final String region = TNECore.eco().region().defaultRegion();</span>
 <span class="source-line-no">091</span><span id="line-91">    final boolean formatted = (params[params.length - 1].equalsIgnoreCase("formatted"));</span>
 <span class="source-line-no">092</span><span id="line-92"></span>
 <span class="source-line-no">093</span><span id="line-93">    return PlaceholderManager.parseHoldings(accountOptional.get(), region,</span>
