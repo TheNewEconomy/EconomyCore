@@ -19,6 +19,8 @@ package net.tnemc.core.currency.calculations;
  */
 
 import net.tnemc.core.currency.Denomination;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -79,10 +81,30 @@ public class ItemCalculations<I> {
     data.getCalculator().calculateDenominationCounts(change);
 
     for(final Map.Entry<BigDecimal, Integer> entry : data.getCalculator().getToAdd().entrySet()) {
-      data.provideMaterials(data.getDenominations().get(entry.getKey()), entry.getValue());
+
+      Integer amount = entry.getValue();
+
+      final Integer removeAmount = data.getCalculator().getToRemove().getOrDefault(entry.getKey(), 0);
+
+      if(removeAmount > 0 && amount > removeAmount) {
+
+        amount = amount - removeAmount;
+      }
+
+      if(removeAmount > 0 && amount <= removeAmount) {
+
+        continue;
+      }
+
+      //PluginCore.log().debug("calculation Amount getToAdd:" + entry.getKey().toPlainString() + " Count:" + amount, DebugLevel.DEVELOPER);
+
+      data.provideMaterials(data.getDenominations().get(entry.getKey()), amount);
     }
 
     for(final Map.Entry<BigDecimal, Integer> entry : data.getCalculator().getToRemove().entrySet()) {
+
+      //PluginCore.log().debug("calculation Amount getToRemove:" + entry.getKey().toPlainString() + " Count:" + entry.getValue(), DebugLevel.DEVELOPER);
+
       data.removeMaterials(data.getDenominations().get(entry.getKey()), entry.getValue());
     }
 

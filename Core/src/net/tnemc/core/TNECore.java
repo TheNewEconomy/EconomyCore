@@ -2,7 +2,7 @@ package net.tnemc.core;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2025 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -102,7 +102,7 @@ public abstract class TNECore extends PluginEngine {
    */
   public static final String coreURL = "https://tnemc.net/files/module-version.xml";
   public static final String version = "0.1.4.0";
-  public static final String build = "SNAPSHOT-13";
+  public static final String build = "SNAPSHOT-16";
   protected static TNECore instance;
 
   /* Key Managers and Object instances utilized with TNE */
@@ -110,7 +110,6 @@ public abstract class TNECore extends PluginEngine {
   private final TNEAPI api = new TNEAPI();
   //General Key Object Instances
   protected EconomyManager economyManager;
-  protected Updater updater;
   protected UUID serverAccount;
   private MainConfig config;
   private DataConfig data;
@@ -367,18 +366,22 @@ public abstract class TNECore extends PluginEngine {
     MenuManager.instance().addMenu(new MyBalMenu());
     MenuManager.instance().addMenu(new TransactionMenu());
 
+    PluginCore.log().debug("Loading All Accounts....");
+
     this.storage.loadAll(Account.class, "");
+
+    PluginCore.log().debug("Loading All Receipts....");
 
     this.storage.loadAll(Receipt.class, "");
 
     this.economyManager.setReloadTime(new Date().getTime());
 
+    PluginCore.log().debug("Checking Server account...");
+
     final String name = MainConfig.yaml().getString("Core.Server.Account.Name");
     serverAccount = UUID.nameUUIDFromBytes(("NonPlayer:" + name).getBytes(StandardCharsets.UTF_8));
 
     if(MainConfig.yaml().getBoolean("Core.Server.Account.Enabled")) {
-
-      PluginCore.log().inform("Checking Server Account.");
 
       if(economyManager.account().findAccount(serverAccount.toString()).isEmpty()) {
 
@@ -403,19 +406,23 @@ public abstract class TNECore extends PluginEngine {
       }
     }
 
+    PluginCore.log().debug("Checking if AutoSaver hamsters are ready....");
     //Set up the auto saver if enabled.
     if(DataConfig.yaml().getBoolean("Data.AutoSaver.Enabled")) {
 
       this.autoSaver = PluginCore.server().scheduler().createRepeatingTask(()->{
-                                                                             storage.storeAll();
+                                                                              PluginCore.log().inform("Running AutoSaver.");
+                                                                              storage.storeAll();
                                                                            }, new ChoreTime(0),
                                                                            new ChoreTime(DataConfig.yaml().getInt("Data.AutoSaver.Interval"), TimeUnit.SECONDS),
                                                                            ChoreExecution.SECONDARY);
     }
 
+    PluginCore.log().debug("Checking for forgotten balances....");
 
     economyManager.printInvalid();
 
+    PluginCore.log().debug("Firing up BalTop Caching System....");
     PluginCore.server().scheduler().createDelayedTask(()->economyManager.getTopManager().load(), new ChoreTime(2), ChoreExecution.SECONDARY);
     PluginCore.server().scheduler().createRepeatingTask(()->economyManager.getTopManager().load(), new ChoreTime(2), new ChoreTime(MainConfig.yaml().getInt("Core.Commands.Top.Refresh"), TimeUnit.SECONDS), ChoreExecution.SECONDARY);
   }

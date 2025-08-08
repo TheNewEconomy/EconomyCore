@@ -89,7 +89,6 @@ public class CurrencyManager {
 
   public boolean load(final File parent, final boolean reset) {
 
-    saver.saveCurrenciesUUID(new File(parent, "currency"));
     if(reset) {
       currencies.clear();
       curIDMap.clear();

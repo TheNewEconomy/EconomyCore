@@ -18,6 +18,7 @@ package net.tnemc.core.currency.saver;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import com.sun.source.util.Plugin;
 import dev.dejvokep.boostedyaml.YamlDocument;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.config.MainConfig;
@@ -65,6 +66,8 @@ public class DefaultCurrencySaver implements CurrencySaver {
    */
   @Override
   public void saveCurrenciesUUID(final File directory) {
+
+    PluginCore.log().debug("Saving currencies uuid...");
 
     for(final Currency currency : TNECore.eco().currency().currencies()) {
       saveID(directory, currency);

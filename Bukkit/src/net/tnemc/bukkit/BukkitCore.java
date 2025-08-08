@@ -108,7 +108,7 @@ public class BukkitCore extends TNECore {
 
     super.registerCallbacks(callbackManager);
 
-    callbackManager.addConsumer(TNECallbacks.ACCOUNT_TYPES.toString(), (callback->{
+    callbackManager.addConsumer(TNECallbacks.ACCOUNT_TYPES.id(), (callback->{
 
       if(Bukkit.getPluginManager().getPlugin("Towny") != null) {
 

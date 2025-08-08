@@ -2,7 +2,7 @@ package net.tnemc.core.manager;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2025 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -118,6 +118,19 @@ public class AccountManager {
    * @return A correlating {@link AccountAPIResponse response} containing the results.
    */
   public AccountAPIResponse createAccount(final String identifier, final String name, final boolean nonPlayer) {
+    return createAccount(identifier, name, nonPlayer, false);
+  }
+
+  /**
+   * Create an account based on the provided identifier, name, and flags.
+   *
+   * @param identifier The identifier for the account.
+   * @param name The name of the account.
+   * @param nonPlayer A boolean flag indicating if the account is for a non-player.
+   * @param skipDB A boolean flag to skip the database saving on creation.
+   * @return An AccountAPIResponse object with the result of the account creation process.
+   */
+  public AccountAPIResponse createAccount(final String identifier, final String name, final boolean nonPlayer, final boolean skipDB) {
 
     PluginCore.log().debug("Create Account Called! ID: " + identifier + " Name: " + name);
     if(name.contains("§")) {
@@ -207,7 +220,9 @@ public class AccountManager {
 
     accounts.put(account.getIdentifier().toString(), account);
 
-    TNECore.instance().storage().store(account, account.getIdentifier().toString());
+    if(!skipDB) {
+      TNECore.instance().storage().store(account, account.getIdentifier().toString());
+    }
 
     try {
       uuidProvider.store(new UUIDPair(account.getIdentifier(), account.getName()));

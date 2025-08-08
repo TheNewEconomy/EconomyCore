@@ -87,7 +87,7 @@ public class BalanceCurrencyPlaceholder implements Placeholder {
       return null;
     }
 
-    final String region = TNECore.eco().region().resolve(params[3]);
+    final String region = TNECore.eco().region().defaultRegion();
     final boolean formatted = (params[params.length - 1].equalsIgnoreCase("formatted"));
 
     return PlaceholderManager.parseHoldings(accountOptional.get(), region,

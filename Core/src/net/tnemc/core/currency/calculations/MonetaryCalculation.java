@@ -159,6 +159,7 @@ public class MonetaryCalculation {
 
     // Reduce the value associated with the higherEntry key by 1
     if(toRemove.containsKey(higherEntry.getKey())) {
+
       toRemove.put(higherEntry.getKey(), toRemove.get(higherEntry.getKey()) + 1);
     } else {
       toRemove.put(higherEntry.getKey(), 1);
@@ -196,13 +197,19 @@ public class MonetaryCalculation {
     // Iterate through the available denominations in the denominationTypes list
     for(final BigDecimal denomination : denominationTypes) {
 
+      //PluginCore.log().debug("breakdown Denomination: " + denomination.toPlainString(), DebugLevel.DEVELOPER);
+
       // Calculate the number of this denomination required to make up the remaining amount
       final int count = workingAmount.divide(denomination, 0, RoundingMode.DOWN).intValue();
+
+      //PluginCore.log().debug("breakdown count: " + count, DebugLevel.DEVELOPER);
 
       // If any of this denomination are required, subtract their value from the working amount
       // and add the count to the counts map
       if(count > 0) {
         workingAmount = workingAmount.subtract(denomination.multiply(BigDecimal.valueOf(count)));
+
+        //PluginCore.log().debug("breakdown count > 0 workingAmount: " + workingAmount, DebugLevel.DEVELOPER);
         counts.put(denomination, count);
       }
 

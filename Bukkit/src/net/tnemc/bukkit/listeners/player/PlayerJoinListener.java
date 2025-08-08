@@ -2,7 +2,7 @@ package net.tnemc.bukkit.listeners.player;
 
 /*
  * The New Economy
- * Copyright (C) 2022 - 2024 Daniel "creatorfromhell" Vidmar
+ * Copyright (C) 2022 - 2025 Daniel "creatorfromhell" Vidmar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -46,16 +46,11 @@ public class PlayerJoinListener implements Listener {
     if(handle.isCancelled()) {
       event.getPlayer().kickPlayer(handle.getResponse());
     }
-    //LegacyComponentSerializer.legacySection().deserialize("<white>=====[<green>Missed Transactions</green>]===== $page/$page_top<newline>ID | Type");
-    //final String display = LegacyComponentSerializer.legacySection().serialize(MiniMessage.miniMessage().deserialize("<red>No NMS Display"));
-    //meta.setLore(Collections.singletonList(LegacyComponentSerializer.legacySection().serialize(MiniMessage.miniMessage().deserialize("<white>No <green>NMS</green> <red>Lore</red>"))));
 
     //Is john joining?
     //easter egg
     if(event.getPlayer().getUniqueId().toString().equalsIgnoreCase("e8e32707-8120-4c48-ad16-81d3fce9346d")) {
       event.getPlayer().chat("Hi my name is JustJohns. I like anime!");
     }
-
-    System.out.println();
   }
 }

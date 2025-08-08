@@ -57,6 +57,16 @@ public class MISCUtils {
     }
   }
 
+  public static void printStack() {
+
+    System.out.println("Printing stack trace:");
+    final StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+    for (int i = 1; i < elements.length; i++) {
+      final StackTraceElement s = elements[i];
+      System.out.println("\tat " + s.getClassName() + "." + s.getMethodName() + "(" + s.getFileName() + ":" + s.getLineNumber() + ")");
+    }
+  }
+
   /**
    * Checks if the time difference between a given date and the current date is greater than or
    * equal to the specified number of minutes.

@@ -134,6 +134,9 @@ public class CalculationData<I> {
     if(!left.isEmpty() && account.isPresent()) {
 
       if(currency.isEnderFill()) {
+
+        //PluginCore.log().debug("Ender Fill: " + contains, DebugLevel.DETAILED);
+        //PluginCore.log().debug("Ender Fill: " + amount, DebugLevel.DETAILED);
         final Collection<AbstractItemStack<Object>> enderLeft = PluginCore.server().calculations().giveItems(left, account.get().getPlayer().get().inventory().getInventory(true), currency.shulker(), currency.bundle());
 
         if(!enderLeft.isEmpty()) {
@@ -154,7 +157,7 @@ public class CalculationData<I> {
       }
     }
 
-    PluginCore.log().debug("Weight: " + denomination.weight() + " - Amount: " + amount, DebugLevel.DETAILED);
+    //PluginCore.log().debug("Weight: " + denomination.weight() + " - Amount: " + amount, DebugLevel.DETAILED);
 
     inventoryMaterials.put(denomination.weight(), contains);
   }
