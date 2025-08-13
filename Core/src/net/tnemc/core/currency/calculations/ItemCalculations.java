@@ -86,14 +86,17 @@ public class ItemCalculations<I> {
 
       final Integer removeAmount = data.getCalculator().getToRemove().getOrDefault(entry.getKey(), 0);
 
-      if(removeAmount > 0 && amount > removeAmount) {
-
-        amount = amount - removeAmount;
-      }
-
-      if(removeAmount > 0 && amount <= removeAmount) {
-
-        continue;
+      // Only adjust amount if this denomination was not created via a breakdown.
+      // If breakdown already provided change, we don't subtract here.
+      if(removeAmount > 0) {
+        if(!data.getCalculator().getToAdd().containsKey(entry.getKey())) {
+          // Normal case: subtract the removed amount from what we're adding
+          if(amount > removeAmount) {
+            amount = amount - removeAmount;
+          } else {
+            continue;
+          }
+        }
       }
 
       //PluginCore.log().debug("calculation Amount getToAdd:" + entry.getKey().toPlainString() + " Count:" + amount, DebugLevel.DEVELOPER);
