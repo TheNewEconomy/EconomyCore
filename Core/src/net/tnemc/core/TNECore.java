@@ -80,6 +80,7 @@ import redis.clients.jedis.JedisPoolConfig;
 import revxrsal.commands.LampBuilderVisitor;
 import revxrsal.commands.command.CommandActor;
 import revxrsal.commands.command.ExecutableCommand;
+import revxrsal.commands.orphan.OrphanRegistry;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -243,6 +244,7 @@ public abstract class TNECore extends PluginEngine {
     if(redisPass != null && redisPass.equalsIgnoreCase("none")) {
       redisPass = null;
     }
+
 
     this.storage = new StorageManager(DataConfig.yaml().getString("Data.Database.Type"),
                                       new TNEStorageProvider(), settings, new JedisPool(config, DataConfig.yaml().getString("Data.Sync.Redis.Host"),

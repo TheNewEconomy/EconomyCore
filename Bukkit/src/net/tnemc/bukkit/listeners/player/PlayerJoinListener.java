@@ -36,7 +36,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
  */
 public class PlayerJoinListener implements Listener {
 
-  @EventHandler(priority = EventPriority.HIGHEST)
+  @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
   public void onJoin(final PlayerJoinEvent event) {
 
     final PlayerProvider provider = PluginCore.server().initializePlayer(event.getPlayer());
