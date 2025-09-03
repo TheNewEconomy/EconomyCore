@@ -21,12 +21,16 @@ package net.tnemc.sponge;
 import com.google.inject.Inject;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.TNECallbackProvider;
+import net.tnemc.core.api.callback.TNECallbacks;
+import net.tnemc.core.api.callback.currency.CurrencyLoadCallback;
+import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.message.BaseTranslationProvider;
 import net.tnemc.menu.sponge8.Sponge8MenuHandler;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.api.CallbackManager;
 import net.tnemc.plugincore.sponge.SpongePluginCore;
 import net.tnemc.sponge.command.AdminCommand;
+import net.tnemc.sponge.command.CurrencyMoneyCommand;
 import net.tnemc.sponge.command.ModuleCommand;
 import net.tnemc.sponge.command.MoneyCommand;
 import net.tnemc.sponge.command.ShortCommands;
@@ -54,6 +58,7 @@ import org.spongepowered.plugin.PluginContainer;
 import org.spongepowered.plugin.builtin.jvm.Plugin;
 import revxrsal.commands.command.CommandActor;
 import revxrsal.commands.command.ExecutableCommand;
+import revxrsal.commands.orphan.Orphans;
 import revxrsal.commands.sponge.SpongeLamp;
 
 import java.nio.file.Path;
@@ -172,6 +177,11 @@ public class SpongeCore extends TNECore {
     command.register(new MoneyCommand());
     command.register(new ShortCommands());
     command.register(new TransactionCommand());
+
+    for(final Currency currency : TNECore.eco().currency().currencies()) {
+
+      command.register(Orphans.path(currency.getIdentifier().toLowerCase()).handler(new CurrencyMoneyCommand(currency)));
+    }
   }
 
   @Override
@@ -183,7 +193,6 @@ public class SpongeCore extends TNECore {
   public void registerCallbacks(final CallbackManager callbackManager) {
 
     super.registerCallbacks(callbackManager);
-    //nothing to see here.
   }
 
   @Override

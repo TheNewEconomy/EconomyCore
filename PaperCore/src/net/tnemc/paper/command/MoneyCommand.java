@@ -71,6 +71,12 @@ public class MoneyCommand {
   @CommandPermission("tne.money.balance")
   public void onBalance(final BukkitCommandActor sender, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
 
+    System.out.println("Currency: " + currency);
+
+    if(currency == null) {
+      System.out.println("Currency is null");
+    }
+
     net.tnemc.core.command.MoneyCommand.onBalance(new PaperCMDSource(sender), currency, region);
   }
 
