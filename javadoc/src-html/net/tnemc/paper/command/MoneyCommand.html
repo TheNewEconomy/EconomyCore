@@ -84,158 +84,164 @@
 <span class="source-line-no">071</span><span id="line-71">  @CommandPermission("tne.money.balance")</span>
 <span class="source-line-no">072</span><span id="line-72">  public void onBalance(final BukkitCommandActor sender, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
 <span class="source-line-no">073</span><span id="line-73"></span>
-<span class="source-line-no">074</span><span id="line-74">    net.tnemc.core.command.MoneyCommand.onBalance(new PaperCMDSource(sender), currency, region);</span>
-<span class="source-line-no">075</span><span id="line-75">  }</span>
-<span class="source-line-no">076</span><span id="line-76"></span>
-<span class="source-line-no">077</span><span id="line-77">  @Subcommand({ "convert" })</span>
-<span class="source-line-no">078</span><span id="line-78">  @Usage("Money.Convert.Arguments")</span>
-<span class="source-line-no">079</span><span id="line-79">  @Description("Money.Convert.Description")</span>
-<span class="source-line-no">080</span><span id="line-80">  @CommandPermission("tne.money.convert")</span>
-<span class="source-line-no">081</span><span id="line-81">  public void onConvert(final BukkitCommandActor sender, @Named("amount") final PercentBigDecimal amount, @Named("currency") final Currency currency, @Named("currency") final Currency from) {</span>
+<span class="source-line-no">074</span><span id="line-74">    System.out.println("Currency: " + currency);</span>
+<span class="source-line-no">075</span><span id="line-75"></span>
+<span class="source-line-no">076</span><span id="line-76">    if(currency == null) {</span>
+<span class="source-line-no">077</span><span id="line-77">      System.out.println("Currency is null");</span>
+<span class="source-line-no">078</span><span id="line-78">    }</span>
+<span class="source-line-no">079</span><span id="line-79"></span>
+<span class="source-line-no">080</span><span id="line-80">    net.tnemc.core.command.MoneyCommand.onBalance(new PaperCMDSource(sender), currency, region);</span>
+<span class="source-line-no">081</span><span id="line-81">  }</span>
 <span class="source-line-no">082</span><span id="line-82"></span>
-<span class="source-line-no">083</span><span id="line-83">    net.tnemc.core.command.MoneyCommand.onConvert(new PaperCMDSource(sender), amount, currency, from);</span>
-<span class="source-line-no">084</span><span id="line-84">  }</span>
-<span class="source-line-no">085</span><span id="line-85"></span>
-<span class="source-line-no">086</span><span id="line-86">  @Subcommand({ "deposit" })</span>
-<span class="source-line-no">087</span><span id="line-87">  @Usage("Money.Deposit.Arguments")</span>
-<span class="source-line-no">088</span><span id="line-88">  @Description("Money.Deposit.Description")</span>
-<span class="source-line-no">089</span><span id="line-89">  @CommandPermission("tne.money.deposit")</span>
-<span class="source-line-no">090</span><span id="line-90">  @InventorySupport</span>
-<span class="source-line-no">091</span><span id="line-91">  @EnderSupport</span>
-<span class="source-line-no">092</span><span id="line-92">  @AllSupport</span>
-<span class="source-line-no">093</span><span id="line-93">  public void onDeposit(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
-<span class="source-line-no">094</span><span id="line-94"></span>
-<span class="source-line-no">095</span><span id="line-95">    net.tnemc.core.command.MoneyCommand.onDeposit(new PaperCMDSource(sender), amount, currency, region);</span>
-<span class="source-line-no">096</span><span id="line-96">  }</span>
-<span class="source-line-no">097</span><span id="line-97"></span>
-<span class="source-line-no">098</span><span id="line-98">  @Subcommand({ "give", "+", "add" })</span>
-<span class="source-line-no">099</span><span id="line-99">  @Usage("Money.Give.Arguments")</span>
-<span class="source-line-no">100</span><span id="line-100">  @Description("Money.Give.Description")</span>
-<span class="source-line-no">101</span><span id="line-101">  @CommandPermission("tne.money.give")</span>
-<span class="source-line-no">102</span><span id="line-102">  public void onGive(final BukkitCommandActor sender, final Account player, @Named("amount") final ParseMoney parseMoney, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
+<span class="source-line-no">083</span><span id="line-83">  @Subcommand({ "convert" })</span>
+<span class="source-line-no">084</span><span id="line-84">  @Usage("Money.Convert.Arguments")</span>
+<span class="source-line-no">085</span><span id="line-85">  @Description("Money.Convert.Description")</span>
+<span class="source-line-no">086</span><span id="line-86">  @CommandPermission("tne.money.convert")</span>
+<span class="source-line-no">087</span><span id="line-87">  public void onConvert(final BukkitCommandActor sender, @Named("amount") final PercentBigDecimal amount, @Named("currency") final Currency currency, @Named("currency") final Currency from) {</span>
+<span class="source-line-no">088</span><span id="line-88"></span>
+<span class="source-line-no">089</span><span id="line-89">    net.tnemc.core.command.MoneyCommand.onConvert(new PaperCMDSource(sender), amount, currency, from);</span>
+<span class="source-line-no">090</span><span id="line-90">  }</span>
+<span class="source-line-no">091</span><span id="line-91"></span>
+<span class="source-line-no">092</span><span id="line-92">  @Subcommand({ "deposit" })</span>
+<span class="source-line-no">093</span><span id="line-93">  @Usage("Money.Deposit.Arguments")</span>
+<span class="source-line-no">094</span><span id="line-94">  @Description("Money.Deposit.Description")</span>
+<span class="source-line-no">095</span><span id="line-95">  @CommandPermission("tne.money.deposit")</span>
+<span class="source-line-no">096</span><span id="line-96">  @InventorySupport</span>
+<span class="source-line-no">097</span><span id="line-97">  @EnderSupport</span>
+<span class="source-line-no">098</span><span id="line-98">  @AllSupport</span>
+<span class="source-line-no">099</span><span id="line-99">  public void onDeposit(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
+<span class="source-line-no">100</span><span id="line-100"></span>
+<span class="source-line-no">101</span><span id="line-101">    net.tnemc.core.command.MoneyCommand.onDeposit(new PaperCMDSource(sender), amount, currency, region);</span>
+<span class="source-line-no">102</span><span id="line-102">  }</span>
 <span class="source-line-no">103</span><span id="line-103"></span>
-<span class="source-line-no">104</span><span id="line-104">    net.tnemc.core.command.MoneyCommand.onGive(new PaperCMDSource(sender), player, parseMoney, region, currency);</span>
-<span class="source-line-no">105</span><span id="line-105">  }</span>
-<span class="source-line-no">106</span><span id="line-106"></span>
-<span class="source-line-no">107</span><span id="line-107">  @Subcommand({ "giveall", "+a", "addall" })</span>
-<span class="source-line-no">108</span><span id="line-108">  @Usage("Money.GiveAll.Arguments")</span>
-<span class="source-line-no">109</span><span id="line-109">  @Description("Money.GiveAll.Description")</span>
-<span class="source-line-no">110</span><span id="line-110">  @CommandPermission("tne.money.giveall")</span>
-<span class="source-line-no">111</span><span id="line-111">  public void onGiveAll(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
+<span class="source-line-no">104</span><span id="line-104">  @Subcommand({ "give", "+", "add" })</span>
+<span class="source-line-no">105</span><span id="line-105">  @Usage("Money.Give.Arguments")</span>
+<span class="source-line-no">106</span><span id="line-106">  @Description("Money.Give.Description")</span>
+<span class="source-line-no">107</span><span id="line-107">  @CommandPermission("tne.money.give")</span>
+<span class="source-line-no">108</span><span id="line-108">  public void onGive(final BukkitCommandActor sender, final Account player, @Named("amount") final ParseMoney parseMoney, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
+<span class="source-line-no">109</span><span id="line-109"></span>
+<span class="source-line-no">110</span><span id="line-110">    net.tnemc.core.command.MoneyCommand.onGive(new PaperCMDSource(sender), player, parseMoney, region, currency);</span>
+<span class="source-line-no">111</span><span id="line-111">  }</span>
 <span class="source-line-no">112</span><span id="line-112"></span>
-<span class="source-line-no">113</span><span id="line-113">    net.tnemc.core.command.MoneyCommand.onGiveAll(new PaperCMDSource(sender), amount, region, currency);</span>
-<span class="source-line-no">114</span><span id="line-114">  }</span>
-<span class="source-line-no">115</span><span id="line-115"></span>
-<span class="source-line-no">116</span><span id="line-116">  @Subcommand({ "givenote", "+note", "addnote" })</span>
-<span class="source-line-no">117</span><span id="line-117">  @Usage("Money.GiveNote.Arguments")</span>
-<span class="source-line-no">118</span><span id="line-118">  @Description("Money.GiveNote.Description")</span>
-<span class="source-line-no">119</span><span id="line-119">  @CommandPermission("tne.money.givenote")</span>
-<span class="source-line-no">120</span><span id="line-120">  public void onGiveNote(final BukkitCommandActor sender, final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency) {</span>
+<span class="source-line-no">113</span><span id="line-113">  @Subcommand({ "giveall", "+a", "addall" })</span>
+<span class="source-line-no">114</span><span id="line-114">  @Usage("Money.GiveAll.Arguments")</span>
+<span class="source-line-no">115</span><span id="line-115">  @Description("Money.GiveAll.Description")</span>
+<span class="source-line-no">116</span><span id="line-116">  @CommandPermission("tne.money.giveall")</span>
+<span class="source-line-no">117</span><span id="line-117">  public void onGiveAll(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
+<span class="source-line-no">118</span><span id="line-118"></span>
+<span class="source-line-no">119</span><span id="line-119">    net.tnemc.core.command.MoneyCommand.onGiveAll(new PaperCMDSource(sender), amount, region, currency);</span>
+<span class="source-line-no">120</span><span id="line-120">  }</span>
 <span class="source-line-no">121</span><span id="line-121"></span>
-<span class="source-line-no">122</span><span id="line-122">    net.tnemc.core.command.MoneyCommand.onGiveNote(new PaperCMDSource(sender), player, amount, currency);</span>
-<span class="source-line-no">123</span><span id="line-123">  }</span>
-<span class="source-line-no">124</span><span id="line-124"></span>
-<span class="source-line-no">125</span><span id="line-125">  @Subcommand({ "note", "n" })</span>
-<span class="source-line-no">126</span><span id="line-126">  @Usage("Money.Note.Arguments")</span>
-<span class="source-line-no">127</span><span id="line-127">  @Description("Money.Note.Description")</span>
-<span class="source-line-no">128</span><span id="line-128">  @CommandPermission("tne.money.note")</span>
-<span class="source-line-no">129</span><span id="line-129">  @InventorySupport</span>
-<span class="source-line-no">130</span><span id="line-130">  @EnderSupport</span>
-<span class="source-line-no">131</span><span id="line-131">  @AllSupport</span>
-<span class="source-line-no">132</span><span id="line-132">  public void onNote(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency) {</span>
-<span class="source-line-no">133</span><span id="line-133"></span>
-<span class="source-line-no">134</span><span id="line-134">    net.tnemc.core.command.MoneyCommand.onNote(new PaperCMDSource(sender), amount, currency);</span>
-<span class="source-line-no">135</span><span id="line-135">  }</span>
-<span class="source-line-no">136</span><span id="line-136"></span>
-<span class="source-line-no">137</span><span id="line-137">  @Subcommand({ "other", "check", "balo" })</span>
-<span class="source-line-no">138</span><span id="line-138">  //@DefaultFor({ "balo", "balanceother" })</span>
-<span class="source-line-no">139</span><span id="line-139">  @Usage("Money.Other.Arguments")</span>
-<span class="source-line-no">140</span><span id="line-140">  @Description("Money.Other.Description")</span>
-<span class="source-line-no">141</span><span id="line-141">  @CommandPermission("tne.money.other")</span>
-<span class="source-line-no">142</span><span id="line-142">  public void onOther(final BukkitCommandActor sender, @Named("account") final Account player, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
-<span class="source-line-no">143</span><span id="line-143"></span>
-<span class="source-line-no">144</span><span id="line-144">    net.tnemc.core.command.MoneyCommand.onOther(new PaperCMDSource(sender), player, region, currency);</span>
-<span class="source-line-no">145</span><span id="line-145">  }</span>
-<span class="source-line-no">146</span><span id="line-146"></span>
-<span class="source-line-no">147</span><span id="line-147">  @Subcommand({ "pay", "send", "transfer" })</span>
-<span class="source-line-no">148</span><span id="line-148">  @Usage("Money.Pay.Arguments")</span>
-<span class="source-line-no">149</span><span id="line-149">  @Description("Money.Pay.Description")</span>
-<span class="source-line-no">150</span><span id="line-150">  @CommandPermission("tne.money.pay")</span>
-<span class="source-line-no">151</span><span id="line-151">  @InventorySupport</span>
-<span class="source-line-no">152</span><span id="line-152">  @EnderSupport</span>
-<span class="source-line-no">153</span><span id="line-153">  @AllSupport</span>
-<span class="source-line-no">154</span><span id="line-154">  public void onPay(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency) {</span>
-<span class="source-line-no">155</span><span id="line-155"></span>
-<span class="source-line-no">156</span><span id="line-156">    net.tnemc.core.command.MoneyCommand.onPay(new PaperCMDSource(sender), player, amount, currency);</span>
-<span class="source-line-no">157</span><span id="line-157">  }</span>
-<span class="source-line-no">158</span><span id="line-158"></span>
-<span class="source-line-no">159</span><span id="line-159">  @Subcommand({ "request" })</span>
-<span class="source-line-no">160</span><span id="line-160">  @Usage("Money.Request.Arguments")</span>
-<span class="source-line-no">161</span><span id="line-161">  @Description("Money.Request.Description")</span>
-<span class="source-line-no">162</span><span id="line-162">  @CommandPermission("tne.money.Request")</span>
-<span class="source-line-no">163</span><span id="line-163">  public void onRequest(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency) {</span>
+<span class="source-line-no">122</span><span id="line-122">  @Subcommand({ "givenote", "+note", "addnote" })</span>
+<span class="source-line-no">123</span><span id="line-123">  @Usage("Money.GiveNote.Arguments")</span>
+<span class="source-line-no">124</span><span id="line-124">  @Description("Money.GiveNote.Description")</span>
+<span class="source-line-no">125</span><span id="line-125">  @CommandPermission("tne.money.givenote")</span>
+<span class="source-line-no">126</span><span id="line-126">  public void onGiveNote(final BukkitCommandActor sender, final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency) {</span>
+<span class="source-line-no">127</span><span id="line-127"></span>
+<span class="source-line-no">128</span><span id="line-128">    net.tnemc.core.command.MoneyCommand.onGiveNote(new PaperCMDSource(sender), player, amount, currency);</span>
+<span class="source-line-no">129</span><span id="line-129">  }</span>
+<span class="source-line-no">130</span><span id="line-130"></span>
+<span class="source-line-no">131</span><span id="line-131">  @Subcommand({ "note", "n" })</span>
+<span class="source-line-no">132</span><span id="line-132">  @Usage("Money.Note.Arguments")</span>
+<span class="source-line-no">133</span><span id="line-133">  @Description("Money.Note.Description")</span>
+<span class="source-line-no">134</span><span id="line-134">  @CommandPermission("tne.money.note")</span>
+<span class="source-line-no">135</span><span id="line-135">  @InventorySupport</span>
+<span class="source-line-no">136</span><span id="line-136">  @EnderSupport</span>
+<span class="source-line-no">137</span><span id="line-137">  @AllSupport</span>
+<span class="source-line-no">138</span><span id="line-138">  public void onNote(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency) {</span>
+<span class="source-line-no">139</span><span id="line-139"></span>
+<span class="source-line-no">140</span><span id="line-140">    net.tnemc.core.command.MoneyCommand.onNote(new PaperCMDSource(sender), amount, currency);</span>
+<span class="source-line-no">141</span><span id="line-141">  }</span>
+<span class="source-line-no">142</span><span id="line-142"></span>
+<span class="source-line-no">143</span><span id="line-143">  @Subcommand({ "other", "check", "balo" })</span>
+<span class="source-line-no">144</span><span id="line-144">  //@DefaultFor({ "balo", "balanceother" })</span>
+<span class="source-line-no">145</span><span id="line-145">  @Usage("Money.Other.Arguments")</span>
+<span class="source-line-no">146</span><span id="line-146">  @Description("Money.Other.Description")</span>
+<span class="source-line-no">147</span><span id="line-147">  @CommandPermission("tne.money.other")</span>
+<span class="source-line-no">148</span><span id="line-148">  public void onOther(final BukkitCommandActor sender, @Named("account") final Account player, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
+<span class="source-line-no">149</span><span id="line-149"></span>
+<span class="source-line-no">150</span><span id="line-150">    net.tnemc.core.command.MoneyCommand.onOther(new PaperCMDSource(sender), player, region, currency);</span>
+<span class="source-line-no">151</span><span id="line-151">  }</span>
+<span class="source-line-no">152</span><span id="line-152"></span>
+<span class="source-line-no">153</span><span id="line-153">  @Subcommand({ "pay", "send", "transfer" })</span>
+<span class="source-line-no">154</span><span id="line-154">  @Usage("Money.Pay.Arguments")</span>
+<span class="source-line-no">155</span><span id="line-155">  @Description("Money.Pay.Description")</span>
+<span class="source-line-no">156</span><span id="line-156">  @CommandPermission("tne.money.pay")</span>
+<span class="source-line-no">157</span><span id="line-157">  @InventorySupport</span>
+<span class="source-line-no">158</span><span id="line-158">  @EnderSupport</span>
+<span class="source-line-no">159</span><span id="line-159">  @AllSupport</span>
+<span class="source-line-no">160</span><span id="line-160">  public void onPay(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency) {</span>
+<span class="source-line-no">161</span><span id="line-161"></span>
+<span class="source-line-no">162</span><span id="line-162">    net.tnemc.core.command.MoneyCommand.onPay(new PaperCMDSource(sender), player, amount, currency);</span>
+<span class="source-line-no">163</span><span id="line-163">  }</span>
 <span class="source-line-no">164</span><span id="line-164"></span>
-<span class="source-line-no">165</span><span id="line-165">    net.tnemc.core.command.MoneyCommand.onRequest(new PaperCMDSource(sender), player, amount, currency);</span>
-<span class="source-line-no">166</span><span id="line-166">  }</span>
-<span class="source-line-no">167</span><span id="line-167"></span>
-<span class="source-line-no">168</span><span id="line-168">  @Subcommand({ "set", "eq", "=" })</span>
-<span class="source-line-no">169</span><span id="line-169">  @Usage("Money.Set.Arguments")</span>
-<span class="source-line-no">170</span><span id="line-170">  @Description("Money.Set.Description")</span>
-<span class="source-line-no">171</span><span id="line-171">  @CommandPermission("tne.money.set")</span>
-<span class="source-line-no">172</span><span id="line-172">  public void onSet(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
+<span class="source-line-no">165</span><span id="line-165">  @Subcommand({ "request" })</span>
+<span class="source-line-no">166</span><span id="line-166">  @Usage("Money.Request.Arguments")</span>
+<span class="source-line-no">167</span><span id="line-167">  @Description("Money.Request.Description")</span>
+<span class="source-line-no">168</span><span id="line-168">  @CommandPermission("tne.money.Request")</span>
+<span class="source-line-no">169</span><span id="line-169">  public void onRequest(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency) {</span>
+<span class="source-line-no">170</span><span id="line-170"></span>
+<span class="source-line-no">171</span><span id="line-171">    net.tnemc.core.command.MoneyCommand.onRequest(new PaperCMDSource(sender), player, amount, currency);</span>
+<span class="source-line-no">172</span><span id="line-172">  }</span>
 <span class="source-line-no">173</span><span id="line-173"></span>
-<span class="source-line-no">174</span><span id="line-174">    net.tnemc.core.command.MoneyCommand.onSet(new PaperCMDSource(sender), player, amount, region, currency);</span>
-<span class="source-line-no">175</span><span id="line-175">  }</span>
-<span class="source-line-no">176</span><span id="line-176"></span>
-<span class="source-line-no">177</span><span id="line-177">  @Subcommand({ "setall" })</span>
-<span class="source-line-no">178</span><span id="line-178">  @Usage("Money.SetAll.Arguments")</span>
-<span class="source-line-no">179</span><span id="line-179">  @Description("Money.SetAll.Description")</span>
-<span class="source-line-no">180</span><span id="line-180">  @CommandPermission("tne.money.setall")</span>
-<span class="source-line-no">181</span><span id="line-181">  public void onSetAll(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
+<span class="source-line-no">174</span><span id="line-174">  @Subcommand({ "set", "eq", "=" })</span>
+<span class="source-line-no">175</span><span id="line-175">  @Usage("Money.Set.Arguments")</span>
+<span class="source-line-no">176</span><span id="line-176">  @Description("Money.Set.Description")</span>
+<span class="source-line-no">177</span><span id="line-177">  @CommandPermission("tne.money.set")</span>
+<span class="source-line-no">178</span><span id="line-178">  public void onSet(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
+<span class="source-line-no">179</span><span id="line-179"></span>
+<span class="source-line-no">180</span><span id="line-180">    net.tnemc.core.command.MoneyCommand.onSet(new PaperCMDSource(sender), player, amount, region, currency);</span>
+<span class="source-line-no">181</span><span id="line-181">  }</span>
 <span class="source-line-no">182</span><span id="line-182"></span>
-<span class="source-line-no">183</span><span id="line-183">    net.tnemc.core.command.MoneyCommand.onSetAll(new PaperCMDSource(sender), amount, region, currency);</span>
-<span class="source-line-no">184</span><span id="line-184">  }</span>
-<span class="source-line-no">185</span><span id="line-185"></span>
-<span class="source-line-no">186</span><span id="line-186">  @Subcommand({ "switch", "swap" })</span>
-<span class="source-line-no">187</span><span id="line-187">  @Usage("Money.Switch.Arguments")</span>
-<span class="source-line-no">188</span><span id="line-188">  @Description("Money.Switch.Description")</span>
-<span class="source-line-no">189</span><span id="line-189">  @CommandPermission("tne.money.switch")</span>
-<span class="source-line-no">190</span><span id="line-190">  public void onSwitch(final BukkitCommandActor sender, @Named("switched") final Account account) {</span>
+<span class="source-line-no">183</span><span id="line-183">  @Subcommand({ "setall" })</span>
+<span class="source-line-no">184</span><span id="line-184">  @Usage("Money.SetAll.Arguments")</span>
+<span class="source-line-no">185</span><span id="line-185">  @Description("Money.SetAll.Description")</span>
+<span class="source-line-no">186</span><span id="line-186">  @CommandPermission("tne.money.setall")</span>
+<span class="source-line-no">187</span><span id="line-187">  public void onSetAll(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
+<span class="source-line-no">188</span><span id="line-188"></span>
+<span class="source-line-no">189</span><span id="line-189">    net.tnemc.core.command.MoneyCommand.onSetAll(new PaperCMDSource(sender), amount, region, currency);</span>
+<span class="source-line-no">190</span><span id="line-190">  }</span>
 <span class="source-line-no">191</span><span id="line-191"></span>
-<span class="source-line-no">192</span><span id="line-192">    net.tnemc.core.command.MoneyCommand.onSwitch(new PaperCMDSource(sender), account);</span>
-<span class="source-line-no">193</span><span id="line-193">  }</span>
-<span class="source-line-no">194</span><span id="line-194"></span>
-<span class="source-line-no">195</span><span id="line-195">  @Subcommand({ "take", "minus", "remove", "-" })</span>
-<span class="source-line-no">196</span><span id="line-196">  @Usage("Money.Take.Arguments")</span>
-<span class="source-line-no">197</span><span id="line-197">  @Description("Money.Take.Description")</span>
-<span class="source-line-no">198</span><span id="line-198">  @CommandPermission("tne.money.take")</span>
-<span class="source-line-no">199</span><span id="line-199">  @InventorySupport</span>
-<span class="source-line-no">200</span><span id="line-200">  @EnderSupport</span>
-<span class="source-line-no">201</span><span id="line-201">  @AllSupport</span>
-<span class="source-line-no">202</span><span id="line-202">  public void onTake(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
-<span class="source-line-no">203</span><span id="line-203"></span>
-<span class="source-line-no">204</span><span id="line-204">    net.tnemc.core.command.MoneyCommand.onTake(new PaperCMDSource(sender), player, amount, region, currency);</span>
-<span class="source-line-no">205</span><span id="line-205">  }</span>
-<span class="source-line-no">206</span><span id="line-206"></span>
-<span class="source-line-no">207</span><span id="line-207">  @Subcommand({ "top", "baltop" })</span>
-<span class="source-line-no">208</span><span id="line-208">  @Usage("Money.Top.Arguments")</span>
-<span class="source-line-no">209</span><span id="line-209">  @Description("Money.Top.Description")</span>
-<span class="source-line-no">210</span><span id="line-210">  @CommandPermission("tne.money.top")</span>
-<span class="source-line-no">211</span><span id="line-211">  public void onTop(final BukkitCommandActor sender, @Default("1") final Integer page, @Default("") @Named("currency") final Currency currency, @Default("false") final Boolean refresh) {</span>
+<span class="source-line-no">192</span><span id="line-192">  @Subcommand({ "switch", "swap" })</span>
+<span class="source-line-no">193</span><span id="line-193">  @Usage("Money.Switch.Arguments")</span>
+<span class="source-line-no">194</span><span id="line-194">  @Description("Money.Switch.Description")</span>
+<span class="source-line-no">195</span><span id="line-195">  @CommandPermission("tne.money.switch")</span>
+<span class="source-line-no">196</span><span id="line-196">  public void onSwitch(final BukkitCommandActor sender, @Named("switched") final Account account) {</span>
+<span class="source-line-no">197</span><span id="line-197"></span>
+<span class="source-line-no">198</span><span id="line-198">    net.tnemc.core.command.MoneyCommand.onSwitch(new PaperCMDSource(sender), account);</span>
+<span class="source-line-no">199</span><span id="line-199">  }</span>
+<span class="source-line-no">200</span><span id="line-200"></span>
+<span class="source-line-no">201</span><span id="line-201">  @Subcommand({ "take", "minus", "remove", "-" })</span>
+<span class="source-line-no">202</span><span id="line-202">  @Usage("Money.Take.Arguments")</span>
+<span class="source-line-no">203</span><span id="line-203">  @Description("Money.Take.Description")</span>
+<span class="source-line-no">204</span><span id="line-204">  @CommandPermission("tne.money.take")</span>
+<span class="source-line-no">205</span><span id="line-205">  @InventorySupport</span>
+<span class="source-line-no">206</span><span id="line-206">  @EnderSupport</span>
+<span class="source-line-no">207</span><span id="line-207">  @AllSupport</span>
+<span class="source-line-no">208</span><span id="line-208">  public void onTake(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
+<span class="source-line-no">209</span><span id="line-209"></span>
+<span class="source-line-no">210</span><span id="line-210">    net.tnemc.core.command.MoneyCommand.onTake(new PaperCMDSource(sender), player, amount, region, currency);</span>
+<span class="source-line-no">211</span><span id="line-211">  }</span>
 <span class="source-line-no">212</span><span id="line-212"></span>
-<span class="source-line-no">213</span><span id="line-213">    net.tnemc.core.command.MoneyCommand.onTop(new PaperCMDSource(sender), page, currency, refresh);</span>
-<span class="source-line-no">214</span><span id="line-214">  }</span>
-<span class="source-line-no">215</span><span id="line-215"></span>
-<span class="source-line-no">216</span><span id="line-216">  @Subcommand({ "withdraw" })</span>
-<span class="source-line-no">217</span><span id="line-217">  @Usage("Money.Withdraw.Arguments")</span>
-<span class="source-line-no">218</span><span id="line-218">  @Description("Money.Withdraw.Description")</span>
-<span class="source-line-no">219</span><span id="line-219">  @CommandPermission("tne.money.withdraw")</span>
-<span class="source-line-no">220</span><span id="line-220">  @AllSupport</span>
-<span class="source-line-no">221</span><span id="line-221">  public void onWithdraw(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
-<span class="source-line-no">222</span><span id="line-222"></span>
-<span class="source-line-no">223</span><span id="line-223">    net.tnemc.core.command.MoneyCommand.onWithdraw(new PaperCMDSource(sender), amount, currency, region);</span>
-<span class="source-line-no">224</span><span id="line-224">  }</span>
-<span class="source-line-no">225</span><span id="line-225">}</span>
+<span class="source-line-no">213</span><span id="line-213">  @Subcommand({ "top", "baltop" })</span>
+<span class="source-line-no">214</span><span id="line-214">  @Usage("Money.Top.Arguments")</span>
+<span class="source-line-no">215</span><span id="line-215">  @Description("Money.Top.Description")</span>
+<span class="source-line-no">216</span><span id="line-216">  @CommandPermission("tne.money.top")</span>
+<span class="source-line-no">217</span><span id="line-217">  public void onTop(final BukkitCommandActor sender, @Default("1") final Integer page, @Default("") @Named("currency") final Currency currency, @Default("false") final Boolean refresh) {</span>
+<span class="source-line-no">218</span><span id="line-218"></span>
+<span class="source-line-no">219</span><span id="line-219">    net.tnemc.core.command.MoneyCommand.onTop(new PaperCMDSource(sender), page, currency, refresh);</span>
+<span class="source-line-no">220</span><span id="line-220">  }</span>
+<span class="source-line-no">221</span><span id="line-221"></span>
+<span class="source-line-no">222</span><span id="line-222">  @Subcommand({ "withdraw" })</span>
+<span class="source-line-no">223</span><span id="line-223">  @Usage("Money.Withdraw.Arguments")</span>
+<span class="source-line-no">224</span><span id="line-224">  @Description("Money.Withdraw.Description")</span>
+<span class="source-line-no">225</span><span id="line-225">  @CommandPermission("tne.money.withdraw")</span>
+<span class="source-line-no">226</span><span id="line-226">  @AllSupport</span>
+<span class="source-line-no">227</span><span id="line-227">  public void onWithdraw(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
+<span class="source-line-no">228</span><span id="line-228"></span>
+<span class="source-line-no">229</span><span id="line-229">    net.tnemc.core.command.MoneyCommand.onWithdraw(new PaperCMDSource(sender), amount, currency, region);</span>
+<span class="source-line-no">230</span><span id="line-230">  }</span>
+<span class="source-line-no">231</span><span id="line-231">}</span>
 
 
 
