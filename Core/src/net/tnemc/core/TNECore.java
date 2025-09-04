@@ -80,7 +80,6 @@ import redis.clients.jedis.JedisPoolConfig;
 import revxrsal.commands.LampBuilderVisitor;
 import revxrsal.commands.command.CommandActor;
 import revxrsal.commands.command.ExecutableCommand;
-import revxrsal.commands.orphan.OrphanRegistry;
 
 import java.io.IOException;
 import java.math.BigDecimal;

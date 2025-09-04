@@ -21,8 +21,6 @@ package net.tnemc.sponge;
 import com.google.inject.Inject;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.TNECallbackProvider;
-import net.tnemc.core.api.callback.TNECallbacks;
-import net.tnemc.core.api.callback.currency.CurrencyLoadCallback;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.io.message.BaseTranslationProvider;
 import net.tnemc.menu.sponge8.Sponge8MenuHandler;

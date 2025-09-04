@@ -19,8 +19,6 @@ package net.tnemc.core.currency.calculations;
  */
 
 import net.tnemc.core.currency.Denomination;
-import net.tnemc.plugincore.PluginCore;
-import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 
 import java.math.BigDecimal;
 import java.util.Map;

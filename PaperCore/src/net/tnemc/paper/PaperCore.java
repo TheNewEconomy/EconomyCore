@@ -19,12 +19,11 @@ package net.tnemc.paper;
 
 import net.tnemc.bukkit.BukkitConfig;
 import net.tnemc.bukkit.BukkitItemCalculations;
-import net.tnemc.core.currency.Currency;
 import net.tnemc.bukkit.depend.faction.FactionHandler;
 import net.tnemc.bukkit.depend.towny.TownyHandler;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.TNECallbacks;
-import net.tnemc.core.api.callback.currency.CurrencyLoadCallback;
+import net.tnemc.core.currency.Currency;
 import net.tnemc.menu.paper.PaperMenuHandler;
 import net.tnemc.paper.command.AdminCommand;
 import net.tnemc.paper.command.CurrencyMoneyCommand;
