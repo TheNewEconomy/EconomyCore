@@ -84,9 +84,9 @@ public class CurrencyMoneyCommand implements OrphanCommand {
   @Usage("Money.Convert.Arguments")
   @Description("Money.Convert.Description")
   @CommandPermission("tne.money.convert")
-  public void onConvert(final BukkitCommandActor sender, @Named("amount") final PercentBigDecimal amount, @Named("currency") final Currency currency, @Named("currencyfrom") final Currency from) {
+  public void onConvert(final BukkitCommandActor sender, @Named("amount") final PercentBigDecimal amount, @Named("currency") final Currency toCurrency) {
 
-    net.tnemc.core.command.MoneyCommand.onConvert(new BukkitCMDSource(sender), amount, currency, from);
+    net.tnemc.core.command.MoneyCommand.onConvert(new BukkitCMDSource(sender), amount, toCurrency, this.currency);
   }
 
   @Subcommand({ "deposit" })
@@ -107,7 +107,7 @@ public class CurrencyMoneyCommand implements OrphanCommand {
   @CommandPermission("tne.money.giveall")
   public void onGiveAll(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("world-113") @Named("region") final String region) {
 
-    net.tnemc.core.command.MoneyCommand.onGiveAll(new BukkitCMDSource(sender), amount, region, currency);
+    net.tnemc.core.command.MoneyCommand.onGiveAll(new BukkitCMDSource(sender), amount, currency, region);
   }
 
   @Subcommand({ "give", "+", "add" })
@@ -116,7 +116,7 @@ public class CurrencyMoneyCommand implements OrphanCommand {
   @CommandPermission("tne.money.give")
   public void onGive(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney parseMoney, @Default("world-113") @Named("region") final String region) {
 
-    net.tnemc.core.command.MoneyCommand.onGive(new BukkitCMDSource(sender), player, parseMoney, region, currency);
+    net.tnemc.core.command.MoneyCommand.onGive(new BukkitCMDSource(sender), player, parseMoney, currency, region);
   }
 
   @Subcommand({ "givenote", "+note", "addnote" })
@@ -146,7 +146,7 @@ public class CurrencyMoneyCommand implements OrphanCommand {
   @CommandPermission("tne.money.other")
   public void onOther(final BukkitCommandActor sender, @Named("account") final Account player, @Default("world-113") @Named("region") final String region) {
 
-    net.tnemc.core.command.MoneyCommand.onOther(new BukkitCMDSource(sender), player, region, currency);
+    net.tnemc.core.command.MoneyCommand.onOther(new BukkitCMDSource(sender), player, currency, region);
   }
 
   @Subcommand({ "pay", "send", "transfer" })
@@ -176,7 +176,7 @@ public class CurrencyMoneyCommand implements OrphanCommand {
   @CommandPermission("tne.money.set")
   public void onSet(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("world-113") @Named("region") final String region) {
 
-    net.tnemc.core.command.MoneyCommand.onSet(new BukkitCMDSource(sender), player, amount, region, currency);
+    net.tnemc.core.command.MoneyCommand.onSet(new BukkitCMDSource(sender), player, amount, currency, region);
   }
 
   @Subcommand({ "setall" })
@@ -185,7 +185,7 @@ public class CurrencyMoneyCommand implements OrphanCommand {
   @CommandPermission("tne.money.setall")
   public void onSetAll(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("world-113") @Named("region") final String region) {
 
-    net.tnemc.core.command.MoneyCommand.onSetAll(new BukkitCMDSource(sender), amount, region, currency);
+    net.tnemc.core.command.MoneyCommand.onSetAll(new BukkitCMDSource(sender), amount, currency, region);
   }
 
   @Subcommand({ "take", "minus", "remove", "-" })
@@ -197,7 +197,7 @@ public class CurrencyMoneyCommand implements OrphanCommand {
   @AllSupport
   public void onTake(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("world-113") @Named("region") final String region) {
 
-    net.tnemc.core.command.MoneyCommand.onTake(new BukkitCMDSource(sender), player, amount, region, currency);
+    net.tnemc.core.command.MoneyCommand.onTake(new BukkitCMDSource(sender), player, amount, currency, region);
   }
 
   @Subcommand({ "top", "baltop" })

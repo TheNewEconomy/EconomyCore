@@ -60,6 +60,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static net.tnemc.core.EconomyManager.TOP_PER_PAGE;
+import static net.tnemc.core.TNECore.DEFAULT_WORLD;
 
 /**
  * MoneyCommands
@@ -78,7 +79,9 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: [currency] [world]
-  public static void onBalance(final CmdSource<?> sender, final Currency currency, final String region) {
+  public static void onBalance(final CmdSource<?> sender, final Currency currencyParam, final String region) {
+
+    final Currency currency = (currencyParam == null)? TNECore.eco().currency().defaultCurrency() : currencyParam;
 
     final Optional<PlayerProvider> player = sender.player();
     if(EconomyManager.limitCurrency() && player.isPresent()) {
@@ -103,7 +106,7 @@ public class MoneyCommand extends BaseCommand {
       sender.message(data);
       return;
     }
-    onOther(sender, account.get(), region, currency);
+    onOther(sender, account.get(), currency, region);
   }
 
   //ArgumentsParser: <amount> <to currency> [from currency]
@@ -184,6 +187,8 @@ public class MoneyCommand extends BaseCommand {
   //ArgumentsParser: <amount> [currency]
   public static void onDeposit(final CmdSource<?> sender, final ParseMoney parseMoney, final Currency currencyParam, final String regionParam) {
 
+    parseMoney.normalizeParameters(currencyParam, regionParam);
+
     String region = parseMoney.region();
     final Currency currency = parseMoney.currency();
 
@@ -246,8 +251,9 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> <amount> [world] [currency]
-  public static void onGive(final CmdSource<?> sender, final Account account, final ParseMoney parseMoney, final String region, final Currency currency) {
+  public static void onGive(final CmdSource<?> sender, final Account account, final ParseMoney parseMoney, final Currency currency, final String region) {
 
+    parseMoney.normalizeParameters(currency, region);
 
     final Optional<PlayerProvider> player = sender.player();
     if(EconomyManager.limitCurrency() && player.isPresent() && !player.get().hasPermission("tne.money.give." + parseMoney.currency().getIdentifier())) {
@@ -294,7 +300,9 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <amount> [world] [currency]
-  public static void onGiveAll(final CmdSource<?> sender, final ParseMoney parseMoney, final String regionParam, final Currency currencyParam) {
+  public static void onGiveAll(final CmdSource<?> sender, final ParseMoney parseMoney, final Currency currencyParam, final String regionParam) {
+
+    parseMoney.normalizeParameters(currencyParam, regionParam);
 
     final String region = TNECore.eco().region().resolve(parseMoney.region());
     final Currency currency = parseMoney.currency();
@@ -352,6 +360,8 @@ public class MoneyCommand extends BaseCommand {
 
   public static void onGiveNote(final CmdSource<?> sender, final Account acc, final ParseMoney parseMoney, final Currency currency) {
 
+    parseMoney.normalizeParameters(currency, DEFAULT_WORLD);
+
     final Optional<Note> note = parseMoney.currency().getNote();
 
     final Optional<Account> accountOpt = BaseCommand.account(acc.getIdentifier(), "note");
@@ -398,6 +408,8 @@ public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: <amount> [currency]
   public static void onNote(final CmdSource<?> sender, final ParseMoney parseMoney, final Currency currency) {
+
+    parseMoney.normalizeParameters(currency, DEFAULT_WORLD);
 
     final Optional<Account> account = BaseCommand.account(sender, "note");
     final Optional<Note> note = parseMoney.currency().getNote();
@@ -457,12 +469,14 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> [world] [currency]
-  public static void onOther(final CmdSource<?> sender, final Account account, String region, final Currency currency) {
+  public static void onOther(final CmdSource<?> sender, final Account account, final Currency currencyParam, String region) {
 
     final Optional<PlayerProvider> player = sender.player();
     final Optional<UUID> senderID = sender.identifier();
 
     final boolean other = (senderID.isPresent() && !senderID.get().equals(account.getIdentifier()));
+
+    final Currency currency = (currencyParam == null)? TNECore.eco().currency().defaultCurrency() : currencyParam;
 
     if(EconomyManager.limitCurrency() && player.isPresent() && other) {
       if(!player.get().hasPermission("tne.money.other." + currency.getIdentifier())) {
@@ -498,12 +512,12 @@ public class MoneyCommand extends BaseCommand {
 
     TNECore.eco().currency().currencies().forEach((cur)->{
       if(cur.isBalanceShow()) {
-        printBalance(sender, account, resolve, cur);
+        printBalance(sender, account, cur, resolve);
       }
     });
   }
 
-  public static void printBalance(final CmdSource<?> sender, final Account account, final String region, final Currency currency) {
+  public static void printBalance(final CmdSource<?> sender, final Account account, final Currency currency, final String region) {
 
     final MessageData entryMSG = new MessageData("Messages.Money.HoldingsMultiSingle");
     entryMSG.addReplacement("$currency", currency.getIdentifier());
@@ -538,6 +552,8 @@ public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: <player> <amount> [currency] [from:account]
   public static void onPay(final CmdSource<?> sender, final Account acc, final ParseMoney parseMoney, final Currency currency) {
+
+    parseMoney.normalizeParameters(currency, DEFAULT_WORLD);
 
     final Optional<PlayerProvider> player = sender.player();
     if(EconomyManager.limitCurrency() && player.isPresent()) {
@@ -643,6 +659,8 @@ public class MoneyCommand extends BaseCommand {
   //ArgumentsParser: <player> <amount> [currency]
   public static void onRequest(final CmdSource<?> sender, final Account account, final ParseMoney parseMoney, final Currency currency) {
 
+    parseMoney.normalizeParameters(currency, DEFAULT_WORLD);
+
     final Optional<PlayerProvider> player = sender.player();
     if(EconomyManager.limitCurrency() && player.isPresent()) {
       if(!player.get().hasPermission("tne.money.request." + parseMoney.currency().getIdentifier())) {
@@ -680,7 +698,9 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> <amount> [world] [currency]
-  public static void onSet(final CmdSource<?> sender, final Account account, final ParseMoney parseMoney, final String regionParam, final Currency currencyParam) {
+  public static void onSet(final CmdSource<?> sender, final Account account, final ParseMoney parseMoney, final Currency currencyParam, final String regionParam) {
+
+    parseMoney.normalizeParameters(currencyParam, regionParam);
 
     String region = parseMoney.region();
     final Currency currency = parseMoney.currency();
@@ -727,7 +747,9 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <amount> [world] [currency]
-  public static void onSetAll(final CmdSource<?> sender, final ParseMoney parseMoney, final String regionParam, final Currency currencyParam) {
+  public static void onSetAll(final CmdSource<?> sender, final ParseMoney parseMoney, final Currency currencyParam, final String regionParam) {
+
+    parseMoney.normalizeParameters(currencyParam, regionParam);
 
     String region = parseMoney.region();
     final Currency currency = parseMoney.currency();
@@ -848,7 +870,9 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: <player> <amount> [world] [currency]
-  public static void onTake(final CmdSource<?> sender, final Account account, final ParseMoney parseMoney, final String regionParam, final Currency currencyParam) {
+  public static void onTake(final CmdSource<?> sender, final Account account, final ParseMoney parseMoney, final Currency currencyParam, final String regionParam) {
+
+    parseMoney.normalizeParameters(currencyParam, regionParam);
 
     String region = parseMoney.region();
     final Currency currency = parseMoney.currency();
@@ -969,6 +993,8 @@ public class MoneyCommand extends BaseCommand {
 
   //ArgumentsParser: <amount> [currency]
   public static void onWithdraw(final CmdSource<?> sender, final ParseMoney parseMoney, final Currency currencyParam, final String regionParam) {
+
+    parseMoney.normalizeParameters(currencyParam, regionParam);
 
     String region = parseMoney.region();
     final Currency currency = parseMoney.currency();

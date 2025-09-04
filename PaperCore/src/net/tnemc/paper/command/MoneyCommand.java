@@ -37,6 +37,8 @@ import revxrsal.commands.bukkit.actor.BukkitCommandActor;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
 import revxrsal.commands.help.Help;
 
+import static net.tnemc.core.TNECore.DEFAULT_WORLD;
+
 /**
  * MoneyCommands
  *
@@ -69,7 +71,7 @@ public class MoneyCommand {
   @Usage("Money.Balance.Arguments")
   @Description("Money.Balance.Description")
   @CommandPermission("tne.money.balance")
-  public void onBalance(final BukkitCommandActor sender, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+  public void onBalance(final BukkitCommandActor sender, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
 
     System.out.println("Currency: " + currency);
 
@@ -96,7 +98,7 @@ public class MoneyCommand {
   @InventorySupport
   @EnderSupport
   @AllSupport
-  public void onDeposit(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+  public void onDeposit(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
 
     net.tnemc.core.command.MoneyCommand.onDeposit(new PaperCMDSource(sender), amount, currency, region);
   }
@@ -105,18 +107,18 @@ public class MoneyCommand {
   @Usage("Money.Give.Arguments")
   @Description("Money.Give.Description")
   @CommandPermission("tne.money.give")
-  public void onGive(final BukkitCommandActor sender, final Account player, @Named("amount") final ParseMoney parseMoney, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+  public void onGive(final BukkitCommandActor sender, final Account player, @Named("amount") final ParseMoney parseMoney, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
 
-    net.tnemc.core.command.MoneyCommand.onGive(new PaperCMDSource(sender), player, parseMoney, region, currency);
+    net.tnemc.core.command.MoneyCommand.onGive(new PaperCMDSource(sender), player, parseMoney, currency, region);
   }
 
   @Subcommand({ "giveall", "+a", "addall" })
   @Usage("Money.GiveAll.Arguments")
   @Description("Money.GiveAll.Description")
   @CommandPermission("tne.money.giveall")
-  public void onGiveAll(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+  public void onGiveAll(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
 
-    net.tnemc.core.command.MoneyCommand.onGiveAll(new PaperCMDSource(sender), amount, region, currency);
+    net.tnemc.core.command.MoneyCommand.onGiveAll(new PaperCMDSource(sender), amount, currency, region);
   }
 
   @Subcommand({ "givenote", "+note", "addnote" })
@@ -145,9 +147,9 @@ public class MoneyCommand {
   @Usage("Money.Other.Arguments")
   @Description("Money.Other.Description")
   @CommandPermission("tne.money.other")
-  public void onOther(final BukkitCommandActor sender, @Named("account") final Account player, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+  public void onOther(final BukkitCommandActor sender, @Named("account") final Account player, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
 
-    net.tnemc.core.command.MoneyCommand.onOther(new PaperCMDSource(sender), player, region, currency);
+    net.tnemc.core.command.MoneyCommand.onOther(new PaperCMDSource(sender), player, currency, region);
   }
 
   @Subcommand({ "pay", "send", "transfer" })
@@ -175,18 +177,18 @@ public class MoneyCommand {
   @Usage("Money.Set.Arguments")
   @Description("Money.Set.Description")
   @CommandPermission("tne.money.set")
-  public void onSet(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+  public void onSet(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
 
-    net.tnemc.core.command.MoneyCommand.onSet(new PaperCMDSource(sender), player, amount, region, currency);
+    net.tnemc.core.command.MoneyCommand.onSet(new PaperCMDSource(sender), player, amount, currency, region);
   }
 
   @Subcommand({ "setall" })
   @Usage("Money.SetAll.Arguments")
   @Description("Money.SetAll.Description")
   @CommandPermission("tne.money.setall")
-  public void onSetAll(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+  public void onSetAll(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
 
-    net.tnemc.core.command.MoneyCommand.onSetAll(new PaperCMDSource(sender), amount, region, currency);
+    net.tnemc.core.command.MoneyCommand.onSetAll(new PaperCMDSource(sender), amount, currency, region);
   }
 
   @Subcommand({ "switch", "swap" })
@@ -205,9 +207,9 @@ public class MoneyCommand {
   @InventorySupport
   @EnderSupport
   @AllSupport
-  public void onTake(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+  public void onTake(final BukkitCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
 
-    net.tnemc.core.command.MoneyCommand.onTake(new PaperCMDSource(sender), player, amount, region, currency);
+    net.tnemc.core.command.MoneyCommand.onTake(new PaperCMDSource(sender), player, amount, currency, region);
   }
 
   @Subcommand({ "top", "baltop" })
@@ -224,7 +226,7 @@ public class MoneyCommand {
   @Description("Money.Withdraw.Description")
   @CommandPermission("tne.money.withdraw")
   @AllSupport
-  public void onWithdraw(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+  public void onWithdraw(final BukkitCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
 
     net.tnemc.core.command.MoneyCommand.onWithdraw(new PaperCMDSource(sender), amount, currency, region);
   }

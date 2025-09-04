@@ -45,7 +45,7 @@ public class CurrencyResolver implements ParameterType<CommandActor, Currency> {
     final String value = input.readString();
 
     final Optional<Currency> currency = TNECore.eco().currency().find(value);
-    return currency.orElseGet(()->TNECore.eco().currency().defaultCurrency());
+    return currency.orElse(null);
   }
 
   @Override

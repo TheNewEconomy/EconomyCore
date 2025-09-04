@@ -35,6 +35,8 @@ import revxrsal.commands.annotation.Usage;
 import revxrsal.commands.sponge.actor.SpongeCommandActor;
 import revxrsal.commands.sponge.annotation.CommandPermission;
 
+import static net.tnemc.core.TNECore.DEFAULT_WORLD;
+
 /**
  * MoneyCommands
  *
@@ -59,7 +61,7 @@ public class MoneyCommand {
   @Usage("Money.Balance.Arguments")
   @Description("Money.Balance.Description")
   @CommandPermission("tne.money.balance")
-  public void onBalance(final SpongeCommandActor sender, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+  public void onBalance(final SpongeCommandActor sender, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
 
     net.tnemc.core.command.MoneyCommand.onBalance(new SpongeCMDSource(sender), currency, region);
   }
@@ -80,7 +82,7 @@ public class MoneyCommand {
   @InventorySupport
   @EnderSupport
   @AllSupport
-  public void onDeposit(final SpongeCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+  public void onDeposit(final SpongeCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
 
     net.tnemc.core.command.MoneyCommand.onDeposit(new SpongeCMDSource(sender), amount, currency, region);
   }
@@ -89,18 +91,18 @@ public class MoneyCommand {
   @Usage("Money.Give.Arguments")
   @Description("Money.Give.Description")
   @CommandPermission("tne.money.give")
-  public void onGive(final SpongeCommandActor sender, final Account player, @Named("amount") final ParseMoney parseMoney, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+  public void onGive(final SpongeCommandActor sender, final Account player, @Named("amount") final ParseMoney parseMoney, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
 
-    net.tnemc.core.command.MoneyCommand.onGive(new SpongeCMDSource(sender), player, parseMoney, region, currency);
+    net.tnemc.core.command.MoneyCommand.onGive(new SpongeCMDSource(sender), player, parseMoney, currency, region);
   }
 
   @Subcommand({ "giveall", "+a", "addall" })
   @Usage("Money.GiveAll.Arguments")
   @Description("Money.GiveAll.Description")
   @CommandPermission("tne.money.giveall")
-  public void onGiveAll(final SpongeCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+  public void onGiveAll(final SpongeCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
 
-    net.tnemc.core.command.MoneyCommand.onGiveAll(new SpongeCMDSource(sender), amount, region, currency);
+    net.tnemc.core.command.MoneyCommand.onGiveAll(new SpongeCMDSource(sender), amount, currency, region);
   }
 
   @Subcommand({ "givenote", "+note", "addnote" })
@@ -129,9 +131,9 @@ public class MoneyCommand {
   @Usage("Money.Other.Arguments")
   @Description("Money.Other.Description")
   @CommandPermission("tne.money.other")
-  public void onOther(final SpongeCommandActor sender, final Account player, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+  public void onOther(final SpongeCommandActor sender, final Account player, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
 
-    net.tnemc.core.command.MoneyCommand.onOther(new SpongeCMDSource(sender), player, region, currency);
+    net.tnemc.core.command.MoneyCommand.onOther(new SpongeCMDSource(sender), player, currency, region);
   }
 
   @Subcommand({ "pay", "send", "transfer" })
@@ -159,18 +161,18 @@ public class MoneyCommand {
   @Usage("Money.Set.Arguments")
   @Description("Money.Set.Description")
   @CommandPermission("tne.money.set")
-  public void onSet(final SpongeCommandActor sender, final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+  public void onSet(final SpongeCommandActor sender, final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
 
-    net.tnemc.core.command.MoneyCommand.onSet(new SpongeCMDSource(sender), player, amount, region, currency);
+    net.tnemc.core.command.MoneyCommand.onSet(new SpongeCMDSource(sender), player, amount, currency, region);
   }
 
   @Subcommand({ "setall" })
   @Usage("Money.SetAll.Arguments")
   @Description("Money.SetAll.Description")
   @CommandPermission("tne.money.setall")
-  public void onSetAll(final SpongeCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+  public void onSetAll(final SpongeCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
 
-    net.tnemc.core.command.MoneyCommand.onSetAll(new SpongeCMDSource(sender), amount, region, currency);
+    net.tnemc.core.command.MoneyCommand.onSetAll(new SpongeCMDSource(sender), amount, currency, region);
   }
 
   @Subcommand({ "switch", "swap" })
@@ -189,9 +191,9 @@ public class MoneyCommand {
   @InventorySupport
   @EnderSupport
   @AllSupport
-  public void onTake(final SpongeCommandActor sender, final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+  public void onTake(final SpongeCommandActor sender, final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
 
-    net.tnemc.core.command.MoneyCommand.onTake(new SpongeCMDSource(sender), player, amount, region, currency);
+    net.tnemc.core.command.MoneyCommand.onTake(new SpongeCMDSource(sender), player, amount, currency, region);
   }
 
   @Subcommand({ "top", "baltop" })
@@ -208,7 +210,7 @@ public class MoneyCommand {
   @Description("Money.Withdraw.Description")
   @CommandPermission("tne.money.withdraw")
   @AllSupport
-  public void onWithdraw(final SpongeCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {
+  public void onWithdraw(final SpongeCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
 
     net.tnemc.core.command.MoneyCommand.onWithdraw(new SpongeCMDSource(sender), amount, currency, region);
   }

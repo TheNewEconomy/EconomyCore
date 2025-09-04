@@ -22,6 +22,8 @@ import net.tnemc.core.currency.Currency;
 
 import java.math.BigDecimal;
 
+import static net.tnemc.core.TNECore.DEFAULT_WORLD;
+
 /**
  * ParseMoney
  *
@@ -30,7 +32,7 @@ import java.math.BigDecimal;
  */
 public class ParseMoney {
 
-  private final String region;
+  private String region;
   private BigDecimal amount;
   private Currency currency;
 
@@ -46,9 +48,24 @@ public class ParseMoney {
     this.currency = currency;
   }
 
+  public void normalizeParameters(final Currency currency, final String region) {
+
+    if(currency != null) {
+      this.currency = currency;
+    }
+
+    if(!region.equalsIgnoreCase(DEFAULT_WORLD)) {
+      this.region = region;
+    }
+  }
+
   public String region() {
 
     return region;
+  }
+
+  public void region(final String region) {
+    this.region = region;
   }
 
   public BigDecimal amount() {
