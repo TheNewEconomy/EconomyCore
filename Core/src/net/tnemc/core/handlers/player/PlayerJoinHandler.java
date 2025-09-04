@@ -66,6 +66,11 @@ public class PlayerJoinHandler {
 
     PluginCore.log().debug("Player Join ID: " + provider.identifier());
 
+    //we have to hardcode this UUID since MoDispenserMechanics fires the join event with their fake player....
+    if(provider.identifier().toString().equalsIgnoreCase("657912a8-aa0e-3f17-aff5-a41f440e710c")) {
+      return response;
+    }
+
     final Optional<Account> account = TNECore.eco().account().findAccount(provider.identifier());
 
     boolean firstJoin = false;
