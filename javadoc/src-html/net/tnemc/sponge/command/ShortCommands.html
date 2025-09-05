@@ -58,7 +58,7 @@
 <span class="source-line-no">045</span><span id="line-45">  @CommandPermission("tne.money.give")</span>
 <span class="source-line-no">046</span><span id="line-46">  public void onGive(final SpongeCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney parseMoney, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
 <span class="source-line-no">047</span><span id="line-47"></span>
-<span class="source-line-no">048</span><span id="line-48">    net.tnemc.core.command.MoneyCommand.onGive(new SpongeCMDSource(sender), player, parseMoney, region, currency);</span>
+<span class="source-line-no">048</span><span id="line-48">    net.tnemc.core.command.MoneyCommand.onGive(new SpongeCMDSource(sender), player, parseMoney, currency, region);</span>
 <span class="source-line-no">049</span><span id="line-49">  }</span>
 <span class="source-line-no">050</span><span id="line-50"></span>
 <span class="source-line-no">051</span><span id="line-51">  @Command({ "giveallmoney", "giveallbal" })</span>
@@ -67,7 +67,7 @@
 <span class="source-line-no">054</span><span id="line-54">  @CommandPermission("tne.money.giveall")</span>
 <span class="source-line-no">055</span><span id="line-55">  public void onGiveAll(final SpongeCommandActor sender, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
 <span class="source-line-no">056</span><span id="line-56"></span>
-<span class="source-line-no">057</span><span id="line-57">    net.tnemc.core.command.MoneyCommand.onGiveAll(new SpongeCMDSource(sender), amount, region, currency);</span>
+<span class="source-line-no">057</span><span id="line-57">    net.tnemc.core.command.MoneyCommand.onGiveAll(new SpongeCMDSource(sender), amount, currency, region);</span>
 <span class="source-line-no">058</span><span id="line-58">  }</span>
 <span class="source-line-no">059</span><span id="line-59"></span>
 <span class="source-line-no">060</span><span id="line-60">  @Command({ "givenote", "+note", "addnote" })</span>
@@ -103,7 +103,7 @@
 <span class="source-line-no">090</span><span id="line-90">  @CommandPermission("tne.money.set")</span>
 <span class="source-line-no">091</span><span id="line-91">  public void onSet(final SpongeCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
 <span class="source-line-no">092</span><span id="line-92"></span>
-<span class="source-line-no">093</span><span id="line-93">    net.tnemc.core.command.MoneyCommand.onSet(new SpongeCMDSource(sender), player, amount, region, currency);</span>
+<span class="source-line-no">093</span><span id="line-93">    net.tnemc.core.command.MoneyCommand.onSet(new SpongeCMDSource(sender), player, amount, currency, region);</span>
 <span class="source-line-no">094</span><span id="line-94">  }</span>
 <span class="source-line-no">095</span><span id="line-95"></span>
 <span class="source-line-no">096</span><span id="line-96">  @Command({ "takemoney", "takebal" })</span>
@@ -112,7 +112,7 @@
 <span class="source-line-no">099</span><span id="line-99">  @CommandPermission("tne.money.take")</span>
 <span class="source-line-no">100</span><span id="line-100">  public void onTake(final SpongeCommandActor sender, @Named("account") final Account player, @Named("amount") final ParseMoney amount, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
 <span class="source-line-no">101</span><span id="line-101"></span>
-<span class="source-line-no">102</span><span id="line-102">    net.tnemc.core.command.MoneyCommand.onTake(new SpongeCMDSource(sender), player, amount, region, currency);</span>
+<span class="source-line-no">102</span><span id="line-102">    net.tnemc.core.command.MoneyCommand.onTake(new SpongeCMDSource(sender), player, amount, currency, region);</span>
 <span class="source-line-no">103</span><span id="line-103">  }</span>
 <span class="source-line-no">104</span><span id="line-104"></span>
 <span class="source-line-no">105</span><span id="line-105">  @Command({ "bal", "money", "eco", "balance" })</span>
@@ -130,7 +130,7 @@
 <span class="source-line-no">117</span><span id="line-117">  @CommandPermission("tne.money.other")</span>
 <span class="source-line-no">118</span><span id="line-118">  public void onOther(final SpongeCommandActor sender, final Account player, @Default("") @Named("currency") final Currency currency, @Default("world-113") @Named("region") final String region) {</span>
 <span class="source-line-no">119</span><span id="line-119"></span>
-<span class="source-line-no">120</span><span id="line-120">    net.tnemc.core.command.MoneyCommand.onOther(new SpongeCMDSource(sender), player, region, currency);</span>
+<span class="source-line-no">120</span><span id="line-120">    net.tnemc.core.command.MoneyCommand.onOther(new SpongeCMDSource(sender), player, currency, region);</span>
 <span class="source-line-no">121</span><span id="line-121">  }</span>
 <span class="source-line-no">122</span><span id="line-122"></span>
 <span class="source-line-no">123</span><span id="line-123">  @Command({ "baltop" })</span>

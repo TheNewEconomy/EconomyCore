@@ -32,128 +32,126 @@
 <span class="source-line-no">019</span><span id="line-19"> */</span>
 <span class="source-line-no">020</span><span id="line-20"></span>
 <span class="source-line-no">021</span><span id="line-21">import net.tnemc.core.currency.Denomination;</span>
-<span class="source-line-no">022</span><span id="line-22">import net.tnemc.plugincore.PluginCore;</span>
-<span class="source-line-no">023</span><span id="line-23">import net.tnemc.plugincore.core.compatibility.log.DebugLevel;</span>
-<span class="source-line-no">024</span><span id="line-24"></span>
-<span class="source-line-no">025</span><span id="line-25">import java.math.BigDecimal;</span>
-<span class="source-line-no">026</span><span id="line-26">import java.util.Map;</span>
-<span class="source-line-no">027</span><span id="line-27"></span>
-<span class="source-line-no">028</span><span id="line-28">/**</span>
-<span class="source-line-no">029</span><span id="line-29"> * CalculationProvider</span>
-<span class="source-line-no">030</span><span id="line-30"> *</span>
-<span class="source-line-no">031</span><span id="line-31"> * @author creatorfromhell</span>
-<span class="source-line-no">032</span><span id="line-32"> * @since 0.1.2.0</span>
-<span class="source-line-no">033</span><span id="line-33"> */</span>
-<span class="source-line-no">034</span><span id="line-34">public class ItemCalculations&lt;I&gt; {</span>
-<span class="source-line-no">035</span><span id="line-35"></span>
-<span class="source-line-no">036</span><span id="line-36">  /**</span>
-<span class="source-line-no">037</span><span id="line-37">   * Used to calculate the holdings of the inventory materials present.</span>
-<span class="source-line-no">038</span><span id="line-38">   *</span>
-<span class="source-line-no">039</span><span id="line-39">   * @return The {@link BigDecimal} representation of the inventory materials balance value.</span>
-<span class="source-line-no">040</span><span id="line-40">   */</span>
-<span class="source-line-no">041</span><span id="line-41">  public BigDecimal calculateHoldings(final CalculationData&lt;I&gt; data) {</span>
+<span class="source-line-no">022</span><span id="line-22"></span>
+<span class="source-line-no">023</span><span id="line-23">import java.math.BigDecimal;</span>
+<span class="source-line-no">024</span><span id="line-24">import java.util.Map;</span>
+<span class="source-line-no">025</span><span id="line-25"></span>
+<span class="source-line-no">026</span><span id="line-26">/**</span>
+<span class="source-line-no">027</span><span id="line-27"> * CalculationProvider</span>
+<span class="source-line-no">028</span><span id="line-28"> *</span>
+<span class="source-line-no">029</span><span id="line-29"> * @author creatorfromhell</span>
+<span class="source-line-no">030</span><span id="line-30"> * @since 0.1.2.0</span>
+<span class="source-line-no">031</span><span id="line-31"> */</span>
+<span class="source-line-no">032</span><span id="line-32">public class ItemCalculations&lt;I&gt; {</span>
+<span class="source-line-no">033</span><span id="line-33"></span>
+<span class="source-line-no">034</span><span id="line-34">  /**</span>
+<span class="source-line-no">035</span><span id="line-35">   * Used to calculate the holdings of the inventory materials present.</span>
+<span class="source-line-no">036</span><span id="line-36">   *</span>
+<span class="source-line-no">037</span><span id="line-37">   * @return The {@link BigDecimal} representation of the inventory materials balance value.</span>
+<span class="source-line-no">038</span><span id="line-38">   */</span>
+<span class="source-line-no">039</span><span id="line-39">  public BigDecimal calculateHoldings(final CalculationData&lt;I&gt; data) {</span>
+<span class="source-line-no">040</span><span id="line-40"></span>
+<span class="source-line-no">041</span><span id="line-41">    BigDecimal holdings = BigDecimal.ZERO;</span>
 <span class="source-line-no">042</span><span id="line-42"></span>
-<span class="source-line-no">043</span><span id="line-43">    BigDecimal holdings = BigDecimal.ZERO;</span>
-<span class="source-line-no">044</span><span id="line-44"></span>
-<span class="source-line-no">045</span><span id="line-45">    for(final Map.Entry&lt;BigDecimal, Denomination&gt; entry : data.getDenominations().entrySet()) {</span>
-<span class="source-line-no">046</span><span id="line-46">      final int amount = data.getInventoryMaterials().getOrDefault(entry.getKey(), 0);</span>
-<span class="source-line-no">047</span><span id="line-47"></span>
-<span class="source-line-no">048</span><span id="line-48">      if(amount &gt; 0) {</span>
-<span class="source-line-no">049</span><span id="line-49">        holdings = holdings.add(entry.getKey().multiply(new BigDecimal(amount)));</span>
-<span class="source-line-no">050</span><span id="line-50">      }</span>
-<span class="source-line-no">051</span><span id="line-51">    }</span>
-<span class="source-line-no">052</span><span id="line-52">    return holdings;</span>
-<span class="source-line-no">053</span><span id="line-53">  }</span>
+<span class="source-line-no">043</span><span id="line-43">    for(final Map.Entry&lt;BigDecimal, Denomination&gt; entry : data.getDenominations().entrySet()) {</span>
+<span class="source-line-no">044</span><span id="line-44">      final int amount = data.getInventoryMaterials().getOrDefault(entry.getKey(), 0);</span>
+<span class="source-line-no">045</span><span id="line-45"></span>
+<span class="source-line-no">046</span><span id="line-46">      if(amount &gt; 0) {</span>
+<span class="source-line-no">047</span><span id="line-47">        holdings = holdings.add(entry.getKey().multiply(new BigDecimal(amount)));</span>
+<span class="source-line-no">048</span><span id="line-48">      }</span>
+<span class="source-line-no">049</span><span id="line-49">    }</span>
+<span class="source-line-no">050</span><span id="line-50">    return holdings;</span>
+<span class="source-line-no">051</span><span id="line-51">  }</span>
+<span class="source-line-no">052</span><span id="line-52"></span>
+<span class="source-line-no">053</span><span id="line-53">  public void setItems(final CalculationData&lt;I&gt; data, final BigDecimal amount) {</span>
 <span class="source-line-no">054</span><span id="line-54"></span>
-<span class="source-line-no">055</span><span id="line-55">  public void setItems(final CalculationData&lt;I&gt; data, final BigDecimal amount) {</span>
+<span class="source-line-no">055</span><span id="line-55">    final BigDecimal holdings = calculateHoldings(data);</span>
 <span class="source-line-no">056</span><span id="line-56"></span>
-<span class="source-line-no">057</span><span id="line-57">    final BigDecimal holdings = calculateHoldings(data);</span>
+<span class="source-line-no">057</span><span id="line-57">    if(holdings.compareTo(amount) == 0) return;</span>
 <span class="source-line-no">058</span><span id="line-58"></span>
-<span class="source-line-no">059</span><span id="line-59">    if(holdings.compareTo(amount) == 0) return;</span>
-<span class="source-line-no">060</span><span id="line-60"></span>
-<span class="source-line-no">061</span><span id="line-61">    if(holdings.compareTo(amount) &gt; 0) {</span>
-<span class="source-line-no">062</span><span id="line-62">      calculation(data, holdings.subtract(amount));</span>
-<span class="source-line-no">063</span><span id="line-63">      return;</span>
-<span class="source-line-no">064</span><span id="line-64">    }</span>
-<span class="source-line-no">065</span><span id="line-65">    provideMaterials(data, amount.subtract(holdings));</span>
-<span class="source-line-no">066</span><span id="line-66">  }</span>
-<span class="source-line-no">067</span><span id="line-67"></span>
-<span class="source-line-no">068</span><span id="line-68">  /**</span>
-<span class="source-line-no">069</span><span id="line-69">   * Used to calculate the materials that need to be removed when a player in an item-based economy</span>
-<span class="source-line-no">070</span><span id="line-70">   * has money taken from their account.</span>
+<span class="source-line-no">059</span><span id="line-59">    if(holdings.compareTo(amount) &gt; 0) {</span>
+<span class="source-line-no">060</span><span id="line-60">      calculation(data, holdings.subtract(amount));</span>
+<span class="source-line-no">061</span><span id="line-61">      return;</span>
+<span class="source-line-no">062</span><span id="line-62">    }</span>
+<span class="source-line-no">063</span><span id="line-63">    provideMaterials(data, amount.subtract(holdings));</span>
+<span class="source-line-no">064</span><span id="line-64">  }</span>
+<span class="source-line-no">065</span><span id="line-65"></span>
+<span class="source-line-no">066</span><span id="line-66">  /**</span>
+<span class="source-line-no">067</span><span id="line-67">   * Used to calculate the materials that need to be removed when a player in an item-based economy</span>
+<span class="source-line-no">068</span><span id="line-68">   * has money taken from their account.</span>
+<span class="source-line-no">069</span><span id="line-69">   *</span>
+<span class="source-line-no">070</span><span id="line-70">   * @param change The amount to remove from the player's account.</span>
 <span class="source-line-no">071</span><span id="line-71">   *</span>
-<span class="source-line-no">072</span><span id="line-72">   * @param change The amount to remove from the player's account.</span>
-<span class="source-line-no">073</span><span id="line-73">   *</span>
-<span class="source-line-no">074</span><span id="line-74">   * @return The {@link BigDecimal} representation of the leftover amount that couldn't be removed</span>
-<span class="source-line-no">075</span><span id="line-75">   * because there's no more materials left to remove.</span>
-<span class="source-line-no">076</span><span id="line-76">   */</span>
-<span class="source-line-no">077</span><span id="line-77">  public BigDecimal calculation(final CalculationData&lt;I&gt; data, final BigDecimal change) {</span>
+<span class="source-line-no">072</span><span id="line-72">   * @return The {@link BigDecimal} representation of the leftover amount that couldn't be removed</span>
+<span class="source-line-no">073</span><span id="line-73">   * because there's no more materials left to remove.</span>
+<span class="source-line-no">074</span><span id="line-74">   */</span>
+<span class="source-line-no">075</span><span id="line-75">  public BigDecimal calculation(final CalculationData&lt;I&gt; data, final BigDecimal change) {</span>
+<span class="source-line-no">076</span><span id="line-76"></span>
+<span class="source-line-no">077</span><span id="line-77">    data.getCalculator().initialize(data.getCurrency(), data.getInventoryMaterials());</span>
 <span class="source-line-no">078</span><span id="line-78"></span>
-<span class="source-line-no">079</span><span id="line-79">    data.getCalculator().initialize(data.getCurrency(), data.getInventoryMaterials());</span>
+<span class="source-line-no">079</span><span id="line-79">    data.getCalculator().calculateDenominationCounts(change);</span>
 <span class="source-line-no">080</span><span id="line-80"></span>
-<span class="source-line-no">081</span><span id="line-81">    data.getCalculator().calculateDenominationCounts(change);</span>
+<span class="source-line-no">081</span><span id="line-81">    for(final Map.Entry&lt;BigDecimal, Integer&gt; entry : data.getCalculator().getToAdd().entrySet()) {</span>
 <span class="source-line-no">082</span><span id="line-82"></span>
-<span class="source-line-no">083</span><span id="line-83">    for(final Map.Entry&lt;BigDecimal, Integer&gt; entry : data.getCalculator().getToAdd().entrySet()) {</span>
+<span class="source-line-no">083</span><span id="line-83">      Integer amount = entry.getValue();</span>
 <span class="source-line-no">084</span><span id="line-84"></span>
-<span class="source-line-no">085</span><span id="line-85">      Integer amount = entry.getValue();</span>
+<span class="source-line-no">085</span><span id="line-85">      final Integer removeAmount = data.getCalculator().getToRemove().getOrDefault(entry.getKey(), 0);</span>
 <span class="source-line-no">086</span><span id="line-86"></span>
-<span class="source-line-no">087</span><span id="line-87">      final Integer removeAmount = data.getCalculator().getToRemove().getOrDefault(entry.getKey(), 0);</span>
+<span class="source-line-no">087</span><span id="line-87">      if(removeAmount &gt; 0 &amp;&amp; amount &gt; removeAmount) {</span>
 <span class="source-line-no">088</span><span id="line-88"></span>
-<span class="source-line-no">089</span><span id="line-89">      if(removeAmount &gt; 0 &amp;&amp; amount &gt; removeAmount) {</span>
-<span class="source-line-no">090</span><span id="line-90"></span>
-<span class="source-line-no">091</span><span id="line-91">        amount = amount - removeAmount;</span>
-<span class="source-line-no">092</span><span id="line-92">      }</span>
+<span class="source-line-no">089</span><span id="line-89">        amount = amount - removeAmount;</span>
+<span class="source-line-no">090</span><span id="line-90">      }</span>
+<span class="source-line-no">091</span><span id="line-91"></span>
+<span class="source-line-no">092</span><span id="line-92">      if(removeAmount &gt; 0 &amp;&amp; amount &lt;= removeAmount) {</span>
 <span class="source-line-no">093</span><span id="line-93"></span>
-<span class="source-line-no">094</span><span id="line-94">      if(removeAmount &gt; 0 &amp;&amp; amount &lt;= removeAmount) {</span>
-<span class="source-line-no">095</span><span id="line-95"></span>
-<span class="source-line-no">096</span><span id="line-96">        continue;</span>
-<span class="source-line-no">097</span><span id="line-97">      }</span>
+<span class="source-line-no">094</span><span id="line-94">        continue;</span>
+<span class="source-line-no">095</span><span id="line-95">      }</span>
+<span class="source-line-no">096</span><span id="line-96"></span>
+<span class="source-line-no">097</span><span id="line-97">      //PluginCore.log().debug("calculation Amount getToAdd:" + entry.getKey().toPlainString() + " Count:" + amount, DebugLevel.DEVELOPER);</span>
 <span class="source-line-no">098</span><span id="line-98"></span>
-<span class="source-line-no">099</span><span id="line-99">      //PluginCore.log().debug("calculation Amount getToAdd:" + entry.getKey().toPlainString() + " Count:" + amount, DebugLevel.DEVELOPER);</span>
-<span class="source-line-no">100</span><span id="line-100"></span>
-<span class="source-line-no">101</span><span id="line-101">      data.provideMaterials(data.getDenominations().get(entry.getKey()), amount);</span>
-<span class="source-line-no">102</span><span id="line-102">    }</span>
+<span class="source-line-no">099</span><span id="line-99">      data.provideMaterials(data.getDenominations().get(entry.getKey()), amount);</span>
+<span class="source-line-no">100</span><span id="line-100">    }</span>
+<span class="source-line-no">101</span><span id="line-101"></span>
+<span class="source-line-no">102</span><span id="line-102">    for(final Map.Entry&lt;BigDecimal, Integer&gt; entry : data.getCalculator().getToRemove().entrySet()) {</span>
 <span class="source-line-no">103</span><span id="line-103"></span>
-<span class="source-line-no">104</span><span id="line-104">    for(final Map.Entry&lt;BigDecimal, Integer&gt; entry : data.getCalculator().getToRemove().entrySet()) {</span>
+<span class="source-line-no">104</span><span id="line-104">      //PluginCore.log().debug("calculation Amount getToRemove:" + entry.getKey().toPlainString() + " Count:" + entry.getValue(), DebugLevel.DEVELOPER);</span>
 <span class="source-line-no">105</span><span id="line-105"></span>
-<span class="source-line-no">106</span><span id="line-106">      //PluginCore.log().debug("calculation Amount getToRemove:" + entry.getKey().toPlainString() + " Count:" + entry.getValue(), DebugLevel.DEVELOPER);</span>
-<span class="source-line-no">107</span><span id="line-107"></span>
-<span class="source-line-no">108</span><span id="line-108">      data.removeMaterials(data.getDenominations().get(entry.getKey()), entry.getValue());</span>
-<span class="source-line-no">109</span><span id="line-109">    }</span>
-<span class="source-line-no">110</span><span id="line-110"></span>
-<span class="source-line-no">111</span><span id="line-111"></span>
-<span class="source-line-no">112</span><span id="line-112">    return BigDecimal.ZERO;</span>
-<span class="source-line-no">113</span><span id="line-113">  }</span>
-<span class="source-line-no">114</span><span id="line-114"></span>
-<span class="source-line-no">115</span><span id="line-115">  /**</span>
-<span class="source-line-no">116</span><span id="line-116">   * Used to exchange an amount to inventory items. This is mostly used for when a larger</span>
-<span class="source-line-no">117</span><span id="line-117">   * denomination needs to be broken into smaller denominations for calculation purposes.</span>
-<span class="source-line-no">118</span><span id="line-118">   *</span>
-<span class="source-line-no">119</span><span id="line-119">   * @param amount The amount that the items should add up to.</span>
-<span class="source-line-no">120</span><span id="line-120">   */</span>
-<span class="source-line-no">121</span><span id="line-121">  public void provideMaterials(final CalculationData&lt;I&gt; data, final BigDecimal amount) {</span>
+<span class="source-line-no">106</span><span id="line-106">      data.removeMaterials(data.getDenominations().get(entry.getKey()), entry.getValue());</span>
+<span class="source-line-no">107</span><span id="line-107">    }</span>
+<span class="source-line-no">108</span><span id="line-108"></span>
+<span class="source-line-no">109</span><span id="line-109"></span>
+<span class="source-line-no">110</span><span id="line-110">    return BigDecimal.ZERO;</span>
+<span class="source-line-no">111</span><span id="line-111">  }</span>
+<span class="source-line-no">112</span><span id="line-112"></span>
+<span class="source-line-no">113</span><span id="line-113">  /**</span>
+<span class="source-line-no">114</span><span id="line-114">   * Used to exchange an amount to inventory items. This is mostly used for when a larger</span>
+<span class="source-line-no">115</span><span id="line-115">   * denomination needs to be broken into smaller denominations for calculation purposes.</span>
+<span class="source-line-no">116</span><span id="line-116">   *</span>
+<span class="source-line-no">117</span><span id="line-117">   * @param amount The amount that the items should add up to.</span>
+<span class="source-line-no">118</span><span id="line-118">   */</span>
+<span class="source-line-no">119</span><span id="line-119">  public void provideMaterials(final CalculationData&lt;I&gt; data, final BigDecimal amount) {</span>
+<span class="source-line-no">120</span><span id="line-120"></span>
+<span class="source-line-no">121</span><span id="line-121">    data.getCalculator().initialize(data.getCurrency(), data.getInventoryMaterials());</span>
 <span class="source-line-no">122</span><span id="line-122"></span>
-<span class="source-line-no">123</span><span id="line-123">    data.getCalculator().initialize(data.getCurrency(), data.getInventoryMaterials());</span>
+<span class="source-line-no">123</span><span id="line-123">    for(final Map.Entry&lt;BigDecimal, Integer&gt; entry : data.getCalculator().breakdown(amount).entrySet()) {</span>
 <span class="source-line-no">124</span><span id="line-124"></span>
-<span class="source-line-no">125</span><span id="line-125">    for(final Map.Entry&lt;BigDecimal, Integer&gt; entry : data.getCalculator().breakdown(amount).entrySet()) {</span>
-<span class="source-line-no">126</span><span id="line-126"></span>
-<span class="source-line-no">127</span><span id="line-127">      final int holding = data.getInventoryMaterials().getOrDefault(entry.getKey(), 0);</span>
-<span class="source-line-no">128</span><span id="line-128">      data.getInventoryMaterials().put(entry.getKey(), holding + entry.getValue());</span>
-<span class="source-line-no">129</span><span id="line-129">      data.provideMaterials(data.getDenominations().get(entry.getKey()), entry.getValue());</span>
-<span class="source-line-no">130</span><span id="line-130">    }</span>
-<span class="source-line-no">131</span><span id="line-131">  }</span>
-<span class="source-line-no">132</span><span id="line-132"></span>
-<span class="source-line-no">133</span><span id="line-133">  /**</span>
-<span class="source-line-no">134</span><span id="line-134">   * Used to remove tiers from the {@link CalculationData} being worked with.</span>
-<span class="source-line-no">135</span><span id="line-135">   *</span>
-<span class="source-line-no">136</span><span id="line-136">   * @param denom  The denom name in String form.</span>
-<span class="source-line-no">137</span><span id="line-137">   * @param amount The amount of the material to remove from working materials.</span>
-<span class="source-line-no">138</span><span id="line-138">   */</span>
-<span class="source-line-no">139</span><span id="line-139">  public void removeMaterials(final CalculationData&lt;I&gt; data, final Denomination denom, final Integer amount) {</span>
-<span class="source-line-no">140</span><span id="line-140"></span>
-<span class="source-line-no">141</span><span id="line-141">    data.removeMaterials(denom, amount);</span>
-<span class="source-line-no">142</span><span id="line-142">  }</span>
-<span class="source-line-no">143</span><span id="line-143">}</span>
+<span class="source-line-no">125</span><span id="line-125">      final int holding = data.getInventoryMaterials().getOrDefault(entry.getKey(), 0);</span>
+<span class="source-line-no">126</span><span id="line-126">      data.getInventoryMaterials().put(entry.getKey(), holding + entry.getValue());</span>
+<span class="source-line-no">127</span><span id="line-127">      data.provideMaterials(data.getDenominations().get(entry.getKey()), entry.getValue());</span>
+<span class="source-line-no">128</span><span id="line-128">    }</span>
+<span class="source-line-no">129</span><span id="line-129">  }</span>
+<span class="source-line-no">130</span><span id="line-130"></span>
+<span class="source-line-no">131</span><span id="line-131">  /**</span>
+<span class="source-line-no">132</span><span id="line-132">   * Used to remove tiers from the {@link CalculationData} being worked with.</span>
+<span class="source-line-no">133</span><span id="line-133">   *</span>
+<span class="source-line-no">134</span><span id="line-134">   * @param denom  The denom name in String form.</span>
+<span class="source-line-no">135</span><span id="line-135">   * @param amount The amount of the material to remove from working materials.</span>
+<span class="source-line-no">136</span><span id="line-136">   */</span>
+<span class="source-line-no">137</span><span id="line-137">  public void removeMaterials(final CalculationData&lt;I&gt; data, final Denomination denom, final Integer amount) {</span>
+<span class="source-line-no">138</span><span id="line-138"></span>
+<span class="source-line-no">139</span><span id="line-139">    data.removeMaterials(denom, amount);</span>
+<span class="source-line-no">140</span><span id="line-140">  }</span>
+<span class="source-line-no">141</span><span id="line-141">}</span>
 
 
 

@@ -93,7 +93,7 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-70">MoneyCommand</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-71">MoneyCommand</a></span>
 <span class="extends-implements">extends <a href="BaseCommand.html" title="class in net.tnemc.core.command">BaseCommand</a></span></div>
 <div class="block">MoneyCommands</div>
 <dl class="notes">
@@ -131,7 +131,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#onBalance(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.currency.Currency,java.lang.String)" class="member-name-link">onBalance</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
- <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
+ <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
@@ -147,17 +147,17 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#onGive(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,java.lang.String,net.tnemc.core.currency.Currency)" class="member-name-link">onGive</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#onGive(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency,java.lang.String)" class="member-name-link">onGive</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
  <a href="../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region,
- <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</code></div>
+ <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#onGiveAll(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.currency.parser.ParseMoney,java.lang.String,net.tnemc.core.currency.Currency)" class="member-name-link">onGiveAll</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#onGiveAll(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency,java.lang.String)" class="member-name-link">onGiveAll</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam,
- <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam)</code></div>
+ <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#onGiveNote(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency)" class="member-name-link">onGiveNote</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
@@ -174,10 +174,10 @@ loadScripts(document, 'script');</script>
  <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#onOther(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,java.lang.String,net.tnemc.core.currency.Currency)" class="member-name-link">onOther</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#onOther(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.Currency,java.lang.String)" class="member-name-link">onOther</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region,
- <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</code></div>
+ <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#onPay(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency)" class="member-name-link">onPay</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
@@ -192,28 +192,28 @@ loadScripts(document, 'script');</script>
  <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#onSet(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,java.lang.String,net.tnemc.core.currency.Currency)" class="member-name-link">onSet</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#onSet(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency,java.lang.String)" class="member-name-link">onSet</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
  <a href="../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam,
- <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam)</code></div>
+ <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#onSetAll(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.currency.parser.ParseMoney,java.lang.String,net.tnemc.core.currency.Currency)" class="member-name-link">onSetAll</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#onSetAll(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency,java.lang.String)" class="member-name-link">onSetAll</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam,
- <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam)</code></div>
+ <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#onSwitch(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account)" class="member-name-link">onSwitch</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#onTake(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,java.lang.String,net.tnemc.core.currency.Currency)" class="member-name-link">onTake</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#onTake(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency,java.lang.String)" class="member-name-link">onTake</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
  <a href="../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam,
- <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam)</code></div>
+ <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#onTop(net.tnemc.plugincore.core.compatibility.CmdSource,java.lang.Integer,net.tnemc.core.currency.Currency,java.lang.Boolean)" class="member-name-link">onTop</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
@@ -228,10 +228,10 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#printBalance(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,java.lang.String,net.tnemc.core.currency.Currency)" class="member-name-link">printBalance</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#printBalance(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.Currency,java.lang.String)" class="member-name-link">printBalance</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region,
- <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</code></div>
+ <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="../transaction/Receipt.html" title="class in net.tnemc.core.transaction">Receipt</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#processTransaction(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.transaction.Transaction,java.lang.String,java.math.BigDecimal)" class="member-name-link">processTransaction</a><wbr>(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
@@ -262,7 +262,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>MoneyCommand</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-70">MoneyCommand</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-71">MoneyCommand</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -276,21 +276,21 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="onMyBal(net.tnemc.plugincore.core.compatibility.CmdSource)">
 <h3>onMyBal</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-73">onMyBal</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-74">onMyBal</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onBalance(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.currency.Currency,java.lang.String)">
 <h3>onBalance</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-81">onBalance</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
- <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-82">onBalance</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+ <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onConvert(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.command.parameters.PercentBigDecimal,net.tnemc.core.currency.Currency,net.tnemc.core.currency.Currency)">
 <h3>onConvert</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-110">onConvert</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-113">onConvert</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="parameters/PercentBigDecimal.html" title="class in net.tnemc.core.command.parameters">PercentBigDecimal</a>&nbsp;amount,
  <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
  <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;fromCurrency)</span></div>
@@ -299,35 +299,35 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="onDeposit(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency,java.lang.String)">
 <h3>onDeposit</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-185">onDeposit</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-188">onDeposit</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
  <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="onGive(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,java.lang.String,net.tnemc.core.currency.Currency)">
+<section class="detail" id="onGive(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency,java.lang.String)">
 <h3>onGive</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-249">onGive</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-254">onGive</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
  <a href="../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region,
- <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</span></div>
+ <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="onGiveAll(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.currency.parser.ParseMoney,java.lang.String,net.tnemc.core.currency.Currency)">
+<section class="detail" id="onGiveAll(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency,java.lang.String)">
 <h3>onGiveAll</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-297">onGiveAll</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-303">onGiveAll</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam,
- <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam)</span></div>
+ <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onGiveNote(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency)">
 <h3>onGiveNote</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-353">onGiveNote</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-361">onGiveNote</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;acc,
  <a href="../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
  <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</span></div>
@@ -336,33 +336,33 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="onNote(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency)">
 <h3>onNote</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-400">onNote</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-410">onNote</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
  <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="onOther(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,java.lang.String,net.tnemc.core.currency.Currency)">
+<section class="detail" id="onOther(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.Currency,java.lang.String)">
 <h3>onOther</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-460">onOther</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-472">onOther</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region,
- <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</span></div>
+ <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="printBalance(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,java.lang.String,net.tnemc.core.currency.Currency)">
+<section class="detail" id="printBalance(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.Currency,java.lang.String)">
 <h3>printBalance</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-506">printBalance</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-520">printBalance</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region,
- <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</span></div>
+ <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onPay(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency)">
 <h3>onPay</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-540">onPay</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-554">onPay</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;acc,
  <a href="../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
  <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</span></div>
@@ -371,52 +371,52 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="onRequest(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency)">
 <h3>onRequest</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-644">onRequest</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-660">onRequest</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
  <a href="../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
  <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="onSet(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,java.lang.String,net.tnemc.core.currency.Currency)">
+<section class="detail" id="onSet(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency,java.lang.String)">
 <h3>onSet</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-683">onSet</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-701">onSet</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
  <a href="../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam,
- <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam)</span></div>
+ <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="onSetAll(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.currency.parser.ParseMoney,java.lang.String,net.tnemc.core.currency.Currency)">
+<section class="detail" id="onSetAll(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency,java.lang.String)">
 <h3>onSetAll</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-730">onSetAll</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-750">onSetAll</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam,
- <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam)</span></div>
+ <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onSwitch(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account)">
 <h3>onSwitch</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-785">onSwitch</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-807">onSwitch</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="onTake(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,java.lang.String,net.tnemc.core.currency.Currency)">
+<section class="detail" id="onTake(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.account.Account,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency,java.lang.String)">
 <h3>onTake</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-851">onTake</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-873">onTake</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../account/Account.html" title="class in net.tnemc.core.account">Account</a>&nbsp;account,
  <a href="../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam,
- <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam)</span></div>
+ <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onTop(net.tnemc.plugincore.core.compatibility.CmdSource,java.lang.Integer,net.tnemc.core.currency.Currency,java.lang.Boolean)">
 <h3>onTop</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-910">onTop</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-934">onTop</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;page,
  <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currency,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;refresh)</span></div>
@@ -425,7 +425,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="onWithdraw(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.currency.parser.ParseMoney,net.tnemc.core.currency.Currency,java.lang.String)">
 <h3>onWithdraw</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-971">onWithdraw</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-995">onWithdraw</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../currency/parser/ParseMoney.html" title="class in net.tnemc.core.currency.parser">ParseMoney</a>&nbsp;parseMoney,
  <a href="../currency/Currency.html" title="class in net.tnemc.core.currency">Currency</a>&nbsp;currencyParam,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regionParam)</span></div>
@@ -434,7 +434,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="processTransaction(net.tnemc.plugincore.core.compatibility.CmdSource,net.tnemc.core.transaction.Transaction,java.lang.String,java.math.BigDecimal)">
 <h3>processTransaction</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="../transaction/Receipt.html" title="class in net.tnemc.core.transaction">Receipt</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-1035">processTransaction</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="../transaction/Receipt.html" title="class in net.tnemc.core.transaction">Receipt</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/net/tnemc/core/command/MoneyCommand.html#line-1061">processTransaction</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.compatibility.CmdSource&lt;?&gt;&nbsp;sender,
  <a href="../transaction/Transaction.html" title="class in net.tnemc.core.transaction">Transaction</a>&nbsp;transaction,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;modifiedAccount,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;modifier)</span></div>

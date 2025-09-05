@@ -95,7 +95,7 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-73">SpongeCore</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-71">SpongeCore</a></span>
 <span class="extends-implements">extends <a href="../core/TNECore.html" title="class in net.tnemc.core">TNECore</a></span></div>
 <div class="block">The Sponge main plugin class.</div>
 <dl class="notes">
@@ -113,7 +113,7 @@ loadScripts(document, 'script');</script>
 <h2>Field Summary</h2>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-net.tnemc.core.TNECore">Fields inherited from class&nbsp;net.tnemc.core.<a href="../core/TNECore.html" title="class in net.tnemc.core">TNECore</a></h3>
-<code><a href="../core/TNECore.html#build">build</a>, <a href="../core/TNECore.html#coreURL">coreURL</a>, <a href="../core/TNECore.html#version">version</a></code></div>
+<code><a href="../core/TNECore.html#build">build</a>, <a href="../core/TNECore.html#coreURL">coreURL</a>, <a href="../core/TNECore.html#DEFAULT_WORLD">DEFAULT_WORLD</a>, <a href="../core/TNECore.html#version">version</a></code></div>
 </section>
 </li>
 <!-- ========== METHOD SUMMARY =========== -->
@@ -199,13 +199,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="key(java.lang.String)">
 <h3>key</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">org.spongepowered.api.ResourceKey</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-97">key</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">org.spongepowered.api.ResourceKey</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-95">key</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="registerMenuHandler()">
 <h3>registerMenuHandler</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-106">registerMenuHandler</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-104">registerMenuHandler</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>registerMenuHandler</code>&nbsp;in class&nbsp;<code>net.tnemc.plugincore.core.PluginEngine</code></dd>
@@ -215,43 +215,43 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="onConstruct(org.spongepowered.api.event.lifecycle.ConstructPluginEvent)">
 <h3>onConstruct</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-112">onConstruct</a></span><wbr><span class="parameters">(org.spongepowered.api.event.lifecycle.ConstructPluginEvent&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-110">onConstruct</a></span><wbr><span class="parameters">(org.spongepowered.api.event.lifecycle.ConstructPluginEvent&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onEngineStart(org.spongepowered.api.event.lifecycle.StartingEngineEvent)">
 <h3>onEngineStart</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-120">onEngineStart</a></span><wbr><span class="parameters">(org.spongepowered.api.event.lifecycle.StartingEngineEvent&lt;org.spongepowered.api.Server&gt;&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-118">onEngineStart</a></span><wbr><span class="parameters">(org.spongepowered.api.event.lifecycle.StartingEngineEvent&lt;org.spongepowered.api.Server&gt;&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onServerStart(org.spongepowered.api.event.lifecycle.StartedEngineEvent)">
 <h3>onServerStart</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-133">onServerStart</a></span><wbr><span class="parameters">(org.spongepowered.api.event.lifecycle.StartedEngineEvent&lt;org.spongepowered.api.Server&gt;&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-131">onServerStart</a></span><wbr><span class="parameters">(org.spongepowered.api.event.lifecycle.StartedEngineEvent&lt;org.spongepowered.api.Server&gt;&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onServerStop(org.spongepowered.api.event.lifecycle.StoppingEngineEvent)">
 <h3>onServerStop</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-140">onServerStop</a></span><wbr><span class="parameters">(org.spongepowered.api.event.lifecycle.StoppingEngineEvent&lt;org.spongepowered.api.Server&gt;&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-138">onServerStop</a></span><wbr><span class="parameters">(org.spongepowered.api.event.lifecycle.StoppingEngineEvent&lt;org.spongepowered.api.Server&gt;&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="provideEconomy(org.spongepowered.api.event.lifecycle.ProvideServiceEvent.EngineScoped)">
 <h3>provideEconomy</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-147">provideEconomy</a></span><wbr><span class="parameters">(org.spongepowered.api.event.lifecycle.ProvideServiceEvent.EngineScoped&lt;org.spongepowered.api.service.economy.EconomyService&gt;&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-145">provideEconomy</a></span><wbr><span class="parameters">(org.spongepowered.api.event.lifecycle.ProvideServiceEvent.EngineScoped&lt;org.spongepowered.api.service.economy.EconomyService&gt;&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getContainer()">
 <h3>getContainer</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.spongepowered.plugin.PluginContainer</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-153">getContainer</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.spongepowered.plugin.PluginContainer</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-151">getContainer</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="registerCommandHandler()">
 <h3>registerCommandHandler</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-158">registerCommandHandler</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-156">registerCommandHandler</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>registerCommandHandler</code>&nbsp;in class&nbsp;<code>net.tnemc.plugincore.core.PluginEngine</code></dd>
@@ -261,7 +261,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="commandHelpWriter(revxrsal.commands.command.ExecutableCommand,revxrsal.commands.command.CommandActor)">
 <h3>commandHelpWriter</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-164">commandHelpWriter</a></span><wbr><span class="parameters">(revxrsal.commands.command.ExecutableCommand&nbsp;executableCommand,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-162">commandHelpWriter</a></span><wbr><span class="parameters">(revxrsal.commands.command.ExecutableCommand&nbsp;executableCommand,
  revxrsal.commands.command.CommandActor&nbsp;commandActor)</span></div>
 <dl class="notes">
 <dt>Overrides:</dt>
@@ -272,7 +272,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="registerCommands()">
 <h3>registerCommands</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-170">registerCommands</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-168">registerCommands</a></span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../core/TNECore.html#registerCommands()">registerCommands</a></code>&nbsp;in class&nbsp;<code><a href="../core/TNECore.html" title="class in net.tnemc.core">TNECore</a></code></dd>
@@ -282,7 +282,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="registerConfigs()">
 <h3>registerConfigs</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-187">registerConfigs</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-185">registerConfigs</a></span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../core/TNECore.html#registerConfigs()">registerConfigs</a></code>&nbsp;in class&nbsp;<code><a href="../core/TNECore.html" title="class in net.tnemc.core">TNECore</a></code></dd>
@@ -292,7 +292,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="registerCallbacks(net.tnemc.plugincore.core.api.CallbackManager)">
 <h3>registerCallbacks</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-192">registerCallbacks</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.api.CallbackManager&nbsp;callbackManager)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-190">registerCallbacks</a></span><wbr><span class="parameters">(net.tnemc.plugincore.core.api.CallbackManager&nbsp;callbackManager)</span></div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../core/TNECore.html#registerCallbacks(net.tnemc.plugincore.core.api.CallbackManager)">registerCallbacks</a></code>&nbsp;in class&nbsp;<code><a href="../core/TNECore.html" title="class in net.tnemc.core">TNECore</a></code></dd>
@@ -302,7 +302,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="itemCalculations()">
 <h3>itemCalculations</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="impl/SpongeItemCalculations.html" title="class in net.tnemc.sponge.impl">SpongeItemCalculations</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-198">itemCalculations</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="impl/SpongeItemCalculations.html" title="class in net.tnemc.sponge.impl">SpongeItemCalculations</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-196">itemCalculations</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../core/TNECore.html#itemCalculations()">itemCalculations</a></code>&nbsp;in class&nbsp;<code><a href="../core/TNECore.html" title="class in net.tnemc.core">TNECore</a></code></dd>
@@ -312,7 +312,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="hasConsent()">
 <h3>hasConsent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-204">hasConsent</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../src-html/net/tnemc/sponge/SpongeCore.html#line-202">hasConsent</a></span>()</div>
 </section>
 </li>
 </ul>

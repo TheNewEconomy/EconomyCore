@@ -79,163 +79,168 @@
 <span class="source-line-no">066</span><span id="line-66"></span>
 <span class="source-line-no">067</span><span id="line-67">    PluginCore.log().debug("Player Join ID: " + provider.identifier());</span>
 <span class="source-line-no">068</span><span id="line-68"></span>
-<span class="source-line-no">069</span><span id="line-69">    final Optional&lt;Account&gt; account = TNECore.eco().account().findAccount(provider.identifier());</span>
-<span class="source-line-no">070</span><span id="line-70"></span>
-<span class="source-line-no">071</span><span id="line-71">    boolean firstJoin = false;</span>
-<span class="source-line-no">072</span><span id="line-72">    AccountAPIResponse apiResponse = null;</span>
+<span class="source-line-no">069</span><span id="line-69">    //we have to hardcode this UUID since MoDispenserMechanics fires the join event with their fake player....</span>
+<span class="source-line-no">070</span><span id="line-70">    if(provider.identifier().toString().equalsIgnoreCase("657912a8-aa0e-3f17-aff5-a41f440e710c")) {</span>
+<span class="source-line-no">071</span><span id="line-71">      return response;</span>
+<span class="source-line-no">072</span><span id="line-72">    }</span>
 <span class="source-line-no">073</span><span id="line-73"></span>
-<span class="source-line-no">074</span><span id="line-74">    PluginCore.log().debug("Join Account Check: " + account.isPresent());</span>
+<span class="source-line-no">074</span><span id="line-74">    final Optional&lt;Account&gt; account = TNECore.eco().account().findAccount(provider.identifier());</span>
 <span class="source-line-no">075</span><span id="line-75"></span>
-<span class="source-line-no">076</span><span id="line-76">    //Our account doesn't exist, so now we need to continue from here</span>
-<span class="source-line-no">077</span><span id="line-77">    if(account.isEmpty()) {</span>
-<span class="source-line-no">078</span><span id="line-78">      firstJoin = true;</span>
-<span class="source-line-no">079</span><span id="line-79"></span>
-<span class="source-line-no">080</span><span id="line-80">      apiResponse = TNECore.eco().account().createAccount(provider.identifier().toString(),</span>
-<span class="source-line-no">081</span><span id="line-81">                                                          provider.getName());</span>
-<span class="source-line-no">082</span><span id="line-82"></span>
-<span class="source-line-no">083</span><span id="line-83">      PluginCore.log().debug("API Join Check. Account Exists: " + apiResponse.getAccount().isPresent());</span>
-<span class="source-line-no">084</span><span id="line-84">      if(apiResponse.getAccount().isEmpty()) {</span>
-<span class="source-line-no">085</span><span id="line-85">        response.setResponse(response.getResponse());</span>
-<span class="source-line-no">086</span><span id="line-86">        response.setCancelled(true);</span>
-<span class="source-line-no">087</span><span id="line-87">        return response;</span>
-<span class="source-line-no">088</span><span id="line-88">      } else {</span>
-<span class="source-line-no">089</span><span id="line-89">        if(!apiResponse.getResponse().success() &amp;&amp; apiResponse.getAccount().isPresent()) {</span>
-<span class="source-line-no">090</span><span id="line-90">          firstJoin = false;</span>
-<span class="source-line-no">091</span><span id="line-91">        }</span>
-<span class="source-line-no">092</span><span id="line-92">      }</span>
-<span class="source-line-no">093</span><span id="line-93">    }</span>
-<span class="source-line-no">094</span><span id="line-94"></span>
-<span class="source-line-no">095</span><span id="line-95">    PluginCore.log().debug("First Join: " + firstJoin);</span>
-<span class="source-line-no">096</span><span id="line-96"></span>
-<span class="source-line-no">097</span><span id="line-97">    final Optional&lt;Account&gt; acc = (apiResponse == null)? account :</span>
-<span class="source-line-no">098</span><span id="line-98">                                  apiResponse.getAccount();</span>
+<span class="source-line-no">076</span><span id="line-76">    boolean firstJoin = false;</span>
+<span class="source-line-no">077</span><span id="line-77">    AccountAPIResponse apiResponse = null;</span>
+<span class="source-line-no">078</span><span id="line-78"></span>
+<span class="source-line-no">079</span><span id="line-79">    PluginCore.log().debug("Join Account Check: " + account.isPresent());</span>
+<span class="source-line-no">080</span><span id="line-80"></span>
+<span class="source-line-no">081</span><span id="line-81">    //Our account doesn't exist, so now we need to continue from here</span>
+<span class="source-line-no">082</span><span id="line-82">    if(account.isEmpty()) {</span>
+<span class="source-line-no">083</span><span id="line-83">      firstJoin = true;</span>
+<span class="source-line-no">084</span><span id="line-84"></span>
+<span class="source-line-no">085</span><span id="line-85">      apiResponse = TNECore.eco().account().createAccount(provider.identifier().toString(),</span>
+<span class="source-line-no">086</span><span id="line-86">                                                          provider.getName());</span>
+<span class="source-line-no">087</span><span id="line-87"></span>
+<span class="source-line-no">088</span><span id="line-88">      PluginCore.log().debug("API Join Check. Account Exists: " + apiResponse.getAccount().isPresent());</span>
+<span class="source-line-no">089</span><span id="line-89">      if(apiResponse.getAccount().isEmpty()) {</span>
+<span class="source-line-no">090</span><span id="line-90">        response.setResponse(response.getResponse());</span>
+<span class="source-line-no">091</span><span id="line-91">        response.setCancelled(true);</span>
+<span class="source-line-no">092</span><span id="line-92">        return response;</span>
+<span class="source-line-no">093</span><span id="line-93">      } else {</span>
+<span class="source-line-no">094</span><span id="line-94">        if(!apiResponse.getResponse().success() &amp;&amp; apiResponse.getAccount().isPresent()) {</span>
+<span class="source-line-no">095</span><span id="line-95">          firstJoin = false;</span>
+<span class="source-line-no">096</span><span id="line-96">        }</span>
+<span class="source-line-no">097</span><span id="line-97">      }</span>
+<span class="source-line-no">098</span><span id="line-98">    }</span>
 <span class="source-line-no">099</span><span id="line-99"></span>
-<span class="source-line-no">100</span><span id="line-100">    final UUID id = provider.identifier();</span>
-<span class="source-line-no">101</span><span id="line-101">    if(acc.isPresent()) {</span>
-<span class="source-line-no">102</span><span id="line-102"></span>
-<span class="source-line-no">103</span><span id="line-103">      if(!acc.get().getName().equalsIgnoreCase(provider.getName())) {</span>
-<span class="source-line-no">104</span><span id="line-104">        acc.get().setName(provider.getName());</span>
-<span class="source-line-no">105</span><span id="line-105"></span>
-<span class="source-line-no">106</span><span id="line-106">        TNECore.eco().account().uuidProvider().store(new UUIDPair(provider.identifier(), provider.getName()));</span>
-<span class="source-line-no">107</span><span id="line-107">      }</span>
-<span class="source-line-no">108</span><span id="line-108"></span>
-<span class="source-line-no">109</span><span id="line-109">      if(firstJoin || acc.get().getCreationDate() == ((PlayerAccount)acc.get()).getLastOnline()) {</span>
+<span class="source-line-no">100</span><span id="line-100">    PluginCore.log().debug("First Join: " + firstJoin);</span>
+<span class="source-line-no">101</span><span id="line-101"></span>
+<span class="source-line-no">102</span><span id="line-102">    final Optional&lt;Account&gt; acc = (apiResponse == null)? account :</span>
+<span class="source-line-no">103</span><span id="line-103">                                  apiResponse.getAccount();</span>
+<span class="source-line-no">104</span><span id="line-104"></span>
+<span class="source-line-no">105</span><span id="line-105">    final UUID id = provider.identifier();</span>
+<span class="source-line-no">106</span><span id="line-106">    if(acc.isPresent()) {</span>
+<span class="source-line-no">107</span><span id="line-107"></span>
+<span class="source-line-no">108</span><span id="line-108">      if(!acc.get().getName().equalsIgnoreCase(provider.getName())) {</span>
+<span class="source-line-no">109</span><span id="line-109">        acc.get().setName(provider.getName());</span>
 <span class="source-line-no">110</span><span id="line-110"></span>
-<span class="source-line-no">111</span><span id="line-111">        final String region = TNECore.eco().region().getMode().region(provider);</span>
-<span class="source-line-no">112</span><span id="line-112">        for(final Currency currency : TNECore.eco().currency().currencies()) {</span>
+<span class="source-line-no">111</span><span id="line-111">        TNECore.eco().account().uuidProvider().store(new UUIDPair(provider.identifier(), provider.getName()));</span>
+<span class="source-line-no">112</span><span id="line-112">      }</span>
 <span class="source-line-no">113</span><span id="line-113"></span>
-<span class="source-line-no">114</span><span id="line-114">          if(currency.type().supportsItems() &amp;&amp; MainConfig.yaml().getBoolean("Core.Server.ImportItems", true)) {</span>
+<span class="source-line-no">114</span><span id="line-114">      if(firstJoin || acc.get().getCreationDate() == ((PlayerAccount)acc.get()).getLastOnline()) {</span>
 <span class="source-line-no">115</span><span id="line-115"></span>
-<span class="source-line-no">116</span><span id="line-116">            TNECore.eco().account().getImporting().add(id);</span>
-<span class="source-line-no">117</span><span id="line-117"></span>
-<span class="source-line-no">118</span><span id="line-118">            for(final HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {</span>
-<span class="source-line-no">119</span><span id="line-119"></span>
-<span class="source-line-no">120</span><span id="line-120">              acc.get().setHoldings(entry, entry.getHandler());</span>
-<span class="source-line-no">121</span><span id="line-121">            }</span>
+<span class="source-line-no">116</span><span id="line-116">        final String region = TNECore.eco().region().getMode().region(provider);</span>
+<span class="source-line-no">117</span><span id="line-117">        for(final Currency currency : TNECore.eco().currency().currencies()) {</span>
+<span class="source-line-no">118</span><span id="line-118"></span>
+<span class="source-line-no">119</span><span id="line-119">          if(currency.type().supportsItems() &amp;&amp; MainConfig.yaml().getBoolean("Core.Server.ImportItems", true)) {</span>
+<span class="source-line-no">120</span><span id="line-120"></span>
+<span class="source-line-no">121</span><span id="line-121">            TNECore.eco().account().getImporting().add(id);</span>
 <span class="source-line-no">122</span><span id="line-122"></span>
-<span class="source-line-no">123</span><span id="line-123">            TNECore.eco().account().getImporting().remove(id);</span>
-<span class="source-line-no">124</span><span id="line-124">            continue;</span>
-<span class="source-line-no">125</span><span id="line-125">          }</span>
-<span class="source-line-no">126</span><span id="line-126"></span>
-<span class="source-line-no">127</span><span id="line-127">          PluginCore.log().debug("Setting Balance to Starting Holdings Currency: " + currency.getIdentifier());</span>
-<span class="source-line-no">128</span><span id="line-128"></span>
-<span class="source-line-no">129</span><span id="line-129">          if(firstJoin) {</span>
-<span class="source-line-no">130</span><span id="line-130">            acc.get().setHoldings(new HoldingsEntry(region,</span>
-<span class="source-line-no">131</span><span id="line-131">                                                    currency.getUid(),</span>
-<span class="source-line-no">132</span><span id="line-132">                                                    currency.getStartingHoldings(),</span>
-<span class="source-line-no">133</span><span id="line-133">                                                    EconomyManager.NORMAL</span>
-<span class="source-line-no">134</span><span id="line-134">            ));</span>
-<span class="source-line-no">135</span><span id="line-135">          }</span>
-<span class="source-line-no">136</span><span id="line-136">        }</span>
-<span class="source-line-no">137</span><span id="line-137">      } else {</span>
-<span class="source-line-no">138</span><span id="line-138">        TNECore.eco().account().getLoading().add(id);</span>
-<span class="source-line-no">139</span><span id="line-139"></span>
-<span class="source-line-no">140</span><span id="line-140">        final String region = TNECore.eco().region().getMode().region(provider);</span>
-<span class="source-line-no">141</span><span id="line-141">        for(final Currency currency : TNECore.eco().currency().getCurrencies(region)) {</span>
-<span class="source-line-no">142</span><span id="line-142"></span>
-<span class="source-line-no">143</span><span id="line-143">          if(currency instanceof final ItemCurrency itemCurrency) {</span>
+<span class="source-line-no">123</span><span id="line-123">            for(final HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {</span>
+<span class="source-line-no">124</span><span id="line-124"></span>
+<span class="source-line-no">125</span><span id="line-125">              acc.get().setHoldings(entry, entry.getHandler());</span>
+<span class="source-line-no">126</span><span id="line-126">            }</span>
+<span class="source-line-no">127</span><span id="line-127"></span>
+<span class="source-line-no">128</span><span id="line-128">            TNECore.eco().account().getImporting().remove(id);</span>
+<span class="source-line-no">129</span><span id="line-129">            continue;</span>
+<span class="source-line-no">130</span><span id="line-130">          }</span>
+<span class="source-line-no">131</span><span id="line-131"></span>
+<span class="source-line-no">132</span><span id="line-132">          PluginCore.log().debug("Setting Balance to Starting Holdings Currency: " + currency.getIdentifier());</span>
+<span class="source-line-no">133</span><span id="line-133"></span>
+<span class="source-line-no">134</span><span id="line-134">          if(firstJoin) {</span>
+<span class="source-line-no">135</span><span id="line-135">            acc.get().setHoldings(new HoldingsEntry(region,</span>
+<span class="source-line-no">136</span><span id="line-136">                                                    currency.getUid(),</span>
+<span class="source-line-no">137</span><span id="line-137">                                                    currency.getStartingHoldings(),</span>
+<span class="source-line-no">138</span><span id="line-138">                                                    EconomyManager.NORMAL</span>
+<span class="source-line-no">139</span><span id="line-139">            ));</span>
+<span class="source-line-no">140</span><span id="line-140">          }</span>
+<span class="source-line-no">141</span><span id="line-141">        }</span>
+<span class="source-line-no">142</span><span id="line-142">      } else {</span>
+<span class="source-line-no">143</span><span id="line-143">        TNECore.eco().account().getLoading().add(id);</span>
 <span class="source-line-no">144</span><span id="line-144"></span>
-<span class="source-line-no">145</span><span id="line-145">            if(!acc.get().getWallet().contains(region, currency.getUid())) {</span>
-<span class="source-line-no">146</span><span id="line-146"></span>
-<span class="source-line-no">147</span><span id="line-147">              if(itemCurrency.isImportItem()) {</span>
-<span class="source-line-no">148</span><span id="line-148"></span>
-<span class="source-line-no">149</span><span id="line-149">                TNECore.eco().account().getImporting().add(id);</span>
-<span class="source-line-no">150</span><span id="line-150"></span>
-<span class="source-line-no">151</span><span id="line-151">                for(final HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {</span>
-<span class="source-line-no">152</span><span id="line-152"></span>
-<span class="source-line-no">153</span><span id="line-153">                  acc.get().setHoldings(entry, entry.getHandler());</span>
-<span class="source-line-no">154</span><span id="line-154">                }</span>
+<span class="source-line-no">145</span><span id="line-145">        final String region = TNECore.eco().region().getMode().region(provider);</span>
+<span class="source-line-no">146</span><span id="line-146">        for(final Currency currency : TNECore.eco().currency().getCurrencies(region)) {</span>
+<span class="source-line-no">147</span><span id="line-147"></span>
+<span class="source-line-no">148</span><span id="line-148">          if(currency instanceof final ItemCurrency itemCurrency) {</span>
+<span class="source-line-no">149</span><span id="line-149"></span>
+<span class="source-line-no">150</span><span id="line-150">            if(!acc.get().getWallet().contains(region, currency.getUid())) {</span>
+<span class="source-line-no">151</span><span id="line-151"></span>
+<span class="source-line-no">152</span><span id="line-152">              if(itemCurrency.isImportItem()) {</span>
+<span class="source-line-no">153</span><span id="line-153"></span>
+<span class="source-line-no">154</span><span id="line-154">                TNECore.eco().account().getImporting().add(id);</span>
 <span class="source-line-no">155</span><span id="line-155"></span>
-<span class="source-line-no">156</span><span id="line-156">                TNECore.eco().account().getImporting().remove(id);</span>
-<span class="source-line-no">157</span><span id="line-157">              } else {</span>
-<span class="source-line-no">158</span><span id="line-158">                acc.get().setHoldings(new HoldingsEntry(region,</span>
-<span class="source-line-no">159</span><span id="line-159">                                                        currency.getUid(),</span>
-<span class="source-line-no">160</span><span id="line-160">                                                        currency.getStartingHoldings(),</span>
-<span class="source-line-no">161</span><span id="line-161">                                                        EconomyManager.NORMAL</span>
-<span class="source-line-no">162</span><span id="line-162">                ));</span>
-<span class="source-line-no">163</span><span id="line-163">              }</span>
-<span class="source-line-no">164</span><span id="line-164">            } else {</span>
-<span class="source-line-no">165</span><span id="line-165"></span>
-<span class="source-line-no">166</span><span id="line-166">              for(final HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {</span>
-<span class="source-line-no">167</span><span id="line-167"></span>
-<span class="source-line-no">168</span><span id="line-168">                acc.get().setHoldings(entry, entry.getHandler());</span>
-<span class="source-line-no">169</span><span id="line-169">              }</span>
-<span class="source-line-no">170</span><span id="line-170">            }</span>
-<span class="source-line-no">171</span><span id="line-171">          }</span>
-<span class="source-line-no">172</span><span id="line-172">        }</span>
-<span class="source-line-no">173</span><span id="line-173">      }</span>
-<span class="source-line-no">174</span><span id="line-174">      TNECore.eco().account().getLoading().remove(id);</span>
-<span class="source-line-no">175</span><span id="line-175"></span>
-<span class="source-line-no">176</span><span id="line-176">      PluginCore.server().scheduler().createDelayedTask(()-&gt;{</span>
-<span class="source-line-no">177</span><span id="line-177"></span>
-<span class="source-line-no">178</span><span id="line-178">        final Optional&lt;AwayHistory&gt; away = acc.get().away(((PlayerAccount)acc.get()).getUUID());</span>
-<span class="source-line-no">179</span><span id="line-179">        if(away.isPresent()) {</span>
-<span class="source-line-no">180</span><span id="line-180">          provider.message(new MessageData("Messages.Transaction.AwayJoin"));</span>
-<span class="source-line-no">181</span><span id="line-181">        }</span>
+<span class="source-line-no">156</span><span id="line-156">                for(final HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {</span>
+<span class="source-line-no">157</span><span id="line-157"></span>
+<span class="source-line-no">158</span><span id="line-158">                  acc.get().setHoldings(entry, entry.getHandler());</span>
+<span class="source-line-no">159</span><span id="line-159">                }</span>
+<span class="source-line-no">160</span><span id="line-160"></span>
+<span class="source-line-no">161</span><span id="line-161">                TNECore.eco().account().getImporting().remove(id);</span>
+<span class="source-line-no">162</span><span id="line-162">              } else {</span>
+<span class="source-line-no">163</span><span id="line-163">                acc.get().setHoldings(new HoldingsEntry(region,</span>
+<span class="source-line-no">164</span><span id="line-164">                                                        currency.getUid(),</span>
+<span class="source-line-no">165</span><span id="line-165">                                                        currency.getStartingHoldings(),</span>
+<span class="source-line-no">166</span><span id="line-166">                                                        EconomyManager.NORMAL</span>
+<span class="source-line-no">167</span><span id="line-167">                ));</span>
+<span class="source-line-no">168</span><span id="line-168">              }</span>
+<span class="source-line-no">169</span><span id="line-169">            } else {</span>
+<span class="source-line-no">170</span><span id="line-170"></span>
+<span class="source-line-no">171</span><span id="line-171">              for(final HoldingsEntry entry : acc.get().getHoldings(region, currency.getUid())) {</span>
+<span class="source-line-no">172</span><span id="line-172"></span>
+<span class="source-line-no">173</span><span id="line-173">                acc.get().setHoldings(entry, entry.getHandler());</span>
+<span class="source-line-no">174</span><span id="line-174">              }</span>
+<span class="source-line-no">175</span><span id="line-175">            }</span>
+<span class="source-line-no">176</span><span id="line-176">          }</span>
+<span class="source-line-no">177</span><span id="line-177">        }</span>
+<span class="source-line-no">178</span><span id="line-178">      }</span>
+<span class="source-line-no">179</span><span id="line-179">      TNECore.eco().account().getLoading().remove(id);</span>
+<span class="source-line-no">180</span><span id="line-180"></span>
+<span class="source-line-no">181</span><span id="line-181">      PluginCore.server().scheduler().createDelayedTask(()-&gt;{</span>
 <span class="source-line-no">182</span><span id="line-182"></span>
-<span class="source-line-no">183</span><span id="line-183">      }, new ChoreTime(0), ChoreExecution.SECONDARY);</span>
-<span class="source-line-no">184</span><span id="line-184"></span>
-<span class="source-line-no">185</span><span id="line-185">      if(provider.hasPermission("tne.admin.update")) {</span>
-<span class="source-line-no">186</span><span id="line-186">        if(MainConfig.yaml().getBoolean("Core.Update.Notify") &amp;&amp; TNECore.instance().update() != null) {</span>
+<span class="source-line-no">183</span><span id="line-183">        final Optional&lt;AwayHistory&gt; away = acc.get().away(((PlayerAccount)acc.get()).getUUID());</span>
+<span class="source-line-no">184</span><span id="line-184">        if(away.isPresent()) {</span>
+<span class="source-line-no">185</span><span id="line-185">          provider.message(new MessageData("Messages.Transaction.AwayJoin"));</span>
+<span class="source-line-no">186</span><span id="line-186">        }</span>
 <span class="source-line-no">187</span><span id="line-187"></span>
-<span class="source-line-no">188</span><span id="line-188">          if(TNECore.instance().update().needsUpdate()) {</span>
-<span class="source-line-no">189</span><span id="line-189">            provider.message(new MessageData("&lt;red&gt;[TNE] Update Available! Latest: &lt;white&gt;" + TNECore.instance().update().getBuild()));</span>
-<span class="source-line-no">190</span><span id="line-190">          }</span>
-<span class="source-line-no">191</span><span id="line-191"></span>
-<span class="source-line-no">192</span><span id="line-192">          if(TNECore.instance().update().isEarlyBuild()) {</span>
-<span class="source-line-no">193</span><span id="line-193">            provider.message(new MessageData("&lt;gold&gt;[TNE] Thank You for testing this pre-release version!"));</span>
-<span class="source-line-no">194</span><span id="line-194">          }</span>
-<span class="source-line-no">195</span><span id="line-195">        }</span>
+<span class="source-line-no">188</span><span id="line-188">      }, new ChoreTime(0), ChoreExecution.SECONDARY);</span>
+<span class="source-line-no">189</span><span id="line-189"></span>
+<span class="source-line-no">190</span><span id="line-190">      if(provider.hasPermission("tne.admin.update")) {</span>
+<span class="source-line-no">191</span><span id="line-191">        if(MainConfig.yaml().getBoolean("Core.Update.Notify") &amp;&amp; TNECore.instance().update() != null) {</span>
+<span class="source-line-no">192</span><span id="line-192"></span>
+<span class="source-line-no">193</span><span id="line-193">          if(TNECore.instance().update().needsUpdate()) {</span>
+<span class="source-line-no">194</span><span id="line-194">            provider.message(new MessageData("&lt;red&gt;[TNE] Update Available! Latest: &lt;white&gt;" + TNECore.instance().update().getBuild()));</span>
+<span class="source-line-no">195</span><span id="line-195">          }</span>
 <span class="source-line-no">196</span><span id="line-196"></span>
-<span class="source-line-no">197</span><span id="line-197"></span>
-<span class="source-line-no">198</span><span id="line-198">        if(TNECore.eco().transaction().isTrack()) {</span>
-<span class="source-line-no">199</span><span id="line-199">          //TODO: Any warnings? Balance jumps?</span>
+<span class="source-line-no">197</span><span id="line-197">          if(TNECore.instance().update().isEarlyBuild()) {</span>
+<span class="source-line-no">198</span><span id="line-198">            provider.message(new MessageData("&lt;gold&gt;[TNE] Thank You for testing this pre-release version!"));</span>
+<span class="source-line-no">199</span><span id="line-199">          }</span>
 <span class="source-line-no">200</span><span id="line-200">        }</span>
-<span class="source-line-no">201</span><span id="line-201">      }</span>
+<span class="source-line-no">201</span><span id="line-201"></span>
 <span class="source-line-no">202</span><span id="line-202"></span>
-<span class="source-line-no">203</span><span id="line-203">      //If this is the first player online, sync balances.</span>
-<span class="source-line-no">204</span><span id="line-204">      if(PluginCore.server().onlinePlayers() == 1) {</span>
-<span class="source-line-no">205</span><span id="line-205">        //check if server own wants db reloaded</span>
-<span class="source-line-no">206</span><span id="line-206">        if(DataConfig.yaml().getBoolean("Data.Sync.Reload.Enabled", false)) {</span>
+<span class="source-line-no">203</span><span id="line-203">        if(TNECore.eco().transaction().isTrack()) {</span>
+<span class="source-line-no">204</span><span id="line-204">          //TODO: Any warnings? Balance jumps?</span>
+<span class="source-line-no">205</span><span id="line-205">        }</span>
+<span class="source-line-no">206</span><span id="line-206">      }</span>
 <span class="source-line-no">207</span><span id="line-207"></span>
-<span class="source-line-no">208</span><span id="line-208">          if(MISCUtils.isTimeDifferenceGreaterOrEqual(new Date(TNECore.eco().getReloadTime()), DataConfig.yaml().getInt("Data.Sync.Reload.Time", 120))) {</span>
-<span class="source-line-no">209</span><span id="line-209"></span>
-<span class="source-line-no">210</span><span id="line-210">            TNECore.eco().account().getAccounts().clear();</span>
-<span class="source-line-no">211</span><span id="line-211">            TransactionManager.receipts().getReceipts().clear();</span>
+<span class="source-line-no">208</span><span id="line-208">      //If this is the first player online, sync balances.</span>
+<span class="source-line-no">209</span><span id="line-209">      if(PluginCore.server().onlinePlayers() == 1) {</span>
+<span class="source-line-no">210</span><span id="line-210">        //check if server own wants db reloaded</span>
+<span class="source-line-no">211</span><span id="line-211">        if(DataConfig.yaml().getBoolean("Data.Sync.Reload.Enabled", false)) {</span>
 <span class="source-line-no">212</span><span id="line-212"></span>
-<span class="source-line-no">213</span><span id="line-213">            TNECore.instance().storage().loadAll(Account.class, "");</span>
-<span class="source-line-no">214</span><span id="line-214">            TNECore.instance().storage().loadAll(Receipt.class, "");</span>
-<span class="source-line-no">215</span><span id="line-215"></span>
-<span class="source-line-no">216</span><span id="line-216">            TNECore.eco().setReloadTime(new Date().getTime());</span>
-<span class="source-line-no">217</span><span id="line-217">          }</span>
-<span class="source-line-no">218</span><span id="line-218">        } else {</span>
-<span class="source-line-no">219</span><span id="line-219">          SyncHandler.send(acc.get().getIdentifier().toString(), acc.get().getName(), serverIP, serverPort);</span>
-<span class="source-line-no">220</span><span id="line-220">        }</span>
-<span class="source-line-no">221</span><span id="line-221">      }</span>
-<span class="source-line-no">222</span><span id="line-222">    }</span>
-<span class="source-line-no">223</span><span id="line-223">    return response;</span>
-<span class="source-line-no">224</span><span id="line-224">  }</span>
-<span class="source-line-no">225</span><span id="line-225">}</span>
+<span class="source-line-no">213</span><span id="line-213">          if(MISCUtils.isTimeDifferenceGreaterOrEqual(new Date(TNECore.eco().getReloadTime()), DataConfig.yaml().getInt("Data.Sync.Reload.Time", 120))) {</span>
+<span class="source-line-no">214</span><span id="line-214"></span>
+<span class="source-line-no">215</span><span id="line-215">            TNECore.eco().account().getAccounts().clear();</span>
+<span class="source-line-no">216</span><span id="line-216">            TransactionManager.receipts().getReceipts().clear();</span>
+<span class="source-line-no">217</span><span id="line-217"></span>
+<span class="source-line-no">218</span><span id="line-218">            TNECore.instance().storage().loadAll(Account.class, "");</span>
+<span class="source-line-no">219</span><span id="line-219">            TNECore.instance().storage().loadAll(Receipt.class, "");</span>
+<span class="source-line-no">220</span><span id="line-220"></span>
+<span class="source-line-no">221</span><span id="line-221">            TNECore.eco().setReloadTime(new Date().getTime());</span>
+<span class="source-line-no">222</span><span id="line-222">          }</span>
+<span class="source-line-no">223</span><span id="line-223">        } else {</span>
+<span class="source-line-no">224</span><span id="line-224">          SyncHandler.send(acc.get().getIdentifier().toString(), acc.get().getName(), serverIP, serverPort);</span>
+<span class="source-line-no">225</span><span id="line-225">        }</span>
+<span class="source-line-no">226</span><span id="line-226">      }</span>
+<span class="source-line-no">227</span><span id="line-227">    }</span>
+<span class="source-line-no">228</span><span id="line-228">    return response;</span>
+<span class="source-line-no">229</span><span id="line-229">  }</span>
+<span class="source-line-no">230</span><span id="line-230">}</span>
 
 
 
