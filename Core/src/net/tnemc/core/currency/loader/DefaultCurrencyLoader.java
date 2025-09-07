@@ -62,7 +62,6 @@ import static net.tnemc.core.manager.CurrencyManager.largestSupported;
  */
 public class DefaultCurrencyLoader implements CurrencyLoader {
 
-
   /**
    * Loads all currencies.
    *
@@ -223,6 +222,21 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
         final String region = (String)regionObj;
         final boolean isDefault = cur.getBoolean("Options.MultiRegion.Regions." + region + ".Default", true);
         currency.getRegions().put(region, new CurrencyRegion(region, true, isDefault));
+      }
+    }
+
+    if(cur.contains("Options.Limit") && cur.isSection("Options.Limit.Permissions")) {
+
+      if(cur.getBoolean("Options.Limit.Enabled", false)) {
+
+        for(final Object amountObj : cur.getSection("Options.Limit.Permissions").getKeys()) {
+
+          final String amount = (String)amountObj;
+          final String permission = cur.getString("Options.Limit.Permissions." + amount);
+          final BigDecimal limit = new BigDecimal(amount);
+
+          currency.limits().put(limit, permission);
+        }
       }
     }
 

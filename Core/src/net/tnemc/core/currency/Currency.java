@@ -23,6 +23,7 @@ import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.manager.CurrencyManager;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -39,6 +40,7 @@ public class Currency {
 
   private final Map<String, Double> conversion = new HashMap<>();
   private final TreeMap<BigDecimal, Denomination> denominations = new TreeMap<>();
+  private final TreeMap<BigDecimal, String> permissionLimits = new TreeMap<>(Collections.reverseOrder());
 
   //World-related configurations.
   private final Map<String, CurrencyRegion> regions = new HashMap<>();
@@ -479,5 +481,10 @@ public class Currency {
   public Map<String, CurrencyRegion> getRegions() {
 
     return regions;
+  }
+
+  public TreeMap<BigDecimal, String> limits() {
+
+    return permissionLimits;
   }
 }
