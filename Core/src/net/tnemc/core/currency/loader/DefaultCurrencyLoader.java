@@ -162,6 +162,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     final BigDecimal maxBalance = ((new BigDecimal(cur.getString("Options.MaxBalance", largestSupported.toPlainString())).compareTo(largestSupported) > 0)? largestSupported : new BigDecimal(cur.getString("MaxBalance", largestSupported.toPlainString())));
     final BigDecimal minBalance = (type.supportsItems())? BigDecimal.ZERO : new BigDecimal(cur.getString("Options.MinBalance", "0.00"));
     final BigDecimal balance = new BigDecimal(cur.getString("Options.Balance", "200.00"));
+    final boolean commandSet = cur.getBoolean("Options.Commands", false);
 
     //Added in build 28, needs removed by build 32.
     boolean uuidAsId = false;
@@ -211,6 +212,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     currency.setMajorSeparator(separator);
     currency.setBalanceShow(showBalance);
     currency.setMinorWeight(minorWeight);
+    currency.commandSet(commandSet);
 
     final boolean global = cur.getBoolean("Options.Global.Enabled", true);
     final boolean globalDefault = cur.getBoolean("Options.Global.Default", false);

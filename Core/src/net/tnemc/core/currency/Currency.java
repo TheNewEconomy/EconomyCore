@@ -85,6 +85,7 @@ public class Currency {
   private int minorWeight;
 
   //MISC configurations
+  private boolean commandSet = true;
   private Note note;
 
   public Currency(final String identifier) {
@@ -150,6 +151,8 @@ public class Currency {
     cloned.decimalPlaces = original.decimalPlaces;
     cloned.minorWeight = original.minorWeight;
     cloned.note = original.note;
+
+    cloned.limits().putAll(original.limits());
 
     if(cloned instanceof final ItemCurrency clonedItem && original instanceof final ItemCurrency itemCurrency) {
       clonedItem.setEnderChest(itemCurrency.canEnderChest());
@@ -445,6 +448,16 @@ public class Currency {
   public boolean negativeSupport() {
 
     return negativeSupport;
+  }
+
+  public boolean commandSet() {
+
+    return commandSet;
+  }
+
+  public void commandSet(final boolean commandSet) {
+
+    this.commandSet = commandSet;
   }
 
   public TreeMap<BigDecimal, Denomination> getDenominations() {

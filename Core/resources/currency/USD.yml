@@ -1,4 +1,4 @@
-config-version: 2
+config-version: 3
 
 #Configurations relating to basic information about this currency.
 Info:
@@ -32,6 +32,9 @@ Info:
 
 #Various options for currencies.
 Options:
+
+  #If TNE should register a set of commands for this currency. Example /usd pay, /usd give, etc.
+  Commands: true
 
   #Configurations relating to multi region support.
   #This is where you can make your currency the default in various regions.
