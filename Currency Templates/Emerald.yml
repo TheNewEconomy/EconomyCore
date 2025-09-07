@@ -91,7 +91,7 @@ Options:
     #The key is the balance limit, the value is the permission node.
     Permissions:
 
-      1000000: "tne.currency.usd.limit.1000000"
+      1000000: "tne.currency.emerald.limit.1000000"
 
 #All configurations relating to item-backed currencies
 #The current built-in types are mixed and item
