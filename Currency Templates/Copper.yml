@@ -5,23 +5,23 @@ Info:
   Server: Main Server
 
   #The identifier of this currency used for various commands.
-  Identifier: EMERALD
+  Identifier: COPPER
 
   #The material name to use as the icon for this currency in
   #the plugin menus.
   Icon: PAPER
 
   #The singular form of this currency's major denomination.
-  Major_Single: Emerald
+  Major_Single: Bar
 
   #The plural form of this currency's major denomination.
-  Major_Plural: Emeralds
+  Major_Plural: Bars
 
   #The singular form of this currency's minor denomination.
-  Minor_Single: Emerald
+  Minor_Single: Nugget
 
   #The plural form of this currency's minor denomination.
-  Minor_Plural: Emeralds
+  Minor_Plural: Nuggets
 
   #The character to use as the symbol for this currency.
   Symbol: $
@@ -43,7 +43,7 @@ Options:
       world:
 
         #Should this currency be the default in this world?
-        Default: false
+        Default: true
 
   #Configurations relating to global configurations for this currency.
   Global:
@@ -52,7 +52,7 @@ Options:
     Enabled: true
 
     #Should this currency be the global default?
-    Default: false
+    Default: true
 
   #Whether this currency is enabled.
   Disabled: false
