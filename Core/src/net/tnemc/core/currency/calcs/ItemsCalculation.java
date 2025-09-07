@@ -18,25 +18,27 @@ package net.tnemc.core.currency.calcs;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jetbrains.annotations.NotNull;
-
 import java.math.BigDecimal;
-import java.util.Map;
+import java.util.Collections;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
- * ChangeCalculator
+ * ItemsCalculation
  *
  * @author creatorfromhell
  * @since 0.1.4.0
  */
-public interface ChangeCalculator {
+public class ItemsCalculation {
 
-  /**
-   * Calculates the change to be returned in various denominations.
-   *
-   * @param denomination the total amount for which the change needs to be calculated
-   * @return a map where the key represents the denomination and the value represents the number of such denominations needed for the change
-   */
-  @NotNull
-  Map<BigDecimal, Integer> calculateChange(final @NotNull BigDecimal denomination);
+  private final TreeSet<BigDecimal> denominationTypes = new TreeSet<>(Collections.reverseOrder());
+  private final TreeMap<BigDecimal, Integer> inventoryMaterials = new TreeMap<>();
+
+  private final TreeMap<BigDecimal, Integer> toAdd = new TreeMap<>();
+  private final TreeMap<BigDecimal, Integer> toRemove = new TreeMap<>();
+
+  //Calculate denominations amounts
+
+  //Calculate the amount of items needed to pay for a given amount. This method has the
+  //potential to fail if the player has items that are not in the currency's itemModel.
 }

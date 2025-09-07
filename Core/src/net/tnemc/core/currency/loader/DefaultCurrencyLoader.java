@@ -43,6 +43,7 @@ import net.tnemc.plugincore.core.utils.IOUtil;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -369,7 +370,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     final String single = denom.getString("Info.Single", "Dollar");
     final String plural = denom.getString("Info.Plural", "Dollars");
 
-    final BigDecimal weight = new BigDecimal(denom.getString("Options.Weight", "1.0"));
+    final BigDecimal weight = new BigDecimal(denom.getString("Options.Weight", "1.0")).setScale(currency.getDecimalPlaces(), RoundingMode.DOWN);
     PluginCore.log().debug("Loading denomination with weight of: " + weight);
     if(weight.compareTo(BigDecimal.ZERO) <= 0) {
 

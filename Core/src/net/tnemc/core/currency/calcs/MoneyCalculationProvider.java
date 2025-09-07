@@ -1,6 +1,5 @@
 package net.tnemc.core.currency.calcs;
 
-
 /*
  * The New Economy
  * Copyright (C) 2022 - 2025 Daniel "creatorfromhell" Vidmar

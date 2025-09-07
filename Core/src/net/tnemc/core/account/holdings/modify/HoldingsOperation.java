@@ -83,7 +83,7 @@ public enum HoldingsOperation {
     @Override
     public BigDecimal perform(final BigDecimal value, final BigDecimal modifier) {
 
-      return value.divide(modifier, RoundingMode.valueOf(9));
+      return value.divide(modifier, RoundingMode.DOWN);
     }
   };
 
