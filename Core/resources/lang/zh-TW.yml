@@ -6,13 +6,13 @@ Messages:
   config-version: 11
   General:
     Version: "<white>TNE Version: <green>$version <white>- Build: <green>$build"
-    NoPerm: "<red>I'm sorry, but you do not have permission to do that."
-    Saved: "<yellow>Successfully saved all TNE Data!"
-    NoPlayer: "<red>Unable to locate player '$player'!"
-    Disabled: "<red>Economy features are currently disabled in this world!"
-    IsConsole: "<red>You can not run this command as the console!"
+    NoPerm: "<red>很抱歉，你沒有權限那麼做。"
+    Saved: "<yellow>已儲存 TNE 資料！"
+    NoPlayer: "<red>找不到玩家 $player！"
+    Disabled: "<red>已停用這個世界的經濟功能！"
+    IsConsole: "<red>不能在控制台執行此指令！"
   Worlds:
-    example: "replacement"
+    example: "取代"
   Item:
     Invalid: "<red>Invalid item name and/or durability combination entered."
     InvalidAmount: "<red>Invalid item amount entered."
