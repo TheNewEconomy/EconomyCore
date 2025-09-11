@@ -370,7 +370,9 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     final String single = denom.getString("Info.Single", "Dollar");
     final String plural = denom.getString("Info.Plural", "Dollars");
 
-    final BigDecimal weight = new BigDecimal(denom.getString("Options.Weight", "1.0")).setScale(currency.getDecimalPlaces(), RoundingMode.DOWN);
+    final String weightStr = denom.getString("Options.Weight", "1.0");
+
+    final BigDecimal weight = new BigDecimal(weightStr).setScale(currency.getDecimalPlaces(), RoundingMode.DOWN);
     PluginCore.log().debug("Loading denomination with weight of: " + weight);
     if(weight.compareTo(BigDecimal.ZERO) <= 0) {
 
@@ -378,13 +380,13 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       return false;
     }
 
-
     final String material = denom.getString("Options.Material", "PAPER").toLowerCase(Locale.ROOT);
     PluginCore.log().debug("Loading denomination with material of: " + material);
 
     final Denomination denomination = (currency instanceof ItemCurrency)?
                                       new ItemDenomination(weight, material) : new Denomination(weight);
 
+    denomination.identifier(UUID.nameUUIDFromBytes(("Weight:" + weightStr).getBytes(StandardCharsets.UTF_8)));
     denomination.setSingle(single);
     denomination.setPlural(plural);
 

@@ -460,6 +460,16 @@ public class Currency {
     this.commandSet = commandSet;
   }
 
+  public Optional<Object> byUUID(final UUID uuid) {
+
+    for(final Denomination denomination : denominations.values()) {
+      if(denomination.identifier().equals(uuid)) {
+        return Optional.of(denomination);
+      }
+    }
+    return Optional.empty();
+  }
+
   public TreeMap<BigDecimal, Denomination> getDenominations() {
 
     return denominations;
