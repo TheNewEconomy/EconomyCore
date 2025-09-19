@@ -79,31 +79,38 @@ public class MoneyResolver implements ParameterType<CommandActor, ParseMoney> {
           item = true;
         }
 
-        final String symbol = currency.getSymbol();
-        if(currency.getDecimalPlaces() >= 2) {
-          suggestionsParsing.add("'" + symbol + "0.01'");
+        if(TNECore.instance().config().getYaml().getBoolean("Core.Commands.SymbolPlaceholders", true)) {
+          final String symbol = currency.getSymbol();
+          if(currency.getDecimalPlaces() >= 2) {
+            suggestionsParsing.add("'" + symbol + "0.01'");
+          }
+
+          suggestionsParsing.add("'" + symbol + "1'");
+          suggestionsParsing.add("'" + symbol + "10'");
+          suggestionsParsing.add("'" + symbol + "100'");
+          suggestionsParsing.add("'" + symbol + "1000'");
+          suggestionsParsing.add("'" + symbol + "1000000'");
+
+          String prefix = String.valueOf(currency.getPrefixes().charAt(0));
+          suggestionsParsing.add("'" + symbol + "1" + prefix + "'");     //1,000
+          suggestionsParsing.add("'" + symbol + "10" + prefix + "'");    //10,000
+          suggestionsParsing.add("'" + symbol + "100" + prefix + "'");   //100,000
+
+          prefix = String.valueOf(currency.getPrefixes().charAt(1));
+          suggestionsParsing.add("'" + symbol + "1" + prefix + "'");     //1,000,000
+          suggestionsParsing.add("'" + symbol + "10" + prefix + "'");    //10,000,000
+          suggestionsParsing.add("'" + symbol + "100" + prefix + "'");    //100,000,000
+
+          prefix = String.valueOf(currency.getPrefixes().charAt(2));
+          suggestionsParsing.add("'" + symbol + "1" + prefix + "'");     //1,000,000,000
         }
 
-        suggestionsParsing.add("'" + symbol + "1'");
-        suggestionsParsing.add("'" + symbol + "10'");
-        suggestionsParsing.add("'" + symbol + "100'");
-        suggestionsParsing.add("'" + symbol + "1000'");
-        suggestionsParsing.add("'" + symbol + "1000000'");
-
-        String prefix = String.valueOf(currency.getPrefixes().charAt(0));
-        suggestionsParsing.add("'" + symbol + "1" + prefix + "'");     //1,000
-        suggestionsParsing.add("'" + symbol + "10" + prefix + "'");    //10,000
-        suggestionsParsing.add("'" + symbol + "100" + prefix + "'");   //100,000
-
-        prefix = String.valueOf(currency.getPrefixes().charAt(1));
-        suggestionsParsing.add("'" + symbol + "1" + prefix + "'");     //1,000,000
-        suggestionsParsing.add("'" + symbol + "10" + prefix + "'");    //10,000,000
-        suggestionsParsing.add("'" + symbol + "100" + prefix + "'");    //100,000,000
-
-        prefix = String.valueOf(currency.getPrefixes().charAt(2));
-        suggestionsParsing.add("'" + symbol + "1" + prefix + "'");     //1,000,000,000
       }
 
+      suggestionsParsing.add("1");
+      suggestionsParsing.add("10");
+      suggestionsParsing.add("100");
+      suggestionsParsing.add("1000");
 
       final Set<String> suggestions = new LinkedHashSet<>();
       for(final String str : suggestionsParsing) {
