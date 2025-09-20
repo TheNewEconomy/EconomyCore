@@ -3,7 +3,7 @@
 # License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 Data:
 
-  config-version: 4
+  config-version: 5
 
   #Configurations related to syncing data across servers.
   Sync:
@@ -81,6 +81,10 @@ Data:
         #for a connection to become available before throwing an exception.
         MaxWait: 15000
 
+        #When the pool is exhausted, block callers until a connection is returned
+        #or MaxWait expires (recommended true for consistency over errors).
+        BlockWhenExhausted: true
+
         #The interval (in milliseconds) between runs of the idle
         #connection eviction thread. This thread checks for idle connections
         #and removes them if they exceed the configured idle time.
@@ -89,6 +93,14 @@ Data:
         #The minimum amount of time (in milliseconds) that a connection
         #may remain idle in the pool before it becomes eligible for eviction.
         MinEvictableIdleTimeMillis: 300000
+
+        #Softer idle cutoff (ms): may evict if above MinIdle even when younger than MinEvictable.
+        #Helps trim the pool during quiet periods while keeping MinIdle warm.
+        SoftMinEvictableIdleTimeMillis: 120000
+
+        #Number of connections to test per eviction run (positive = exact count).
+        #Small number prevents long evictor pauses on big pools.
+        NumTestsPerEvictionRun: 3
 
         # When true, every newly created connection is validated
         # before being added to the pool. This ensures only healthy
@@ -108,6 +120,21 @@ Data:
         #to the pool. This adds overhead and is usually unnecessary unless
         #you suspect connections are being corrupted during use.
         TestOnReturn: false
+
+        #Use LIFO (stack) behavior for the pool. True = hottest connections reused first.
+        #Slightly better locality and CPU cache behavior for busy servers.
+        Lifo: true
+
+        #Disable JMX to reduce overhead unless you actively monitor the pool via JMX.
+        JmxEnabled: false
+
+        #A prefix added to JMX MBean object names when monitoring the pool.
+        #Useful if running multiple pools to avoid name collisions.
+        JmxNamePrefix: "tne_redis_pool"
+
+        #The base name used for JMX MBean object names.
+        #Default is "pool", but can be customized for better identification.
+        JmxNameBase: "pool"
 
 
   #Configurations relating to purging old data.
