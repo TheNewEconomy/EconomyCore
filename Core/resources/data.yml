@@ -3,7 +3,7 @@
 # License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 Data:
 
-  config-version: 3
+  config-version: 4
 
   #Configurations related to syncing data across servers.
   Sync:
@@ -76,6 +76,38 @@ Data:
 
         #The min idle amount
         MinIdle: 1
+
+        #The maximum time (in milliseconds) that a thread will wait
+        #for a connection to become available before throwing an exception.
+        MaxWait: 15000
+
+        #The interval (in milliseconds) between runs of the idle
+        #connection eviction thread. This thread checks for idle connections
+        #and removes them if they exceed the configured idle time.
+        TimeBetweenEvictionRunsMillis: 30000
+
+        #The minimum amount of time (in milliseconds) that a connection
+        #may remain idle in the pool before it becomes eligible for eviction.
+        MinEvictableIdleTimeMillis: 300000
+
+        # When true, every newly created connection is validated
+        # before being added to the pool. This ensures only healthy
+        # connections enter the pool but adds extra overhead at creation.
+        # Typically left false unless your Redis setup is unstable.
+        TestOnCreate: false
+
+        #When true, the pool will validate idle connections
+        #(using a PING command) during eviction runs to ensure they are still alive.
+        TestWhileIdle: true
+
+        #When true, each connection will be validated before being borrowed
+        #from the pool. This helps avoid broken connections but can add latency.
+        TestOnBorrow: true
+
+        #When true, each connection will be validated before being returned
+        #to the pool. This adds overhead and is usually unnecessary unless
+        #you suspect connections are being corrupted during use.
+        TestOnReturn: false
 
 
   #Configurations relating to purging old data.
