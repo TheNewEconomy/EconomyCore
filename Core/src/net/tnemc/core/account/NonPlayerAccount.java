@@ -33,8 +33,6 @@ public class NonPlayerAccount extends SharedAccount {
   public NonPlayerAccount(final UUID identifier, final String name) {
 
     super(identifier, name, null);
-
-    this.identifier = identifier;
   }
 
   /**

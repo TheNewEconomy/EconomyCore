@@ -255,8 +255,10 @@ public class AccountManager {
 
       if(entry.getValue().apply(name)) {
         try {
-          return Optional.of(entry.getKey().getDeclaredConstructor(UUID.class, String.class)
-                                     .newInstance(uuid, name));
+
+          final SharedAccount account = entry.getKey().getDeclaredConstructor(UUID.class, String.class).newInstance(uuid, name);
+
+          return Optional.of(account);
         } catch(final Exception e) {
           PluginCore.log().error("An error occured while trying to create a new NonPlayer Account" +
                                  "for : " + name, e, DebugLevel.STANDARD);

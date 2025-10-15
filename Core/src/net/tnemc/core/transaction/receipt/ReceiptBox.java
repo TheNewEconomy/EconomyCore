@@ -45,14 +45,14 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class ReceiptBox {
 
   private final Queue<UUID> receipts = new ConcurrentLinkedQueue<>();
-  private final UUID owner;
+  protected UUID receiptOwner;
   private AwayHistory away = null;
   private SortedHistory sorted = null;
   private boolean checked = false;
 
-  public ReceiptBox(final UUID owner) {
+  public ReceiptBox(final UUID receiptOwner) {
 
-    this.owner = owner;
+    this.receiptOwner = receiptOwner;
   }
 
   /**
@@ -136,7 +136,7 @@ public class ReceiptBox {
    */
   public void destroy(final long time) {
 
-    TransactionManager.receipts().removeReceiptsByTimeAndParticipant(time, owner);
+    TransactionManager.receipts().removeReceiptsByTimeAndParticipant(time, receiptOwner);
   }
 
   /**
@@ -183,7 +183,7 @@ public class ReceiptBox {
    */
   public TreeMap<Long, Receipt> range(final long start, final long end) {
 
-    return TransactionManager.receipts().getReceiptsBetweenTimesAndParticipant(start, end, owner);
+    return TransactionManager.receipts().getReceiptsBetweenTimesAndParticipant(start, end, receiptOwner);
   }
 
   public Queue<UUID> getReceipts() {

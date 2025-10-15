@@ -36,7 +36,11 @@ public class NationAccount extends NonPlayerAccount {
 
     super(identifier, name);
 
-    this.identifier = identifier;
+    final UUID nationID = generateIdentifier(name);
+
+    this.identifier = nationID;
+
+    this.receiptOwner = nationID;
     //this.owner = Objects.requireNonNull(TownyAPI.getInstance().getNation(name)).getKing().getUUID();
   }
 

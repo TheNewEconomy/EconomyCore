@@ -100,6 +100,7 @@ public class AdminCommand {
         UUID id = get(username);
         if(id == null) {
           nonPlayer = true;
+
           id = UUID.randomUUID();
         }
 
@@ -162,11 +163,10 @@ public class AdminCommand {
 
   protected static UUID get(final String name) {
 
-    for(final OfflinePlayer player : Bukkit.getServer().getOfflinePlayers()) {
-      if(player.getName() == null) continue;
-      if(player.getName().equalsIgnoreCase(name)) {
-        return player.getUniqueId();
-      }
+    final OfflinePlayer player = Bukkit.getServer().getOfflinePlayerIfCached(name);
+    if(player != null) {
+
+      return player.getUniqueId();
     }
     return null;
   }

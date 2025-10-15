@@ -36,7 +36,11 @@ public class TownAccount extends NonPlayerAccount {
 
     super(identifier, name);
 
-    this.identifier = identifier;
+    final UUID townID = generateIdentifier(name);
+
+    this.identifier = townID;
+
+    this.receiptOwner = townID;
     //this.owner = Objects.requireNonNull(TownyAPI.getInstance().getTown(name)).getMayor().getUUID();
   }
 
