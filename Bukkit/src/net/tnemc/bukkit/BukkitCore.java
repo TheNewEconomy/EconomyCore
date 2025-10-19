@@ -107,6 +107,8 @@ public class BukkitCore extends TNECore {
 
     for(final Currency currency : TNECore.eco().currency().currencies()) {
 
+      if(!currency.commandSet()) continue;
+
       command.register(Orphans.path(currency.getIdentifier().toLowerCase()).handler(new CurrencyMoneyCommand(currency)));
     }
   }

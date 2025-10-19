@@ -3,7 +3,7 @@
 # License: https://github.com/TheNewEconomy/EconomyCore/blob/main/license.md
 Core:
 
-  config-version: 7
+  config-version: 8
 
   #Cracked Server? Set this to true. May cause data issues as spigot/paper UUIDs are unpredictable.
   #Do not change this unless you know what you're doing.
@@ -90,6 +90,9 @@ Core:
 
     #Should the commands in TNE use their GUI alternatives?
     GUIAlternatives: true
+
+    #Should the money commands show the symbol and amount placeholders or not?
+    SymbolPlaceholders: true
 
     #A list of values to use to exclude certain users from the parameters of an account argument if the username contains these values.
     Exclusions:

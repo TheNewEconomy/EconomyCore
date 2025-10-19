@@ -20,6 +20,7 @@ package net.tnemc.core.transaction.check;
 
 import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
+import net.tnemc.core.account.PlayerAccount;
 import net.tnemc.core.account.holdings.modify.HoldingsModifier;
 import net.tnemc.core.actions.EconomyResponse;
 import net.tnemc.core.actions.response.GeneralResponse;
@@ -28,9 +29,12 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionCheck;
 import net.tnemc.core.transaction.TransactionParticipant;
+import net.tnemc.plugincore.core.compatibility.PlayerProvider;
 import net.tnemc.plugincore.core.io.maps.MapKey;
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -73,15 +77,32 @@ public class MaximumBalanceCheck implements TransactionCheck {
   public EconomyResponse checkParticipant(final Transaction transaction, @NotNull final TransactionParticipant participant, final HoldingsModifier modifier) {
 
     final Optional<Account> account = participant.asAccount();
-    if(account.isPresent() && !modifier.isRemoval()) {
 
-      final Optional<Currency> currency = TNECore.eco().currency().find(modifier.getCurrency());
+    if(modifier.isRemoval()) return GeneralResponse.SUCCESS;
 
-      if(currency.isPresent() &&
-         participant.getCombinedEnding().compareTo(currency.get().getMaxBalance()) > 0) {
-        return HoldingsResponse.MAX_HOLDINGS;
-      }
+    if(account.isEmpty()) return GeneralResponse.SUCCESS;
+
+    final Optional<Currency> currency = TNECore.eco().currency().find(modifier.getCurrency());
+    if(currency.isEmpty()) return GeneralResponse.SUCCESS;
+
+    final Optional<PlayerProvider> provider = (account.get() instanceof final PlayerAccount player)? player.getPlayer() : Optional.empty();
+
+    final BigDecimal limit = (provider.isPresent())? findApplicablePermission(currency.get(), provider.get()) : currency.get().getMaxBalance();
+
+    if(participant.getCombinedEnding().compareTo(limit) > 0) {
+      return HoldingsResponse.MAX_HOLDINGS;
     }
     return GeneralResponse.SUCCESS;
+  }
+
+  public BigDecimal findApplicablePermission(final Currency currency, final PlayerProvider player) {
+
+    for(final Map.Entry<BigDecimal, String> entry : currency.limits().entrySet()) {
+
+      if(player.hasPermission(entry.getValue())) {
+        return entry.getKey();
+      }
+    }
+    return currency.getMaxBalance();
   }
 }

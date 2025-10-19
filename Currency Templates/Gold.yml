@@ -29,6 +29,9 @@ Info:
 #Various options for currencies.
 Options:
 
+  #If TNE should register a set of commands for this currency. Example /usd pay, /usd give, etc.
+  Commands: true
+
   #Configurations relating to multi region support.
   #This is where you can make your currency the default in various regions.
   MultiRegion:
@@ -78,6 +81,17 @@ Options:
 
   #This is used to determine how many of minor it takes to make one major
   Minor_Weight: 100
+
+  #Ability to limit balances based on a player's permission
+  Limit:
+
+    Enabled: false
+
+    #The permission nodes for each balance limit.
+    #The key is the balance limit, the value is the permission node.
+    Permissions:
+
+      1000000: "tne.currency.gold.limit.1000000"
 
 #All configurations relating to item-backed currencies
 #The current built-in types are mixed and item
@@ -204,9 +218,3 @@ Note:
     #Optional.
     Flags:
       - example_flag
-Converting:
-  #Example currency conversion.
-  #Format is currency name and decimal based rate
-  #In this USD converts to double Example currency so 1 USD is 2 Examples
-  #
-  EUR: 0.86

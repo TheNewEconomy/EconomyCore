@@ -24,7 +24,7 @@
     <properties>
         <papi.version>2.11.6</papi.version>
         <tnml.version>1.7.0.1-SNAPSHOT-3</tnml.version>
-        <tnpc.version>1.1.0.1-SNAPSHOT-24</tnpc.version>
+        <tnpc.version>1.1.0.2-SNAPSHOT-1</tnpc.version>
         <tne.relocation>net.tnemc.libs</tne.relocation>
 
         <depend.adventure>4.23.0</depend.adventure>

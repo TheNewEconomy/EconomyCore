@@ -23,6 +23,7 @@ import net.tnemc.core.currency.item.ItemCurrency;
 import net.tnemc.core.manager.CurrencyManager;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -39,6 +40,7 @@ public class Currency {
 
   private final Map<String, Double> conversion = new HashMap<>();
   private final TreeMap<BigDecimal, Denomination> denominations = new TreeMap<>();
+  private final TreeMap<BigDecimal, String> permissionLimits = new TreeMap<>(Collections.reverseOrder());
 
   //World-related configurations.
   private final Map<String, CurrencyRegion> regions = new HashMap<>();
@@ -83,6 +85,7 @@ public class Currency {
   private int minorWeight;
 
   //MISC configurations
+  private boolean commandSet = true;
   private Note note;
 
   public Currency(final String identifier) {
@@ -148,6 +151,8 @@ public class Currency {
     cloned.decimalPlaces = original.decimalPlaces;
     cloned.minorWeight = original.minorWeight;
     cloned.note = original.note;
+
+    cloned.limits().putAll(original.limits());
 
     if(cloned instanceof final ItemCurrency clonedItem && original instanceof final ItemCurrency itemCurrency) {
       clonedItem.setEnderChest(itemCurrency.canEnderChest());
@@ -445,6 +450,26 @@ public class Currency {
     return negativeSupport;
   }
 
+  public boolean commandSet() {
+
+    return commandSet;
+  }
+
+  public void commandSet(final boolean commandSet) {
+
+    this.commandSet = commandSet;
+  }
+
+  public Optional<Object> byUUID(final UUID uuid) {
+
+    for(final Denomination denomination : denominations.values()) {
+      if(denomination.identifier().equals(uuid)) {
+        return Optional.of(denomination);
+      }
+    }
+    return Optional.empty();
+  }
+
   public TreeMap<BigDecimal, Denomination> getDenominations() {
 
     return denominations;
@@ -479,5 +504,10 @@ public class Currency {
   public Map<String, CurrencyRegion> getRegions() {
 
     return regions;
+  }
+
+  public TreeMap<BigDecimal, String> limits() {
+
+    return permissionLimits;
   }
 }

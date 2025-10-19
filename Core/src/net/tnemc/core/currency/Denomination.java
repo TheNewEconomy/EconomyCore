@@ -22,6 +22,7 @@ import net.tnemc.core.currency.item.ItemDenomination;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Represents a denomination for an {@link Currency currency}.
@@ -32,6 +33,7 @@ import java.util.ArrayList;
  */
 public class Denomination {
 
+  private UUID identifier;
   private String single;
   private String plural;
   private BigDecimal weight;
@@ -69,6 +71,16 @@ public class Denomination {
   public boolean isItem() {
 
     return (this instanceof ItemDenomination);
+  }
+
+  public UUID identifier() {
+
+    return identifier;
+  }
+
+  public void identifier(final UUID identifier) {
+
+    this.identifier = identifier;
   }
 
   public void setSingle(final String single) {

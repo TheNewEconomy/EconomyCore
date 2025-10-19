@@ -43,6 +43,7 @@ import net.tnemc.plugincore.core.utils.IOUtil;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -61,7 +62,6 @@ import static net.tnemc.core.manager.CurrencyManager.largestSupported;
  * @since 0.1.2.0
  */
 public class DefaultCurrencyLoader implements CurrencyLoader {
-
 
   /**
    * Loads all currencies.
@@ -163,6 +163,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     final BigDecimal maxBalance = ((new BigDecimal(cur.getString("Options.MaxBalance", largestSupported.toPlainString())).compareTo(largestSupported) > 0)? largestSupported : new BigDecimal(cur.getString("MaxBalance", largestSupported.toPlainString())));
     final BigDecimal minBalance = (type.supportsItems())? BigDecimal.ZERO : new BigDecimal(cur.getString("Options.MinBalance", "0.00"));
     final BigDecimal balance = new BigDecimal(cur.getString("Options.Balance", "200.00"));
+    final boolean commandSet = cur.getBoolean("Options.Commands", false);
 
     //Added in build 28, needs removed by build 32.
     boolean uuidAsId = false;
@@ -212,6 +213,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     currency.setMajorSeparator(separator);
     currency.setBalanceShow(showBalance);
     currency.setMinorWeight(minorWeight);
+    currency.commandSet(commandSet);
 
     final boolean global = cur.getBoolean("Options.Global.Enabled", true);
     final boolean globalDefault = cur.getBoolean("Options.Global.Default", false);
@@ -223,6 +225,21 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
         final String region = (String)regionObj;
         final boolean isDefault = cur.getBoolean("Options.MultiRegion.Regions." + region + ".Default", true);
         currency.getRegions().put(region, new CurrencyRegion(region, true, isDefault));
+      }
+    }
+
+    if(cur.contains("Options.Limit") && cur.isSection("Options.Limit.Permissions")) {
+
+      if(cur.getBoolean("Options.Limit.Enabled", false)) {
+
+        for(final Object amountObj : cur.getSection("Options.Limit.Permissions").getKeys()) {
+
+          final String amount = (String)amountObj;
+          final String permission = cur.getString("Options.Limit.Permissions." + amount);
+          final BigDecimal limit = new BigDecimal(amount);
+
+          currency.limits().put(limit, permission);
+        }
       }
     }
 
@@ -353,7 +370,9 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
     final String single = denom.getString("Info.Single", "Dollar");
     final String plural = denom.getString("Info.Plural", "Dollars");
 
-    final BigDecimal weight = new BigDecimal(denom.getString("Options.Weight", "1.0"));
+    final String weightStr = denom.getString("Options.Weight", "1.0");
+
+    final BigDecimal weight = new BigDecimal(weightStr).setScale(currency.getDecimalPlaces(), RoundingMode.DOWN);
     PluginCore.log().debug("Loading denomination with weight of: " + weight);
     if(weight.compareTo(BigDecimal.ZERO) <= 0) {
 
@@ -361,13 +380,13 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       return false;
     }
 
-
     final String material = denom.getString("Options.Material", "PAPER").toLowerCase(Locale.ROOT);
     PluginCore.log().debug("Loading denomination with material of: " + material);
 
     final Denomination denomination = (currency instanceof ItemCurrency)?
                                       new ItemDenomination(weight, material) : new Denomination(weight);
 
+    denomination.identifier(UUID.nameUUIDFromBytes(("Weight:" + weightStr).getBytes(StandardCharsets.UTF_8)));
     denomination.setSingle(single);
     denomination.setPlural(plural);
 

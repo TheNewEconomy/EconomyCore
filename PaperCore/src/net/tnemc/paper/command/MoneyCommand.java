@@ -31,6 +31,7 @@ import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.Description;
 import revxrsal.commands.annotation.Named;
+import revxrsal.commands.annotation.Single;
 import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.annotation.Usage;
 import revxrsal.commands.bukkit.actor.BukkitCommandActor;
@@ -107,7 +108,7 @@ public class MoneyCommand {
   @Usage("Money.Give.Arguments")
   @Description("Money.Give.Description")
   @CommandPermission("tne.money.give")
-  public void onGive(final BukkitCommandActor sender, final Account player, @Named("amount") final ParseMoney parseMoney, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
+  public void onGive(final BukkitCommandActor sender, final Account player, @Named("amount") @Single final ParseMoney parseMoney, @Default("") @Named("currency") final Currency currency, @Default(DEFAULT_WORLD) @Named("region") final String region) {
 
     net.tnemc.core.command.MoneyCommand.onGive(new PaperCMDSource(sender), player, parseMoney, currency, region);
   }

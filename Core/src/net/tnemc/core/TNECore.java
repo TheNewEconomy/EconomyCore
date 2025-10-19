@@ -84,6 +84,7 @@ import revxrsal.commands.command.ExecutableCommand;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
@@ -231,30 +232,54 @@ public abstract class TNECore extends PluginEngine {
             DataConfig.yaml().getString("Data.Sync.Type")
     );
 
-    final JedisPoolConfig config = new JedisPoolConfig();
-    config.setMaxTotal(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.MaxSize", 10));
-    config.setMaxIdle(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.MaxIdle", 10));
-    config.setMinIdle(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.MinIdle", 1));
+    JedisPool pool = null;
 
-    String redisUser = (DataConfig.yaml().contains("Data.Sync.Redis.User"))? DataConfig.yaml().getString("Data.Sync.Redis.User") : null;
-    if(redisUser != null && redisUser.equalsIgnoreCase("none")) {
-      redisUser = null;
-    }
+    if(settings.proxyType().equalsIgnoreCase("redis")
+       || settings.proxyType().equalsIgnoreCase("jedis")) {
 
-    String redisPass = (DataConfig.yaml().contains("Data.Sync.Redis.Password"))? DataConfig.yaml().getString("Data.Sync.Redis.Password") : null;
-    if(redisPass != null && redisPass.equalsIgnoreCase("none")) {
-      redisPass = null;
+      final JedisPoolConfig config = new JedisPoolConfig();
+      config.setMaxTotal(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.MaxSize", 10));
+      config.setMaxIdle(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.MaxIdle", 10));
+      config.setMinIdle(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.MinIdle", 1));
+      config.setMaxWait(Duration.ofMillis(DataConfig.yaml().getLong("Data.Sync.Redis.Pool.MaxWait", 10000L)));
+      config.setBlockWhenExhausted(DataConfig.yaml().getBoolean("Data.Sync.Redis.Pool.BlockWhenExhausted", true));
+      config.setTimeBetweenEvictionRuns(Duration.ofMillis(DataConfig.yaml().getLong("Data.Sync.Redis.Pool.TimeBetweenEvictionRunsMillis", 30000L)));
+      config.setMinEvictableIdleTime(Duration.ofMillis(DataConfig.yaml().getLong("Data.Sync.Redis.Pool.MinEvictableIdleTimeMillis", 300000L)));
+      config.setSoftMinEvictableIdleTime(Duration.ofMillis(DataConfig.yaml().getLong("Data.Sync.Redis.Pool.SoftMinEvictableIdleTimeMillis", 60000L)));
+      config.setNumTestsPerEvictionRun(DataConfig.yaml().getInt("Data.Sync.Redis.Pool.NumTestsPerEvictionRun", 3));
+      config.setTestOnCreate(DataConfig.yaml().getBoolean("Data.Sync.Redis.Pool.TestOnCreate", true));
+      config.setTestWhileIdle(DataConfig.yaml().getBoolean("Data.Sync.Redis.Pool.TestWhileIdle", true));
+      config.setTestOnBorrow(DataConfig.yaml().getBoolean("Data.Sync.Redis.Pool.TestOnBorrow", true));
+      config.setTestOnReturn(DataConfig.yaml().getBoolean("Data.Sync.Redis.Pool.TestOnReturn", false));
+      config.setLifo(DataConfig.yaml().getBoolean("Data.Sync.Redis.Pool.Lifo", true));
+      config.setJmxEnabled(DataConfig.yaml().getBoolean("Data.Sync.Redis.Pool.JmxEnabled", false));
+      config.setJmxNamePrefix(DataConfig.yaml().getString("Data.Sync.Redis.Pool.JmxNamePrefix", "tne_redis_pool"));
+      config.setJmxNameBase(DataConfig.yaml().getString("Data.Sync.Redis.Pool.JmxNameBase", "pool"));
+
+      String redisUser = (DataConfig.yaml().contains("Data.Sync.Redis.User"))? DataConfig.yaml().getString("Data.Sync.Redis.User") : null;
+      if(redisUser != null && redisUser.equalsIgnoreCase("none")
+         || redisUser != null && redisUser.isBlank()) {
+        redisUser = null;
+      }
+
+      String redisPass = (DataConfig.yaml().contains("Data.Sync.Redis.Password"))? DataConfig.yaml().getString("Data.Sync.Redis.Password") : null;
+      if(redisPass != null && redisPass.equalsIgnoreCase("none")
+         || redisPass != null && redisPass.isBlank()) {
+        redisPass = null;
+      }
+
+      pool = new JedisPool(config, DataConfig.yaml().getString("Data.Sync.Redis.Host"),
+                           DataConfig.yaml().getInt("Data.Sync.Redis.Port"),
+                           DataConfig.yaml().getInt("Data.Sync.Redis.Timeout"),
+                           redisUser,
+                           redisPass,
+                           DataConfig.yaml().getInt("Data.Sync.Redis.Index"),
+                           DataConfig.yaml().getBoolean("Data.Sync.Redis.SSL"));
     }
 
 
     this.storage = new StorageManager(DataConfig.yaml().getString("Data.Database.Type"),
-                                      new TNEStorageProvider(), settings, new JedisPool(config, DataConfig.yaml().getString("Data.Sync.Redis.Host"),
-                                                                                        DataConfig.yaml().getInt("Data.Sync.Redis.Port"),
-                                                                                        DataConfig.yaml().getInt("Data.Sync.Redis.Timeout"),
-                                                                                        redisUser,
-                                                                                        redisPass,
-                                                                                        DataConfig.yaml().getInt("Data.Sync.Redis.Index"),
-                                                                                        DataConfig.yaml().getBoolean("Data.Sync.Redis.SSL")));
+                                      new TNEStorageProvider(), settings, pool);
   }
 
   @Override

@@ -59,7 +59,7 @@ public class SymbolParseRule implements ParseRule {
       if(currency.isPresent()) {
 
         parseMoney.currency(currency.get());
-        parseMoney.amount(parseMoney.amount().setScale(currency.get().getDecimalPlaces(), RoundingMode.FLOOR));
+        parseMoney.amount(parseMoney.amount().setScale(currency.get().getDecimalPlaces(), RoundingMode.DOWN));
 
         return input.replace(matcher.group(), "").trim();
       }
