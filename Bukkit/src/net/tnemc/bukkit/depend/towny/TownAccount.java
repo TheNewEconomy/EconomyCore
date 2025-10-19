@@ -19,7 +19,9 @@ package net.tnemc.bukkit.depend.towny;
  */
 
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.TownySettings;
 import net.tnemc.core.account.NonPlayerAccount;
+import net.tnemc.plugincore.PluginCore;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -41,6 +43,8 @@ public class TownAccount extends NonPlayerAccount {
     this.identifier = townID;
 
     this.receiptOwner = townID;
+
+    PluginCore.log().debug("Town Account created with Name: " + name + " and UUID: " + townID + ".");
     //this.owner = Objects.requireNonNull(TownyAPI.getInstance().getTown(name)).getMayor().getUUID();
   }
 
@@ -59,8 +63,15 @@ public class TownAccount extends NonPlayerAccount {
   public UUID generateIdentifier(final String name) {
 
     try {
-      return Objects.requireNonNull(TownyAPI.getInstance().getTown(name)).getUUID();
+
+      PluginCore.log().debug("Generating Town UUID for: " + name + ".");
+      final UUID townID = Objects.requireNonNull(TownyAPI.getInstance().getTown(name.replace(TownySettings.getTownAccountPrefix(), ""))).getUUID();
+
+      PluginCore.log().debug("Generated Town UUID: " + townID + ".");
+      return townID;
     } catch(final Exception ignore) {
+
+      PluginCore.log().debug("Failed to generate Town UUID for: " + name + ".");
       return super.generateIdentifier(name);
     }
   }

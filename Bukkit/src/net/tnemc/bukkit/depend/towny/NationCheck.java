@@ -20,6 +20,7 @@ package net.tnemc.bukkit.depend.towny;
 
 import com.palmergames.bukkit.towny.TownySettings;
 import net.tnemc.core.account.AccountTypeCheck;
+import net.tnemc.plugincore.PluginCore;
 
 import java.util.function.Function;
 
@@ -43,8 +44,13 @@ public class NationCheck implements AccountTypeCheck {
 
     return value->{
       try {
-        return value.contains(TownySettings.getNationAccountPrefix());
-      } catch(Exception e) {
+
+        final boolean checkResult = value.contains(TownySettings.getNationAccountPrefix());
+
+        PluginCore.log().debug("Towny Nation Account Check -  Value: " + value + ", Result: " + checkResult);
+
+        return checkResult;
+      } catch(final Exception ignore) {
         //towny probably isn't enabled yet, or something went wrong enabling it.
         return false;
       }

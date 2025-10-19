@@ -218,6 +218,7 @@ public class AccountManager {
       return new AccountAPIResponse(account, AccountResponse.CREATION_FAILED_PLUGIN);
     }
 
+    PluginCore.log().debug("Adding account to Accounts Map. ID: " + identifier + " Name: " + name);
     accounts.put(account.getIdentifier().toString(), account);
 
     if(!skipDB) {
@@ -229,6 +230,7 @@ public class AccountManager {
     } catch(final Exception ignore) {
       //identifier isn't an uuid, so it'll be a string, most likely a non-player.
     }
+    PluginCore.log().debug("Created Account: " + account.getIdentifier().toString() + " Name: " + account.getName());
     return new AccountAPIResponse(account, AccountResponse.CREATED);
   }
 

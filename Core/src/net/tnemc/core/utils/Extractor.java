@@ -63,7 +63,7 @@ public class Extractor {
 
     try {
       file.createNewFile();
-    } catch(IOException e) {
+    } catch(final IOException e) {
       PluginCore.log().error("Failed to create extraction file.", e, DebugLevel.STANDARD);
       return false;
     }
@@ -71,11 +71,14 @@ public class Extractor {
     YamlDocument yaml = null;
     try {
       yaml = YamlDocument.create(file);
-    } catch(IOException e) {
+    } catch(final IOException e) {
       PluginCore.log().error("Failed load extraction file for writing.", e, DebugLevel.STANDARD);
       return false;
     }
     final int total = TNECore.eco().account().getAccounts().values().size();
+
+    PluginCore.log().inform("Extracting " + total + " accounts...");
+
     final int frequency = (int)(total * 0.10);
     int number = 1;
 
@@ -92,7 +95,7 @@ public class Extractor {
         yaml.set("Accounts." + username + ".Balances." + entry.getRegion() + "."
                  + entry.getCurrency() + "." + entry.getHandler().asID(), entry.getAmount().toPlainString());
 
-        yaml.set("Accounts." + username + ".id", account.getIdentifier());
+        yaml.set("Accounts." + username + ".id", account.getIdentifier().toString());
       }
       number++;
       try {
@@ -102,13 +105,13 @@ public class Extractor {
           final int progress = (number * 100) / total;
           PluginCore.log().inform("Extraction Progress: " + progress);
         }
-      } catch(Exception ignore) { }
+      } catch(final Exception ignore) { }
     }
 
     try {
       yaml.save();
       PluginCore.log().inform("Extraction has completed!");
-    } catch(IOException e) {
+    } catch(final IOException e) {
       PluginCore.log().error("Failed to save extraction file.", e, DebugLevel.STANDARD);
       return false;
     }
@@ -135,7 +138,7 @@ public class Extractor {
 
     try {
       extracted = YamlDocument.create(file);
-    } catch(IOException e) {
+    } catch(final IOException e) {
       PluginCore.log().error("Failed load extraction file for writing.", e, DebugLevel.STANDARD);
       return false;
     }
@@ -211,7 +214,7 @@ public class Extractor {
                 final int progress = (number * 100) / accounts.size();
                 PluginCore.log().inform("Restoration Progress: " + progress);
               }
-            } catch(Exception ignore) { }
+            } catch(final Exception ignore) { }
           }
         }
       }
