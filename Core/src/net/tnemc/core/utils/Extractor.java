@@ -75,7 +75,7 @@ public class Extractor {
       PluginCore.log().error("Failed load extraction file for writing.", e, DebugLevel.STANDARD);
       return false;
     }
-    final int total = TNECore.eco().account().getAccounts().values().size();
+    final int total = TNECore.eco().account().getAccounts().size();
 
     PluginCore.log().inform("Extracting " + total + " accounts...");
 
@@ -119,6 +119,7 @@ public class Extractor {
   }
 
   public static boolean restore(@Nullable final Integer extraction) {
+    PluginCore.log().inform("Starting up Restoration Worker...");
 
     final File file;
 
@@ -158,6 +159,8 @@ public class Extractor {
         final String username = name.replaceAll("\\!", ".").replaceAll("\\@", "-").replaceAll("\\%", "_");
 
         final String id = extracted.getString("Accounts." + name + ".id");
+
+        PluginCore.log().inform("Attempting to restore account: id" + id + ", name" + name);
 
         final AccountAPIResponse response = TNECore.eco().account().createAccount(id, username);
         if(!response.getResponse().success() || response.getAccount().isEmpty()) {
@@ -221,6 +224,7 @@ public class Extractor {
       PluginCore.log().inform("Restoration has completed!");
     }
 
+    PluginCore.log().inform("Stopping restoration worker....");
     return true;
   }
 }
