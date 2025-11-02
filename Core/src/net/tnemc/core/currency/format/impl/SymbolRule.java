@@ -22,6 +22,7 @@ import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.format.FormatRule;
+import net.tnemc.plugincore.PluginCore;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -38,6 +39,10 @@ public class SymbolRule implements FormatRule {
   public String format(@Nullable final Account account, final HoldingsEntry entry, final String format) {
 
     final Optional<Currency> currency = entry.currency();
-    return currency.map(value->format.replace("<symbol>", value.getSymbol())).orElse(format);
+    if(currency.isPresent()) {
+
+      return format.replace("<symbol>", currency.get().getSymbol());
+    }
+    return format;
   }
 }

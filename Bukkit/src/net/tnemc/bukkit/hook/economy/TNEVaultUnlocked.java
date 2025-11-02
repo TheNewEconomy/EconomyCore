@@ -147,8 +147,10 @@ public class TNEVaultUnlocked implements Economy {
 
     PluginCore.log().debug("Format method called with amount: " + amount + ", currency: " + currency, DebugLevel.STANDARD);
 
+    final Currency currencyObj = TNECore.eco().currency().findOrDefault(currency);
+
     return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
-                                                            TNECore.eco().currency().defaultCurrency().getUid(),
+                                                            currencyObj.getUid(),
                                                             amount,
                                                             EconomyManager.NORMAL
     ));
@@ -160,8 +162,6 @@ public class TNEVaultUnlocked implements Economy {
     PluginCore.log().debug("Format method called with pluginName: " + pluginName + ", amount: " + amount + ", currency: " + currency, DebugLevel.STANDARD);
 
     final Currency currencyObj = TNECore.eco().currency().findOrDefault(currency);
-
-
 
     return CurrencyFormatter.format(null, new HoldingsEntry(TNECore.eco().region().defaultRegion(),
                                                             currencyObj.getUid(),
