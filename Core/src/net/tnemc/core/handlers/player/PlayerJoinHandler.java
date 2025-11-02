@@ -71,6 +71,25 @@ public class PlayerJoinHandler {
       return response;
     }
 
+    //look for an account with the same name, but different UUID
+    //This indicates that the player has renamed, but never rejoined and someone else took the name
+
+    PluginCore.log().debug("Validating Player Name: " + provider.getName() + ".");
+    final Optional<UUIDPair> idPair = TNECore.eco().account().uuidProvider().retrieve(provider.getName());
+    if(idPair.isPresent() && !provider.identifier().toString().equalsIgnoreCase(idPair.get().getIdentifier().toString())) {
+
+      final Optional<Account> oldAccount = TNECore.eco().account().findAccount(provider.identifier());
+      if(oldAccount.isPresent()) {
+
+        PluginCore.log().debug("Renaming player as someone took their old username already!");
+
+        final String newName = oldAccount.get().getName() + "_old";
+        oldAccount.get().setName(newName);
+        TNECore.eco().account().uuidProvider().store(new UUIDPair(provider.identifier(), newName));
+      }
+
+    }
+
     final Optional<Account> account = TNECore.eco().account().findAccount(provider.identifier());
 
     boolean firstJoin = false;
@@ -105,6 +124,7 @@ public class PlayerJoinHandler {
     final UUID id = provider.identifier();
     if(acc.isPresent()) {
 
+      //the player has a new name
       if(!acc.get().getName().equalsIgnoreCase(provider.getName())) {
         acc.get().setName(provider.getName());
 
