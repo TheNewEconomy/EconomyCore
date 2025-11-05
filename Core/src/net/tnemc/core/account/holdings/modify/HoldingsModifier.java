@@ -19,12 +19,16 @@ package net.tnemc.core.account.holdings.modify;
  */
 
 import net.tnemc.core.EconomyManager;
+import net.tnemc.core.TNECore;
 import net.tnemc.core.account.Account;
 import net.tnemc.core.account.holdings.HoldingsEntry;
 import net.tnemc.core.command.parameters.PercentBigDecimal;
+import net.tnemc.core.currency.Currency;
 import net.tnemc.core.utils.Identifier;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -56,9 +60,9 @@ public class HoldingsModifier {
 
     this.region = region;
     this.currency = currency;
-    this.modifier = modifier;
     this.operation = HoldingsOperation.ADD;
     this.holdingsID = EconomyManager.NORMAL;
+    this.modifier = normalizeModifier(modifier);
   }
 
   /**
@@ -75,15 +79,10 @@ public class HoldingsModifier {
 
     this.region = region;
     this.currency = currency;
-    this.modifier = modifier.value();
-
-    if(modifier.isPercent()) {
-      this.operation = HoldingsOperation.PERCENT_ADD;
-      this.percent = true;
-    } else {
-      this.operation = HoldingsOperation.ADD;
-    }
+    this.percent = modifier.isPercent();
+    this.operation = (this.percent)? HoldingsOperation.PERCENT_ADD : HoldingsOperation.ADD;
     this.holdingsID = EconomyManager.NORMAL;
+    this.modifier = normalizeModifier(modifier.value());
   }
 
   /**
@@ -101,9 +100,9 @@ public class HoldingsModifier {
 
     this.region = region;
     this.currency = currency;
-    this.modifier = modifier;
     this.operation = HoldingsOperation.ADD;
     this.holdingsID = id;
+    this.modifier = normalizeModifier(modifier);
   }
 
   /**
@@ -121,15 +120,10 @@ public class HoldingsModifier {
 
     this.region = region;
     this.currency = currency;
-    this.modifier = modifier.value();
-
-    if(modifier.isPercent()) {
-      this.operation = HoldingsOperation.PERCENT_ADD;
-      this.percent = true;
-    } else {
-      this.operation = HoldingsOperation.ADD;
-    }
+    this.percent = modifier.isPercent();
+    this.operation = (this.percent)? HoldingsOperation.PERCENT_ADD : HoldingsOperation.ADD;
     this.holdingsID = id;
+    this.modifier = normalizeModifier(modifier.value());
   }
 
   /**
@@ -142,9 +136,9 @@ public class HoldingsModifier {
 
     this.region = entry.getRegion();
     this.currency = entry.getCurrency();
-    this.modifier = entry.getAmount();
     this.operation = HoldingsOperation.ADD;
     this.holdingsID = entry.getHandler();
+    this.modifier = normalizeModifier(entry.getAmount());
   }
 
   /**
@@ -163,9 +157,9 @@ public class HoldingsModifier {
 
     this.currency = currency;
     this.region = region;
-    this.modifier = modifier;
     this.operation = operation;
     this.holdingsID = EconomyManager.NORMAL;
+    this.modifier = normalizeModifier(modifier);
   }
 
   /**
@@ -185,9 +179,9 @@ public class HoldingsModifier {
 
     this.currency = currency;
     this.region = region;
-    this.modifier = modifier;
     this.operation = operation;
     this.holdingsID = id;
+    this.modifier = normalizeModifier(modifier);
   }
 
   /**
@@ -201,9 +195,9 @@ public class HoldingsModifier {
 
     this.region = entry.getRegion();
     this.currency = entry.getCurrency();
-    this.modifier = entry.getAmount();
     this.operation = operation;
     this.holdingsID = entry.getHandler();
+    this.modifier = normalizeModifier(entry.getAmount());
   }
 
   /**
@@ -254,7 +248,7 @@ public class HoldingsModifier {
 
   public void modifier(final BigDecimal value) {
 
-    this.modifier = modifier.add(value);
+    this.modifier = normalizeModifier(modifier.add(value));
   }
 
   public UUID getCurrency() {
@@ -295,5 +289,30 @@ public class HoldingsModifier {
   public void setPercent(final boolean percent) {
 
     this.percent = percent;
+  }
+
+  private BigDecimal normalizeModifier(final BigDecimal value) {
+
+    if(value == null) {
+      return BigDecimal.ZERO;
+    }
+
+    if(percent || operation == HoldingsOperation.PERCENT_ADD || operation == HoldingsOperation.PERCENT_SUBTRACT) {
+      return value;
+    }
+
+    final Optional<Currency> currencyOptional = TNECore.eco().currency().find(currency);
+
+    if(currencyOptional.isEmpty()) {
+      return value;
+    }
+
+    final int scale = currencyOptional.get().getDecimalPlaces();
+
+    if(scale < 0) {
+      return value;
+    }
+
+    return value.setScale(scale, RoundingMode.DOWN);
   }
 }
