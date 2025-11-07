@@ -931,9 +931,19 @@ public class MoneyCommand extends BaseCommand {
   }
 
   //ArgumentsParser: [page] [currency:name] [world:world] [limit:#]
-  public static void onTop(final CmdSource<?> sender, Integer page, final Currency currency, final Boolean refresh) {
+  public static void onTop(final CmdSource<?> sender, Integer page, final Currency currencyParam, final Boolean refresh) {
 
     final Optional<PlayerProvider> player = sender.player();
+
+    String region = DEFAULT_WORLD;
+    if(player.isPresent()) {
+      region = player.get().world();
+    }
+
+    region = TNECore.eco().region().resolve(region);
+
+    final Currency currency = (currencyParam == null)? TNECore.eco().currency().defaultCurrency(region) : currencyParam;
+
     if(EconomyManager.limitCurrency() && player.isPresent()) {
       if(!player.get().hasPermission("tne.money.top." + currency.getIdentifier())) {
         final MessageData data = new MessageData("Messages.Account.BlockedAction");
