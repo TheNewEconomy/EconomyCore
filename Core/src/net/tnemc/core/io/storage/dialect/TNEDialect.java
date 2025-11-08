@@ -78,6 +78,10 @@ public interface TNEDialect extends Dialect {
   @Language("SQL")
   String saveAccount();
 
+  //account save
+  @Language("SQL")
+  String deleteAccount();
+
   //non player load
   @Language("SQL")
   String loadNonPlayer();

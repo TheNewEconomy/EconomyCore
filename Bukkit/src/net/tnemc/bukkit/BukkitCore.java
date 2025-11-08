@@ -25,6 +25,7 @@ import net.tnemc.bukkit.command.MoneyCommand;
 import net.tnemc.bukkit.command.ShortCommands;
 import net.tnemc.bukkit.command.TransactionCommand;
 import net.tnemc.bukkit.depend.faction.FactionHandler;
+import net.tnemc.bukkit.depend.towny.TownyCommand;
 import net.tnemc.bukkit.depend.towny.TownyHandler;
 import net.tnemc.core.TNECore;
 import net.tnemc.core.api.callback.TNECallbacks;
@@ -111,6 +112,13 @@ public class BukkitCore extends TNECore {
 
       command.register(Orphans.path(currency.getIdentifier().toLowerCase()).handler(new CurrencyMoneyCommand(currency)));
     }
+
+
+    if(Bukkit.getPluginManager().getPlugin("Towny") != null) {
+
+      command.register(Orphans.path("tne").handler(new TownyCommand()));
+    }
+
   }
 
   @Override

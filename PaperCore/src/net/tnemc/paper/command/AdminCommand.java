@@ -307,6 +307,14 @@ public class AdminCommand {
     net.tnemc.core.command.AdminCommand.onStatus(new PaperCMDSource(sender), account, status);
   }
 
+  @Subcommand({ "towny" })
+  @Usage("")
+  @Description("Used to realign old towny data with the new enhanced data for when you're using VaultUnlocked")
+  @CommandPermission("tne.admin.towny")
+  public void towny(final BukkitCommandActor sender) {
+
+  }
+
   @Subcommand({ "version", "ver", "build" })
   @Usage("Admin.Version.Arguments")
   @Description("Admin.Version.Description")

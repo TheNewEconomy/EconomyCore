@@ -74,7 +74,7 @@ public class SQLAccount implements Datable<Account> {
   @Override
   public void purge(final StorageConnector<?> connector) {
 
-    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
+    if(connector instanceof final SQLConnector sql && sql.dialect() instanceof final TNEDialect tne) {
       sql.executeUpdate(tne.accountPurge(
                                 DataConfig.yaml().getInt("Data.Purge.Accounts.Days")
                                         ),
@@ -91,7 +91,7 @@ public class SQLAccount implements Datable<Account> {
   @Override
   public void store(final StorageConnector<?> connector, @NotNull final Account account, @Nullable final String identifier) {
 
-    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
+    if(connector instanceof final SQLConnector sql && sql.dialect() instanceof final TNEDialect tne) {
 
       PluginCore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.STANDARD);
 
@@ -111,7 +111,7 @@ public class SQLAccount implements Datable<Account> {
 
       PluginCore.log().debug("Account Insert Executed correctly: " + test + " - " + identifier, DebugLevel.DETAILED);
 
-      if(account instanceof PlayerAccount playerAccount) {
+      if(account instanceof final PlayerAccount playerAccount) {
 
         //Player account storage.(players_accounts table)
         final int test2 = sql.executeUpdate(tne.savePlayer(),
@@ -124,7 +124,7 @@ public class SQLAccount implements Datable<Account> {
 
       }
 
-      if(account instanceof SharedAccount shared) {
+      if(account instanceof final SharedAccount shared) {
 
         //Non-player accounts.(non_players_accounts table)
         final String owner = (shared.getOwner() == null)? account.getIdentifier().toString() :
@@ -174,6 +174,17 @@ public class SQLAccount implements Datable<Account> {
     }
   }
 
+  @Override
+  public void delete(final StorageConnector<?> connector, @NotNull final String identifier) {
+
+    if(connector instanceof final SQLConnector sql && sql.dialect() instanceof final TNEDialect tne) {
+
+      sql.executeUpdate(tne.deleteAccount(), new Object[]{ identifier });
+    }
+
+
+  }
+
   /**
    * Used to load this object.
    *
@@ -185,13 +196,13 @@ public class SQLAccount implements Datable<Account> {
   @Override
   public Optional<Account> load(final StorageConnector<?> connector, @NotNull final String identifier) {
 
-    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
+    if(connector instanceof final SQLConnector sql && sql.dialect() instanceof final TNEDialect tne) {
 
       Account account = null;
 
       //Loading/creating our account object.
-      try(ResultSet result = sql.executeQuery(tne.loadAccount(),
-                                              new Object[]{
+      try(final ResultSet result = sql.executeQuery(tne.loadAccount(),
+                                                    new Object[]{
                                                       identifier
                                               })) {
         if(result.next()) {
@@ -215,42 +226,42 @@ public class SQLAccount implements Datable<Account> {
           }
         }
 
-      } catch(SQLException e) {
+      } catch(final SQLException e) {
         e.printStackTrace();
       }
 
       if(account != null) {
 
         //Load our player account info
-        if(account instanceof PlayerAccount playerAccount) {
-          try(ResultSet result = sql.executeQuery(tne.loadPlayer(),
-                                                  new Object[]{
+        if(account instanceof final PlayerAccount playerAccount) {
+          try(final ResultSet result = sql.executeQuery(tne.loadPlayer(),
+                                                        new Object[]{
                                                           identifier
                                                   })) {
             if(result.next()) {
               playerAccount.setLastOnline(result.getTimestamp("last_online").getTime());
             }
-          } catch(SQLException e) {
+          } catch(final SQLException e) {
             e.printStackTrace();
           }
         }
 
         //load our shared account info
-        if(account instanceof SharedAccount shared) {
-          try(ResultSet result = sql.executeQuery(tne.loadNonPlayer(),
-                                                  new Object[]{
+        if(account instanceof final SharedAccount shared) {
+          try(final ResultSet result = sql.executeQuery(tne.loadNonPlayer(),
+                                                        new Object[]{
                                                           identifier
                                                   })) {
             if(result.next()) {
               shared.setOwner(UUID.fromString(result.getString("owner")));
             }
-          } catch(SQLException e) {
+          } catch(final SQLException e) {
             e.printStackTrace();
           }
 
           //Load our members for shared accounts
-          try(ResultSet result = sql.executeQuery(tne.loadMembers(),
-                                                  new Object[]{
+          try(final ResultSet result = sql.executeQuery(tne.loadMembers(),
+                                                        new Object[]{
                                                           identifier
                                                   })) {
             while(result.next()) {
@@ -259,7 +270,7 @@ public class SQLAccount implements Datable<Account> {
                                    result.getBoolean("perm_value")
                                   );
             }
-          } catch(SQLException e) {
+          } catch(final SQLException e) {
             e.printStackTrace();
           }
 
@@ -291,16 +302,16 @@ public class SQLAccount implements Datable<Account> {
 
     final Collection<Account> accounts = new ArrayList<>(); // is this required? Not entirely sure it is - seems maybe a waste
 
-    if(connector instanceof SQLConnector sql && sql.dialect() instanceof TNEDialect tne) {
+    if(connector instanceof final SQLConnector sql && sql.dialect() instanceof final TNEDialect tne) {
 
       final List<String> ids = new ArrayList<>();
-      try(ResultSet result = sql.executeQuery(tne.loadAccounts(),
-                                              new Object[]{})) {
+      try(final ResultSet result = sql.executeQuery(tne.loadAccounts(),
+                                                    new Object[]{})) {
         while(result.next()) {
           ids.add(result.getString("uid"));
         }
 
-      } catch(SQLException e) {
+      } catch(final SQLException e) {
         e.printStackTrace();
       }
 

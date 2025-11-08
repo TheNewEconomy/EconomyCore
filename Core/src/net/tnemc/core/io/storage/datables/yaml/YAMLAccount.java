@@ -177,6 +177,17 @@ public class YAMLAccount implements Datable<Account> {
     }
   }
 
+  @Override
+  public void delete(final StorageConnector<?> connector, @NotNull final String identifier) {
+
+    final String file = "accounts/" + identifier + ".yml";
+
+    final File accFile = new File(PluginCore.directory(), file);
+    if(accFile.exists()) {
+      accFile.delete();
+    }
+  }
+
   /**
    * Used to load this object.
    *

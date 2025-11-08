@@ -210,6 +210,18 @@ public class TNEStorageProvider implements StorageProvider {
   }
 
   @Override
+  public void delete(@NotNull final String identifier) {
+
+
+    final Optional<Datable<?>> data = Optional.ofNullable(engine.datables().get(Account.class));
+
+    //Our account storeAll requires no identifier, so we set it to null
+    data.ifPresent(datable->PluginCore.server().scheduler()
+            .createDelayedTask(()->datable.delete(connector, identifier), new ChoreTime(0), ChoreExecution.SECONDARY));
+
+  }
+
+  @Override
   public void purge() {
 
   }

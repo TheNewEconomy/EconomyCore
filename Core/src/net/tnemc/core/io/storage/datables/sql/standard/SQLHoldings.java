@@ -124,6 +124,11 @@ public class SQLHoldings implements Datable<HoldingsEntry> {
     }
   }
 
+  @Override
+  public void delete(final StorageConnector<?> connector, @NotNull final String identifier) {
+    //nothing to do here
+  }
+
   /**
    * Used to load this object.
    *

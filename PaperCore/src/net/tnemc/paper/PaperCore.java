@@ -31,6 +31,7 @@ import net.tnemc.paper.command.ModuleCommand;
 import net.tnemc.paper.command.MoneyCommand;
 import net.tnemc.paper.command.ShortCommands;
 import net.tnemc.paper.command.TransactionCommand;
+import net.tnemc.paper.hook.towny.TownyCommand;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.api.CallbackManager;
 import org.bukkit.Bukkit;
@@ -108,6 +109,12 @@ public class PaperCore extends TNECore {
       if(!currency.commandSet()) continue;
 
       command.register(Orphans.path(currency.getIdentifier().toLowerCase()).handler(new CurrencyMoneyCommand(currency)));
+    }
+
+
+    if(Bukkit.getPluginManager().getPlugin("Towny") != null) {
+
+      command.register(Orphans.path("tne").handler(new TownyCommand()));
     }
   }
 

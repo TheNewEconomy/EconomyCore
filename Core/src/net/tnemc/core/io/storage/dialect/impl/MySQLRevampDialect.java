@@ -78,6 +78,9 @@ public class MySQLRevampDialect implements TNEDialect {
   protected final String loadAccount;
 
   @Language("SQL")
+  protected final String deleteAccount;
+
+  @Language("SQL")
   protected final String saveAccount;
 
   @Language("SQL")
@@ -139,6 +142,8 @@ public class MySQLRevampDialect implements TNEDialect {
     this.loadAccounts = "SELECT uid AS uid, username, account_type, created, pin, status FROM " + prefix + "accounts";
 
     this.loadAccount = "SELECT username, account_type, created, pin, status FROM " + prefix + "accounts WHERE uid = ?";
+
+    this.deleteAccount = "DELETE FROM " + prefix + "accounts WHERE uid = ?";
 
     this.saveAccount = "INSERT INTO " + prefix + "accounts (uid, username, account_type, created, pin, status)" +
                        "VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE username = ?, pin = ?, status = ?";
@@ -354,6 +359,12 @@ public class MySQLRevampDialect implements TNEDialect {
   public @Language("SQL") String saveAccount() {
 
     return saveAccount;
+  }
+
+  @Override
+  public String deleteAccount() {
+
+    return this.deleteAccount;
   }
 
   @Override

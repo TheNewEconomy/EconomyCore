@@ -185,6 +185,11 @@ public class YAMLReceipt implements Datable<Receipt> {
     }
   }
 
+  @Override
+  public void delete(final StorageConnector<?> connector, @NotNull final String identifier) {
+    //nothing to see here
+  }
+
   /**
    * Used to load this object.
    *

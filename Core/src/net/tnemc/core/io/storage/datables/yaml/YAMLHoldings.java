@@ -200,6 +200,11 @@ public class YAMLHoldings implements Datable<HoldingsEntry> {
     }
   }
 
+  @Override
+  public void delete(final StorageConnector<?> connector, @NotNull final String identifier) {
+    //nothing to see here
+  }
+
   /**
    * Used to load this object.
    *

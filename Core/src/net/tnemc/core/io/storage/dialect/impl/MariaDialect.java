@@ -42,6 +42,9 @@ public class MariaDialect implements TNEDialect {
   protected final String loadAccount;
 
   @Language("SQL")
+  protected final String deleteAccount;
+
+  @Language("SQL")
   protected final String saveAccount;
 
   @Language("SQL")
@@ -99,6 +102,8 @@ public class MariaDialect implements TNEDialect {
     this.prefix = prefix;
 
     this.saveName = "INSERT INTO " + prefix + "player_names (uid, username) VALUES (?, ?) ON DUPLICATE KEY UPDATE username = ?";
+
+    this.deleteAccount = "DELETE FROM " + prefix + "accounts WHERE uid = ?";
 
     this.loadAccounts = "SELECT uid AS uid, username, account_type, created, pin, status FROM " + prefix + "accounts";
 
@@ -323,6 +328,12 @@ public class MariaDialect implements TNEDialect {
   public @Language("SQL") String saveAccount() {
 
     return saveAccount;
+  }
+
+  @Override
+  public @Language("SQL") String deleteAccount() {
+
+    return this.deleteAccount;
   }
 
   @Override

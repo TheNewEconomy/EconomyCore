@@ -300,7 +300,17 @@ public class AccountManager {
     final AccountDeleteCallback callback = new AccountDeleteCallback(identifier);
     PluginCore.callbacks().call(callback);
 
-    accounts.remove(identifier);
+    try {
+
+      final UUID id = UUID.fromString(identifier);
+
+      uuidProvider.pairs().remove(id);
+      accounts.remove(identifier);
+      TNECore.instance().storage().delete(Account.class, identifier);
+    } catch(final Exception ignore) {
+
+      PluginCore.log().debug("Failed to delete account: " + identifier);
+    }
     return AccountResponse.DELETED;
   }
 
