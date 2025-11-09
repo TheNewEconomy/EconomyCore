@@ -68,14 +68,19 @@ public class TownyCommand implements OrphanCommand {
       if(name.contains(TownySettings.getTownAccountPrefix())) {
 
         final Town town = TownyAPI.getInstance().getTown(name.replace(TownySettings.getTownAccountPrefix(), ""));
+
+        PluginCore.log().inform("Town Account Detected... Exists in Towny: " + (town != null));
         if(town == null) {
           //delete account
+          PluginCore.log().inform("Deleting Town Account");
           TNECore.eco().account().deleteAccount(entry.getKey());
           continue;
         }
 
         final UUID townyUUID = town.getUUID();
         final Optional<Account> account = TNECore.eco().account().findAccount(entry.getKey().toString());
+
+        PluginCore.log().inform("Changing UUID of Town Account");
         if(!townyUUID.equals(entry.getKey()) && account.isPresent()) {
 
           final List<HoldingsEntry> holdings = account.get().getWallet().entryList();
@@ -95,14 +100,19 @@ public class TownyCommand implements OrphanCommand {
       } else if(entry.getValue().getUsername().contains(TownySettings.getNationAccountPrefix())) {
 
         final Nation nation = TownyAPI.getInstance().getNation(name.replace(TownySettings.getNationAccountPrefix(), ""));
+
+        PluginCore.log().inform("Nation Account Detected... Exists in Towny: " + (nation != null));
         if(nation == null) {
           //delete account
+          PluginCore.log().inform("Deleting Nation Account");
           TNECore.eco().account().deleteAccount(entry.getKey());
           continue;
         }
 
         final UUID townyUUID = nation.getUUID();
         final Optional<Account> account = TNECore.eco().account().findAccount(entry.getKey().toString());
+
+        PluginCore.log().inform("Changing UUID of Nation Account");
         if(!townyUUID.equals(entry.getKey()) && account.isPresent()) {
 
           final List<HoldingsEntry> holdings = account.get().getWallet().entryList();

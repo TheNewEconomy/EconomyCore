@@ -243,7 +243,7 @@ public class DefaultCurrencyLoader implements CurrencyLoader {
       }
     }
 
-    if(cur.contains("Converting")) {
+    if(cur.contains("Converting") && cur.getSection("Converting") != null) {
       final Set<Object> converting = cur.getSection("Converting").getKeys();
 
       for(final Object strObj : converting) {
