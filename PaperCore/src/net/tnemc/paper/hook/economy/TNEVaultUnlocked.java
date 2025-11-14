@@ -35,6 +35,7 @@ import net.tnemc.core.currency.Currency;
 import net.tnemc.core.currency.format.CurrencyFormatter;
 import net.tnemc.core.transaction.Transaction;
 import net.tnemc.core.transaction.TransactionResult;
+import net.tnemc.core.utils.MISCUtils;
 import net.tnemc.core.utils.exceptions.InvalidTransactionException;
 import net.tnemc.plugincore.PluginCore;
 import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
@@ -210,6 +211,7 @@ public class TNEVaultUnlocked implements Economy {
   public boolean createAccount(final UUID uuid, final @NotNull String name) {
 
     PluginCore.log().debug("CreateAccount method called with UUID: " + uuid + ", Name: " + name, DebugLevel.STANDARD);
+
     return TNECore.eco().account().createAccount(uuid.toString(), name).getResponse().success();
   }
 

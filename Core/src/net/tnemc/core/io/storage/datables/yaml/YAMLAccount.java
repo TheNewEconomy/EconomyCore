@@ -180,6 +180,8 @@ public class YAMLAccount implements Datable<Account> {
   @Override
   public void delete(final StorageConnector<?> connector, @NotNull final String identifier) {
 
+    PluginCore.log().debug("Deleting Account with ID: " + identifier, DebugLevel.DEVELOPER);
+
     final String file = "accounts/" + identifier + ".yml";
 
     final File accFile = new File(PluginCore.directory(), file);

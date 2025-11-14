@@ -294,6 +294,7 @@ public class AccountManager {
   public EconomyResponse deleteAccount(@NotNull final String identifier) {
 
     if(!accounts.containsKey(identifier)) {
+      PluginCore.log().debug("Account Doesn't Exist: " + identifier);
       return AccountResponse.DOESNT_EXIST;
     }
 
@@ -306,6 +307,7 @@ public class AccountManager {
 
       uuidProvider.pairs().remove(id);
       accounts.remove(identifier);
+      PluginCore.log().debug("Deleting account: " + identifier);
       TNECore.instance().storage().delete(Account.class, identifier);
     } catch(final Exception ignore) {
 

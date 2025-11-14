@@ -177,6 +177,8 @@ public class SQLAccount implements Datable<Account> {
   @Override
   public void delete(final StorageConnector<?> connector, @NotNull final String identifier) {
 
+    PluginCore.log().debug("Deleting Account with ID: " + identifier, DebugLevel.DEVELOPER);
+
     if(connector instanceof final SQLConnector sql && sql.dialect() instanceof final TNEDialect tne) {
 
       sql.executeUpdate(tne.deleteAccount(), new Object[]{ identifier });
