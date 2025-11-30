@@ -87,7 +87,7 @@ public class YAMLAccount implements Datable<Account> {
 
     //MISCUtils.printStack();
 
-    PluginCore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.STANDARD);
+    PluginCore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.OFF);
 
     //check if our file is in use.
     final String file = "accounts/" + identifier + ".yml";
@@ -180,7 +180,7 @@ public class YAMLAccount implements Datable<Account> {
   @Override
   public void delete(final StorageConnector<?> connector, @NotNull final String identifier) {
 
-    PluginCore.log().debug("Deleting Account with ID: " + identifier, DebugLevel.DEVELOPER);
+    PluginCore.log().debug("Deleting Account with ID: " + identifier, DebugLevel.STANDARD);
 
     final String file = "accounts/" + identifier + ".yml";
 

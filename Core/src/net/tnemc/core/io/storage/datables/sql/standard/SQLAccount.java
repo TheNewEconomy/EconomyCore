@@ -93,7 +93,7 @@ public class SQLAccount implements Datable<Account> {
 
     if(connector instanceof final SQLConnector sql && sql.dialect() instanceof final TNEDialect tne) {
 
-      PluginCore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.STANDARD);
+      PluginCore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.OFF);
 
       //store the basic account information(accounts table)
       final int test = sql.executeUpdate(tne.saveAccount(),
@@ -177,7 +177,7 @@ public class SQLAccount implements Datable<Account> {
   @Override
   public void delete(final StorageConnector<?> connector, @NotNull final String identifier) {
 
-    PluginCore.log().debug("Deleting Account with ID: " + identifier, DebugLevel.DEVELOPER);
+    PluginCore.log().debug("Deleting Account with ID: " + identifier, DebugLevel.STANDARD);
 
     if(connector instanceof final SQLConnector sql && sql.dialect() instanceof final TNEDialect tne) {
 

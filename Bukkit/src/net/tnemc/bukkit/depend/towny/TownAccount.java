@@ -21,6 +21,7 @@ package net.tnemc.bukkit.depend.towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
 import net.tnemc.core.account.NonPlayerAccount;
+import net.tnemc.core.utils.MISCUtils;
 import net.tnemc.plugincore.PluginCore;
 
 import java.util.Objects;
@@ -61,6 +62,8 @@ public class TownAccount extends NonPlayerAccount {
 
   @Override
   public UUID generateIdentifier(final String name) {
+
+    MISCUtils.printStack();
 
     try {
 
