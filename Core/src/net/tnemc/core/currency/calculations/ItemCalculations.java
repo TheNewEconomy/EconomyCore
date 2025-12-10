@@ -19,12 +19,16 @@ package net.tnemc.core.currency.calculations;
  */
 
 import net.tnemc.core.currency.Denomination;
+import net.tnemc.plugincore.PluginCore;
+import net.tnemc.plugincore.core.compatibility.log.DebugLevel;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
- * CalculationProvider
+ * ItemCalculations
  *
  * @author creatorfromhell
  * @since 0.1.2.0
@@ -67,46 +71,116 @@ public class ItemCalculations<I> {
    * Used to calculate the materials that need to be removed when a player in an item-based economy
    * has money taken from their account.
    *
-   * @param change The amount to remove from the player's account.
+   * This is a rewritten version that fixes the change calculation bug where players were not
+   * receiving the correct amount of change when paying with larger denominations.
+   *
+   * @param amountToRemove The amount to remove from the player's account.
    *
    * @return The {@link BigDecimal} representation of the leftover amount that couldn't be removed
    * because there's no more materials left to remove.
    */
-  public BigDecimal calculation(final CalculationData<I> data, final BigDecimal change) {
+  public BigDecimal calculation(final CalculationData<I> data, final BigDecimal amountToRemove) {
 
-    data.getCalculator().initialize(data.getCurrency(), data.getInventoryMaterials());
+    PluginCore.log().debug("=== Starting Calculation ===", DebugLevel.DEVELOPER);
+    PluginCore.log().debug("Amount to remove: " + amountToRemove.toPlainString(), DebugLevel.DEVELOPER);
 
-    data.getCalculator().calculateDenominationCounts(change);
+    // Track what we can pay with directly without breaking down larger denominations
+    BigDecimal paidAmount = BigDecimal.ZERO;
+    final TreeMap<BigDecimal, Integer> toRemoveDirectly = new TreeMap<>();
 
-    for(final Map.Entry<BigDecimal, Integer> entry : data.getCalculator().getToAdd().entrySet()) {
+    // Create a copy of inventory materials
+    final TreeMap<BigDecimal, Integer> availableMaterials = new TreeMap<>(data.getInventoryMaterials());
 
-      Integer amount = entry.getValue();
+    // First pass: try to pay using existing denominations (largest to smallest, but only those <= amountToRemove)
+    BigDecimal remaining = amountToRemove;
 
-      final Integer removeAmount = data.getCalculator().getToRemove().getOrDefault(entry.getKey(), 0);
+    for(final Map.Entry<BigDecimal, Integer> entry : availableMaterials.descendingMap().entrySet()) {
 
-      if(removeAmount > 0 && amount > removeAmount) {
+      final BigDecimal denomination = entry.getKey();
 
-        amount = amount - removeAmount;
-      }
-
-      if(removeAmount > 0 && amount <= removeAmount) {
-
+      // skip denominations larger than what we need to pay
+      if(denomination.compareTo(remaining) > 0) {
         continue;
       }
 
-      //PluginCore.log().debug("calculation Amount getToAdd:" + entry.getKey().toPlainString() + " Count:" + amount, DebugLevel.DEVELOPER);
+      final int available = entry.getValue();
 
-      data.provideMaterials(data.getDenominations().get(entry.getKey()), amount);
+      // Calculate how many of this denominations we can use
+      final int needed = remaining.divide(denomination, 0, RoundingMode.DOWN).intValue();
+      final int toUse = Math.min(needed, available);
+
+      if(toUse > 0) {
+        toRemoveDirectly.put(denomination, toUse);
+        final BigDecimal value = denomination.multiply(new BigDecimal(toUse));
+        paidAmount = paidAmount.add(value);
+        remaining = remaining.subtract(value);
+
+        PluginCore.log().debug("Using " + toUse + "x " + denomination.toPlainString() + " = " + value.toPlainString(), DebugLevel.DEVELOPER);
+      }
+
+      if(remaining.compareTo(BigDecimal.ZERO) == 0) {
+        break;
+      }
     }
 
-    for(final Map.Entry<BigDecimal, Integer> entry : data.getCalculator().getToRemove().entrySet()) {
+    PluginCore.log().debug("After direct payment - paid: " + paidAmount.toPlainString() + ", Remaining: " + remaining.toPlainString(), DebugLevel.DEVELOPER);
 
-      //PluginCore.log().debug("calculation Amount getToRemove:" + entry.getKey().toPlainString() + " Count:" + entry.getValue(), DebugLevel.DEVELOPER);
+    // If more is still needed to pay, break down a larger denomination
+    BigDecimal changeToGiveBack = BigDecimal.ZERO;
+    Denomination denominationToBreakDown = null;
 
-      data.removeMaterials(data.getDenominations().get(entry.getKey()), entry.getValue());
+    if(remaining.compareTo(BigDecimal.ZERO) > 0) {
+
+      // Find the smallest denomination larger than the remaining amount
+      for(final Map.Entry<BigDecimal, Integer> entry : availableMaterials.entrySet()) {
+
+        final BigDecimal denomination = entry.getKey();
+        final int available = entry.getValue();
+
+        // Check if this denomination is larger than what is needed
+        if(denomination.compareTo(remaining) > 0 && available > 0) {
+
+          // Check if all of this denomination has already been used
+          final int alreadyUsed = toRemoveDirectly.getOrDefault(denomination, 0);
+          if(available > alreadyUsed) {
+
+            denominationToBreakDown = data.getDenominations().get(denomination);
+            changeToGiveBack = denomination.subtract(remaining);
+
+            PluginCore.log().debug("Breaking down 1x " + denomination.toPlainString() + ", change: " + changeToGiveBack.toPlainString(), DebugLevel.DEVELOPER);
+
+            // Mark denomination for removal
+            toRemoveDirectly.put(denomination, alreadyUsed + 1);
+            break;
+          }
+        }
+      }
+
+      if(denominationToBreakDown == null) {
+        PluginCore.log().debug("Cannot pay - insufficient funds", DebugLevel.DEVELOPER);
+        // Cannot pay because insufficient funds
+        return remaining;
+      }
     }
 
+    // Execute the removals
+    for(final Map.Entry<BigDecimal, Integer> entry : toRemoveDirectly.entrySet()) {
 
+      final Denomination denom = data.getDenominations().get(entry.getKey());
+      final int amount = entry.getValue();
+
+      PluginCore.log().debug("Removing " + amount + "x " + entry.getKey().toPlainString(), DebugLevel.DEVELOPER);
+      data.removeMaterials(denom, amount);
+    }
+
+    // Give back change if any
+    if(changeToGiveBack.compareTo(BigDecimal.ZERO) > 0) {
+
+      PluginCore.log().debug("Providing change: " + changeToGiveBack.toPlainString(), DebugLevel.DEVELOPER);
+      provideMaterials(data, changeToGiveBack);
+    }
+
+    PluginCore.log().debug("=== Calculation Completed ===", DebugLevel.DEVELOPER);
     return BigDecimal.ZERO;
   }
 
