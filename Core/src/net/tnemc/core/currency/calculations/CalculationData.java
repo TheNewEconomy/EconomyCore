@@ -124,7 +124,7 @@ public class CalculationData<I> {
 
   public void provideMaterials(final Denomination denomination, final Integer amount) {
 
-    int contains = (inventoryMaterials.getOrDefault(denomination.weight(), amount));
+    int contains = (inventoryMaterials.getOrDefault(denomination.weight(), 0)) + amount;
 
     final AbstractItemStack<?> stack = TNECore.instance().denominationToStack((ItemDenomination)denomination).amount(amount);
     final Collection<AbstractItemStack<Object>> left = PluginCore.server().calculations().giveItems(Collections.singletonList((AbstractItemStack<Object>)stack), inventory, currency.shulker(), currency.bundle());
