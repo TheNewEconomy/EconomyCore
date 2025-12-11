@@ -93,7 +93,7 @@ public class SQLAccount implements Datable<Account> {
 
     if(connector instanceof final SQLConnector sql && sql.dialect() instanceof final TNEDialect tne) {
 
-      PluginCore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.OFF);
+      PluginCore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.STANDARD);
 
       //store the basic account information(accounts table)
       final int test = sql.executeUpdate(tne.saveAccount(),

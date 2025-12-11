@@ -63,8 +63,6 @@ public class TownAccount extends NonPlayerAccount {
   @Override
   public UUID generateIdentifier(final String name) {
 
-    MISCUtils.printStack();
-
     try {
 
       PluginCore.log().debug("Generating Town UUID for: " + name + ".");

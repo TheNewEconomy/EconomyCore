@@ -87,7 +87,7 @@ public class YAMLAccount implements Datable<Account> {
 
     //MISCUtils.printStack();
 
-    PluginCore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.OFF);
+    PluginCore.log().debug("Saving Account with ID: " + identifier + " Name: " + account.getName(), DebugLevel.STANDARD);
 
     //check if our file is in use.
     final String file = "accounts/" + identifier + ".yml";
